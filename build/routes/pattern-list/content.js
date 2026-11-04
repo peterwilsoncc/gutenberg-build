@@ -9561,6 +9561,23 @@ function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, refer
 	useScrollLock(enabled && (!touchOpen || touchOpenShouldLockScroll), referenceElement);
 }
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/listbox-separator/ListboxSeparator.mjs
+/**
+* A visual separator between items.
+* Renders a `<div>` element.
+*
+* @internal
+*/
+const ListboxSeparator = /*#__PURE__*/ import__wp_global_react.forwardRef(function ListboxSeparator(componentProps, forwardedRef) {
+	const { className, render, orientation = "horizontal", style, ...elementProps } = componentProps;
+	return useRenderElement("div", componentProps, {
+		state: { orientation },
+		ref: forwardedRef,
+		props: [{ role: "presentation" }, elementProps]
+	});
+});
+ListboxSeparator.displayName = "ListboxSeparator";
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/button/Button.mjs
 /**
 * A button component that can be used to trigger actions.
@@ -12182,7 +12199,7 @@ DirectionProvider$1.displayName = "DirectionProvider";
 *
 * Documentation: [Base UI Separator](https://base-ui.com/react/components/separator)
 */
-const Separator$1 = /*#__PURE__*/ import__wp_global_react.forwardRef(function SeparatorComponent(componentProps, forwardedRef) {
+const Separator$2 = /*#__PURE__*/ import__wp_global_react.forwardRef(function SeparatorComponent(componentProps, forwardedRef) {
 	const { className, render, orientation = "horizontal", style, ...elementProps } = componentProps;
 	return useRenderElement("div", componentProps, {
 		state: { orientation },
@@ -12193,7 +12210,7 @@ const Separator$1 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Se
 		}, elementProps]
 	});
 });
-Separator$1.displayName = "Separator";
+Separator$2.displayName = "Separator";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/isElementDisabled.mjs
 function isElementDisabled(element) {
@@ -14877,6 +14894,79 @@ const SelectItemText = /*#__PURE__*/ import__wp_global_react.memo(/*#__PURE__*/ 
 }));
 SelectItemText.displayName = "SelectItemText";
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroupContext.mjs
+const SelectGroupContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+SelectGroupContext.displayName = "SelectGroupContext";
+function useSelectGroupContext() {
+	const context = import__wp_global_react.useContext(SelectGroupContext);
+	if (context === void 0) throw new Error("Base UI: SelectGroupContext is missing. SelectGroup parts must be placed within <Select.Group>.");
+	return context;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroup.mjs
+/**
+* Groups related select items with the corresponding label.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectGroup = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectGroup(componentProps, forwardedRef) {
+	const { render, className, style, ...elementProps } = componentProps;
+	const [labelId, setLabelId] = import__wp_global_react.useState();
+	const contextValue = import__wp_global_react.useMemo(() => ({
+		labelId,
+		setLabelId
+	}), [labelId, setLabelId]);
+	const element = useRenderElement("div", componentProps, {
+		ref: forwardedRef,
+		props: [{
+			role: "group",
+			"aria-labelledby": labelId
+		}, elementProps]
+	});
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsx)(SelectGroupContext.Provider, {
+		value: contextValue,
+		children: element
+	});
+});
+SelectGroup.displayName = "SelectGroup";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group-label/SelectGroupLabel.mjs
+/**
+* An accessible label that is automatically associated with its parent group.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectGroupLabel = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectGroupLabel(componentProps, forwardedRef) {
+	const { render, className, style, id: idProp, ...elementProps } = componentProps;
+	const { setLabelId } = useSelectGroupContext();
+	const id = useBaseUiId(idProp);
+	useIsoLayoutEffect(() => {
+		setLabelId(id);
+		return () => {
+			setLabelId((currentId) => currentId === id ? void 0 : currentId);
+		};
+	}, [id, setLabelId]);
+	return useRenderElement("div", componentProps, {
+		ref: forwardedRef,
+		props: [{
+			id,
+			"aria-hidden": true
+		}, elementProps]
+	});
+});
+SelectGroupLabel.displayName = "SelectGroupLabel";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/separator/SelectSeparator.mjs
+/**
+* A visual separator between items or groups.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectSeparator = ListboxSeparator;
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
 const TooltipRootContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
 TooltipRootContext.displayName = "TooltipRootContext";
@@ -15387,7 +15477,7 @@ var require_i18n = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 }));
 
 // packages/ui/build-module/spinner/spinner.mjs
-const STYLE_HASH_ATTRIBUTE$45 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$48 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -15396,7 +15486,7 @@ const STYLE_HASH_ATTRIBUTE$45 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$45() {
+function getRuntime$48() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -15404,7 +15494,7 @@ function getRuntime$45() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$45(document);
+	if (typeof document !== "undefined") registerDocument$48(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -15415,9 +15505,9 @@ function getRuntime$45() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$45(targetDocument, hash) {
+function documentContainsStyleHash$48(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$45}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$45) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$48}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$48) === hash) return true;
 	return false;
 }
 /**
@@ -15428,21 +15518,21 @@ function documentContainsStyleHash$45(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$45(targetDocument, hash, css) {
+function injectStyle$48(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$45();
+	const runtime = getRuntime$48();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$45(targetDocument, hash)) {
+	if (documentContainsStyleHash$48(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$45, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$48, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -15458,10 +15548,10 @@ function injectStyle$45(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$45(targetDocument) {
-	const runtime = getRuntime$45();
+function registerDocument$48(targetDocument) {
+	const runtime = getRuntime$48();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$45(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$48(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -15483,12 +15573,12 @@ function registerDocument$45(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$45(hash, css) {
-	const runtime = getRuntime$45();
+function registerStyle$48(hash, css) {
+	const runtime = getRuntime$48();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$45(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$48(targetDocument, hash, css);
 }
-registerStyle$45("b081213352", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.da418dc15e63be57__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}._8b83deccaefa3c92__indicator{fill:transparent;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_0da63cf2c7b08803__spinner-spin 1.4s linear infinite both}@keyframes _0da63cf2c7b08803__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+registerStyle$48("b081213352", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.da418dc15e63be57__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}._8b83deccaefa3c92__indicator{fill:transparent;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_0da63cf2c7b08803__spinner-spin 1.4s linear infinite both}@keyframes _0da63cf2c7b08803__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
 var style_module_default$35 = {
 	"spinner": "da418dc15e63be57__spinner",
 	"indicator": "_8b83deccaefa3c92__indicator",
@@ -15519,7 +15609,7 @@ const Spinner$14 = (0, import_element.forwardRef)(function UnforwardedSpinner({ 
 
 // packages/ui/build-module/button/button.mjs
 var import_i18n = require_i18n();
-const STYLE_HASH_ATTRIBUTE$44 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$47 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -15528,7 +15618,7 @@ const STYLE_HASH_ATTRIBUTE$44 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$44() {
+function getRuntime$47() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -15536,7 +15626,7 @@ function getRuntime$44() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$44(document);
+	if (typeof document !== "undefined") registerDocument$47(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -15547,9 +15637,9 @@ function getRuntime$44() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$44(targetDocument, hash) {
+function documentContainsStyleHash$47(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$44}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$44) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$47}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$47) === hash) return true;
 	return false;
 }
 /**
@@ -15560,21 +15650,21 @@ function documentContainsStyleHash$44(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$44(targetDocument, hash, css) {
+function injectStyle$47(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$44();
+	const runtime = getRuntime$47();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$44(targetDocument, hash)) {
+	if (documentContainsStyleHash$47(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$44, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$47, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -15590,10 +15680,10 @@ function injectStyle$44(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$44(targetDocument) {
-	const runtime = getRuntime$44();
+function registerDocument$47(targetDocument) {
+	const runtime = getRuntime$47();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$44(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$47(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -15615,12 +15705,12 @@ function registerDocument$44(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$44(hash, css) {
-	const runtime = getRuntime$44();
+function registerStyle$47(hash, css) {
+	const runtime = getRuntime$47();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$44(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$47(targetDocument, hash, css);
 }
-registerStyle$44("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
+registerStyle$47("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
 var style_module_default$34 = {
 	"button": "e01b07636421375d__button",
 	"is-unstyled": "ec10ae721bc68934__is-unstyled",
@@ -15635,9 +15725,9 @@ var style_module_default$34 = {
 	"is-compact": "df99f7773c9c8915__is-compact",
 	"spinner": "_20f9e334daee91a7__spinner"
 };
-registerStyle$44("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+registerStyle$47("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 var resets_module_default$13 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$44("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+registerStyle$47("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 var focus_module_default$6 = {
 	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
 	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
@@ -15645,7 +15735,7 @@ var focus_module_default$6 = {
 	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
 	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
 };
-registerStyle$44("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+registerStyle$47("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 var global_css_defense_module_default$12 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
@@ -15680,7 +15770,7 @@ const Button$15 = (0, import_element.forwardRef)(function UnforwardedButton({ to
 });
 
 // packages/ui/build-module/button/icon.mjs
-const STYLE_HASH_ATTRIBUTE$43 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$46 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -15689,7 +15779,7 @@ const STYLE_HASH_ATTRIBUTE$43 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$43() {
+function getRuntime$46() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -15697,7 +15787,7 @@ function getRuntime$43() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$43(document);
+	if (typeof document !== "undefined") registerDocument$46(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -15708,9 +15798,9 @@ function getRuntime$43() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$43(targetDocument, hash) {
+function documentContainsStyleHash$46(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$43}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$43) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$46}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$46) === hash) return true;
 	return false;
 }
 /**
@@ -15721,21 +15811,21 @@ function documentContainsStyleHash$43(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$43(targetDocument, hash, css) {
+function injectStyle$46(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$43();
+	const runtime = getRuntime$46();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$43(targetDocument, hash)) {
+	if (documentContainsStyleHash$46(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$43, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$46, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -15751,10 +15841,10 @@ function injectStyle$43(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$43(targetDocument) {
-	const runtime = getRuntime$43();
+function registerDocument$46(targetDocument) {
+	const runtime = getRuntime$46();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$43(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$46(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -15776,12 +15866,12 @@ function registerDocument$43(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$43(hash, css) {
-	const runtime = getRuntime$43();
+function registerStyle$46(hash, css) {
+	const runtime = getRuntime$46();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$43(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$46(targetDocument, hash, css);
 }
-registerStyle$43("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
+registerStyle$46("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
 var style_module_default$33 = {
 	"button": "e01b07636421375d__button",
 	"is-unstyled": "ec10ae721bc68934__is-unstyled",
@@ -16235,7 +16325,7 @@ const MenuItemContentContext = (0, import_element.createContext)(null);
 const useMenuItemContentContext = () => (0, import_element.useContext)(MenuItemContentContext);
 
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-const STYLE_HASH_ATTRIBUTE$42 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$45 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -16244,7 +16334,7 @@ const STYLE_HASH_ATTRIBUTE$42 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$42() {
+function getRuntime$45() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -16252,7 +16342,7 @@ function getRuntime$42() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$42(document);
+	if (typeof document !== "undefined") registerDocument$45(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -16263,9 +16353,9 @@ function getRuntime$42() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$42(targetDocument, hash) {
+function documentContainsStyleHash$45(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$42}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$42) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$45}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$45) === hash) return true;
 	return false;
 }
 /**
@@ -16276,21 +16366,21 @@ function documentContainsStyleHash$42(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$42(targetDocument, hash, css) {
+function injectStyle$45(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$42();
+	const runtime = getRuntime$45();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$42(targetDocument, hash)) {
+	if (documentContainsStyleHash$45(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$42, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$45, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -16306,10 +16396,10 @@ function injectStyle$42(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$42(targetDocument) {
-	const runtime = getRuntime$42();
+function registerDocument$45(targetDocument) {
+	const runtime = getRuntime$45();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$42(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$45(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -16331,12 +16421,12 @@ function registerDocument$42(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$42(hash, css) {
-	const runtime = getRuntime$42();
+function registerStyle$45(hash, css) {
+	const runtime = getRuntime$45();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$42(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$45(targetDocument, hash, css);
 }
-registerStyle$42("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+registerStyle$45("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
 var style_module_default$32 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
 /**
 * Visually hides content while keeping it accessible to screen readers.
@@ -16454,6 +16544,444 @@ function useItemContent$1(children, components, { "aria-describedby": ariaDescri
 }
 
 // packages/ui/build-module/text/text.mjs
+const STYLE_HASH_ATTRIBUTE$44 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$44() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$44(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$44(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$44}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$44) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$44(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$44();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$44(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$44, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$44(targetDocument) {
+	const runtime = getRuntime$44();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$44(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$44(hash, css) {
+	const runtime = getRuntime$44();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$44(targetDocument, hash, css);
+}
+registerStyle$44("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var style_module_default$31 = {
+	"text": "_9745ffa515d864cf__text",
+	"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
+	"heading-xl": "_664e3e7687c45603__heading-xl",
+	"heading-lg": "dac661a5de0ed2bd__heading-lg",
+	"heading-md": "_59c7f3f740e2f96e__heading-md",
+	"heading-sm": "cf052fbad8d93b7e__heading-sm",
+	"body-xl": "_212b9cfef57a0af4__body-xl",
+	"body-lg": "_07f57bc0aa36b2c6__body-lg",
+	"body-md": "_0c6da4457aec9e62__body-md",
+	"body-sm": "b998f87ff17b7bec__body-sm"
+};
+registerStyle$44("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$11 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+/**
+* A text component for rendering content with predefined typographic variants.
+* Built on design tokens for consistent typography across the UI.
+*/
+const Text$1 = (0, import_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
+	return useRender({
+		render,
+		defaultTagName: "span",
+		ref,
+		props: mergeProps$1(props, { className: clsx(style_module_default$31.text, global_css_defense_module_default$11.heading, global_css_defense_module_default$11.p, style_module_default$31[variant], className) })
+	});
+});
+
+// packages/ui/build-module/menu/item-description.mjs
+const STYLE_HASH_ATTRIBUTE$43 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$43() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$43(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$43(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$43}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$43) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$43(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$43();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$43(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$43, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$43(targetDocument) {
+	const runtime = getRuntime$43();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$43(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$43(hash, css) {
+	const runtime = getRuntime$43();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$43(targetDocument, hash, css);
+}
+registerStyle$43("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+var style_module_default$30 = {
+	"positioner": "_0d7a6f8f4c34457c__positioner",
+	"popup": "_0da3a4bb35470489__popup",
+	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
+	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
+	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
+	"list": "abaf9ed9a87a5372__list",
+	"group": "_5e3448a892d173e1__group",
+	"radio-group": "_3785cb9270b05b6a__radio-group",
+	"item": "b830290b73bc0114__item",
+	"item-prefix": "_25efda4e627b2ecc__item-prefix",
+	"group-label": "b7aec7c5d32889bd__group-label",
+	"separator": "dd2c56340325cbba__separator",
+	"item-content": "_2970c1730cad40f5__item-content",
+	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
+	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
+	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
+	"has-prefix": "_330cf40dd3a05350__has-prefix",
+	"item-descriptions": "_83ba90b140489b39__item-descriptions",
+	"item-label": "_023b6373e5ff4fcc__item-label",
+	"item-description": "ccf4e74038998385__item-description",
+	"item-suffix": "bf553a7f6108e57a__item-suffix",
+	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
+	"item-trailing": "_0c196486b823d48b__item-trailing",
+	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
+	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+};
+const ITEM_DESCRIPTION_DIRECT_CHILD$1 = Symbol();
+/**
+* Adds supporting text below a menu item label. Use it as a direct child
+* after `Menu.ItemLabel`.
+*
+* Keep labels clear on their own. Add a brief description only for essential
+* context the label cannot convey. Avoid combining a description and a prefix
+* icon in the same item.
+*/
+const ItemDescription$1 = (0, import_element.forwardRef)(function MenuItemDescription(props, ref) {
+	const { className, id, validationToken, ...restProps } = props;
+	if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD$1) throw new Error("Menu.ItemDescription: Missing direct menu item parent. Render <Menu.ItemDescription> as a direct child of a menu item.");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
+		ref,
+		variant: "body-sm",
+		...restProps,
+		id,
+		className: clsx(style_module_default$30["item-description"], className)
+	});
+});
+
+// packages/ui/build-module/menu/item-label.mjs
+const STYLE_HASH_ATTRIBUTE$42 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$42() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$42(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$42(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$42}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$42) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$42(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$42();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$42(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$42, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$42(targetDocument) {
+	const runtime = getRuntime$42();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$42(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$42(hash, css) {
+	const runtime = getRuntime$42();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$42(targetDocument, hash, css);
+}
+registerStyle$42("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+var style_module_default$29 = {
+	"positioner": "_0d7a6f8f4c34457c__positioner",
+	"popup": "_0da3a4bb35470489__popup",
+	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
+	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
+	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
+	"list": "abaf9ed9a87a5372__list",
+	"group": "_5e3448a892d173e1__group",
+	"radio-group": "_3785cb9270b05b6a__radio-group",
+	"item": "b830290b73bc0114__item",
+	"item-prefix": "_25efda4e627b2ecc__item-prefix",
+	"group-label": "b7aec7c5d32889bd__group-label",
+	"separator": "dd2c56340325cbba__separator",
+	"item-content": "_2970c1730cad40f5__item-content",
+	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
+	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
+	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
+	"has-prefix": "_330cf40dd3a05350__has-prefix",
+	"item-descriptions": "_83ba90b140489b39__item-descriptions",
+	"item-label": "_023b6373e5ff4fcc__item-label",
+	"item-description": "ccf4e74038998385__item-description",
+	"item-suffix": "bf553a7f6108e57a__item-suffix",
+	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
+	"item-trailing": "_0c196486b823d48b__item-trailing",
+	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
+	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+};
+/**
+* Renders the primary label within a menu item. Use it as the first direct
+* child of every item.
+*/
+const ItemLabel$1 = (0, import_element.forwardRef)(function MenuItemLabel({ children, className, id, ...props }, ref) {
+	const itemContentContext = useMenuItemContentContext();
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Text$1, {
+		ref,
+		variant: "body-md",
+		...props,
+		id: id ?? itemContentContext?.labelId,
+		className: clsx(style_module_default$29["item-label"], className),
+		children: [children, itemContentContext?.labelTrailing]
+	});
+});
+
+// packages/ui/build-module/menu/item.mjs
 const STYLE_HASH_ATTRIBUTE$41 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -16555,445 +17083,7 @@ function registerStyle$41(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$41(targetDocument, hash, css);
 }
-registerStyle$41("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var style_module_default$31 = {
-	"text": "_9745ffa515d864cf__text",
-	"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
-	"heading-xl": "_664e3e7687c45603__heading-xl",
-	"heading-lg": "dac661a5de0ed2bd__heading-lg",
-	"heading-md": "_59c7f3f740e2f96e__heading-md",
-	"heading-sm": "cf052fbad8d93b7e__heading-sm",
-	"body-xl": "_212b9cfef57a0af4__body-xl",
-	"body-lg": "_07f57bc0aa36b2c6__body-lg",
-	"body-md": "_0c6da4457aec9e62__body-md",
-	"body-sm": "b998f87ff17b7bec__body-sm"
-};
 registerStyle$41("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$11 = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
-};
-/**
-* A text component for rendering content with predefined typographic variants.
-* Built on design tokens for consistent typography across the UI.
-*/
-const Text$1 = (0, import_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
-	return useRender({
-		render,
-		defaultTagName: "span",
-		ref,
-		props: mergeProps$1(props, { className: clsx(style_module_default$31.text, global_css_defense_module_default$11.heading, global_css_defense_module_default$11.p, style_module_default$31[variant], className) })
-	});
-});
-
-// packages/ui/build-module/menu/item-description.mjs
-const STYLE_HASH_ATTRIBUTE$40 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$40() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$40(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$40(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$40}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$40) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$40(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$40();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$40(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$40, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$40(targetDocument) {
-	const runtime = getRuntime$40();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$40(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$40(hash, css) {
-	const runtime = getRuntime$40();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$40(targetDocument, hash, css);
-}
-registerStyle$40("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
-var style_module_default$30 = {
-	"positioner": "_0d7a6f8f4c34457c__positioner",
-	"popup": "_0da3a4bb35470489__popup",
-	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
-	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
-	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
-	"list": "abaf9ed9a87a5372__list",
-	"group": "_5e3448a892d173e1__group",
-	"radio-group": "_3785cb9270b05b6a__radio-group",
-	"item": "b830290b73bc0114__item",
-	"item-prefix": "_25efda4e627b2ecc__item-prefix",
-	"group-label": "b7aec7c5d32889bd__group-label",
-	"separator": "dd2c56340325cbba__separator",
-	"item-content": "_2970c1730cad40f5__item-content",
-	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
-	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
-	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
-	"has-prefix": "_330cf40dd3a05350__has-prefix",
-	"item-descriptions": "_83ba90b140489b39__item-descriptions",
-	"item-label": "_023b6373e5ff4fcc__item-label",
-	"item-description": "ccf4e74038998385__item-description",
-	"item-suffix": "bf553a7f6108e57a__item-suffix",
-	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
-	"item-trailing": "_0c196486b823d48b__item-trailing",
-	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
-	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
-};
-const ITEM_DESCRIPTION_DIRECT_CHILD$1 = Symbol();
-/**
-* Adds supporting text below a menu item label. Use it as a direct child
-* after `Menu.ItemLabel`.
-*
-* Keep labels clear on their own. Add a brief description only for essential
-* context the label cannot convey. Avoid combining a description and a prefix
-* icon in the same item.
-*/
-const ItemDescription$1 = (0, import_element.forwardRef)(function MenuItemDescription(props, ref) {
-	const { className, id, validationToken, ...restProps } = props;
-	if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD$1) throw new Error("Menu.ItemDescription: Missing direct menu item parent. Render <Menu.ItemDescription> as a direct child of a menu item.");
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
-		ref,
-		variant: "body-sm",
-		...restProps,
-		id,
-		className: clsx(style_module_default$30["item-description"], className)
-	});
-});
-
-// packages/ui/build-module/menu/item-label.mjs
-const STYLE_HASH_ATTRIBUTE$39 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$39() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$39(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$39(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$39}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$39) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$39(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$39();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$39(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$39, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$39(targetDocument) {
-	const runtime = getRuntime$39();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$39(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$39(hash, css) {
-	const runtime = getRuntime$39();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$39(targetDocument, hash, css);
-}
-registerStyle$39("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
-var style_module_default$29 = {
-	"positioner": "_0d7a6f8f4c34457c__positioner",
-	"popup": "_0da3a4bb35470489__popup",
-	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
-	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
-	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
-	"list": "abaf9ed9a87a5372__list",
-	"group": "_5e3448a892d173e1__group",
-	"radio-group": "_3785cb9270b05b6a__radio-group",
-	"item": "b830290b73bc0114__item",
-	"item-prefix": "_25efda4e627b2ecc__item-prefix",
-	"group-label": "b7aec7c5d32889bd__group-label",
-	"separator": "dd2c56340325cbba__separator",
-	"item-content": "_2970c1730cad40f5__item-content",
-	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
-	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
-	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
-	"has-prefix": "_330cf40dd3a05350__has-prefix",
-	"item-descriptions": "_83ba90b140489b39__item-descriptions",
-	"item-label": "_023b6373e5ff4fcc__item-label",
-	"item-description": "ccf4e74038998385__item-description",
-	"item-suffix": "bf553a7f6108e57a__item-suffix",
-	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
-	"item-trailing": "_0c196486b823d48b__item-trailing",
-	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
-	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
-};
-/**
-* Renders the primary label within a menu item. Use it as the first direct
-* child of every item.
-*/
-const ItemLabel$1 = (0, import_element.forwardRef)(function MenuItemLabel({ children, className, id, ...props }, ref) {
-	const itemContentContext = useMenuItemContentContext();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Text$1, {
-		ref,
-		variant: "body-md",
-		...props,
-		id: id ?? itemContentContext?.labelId,
-		className: clsx(style_module_default$29["item-label"], className),
-		children: [children, itemContentContext?.labelTrailing]
-	});
-});
-
-// packages/ui/build-module/menu/item.mjs
-const STYLE_HASH_ATTRIBUTE$38 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$38() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$38(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$38(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$38}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$38) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$38(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$38();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$38(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$38, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$38(targetDocument) {
-	const runtime = getRuntime$38();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$38(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$38(hash, css) {
-	const runtime = getRuntime$38();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$38(targetDocument, hash, css);
-}
-registerStyle$38("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 var global_css_defense_module_default$10 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
@@ -17006,9 +17096,9 @@ var global_css_defense_module_default$10 = {
 	"li": "_3c72ff72abe57859__li",
 	"span": "_79d16267c15d9eb2__span"
 };
-registerStyle$38("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+registerStyle$41("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 var resets_module_default$12 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$38("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+registerStyle$41("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
 var style_module_default$28 = {
 	"positioner": "_0d7a6f8f4c34457c__positioner",
 	"popup": "_0da3a4bb35470489__popup",
@@ -17111,7 +17201,7 @@ function ItemContent({ children, prefix, shortcut, shortcutDescriptionId, suffix
 /**
 * Renders an individual menu item.
 */
-const Item$1 = (0, import_element.forwardRef)(function MenuItem$1({ children, className, prefix, shortcut, suffix, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...props }, ref) {
+const Item$2 = (0, import_element.forwardRef)(function MenuItem$1({ children, className, prefix, shortcut, suffix, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...props }, ref) {
 	const { contentChildren, contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
 		"aria-describedby": ariaDescribedBy,
 		"aria-keyshortcuts": ariaKeyShortcuts,
@@ -17138,6 +17228,514 @@ const Item$1 = (0, import_element.forwardRef)(function MenuItem$1({ children, cl
 });
 
 // packages/ui/build-module/menu/group.mjs
+const STYLE_HASH_ATTRIBUTE$40 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$40() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$40(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$40(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$40}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$40) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$40(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$40();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$40(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$40, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$40(targetDocument) {
+	const runtime = getRuntime$40();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$40(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$40(hash, css) {
+	const runtime = getRuntime$40();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$40(targetDocument, hash, css);
+}
+registerStyle$40("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+var style_module_default$27 = {
+	"positioner": "_0d7a6f8f4c34457c__positioner",
+	"popup": "_0da3a4bb35470489__popup",
+	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
+	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
+	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
+	"list": "abaf9ed9a87a5372__list",
+	"group": "_5e3448a892d173e1__group",
+	"radio-group": "_3785cb9270b05b6a__radio-group",
+	"item": "b830290b73bc0114__item",
+	"item-prefix": "_25efda4e627b2ecc__item-prefix",
+	"group-label": "b7aec7c5d32889bd__group-label",
+	"separator": "dd2c56340325cbba__separator",
+	"item-content": "_2970c1730cad40f5__item-content",
+	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
+	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
+	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
+	"has-prefix": "_330cf40dd3a05350__has-prefix",
+	"item-descriptions": "_83ba90b140489b39__item-descriptions",
+	"item-label": "_023b6373e5ff4fcc__item-label",
+	"item-description": "ccf4e74038998385__item-description",
+	"item-suffix": "bf553a7f6108e57a__item-suffix",
+	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
+	"item-trailing": "_0c196486b823d48b__item-trailing",
+	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
+	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+};
+/**
+* Groups related menu items with a corresponding label.
+*
+* Use `Menu.RadioGroup` instead for radio items. Do not nest `Menu.Group` and
+* `Menu.RadioGroup` within each other in the same menu. They can be siblings.
+*/
+const Group$1 = (0, import_element.forwardRef)(function MenuGroup$1({ className, ...props }, ref) {
+	if (useMenuGroupContext() === "radio-group") throw new Error("Menu.Group: Cannot be nested inside Menu.RadioGroup. Remove Menu.Group and put Menu.GroupLabel and Menu.RadioItem directly inside Menu.RadioGroup.");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroupContext.Provider, {
+		value: "group",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroup, {
+			ref,
+			className: clsx(style_module_default$27.group, className),
+			...props
+		})
+	});
+});
+
+// packages/ui/build-module/utils/render-slot-with-children.mjs
+/**
+* Fills an optional "slot" element prop with content by cloning it and
+* injecting the given `children`. When `slot` is undefined, the provided
+* `defaultSlot` is used in its place.
+*
+* Shared by overlay `Popup` components for their slot-shaped customization
+* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
+* children injection — stays consistent across all of them.
+*
+* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
+* any subtree passed on the slot element is overwritten by `children`.
+*
+* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
+*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
+*                    is used. Injected `children` replace any subtree the caller
+*                    may have passed on the slot element.
+* @param defaultSlot Unpopulated default element used when `slot` is omitted
+*                    (e.g. `<Tooltip.Portal />`).
+* @param children    Content to inject as the slot's children (backdrop,
+*                    positioner, popup subtree, etc.).
+*/
+function renderSlotWithChildren(slot, defaultSlot, children) {
+	return (0, import_element.cloneElement)(slot ?? defaultSlot, { children });
+}
+
+// packages/ui/build-module/utils/css/item-popup.mjs
+const STYLE_HASH_ATTRIBUTE$39 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$39() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$39(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$39(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$39}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$39) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$39(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$39();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$39(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$39, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$39(targetDocument) {
+	const runtime = getRuntime$39();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$39(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$39(hash, css) {
+	const runtime = getRuntime$39();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$39(targetDocument, hash, css);
+}
+registerStyle$39("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$8 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
+};
+function getItemPopupWidthClassName(width = "anchor") {
+	switch (width) {
+		case "available": return item_popup_module_default$8["is-width-available"];
+		case "content": return item_popup_module_default$8["is-width-content"];
+		case "lg": return item_popup_module_default$8["is-width-lg"];
+		case "md": return item_popup_module_default$8["is-width-md"];
+		case "sm": return item_popup_module_default$8["is-width-sm"];
+		case "anchor": return item_popup_module_default$8["is-width-anchor"];
+		default: return false;
+	}
+}
+
+// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+const STYLE_HASH_ATTRIBUTE$38 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$38() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$38(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$38(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$38}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$38) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$38(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$38();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$38(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$38, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$38(targetDocument) {
+	const runtime = getRuntime$38();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$38(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$38(hash, css) {
+	const runtime = getRuntime$38();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$38(targetDocument, hash, css);
+}
+registerStyle$38("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
+var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
+/**
+* Marker attribute on the compat overlay slot element.
+*/
+const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+function resolveOwnerDocument() {
+	return typeof document === "undefined" ? null : document;
+}
+function isInWordPressEnvironment() {
+	let topWp;
+	try {
+		topWp = window.top?.wp;
+	} catch {}
+	const wp = topWp ?? window.wp;
+	return typeof wp?.components === "object" && wp.components !== null;
+}
+let cachedSlot = null;
+function ensureSlotIsAccessible(element) {
+	element.setAttribute("aria-hidden", "false");
+	return element;
+}
+function createSlot(ownerDocument) {
+	const element = ownerDocument.createElement("div");
+	element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+	if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
+	ownerDocument.body.appendChild(element);
+	return element;
+}
+/**
+* Returns the body-level compat overlay slot when the runtime opts in,
+* lazily creating it on first call. Returns `undefined` otherwise — so the
+* return value can be forwarded straight to a `container` prop, leaving the
+* default portal container in effect.
+*
+* Two opt-in paths:
+*
+* - Auto-detected when `window.wp.components` is on the global — the
+*   typical script-loader setup for WordPress plugins and admin screens.
+* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
+*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
+*   relying on the global.
+*
+* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
+* local document's body. Subsequent calls return the same element; if it's
+* been removed it's recreated, and a slot created by another
+* `@wordpress/ui` instance in the same document is adopted rather than
+* duplicated.
+*/
+function getWpCompatOverlaySlot() {
+	if (typeof window === "undefined") return;
+	if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
+	const ownerDocument = resolveOwnerDocument();
+	if (!ownerDocument || !ownerDocument.body) return;
+	if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
+	const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
+	if (existing instanceof HTMLDivElement) {
+		cachedSlot = ensureSlotIsAccessible(existing);
+		return cachedSlot;
+	}
+	if (cachedSlot?.isConnected) cachedSlot.remove();
+	cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
+	return cachedSlot;
+}
+
+// packages/ui/build-module/menu/portal.mjs
+/**
+* Portals the menu popup to the document body by default.
+*/
+const Portal$2 = (0, import_element.forwardRef)(function MenuPortal$1({ container, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuPortal, {
+		ref,
+		container: container === void 0 ? getWpCompatOverlaySlot() : container,
+		...props
+	});
+});
+
+// packages/ui/build-module/form/primitives/constants.mjs
+/**
+* Shared positioning defaults for item-list popups, e.g. Select, Combobox,
+* or Autocomplete.
+*/
+const ITEM_POPUP_POSITIONER_PROPS = {
+	align: "start",
+	sideOffset: 8,
+	collisionPadding: 12
+};
+
+// packages/ui/build-module/menu/positioner.mjs
+var import_compose = require_compose();
 const STYLE_HASH_ATTRIBUTE$37 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -17239,517 +17837,9 @@ function registerStyle$37(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$37(targetDocument, hash, css);
 }
-registerStyle$37("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
-var style_module_default$27 = {
-	"positioner": "_0d7a6f8f4c34457c__positioner",
-	"popup": "_0da3a4bb35470489__popup",
-	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
-	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
-	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
-	"list": "abaf9ed9a87a5372__list",
-	"group": "_5e3448a892d173e1__group",
-	"radio-group": "_3785cb9270b05b6a__radio-group",
-	"item": "b830290b73bc0114__item",
-	"item-prefix": "_25efda4e627b2ecc__item-prefix",
-	"group-label": "b7aec7c5d32889bd__group-label",
-	"separator": "dd2c56340325cbba__separator",
-	"item-content": "_2970c1730cad40f5__item-content",
-	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
-	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
-	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
-	"has-prefix": "_330cf40dd3a05350__has-prefix",
-	"item-descriptions": "_83ba90b140489b39__item-descriptions",
-	"item-label": "_023b6373e5ff4fcc__item-label",
-	"item-description": "ccf4e74038998385__item-description",
-	"item-suffix": "bf553a7f6108e57a__item-suffix",
-	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
-	"item-trailing": "_0c196486b823d48b__item-trailing",
-	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
-	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
-};
-/**
-* Groups related menu items with a corresponding label.
-*
-* Use `Menu.RadioGroup` instead for radio items. Do not nest `Menu.Group` and
-* `Menu.RadioGroup` within each other in the same menu. They can be siblings.
-*/
-const Group = (0, import_element.forwardRef)(function MenuGroup$1({ className, ...props }, ref) {
-	if (useMenuGroupContext() === "radio-group") throw new Error("Menu.Group: Cannot be nested inside Menu.RadioGroup. Remove Menu.Group and put Menu.GroupLabel and Menu.RadioItem directly inside Menu.RadioGroup.");
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroupContext.Provider, {
-		value: "group",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroup, {
-			ref,
-			className: clsx(style_module_default$27.group, className),
-			...props
-		})
-	});
-});
-
-// packages/ui/build-module/utils/render-slot-with-children.mjs
-/**
-* Fills an optional "slot" element prop with content by cloning it and
-* injecting the given `children`. When `slot` is undefined, the provided
-* `defaultSlot` is used in its place.
-*
-* Shared by overlay `Popup` components for their slot-shaped customization
-* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
-* children injection — stays consistent across all of them.
-*
-* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
-* any subtree passed on the slot element is overwritten by `children`.
-*
-* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
-*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
-*                    is used. Injected `children` replace any subtree the caller
-*                    may have passed on the slot element.
-* @param defaultSlot Unpopulated default element used when `slot` is omitted
-*                    (e.g. `<Tooltip.Portal />`).
-* @param children    Content to inject as the slot's children (backdrop,
-*                    positioner, popup subtree, etc.).
-*/
-function renderSlotWithChildren(slot, defaultSlot, children) {
-	return (0, import_element.cloneElement)(slot ?? defaultSlot, { children });
-}
-
-// packages/ui/build-module/utils/css/item-popup.mjs
-const STYLE_HASH_ATTRIBUTE$36 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$36() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$36(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$36(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$36}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$36) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$36(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$36();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$36(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$36, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$36(targetDocument) {
-	const runtime = getRuntime$36();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$36(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$36(hash, css) {
-	const runtime = getRuntime$36();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$36(targetDocument, hash, css);
-}
-registerStyle$36("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
-var item_popup_module_default$5 = {
-	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
-	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
-	"is-width-content": "_8f1224a085e41ee8__is-width-content",
-	"is-width-available": "_80926ed7e7d54be0__is-width-available",
-	"is-width-sm": "d08be1bfb7489969__is-width-sm",
-	"is-width-md": "b38610fddbff3473__is-width-md",
-	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
-	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
-	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
-	"list-chrome": "_750bf16b8304f204__list-chrome",
-	"item-icon": "d786737b2e57c2d3__item-icon",
-	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
-	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
-	"list-footer": "_759a12af5db7a8dd__list-footer",
-	"group": "_74a6a24cc319fdba__group",
-	"group-label": "_09632da7090fc022__group-label",
-	"separator": "d9a1c5812534c804__separator",
-	"item": "bbed87bc28f61ead__item",
-	"is-size-small": "_2426aa84de39c4dd__is-size-small",
-	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
-	"item-content": "_6fc483b6919abf79__item-content",
-	"item-text": "_583f0728d87c5db1__item-text",
-	"item-label": "aa96b6c7fcb20ae8__item-label",
-	"item-description": "_26fffe8e4119e36e__item-description",
-	"status": "_7738d24c2d5904c5__status",
-	"empty": "bb720e36b47aa491__empty"
-};
-function getItemPopupWidthClassName(width = "anchor") {
-	switch (width) {
-		case "available": return item_popup_module_default$5["is-width-available"];
-		case "content": return item_popup_module_default$5["is-width-content"];
-		case "lg": return item_popup_module_default$5["is-width-lg"];
-		case "md": return item_popup_module_default$5["is-width-md"];
-		case "sm": return item_popup_module_default$5["is-width-sm"];
-		case "anchor": return item_popup_module_default$5["is-width-anchor"];
-		default: return false;
-	}
-}
-
-// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
-const STYLE_HASH_ATTRIBUTE$35 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$35() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$35(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$35(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$35}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$35) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$35(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$35();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$35(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$35, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$35(targetDocument) {
-	const runtime = getRuntime$35();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$35(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$35(hash, css) {
-	const runtime = getRuntime$35();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$35(targetDocument, hash, css);
-}
-registerStyle$35("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
-var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
-/**
-* Marker attribute on the compat overlay slot element.
-*/
-const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-function resolveOwnerDocument() {
-	return typeof document === "undefined" ? null : document;
-}
-function isInWordPressEnvironment() {
-	let topWp;
-	try {
-		topWp = window.top?.wp;
-	} catch {}
-	const wp = topWp ?? window.wp;
-	return typeof wp?.components === "object" && wp.components !== null;
-}
-let cachedSlot = null;
-function ensureSlotIsAccessible(element) {
-	element.setAttribute("aria-hidden", "false");
-	return element;
-}
-function createSlot(ownerDocument) {
-	const element = ownerDocument.createElement("div");
-	element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-	if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
-	ownerDocument.body.appendChild(element);
-	return element;
-}
-/**
-* Returns the body-level compat overlay slot when the runtime opts in,
-* lazily creating it on first call. Returns `undefined` otherwise — so the
-* return value can be forwarded straight to a `container` prop, leaving the
-* default portal container in effect.
-*
-* Two opt-in paths:
-*
-* - Auto-detected when `window.wp.components` is on the global — the
-*   typical script-loader setup for WordPress plugins and admin screens.
-* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
-*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
-*   relying on the global.
-*
-* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
-* local document's body. Subsequent calls return the same element; if it's
-* been removed it's recreated, and a slot created by another
-* `@wordpress/ui` instance in the same document is adopted rather than
-* duplicated.
-*/
-function getWpCompatOverlaySlot() {
-	if (typeof window === "undefined") return;
-	if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
-	const ownerDocument = resolveOwnerDocument();
-	if (!ownerDocument || !ownerDocument.body) return;
-	if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
-	const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
-	if (existing instanceof HTMLDivElement) {
-		cachedSlot = ensureSlotIsAccessible(existing);
-		return cachedSlot;
-	}
-	if (cachedSlot?.isConnected) cachedSlot.remove();
-	cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
-	return cachedSlot;
-}
-
-// packages/ui/build-module/menu/portal.mjs
-/**
-* Portals the menu popup to the document body by default.
-*/
-const Portal$2 = (0, import_element.forwardRef)(function MenuPortal$1({ container, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuPortal, {
-		ref,
-		container: container === void 0 ? getWpCompatOverlaySlot() : container,
-		...props
-	});
-});
-
-// packages/ui/build-module/form/primitives/constants.mjs
-/**
-* Shared positioning defaults for item-list popups, e.g. Select, Combobox,
-* or Autocomplete.
-*/
-const ITEM_POPUP_POSITIONER_PROPS = {
-	align: "start",
-	sideOffset: 8,
-	collisionPadding: 12
-};
-
-// packages/ui/build-module/menu/positioner.mjs
-var import_compose = require_compose();
-const STYLE_HASH_ATTRIBUTE$34 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$34() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$34(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$34(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$34}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$34) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$34(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$34();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$34(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$34, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$34(targetDocument) {
-	const runtime = getRuntime$34();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$34(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$34(hash, css) {
-	const runtime = getRuntime$34();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$34(targetDocument, hash, css);
-}
-registerStyle$34("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+registerStyle$37("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 var resets_module_default$11 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$34("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+registerStyle$37("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
 var style_module_default$26 = {
 	"positioner": "_0d7a6f8f4c34457c__positioner",
 	"popup": "_0da3a4bb35470489__popup",
@@ -17861,6 +17951,458 @@ const Positioner$2 = (0, import_element.forwardRef)(function MenuPositioner$1({ 
 });
 
 // packages/ui/build-module/menu/popup.mjs
+const STYLE_HASH_ATTRIBUTE$36 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$36() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$36(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$36(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$36}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$36) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$36(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$36();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$36(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$36, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$36(targetDocument) {
+	const runtime = getRuntime$36();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$36(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$36(hash, css) {
+	const runtime = getRuntime$36();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$36(targetDocument, hash, css);
+}
+registerStyle$36("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+var style_module_default$25 = {
+	"positioner": "_0d7a6f8f4c34457c__positioner",
+	"popup": "_0da3a4bb35470489__popup",
+	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
+	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
+	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
+	"list": "abaf9ed9a87a5372__list",
+	"group": "_5e3448a892d173e1__group",
+	"radio-group": "_3785cb9270b05b6a__radio-group",
+	"item": "b830290b73bc0114__item",
+	"item-prefix": "_25efda4e627b2ecc__item-prefix",
+	"group-label": "b7aec7c5d32889bd__group-label",
+	"separator": "dd2c56340325cbba__separator",
+	"item-content": "_2970c1730cad40f5__item-content",
+	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
+	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
+	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
+	"has-prefix": "_330cf40dd3a05350__has-prefix",
+	"item-descriptions": "_83ba90b140489b39__item-descriptions",
+	"item-label": "_023b6373e5ff4fcc__item-label",
+	"item-description": "ccf4e74038998385__item-description",
+	"item-suffix": "bf553a7f6108e57a__item-suffix",
+	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
+	"item-trailing": "_0c196486b823d48b__item-trailing",
+	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
+	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+};
+/**
+* Renders the floating menu popup.
+*/
+const Popup$2 = (0, import_element.forwardRef)(function MenuPopup$1({ children, className, portal, positioner, width = "sm", ...props }, ref) {
+	const { isSubmenu } = useMenuContext();
+	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuPopup, {
+		ref,
+		className: clsx(style_module_default$25.popup, getItemPopupWidthClassName(width), isSubmenu ? style_module_default$25["is-submenu"] : style_module_default$25["is-root"], className),
+		...props,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: style_module_default$25.list,
+			children
+		})
+	});
+	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner$2, {}), popupContent);
+	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$2, {}), positionedPopup);
+});
+
+// packages/ui/build-module/menu/prefix-icon.mjs
+const STYLE_HASH_ATTRIBUTE$35 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$35() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$35(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$35(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$35}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$35) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$35(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$35();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$35(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$35, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$35(targetDocument) {
+	const runtime = getRuntime$35();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$35(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$35(hash, css) {
+	const runtime = getRuntime$35();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$35(targetDocument, hash, css);
+}
+registerStyle$35("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+var style_module_default$24 = {
+	"positioner": "_0d7a6f8f4c34457c__positioner",
+	"popup": "_0da3a4bb35470489__popup",
+	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
+	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
+	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
+	"list": "abaf9ed9a87a5372__list",
+	"group": "_5e3448a892d173e1__group",
+	"radio-group": "_3785cb9270b05b6a__radio-group",
+	"item": "b830290b73bc0114__item",
+	"item-prefix": "_25efda4e627b2ecc__item-prefix",
+	"group-label": "b7aec7c5d32889bd__group-label",
+	"separator": "dd2c56340325cbba__separator",
+	"item-content": "_2970c1730cad40f5__item-content",
+	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
+	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
+	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
+	"has-prefix": "_330cf40dd3a05350__has-prefix",
+	"item-descriptions": "_83ba90b140489b39__item-descriptions",
+	"item-label": "_023b6373e5ff4fcc__item-label",
+	"item-description": "ccf4e74038998385__item-description",
+	"item-suffix": "bf553a7f6108e57a__item-suffix",
+	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
+	"item-trailing": "_0c196486b823d48b__item-trailing",
+	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
+	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+};
+/**
+* Renders an icon before a menu item label. Keep the default 16px size for
+* consistency. Use familiar icons to help users recognize actions or give
+* a key action useful prominence.
+*
+* Prefer icons on every item in a group, or none. If only one item needs an
+* icon, reconsider its grouping. Prefer omitting it over adding unnecessary
+* icons to the other items. Mixed icon usage is supported.
+*
+* Make the action clear in its label. Avoid combining a prefix icon and a
+* description in the same item.
+*/
+const PrefixIcon = (0, import_element.forwardRef)(function MenuPrefixIcon({ className, size = 16, style, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
+		...props,
+		ref,
+		size,
+		className: clsx(style_module_default$24["prefix-icon"], className),
+		style: {
+			...style,
+			"--_wp-ui-menu-prefix-icon-size": `${size}px`
+		}
+	});
+});
+PrefixIcon.displayName = "Menu.PrefixIcon";
+
+// packages/ui/build-module/menu/radio-group.mjs
+const STYLE_HASH_ATTRIBUTE$34 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$34() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$34(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$34(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$34}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$34) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$34(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$34();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$34(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$34, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$34(targetDocument) {
+	const runtime = getRuntime$34();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$34(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$34(hash, css) {
+	const runtime = getRuntime$34();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$34(targetDocument, hash, css);
+}
+registerStyle$34("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+var style_module_default$23 = {
+	"positioner": "_0d7a6f8f4c34457c__positioner",
+	"popup": "_0da3a4bb35470489__popup",
+	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
+	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
+	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
+	"list": "abaf9ed9a87a5372__list",
+	"group": "_5e3448a892d173e1__group",
+	"radio-group": "_3785cb9270b05b6a__radio-group",
+	"item": "b830290b73bc0114__item",
+	"item-prefix": "_25efda4e627b2ecc__item-prefix",
+	"group-label": "b7aec7c5d32889bd__group-label",
+	"separator": "dd2c56340325cbba__separator",
+	"item-content": "_2970c1730cad40f5__item-content",
+	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
+	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
+	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
+	"has-prefix": "_330cf40dd3a05350__has-prefix",
+	"item-descriptions": "_83ba90b140489b39__item-descriptions",
+	"item-label": "_023b6373e5ff4fcc__item-label",
+	"item-description": "ccf4e74038998385__item-description",
+	"item-suffix": "bf553a7f6108e57a__item-suffix",
+	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
+	"item-trailing": "_0c196486b823d48b__item-trailing",
+	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
+	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+};
+/**
+* Groups related radio menu items.
+*
+* Put `Menu.GroupLabel` inside this component to label the radio group.
+* Do not wrap it in `Menu.Group` or put `Menu.Group` inside it.
+*/
+const RadioGroup$1 = (0, import_element.forwardRef)(function MenuRadioGroup$1({ className, ...props }, ref) {
+	if (useMenuGroupContext() === "group") throw new Error("Menu.RadioGroup: Cannot be nested inside Menu.Group. Move Menu.RadioGroup outside Menu.Group and put its Menu.GroupLabel inside Menu.RadioGroup.");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroupContext.Provider, {
+		value: "radio-group",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuRadioGroup, {
+			ref,
+			className: clsx(style_module_default$23["radio-group"], className),
+			...props
+		})
+	});
+});
+
+// packages/ui/build-module/menu/radio-item.mjs
 const STYLE_HASH_ATTRIBUTE$33 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -17962,459 +18504,7 @@ function registerStyle$33(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$33(targetDocument, hash, css);
 }
-registerStyle$33("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
-var style_module_default$25 = {
-	"positioner": "_0d7a6f8f4c34457c__positioner",
-	"popup": "_0da3a4bb35470489__popup",
-	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
-	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
-	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
-	"list": "abaf9ed9a87a5372__list",
-	"group": "_5e3448a892d173e1__group",
-	"radio-group": "_3785cb9270b05b6a__radio-group",
-	"item": "b830290b73bc0114__item",
-	"item-prefix": "_25efda4e627b2ecc__item-prefix",
-	"group-label": "b7aec7c5d32889bd__group-label",
-	"separator": "dd2c56340325cbba__separator",
-	"item-content": "_2970c1730cad40f5__item-content",
-	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
-	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
-	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
-	"has-prefix": "_330cf40dd3a05350__has-prefix",
-	"item-descriptions": "_83ba90b140489b39__item-descriptions",
-	"item-label": "_023b6373e5ff4fcc__item-label",
-	"item-description": "ccf4e74038998385__item-description",
-	"item-suffix": "bf553a7f6108e57a__item-suffix",
-	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
-	"item-trailing": "_0c196486b823d48b__item-trailing",
-	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
-	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
-};
-/**
-* Renders the floating menu popup.
-*/
-const Popup$2 = (0, import_element.forwardRef)(function MenuPopup$1({ children, className, portal, positioner, width = "sm", ...props }, ref) {
-	const { isSubmenu } = useMenuContext();
-	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuPopup, {
-		ref,
-		className: clsx(style_module_default$25.popup, getItemPopupWidthClassName(width), isSubmenu ? style_module_default$25["is-submenu"] : style_module_default$25["is-root"], className),
-		...props,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: style_module_default$25.list,
-			children
-		})
-	});
-	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner$2, {}), popupContent);
-	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$2, {}), positionedPopup);
-});
-
-// packages/ui/build-module/menu/prefix-icon.mjs
-const STYLE_HASH_ATTRIBUTE$32 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$32() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$32(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$32(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$32}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$32) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$32(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$32();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$32(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$32, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$32(targetDocument) {
-	const runtime = getRuntime$32();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$32(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$32(hash, css) {
-	const runtime = getRuntime$32();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$32(targetDocument, hash, css);
-}
-registerStyle$32("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
-var style_module_default$24 = {
-	"positioner": "_0d7a6f8f4c34457c__positioner",
-	"popup": "_0da3a4bb35470489__popup",
-	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
-	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
-	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
-	"list": "abaf9ed9a87a5372__list",
-	"group": "_5e3448a892d173e1__group",
-	"radio-group": "_3785cb9270b05b6a__radio-group",
-	"item": "b830290b73bc0114__item",
-	"item-prefix": "_25efda4e627b2ecc__item-prefix",
-	"group-label": "b7aec7c5d32889bd__group-label",
-	"separator": "dd2c56340325cbba__separator",
-	"item-content": "_2970c1730cad40f5__item-content",
-	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
-	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
-	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
-	"has-prefix": "_330cf40dd3a05350__has-prefix",
-	"item-descriptions": "_83ba90b140489b39__item-descriptions",
-	"item-label": "_023b6373e5ff4fcc__item-label",
-	"item-description": "ccf4e74038998385__item-description",
-	"item-suffix": "bf553a7f6108e57a__item-suffix",
-	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
-	"item-trailing": "_0c196486b823d48b__item-trailing",
-	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
-	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
-};
-/**
-* Renders an icon before a menu item label. Keep the default 16px size for
-* consistency. Use familiar icons to help users recognize actions or give
-* a key action useful prominence.
-*
-* Prefer icons on every item in a group, or none. If only one item needs an
-* icon, reconsider its grouping. Prefer omitting it over adding unnecessary
-* icons to the other items. Mixed icon usage is supported.
-*
-* Make the action clear in its label. Avoid combining a prefix icon and a
-* description in the same item.
-*/
-const PrefixIcon = (0, import_element.forwardRef)(function MenuPrefixIcon({ className, size = 16, style, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
-		...props,
-		ref,
-		size,
-		className: clsx(style_module_default$24["prefix-icon"], className),
-		style: {
-			...style,
-			"--_wp-ui-menu-prefix-icon-size": `${size}px`
-		}
-	});
-});
-PrefixIcon.displayName = "Menu.PrefixIcon";
-
-// packages/ui/build-module/menu/radio-group.mjs
-const STYLE_HASH_ATTRIBUTE$31 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$31() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$31(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$31(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$31}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$31) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$31(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$31();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$31(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$31, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$31(targetDocument) {
-	const runtime = getRuntime$31();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$31(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$31(hash, css) {
-	const runtime = getRuntime$31();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$31(targetDocument, hash, css);
-}
-registerStyle$31("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
-var style_module_default$23 = {
-	"positioner": "_0d7a6f8f4c34457c__positioner",
-	"popup": "_0da3a4bb35470489__popup",
-	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
-	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
-	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
-	"list": "abaf9ed9a87a5372__list",
-	"group": "_5e3448a892d173e1__group",
-	"radio-group": "_3785cb9270b05b6a__radio-group",
-	"item": "b830290b73bc0114__item",
-	"item-prefix": "_25efda4e627b2ecc__item-prefix",
-	"group-label": "b7aec7c5d32889bd__group-label",
-	"separator": "dd2c56340325cbba__separator",
-	"item-content": "_2970c1730cad40f5__item-content",
-	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
-	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
-	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
-	"has-prefix": "_330cf40dd3a05350__has-prefix",
-	"item-descriptions": "_83ba90b140489b39__item-descriptions",
-	"item-label": "_023b6373e5ff4fcc__item-label",
-	"item-description": "ccf4e74038998385__item-description",
-	"item-suffix": "bf553a7f6108e57a__item-suffix",
-	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
-	"item-trailing": "_0c196486b823d48b__item-trailing",
-	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
-	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
-};
-/**
-* Groups related radio menu items.
-*
-* Put `Menu.GroupLabel` inside this component to label the radio group.
-* Do not wrap it in `Menu.Group` or put `Menu.Group` inside it.
-*/
-const RadioGroup$1 = (0, import_element.forwardRef)(function MenuRadioGroup$1({ className, ...props }, ref) {
-	if (useMenuGroupContext() === "group") throw new Error("Menu.RadioGroup: Cannot be nested inside Menu.Group. Move Menu.RadioGroup outside Menu.Group and put its Menu.GroupLabel inside Menu.RadioGroup.");
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroupContext.Provider, {
-		value: "radio-group",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuRadioGroup, {
-			ref,
-			className: clsx(style_module_default$23["radio-group"], className),
-			...props
-		})
-	});
-});
-
-// packages/ui/build-module/menu/radio-item.mjs
-const STYLE_HASH_ATTRIBUTE$30 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$30() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$30(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$30(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$30}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$30) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$30(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$30();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$30(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$30, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$30(targetDocument) {
-	const runtime = getRuntime$30();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$30(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$30(hash, css) {
-	const runtime = getRuntime$30();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$30(targetDocument, hash, css);
-}
-registerStyle$30("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+registerStyle$33("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 var global_css_defense_module_default$9 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
@@ -18427,9 +18517,9 @@ var global_css_defense_module_default$9 = {
 	"li": "_3c72ff72abe57859__li",
 	"span": "_79d16267c15d9eb2__span"
 };
-registerStyle$30("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+registerStyle$33("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 var resets_module_default$10 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$30("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+registerStyle$33("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
 var style_module_default$22 = {
 	"positioner": "_0d7a6f8f4c34457c__positioner",
 	"popup": "_0da3a4bb35470489__popup",
@@ -18680,6 +18770,512 @@ function Root$5(props) {
 }
 
 // packages/ui/build-module/menu/separator.mjs
+const STYLE_HASH_ATTRIBUTE$32 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$32() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$32(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$32(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$32}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$32) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$32(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$32();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$32(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$32, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$32(targetDocument) {
+	const runtime = getRuntime$32();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$32(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$32(hash, css) {
+	const runtime = getRuntime$32();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$32(targetDocument, hash, css);
+}
+registerStyle$32("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+var style_module_default$21 = {
+	"positioner": "_0d7a6f8f4c34457c__positioner",
+	"popup": "_0da3a4bb35470489__popup",
+	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
+	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
+	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
+	"list": "abaf9ed9a87a5372__list",
+	"group": "_5e3448a892d173e1__group",
+	"radio-group": "_3785cb9270b05b6a__radio-group",
+	"item": "b830290b73bc0114__item",
+	"item-prefix": "_25efda4e627b2ecc__item-prefix",
+	"group-label": "b7aec7c5d32889bd__group-label",
+	"separator": "dd2c56340325cbba__separator",
+	"item-content": "_2970c1730cad40f5__item-content",
+	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
+	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
+	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
+	"has-prefix": "_330cf40dd3a05350__has-prefix",
+	"item-descriptions": "_83ba90b140489b39__item-descriptions",
+	"item-label": "_023b6373e5ff4fcc__item-label",
+	"item-description": "ccf4e74038998385__item-description",
+	"item-suffix": "bf553a7f6108e57a__item-suffix",
+	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
+	"item-trailing": "_0c196486b823d48b__item-trailing",
+	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
+	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+};
+/**
+* Renders a visual and semantic separator between menu items.
+*/
+const Separator$1 = (0, import_element.forwardRef)(function MenuSeparator({ className, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator$2, {
+		ref,
+		className: clsx(style_module_default$21.separator, className),
+		...props
+	});
+});
+
+// packages/ui/build-module/menu/submenu-root.mjs
+/**
+* Groups all parts of a nested submenu.
+*/
+function SubmenuRoot(props) {
+	const submenuTriggerRef = (0, import_element.useRef)(null);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuContext.Provider, {
+		value: {
+			isSubmenu: true,
+			submenuTriggerRef
+		},
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroupContext.Provider, {
+			value: null,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuSubmenuRoot, { ...props })
+		})
+	});
+}
+
+// packages/ui/build-module/menu/submenu-trigger.mjs
+const STYLE_HASH_ATTRIBUTE$31 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$31() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$31(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$31(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$31}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$31) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$31(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$31();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$31(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$31, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$31(targetDocument) {
+	const runtime = getRuntime$31();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$31(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$31(hash, css) {
+	const runtime = getRuntime$31();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$31(targetDocument, hash, css);
+}
+registerStyle$31("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$8 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+registerStyle$31("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$9 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$31("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
+var style_module_default$20 = {
+	"positioner": "_0d7a6f8f4c34457c__positioner",
+	"popup": "_0da3a4bb35470489__popup",
+	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
+	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
+	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
+	"list": "abaf9ed9a87a5372__list",
+	"group": "_5e3448a892d173e1__group",
+	"radio-group": "_3785cb9270b05b6a__radio-group",
+	"item": "b830290b73bc0114__item",
+	"item-prefix": "_25efda4e627b2ecc__item-prefix",
+	"group-label": "b7aec7c5d32889bd__group-label",
+	"separator": "dd2c56340325cbba__separator",
+	"item-content": "_2970c1730cad40f5__item-content",
+	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
+	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
+	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
+	"has-prefix": "_330cf40dd3a05350__has-prefix",
+	"item-descriptions": "_83ba90b140489b39__item-descriptions",
+	"item-label": "_023b6373e5ff4fcc__item-label",
+	"item-description": "ccf4e74038998385__item-description",
+	"item-suffix": "bf553a7f6108e57a__item-suffix",
+	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
+	"item-trailing": "_0c196486b823d48b__item-trailing",
+	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
+	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+};
+/**
+* Renders a menu item that opens a submenu.
+*/
+const SubmenuTrigger = (0, import_element.forwardRef)(function MenuSubmenuTrigger$1({ children, className, prefix, shortcut, suffix, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...props }, ref) {
+	const { submenuTriggerRef } = useMenuContext();
+	const mergedRef = (0, import_compose.useMergeRefs)([ref, submenuTriggerRef ?? null]);
+	const { contentChildren, contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
+		"aria-describedby": ariaDescribedBy,
+		"aria-keyshortcuts": ariaKeyShortcuts,
+		"aria-label": ariaLabel,
+		"aria-labelledby": ariaLabelledBy,
+		shortcut
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuSubmenuTrigger, {
+		ref: mergedRef,
+		...itemAriaProps,
+		className: clsx(global_css_defense_module_default$8.div, resets_module_default$9["box-sizing"], style_module_default$20.item, className),
+		...props,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuItemContentContext.Provider, {
+			value: contentContextValue,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemContent, {
+				prefix,
+				shortcut,
+				shortcutDescriptionId,
+				suffix,
+				trailing: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
+					className: style_module_default$20["submenu-chevron"],
+					icon: chevron_right_small_default,
+					size: 24,
+					"aria-hidden": "true"
+				}),
+				children: contentChildren
+			})
+		})
+	});
+});
+
+// packages/ui/build-module/menu/trigger.mjs
+/**
+* Renders the button that opens the menu.
+*/
+const Trigger$3 = (0, import_element.forwardRef)(function MenuTrigger$1(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuTrigger, {
+		ref,
+		...props
+	});
+});
+
+// packages/ui/build-module/tooltip/portal.mjs
+/**
+* Used to apply custom portal behavior to `Tooltip`'s floating content.
+* `container` defaults to the `@wordpress/ui` compat overlay slot.
+*/
+const Portal$1 = (0, import_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPortal, {
+		container: container === void 0 ? getWpCompatOverlaySlot() : container,
+		...restProps,
+		ref
+	});
+});
+
+// packages/ui/build-module/tooltip/positioner.mjs
+const STYLE_HASH_ATTRIBUTE$30 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$30() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$30(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$30(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$30}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$30) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$30(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$30();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$30(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$30, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$30(targetDocument) {
+	const runtime = getRuntime$30();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$30(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$30(hash, css) {
+	const runtime = getRuntime$30();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$30(targetDocument, hash, css);
+}
+registerStyle$30("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$8 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$30("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+var style_module_default$19 = {
+	"positioner": "b9266862d9435660__positioner",
+	"popup": "_7bb3fd8a0810be6d__popup"
+};
+/**
+* Used to apply custom positioning to `Tooltip`'s floating content.
+*/
+const Positioner$1 = (0, import_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPositioner, {
+		ref,
+		align,
+		side,
+		sideOffset,
+		...props,
+		className: clsx(resets_module_default$8["box-sizing"], style_module_default$19.positioner, className)
+	});
+});
+
+// \0wp-global:@wordpress/theme
+var require_theme = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.theme;
+}));
+
+// packages/ui/build-module/lock-unlock.mjs
+const { lock: lock$1, unlock: unlock$1 } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
+
+// packages/ui/build-module/utils/theme-provider.mjs
+var import_theme = /* @__PURE__ */ __toESM(require_theme(), 1);
+function getThemeProvider() {
+	const themePackage = import_theme;
+	if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
+	if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
+	return unlock$1(themePackage.privateApis).ThemeProvider;
+}
+const ThemeProvider = getThemeProvider();
+
+// packages/ui/build-module/tooltip/popup.mjs
 const STYLE_HASH_ATTRIBUTE$29 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -18781,64 +19377,53 @@ function registerStyle$29(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$29(targetDocument, hash, css);
 }
-registerStyle$29("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
-var style_module_default$21 = {
-	"positioner": "_0d7a6f8f4c34457c__positioner",
-	"popup": "_0da3a4bb35470489__popup",
-	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
-	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
-	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
-	"list": "abaf9ed9a87a5372__list",
-	"group": "_5e3448a892d173e1__group",
-	"radio-group": "_3785cb9270b05b6a__radio-group",
-	"item": "b830290b73bc0114__item",
-	"item-prefix": "_25efda4e627b2ecc__item-prefix",
-	"group-label": "b7aec7c5d32889bd__group-label",
-	"separator": "dd2c56340325cbba__separator",
-	"item-content": "_2970c1730cad40f5__item-content",
-	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
-	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
-	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
-	"has-prefix": "_330cf40dd3a05350__has-prefix",
-	"item-descriptions": "_83ba90b140489b39__item-descriptions",
-	"item-label": "_023b6373e5ff4fcc__item-label",
-	"item-description": "ccf4e74038998385__item-description",
-	"item-suffix": "bf553a7f6108e57a__item-suffix",
-	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
-	"item-trailing": "_0c196486b823d48b__item-trailing",
-	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
-	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
+registerStyle$29("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+var style_module_default$18 = {
+	"positioner": "b9266862d9435660__positioner",
+	"popup": "_7bb3fd8a0810be6d__popup"
 };
-/**
-* Renders a visual and semantic separator between menu items.
-*/
-const Separator = (0, import_element.forwardRef)(function MenuSeparator({ className, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator$1, {
+const POPUP_COLOR = { background: "#1e1e1e" };
+const Popup$1 = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
+	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeProvider, {
+		color: POPUP_COLOR,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPopup, {
+			ref,
+			className: clsx(style_module_default$18.popup, className),
+			...props,
+			children
+		})
+	});
+	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner$1, {}), popupContent);
+	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$1, {}), positionedPopup);
+});
+
+// packages/ui/build-module/tooltip/trigger.mjs
+const Trigger$2 = (0, import_element.forwardRef)(function TooltipTrigger$1(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipTrigger, {
 		ref,
-		className: clsx(style_module_default$21.separator, className),
 		...props
 	});
 });
 
-// packages/ui/build-module/menu/submenu-root.mjs
+// packages/ui/build-module/tooltip/root.mjs
 /**
-* Groups all parts of a nested submenu.
+* `Tooltip` is used to visually show the label of an icon button, or other such
+* interactive controls that don't have a visual text label.
+*
+* Tooltip popups are visual-only and not exposed to assistive technologies.
+* The trigger's accessible name (e.g. `aria-label`) is the source of truth
+* for screen reader users. Tooltips are not available on touch devices,
+* and thus should not be used for infotips, descriptions, or dynamic status
+* messages.
+*
+* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
+* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
 */
-function SubmenuRoot(props) {
-	const submenuTriggerRef = (0, import_element.useRef)(null);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuContext.Provider, {
-		value: {
-			isSubmenu: true,
-			submenuTriggerRef
-		},
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroupContext.Provider, {
-			value: null,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuSubmenuRoot, { ...props })
-		})
-	});
+function Root$4(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
 }
 
-// packages/ui/build-module/menu/submenu-trigger.mjs
+// packages/ui/build-module/link/link.mjs
 const STYLE_HASH_ATTRIBUTE$28 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -18940,8 +19525,28 @@ function registerStyle$28(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$28(targetDocument, hash, css);
 }
+registerStyle$28("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$7 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$28("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default$5 = {
+	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+};
+registerStyle$28("c87d91cdf7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a574f9f242212d58__link{--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);border-radius:var(--wpds-border-radius-sm,2px);text-decoration-thickness:from-font;text-underline-offset:.2em}._2d2f0506e717a46c__link-with-icon{text-decoration-line:none}._92b7b6a03fbb27ac__link-contents{text-decoration:inherit;text-decoration-line:underline}._69f40d9212adc58d__is-brand,._69f40d9212adc58d__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}._69f40d9212adc58d__is-brand:active,._69f40d9212adc58d__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._9a9c54c6e67b4c3c__is-neutral,._9a9c54c6e67b4c3c__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._9a9c54c6e67b4c3c__is-neutral:active,._9a9c54c6e67b4c3c__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._93be0b747897baad__is-unstyled{--_gcd-a-border-radius:0;--_gcd-a-color:inherit;color:inherit;text-decoration:none}._9c39df40fdc09594__link-icon{font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._9c39df40fdc09594__link-icon:after{content:\"\\2060\\2197\"}._9c39df40fdc09594__link-icon:dir(rtl):after{content:\"\\2060\\2196\"}}}");
+var style_module_default$17 = {
+	"link": "a574f9f242212d58__link",
+	"link-with-icon": "_2d2f0506e717a46c__link-with-icon",
+	"link-contents": "_92b7b6a03fbb27ac__link-contents",
+	"is-brand": "_69f40d9212adc58d__is-brand",
+	"is-neutral": "_9a9c54c6e67b4c3c__is-neutral",
+	"is-unstyled": "_93be0b747897baad__is-unstyled",
+	"link-icon": "_9c39df40fdc09594__link-icon"
+};
 registerStyle$28("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$8 = {
+var global_css_defense_module_default$7 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
 	"textarea": "_980b3b4776ac8f81__textarea",
@@ -18953,98 +19558,59 @@ var global_css_defense_module_default$8 = {
 	"li": "_3c72ff72abe57859__li",
 	"span": "_79d16267c15d9eb2__span"
 };
-registerStyle$28("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$9 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$28("a94bf24cf8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._0d7a6f8f4c34457c__positioner{z-index:var(--wp-ui-menu-z-index,initial)}._0da3a4bb35470489__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--_wp-ui-item-popup-max-width,var(--available-width));--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(.a145944c3c5c1072__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}.abaf9ed9a87a5372__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group,.abaf9ed9a87a5372__list{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._3785cb9270b05b6a__radio-group,._5e3448a892d173e1__group{grid-column:1/-1}._3785cb9270b05b6a__radio-group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),._5e3448a892d173e1__group:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix),.abaf9ed9a87a5372__list:has(>.b830290b73bc0114__item>._25efda4e627b2ecc__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}.b7aec7c5d32889bd__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.dd2c56340325cbba__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}.b830290b73bc0114__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&[data-highlighted]{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._25efda4e627b2ecc__item-prefix,._2970c1730cad40f5__item-content,.a145944c3c5c1072__item-selection-indicator{grid-row:1}.a145944c3c5c1072__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}._36f8b029df7bca9c__checkbox-selection-icon{translate:0 1px}._7e4fc60a729f7f34__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._25efda4e627b2ecc__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}._66a6ce38bf0fc0d0__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._2970c1730cad40f5__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._330cf40dd3a05350__has-prefix{grid-column:content-start/content-end}}._83ba90b140489b39__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._023b6373e5ff4fcc__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}.ccf4e74038998385__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._2970c1730cad40f5__item-content>.bf553a7f6108e57a__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{grid-column:shortcut-start/shortcut-end}._0c196486b823d48b__item-trailing,._2970c1730cad40f5__item-content>._98e3d60446e49eac__item-shortcut{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._0c196486b823d48b__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._023b6373e5ff4fcc__item-label+:is(.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}._98e3d60446e49eac__item-shortcut+._0c196486b823d48b__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._405e23970ca63747__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}._405e23970ca63747__submenu-chevron:dir(rtl){transform:rotate(180deg)}.e6c9d5696235cc3e__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}.e6c9d5696235cc3e__external-link-indicator:after{content:\"\\2197\"}.e6c9d5696235cc3e__external-link-indicator:dir(rtl):after{content:\"\\2196\"}.b830290b73bc0114__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) .a145944c3c5c1072__item-selection-indicator,.b830290b73bc0114__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(.ccf4e74038998385__item-description,.bf553a7f6108e57a__item-suffix,._98e3d60446e49eac__item-shortcut,._0c196486b823d48b__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}");
-var style_module_default$20 = {
-	"positioner": "_0d7a6f8f4c34457c__positioner",
-	"popup": "_0da3a4bb35470489__popup",
-	"item-selection-indicator": "a145944c3c5c1072__item-selection-indicator",
-	"is-root": "a1c910f48de7300d__is-root _069972d5e326bada__dropdown-motion",
-	"is-submenu": "_52d1d4cf8f66c8f5__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only",
-	"list": "abaf9ed9a87a5372__list",
-	"group": "_5e3448a892d173e1__group",
-	"radio-group": "_3785cb9270b05b6a__radio-group",
-	"item": "b830290b73bc0114__item",
-	"item-prefix": "_25efda4e627b2ecc__item-prefix",
-	"group-label": "b7aec7c5d32889bd__group-label",
-	"separator": "dd2c56340325cbba__separator",
-	"item-content": "_2970c1730cad40f5__item-content",
-	"checkbox-selection-icon": "_36f8b029df7bca9c__checkbox-selection-icon",
-	"radio-selection-icon": "_7e4fc60a729f7f34__radio-selection-icon",
-	"prefix-icon": "_66a6ce38bf0fc0d0__prefix-icon",
-	"has-prefix": "_330cf40dd3a05350__has-prefix",
-	"item-descriptions": "_83ba90b140489b39__item-descriptions",
-	"item-label": "_023b6373e5ff4fcc__item-label",
-	"item-description": "ccf4e74038998385__item-description",
-	"item-suffix": "bf553a7f6108e57a__item-suffix",
-	"item-shortcut": "_98e3d60446e49eac__item-shortcut",
-	"item-trailing": "_0c196486b823d48b__item-trailing",
-	"submenu-chevron": "_405e23970ca63747__submenu-chevron",
-	"external-link-indicator": "e6c9d5696235cc3e__external-link-indicator"
-};
 /**
-* Renders a menu item that opens a submenu.
+* A styled anchor element with support for semantic color tones and an
+* unstyled escape hatch.
+*
+* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
-const SubmenuTrigger = (0, import_element.forwardRef)(function MenuSubmenuTrigger$1({ children, className, prefix, shortcut, suffix, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...props }, ref) {
-	const { submenuTriggerRef } = useMenuContext();
-	const mergedRef = (0, import_compose.useMergeRefs)([ref, submenuTriggerRef ?? null]);
-	const { contentChildren, contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
-		"aria-describedby": ariaDescribedBy,
-		"aria-keyshortcuts": ariaKeyShortcuts,
-		"aria-label": ariaLabel,
-		"aria-labelledby": ariaLabelledBy,
-		shortcut
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuSubmenuTrigger, {
-		ref: mergedRef,
-		...itemAriaProps,
-		className: clsx(global_css_defense_module_default$8.div, resets_module_default$9["box-sizing"], style_module_default$20.item, className),
-		...props,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuItemContentContext.Provider, {
-			value: contentContextValue,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemContent, {
-				prefix,
-				shortcut,
-				shortcutDescriptionId,
-				suffix,
-				trailing: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
-					className: style_module_default$20["submenu-chevron"],
-					icon: chevron_right_small_default,
-					size: 24,
-					"aria-hidden": "true"
-				}),
-				children: contentChildren
-			})
+const Link$1 = (0, import_element.forwardRef)(function UnforwardedLink({ children, variant = "default", tone = "brand", openInNewTab = false, target, render, className, ...props }, ref) {
+	const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+	return useRender({
+		render,
+		defaultTagName: "a",
+		ref,
+		props: mergeProps$1(props, {
+			className: clsx(global_css_defense_module_default$7.a, resets_module_default$7["box-sizing"], focus_module_default$5["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$17.link, variant !== "unstyled" && shouldShowNewTabIndicator && style_module_default$17["link-with-icon"], variant !== "unstyled" && style_module_default$17[`is-${tone}`], variant === "unstyled" && style_module_default$17["is-unstyled"], className),
+			target: target ?? (openInNewTab ? "_blank" : void 0),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: style_module_default$17["link-contents"],
+				children
+			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: style_module_default$17["link-icon"],
+				role: "img",
+				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+			})] })
 		})
 	});
 });
 
-// packages/ui/build-module/menu/trigger.mjs
+// packages/react-inert-value/build-module/index.mjs
+const majorVersion = parseInt(import__wp_global_react.version, 10);
 /**
-* Renders the button that opens the menu.
+* Returns a value for the `inert` prop that the running version of React
+* renders as the `inert` HTML attribute.
+*
+* React 19 handles `inert` as a boolean attribute, while React 18 knows nothing
+* about `inert` and ignores `inert={ true }`, so it has to be given the string
+* `'true'` instead.
+*
+* The return type describes what React 19 types accept. React 18 doesn't support
+* `inert` HTML attribute at all, so a TypeScript call site still
+* needs a `@ts-expect-error` annotation.
+*
+* Inspired by the helper of the same name in the Base UI library.
+*
+* @param value Boolean value for the `inert` prop.
+* @return The actual value to pass to the `inert` prop.
 */
-const Trigger$2 = (0, import_element.forwardRef)(function MenuTrigger$1(props, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuTrigger, {
-		ref,
-		...props
-	});
-});
+function inertValue(value) {
+	if (majorVersion >= 19) return value;
+	return value ? "true" : void 0;
+}
 
-// packages/ui/build-module/tooltip/portal.mjs
-/**
-* Used to apply custom portal behavior to `Tooltip`'s floating content.
-* `container` defaults to the `@wordpress/ui` compat overlay slot.
-*/
-const Portal$1 = (0, import_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPortal, {
-		container: container === void 0 ? getWpCompatOverlaySlot() : container,
-		...restProps,
-		ref
-	});
-});
-
-// packages/ui/build-module/tooltip/positioner.mjs
+// packages/ui/build-module/stack/stack.mjs
 const STYLE_HASH_ATTRIBUTE$27 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -19146,46 +19712,40 @@ function registerStyle$27(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$27(targetDocument, hash, css);
 }
-registerStyle$27("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$8 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$27("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
-var style_module_default$19 = {
-	"positioner": "b9266862d9435660__positioner",
-	"popup": "_7bb3fd8a0810be6d__popup"
+registerStyle$27("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
+var style_module_default$16 = { "stack": "_8e8e79c1a2eec43b__stack" };
+const gapTokens = {
+	xs: "var(--wpds-dimension-gap-xs, 4px)",
+	sm: "var(--wpds-dimension-gap-sm, 8px)",
+	md: "var(--wpds-dimension-gap-md, 12px)",
+	lg: "var(--wpds-dimension-gap-lg, 16px)",
+	xl: "var(--wpds-dimension-gap-xl, 24px)",
+	"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+	"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 };
 /**
-* Used to apply custom positioning to `Tooltip`'s floating content.
+* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
+* Built on design tokens for predictable spacing values.
 */
-const Positioner$1 = (0, import_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPositioner, {
+const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+	const style = {
+		gap: gap && gapTokens[gap],
+		alignItems: align,
+		justifyContent: justify,
+		flexDirection: direction,
+		flexWrap: wrap
+	};
+	return useRender({
+		render,
 		ref,
-		align,
-		side,
-		sideOffset,
-		...props,
-		className: clsx(resets_module_default$8["box-sizing"], style_module_default$19.positioner, className)
+		props: mergeProps$1(props, {
+			style,
+			className: style_module_default$16.stack
+		})
 	});
 });
 
-// \0wp-global:@wordpress/theme
-var require_theme = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.theme;
-}));
-
-// packages/ui/build-module/lock-unlock.mjs
-const { lock: lock$1, unlock: unlock$1 } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
-
-// packages/ui/build-module/utils/theme-provider.mjs
-var import_theme = /* @__PURE__ */ __toESM(require_theme(), 1);
-function getThemeProvider() {
-	const themePackage = import_theme;
-	if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
-	if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
-	return unlock$1(themePackage.privateApis).ThemeProvider;
-}
-const ThemeProvider = getThemeProvider();
-
-// packages/ui/build-module/tooltip/popup.mjs
+// packages/ui/build-module/icon-button/icon-button.mjs
 const STYLE_HASH_ATTRIBUTE$26 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -19287,53 +19847,81 @@ function registerStyle$26(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$26(targetDocument, hash, css);
 }
-registerStyle$26("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
-var style_module_default$18 = {
-	"positioner": "b9266862d9435660__positioner",
-	"popup": "_7bb3fd8a0810be6d__popup"
+registerStyle$26("2a111665b3", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._7f5dbf30e44a43dd__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}._1b3c0d159ecbf3d5__icon{margin:-1px}}}");
+var style_module_default$15 = {
+	"icon-button": "_7f5dbf30e44a43dd__icon-button",
+	"icon": "_1b3c0d159ecbf3d5__icon"
 };
-const POPUP_COLOR = { background: "#1e1e1e" };
-const Popup$1 = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
-	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeProvider, {
-		color: POPUP_COLOR,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPopup, {
-			ref,
-			className: clsx(style_module_default$18.popup, className),
-			...props,
-			children
-		})
-	});
-	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner$1, {}), popupContent);
-	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$1, {}), positionedPopup);
-});
-
-// packages/ui/build-module/tooltip/trigger.mjs
-const Trigger$1 = (0, import_element.forwardRef)(function TooltipTrigger$1(props, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipTrigger, {
-		ref,
-		...props
-	});
-});
-
-// packages/ui/build-module/tooltip/root.mjs
 /**
-* `Tooltip` is used to visually show the label of an icon button, or other such
-* interactive controls that don't have a visual text label.
+* An icon-only button with automatic tooltip and optimized styling.
+* Inherits all Button props while providing icon-specific enhancements.
 *
-* Tooltip popups are visual-only and not exposed to assistive technologies.
-* The trigger's accessible name (e.g. `aria-label`) is the source of truth
-* for screen reader users. Tooltips are not available on touch devices,
-* and thus should not be used for infotips, descriptions, or dynamic status
-* messages.
+* When rendering a group of `IconButton`s, wrap them in a `Tooltip.Provider`
+* to coordinate tooltip delays across the group.
 *
-* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
-* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
+* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
-function Root$4(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
+const IconButton = (0, import_element.forwardRef)(function UnforwardedIconButton({ label, className, children: _children, disabled, focusableWhenDisabled = true, icon, size, shortcut, positioner, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, ...restProps }, ref) {
+	const classes = clsx(style_module_default$15["icon-button"], className);
+	const { descriptionId, targetProps } = useKeyboardShortcutProps({
+		"aria-describedby": ariaDescribedBy,
+		"aria-keyshortcuts": ariaKeyShortcuts,
+		shortcut
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger$2, {
+		ref,
+		...targetProps,
+		disabled: disabled && !focusableWhenDisabled,
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$14, {
+			...restProps,
+			size,
+			"aria-label": label,
+			disabled,
+			focusableWhenDisabled
+		}),
+		className: classes,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
+			icon,
+			size: 24,
+			className: style_module_default$15.icon
+		}), shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDescription, {
+			descriptionId,
+			shortcut
+		})]
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popup$1, {
+		positioner,
+		children: [label, shortcut && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [" ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDisplay, { shortcut })] })]
+	})] });
+});
+
+// packages/ui/build-module/utils/use-enable-wp-compat-overlay-slot.mjs
+/**
+* Opts the host application into the `@wordpress/ui` compat overlay slot —
+* a body-level container into which `@wordpress/ui` overlays portal so they
+* reliably stack above `@wordpress/components` overlays in mixed-library
+* compositions.
+*
+* Call once from a component that mounts for the lifetime of the app
+* (typically the root). Idempotent and one-way: a single caller should not
+* be able to turn off shared infrastructure for everyone else; if the slot
+* isn't wanted, simply don't call this hook.
+*
+* The opt-in applies to the whole window, including other React roots and
+* package copies, and remains enabled after the calling component unmounts.
+* Explicit portal containers still take precedence.
+*
+* Where `window.wp.components` is on the global — the typical setup for
+* plugins enqueueing `wp-components` through WordPress's script-loader —
+* the slot auto-enables and this hook is a no-op.
+*/
+function useEnableWpCompatOverlaySlot() {
+	if (typeof window === "undefined") return;
+	const internalWindow = window;
+	if (internalWindow.__wpUiCompatOverlaySlotEnabled !== true) internalWindow.__wpUiCompatOverlaySlotEnabled = true;
 }
 
-// packages/ui/build-module/link/link.mjs
+// packages/ui/build-module/badge/badge.mjs
 const STYLE_HASH_ATTRIBUTE$25 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -19435,505 +20023,7 @@ function registerStyle$25(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$25(targetDocument, hash, css);
 }
-registerStyle$25("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$7 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$25("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default$5 = {
-	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-};
-registerStyle$25("c87d91cdf7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a574f9f242212d58__link{--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);border-radius:var(--wpds-border-radius-sm,2px);text-decoration-thickness:from-font;text-underline-offset:.2em}._2d2f0506e717a46c__link-with-icon{text-decoration-line:none}._92b7b6a03fbb27ac__link-contents{text-decoration:inherit;text-decoration-line:underline}._69f40d9212adc58d__is-brand,._69f40d9212adc58d__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}._69f40d9212adc58d__is-brand:active,._69f40d9212adc58d__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._9a9c54c6e67b4c3c__is-neutral,._9a9c54c6e67b4c3c__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._9a9c54c6e67b4c3c__is-neutral:active,._9a9c54c6e67b4c3c__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._93be0b747897baad__is-unstyled{--_gcd-a-border-radius:0;--_gcd-a-color:inherit;color:inherit;text-decoration:none}._9c39df40fdc09594__link-icon{font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._9c39df40fdc09594__link-icon:after{content:\"\\2060\\2197\"}._9c39df40fdc09594__link-icon:dir(rtl):after{content:\"\\2060\\2196\"}}}");
-var style_module_default$17 = {
-	"link": "a574f9f242212d58__link",
-	"link-with-icon": "_2d2f0506e717a46c__link-with-icon",
-	"link-contents": "_92b7b6a03fbb27ac__link-contents",
-	"is-brand": "_69f40d9212adc58d__is-brand",
-	"is-neutral": "_9a9c54c6e67b4c3c__is-neutral",
-	"is-unstyled": "_93be0b747897baad__is-unstyled",
-	"link-icon": "_9c39df40fdc09594__link-icon"
-};
-registerStyle$25("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$7 = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
-};
-/**
-* A styled anchor element with support for semantic color tones and an
-* unstyled escape hatch.
-*
-* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
-*/
-const Link$1 = (0, import_element.forwardRef)(function UnforwardedLink({ children, variant = "default", tone = "brand", openInNewTab = false, target, render, className, ...props }, ref) {
-	const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
-	return useRender({
-		render,
-		defaultTagName: "a",
-		ref,
-		props: mergeProps$1(props, {
-			className: clsx(global_css_defense_module_default$7.a, resets_module_default$7["box-sizing"], focus_module_default$5["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$17.link, variant !== "unstyled" && shouldShowNewTabIndicator && style_module_default$17["link-with-icon"], variant !== "unstyled" && style_module_default$17[`is-${tone}`], variant === "unstyled" && style_module_default$17["is-unstyled"], className),
-			target: target ?? (openInNewTab ? "_blank" : void 0),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: style_module_default$17["link-contents"],
-				children
-			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: style_module_default$17["link-icon"],
-				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
-			})] })
-		})
-	});
-});
-
-// packages/react-inert-value/build-module/index.mjs
-const majorVersion = parseInt(import__wp_global_react.version, 10);
-/**
-* Returns a value for the `inert` prop that the running version of React
-* renders as the `inert` HTML attribute.
-*
-* React 19 handles `inert` as a boolean attribute, while React 18 knows nothing
-* about `inert` and ignores `inert={ true }`, so it has to be given the string
-* `'true'` instead.
-*
-* The return type describes what React 19 types accept. React 18 doesn't support
-* `inert` HTML attribute at all, so a TypeScript call site still
-* needs a `@ts-expect-error` annotation.
-*
-* Inspired by the helper of the same name in the Base UI library.
-*
-* @param value Boolean value for the `inert` prop.
-* @return The actual value to pass to the `inert` prop.
-*/
-function inertValue(value) {
-	if (majorVersion >= 19) return value;
-	return value ? "true" : void 0;
-}
-
-// packages/ui/build-module/stack/stack.mjs
-const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$24() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$24(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$24(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$24}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$24) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$24(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$24();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$24(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$24, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$24(targetDocument) {
-	const runtime = getRuntime$24();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$24(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$24(hash, css) {
-	const runtime = getRuntime$24();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
-}
-registerStyle$24("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
-var style_module_default$16 = { "stack": "_8e8e79c1a2eec43b__stack" };
-const gapTokens = {
-	xs: "var(--wpds-dimension-gap-xs, 4px)",
-	sm: "var(--wpds-dimension-gap-sm, 8px)",
-	md: "var(--wpds-dimension-gap-md, 12px)",
-	lg: "var(--wpds-dimension-gap-lg, 16px)",
-	xl: "var(--wpds-dimension-gap-xl, 24px)",
-	"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-	"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
-};
-/**
-* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
-* Built on design tokens for predictable spacing values.
-*/
-const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
-	const style = {
-		gap: gap && gapTokens[gap],
-		alignItems: align,
-		justifyContent: justify,
-		flexDirection: direction,
-		flexWrap: wrap
-	};
-	return useRender({
-		render,
-		ref,
-		props: mergeProps$1(props, {
-			style,
-			className: style_module_default$16.stack
-		})
-	});
-});
-
-// packages/ui/build-module/icon-button/icon-button.mjs
-const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$23() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$23(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$23(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$23}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$23) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$23(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$23();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$23(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$23, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$23(targetDocument) {
-	const runtime = getRuntime$23();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$23(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$23(hash, css) {
-	const runtime = getRuntime$23();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
-}
-registerStyle$23("2a111665b3", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._7f5dbf30e44a43dd__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}._1b3c0d159ecbf3d5__icon{margin:-1px}}}");
-var style_module_default$15 = {
-	"icon-button": "_7f5dbf30e44a43dd__icon-button",
-	"icon": "_1b3c0d159ecbf3d5__icon"
-};
-/**
-* An icon-only button with automatic tooltip and optimized styling.
-* Inherits all Button props while providing icon-specific enhancements.
-*
-* When rendering a group of `IconButton`s, wrap them in a `Tooltip.Provider`
-* to coordinate tooltip delays across the group.
-*
-* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
-*/
-const IconButton = (0, import_element.forwardRef)(function UnforwardedIconButton({ label, className, children: _children, disabled, focusableWhenDisabled = true, icon, size, shortcut, positioner, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, ...restProps }, ref) {
-	const classes = clsx(style_module_default$15["icon-button"], className);
-	const { descriptionId, targetProps } = useKeyboardShortcutProps({
-		"aria-describedby": ariaDescribedBy,
-		"aria-keyshortcuts": ariaKeyShortcuts,
-		shortcut
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger$1, {
-		ref,
-		...targetProps,
-		disabled: disabled && !focusableWhenDisabled,
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$14, {
-			...restProps,
-			size,
-			"aria-label": label,
-			disabled,
-			focusableWhenDisabled
-		}),
-		className: classes,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
-			icon,
-			size: 24,
-			className: style_module_default$15.icon
-		}), shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDescription, {
-			descriptionId,
-			shortcut
-		})]
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popup$1, {
-		positioner,
-		children: [label, shortcut && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [" ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDisplay, { shortcut })] })]
-	})] });
-});
-
-// packages/ui/build-module/utils/use-enable-wp-compat-overlay-slot.mjs
-/**
-* Opts the host application into the `@wordpress/ui` compat overlay slot —
-* a body-level container into which `@wordpress/ui` overlays portal so they
-* reliably stack above `@wordpress/components` overlays in mixed-library
-* compositions.
-*
-* Call once from a component that mounts for the lifetime of the app
-* (typically the root). Idempotent and one-way: a single caller should not
-* be able to turn off shared infrastructure for everyone else; if the slot
-* isn't wanted, simply don't call this hook.
-*
-* The opt-in applies to the whole window, including other React roots and
-* package copies, and remains enabled after the calling component unmounts.
-* Explicit portal containers still take precedence.
-*
-* Where `window.wp.components` is on the global — the typical setup for
-* plugins enqueueing `wp-components` through WordPress's script-loader —
-* the slot auto-enables and this hook is a no-op.
-*/
-function useEnableWpCompatOverlaySlot() {
-	if (typeof window === "undefined") return;
-	const internalWindow = window;
-	if (internalWindow.__wpUiCompatOverlaySlotEnabled !== true) internalWindow.__wpUiCompatOverlaySlotEnabled = true;
-}
-
-// packages/ui/build-module/badge/badge.mjs
-const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$22() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$22(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$22(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$22}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$22) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$22(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$22();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$22(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$22, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$22(targetDocument) {
-	const runtime = getRuntime$22();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$22(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$22(hash, css) {
-	const runtime = getRuntime$22();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
-}
-registerStyle$22("7daf4893c9", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9ce8c05efea8e203__badge{border-radius:var(--wpds-border-radius-lg,8px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._8b848c49ae4c70ec__infotip-trigger{--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-button-font-weight:var(--wpds-typography-font-weight-default,400);align-items:center;border:0;cursor:var(--wpds-cursor-control,pointer);display:inline-flex;gap:var(--wpds-dimension-gap-xs,4px);text-align:start;vertical-align:middle}._8b848c49ae4c70ec__infotip-trigger:focus{outline:none}._8b848c49ae4c70ec__infotip-trigger:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0b34a322e3f931d1__infotip-icon{flex-shrink:0;margin-inline-end:-3px}.dbaa78793aa9ed55__is-high-intent{background-color:var(--wpds-color-background-surface-error,#fae5e1);color:var(--wpds-color-foreground-content-error,#470000)}.e7014da94d135da5__is-medium-intent{background-color:var(--wpds-color-background-surface-warning,#fde6be);color:var(--wpds-color-foreground-content-warning,#2e1900)}._0ea3f993ed9a8b93__is-low-intent{background-color:var(--wpds-color-background-surface-caution,#fee995);color:var(--wpds-color-foreground-content-caution,#281d00)}._2cb7bc48c640ffb1__is-stable-intent{background-color:var(--wpds-color-background-surface-success,#c2f8ca);color:var(--wpds-color-foreground-content-success,#002900)}._4ad31051a45a43b8__is-informational-intent{background-color:var(--wpds-color-background-surface-info,#deebfa);color:var(--wpds-color-foreground-content-info,#001b4f)}._0161efc7afeedbfd__is-draft-intent{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._8d100360e716930c__is-none-intent{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}}}");
+registerStyle$25("7daf4893c9", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9ce8c05efea8e203__badge{border-radius:var(--wpds-border-radius-lg,8px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._8b848c49ae4c70ec__infotip-trigger{--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-button-font-weight:var(--wpds-typography-font-weight-default,400);align-items:center;border:0;cursor:var(--wpds-cursor-control,pointer);display:inline-flex;gap:var(--wpds-dimension-gap-xs,4px);text-align:start;vertical-align:middle}._8b848c49ae4c70ec__infotip-trigger:focus{outline:none}._8b848c49ae4c70ec__infotip-trigger:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._0b34a322e3f931d1__infotip-icon{flex-shrink:0;margin-inline-end:-3px}.dbaa78793aa9ed55__is-high-intent{background-color:var(--wpds-color-background-surface-error,#fae5e1);color:var(--wpds-color-foreground-content-error,#470000)}.e7014da94d135da5__is-medium-intent{background-color:var(--wpds-color-background-surface-warning,#fde6be);color:var(--wpds-color-foreground-content-warning,#2e1900)}._0ea3f993ed9a8b93__is-low-intent{background-color:var(--wpds-color-background-surface-caution,#fee995);color:var(--wpds-color-foreground-content-caution,#281d00)}._2cb7bc48c640ffb1__is-stable-intent{background-color:var(--wpds-color-background-surface-success,#c2f8ca);color:var(--wpds-color-foreground-content-success,#002900)}._4ad31051a45a43b8__is-informational-intent{background-color:var(--wpds-color-background-surface-info,#deebfa);color:var(--wpds-color-foreground-content-info,#001b4f)}._0161efc7afeedbfd__is-draft-intent{background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._8d100360e716930c__is-none-intent{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}}}");
 var style_module_default$14 = {
 	"badge": "_9ce8c05efea8e203__badge",
 	"infotip-trigger": "_8b848c49ae4c70ec__infotip-trigger",
@@ -19946,7 +20036,7 @@ var style_module_default$14 = {
 	"is-draft-intent": "_0161efc7afeedbfd__is-draft-intent",
 	"is-none-intent": "_8d100360e716930c__is-none-intent"
 };
-registerStyle$22("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+registerStyle$25("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 var global_css_defense_module_default$6 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
@@ -29446,7 +29536,7 @@ function NextMonthButton(props) {
 }
 
 // packages/ui/build-module/calendar/utils/constants.mjs
-const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -29455,7 +29545,7 @@ const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$21() {
+function getRuntime$24() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -29463,7 +29553,7 @@ function getRuntime$21() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$21(document);
+	if (typeof document !== "undefined") registerDocument$24(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -29474,9 +29564,9 @@ function getRuntime$21() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$21(targetDocument, hash) {
+function documentContainsStyleHash$24(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$21}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$21) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$24}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$24) === hash) return true;
 	return false;
 }
 /**
@@ -29487,21 +29577,21 @@ function documentContainsStyleHash$21(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$21(targetDocument, hash, css) {
+function injectStyle$24(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$21();
+	const runtime = getRuntime$24();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$21(targetDocument, hash)) {
+	if (documentContainsStyleHash$24(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$21, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$24, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -29517,10 +29607,10 @@ function injectStyle$21(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$21(targetDocument) {
-	const runtime = getRuntime$21();
+function registerDocument$24(targetDocument) {
+	const runtime = getRuntime$24();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$21(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$24(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -29542,12 +29632,12 @@ function registerDocument$21(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$21(hash, css) {
-	const runtime = getRuntime$21();
+function registerStyle$24(hash, css) {
+	const runtime = getRuntime$24();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$21(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
 }
-registerStyle$21("e870b205d5", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d67ac5940b3db040__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-block;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);position:relative;z-index:0}._6b8244eeebcb141c__day{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);padding:0;position:relative;&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:has(._2326449c1ec1ccf4__day-button:focus-visible),&:has(._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}}._2326449c1ec1ccf4__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:var(--wp-ui-calendar-cell-size);&:before{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:none;border-radius:var(--wpds-border-radius-sm,2px);z-index:-1}&:after,&:before{content:\"\";inset:0;position:absolute}&:after{pointer-events:none;z-index:1}&:disabled{cursor:revert;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}@media (forced-colors:active){text-decoration:line-through}}&:focus-visible:before,&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._346164a767356104__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}.d67ac5940b3db040__root[dir=rtl] ._88966391f27fd845__nav-button{transform:rotate(180deg);transform-origin:50%}.bac4b28345f14fe6__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}._226a2d5b1606f462__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);justify-content:center;max-width:fit-content;position:relative}.b5cd5413fc4f1e0e__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px)}._3c49e5eebd49ce33__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}.ea5dc5e279591e40__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase;width:var(--wp-ui-calendar-cell-size)}._361d685bc7a465e9__today:after{border:2px solid;border-radius:50%;content:\"\";height:0;inset-block-start:2px;inset-inline-end:2px;position:absolute;width:0;z-index:1}._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle){&:has(._2326449c1ec1ccf4__day-button,._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}._485aca6ce0a23a05__outside{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}.cd568589a03e3e05__hidden{visibility:hidden}._8638d195805d7395__range-start:not(._5c9d35f37a7da85e__range-end) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}._5c9d35f37a7da85e__range-end:not(._8638d195805d7395__range-start) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._553023aea73828e1__preview svg{color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);inset:0;pointer-events:none;position:absolute;@media (forced-colors:active){color:inherit}}._553023aea73828e1__preview._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle) svg{display:none}.d67ac5940b3db040__root[dir=rtl] ._553023aea73828e1__preview svg{transform:scaleX(-1)}._553023aea73828e1__preview._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button:before{border:none}@keyframes c2faa611ba1488be__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes c4980e1313f9993a__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes _1c1656e86f6f632c__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes c3793bdbceb0750e__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes _22a1a70f5db25e5c__fade-in{0%{opacity:0}to{opacity:1}}@keyframes _25e4fa1d41281b90__fade-out{0%{opacity:1}to{opacity:0}}._1e3b69aa679f8655__caption-before-exit,._4f9d6e3dc0d6f392__caption-after-enter,._6c19d1b31fe17f76__weeks-before-enter,._747d985c3c395f78__caption-before-enter,._75c3ff871d74d8f8__weeks-before-exit,._854319d82ea3790a__weeks-after-enter,.c555a192f01c276c__weeks-after-exit,.ee9bc34717c59541__caption-after-exit{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}._6c19d1b31fe17f76__weeks-before-enter,.d67ac5940b3db040__root[dir=rtl] ._854319d82ea3790a__weeks-after-enter{animation-name:c2faa611ba1488be__slide-in-left}._75c3ff871d74d8f8__weeks-before-exit,.d67ac5940b3db040__root[dir=rtl] .c555a192f01c276c__weeks-after-exit{animation-name:_1c1656e86f6f632c__slide-out-left}._854319d82ea3790a__weeks-after-enter,.d67ac5940b3db040__root[dir=rtl] ._6c19d1b31fe17f76__weeks-before-enter{animation-name:c4980e1313f9993a__slide-in-right}.c555a192f01c276c__weeks-after-exit,.d67ac5940b3db040__root[dir=rtl] ._75c3ff871d74d8f8__weeks-before-exit{animation-name:c3793bdbceb0750e__slide-out-right}._4f9d6e3dc0d6f392__caption-after-enter,._747d985c3c395f78__caption-before-enter{animation-name:_22a1a70f5db25e5c__fade-in}._1e3b69aa679f8655__caption-before-exit,.ee9bc34717c59541__caption-after-exit{animation-name:_25e4fa1d41281b90__fade-out}}}");
+registerStyle$24("e870b205d5", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d67ac5940b3db040__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-block;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);position:relative;z-index:0}._6b8244eeebcb141c__day{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);padding:0;position:relative;&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:has(._2326449c1ec1ccf4__day-button:focus-visible),&:has(._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}}._2326449c1ec1ccf4__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:var(--wp-ui-calendar-cell-size);&:before{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:none;border-radius:var(--wpds-border-radius-sm,2px);z-index:-1}&:after,&:before{content:\"\";inset:0;position:absolute}&:after{pointer-events:none;z-index:1}&:disabled{cursor:revert;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}@media (forced-colors:active){text-decoration:line-through}}&:focus-visible:before,&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._346164a767356104__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}.d67ac5940b3db040__root[dir=rtl] ._88966391f27fd845__nav-button{transform:rotate(180deg);transform-origin:50%}.bac4b28345f14fe6__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}._226a2d5b1606f462__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);justify-content:center;max-width:fit-content;position:relative}.b5cd5413fc4f1e0e__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px)}._3c49e5eebd49ce33__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}.ea5dc5e279591e40__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase;width:var(--wp-ui-calendar-cell-size)}._361d685bc7a465e9__today:after{border:2px solid;border-radius:50%;content:\"\";height:0;inset-block-start:2px;inset-inline-end:2px;position:absolute;width:0;z-index:1}._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle){&:has(._2326449c1ec1ccf4__day-button,._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}._485aca6ce0a23a05__outside{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}.cd568589a03e3e05__hidden{visibility:hidden}._8638d195805d7395__range-start:not(._5c9d35f37a7da85e__range-end) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}._5c9d35f37a7da85e__range-end:not(._8638d195805d7395__range-start) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._553023aea73828e1__preview svg{color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);inset:0;pointer-events:none;position:absolute;@media (forced-colors:active){color:inherit}}._553023aea73828e1__preview._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle) svg{display:none}.d67ac5940b3db040__root[dir=rtl] ._553023aea73828e1__preview svg{transform:scaleX(-1)}._553023aea73828e1__preview._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button:before{border:none}@keyframes c2faa611ba1488be__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes c4980e1313f9993a__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes _1c1656e86f6f632c__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes c3793bdbceb0750e__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes _22a1a70f5db25e5c__fade-in{0%{opacity:0}to{opacity:1}}@keyframes _25e4fa1d41281b90__fade-out{0%{opacity:1}to{opacity:0}}._1e3b69aa679f8655__caption-before-exit,._4f9d6e3dc0d6f392__caption-after-enter,._6c19d1b31fe17f76__weeks-before-enter,._747d985c3c395f78__caption-before-enter,._75c3ff871d74d8f8__weeks-before-exit,._854319d82ea3790a__weeks-after-enter,.c555a192f01c276c__weeks-after-exit,.ee9bc34717c59541__caption-after-exit{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}._6c19d1b31fe17f76__weeks-before-enter,.d67ac5940b3db040__root[dir=rtl] ._854319d82ea3790a__weeks-after-enter{animation-name:c2faa611ba1488be__slide-in-left}._75c3ff871d74d8f8__weeks-before-exit,.d67ac5940b3db040__root[dir=rtl] .c555a192f01c276c__weeks-after-exit{animation-name:_1c1656e86f6f632c__slide-out-left}._854319d82ea3790a__weeks-after-enter,.d67ac5940b3db040__root[dir=rtl] ._6c19d1b31fe17f76__weeks-before-enter{animation-name:c4980e1313f9993a__slide-in-right}.c555a192f01c276c__weeks-after-exit,.d67ac5940b3db040__root[dir=rtl] ._75c3ff871d74d8f8__weeks-before-exit{animation-name:c3793bdbceb0750e__slide-out-right}._4f9d6e3dc0d6f392__caption-after-enter,._747d985c3c395f78__caption-before-enter{animation-name:_22a1a70f5db25e5c__fade-in}._1e3b69aa679f8655__caption-before-exit,.ee9bc34717c59541__caption-after-exit{animation-name:_25e4fa1d41281b90__fade-out}}}");
 var style_module_default$13 = {
 	"root": "d67ac5940b3db040__root",
 	"day": "_6b8244eeebcb141c__day",
@@ -29582,9 +29672,9 @@ var style_module_default$13 = {
 	"fade-in": "_22a1a70f5db25e5c__fade-in",
 	"fade-out": "_25e4fa1d41281b90__fade-out"
 };
-registerStyle$21("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+registerStyle$24("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 var resets_module_default$6 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$21("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+registerStyle$24("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 var focus_module_default$4 = {
 	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
 	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
@@ -29592,7 +29682,7 @@ var focus_module_default$4 = {
 	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
 	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
 };
-registerStyle$21("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+registerStyle$24("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 const CLASSNAMES = {
 	root: clsx(style_module_default$13.root, resets_module_default$6["box-sizing"]),
 	day: style_module_default$13.day,
@@ -30078,6 +30168,440 @@ const RangeCalendar = (0, import_element.forwardRef)(function UnforwardedRangeCa
 });
 
 // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
+const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$23() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$23(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$23(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$23}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$23) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$23(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$23();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$23(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$23, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$23(targetDocument) {
+	const runtime = getRuntime$23();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$23(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$23(hash, css) {
+	const runtime = getRuntime$23();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
+}
+registerStyle$23("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$5 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+registerStyle$23("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$5 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$23("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
+var style_module_default$12 = {
+	"input-layout": "b58f09bec1a5dbde__input-layout",
+	"is-size-compact": "c6959524c70627d6__is-size-compact",
+	"is-size-small": "aa52ad890a16cc91__is-size-small",
+	"is-disabled": "_50a72abb47530e8a__is-disabled",
+	"is-borderless": "_33a5f404fc55a9f2__is-borderless",
+	"input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot",
+	"slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper",
+	"is-padding-minimal": "_50d0eced305893d5__is-padding-minimal"
+};
+/**
+* A low-level component that handles the visual layout of an input-like field,
+* including disabled states and standard prefix/suffix slots.
+*/
+const InputLayout$1 = (0, import_element.forwardRef)(function UnforwardedInputLayout({ className, children, visuallyDisabled, size = "default", isBorderless, prefix, suffix, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		ref,
+		className: clsx(global_css_defense_module_default$5.div, resets_module_default$5["box-sizing"], style_module_default$12["input-layout"], style_module_default$12[`is-size-${size}`], visuallyDisabled && style_module_default$12["is-disabled"], isBorderless && style_module_default$12["is-borderless"], className),
+		...restProps,
+		children: [
+			import_element.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: style_module_default$12["slot-wrapper"],
+				"data-slot-type": "prefix",
+				children: prefix
+			}),
+			children,
+			import_element.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: style_module_default$12["slot-wrapper"],
+				"data-slot-type": "suffix",
+				children: suffix
+			})
+		]
+	});
+});
+
+// packages/ui/build-module/form/primitives/input-layout/slot.mjs
+const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$22() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$22(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$22(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$22}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$22) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$22(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$22();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$22(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$22, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$22(targetDocument) {
+	const runtime = getRuntime$22();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$22(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$22(hash, css) {
+	const runtime = getRuntime$22();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
+}
+registerStyle$22("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
+var style_module_default$11 = {
+	"input-layout": "b58f09bec1a5dbde__input-layout",
+	"is-size-compact": "c6959524c70627d6__is-size-compact",
+	"is-size-small": "aa52ad890a16cc91__is-size-small",
+	"is-disabled": "_50a72abb47530e8a__is-disabled",
+	"is-borderless": "_33a5f404fc55a9f2__is-borderless",
+	"input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot",
+	"slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper",
+	"is-padding-minimal": "_50d0eced305893d5__is-padding-minimal"
+};
+/**
+* A layout helper to add paddings in a prefix or suffix.
+*/
+const InputLayoutSlot = (0, import_element.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref,
+		className: clsx(style_module_default$11["input-layout-slot"], style_module_default$11[`is-padding-${padding}`], className),
+		...restProps
+	});
+});
+InputLayoutSlot.displayName = "InputLayout.Slot";
+
+// packages/ui/build-module/form/primitives/input-layout/index.mjs
+/**
+* A low-level component that handles the visual layout of an input-like field,
+* including disabled states and standard prefix/suffix slots.
+*/
+const InputLayout = Object.assign(InputLayout$1, { Slot: InputLayoutSlot });
+
+// packages/ui/build-module/form/primitives/input/input.mjs
+const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$21() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$21(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$21(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$21}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$21) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$21(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$21();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$21(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$21, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$21(targetDocument) {
+	const runtime = getRuntime$21();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$21(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$21(hash, css) {
+	const runtime = getRuntime$21();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$21(targetDocument, hash, css);
+}
+registerStyle$21("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$4 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+registerStyle$21("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default$3 = {
+	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+};
+registerStyle$21("a53cd10a80", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9edfcd97eeaee9dc__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);--_gcd-input-font-size:max(var(--wpds-typography-font-size-md,13px),16px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;@media (min-width:600px){--_gcd-input-font-size:inherit}&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}@layer compositions{.edc52bf0fe80b57f__layout{font-size:max(var(--wpds-typography-font-size-md,13px),16px);@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}}}}");
+var style_module_default$10 = {
+	"input": "_9edfcd97eeaee9dc__input",
+	"layout": "edc52bf0fe80b57f__layout"
+};
+/**
+* A low-level primitive for an input field.
+*
+* Prefer `InputControl` when using with a standard label and description.
+*/
+const Input = (0, import_element.forwardRef)(function UnforwardedInput({ className, size = "default", prefix, suffix, style, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout, {
+		className: clsx(style_module_default$10.layout, focus_module_default$3["outset-ring--focus-within"], className),
+		style,
+		size,
+		visuallyDisabled: restProps.disabled,
+		prefix,
+		suffix,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input$1, {
+			ref,
+			className: clsx(global_css_defense_module_default$4.input, style_module_default$10.input),
+			...restProps
+		})
+	});
+});
+
+// packages/ui/build-module/form/primitives/checkbox/checkbox.mjs
 const STYLE_HASH_ATTRIBUTE$20 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -30179,58 +30703,47 @@ function registerStyle$20(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$20(targetDocument, hash, css);
 }
-registerStyle$20("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$5 = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
-};
 registerStyle$20("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$5 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$20("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
-var style_module_default$12 = {
-	"input-layout": "b58f09bec1a5dbde__input-layout",
-	"is-size-compact": "c6959524c70627d6__is-size-compact",
-	"is-size-small": "aa52ad890a16cc91__is-size-small",
-	"is-disabled": "_50a72abb47530e8a__is-disabled",
-	"is-borderless": "_33a5f404fc55a9f2__is-borderless",
-	"input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot",
-	"slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper",
-	"is-padding-minimal": "_50d0eced305893d5__is-padding-minimal"
+var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$20("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default$2 = {
+	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+};
+registerStyle$20("ecdf49ebe4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._63457135733e4745__root{--_checkbox-input-size:var(--wp-ui-checkbox-input-size,var(--wpds-dimension-size-2xs,16px));aspect-ratio:1;background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:min(var(--wpds-border-radius-sm,2px),2px);display:inline-block;flex-shrink:0;padding:0;position:relative;width:var(--_checkbox-input-size);&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:hover,[data-highlighted] &{background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&[aria-checked=mixed],&[aria-checked=true]{background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));border-color:transparent;color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:after{aspect-ratio:1;content:\"\";left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:max(var(--_checkbox-input-size),var(--wpds-dimension-size-sm,24px))}}.e5da9f589362d532__indicator-icon{inset:calc(0px - var(--wpds-border-width-xs, 1px));position:absolute}}}");
+var style_module_default$9 = {
+	"root": "_63457135733e4745__root",
+	"indicator-icon": "e5da9f589362d532__indicator-icon"
 };
 /**
-* A low-level component that handles the visual layout of an input-like field,
-* including disabled states and standard prefix/suffix slots.
+* A low-level checkbox primitive.
+*
+* Prefer `CheckboxControl` for labeled items. For grouping and nested parent
+* checkboxes, see the [Checkbox Groups](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-form-checkbox-groups--docs)
+* documentation.
 */
-const InputLayout$1 = (0, import_element.forwardRef)(function UnforwardedInputLayout({ className, children, visuallyDisabled, size = "default", isBorderless, prefix, suffix, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+const Checkbox$2 = (0, import_element.forwardRef)(function UnforwardedCheckbox({ className, indeterminate, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckboxRoot, {
 		ref,
-		className: clsx(global_css_defense_module_default$5.div, resets_module_default$5["box-sizing"], style_module_default$12["input-layout"], style_module_default$12[`is-size-${size}`], visuallyDisabled && style_module_default$12["is-disabled"], isBorderless && style_module_default$12["is-borderless"], className),
+		className: clsx(resets_module_default$4["box-sizing"], focus_module_default$2["outset-ring--focus"], style_module_default$9.root, className),
+		indeterminate,
 		...restProps,
-		children: [
-			import_element.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: style_module_default$12["slot-wrapper"],
-				"data-slot-type": "prefix",
-				children: prefix
-			}),
-			children,
-			import_element.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: style_module_default$12["slot-wrapper"],
-				"data-slot-type": "suffix",
-				children: suffix
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckboxIndicator, {
+			className: style_module_default$9["indicator-icon"],
+			render: (props, state) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
+				...props,
+				icon: state.indeterminate ? reset_default : check_default,
+				viewBox: "4 4 16 16",
+				size: 16
 			})
-		]
+		})
 	});
 });
 
-// packages/ui/build-module/form/primitives/input-layout/slot.mjs
+// packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
 const STYLE_HASH_ATTRIBUTE$19 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -30332,430 +30845,7 @@ function registerStyle$19(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$19(targetDocument, hash, css);
 }
-registerStyle$19("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
-var style_module_default$11 = {
-	"input-layout": "b58f09bec1a5dbde__input-layout",
-	"is-size-compact": "c6959524c70627d6__is-size-compact",
-	"is-size-small": "aa52ad890a16cc91__is-size-small",
-	"is-disabled": "_50a72abb47530e8a__is-disabled",
-	"is-borderless": "_33a5f404fc55a9f2__is-borderless",
-	"input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot",
-	"slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper",
-	"is-padding-minimal": "_50d0eced305893d5__is-padding-minimal"
-};
-/**
-* A layout helper to add paddings in a prefix or suffix.
-*/
-const InputLayoutSlot = (0, import_element.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref,
-		className: clsx(style_module_default$11["input-layout-slot"], style_module_default$11[`is-padding-${padding}`], className),
-		...restProps
-	});
-});
-InputLayoutSlot.displayName = "InputLayout.Slot";
-
-// packages/ui/build-module/form/primitives/input-layout/index.mjs
-/**
-* A low-level component that handles the visual layout of an input-like field,
-* including disabled states and standard prefix/suffix slots.
-*/
-const InputLayout = Object.assign(InputLayout$1, { Slot: InputLayoutSlot });
-
-// packages/ui/build-module/form/primitives/input/input.mjs
-const STYLE_HASH_ATTRIBUTE$18 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$18() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$18(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$18(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$18}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$18) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$18(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$18();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$18(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$18, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$18(targetDocument) {
-	const runtime = getRuntime$18();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$18(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$18(hash, css) {
-	const runtime = getRuntime$18();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$18(targetDocument, hash, css);
-}
-registerStyle$18("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$4 = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
-};
-registerStyle$18("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default$3 = {
-	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-};
-registerStyle$18("a53cd10a80", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9edfcd97eeaee9dc__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);--_gcd-input-font-size:max(var(--wpds-typography-font-size-md,13px),16px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;@media (min-width:600px){--_gcd-input-font-size:inherit}&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}@layer compositions{.edc52bf0fe80b57f__layout{font-size:max(var(--wpds-typography-font-size-md,13px),16px);@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}}}}");
-var style_module_default$10 = {
-	"input": "_9edfcd97eeaee9dc__input",
-	"layout": "edc52bf0fe80b57f__layout"
-};
-/**
-* A low-level primitive for an input field.
-*
-* Prefer `InputControl` when using with a standard label and description.
-*/
-const Input = (0, import_element.forwardRef)(function UnforwardedInput({ className, size = "default", prefix, suffix, style, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout, {
-		className: clsx(style_module_default$10.layout, focus_module_default$3["outset-ring--focus-within"], className),
-		style,
-		size,
-		visuallyDisabled: restProps.disabled,
-		prefix,
-		suffix,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input$1, {
-			ref,
-			className: clsx(global_css_defense_module_default$4.input, style_module_default$10.input),
-			...restProps
-		})
-	});
-});
-
-// packages/ui/build-module/form/primitives/checkbox/checkbox.mjs
-const STYLE_HASH_ATTRIBUTE$17 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$17() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$17(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$17(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$17}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$17) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$17(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$17();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$17(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$17, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$17(targetDocument) {
-	const runtime = getRuntime$17();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$17(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$17(hash, css) {
-	const runtime = getRuntime$17();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$17(targetDocument, hash, css);
-}
-registerStyle$17("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$17("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default$2 = {
-	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-};
-registerStyle$17("ecdf49ebe4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._63457135733e4745__root{--_checkbox-input-size:var(--wp-ui-checkbox-input-size,var(--wpds-dimension-size-2xs,16px));aspect-ratio:1;background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:min(var(--wpds-border-radius-sm,2px),2px);display:inline-block;flex-shrink:0;padding:0;position:relative;width:var(--_checkbox-input-size);&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:hover,[data-highlighted] &{background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&[aria-checked=mixed],&[aria-checked=true]{background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));border-color:transparent;color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:after{aspect-ratio:1;content:\"\";left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:max(var(--_checkbox-input-size),var(--wpds-dimension-size-sm,24px))}}.e5da9f589362d532__indicator-icon{inset:calc(0px - var(--wpds-border-width-xs, 1px));position:absolute}}}");
-var style_module_default$9 = {
-	"root": "_63457135733e4745__root",
-	"indicator-icon": "e5da9f589362d532__indicator-icon"
-};
-/**
-* A low-level checkbox primitive.
-*
-* Prefer `CheckboxControl` for labeled items. For grouping and nested parent
-* checkboxes, see the [Checkbox Groups](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-form-checkbox-groups--docs)
-* documentation.
-*/
-const Checkbox$2 = (0, import_element.forwardRef)(function UnforwardedCheckbox({ className, indeterminate, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckboxRoot, {
-		ref,
-		className: clsx(resets_module_default$4["box-sizing"], focus_module_default$2["outset-ring--focus"], style_module_default$9.root, className),
-		indeterminate,
-		...restProps,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CheckboxIndicator, {
-			className: style_module_default$9["indicator-icon"],
-			render: (props, state) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
-				...props,
-				icon: state.indeterminate ? reset_default : check_default,
-				viewBox: "4 4 16 16",
-				size: 16
-			})
-		})
-	});
-});
-
-// packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-const STYLE_HASH_ATTRIBUTE$16 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$16() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$16(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$16(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$16}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$16) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$16(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$16();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$16(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$16, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$16(targetDocument) {
-	const runtime = getRuntime$16();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$16(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$16(hash, css) {
-	const runtime = getRuntime$16();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$16(targetDocument, hash, css);
-}
-registerStyle$16("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+registerStyle$19("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 var global_css_defense_module_default$3 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
@@ -30768,7 +30858,7 @@ var global_css_defense_module_default$3 = {
 	"li": "_3c72ff72abe57859__li",
 	"span": "_79d16267c15d9eb2__span"
 };
-registerStyle$16("aba5ec2cd2", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._065156d308cd9e34__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);@media not (prefers-reduced-motion){animation:_0b9b0205648471e6__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._1433e92faa429aa6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._8f2844793b7e3dbd__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}._9b4c4f0124b71294__indicator-icon{flex-shrink:0}.c07a36506fa9f62a__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _0b9b0205648471e6__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}");
+registerStyle$19("aba5ec2cd2", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._065156d308cd9e34__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);@media not (prefers-reduced-motion){animation:_0b9b0205648471e6__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._1433e92faa429aa6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._8f2844793b7e3dbd__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}._9b4c4f0124b71294__indicator-icon{flex-shrink:0}.c07a36506fa9f62a__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _0b9b0205648471e6__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}");
 var style_module_default$8 = {
 	"indicator": "_065156d308cd9e34__indicator",
 	"indicator-jump": "_0b9b0205648471e6__indicator-jump",
@@ -30943,6 +31033,380 @@ const ControlWithError = (0, import_element.forwardRef)(function UnforwardedCont
 });
 
 // packages/ui/build-module/form/primitives/field/root.mjs
+const STYLE_HASH_ATTRIBUTE$18 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$18() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$18(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$18(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$18}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$18) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$18(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$18();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$18(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$18, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$18(targetDocument) {
+	const runtime = getRuntime$18();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$18(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$18(hash, css) {
+	const runtime = getRuntime$18();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$18(targetDocument, hash, css);
+}
+registerStyle$18("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$3 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+const DEFAULT_RENDER$1 = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
+	...props,
+	direction: "column",
+	gap: "sm"
+});
+/**
+* A low-level component that associates an accessible label and description
+* with a single form control element.
+*
+* To label a group of multiple form control elements, use the `Fieldset` component instead.
+*
+* Simply wrapping a control with this component does not guarantee
+* accessible labeling. See examples for how to associate the label in different cases.
+*/
+const Root$1 = (0, import_element.forwardRef)(function UnforwardedRoot({ className, render = DEFAULT_RENDER$1, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldRoot, {
+		ref,
+		className: clsx(resets_module_default$3["box-sizing"], className),
+		render,
+		...restProps
+	});
+});
+
+// packages/ui/build-module/form/primitives/field/label.mjs
+const STYLE_HASH_ATTRIBUTE$17 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$17() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$17(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$17(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$17}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$17) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$17(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$17();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$17(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$17, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$17(targetDocument) {
+	const runtime = getRuntime$17();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$17(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$17(hash, css) {
+	const runtime = getRuntime$17();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$17(targetDocument, hash, css);
+}
+registerStyle$17("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var field_module_default$2 = {
+	"label": "b83e088455118c35__label",
+	"is-plain": "_7cbfa5d2e598834a__is-plain",
+	"description": "_507b5c7970fe2ffd__description"
+};
+const Label = (0, import_element.forwardRef)(function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
+	const label = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldLabel, {
+		ref,
+		className: clsx(field_module_default$2.label, variant && field_module_default$2[`is-${variant}`], className),
+		...restProps
+	});
+	if (hideFromVision) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, { render: label });
+	return label;
+});
+
+// packages/ui/build-module/form/primitives/field/description.mjs
+const STYLE_HASH_ATTRIBUTE$16 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$16() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$16(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$16(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$16}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$16) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$16(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$16();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$16(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$16, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$16(targetDocument) {
+	const runtime = getRuntime$16();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$16(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$16(hash, css) {
+	const runtime = getRuntime$16();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$16(targetDocument, hash, css);
+}
+registerStyle$16("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$2 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+registerStyle$16("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var field_module_default$1 = {
+	"label": "b83e088455118c35__label",
+	"is-plain": "_7cbfa5d2e598834a__is-plain",
+	"description": "_507b5c7970fe2ffd__description"
+};
+const Description = (0, import_element.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldDescription, {
+		ref,
+		className: clsx(global_css_defense_module_default$2.p, field_module_default$1.description, className),
+		...restProps
+	});
+});
+
+// packages/ui/build-module/form/primitives/field/details.mjs
 const STYLE_HASH_ATTRIBUTE$15 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31044,32 +31508,36 @@ function registerStyle$15(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$15(targetDocument, hash, css);
 }
-registerStyle$15("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$3 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-const DEFAULT_RENDER$1 = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
-	...props,
-	direction: "column",
-	gap: "sm"
-});
+registerStyle$15("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var field_module_default = {
+	"label": "b83e088455118c35__label",
+	"is-plain": "_7cbfa5d2e598834a__is-plain",
+	"description": "_507b5c7970fe2ffd__description"
+};
 /**
-* A low-level component that associates an accessible label and description
-* with a single form control element.
+* A component for showing additional information about the field,
+* styled similarly to a normal `Field.Description`.
+* Unlike a normal description, it can include links and other semantic elements.
 *
-* To label a group of multiple form control elements, use the `Fieldset` component instead.
+* Although this content is not associated with the field using direct semantics,
+* it is made discoverable to screen reader users via a visually hidden description,
+* alerting them to the presence of additional information below.
 *
-* Simply wrapping a control with this component does not guarantee
-* accessible labeling. See examples for how to associate the label in different cases.
+* If the content only includes plain text, use `Field.Description` instead,
+* so the readout is not unnecessarily verbose for screen reader users.
 */
-const Root$1 = (0, import_element.forwardRef)(function UnforwardedRoot({ className, render = DEFAULT_RENDER$1, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldRoot, {
+const Details = (0, import_element.forwardRef)(function UnforwardedDetails({ className, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldDescription, {}),
+		children: (0, import_i18n.__)("More details follow the field.")
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref,
-		className: clsx(resets_module_default$3["box-sizing"], className),
-		render,
+		className: clsx(field_module_default.description, className),
 		...restProps
-	});
+	})] });
 });
 
-// packages/ui/build-module/form/primitives/field/label.mjs
+// packages/ui/build-module/form/primitives/radio/radio.mjs
 const STYLE_HASH_ATTRIBUTE$14 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31171,23 +31639,62 @@ function registerStyle$14(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$14(targetDocument, hash, css);
 }
-registerStyle$14("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var field_module_default$2 = {
-	"label": "b83e088455118c35__label",
-	"is-plain": "_7cbfa5d2e598834a__is-plain",
-	"description": "_507b5c7970fe2ffd__description"
+registerStyle$14("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$2 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$14("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default$1 = {
+	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
 };
-const Label = (0, import_element.forwardRef)(function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
-	const label = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldLabel, {
+registerStyle$14("7f3dce10ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7072fe766eedf4cd__root{--wp-ui-radio-input-size:16px;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:50%;display:inline-block;flex-shrink:0;height:var(--wp-ui-radio-input-size);padding:0;position:relative;width:var(--wp-ui-radio-input-size);&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:hover,[data-highlighted] &{border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&[data-checked]{background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));border-color:transparent;color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:after{aspect-ratio:1;content:\"\";left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:max(var(--wp-ui-radio-input-size),var(--wpds-dimension-size-sm,24px))}}._467bcd2f611a1506__indicator{background-color:currentColor;border-radius:50%;height:calc(var(--wp-ui-radio-input-size)/2);inset:0;margin:auto;position:absolute;width:calc(var(--wp-ui-radio-input-size)/2);@media (forced-colors:active){background-color:transparent;border-bottom-color:currentcolor;border-bottom-style:solid;border-bottom-width:4px;border-left-color:currentcolor;border-left-style:solid;border-left-width:4px;border-right-color:currentcolor;border-right-style:solid;border-right-width:4px;border-top-color:currentcolor;border-top-style:solid;border-top-width:4px}}}}");
+var style_module_default$7 = {
+	"root": "_7072fe766eedf4cd__root",
+	"indicator": "_467bcd2f611a1506__indicator"
+};
+/**
+* A low-level radio button primitive.
+*
+* Prefer `RadioGroupControl` for standard labeled radio groups.
+*
+* Must be rendered inside a `RadioGroup`.
+*/
+const Radio$2 = (0, import_element.forwardRef)(function UnforwardedRadio({ className, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RadioRoot, {
 		ref,
-		className: clsx(field_module_default$2.label, variant && field_module_default$2[`is-${variant}`], className),
-		...restProps
+		className: clsx(resets_module_default$2["box-sizing"], focus_module_default$1["outset-ring--focus"], style_module_default$7.root, className),
+		...props,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RadioIndicator, { className: style_module_default$7.indicator })
 	});
-	if (hideFromVision) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, { render: label });
-	return label;
 });
 
-// packages/ui/build-module/form/primitives/field/description.mjs
+// packages/ui/build-module/form/primitives/radio-group/radio-group.mjs
+const DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
+	...props,
+	direction: "column",
+	gap: "sm"
+});
+/**
+* A low-level primitive that groups radio buttons so they share one selected
+* value.
+*
+* Prefer `RadioGroupControl` for standard labeled radio groups.
+*
+* Must wrap `Radio` items. For one labeled group, pass `RadioGroup` to
+* `Fieldset.Root`'s `render` prop. When a `Fieldset` contains multiple groups,
+* give each `RadioGroup` its own accessible name.
+*/
+const RadioGroup = (0, import_element.forwardRef)(function UnforwardedRadioGroup({ render = DEFAULT_RENDER, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RadioGroup$2, {
+		ref,
+		render,
+		...restProps
+	});
+});
+
+// packages/ui/build-module/form/primitives/select/group.mjs
 const STYLE_HASH_ATTRIBUTE$13 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31289,34 +31796,49 @@ function registerStyle$13(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$13(targetDocument, hash, css);
 }
-registerStyle$13("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$2 = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
+registerStyle$13("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$7 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
 };
-registerStyle$13("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var field_module_default$1 = {
-	"label": "b83e088455118c35__label",
-	"is-plain": "_7cbfa5d2e598834a__is-plain",
-	"description": "_507b5c7970fe2ffd__description"
-};
-const Description = (0, import_element.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldDescription, {
+/**
+* Groups related items together with an associated label rendered by
+* `Select.GroupLabel`.
+*/
+const Group = (0, import_element.forwardRef)(function UnforwardedGroup({ className, children, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectGroup, {
+		className: clsx(item_popup_module_default$7.group, className),
 		ref,
-		className: clsx(global_css_defense_module_default$2.p, field_module_default$1.description, className),
-		...restProps
+		...restProps,
+		children
 	});
 });
 
-// packages/ui/build-module/form/primitives/field/details.mjs
+// packages/ui/build-module/form/primitives/select/group-label.mjs
 const STYLE_HASH_ATTRIBUTE$12 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31418,36 +31940,52 @@ function registerStyle$12(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$12(targetDocument, hash, css);
 }
-registerStyle$12("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var field_module_default = {
-	"label": "b83e088455118c35__label",
-	"is-plain": "_7cbfa5d2e598834a__is-plain",
-	"description": "_507b5c7970fe2ffd__description"
+registerStyle$12("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$6 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
 };
 /**
-* A component for showing additional information about the field,
-* styled similarly to a normal `Field.Description`.
-* Unlike a normal description, it can include links and other semantic elements.
-*
-* Although this content is not associated with the field using direct semantics,
-* it is made discoverable to screen reader users via a visually hidden description,
-* alerting them to the presence of additional information below.
-*
-* If the content only includes plain text, use `Field.Description` instead,
-* so the readout is not unnecessarily verbose for screen reader users.
+* Renders a label for a `Select.Group`, describing the group of items
+* it is associated with.
 */
-const Details = (0, import_element.forwardRef)(function UnforwardedDetails({ className, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldDescription, {}),
-		children: (0, import_i18n.__)("More details follow the field.")
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref,
-		className: clsx(field_module_default.description, className),
-		...restProps
-	})] });
+const GroupLabel = (0, import_element.forwardRef)(function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
+		variant: "heading-sm",
+		className: clsx(item_popup_module_default$6["group-label"], className),
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectGroupLabel, {
+			ref,
+			...restProps
+		}),
+		children
+	});
 });
 
-// packages/ui/build-module/form/primitives/radio/radio.mjs
+// packages/ui/build-module/form/primitives/select/item-description.mjs
 const STYLE_HASH_ATTRIBUTE$11 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31549,62 +32087,53 @@ function registerStyle$11(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$11(targetDocument, hash, css);
 }
-registerStyle$11("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$2 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$11("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default$1 = {
-	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+registerStyle$11("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$5 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
 };
-registerStyle$11("7f3dce10ae", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._7072fe766eedf4cd__root{--wp-ui-radio-input-size:16px;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:50%;display:inline-block;flex-shrink:0;height:var(--wp-ui-radio-input-size);padding:0;position:relative;width:var(--wp-ui-radio-input-size);&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:hover,[data-highlighted] &{border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&[data-checked]{background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));border-color:transparent;color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:after{aspect-ratio:1;content:\"\";left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:max(var(--wp-ui-radio-input-size),var(--wpds-dimension-size-sm,24px))}}._467bcd2f611a1506__indicator{background-color:currentColor;border-radius:50%;height:calc(var(--wp-ui-radio-input-size)/2);inset:0;margin:auto;position:absolute;width:calc(var(--wp-ui-radio-input-size)/2);@media (forced-colors:active){background-color:transparent;border-bottom-color:currentcolor;border-bottom-style:solid;border-bottom-width:4px;border-left-color:currentcolor;border-left-style:solid;border-left-width:4px;border-right-color:currentcolor;border-right-style:solid;border-right-width:4px;border-top-color:currentcolor;border-top-style:solid;border-top-width:4px}}}}");
-var style_module_default$7 = {
-	"root": "_7072fe766eedf4cd__root",
-	"indicator": "_467bcd2f611a1506__indicator"
-};
+const ITEM_DESCRIPTION_DIRECT_CHILD = Symbol();
 /**
-* A low-level radio button primitive.
-*
-* Prefer `RadioGroupControl` for standard labeled radio groups.
-*
-* Must be rendered inside a `RadioGroup`.
+* Supplementary content for a select item. Its text contributes to the item's
+* accessible description. Use it as a direct child after `Select.ItemLabel`.
+* Content should be text or non-interactive inline markup.
 */
-const Radio$2 = (0, import_element.forwardRef)(function UnforwardedRadio({ className, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RadioRoot, {
+const ItemDescription = (0, import_element.forwardRef)(function UnforwardedItemDescription(props, ref) {
+	const { className, validationToken, ...restProps } = props;
+	if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD) throw new Error("Select.ItemDescription: Missing direct select item parent. Render <Select.ItemDescription> as a direct child of <Select.Item>.");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
 		ref,
-		className: clsx(resets_module_default$2["box-sizing"], focus_module_default$1["outset-ring--focus"], style_module_default$7.root, className),
-		...props,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RadioIndicator, { className: style_module_default$7.indicator })
-	});
-});
-
-// packages/ui/build-module/form/primitives/radio-group/radio-group.mjs
-const DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
-	...props,
-	direction: "column",
-	gap: "sm"
-});
-/**
-* A low-level primitive that groups radio buttons so they share one selected
-* value.
-*
-* Prefer `RadioGroupControl` for standard labeled radio groups.
-*
-* Must wrap `Radio` items. For one labeled group, pass `RadioGroup` to
-* `Fieldset.Root`'s `render` prop. When a `Fieldset` contains multiple groups,
-* give each `RadioGroup` its own accessible name.
-*/
-const RadioGroup = (0, import_element.forwardRef)(function UnforwardedRadioGroup({ render = DEFAULT_RENDER, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RadioGroup$2, {
-		ref,
-		render,
+		variant: "body-sm",
+		className: clsx(item_popup_module_default$5["item-description"], className),
 		...restProps
 	});
 });
 
-// packages/ui/build-module/form/primitives/select/item-description.mjs
+// packages/ui/build-module/form/primitives/select/item-label.mjs
 const STYLE_HASH_ATTRIBUTE$10 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31735,24 +32264,24 @@ var item_popup_module_default$4 = {
 	"status": "_7738d24c2d5904c5__status",
 	"empty": "bb720e36b47aa491__empty"
 };
-const ITEM_DESCRIPTION_DIRECT_CHILD = Symbol();
 /**
-* Supplementary content for a select item. Its text contributes to the item's
-* accessible description. Use it as a direct child after `Select.ItemLabel`.
-* Content should be text or non-interactive inline markup.
+* The primary label of a select item. Use it as the first direct child of
+* every item. Its content is the item's accessible name. The trigger label
+* still comes from the selected item's `label` (via `items` or an object
+* value) or from `Select.Trigger` children.
 */
-const ItemDescription = (0, import_element.forwardRef)(function UnforwardedItemDescription(props, ref) {
-	const { className, validationToken, ...restProps } = props;
-	if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD) throw new Error("Select.ItemDescription: Missing direct select item parent. Render <Select.ItemDescription> as a direct child of <Select.Item>.");
+const ItemLabel = (0, import_element.forwardRef)(function UnforwardedItemLabel({ children, className, render, ...restProps }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
 		ref,
-		variant: "body-sm",
-		className: clsx(item_popup_module_default$4["item-description"], className),
-		...restProps
+		variant: "body-md",
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItemText, { render }),
+		className: clsx(item_popup_module_default$4["item-label"], className),
+		...restProps,
+		children
 	});
 });
 
-// packages/ui/build-module/form/primitives/select/item-label.mjs
+// packages/ui/build-module/form/primitives/select/item.mjs
 const STYLE_HASH_ATTRIBUTE$9 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31854,6 +32383,19 @@ function registerStyle$9(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$9(targetDocument, hash, css);
 }
+registerStyle$9("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$1 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
 registerStyle$9("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
 var item_popup_module_default$3 = {
 	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
@@ -31883,24 +32425,54 @@ var item_popup_module_default$3 = {
 	"status": "_7738d24c2d5904c5__status",
 	"empty": "bb720e36b47aa491__empty"
 };
-/**
-* The primary label of a select item. Use it as the first direct child of
-* every item. Its content is the item's accessible name. The trigger label
-* still comes from the selected item's `label` (via `items` or an object
-* value) or from `Select.Trigger` children.
-*/
-const ItemLabel = (0, import_element.forwardRef)(function UnforwardedItemLabel({ children, className, render, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
+registerStyle$9("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+const ITEM_CONTENT_COMPONENTS = {
+	Label: ItemLabel,
+	Description: ItemDescription,
+	descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD,
+	validationMessage: "Select.ItemLabel must be the first direct child of every select item, followed only by Select.ItemDescription components."
+};
+const Item$1 = (0, import_element.forwardRef)(function UnforwardedItem({ className, value, size = "default", children, "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...restProps }, ref) {
+	const { contentChildren, itemAriaProps } = useItemContent$1(children, ITEM_CONTENT_COMPONENTS, {
+		"aria-describedby": ariaDescribedBy,
+		"aria-label": ariaLabel,
+		"aria-labelledby": ariaLabelledBy
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectItem, {
+		className: clsx(global_css_defense_module_default$1.div, resets_module_default$1["box-sizing"], item_popup_module_default$3.item, size === "small" && item_popup_module_default$3["is-size-small"], className),
+		value,
 		ref,
-		variant: "body-md",
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItemText, { render }),
-		className: clsx(item_popup_module_default$3["item-label"], className),
+		...itemAriaProps,
 		...restProps,
-		children
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: item_popup_module_default$3["item-icon"],
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
+				icon: check_default,
+				className: item_popup_module_default$3["item-indicator-icon"],
+				size: 16
+			})
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: item_popup_module_default$3["item-text"],
+			children: contentChildren
+		})]
 	});
 });
 
-// packages/ui/build-module/form/primitives/select/item.mjs
+// packages/ui/build-module/form/primitives/select/portal.mjs
+/**
+* Used to apply custom portal behavior to `Select`'s listbox content.
+* `container` defaults to the `@wordpress/ui` compat overlay slot.
+*/
+const Portal = (0, import_element.forwardRef)(function SelectPortal$1({ container, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPortal, {
+		container: container === void 0 ? getWpCompatOverlaySlot() : container,
+		...restProps,
+		ref
+	});
+});
+
+// packages/ui/build-module/form/primitives/select/positioner.mjs
 const STYLE_HASH_ATTRIBUTE$8 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -32002,19 +32574,8 @@ function registerStyle$8(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$8(targetDocument, hash, css);
 }
-registerStyle$8("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$1 = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
-};
+registerStyle$8("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
 registerStyle$8("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
 var item_popup_module_default$2 = {
 	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
@@ -32044,54 +32605,25 @@ var item_popup_module_default$2 = {
 	"status": "_7738d24c2d5904c5__status",
 	"empty": "bb720e36b47aa491__empty"
 };
-registerStyle$8("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-const ITEM_CONTENT_COMPONENTS = {
-	Label: ItemLabel,
-	Description: ItemDescription,
-	descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD,
-	validationMessage: "Select.ItemLabel must be the first direct child of every select item, followed only by Select.ItemDescription components."
+registerStyle$8("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
+var style_module_default$6 = {
+	"positioner": "cc0f09fba19eb669__positioner",
+	"list": "_3a3c25e09f4fd1ec__list"
 };
-const Item = (0, import_element.forwardRef)(function UnforwardedItem({ className, value, size = "default", children, "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...restProps }, ref) {
-	const { contentChildren, itemAriaProps } = useItemContent$1(children, ITEM_CONTENT_COMPONENTS, {
-		"aria-describedby": ariaDescribedBy,
-		"aria-label": ariaLabel,
-		"aria-labelledby": ariaLabelledBy
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectItem, {
-		className: clsx(global_css_defense_module_default$1.div, resets_module_default$1["box-sizing"], item_popup_module_default$2.item, size === "small" && item_popup_module_default$2["is-size-small"], className),
-		value,
-		ref,
-		...itemAriaProps,
-		...restProps,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: item_popup_module_default$2["item-icon"],
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, {
-				icon: check_default,
-				className: item_popup_module_default$2["item-indicator-icon"],
-				size: 16
-			})
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: item_popup_module_default$2["item-text"],
-			children: contentChildren
-		})]
-	});
-});
-
-// packages/ui/build-module/form/primitives/select/portal.mjs
 /**
-* Used to apply custom portal behavior to `Select`'s listbox content.
-* `container` defaults to the `@wordpress/ui` compat overlay slot.
+* Used to apply custom positioning to `Select`'s listbox content.
 */
-const Portal = (0, import_element.forwardRef)(function SelectPortal$1({ container, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPortal, {
-		container: container === void 0 ? getWpCompatOverlaySlot() : container,
-		...restProps,
-		ref
+const Positioner = (0, import_element.forwardRef)(function SelectPositioner$1({ className, alignItemWithTrigger = true, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPositioner, {
+		...ITEM_POPUP_POSITIONER_PROPS,
+		...props,
+		alignItemWithTrigger,
+		ref,
+		className: clsx(resets_module_default["box-sizing"], style_module_default$6.positioner, alignItemWithTrigger && item_popup_module_default$2["is-align-item-with-trigger"], className)
 	});
 });
 
-// packages/ui/build-module/form/primitives/select/positioner.mjs
+// packages/ui/build-module/form/primitives/select/popup.mjs
 const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -32193,8 +32725,6 @@ function registerStyle$7(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
 }
-registerStyle$7("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
 registerStyle$7("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
 var item_popup_module_default$1 = {
 	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
@@ -32225,24 +32755,43 @@ var item_popup_module_default$1 = {
 	"empty": "bb720e36b47aa491__empty"
 };
 registerStyle$7("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
-var style_module_default$6 = {
+var style_module_default$5 = {
 	"positioner": "cc0f09fba19eb669__positioner",
 	"list": "_3a3c25e09f4fd1ec__list"
 };
-/**
-* Used to apply custom positioning to `Select`'s listbox content.
-*/
-const Positioner = (0, import_element.forwardRef)(function SelectPositioner$1({ className, alignItemWithTrigger = true, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPositioner, {
-		...ITEM_POPUP_POSITIONER_PROPS,
-		...props,
-		alignItemWithTrigger,
+const Popup = (0, import_element.forwardRef)(function UnforwardedPopup({ className, portal, positioner, width, children, ...restProps }, ref) {
+	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPopup, {
 		ref,
-		className: clsx(resets_module_default["box-sizing"], style_module_default$6.positioner, alignItemWithTrigger && item_popup_module_default$1["is-align-item-with-trigger"], className)
+		className: clsx(item_popup_module_default$1.popup, getItemPopupWidthClassName(width), className),
+		...restProps,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectList, {
+			className: clsx(item_popup_module_default$1["list-chrome"], style_module_default$5.list),
+			children
+		})
 	});
+	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner, {}), popupContent);
+	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {}), positionedPopup);
 });
 
-// packages/ui/build-module/form/primitives/select/popup.mjs
+// packages/ui/build-module/form/primitives/select/root.mjs
+/**
+* A component that lets users choose one option from a list.
+*
+* Prefer `SelectControl` when using with a standard label and description.
+*
+* When using object values, pass an `items` array so `Select.Trigger` can
+* auto-resolve the selected item's label. By default, items should use a
+* `{ value, label }` shape, or provide `itemToStringLabel` for a custom shape.
+*
+* Object values are compared with `Object.is` by default, so use the same
+* object references for `value` / `defaultValue` and `Select.Item` values, or
+* provide `isItemEqualToValue`.
+*/
+function Root(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectRoot, { ...props }) });
+}
+
+// packages/ui/build-module/form/primitives/select/separator.mjs
 const STYLE_HASH_ATTRIBUTE$6 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -32373,42 +32922,16 @@ var item_popup_module_default = {
 	"status": "_7738d24c2d5904c5__status",
 	"empty": "bb720e36b47aa491__empty"
 };
-registerStyle$6("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
-var style_module_default$5 = {
-	"positioner": "cc0f09fba19eb669__positioner",
-	"list": "_3a3c25e09f4fd1ec__list"
-};
-const Popup = (0, import_element.forwardRef)(function UnforwardedPopup({ className, portal, positioner, width, children, ...restProps }, ref) {
-	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPopup, {
-		ref,
-		className: clsx(item_popup_module_default.popup, getItemPopupWidthClassName(width), className),
-		...restProps,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectList, {
-			className: clsx(item_popup_module_default["list-chrome"], style_module_default$5.list),
-			children
-		})
-	});
-	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner, {}), popupContent);
-	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {}), positionedPopup);
-});
-
-// packages/ui/build-module/form/primitives/select/root.mjs
 /**
-* A component that lets users choose one option from a list.
-*
-* Prefer `SelectControl` when using with a standard label and description.
-*
-* When using object values, pass an `items` array so `Select.Trigger` can
-* auto-resolve the selected item's label. By default, items should use a
-* `{ value, label }` shape, or provide `itemToStringLabel` for a custom shape.
-*
-* Object values are compared with `Object.is` by default, so use the same
-* object references for `value` / `defaultValue` and `Select.Item` values, or
-* provide `isItemEqualToValue`.
+* Renders a visual separator between select items or groups.
 */
-function Root(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectRoot, { ...props }) });
-}
+const Separator = (0, import_element.forwardRef)(function SelectSeparator$1({ className, orientation: _orientation, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectSeparator, {
+		ref,
+		className: clsx(item_popup_module_default.separator, className),
+		...props
+	});
+});
 
 // packages/ui/build-module/form/primitives/select/trigger.mjs
 const STYLE_HASH_ATTRIBUTE$5 = "data-wp-hash";
@@ -32528,7 +33051,7 @@ var select_trigger_module_default = {
 	"trigger-value": "ba63264311039401__trigger-value",
 	"trigger-caret": "cb34834e4f533240__trigger-caret"
 };
-const Trigger = (0, import_element.forwardRef)(function UnforwardedTrigger({ className, size, variant, children, placeholder = (0, import_i18n.__)("Select"), ...restProps }, ref) {
+const Trigger$1 = (0, import_element.forwardRef)(function UnforwardedTrigger({ className, size, variant, children, placeholder = (0, import_i18n.__)("Select"), ...restProps }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout, {
 		className: clsx(focus_module_default["outset-ring--focus-within-except-active"], select_trigger_module_default["trigger-wrapper"], variant === "minimal" && select_trigger_module_default["is-minimal"], className),
 		size,
@@ -32821,6 +33344,116 @@ const InputControl = (0, import_element.forwardRef)(function UnforwardedInputCon
 			details && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Details, { children: details })
 		]
 	});
+});
+
+// packages/ui/build-module/form/select-control/dev-warnings.mjs
+var import_warning = /* @__PURE__ */ __toESM(require_warning(), 1);
+function warnSelectControlProps(items, itemToStringValue) {
+	if (!itemToStringValue && items?.some((item) => item.value === "")) (0, import_warning.default)("SelectControl: empty string item values are treated as empty selections by default. Use a non-empty item value or return a non-empty string from `itemToStringValue`. Use `null` for an option that clears the selection.");
+}
+
+// packages/ui/build-module/form/select-control/item.mjs
+const Item = (0, import_element.forwardRef)(function UnforwardedItem(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+		ref,
+		...props
+	});
+});
+
+// packages/ui/build-module/form/select-control/trigger.mjs
+/**
+* The trigger button for a `SelectControl`.
+*/
+const Trigger = (0, import_element.forwardRef)(function UnforwardedTrigger(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$1, {
+		ref,
+		...props
+	});
+});
+
+// packages/ui/build-module/form/select-control/select-control.mjs
+const DEFAULT_TRIGGER = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger, {});
+/**
+* A complete select field with integrated label and description.
+*/
+const SelectControl$1 = (0, import_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	warnSelectControlProps(items, restProps.itemToStringValue);
+	const triggerElement = useRender({
+		render: trigger ?? DEFAULT_TRIGGER,
+		ref,
+		props: {
+			placeholder,
+			size
+		}
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$1, {
+		className,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label, {
+				hideFromVision: hideLabelFromVision,
+				children: label
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root, {
+				items,
+				...restProps,
+				children: [triggerElement, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup, {
+					width: popupWidth,
+					children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Item, {
+						value: item,
+						label: item.label,
+						disabled: item.disabled,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel, { children: item.label }), item.description ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemDescription, { children: item.description }) : null]
+					}, item.value ?? "null"))
+				})]
+			}),
+			description && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Description, { children: description }),
+			details && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Details, { children: details })
+		]
+	});
+});
+
+// packages/ui/build-module/form/select-control/index.mjs
+Trigger.displayName = "SelectControl.Trigger";
+Group.displayName = "SelectControl.Group";
+GroupLabel.displayName = "SelectControl.GroupLabel";
+Item.displayName = "SelectControl.Item";
+ItemLabel.displayName = "SelectControl.ItemLabel";
+ItemDescription.displayName = "SelectControl.ItemDescription";
+/**
+* A complete select field with integrated label and description.
+*/
+const SelectControl$2 = Object.assign(SelectControl$1, {
+	/**
+	* The trigger button, passed through the `trigger` prop to customize
+	* its props while retaining the control's label and selected content.
+	*/
+	Trigger,
+	/**
+	* Groups related items together with an associated label rendered by
+	* `SelectControl.GroupLabel`.
+	*/
+	Group,
+	/**
+	* Renders a label for a `SelectControl.Group`.
+	*/
+	GroupLabel,
+	/**
+	* An item rendered inside a `SelectControl` popup.
+	*/
+	Item,
+	/**
+	* The primary label of a select item.
+	*/
+	ItemLabel,
+	/**
+	* Supplementary content that describes a select item via
+	* `aria-describedby`.
+	*/
+	ItemDescription,
+	/**
+	* Renders a visual separator between items or groups.
+	*/
+	Separator
 });
 
 // packages/ui/build-module/form/textarea-control/textarea-control.mjs
@@ -33124,7 +33757,7 @@ function ButtonTrigger({ action, onClick, items, variant }) {
 }
 function MenuItemTrigger({ action, onClick, items }) {
 	const label = getActionLabel(action, items, "menu");
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 		disabled: action.disabled,
 		onClick,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: label })
@@ -33167,7 +33800,7 @@ function ActionsMenuGroup({ actions, item, registry, setActiveModalAction }) {
 		},
 		items: [item]
 	}, action.id));
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Group, { children: [renderActionGroup(primaryActions), renderActionGroup(regularActions)] });
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Group$1, { children: [renderActionGroup(primaryActions), renderActionGroup(regularActions)] });
 }
 function ItemActions({ item, actions, isCompact }) {
 	const registry = (0, import_data.useRegistry)();
@@ -33206,7 +33839,7 @@ function ItemActions({ item, actions, isCompact }) {
 }
 function CompactItemActions({ item, actions, isSmall, registry }) {
 	const [activeModalAction, setActiveModalAction] = (0, import_element.useState)(null);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$3, {
 		disabled: !actions.length,
 		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 			size: isSmall ? "small" : "compact",
@@ -33323,7 +33956,7 @@ function ActionButton({ action, selectedItems, actionInProgress, onAction, isMen
 		onAction(action, selectedEligibleItems);
 	};
 	const isBusy = actionInProgress === action.id;
-	if (isMenuItem) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+	if (isMenuItem) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 		onClick,
 		disabled: !!action.disabled || isBusy,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: getActionLabel(action, selectedEligibleItems, "menu") })
@@ -33389,7 +34022,7 @@ function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, se
 				className: "dataviews-bulk-actions__actions",
 				gap: "md",
 				justify: "start",
-				children: isMobile ? actionsToShow.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, {
+				children: isMobile ? actionsToShow.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$3, {
 					disabled: !!actionInProgress,
 					render: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$14, {
 						variant: "outline",
@@ -33398,7 +34031,7 @@ function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, se
 						loading: !!actionInProgress,
 						children: [(0, import_i18n.__)("Actions"), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$14.Icon, { icon: chevron_down_default })]
 					})
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$2, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Group, { children: renderActions(true) }) })] }) : renderActions()
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$2, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Group$1, { children: renderActions(true) }) })] }) : renderActions()
 			}),
 			clearSelection
 		]
@@ -33501,7 +34134,7 @@ function getTableColumns(view, fields) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
 function WithMenuSeparators({ children }) {
-	return import_element.Children.toArray(children).filter(Boolean).map((child, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_element.Fragment, { children: [i > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator, {}), child] }, i));
+	return import_element.Children.toArray(children).filter(Boolean).map((child, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_element.Fragment, { children: [i > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Separator$1, {}), child] }, i));
 }
 const ColumnHeaderMenu = (0, import_element.forwardRef)(function HeaderMenu({ fieldId, view, fields, onChangeView, onHide, setOpenedFilter, isCovered = false, canMove = true, canInsertLeft = true, canInsertRight = true }, ref) {
 	const isSorted = view.sort?.field === fieldId;
@@ -33525,7 +34158,7 @@ const ColumnHeaderMenu = (0, import_element.forwardRef)(function HeaderMenu({ fi
 	const isRtl = (0, import_i18n.isRTL)();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [
 		isCovered && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, { children: header }),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger$2, {
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger$3, {
 			render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 				size: "compact",
 				className: "dataviews-view-table-header-button",
@@ -33559,7 +34192,7 @@ const ColumnHeaderMenu = (0, import_element.forwardRef)(function HeaderMenu({ fi
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: sortLabels[direction] })
 					}, direction))
 				}),
-				canAddFilter && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Group, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+				canAddFilter && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Group$1, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 					prefix: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PrefixIcon, { icon: funnel_default }),
 					onClick: () => {
 						setOpenedFilter(fieldId);
@@ -33576,8 +34209,8 @@ const ColumnHeaderMenu = (0, import_element.forwardRef)(function HeaderMenu({ fi
 					},
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: (0, import_i18n.__)("Add filter") })
 				}) }),
-				(canMove || isHidable || canInsert) && field && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Group, { children: [
-					canMove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+				(canMove || isHidable || canInsert) && field && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Group$1, { children: [
+					canMove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 						prefix: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PrefixIcon, { icon: arrow_left_default }),
 						disabled: isRtl ? index >= visibleFieldIds.length - 1 : index < 1,
 						onClick: () => {
@@ -33592,7 +34225,7 @@ const ColumnHeaderMenu = (0, import_element.forwardRef)(function HeaderMenu({ fi
 						},
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: (0, import_i18n.__)("Move left") })
 					}),
-					canMove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+					canMove && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 						prefix: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PrefixIcon, { icon: arrow_right_default }),
 						disabled: isRtl ? index < 1 : index >= visibleFieldIds.length - 1,
 						onClick: () => {
@@ -33609,7 +34242,7 @@ const ColumnHeaderMenu = (0, import_element.forwardRef)(function HeaderMenu({ fi
 					}),
 					canInsertLeft && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SubmenuRoot, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: (0, import_i18n.__)("Insert left") }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$2, { children: hiddenFields.map((hiddenField) => {
 						const insertIndex = isRtl ? index + 1 : index;
-						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 							onClick: () => {
 								onChangeView({
 									...view,
@@ -33625,7 +34258,7 @@ const ColumnHeaderMenu = (0, import_element.forwardRef)(function HeaderMenu({ fi
 					}) })] }),
 					canInsertRight && !!hiddenFields.length && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SubmenuRoot, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SubmenuTrigger, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: (0, import_i18n.__)("Insert right") }) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$2, { children: hiddenFields.map((hiddenField) => {
 						const insertIndex = isRtl ? index : index + 1;
-						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 							onClick: () => {
 								onChangeView({
 									...view,
@@ -33639,7 +34272,7 @@ const ColumnHeaderMenu = (0, import_element.forwardRef)(function HeaderMenu({ fi
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: hiddenField.label })
 						}, hiddenField.id);
 					}) })] }),
-					isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+					isHidable && field && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 						prefix: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PrefixIcon, { icon: unseen_default }),
 						onClick: () => {
 							onHide(field);
@@ -34666,7 +35299,7 @@ const GridItem$1 = (0, import_element.forwardRef)(function UnforwardedGridItem({
 								expanded: true,
 								style: { height: "auto" },
 								direction: "row",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$1, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexItem, {
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexItem, {
 									className: "dataviews-view-grid__field-name",
 									children: field.header
 								}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$1, { children: field.label })] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexItem, {
@@ -35006,7 +35639,7 @@ function ListItem({ view, actions, idPrefix, isSelected, item, titleField, media
 			item
 		}), !hasOnlyOnePrimaryAction && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			role: "gridcell",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$3, {
 				disabled: !actions.length,
 				render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Composite.Item, {
 					id: generateDropdownTriggerCompositeId(idPrefix),
@@ -35533,14 +36166,14 @@ function DataViewsPageSelect({ className }) {
 						page: +newValue
 					});
 				},
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger, {
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$1, {
 					className: "dataviews-pagination__page-select-trigger",
 					size: "small",
 					variant: "minimal",
 					"aria-label": (0, import_i18n.__)("Current page")
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup, {
 					width: "content",
-					children: pageSelectOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item, {
+					children: pageSelectOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
 						value: option.value,
 						size: "small",
 						"aria-label": option["aria-label"],
@@ -43770,7 +44403,7 @@ function OperatorSelector({ filter, view, onChangeView }) {
 					filters: newFilters
 				});
 			},
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$1, {
 				size: "small",
 				variant: "minimal",
 				"aria-label": (0, import_i18n.__)("Conditions"),
@@ -43778,7 +44411,7 @@ function OperatorSelector({ filter, view, onChangeView }) {
 				style: { minWidth: 0 }
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup, {
 				width: "content",
-				children: operatorOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item, {
+				children: operatorOptions.map((option) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
 					value: option.value,
 					size: "small",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel, { children: option.label })
@@ -43853,7 +44486,7 @@ function Filter({ addFilterRef, openedFilter, fields, ...commonProps }) {
 		},
 		renderToggle: ({ isOpen, onToggle }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "dataviews-filters__summary-chip-container",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$1, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: clsx("dataviews-filters__summary-chip", {
 					"has-reset": canResetOrRemove,
 					"has-values": hasValues,
@@ -43879,7 +44512,7 @@ function Filter({ addFilterRef, openedFilter, fields, ...commonProps }) {
 					filterInView,
 					filter
 				})
-			}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$1, { children: (0, import_i18n.sprintf)((0, import_i18n.__)("Filter by: %1$s"), filter.name.toLowerCase()) })] }), canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$1, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$1, { children: (0, import_i18n.sprintf)((0, import_i18n.__)("Filter by: %1$s"), filter.name.toLowerCase()) })] }), canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 				className: clsx("dataviews-filters__summary-chip-remove", { "has-values": hasValues }),
 				"aria-label": resetOrRemoveLabel,
 				onClick: () => {
@@ -43916,11 +44549,11 @@ function Filter({ addFilterRef, openedFilter, fields, ...commonProps }) {
 // packages/dataviews/build-module/components/dataviews-filters/add-filter.mjs
 function AddFilterMenu({ filters, view, onChangeView, setOpenedFilter, triggerProps }) {
 	const inactiveFilters = filters.filter((filter) => !filter.isVisible);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$3, {
 		...triggerProps,
 		disabled: !inactiveFilters.length || triggerProps.disabled
 	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$2, { children: inactiveFilters.map((filter) => {
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 			onClick: () => {
 				setOpenedFilter(filter.field);
 				onChangeView({
@@ -44223,7 +44856,6 @@ const DataViewsSearch = (0, import_element.memo)(function Search({ label }) {
 });
 
 // packages/dataviews/build-module/components/dataviews-view-config/index.mjs
-var import_warning = /* @__PURE__ */ __toESM(require_warning(), 1);
 const DATAVIEWS_CONFIG_POPOVER_PROPS = {
 	className: "dataviews-config__popover",
 	placement: "bottom-end",
@@ -44234,7 +44866,7 @@ function ViewTypeMenu() {
 	const availableLayouts = Object.keys(defaultLayouts);
 	if (availableLayouts.length <= 1) return null;
 	const activeView = VIEW_LAYOUTS.find((v) => view.type === v.type);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$5, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$3, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 		size: "compact",
 		icon: activeView?.icon,
 		label: (0, import_i18n.__)("Layout")
@@ -44280,16 +44912,19 @@ function SortFieldControl() {
 			};
 		});
 	}, [fields]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.SelectControl, {
+	const selectedSortItem = orderOptions.find((item) => item.value === view.sort?.field) ?? orderOptions[0];
+	if (!selectedSortItem) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectControl$2, {
 		label: (0, import_i18n.__)("Sort by"),
-		value: view.sort?.field,
-		options: orderOptions,
-		onChange: (value) => {
+		value: selectedSortItem,
+		items: orderOptions,
+		onValueChange: (item) => {
+			if (!item || item.value === null || item.value === selectedSortItem.value) return;
 			onChangeView({
 				...view,
 				sort: {
 					direction: view?.sort?.direction || "desc",
-					field: value
+					field: item.value
 				},
 				showLevels: false
 			});
@@ -44739,6 +45374,7 @@ function RelativeDateControl({ className, data, field, onChange, hideLabelFromVi
 	});
 	const fieldValue = getValue({ item: data });
 	const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
+	const selectedUnitItem = options.find((item) => item.value === unit) ?? options[0];
 	const onChangeValue = (0, import_element.useCallback)((newValue) => onChange(setValue({
 		item: data,
 		value: {
@@ -44780,12 +45416,14 @@ function RelativeDateControl({ className, data, field, onChange, hideLabelFromVi
 				value: relValue,
 				onChange: onChangeValue,
 				disabled
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.SelectControl, {
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectControl$2, {
 				className: "dataviews-controls__relative-date-unit",
 				label: (0, import_i18n.__)("Unit"),
-				value: unit,
-				options,
-				onChange: onChangeUnit,
+				value: selectedUnitItem,
+				items: options,
+				onValueChange: (item) => {
+					if (item?.value && item.value !== selectedUnitItem.value) onChangeUnit(item.value);
+				},
 				hideLabelFromVision: true,
 				disabled
 			})]

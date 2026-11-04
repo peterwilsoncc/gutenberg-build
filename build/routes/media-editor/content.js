@@ -33997,7 +33997,7 @@ const DEFAULT_TRIGGER = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger, {})
 /**
 * A complete select field with integrated label and description.
 */
-const SelectControl$3 = (0, import_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+const SelectControl$1 = (0, import_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 	warnSelectControlProps(items, restProps.itemToStringValue);
 	const triggerElement = useRender({
 		render: trigger ?? DEFAULT_TRIGGER,
@@ -34043,7 +34043,7 @@ ItemDescription.displayName = "SelectControl.ItemDescription";
 /**
 * A complete select field with integrated label and description.
 */
-const SelectControl$2 = Object.assign(SelectControl$3, {
+const SelectControl$2 = Object.assign(SelectControl$1, {
 	/**
 	* The trigger button, passed through the `trigger` prop to customize
 	* its props while retaining the control's label and selected content.
@@ -35714,6 +35714,7 @@ function RelativeDateControl({ className, data, field, onChange, hideLabelFromVi
 	});
 	const fieldValue = getValue({ item: data });
 	const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
+	const selectedUnitItem = options.find((item) => item.value === unit) ?? options[0];
 	const onChangeValue = (0, import_element.useCallback)((newValue) => onChange(setValue({
 		item: data,
 		value: {
@@ -35755,12 +35756,14 @@ function RelativeDateControl({ className, data, field, onChange, hideLabelFromVi
 				value: relValue,
 				onChange: onChangeValue,
 				disabled
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.SelectControl, {
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectControl$2, {
 				className: "dataviews-controls__relative-date-unit",
 				label: (0, import_i18n.__)("Unit"),
-				value: unit,
-				options,
-				onChange: onChangeUnit,
+				value: selectedUnitItem,
+				items: options,
+				onValueChange: (item) => {
+					if (item?.value && item.value !== selectedUnitItem.value) onChangeUnit(item.value);
+				},
 				hideLabelFromVision: true,
 				disabled
 			})]

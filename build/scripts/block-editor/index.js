@@ -56158,7 +56158,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$4 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	const SelectControl$1 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 		warnSelectControlProps(items, restProps.itemToStringValue);
 		const triggerElement = useRender({
 			render: trigger ?? DEFAULT_TRIGGER,
@@ -56204,7 +56204,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$3 = Object.assign(SelectControl$4, {
+	const SelectControl$2 = Object.assign(SelectControl$1, {
 		/**
 		* The trigger button, passed through the `trigger` prop to customize
 		* its props while retaining the control's label and selected content.
@@ -83175,16 +83175,19 @@ If there's a particular need for this, please submit a feature request at https:
 				};
 			});
 		}, [fields]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+		const selectedSortItem = orderOptions.find((item) => item.value === view.sort?.field) ?? orderOptions[0];
+		if (!selectedSortItem) return null;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 			label: (0, _wordpress_i18n.__)("Sort by"),
-			value: view.sort?.field,
-			options: orderOptions,
-			onChange: (value) => {
+			value: selectedSortItem,
+			items: orderOptions,
+			onValueChange: (item) => {
+				if (!item || item.value === null || item.value === selectedSortItem.value) return;
 				onChangeView({
 					...view,
 					sort: {
 						direction: view?.sort?.direction || "desc",
-						field: value
+						field: item.value
 					},
 					showLevels: false
 				});
@@ -83634,6 +83637,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const fieldValue = getValue({ item: data });
 		const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
+		const selectedUnitItem = options.find((item) => item.value === unit) ?? options[0];
 		const onChangeValue = (0, _wordpress_element.useCallback)((newValue) => onChange(setValue({
 			item: data,
 			value: {
@@ -83675,12 +83679,14 @@ If there's a particular need for this, please submit a feature request at https:
 					value: relValue,
 					onChange: onChangeValue,
 					disabled
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 					className: "dataviews-controls__relative-date-unit",
 					label: (0, _wordpress_i18n.__)("Unit"),
-					value: unit,
-					options,
-					onChange: onChangeUnit,
+					value: selectedUnitItem,
+					items: options,
+					onValueChange: (item) => {
+						if (item?.value && item.value !== selectedUnitItem.value) onChangeUnit(item.value);
+					},
 					hideLabelFromVision: true,
 					disabled
 				})]
@@ -92024,7 +92030,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const selectedOption = value ? options.find((option) => option.value === value) || DEFAULT_OPTION : DEFAULT_OPTION;
 		return options.length > 1 ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls, {
 			group: "position",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 				label: (0, _wordpress_i18n.__)("Position"),
 				hideLabelFromVision: true,
 				description: stickyHelpText,
@@ -99140,7 +99146,7 @@ If there's a particular need for this, please submit a feature request at https:
 					value: currentValue,
 					withInputField: false
 				}),
-				hasPresets && !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
+				hasPresets && !showRangeControl && !showCustomValueControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 					label: ariaLabel,
 					hideLabelFromVision: true,
 					items: options,
@@ -99150,7 +99156,7 @@ If there's a particular need for this, please submit a feature request at https:
 						else onChange(getNewPresetValue(selection.value, "selectList"));
 					},
 					value: options.find((option) => option.value === String(currentValue)) ?? options[0],
-					trigger: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Trigger, {
+					trigger: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Trigger, {
 						className: "preset-input-control__custom-select-control",
 						onBlur: onMouseOut,
 						onFocus: onMouseOver,
@@ -99663,7 +99669,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 			direction: "column",
 			gap: "sm",
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(SelectControl$3, {
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(SelectControl$2, {
 				label: (0, _wordpress_i18n.__)("Choose a format"),
 				items: [...suggestedOptions, customOption],
 				value: isCustom ? customOption : suggestedOptions.find((option) => option.value === format) ?? customOption,
@@ -99676,14 +99682,14 @@ If there's a particular need for this, please submit a feature request at https:
 					}
 				},
 				children: [
-					suggestedOptions.map((option) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Item, {
+					suggestedOptions.map((option) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Item, {
 						value: option,
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.ItemLabel, { children: option.label })
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.ItemLabel, { children: option.label })
 					}, option.value)),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Separator, {}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(SelectControl$3.Item, {
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Separator, {}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(SelectControl$2.Item, {
 						value: customOption,
-						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.ItemLabel, { children: customOption.label }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.ItemDescription, { children: customOption.description })]
+						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.ItemLabel, { children: customOption.label }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.ItemDescription, { children: customOption.description })]
 					})
 				]
 			}), isCustom && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputControl, {
@@ -102972,7 +102978,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalVStack, {
 			className: "block-editor-image-size-control",
 			spacing: "4",
-			children: [imageSizeOptions && imageSizeOptions.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
+			children: [imageSizeOptions && imageSizeOptions.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 				label: (0, _wordpress_i18n.__)("Resolution"),
 				value: imageSizeOptions.find((item) => item.value === slug) ?? imageSizeOptions.find((item) => !item.disabled) ?? null,
 				items: imageSizeOptions,
@@ -108836,7 +108842,7 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!items.length) return null;
 		const visibleItems = [DEFAULT_ITEM, ...items];
 		const selectedItem = items.find((item) => item.value === value) ?? DEFAULT_ITEM;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 			className: "block-editor-background-clip-control",
 			label: (0, _wordpress_i18n.__)("Clip"),
 			items: visibleItems,
@@ -108845,10 +108851,10 @@ If there's a particular need for this, please submit a feature request at https:
 				if (!item || item.value === DEFAULT_ITEM.value || item.value === null) onChange(void 0);
 				else onChange(item.value);
 			},
-			children: visibleItems.map((item) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Item, {
+			children: visibleItems.map((item) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Item, {
 				value: item,
 				label: item.label,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.ItemLabel, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.ItemLabel, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
 					className: "block-editor-background-clip-control__option",
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BackgroundClipIcon, { value: item.value }), item.label]
 				}) })
@@ -110246,7 +110252,7 @@ If there's a particular need for this, please submit a feature request at https:
 					style: { textShadow: previewValue },
 					children: (0, _wordpress_i18n.__)("Code is poetry")
 				}),
-				presets.length >= PRESETS_SELECT_THRESHOLD ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
+				presets.length >= PRESETS_SELECT_THRESHOLD ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 					hideLabelFromVision: true,
 					label: (0, _wordpress_i18n.__)("Text shadow preset"),
 					value: items.find((item) => item.value === (activeValue || DEFAULT_VALUE)) ?? items[0],
@@ -114942,23 +114948,23 @@ If there's a particular need for this, please submit a feature request at https:
 			onDeselect: () => onChange(void 0),
 			isShownByDefault,
 			panelId,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 				label: (0, _wordpress_i18n.__)("Aspect ratio"),
 				value: resolvedOptions.find((item) => item.value === displayValue) ?? resolvedOptions.find((item) => !item.disabled) ?? null,
 				items: visibleOptions,
 				onValueChange: (item) => onChange(item?.value ?? ""),
-				trigger: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Trigger, { children: (item) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+				trigger: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Trigger, { children: (item) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
 					className: "block-editor-dimensions-tool__aspect-ratio-option",
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AspectRatioIcon, { ratio: item.value === "custom" ? value ?? "" : item.value ?? "" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 						className: "block-editor-dimensions-tool__aspect-ratio-label",
 						children: item.label
 					})]
 				}) }),
-				children: visibleOptions.map((item) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.Item, {
+				children: visibleOptions.map((item) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Item, {
 					value: item,
 					label: item.label,
 					disabled: item.disabled,
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3.ItemLabel, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.ItemLabel, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
 						className: "block-editor-dimensions-tool__aspect-ratio-option",
 						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AspectRatioIcon, { ratio: item.value }), item.label]
 					}) })
@@ -120501,7 +120507,7 @@ If there's a particular need for this, please submit a feature request at https:
 			isShownByDefault,
 			panelId,
 			resetAllFilter,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 				label: (0, _wordpress_i18n.__)("Resolution"),
 				value: options.find((item) => item.value === displayValue) ?? options.find((item) => !item.disabled) ?? null,
 				items: options,
@@ -120591,7 +120597,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalVStack, {
 			spacing: 2,
 			className: "block-editor-html-element-control",
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$3, {
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 				label: (0, _wordpress_i18n.__)("HTML element"),
 				items: modifiedOptions,
 				value: modifiedOptions.find((item) => item.value === tagName) ?? modifiedOptions.find((item) => !item.disabled) ?? null,

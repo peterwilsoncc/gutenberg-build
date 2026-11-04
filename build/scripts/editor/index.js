@@ -52796,7 +52796,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$5 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	const SelectControl$3 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 		warnSelectControlProps(items, restProps.itemToStringValue);
 		const triggerElement = useRender({
 			render: trigger ?? DEFAULT_TRIGGER,
@@ -52842,7 +52842,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$4 = Object.assign(SelectControl$5, {
+	const SelectControl$2 = Object.assign(SelectControl$3, {
 		/**
 		* The trigger button, passed through the `trigger` prop to customize
 		* its props while retaining the control's label and selected content.
@@ -79293,16 +79293,19 @@ If there's a particular need for this, please submit a feature request at https:
 				};
 			});
 		}, [fields]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+		const selectedSortItem = orderOptions.find((item) => item.value === view.sort?.field) ?? orderOptions[0];
+		if (!selectedSortItem) return null;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 			label: (0, _wordpress_i18n.__)("Sort by"),
-			value: view.sort?.field,
-			options: orderOptions,
-			onChange: (value) => {
+			value: selectedSortItem,
+			items: orderOptions,
+			onValueChange: (item) => {
+				if (!item || item.value === null || item.value === selectedSortItem.value) return;
 				onChangeView({
 					...view,
 					sort: {
 						direction: view?.sort?.direction || "desc",
-						field: value
+						field: item.value
 					},
 					showLevels: false
 				});
@@ -79752,6 +79755,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const fieldValue = getValue({ item: data });
 		const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
+		const selectedUnitItem = options.find((item) => item.value === unit) ?? options[0];
 		const onChangeValue = (0, _wordpress_element.useCallback)((newValue) => onChange(setValue({
 			item: data,
 			value: {
@@ -79793,12 +79797,14 @@ If there's a particular need for this, please submit a feature request at https:
 					value: relValue,
 					onChange: onChangeValue,
 					disabled
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 					className: "dataviews-controls__relative-date-unit",
 					label: (0, _wordpress_i18n.__)("Unit"),
-					value: unit,
-					options,
-					onChange: onChangeUnit,
+					value: selectedUnitItem,
+					items: options,
+					onValueChange: (item) => {
+						if (item?.value && item.value !== selectedUnitItem.value) onChangeUnit(item.value);
+					},
 					hideLabelFromVision: true,
 					disabled
 				})]
@@ -88235,7 +88241,7 @@ If there's a particular need for this, please submit a feature request at https:
 					status: "warning",
 					isDismissible: false,
 					children: (0, _wordpress_i18n.__)("The posts page template cannot be changed.")
-				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$4, {
+				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 					hideLabelFromVision: true,
 					label: (0, _wordpress_i18n.__)("Template"),
 					value: selectedOption ?? null,
@@ -99927,7 +99933,7 @@ If there's a particular need for this, please submit a feature request at https:
 					withLabels: true,
 					disabled
 				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$4, {
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
 					label: (0, _wordpress_i18n.__)("Aspect ratio"),
 					value: items.find((item) => item.value === aspectRatioValue) ?? null,
 					onValueChange: (item) => {

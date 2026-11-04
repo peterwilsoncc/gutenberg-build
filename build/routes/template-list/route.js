@@ -918,6 +918,11 @@ function useTimeout() {
 	return timeout;
 }
 
+// \0wp-global:@wordpress/warning
+var require_warning = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.warning;
+}));
+
 // \0wp-global:@wordpress/primitives
 var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.primitives;
@@ -953,6 +958,240 @@ const Icon = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, siz
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
 const error = createLogOnce("error", "Base UI");
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useControlled.mjs
+function useControlled({ controlled, default: defaultProp, name, state = "value" }) {
+	const { current: isControlled } = import__wp_global_react.useRef(controlled !== void 0);
+	const [valueState, setValue] = import__wp_global_react.useState(() => defaultProp);
+	const value = isControlled && controlled !== void 0 ? controlled : valueState;
+	{
+		import__wp_global_react.useEffect(() => {
+			if (isControlled !== (controlled !== void 0)) error([
+				`A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`,
+				"Elements should not switch from uncontrolled to controlled (or vice versa).",
+				`Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`,
+				"The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.",
+				"More info: https://fb.me/react-controlled-components"
+			].join("\n"));
+		}, [
+			state,
+			name,
+			controlled
+		]);
+		const { current: defaultValue } = import__wp_global_react.useRef(defaultProp);
+		import__wp_global_react.useEffect(() => {
+			if (!isControlled && serializeToDevModeString(defaultValue) !== serializeToDevModeString(defaultProp)) error([`A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
+		}, [defaultProp]);
+	}
+	return [value, import__wp_global_react.useCallback((newValue) => {
+		if (!isControlled) setValue(newValue);
+	}, [])];
+}
+function serializeToDevModeString(input) {
+	let nextId = 0;
+	const seen = /* @__PURE__ */ new WeakMap();
+	try {
+		return JSON.stringify(input, function replacer(key, value) {
+			if (key === "_owner" && this != null && typeof this === "object" && "$$typeof" in this) return;
+			if (typeof value === "bigint") return `__bigint__:${value}`;
+			if (value !== null && typeof value === "object") {
+				const id = seen.get(value);
+				if (id !== void 0) return `__object__:${id}`;
+				seen.set(value, nextId);
+				nextId += 1;
+			}
+			return value;
+		}) ?? `__top__:${typeof input}`;
+	} catch {
+		return "__unserializable__";
+	}
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeListContext.mjs
+const CompositeListContext = /*#__PURE__*/ import__wp_global_react.createContext({
+	register: () => {},
+	unregister: () => {},
+	subscribeMapChange: () => () => {},
+	nextIndexRef: { current: 0 }
+});
+CompositeListContext.displayName = "CompositeListContext";
+function useCompositeListContext() {
+	return import__wp_global_react.useContext(CompositeListContext);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/CompositeList.mjs
+/**
+* Provides context for a list of items in a composite component.
+*/
+function CompositeList(props) {
+	const { children, elementsRef, labelsRef, onMapChange: onMapChangeProp } = props;
+	const onMapChange = useStableCallback(onMapChangeProp);
+	const [, setMapTick] = import__wp_global_react.useState(0);
+	const listeners = useRefWithInit(createListeners).current;
+	const map = useRefWithInit(createMap).current;
+	const nextIndexRef = import__wp_global_react.useRef(0);
+	const isDirtyRef = import__wp_global_react.useRef(true);
+	const itemsRef = import__wp_global_react.useRef(null);
+	const mutationObserverRef = import__wp_global_react.useRef(null);
+	const scheduleMapUpdate = useStableCallback(() => {
+		if (isDirtyRef.current) return;
+		isDirtyRef.current = true;
+		setMapTick((tick) => tick + 1);
+	});
+	const register = useStableCallback((node, registration) => {
+		map.set(node, registration);
+		scheduleMapUpdate();
+	});
+	const unregister = useStableCallback((node) => {
+		map.delete(node);
+		scheduleMapUpdate();
+	});
+	const syncRefs = useStableCallback((items) => {
+		const nextMap = /* @__PURE__ */ new Map();
+		elementsRef.current.length = 0;
+		if (labelsRef) labelsRef.current.length = 0;
+		items.forEach((item) => {
+			nextMap.set(item.element, {
+				...item.registration.metadata ?? {},
+				index: item.index
+			});
+			elementsRef.current[item.index] = item.element;
+			if (labelsRef) labelsRef.current[item.index] = item.registration.label !== void 0 ? item.registration.label : item.registration.textRef?.current?.textContent ?? item.element.textContent;
+		});
+		nextIndexRef.current = elementsRef.current.length;
+		return nextMap;
+	});
+	function observe(sortedNodes) {
+		mutationObserverRef.current?.disconnect();
+		mutationObserverRef.current = null;
+		if (typeof MutationObserver !== "function" || sortedNodes.length < 2) return;
+		const mutationObserver = new MutationObserver((entries) => {
+			if (!hasMovedNode(entries)) return;
+			let previousConnectedNode = null;
+			for (const node of sortedNodes) {
+				if (!node.isConnected) continue;
+				if (previousConnectedNode && sortByDocumentPosition(previousConnectedNode, node) > 0) {
+					mutationObserver.disconnect();
+					scheduleMapUpdate();
+					return;
+				}
+				previousConnectedNode = node;
+			}
+		});
+		mutationObserverRef.current = mutationObserver;
+		const roots = /* @__PURE__ */ new Set();
+		for (let i = 1; i < sortedNodes.length; i += 1) {
+			const root = getCommonAncestor(sortedNodes[i - 1], sortedNodes[i]);
+			if (root) roots.add(root);
+		}
+		roots.forEach((root) => mutationObserver.observe(root, { childList: true }));
+	}
+	const flush = useStableCallback(() => {
+		const [items, automaticNodes] = getCompositeListSnapshot(map);
+		const nextMap = syncRefs(items);
+		const previousItems = itemsRef.current;
+		const changed = !previousItems || previousItems.length !== items.length || items.some((item, index) => {
+			const previousItem = previousItems[index];
+			return item.index !== previousItem.index || item.element !== previousItem.element || item.registration.index !== previousItem.registration.index || item.registration.metadata !== previousItem.registration.metadata;
+		});
+		observe(automaticNodes);
+		itemsRef.current = items;
+		isDirtyRef.current = false;
+		if (!changed) return;
+		listeners.forEach((listener) => listener(nextMap));
+		onMapChange(nextMap);
+	});
+	useIsoLayoutEffect(() => {
+		if (!isDirtyRef.current && itemsRef.current) syncRefs(itemsRef.current);
+		return () => {
+			elementsRef.current = [];
+			if (labelsRef) labelsRef.current = [];
+		};
+	}, [
+		elementsRef,
+		labelsRef,
+		syncRefs
+	]);
+	useIsoLayoutEffect(() => {
+		if (isDirtyRef.current) flush();
+	});
+	useIsoLayoutEffect(() => {
+		return () => {
+			mutationObserverRef.current?.disconnect();
+			isDirtyRef.current = true;
+		};
+	}, []);
+	const subscribeMapChange = useStableCallback((fn) => {
+		listeners.add(fn);
+		return () => {
+			listeners.delete(fn);
+		};
+	});
+	const contextValue = import__wp_global_react.useMemo(() => ({
+		register,
+		unregister,
+		subscribeMapChange,
+		nextIndexRef
+	}), [
+		register,
+		unregister,
+		subscribeMapChange,
+		nextIndexRef
+	]);
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsx)(CompositeListContext.Provider, {
+		value: contextValue,
+		children
+	});
+}
+function createMap() {
+	return /* @__PURE__ */ new Map();
+}
+function createListeners() {
+	return /* @__PURE__ */ new Set();
+}
+function getCompositeListSnapshot(map) {
+	const reservedIndices = /* @__PURE__ */ new Set();
+	const items = [];
+	const automaticItems = [];
+	map.forEach((registration, node) => {
+		if (!node.isConnected) return;
+		const index = registration.index;
+		const item = {
+			index: index ?? -1,
+			element: node,
+			registration
+		};
+		if (index === null) automaticItems.push(item);
+		else if (index >= 0) {
+			reservedIndices.add(index);
+			items.push(item);
+		}
+	});
+	let nextAutomaticIndex = 0;
+	automaticItems.sort((a, b) => sortByDocumentPosition(a.element, b.element));
+	automaticItems.forEach((item) => {
+		while (reservedIndices.has(nextAutomaticIndex)) nextAutomaticIndex += 1;
+		item.index = nextAutomaticIndex;
+		items.push(item);
+		nextAutomaticIndex += 1;
+	});
+	if (reservedIndices.size > 0) items.sort((a, b) => a.index - b.index);
+	return [items, automaticItems.map((item) => item.element)];
+}
+function getCommonAncestor(firstNode, lastNode) {
+	let ancestor = firstNode.parentElement;
+	while (ancestor && !ancestor.contains(lastNode)) ancestor = ancestor.parentElement;
+	return ancestor;
+}
+function hasMovedNode(entries) {
+	for (const entry of entries) for (let i = 0; i < entry.removedNodes.length; i += 1) if (entry.removedNodes[i].isConnected) return true;
+	return false;
+}
+function sortByDocumentPosition(a, b) {
+	if (a.nextElementSibling === b) return -1;
+	if (b.nextElementSibling === a) return 1;
+	return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+}
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useForcedRerendering.mjs
 /**
@@ -992,7 +1231,7 @@ const maybeReactUseId = SafeReact.useId;
 * @param {string | undefined} prefix prefixes the generated id when provided
 * @returns {string | undefined}
 */
-function useId$3(idOverride, prefix) {
+function useId$4(idOverride, prefix) {
 	if (maybeReactUseId !== void 0) {
 		const reactId = maybeReactUseId();
 		return idOverride ?? (prefix ? `${prefix}-${reactId}` : reactId);
@@ -1007,7 +1246,7 @@ function useId$3(idOverride, prefix) {
 * @returns {string | undefined}
 */
 function useBaseUiId(idOverride) {
-	return useId$3(idOverride, "base-ui");
+	return useId$4(idOverride, "base-ui");
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/createBaseUIEventDetails.mjs
@@ -1055,10 +1294,63 @@ const triggerPress = "trigger-press";
 const triggerHover = "trigger-hover";
 const triggerFocus = "trigger-focus";
 const outsidePress = "outside-press";
+const itemPress = "item-press";
 const focusOut = "focus-out";
 const escapeKey = "escape-key";
+const listNavigation = "list-navigation";
+const cancelOpen = "cancel-open";
 const disabled = "disabled";
 const imperativeAction = "imperative-action";
+const windowResize = "window-resize";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/list/useCompositeListItem.mjs
+/**
+* Used to register a list item and its index (DOM position) in the `CompositeList`.
+*/
+function useCompositeListItem(params = {}) {
+	const { guess, label, metadata, textRef, index: externalIndex } = params;
+	const { register, unregister, subscribeMapChange, nextIndexRef } = useCompositeListContext();
+	const indexRef = import__wp_global_react.useRef(-1);
+	const [internalIndex, setInternalIndex] = import__wp_global_react.useState(externalIndex == null && guess ? () => {
+		if (indexRef.current === -1) {
+			const newIndex = nextIndexRef.current;
+			nextIndexRef.current += 1;
+			indexRef.current = newIndex;
+		}
+		return indexRef.current;
+	} : -1);
+	const index = externalIndex ?? internalIndex;
+	const componentRef = import__wp_global_react.useRef(null);
+	const ref = import__wp_global_react.useCallback((node) => {
+		const previousNode = componentRef.current;
+		if (previousNode) unregister(previousNode);
+		componentRef.current = node;
+		if (node) register(node, {
+			metadata: metadata ?? null,
+			index: externalIndex ?? null,
+			label,
+			textRef
+		});
+	}, [
+		externalIndex,
+		register,
+		unregister,
+		metadata,
+		label,
+		textRef
+	]);
+	useIsoLayoutEffect(() => {
+		if (externalIndex != null) return;
+		return subscribeMapChange((map) => {
+			const i = componentRef.current ? map.get(componentRef.current)?.index : null;
+			if (i != null) setInternalIndex(i);
+		});
+	}, [externalIndex, subscribeMapChange]);
+	return {
+		ref,
+		index
+	};
+}
 
 // node_modules/.store/@floating-ui/utils@0.2.12-gOxTzMf36nCrbeHpEew-rw/node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
 function hasWindow() {
@@ -1467,7 +1759,207 @@ const voiceOver = apple;
 /** Running in jsdom or HappyDOM (used by unit tests). */
 const jsdom = /jsdom|happydom/.test(lowerUserAgent);
 
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useScrollLock.mjs
+let originalHtmlStyles = {};
+let originalBodyStyles = {};
+let originalHtmlScrollBehavior = "";
+function getViewportScroller(html, body) {
+	return isOverflowElement(html) ? html : body;
+}
+function isPageScrollLocked(win, html, body) {
+	return /hidden|clip/.test(win.getComputedStyle(getViewportScroller(html, body)).overflowY);
+}
+function hasInsetScrollbars(referenceElement) {
+	if (typeof document === "undefined") return false;
+	const doc = ownerDocument(referenceElement);
+	return getWindow(doc).innerWidth - doc.documentElement.clientWidth > 0;
+}
+function supportsStableScrollbarGutter(referenceElement) {
+	if (!(typeof CSS !== "undefined" && CSS.supports && CSS.supports("scrollbar-gutter", "stable")) || typeof document === "undefined") return false;
+	const doc = ownerDocument(referenceElement);
+	const html = doc.documentElement;
+	const body = doc.body;
+	const scrollContainer = getViewportScroller(html, body);
+	const originalScrollContainerOverflowY = scrollContainer.style.overflowY;
+	const originalHtmlStyleGutter = html.style.scrollbarGutter;
+	html.style.scrollbarGutter = "stable";
+	scrollContainer.style.overflowY = "scroll";
+	const before = scrollContainer.offsetWidth;
+	scrollContainer.style.overflowY = "hidden";
+	const after = scrollContainer.offsetWidth;
+	scrollContainer.style.overflowY = originalScrollContainerOverflowY;
+	html.style.scrollbarGutter = originalHtmlStyleGutter;
+	return before === after;
+}
+function preventScrollOverlayScrollbars(referenceElement) {
+	const doc = ownerDocument(referenceElement);
+	const html = doc.documentElement;
+	const body = doc.body;
+	const elementToLock = getViewportScroller(html, body);
+	const originalElementToLockStyles = {
+		overflowY: elementToLock.style.overflowY,
+		overflowX: elementToLock.style.overflowX
+	};
+	Object.assign(elementToLock.style, {
+		overflowY: "hidden",
+		overflowX: "hidden"
+	});
+	return () => {
+		Object.assign(elementToLock.style, originalElementToLockStyles);
+	};
+}
+function preventScrollInsetScrollbars(referenceElement) {
+	const doc = ownerDocument(referenceElement);
+	const html = doc.documentElement;
+	const body = doc.body;
+	const win = getWindow(html);
+	let scrollTop = 0;
+	let scrollLeft = 0;
+	let updateGutterOnly = false;
+	const resizeFrame = AnimationFrame.create();
+	if (webkit && (win.visualViewport?.scale ?? 1) !== 1) return () => {};
+	function lockScroll() {
+		const htmlStyles = win.getComputedStyle(html);
+		const bodyStyles = win.getComputedStyle(body);
+		const scrollbarGutterValue = (htmlStyles.scrollbarGutter || "").includes("both-edges") ? "stable both-edges" : "stable";
+		scrollTop = html.scrollTop;
+		scrollLeft = html.scrollLeft;
+		originalHtmlStyles = {
+			scrollbarGutter: html.style.scrollbarGutter,
+			overflowY: html.style.overflowY,
+			overflowX: html.style.overflowX
+		};
+		originalHtmlScrollBehavior = html.style.scrollBehavior;
+		originalBodyStyles = {
+			position: body.style.position,
+			height: body.style.height,
+			width: body.style.width,
+			boxSizing: body.style.boxSizing,
+			overflowY: body.style.overflowY,
+			overflowX: body.style.overflowX,
+			scrollBehavior: body.style.scrollBehavior
+		};
+		const isScrollableY = html.scrollHeight > html.clientHeight;
+		const isScrollableX = html.scrollWidth > html.clientWidth;
+		const hasConstantOverflowY = htmlStyles.overflowY === "scroll" || bodyStyles.overflowY === "scroll";
+		const hasConstantOverflowX = htmlStyles.overflowX === "scroll" || bodyStyles.overflowX === "scroll";
+		const scrollbarWidth = Math.max(0, win.innerWidth - body.clientWidth);
+		const scrollbarHeight = Math.max(0, win.innerHeight - body.clientHeight);
+		const marginY = parseFloat(bodyStyles.marginTop) + parseFloat(bodyStyles.marginBottom);
+		const marginX = parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight);
+		const elementToLock = getViewportScroller(html, body);
+		updateGutterOnly = supportsStableScrollbarGutter(referenceElement);
+		if (updateGutterOnly) {
+			html.style.scrollbarGutter = scrollbarGutterValue;
+			elementToLock.style.overflowY = "hidden";
+			elementToLock.style.overflowX = "hidden";
+			return;
+		}
+		Object.assign(html.style, {
+			scrollbarGutter: scrollbarGutterValue,
+			overflowY: "hidden",
+			overflowX: "hidden"
+		});
+		if (isScrollableY || hasConstantOverflowY) html.style.overflowY = "scroll";
+		if (isScrollableX || hasConstantOverflowX) html.style.overflowX = "scroll";
+		Object.assign(body.style, {
+			position: "relative",
+			height: marginY || scrollbarHeight ? `calc(100dvh - ${marginY + scrollbarHeight}px)` : "100dvh",
+			width: marginX || scrollbarWidth ? `calc(100vw - ${marginX + scrollbarWidth}px)` : "100vw",
+			boxSizing: "border-box",
+			overflowY: "hidden",
+			overflowX: "hidden",
+			scrollBehavior: "unset"
+		});
+		body.scrollTop = scrollTop;
+		body.scrollLeft = scrollLeft;
+		html.setAttribute("data-base-ui-scroll-locked", "");
+		html.style.scrollBehavior = "unset";
+	}
+	function cleanup() {
+		Object.assign(html.style, originalHtmlStyles);
+		Object.assign(body.style, originalBodyStyles);
+		if (!updateGutterOnly) {
+			html.scrollTop = scrollTop;
+			html.scrollLeft = scrollLeft;
+			html.removeAttribute("data-base-ui-scroll-locked");
+			html.style.scrollBehavior = originalHtmlScrollBehavior;
+		}
+	}
+	function handleResize() {
+		cleanup();
+		resizeFrame.request(lockScroll);
+	}
+	lockScroll();
+	const unsubscribeResize = addEventListener(win, "resize", handleResize);
+	return () => {
+		resizeFrame.cancel();
+		cleanup();
+		if (typeof win.removeEventListener === "function") unsubscribeResize();
+	};
+}
+var ScrollLocker = class {
+	lockCount = 0;
+	restore = null;
+	timeoutLock = Timeout.create();
+	timeoutUnlock = Timeout.create();
+	acquire(referenceElement) {
+		this.lockCount += 1;
+		if (this.lockCount === 1 && this.restore === null) this.timeoutLock.start(0, () => this.lock(referenceElement));
+		return this.release;
+	}
+	release = () => {
+		this.lockCount -= 1;
+		if (this.lockCount === 0 && this.restore) this.timeoutUnlock.start(0, this.unlock);
+	};
+	unlock = () => {
+		if (this.lockCount === 0 && this.restore) {
+			this.restore?.();
+			this.restore = null;
+		}
+	};
+	lock(referenceElement) {
+		if (this.lockCount === 0 || this.restore !== null) return;
+		const doc = ownerDocument(referenceElement);
+		const html = doc.documentElement;
+		const body = doc.body;
+		const win = getWindow(html);
+		if (isPageScrollLocked(win, html, body)) {
+			const observer = new win.MutationObserver(() => {
+				if (isPageScrollLocked(win, html, body)) return;
+				observer.disconnect();
+				this.restore = null;
+				this.lock(referenceElement);
+			});
+			const options = { attributes: true };
+			observer.observe(html, options);
+			observer.observe(body, options);
+			this.restore = () => observer.disconnect();
+			return;
+		}
+		const hasOverlayScrollbars = ios || !hasInsetScrollbars(referenceElement);
+		this.restore = hasOverlayScrollbars ? preventScrollOverlayScrollbars(referenceElement) : preventScrollInsetScrollbars(referenceElement);
+	}
+};
+const SCROLL_LOCKER = new ScrollLocker();
+/**
+* Locks the scroll of the document when enabled.
+*
+* @param enabled - Whether to enable the scroll lock.
+* @param referenceElement - Element to use as a reference for lock calculations.
+*/
+function useScrollLock(enabled = true, referenceElement = null) {
+	useIsoLayoutEffect(() => {
+		if (!enabled) return;
+		return SCROLL_LOCKER.acquire(referenceElement);
+	}, [enabled, referenceElement]);
+}
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/event.mjs
+function stopEvent(event) {
+	event.preventDefault();
+	event.stopPropagation();
+}
 function isReactEvent(event) {
 	return "nativeEvent" in event;
 }
@@ -1475,6 +1967,10 @@ function isVirtualClick(event) {
 	if (event.pointerType === "" && event.isTrusted) return true;
 	if (android && event.pointerType) return event.type === "click" && event.buttons === 1;
 	return event.detail === 0 && !event.pointerType;
+}
+function isVirtualPointerEvent(event) {
+	if (jsdom) return false;
+	return !android && event.width === 0 && event.height === 0 || event.type === "pointerdown" && event.width === 1 && event.height === 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "mouse" && (android || event.buttons === 0) || event.width < 1 && event.height < 1 && event.pressure === 0 && event.detail === 0 && event.pointerType === "touch";
 }
 function isMouseLikePointerType(pointerType, strict) {
 	const values = ["mouse", "pen"];
@@ -1525,6 +2021,10 @@ function getTarget(event) {
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/constants.mjs
 const FOCUSABLE_ATTRIBUTE = "data-base-ui-focusable";
 const TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled]),[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
+const ARROW_LEFT$1 = "ArrowLeft";
+const ARROW_RIGHT$1 = "ArrowRight";
+const ARROW_UP$1 = "ArrowUp";
+const ARROW_DOWN$1 = "ArrowDown";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/CommonPopupDataAttributes.mjs
 /**
@@ -1544,23 +2044,27 @@ const anchorHidden = "data-anchor-hidden";
 /**
 * Present when the popup is open.
 */
-const popupOpen$1 = "data-popup-open";
+const popupOpen$2 = "data-popup-open";
 /**
 * Present when a pressable trigger is pressed.
 */
-const pressed = "data-pressed";
+const pressed$1 = "data-pressed";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/popupStateMapping.mjs
-const TRIGGER_HOOK = { [popupOpen$1]: "" };
+const TRIGGER_HOOK = { [popupOpen$2]: "" };
 const PRESSABLE_TRIGGER_HOOK = {
-	[popupOpen$1]: "",
-	[pressed]: ""
+	[popupOpen$2]: "",
+	[pressed$1]: ""
 };
 const POPUP_OPEN_HOOK = { [open]: "" };
 const POPUP_CLOSED_HOOK = { [closed]: "" };
 const ANCHOR_HIDDEN_HOOK = { [anchorHidden]: "" };
 const triggerOpenStateMapping = { open(value) {
 	if (value) return TRIGGER_HOOK;
+	return null;
+} };
+const pressableTriggerOpenStateMapping = { open(value) {
+	if (value) return PRESSABLE_TRIGGER_HOOK;
 	return null;
 } };
 const popupStateMapping = {
@@ -1582,7 +2086,7 @@ const popupTransitionStateMapping = {
 /**
 * Present when the corresponding tooltip is open.
 */
-const popupOpen = popupOpen$1;
+const popupOpen$1 = popupOpen$2;
 /**
 * Present when the trigger is disabled, either by the `disabled` prop or by a parent `<Tooltip.Root>` component.
 */
@@ -1611,6 +2115,10 @@ function isTypeableElement(element) {
 function isInteractiveElement(element) {
 	return closest(element, `button,a[href],[role="button"],select,[tabindex]:not([tabindex="-1"]),${TYPEABLE_SELECTOR}`) != null;
 }
+function isTypeableCombobox(element) {
+	if (!element) return false;
+	return element.getAttribute("role") === "combobox" && isTypeableElement(element);
+}
 function matchesFocusVisible(element) {
 	if (!element || jsdom) return true;
 	try {
@@ -1618,6 +2126,10 @@ function matchesFocusVisible(element) {
 	} catch (_e) {
 		return true;
 	}
+}
+function getFloatingFocusElement(floatingElement) {
+	if (!floatingElement) return null;
+	return floatingElement.hasAttribute("data-base-ui-focusable") ? floatingElement : floatingElement.querySelector(`[${"data-base-ui-focusable"}]`) || floatingElement;
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useHoverShared.mjs
@@ -1843,7 +2355,7 @@ const oppositeSideMap = {
 	bottom: "top",
 	top: "bottom"
 };
-function clamp(start, value, end) {
+function clamp$1(start, value, end) {
 	return max$1(start, min$1(value, end));
 }
 function evaluate(value, param) {
@@ -1948,6 +2460,61 @@ function rectToClientRect(rect) {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/composite.mjs
+function isIndexOutOfListBounds(list, index) {
+	return index < 0 || index >= list.length;
+}
+function getMinListIndex(listRef, disabledIndices) {
+	return findNonDisabledListIndex(listRef.current, { disabledIndices });
+}
+function getMaxListIndex(listRef, disabledIndices) {
+	return findNonDisabledListIndex(listRef.current, {
+		decrement: true,
+		startingIndex: listRef.current.length,
+		disabledIndices
+	});
+}
+/**
+* The index one arrow step moves the highlight to from `currentIndex`, or `-1` when the step
+* leaves the list. `wrapped` reports a jump from one end of the list to the other.
+*/
+function getNextListIndex(list, currentIndex, options) {
+	const { decrement, loopFocus, allowEscape, disabledIndices, minIndex, maxIndex } = options;
+	const step = () => findNonDisabledListIndex(list, {
+		startingIndex: currentIndex,
+		decrement,
+		disabledIndices
+	});
+	let index;
+	let wrapped = false;
+	if (!loopFocus) index = decrement ? Math.max(minIndex, step()) : Math.min(maxIndex, step());
+	else if (decrement ? currentIndex <= minIndex : currentIndex >= maxIndex) {
+		const outside = decrement ? -1 : list.length;
+		if (allowEscape && currentIndex !== outside) index = -1;
+		else {
+			index = decrement ? maxIndex : minIndex;
+			wrapped = true;
+		}
+	} else index = step();
+	return {
+		index: isIndexOutOfListBounds(list, index) ? -1 : index,
+		wrapped
+	};
+}
+function findNonDisabledListIndex(list, { startingIndex = -1, decrement = false, disabledIndices, amount = 1 } = {}) {
+	let index = startingIndex;
+	do
+		index += decrement ? -amount : amount;
+	while (index >= 0 && index <= list.length - 1 && isListIndexDisabled(list, index, disabledIndices));
+	return index;
+}
+function isListIndexDisabled(list, index, disabledIndices) {
+	if (typeof disabledIndices === "function" ? disabledIndices(index) : disabledIndices?.includes(index) ?? false) return true;
+	const element = list[index];
+	if (!element) return false;
+	if (!isElementVisible(element)) return true;
+	if (element.matches(":disabled")) return true;
+	return !disabledIndices && (element.hasAttribute("disabled") || element.getAttribute("aria-disabled") === "true");
+}
 function isHiddenByStyles(styles) {
 	return styles.visibility === "hidden" || styles.visibility === "collapse";
 }
@@ -2039,6 +2606,9 @@ function appendMatchingElements(container, selector, list) {
 		appendMatchingElements(child, selector, list);
 	});
 }
+function isTabbable(element) {
+	return isFocusableElement(element) && getTabIndex(element) >= 0;
+}
 function focusable(container) {
 	const candidates = [];
 	appendCandidates(container, candidates);
@@ -2088,14 +2658,146 @@ function enableFocusInside(container) {
 function getNodeChildren(nodes, id, onlyOpenChildren = true) {
 	return nodes.filter((node) => node.parentId === id).flatMap((child) => [...!onlyOpenChildren || child.context?.open ? [child] : [], ...getNodeChildren(nodes, child.id, onlyOpenChildren)]);
 }
+function getNodeAncestors(nodes, id) {
+	let allAncestors = [];
+	let currentParentId = nodes.find((node) => node.id === id)?.parentId;
+	while (currentParentId) {
+		const currentNode = nodes.find((node) => node.id === currentParentId);
+		currentParentId = currentNode?.parentId;
+		if (currentNode) allAncestors = allAncestors.concat(currentNode);
+	}
+	return allAncestors;
+}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/createAttribute.mjs
 function createAttribute(name) {
 	return `data-base-ui-${name}`;
 }
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/enqueueFocus.mjs
+let rafId = 0;
+function enqueueFocus(el, options = {}) {
+	const { preventScroll = false, sync = false, shouldFocus } = options;
+	cancelAnimationFrame(rafId);
+	function exec() {
+		if (shouldFocus && !shouldFocus()) return;
+		el?.focus({ preventScroll });
+	}
+	if (sync) {
+		exec();
+		return NOOP;
+	}
+	const currentRafId = requestAnimationFrame(exec);
+	rafId = currentRafId;
+	return () => {
+		if (rafId === currentRafId) {
+			cancelAnimationFrame(currentRafId);
+			rafId = 0;
+		}
+	};
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/utils/markOthers.mjs
+const markerName = "data-base-ui-inert";
+let ariaHiddenCounterMap = /* @__PURE__ */ new WeakMap();
+let uncontrolledElementsSet = /* @__PURE__ */ new WeakSet();
+let markerCounterMap = /* @__PURE__ */ new WeakMap();
+let lockCount = 0;
+function unwrapHost(node) {
+	if (!node) return null;
+	return isShadowRoot(node) ? node.host : unwrapHost(node.parentNode);
+}
+const correctElements = (parent, targets) => targets.map((target) => {
+	if (parent.contains(target)) return target;
+	const correctedTarget = unwrapHost(target);
+	if (parent.contains(correctedTarget)) return correctedTarget;
+	return null;
+}).filter((x) => x != null);
+const buildKeepSet = (targets) => {
+	const keep = /* @__PURE__ */ new Set();
+	targets.forEach((target) => {
+		let node = target;
+		while (node && !keep.has(node)) {
+			keep.add(node);
+			node = node.parentNode;
+		}
+	});
+	return keep;
+};
+const collectOutsideElements = (root, keepElements, stopElements) => {
+	const outside = [];
+	const walk = (parent) => {
+		if (!parent || stopElements.has(parent)) return;
+		Array.from(parent.children).forEach((node) => {
+			if (getNodeName(node) === "script") return;
+			if (keepElements.has(node)) walk(node);
+			else outside.push(node);
+		});
+	};
+	walk(root);
+	return outside;
+};
+function applyAttributeToOthers(uncorrectedAvoidElements, body, ariaHidden, { mark = true }) {
+	const avoidElements = correctElements(body, uncorrectedAvoidElements);
+	const markerTargets = mark ? collectOutsideElements(body, buildKeepSet(avoidElements), new Set(avoidElements)) : [];
+	const hiddenElements = [];
+	const markedElements = [];
+	if (ariaHidden) {
+		const ariaLiveElements = correctElements(body, Array.from(body.querySelectorAll("[aria-live]")));
+		const controlElements = avoidElements.concat(ariaLiveElements);
+		collectOutsideElements(body, buildKeepSet(controlElements), new Set(controlElements)).forEach((node) => {
+			const attr = node.getAttribute("aria-hidden");
+			const alreadyHidden = attr !== null && attr !== "false";
+			const counterValue = (ariaHiddenCounterMap.get(node) || 0) + 1;
+			ariaHiddenCounterMap.set(node, counterValue);
+			hiddenElements.push(node);
+			if (counterValue === 1 && alreadyHidden) uncontrolledElementsSet.add(node);
+			if (!alreadyHidden) node.setAttribute("aria-hidden", "true");
+		});
+	}
+	if (mark) markerTargets.forEach((node) => {
+		const markerValue = (markerCounterMap.get(node) || 0) + 1;
+		markerCounterMap.set(node, markerValue);
+		markedElements.push(node);
+		if (markerValue === 1) node.setAttribute(markerName, "");
+	});
+	lockCount += 1;
+	return () => {
+		hiddenElements.forEach((element) => {
+			const counterValue = (ariaHiddenCounterMap.get(element) || 0) - 1;
+			ariaHiddenCounterMap.set(element, counterValue);
+			if (!counterValue) {
+				if (!uncontrolledElementsSet.has(element)) element.removeAttribute("aria-hidden");
+				uncontrolledElementsSet.delete(element);
+			}
+		});
+		if (mark) markedElements.forEach((element) => {
+			const markerValue = (markerCounterMap.get(element) || 0) - 1;
+			markerCounterMap.set(element, markerValue);
+			if (!markerValue) element.removeAttribute(markerName);
+		});
+		lockCount -= 1;
+		if (!lockCount) {
+			ariaHiddenCounterMap = /* @__PURE__ */ new WeakMap();
+			uncontrolledElementsSet = /* @__PURE__ */ new WeakSet();
+			markerCounterMap = /* @__PURE__ */ new WeakMap();
+		}
+	};
+}
+function markOthers(avoidElements, options = {}) {
+	const { ariaHidden = false, mark = true } = options;
+	const body = ownerDocument(avoidElements[0]).body;
+	return applyAttributeToOthers(avoidElements, body, ariaHidden, { mark });
+}
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/constants.mjs
 const DISABLED_TRANSITIONS_STYLE = { style: { transition: "none" } };
+const CLICK_TRIGGER_IDENTIFIER = "data-base-ui-click-trigger";
+/**
+* Used for dropdowns that usually strictly prefer top/bottom placements and
+* use `var(--available-height)` to limit their height.
+*/
+const DROPDOWN_COLLISION_AVOIDANCE = { fallbackAxisSide: "none" };
 /**
 * Used by regular popups that usually aren't scrollable and are allowed to
 * freely flip to any axis of placement.
@@ -2121,7 +2823,7 @@ const usePortalContext = () => import__wp_global_react.useContext(PortalContext)
 const attr = createAttribute("portal");
 function useFloatingPortalNode(props = {}) {
 	const { ref, container: containerProp, componentProps = EMPTY_OBJECT, elementProps } = props;
-	const uniqueId = useId$3();
+	const uniqueId = useId$4();
 	const parentPortalNode = usePortalContext()?.portalNode;
 	const [containerElement, setContainerElement] = import__wp_global_react.useState(null);
 	const [portalNode, setPortalNode] = import__wp_global_react.useState(null);
@@ -2290,6 +2992,546 @@ const useFloatingTree = (externalTree) => {
 	const contextTree = import__wp_global_react.useContext(FloatingTreeContext);
 	return externalTree ?? contextTree;
 };
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingFocusManager.mjs
+function getEventType(event, lastInteractionType) {
+	const win = getWindow(getTarget(event));
+	if (event instanceof win.KeyboardEvent) return "keyboard";
+	if (event instanceof win.FocusEvent) return lastInteractionType || "keyboard";
+	if ("pointerType" in event) return event.pointerType || (isVirtualClick(event) ? "keyboard" : lastInteractionType || "mouse");
+	if ("touches" in event) return "touch";
+	if (event instanceof win.MouseEvent) return lastInteractionType || (event.detail === 0 ? "keyboard" : "mouse");
+	return "";
+}
+const LIST_LIMIT = 20;
+let previouslyFocusedElements = [];
+function clearDisconnectedPreviouslyFocusedElements() {
+	previouslyFocusedElements = previouslyFocusedElements.filter((entry) => {
+		return entry.deref()?.isConnected;
+	});
+}
+function addPreviouslyFocusedElement(element) {
+	clearDisconnectedPreviouslyFocusedElements();
+	if (element && getNodeName(element) !== "body") {
+		previouslyFocusedElements.push(new WeakRef(element));
+		if (previouslyFocusedElements.length > LIST_LIMIT) previouslyFocusedElements = previouslyFocusedElements.slice(-20);
+	}
+}
+function getPreviouslyFocusedElement() {
+	clearDisconnectedPreviouslyFocusedElements();
+	return previouslyFocusedElements[previouslyFocusedElements.length - 1]?.deref();
+}
+function getFirstTabbableElement(container) {
+	if (!container) return null;
+	if (isTabbable(container)) return container;
+	return tabbable(container)[0] || container;
+}
+function handleTabIndex(floatingFocusElement) {
+	if (floatingFocusElement.hasAttribute("tabindex") && !floatingFocusElement.hasAttribute("data-tabindex")) return;
+	if (!floatingFocusElement.getAttribute("role")?.includes("dialog")) return;
+	const tabbableContent = focusable(floatingFocusElement).filter((element) => {
+		const dataTabIndex = element.getAttribute("data-tabindex") || "";
+		return isTabbable(element) || element.hasAttribute("data-tabindex") && !dataTabIndex.startsWith("-");
+	});
+	const tabIndex = floatingFocusElement.getAttribute("tabindex");
+	if (tabbableContent.length === 0) {
+		if (tabIndex !== "0") {
+			floatingFocusElement.setAttribute("tabindex", "0");
+			floatingFocusElement.setAttribute("data-tabindex", "0");
+		}
+	} else if (tabIndex !== "-1" || floatingFocusElement.hasAttribute("data-tabindex") && floatingFocusElement.getAttribute("data-tabindex") !== "-1") {
+		floatingFocusElement.setAttribute("tabindex", "-1");
+		floatingFocusElement.setAttribute("data-tabindex", "-1");
+	}
+}
+/**
+* Provides focus management for the floating element.
+* @see https://floating-ui.com/docs/FloatingFocusManager
+* @internal
+*/
+function FloatingFocusManager(props) {
+	const { context: store, children, disabled = false, initialFocus = true, returnFocus = true, explicitReturnFocus, restoreFocus = false, modal = true, closeOnFocusOut = true, openInteractionType = "", nextFocusableElement, previousFocusableElement, beforeContentFocusGuardRef, externalTree, getInsideElements } = props;
+	const open = store.useState("open");
+	const domReference = store.useState("domReferenceElement");
+	const floating = store.useState("floatingElement");
+	const { events, dataRef } = store.context;
+	const getNodeId = useStableCallback(() => dataRef.current.floatingContext?.nodeId);
+	const ignoreInitialFocus = initialFocus === false;
+	const isUntrappedTypeableCombobox = isTypeableCombobox(domReference) && ignoreInitialFocus;
+	const initialFocusRef = useValueAsRef(initialFocus);
+	const returnFocusRef = useValueAsRef(returnFocus);
+	const explicitReturnFocusRef = useValueAsRef(explicitReturnFocus);
+	const openInteractionTypeRef = useValueAsRef(openInteractionType);
+	const openRef = useValueAsRef(open);
+	const tree = useFloatingTree(externalTree);
+	const portalContext = usePortalContext();
+	const preventReturnFocusRef = import__wp_global_react.useRef(false);
+	const isPointerDownRef = import__wp_global_react.useRef(false);
+	const pointerDownOutsideRef = import__wp_global_react.useRef(false);
+	const lastFocusedTabbableRef = import__wp_global_react.useRef(null);
+	const closeTypeRef = import__wp_global_react.useRef("");
+	const lastInteractionTypeRef = import__wp_global_react.useRef("");
+	const beforeGuardRef = import__wp_global_react.useRef(null);
+	const afterGuardRef = import__wp_global_react.useRef(null);
+	const mergedBeforeGuardRef = useMergedRefs(beforeGuardRef, beforeContentFocusGuardRef, portalContext?.beforeInsideRef);
+	const mergedAfterGuardRef = useMergedRefs(afterGuardRef, portalContext?.afterInsideRef);
+	const blurTimeout = useTimeout();
+	const pointerDownTimeout = useTimeout();
+	const restoreFocusFrame = useAnimationFrame();
+	const isInsidePortal = portalContext != null;
+	const floatingFocusElement = getFloatingFocusElement(floating);
+	const getTabbableContent = useStableCallback((container = floatingFocusElement) => {
+		return container ? tabbable(container) : [];
+	});
+	const getResolvedInsideElements = useStableCallback(() => getInsideElements?.().filter((element) => element != null) ?? []);
+	import__wp_global_react.useEffect(() => {
+		if (disabled || !modal) return;
+		function onKeyDown(event) {
+			if (event.key === "Tab") {
+				if (contains(floatingFocusElement, activeElement(ownerDocument(floatingFocusElement))) && getTabbableContent().length === 0 && !isUntrappedTypeableCombobox) stopEvent(event);
+			}
+		}
+		const doc = ownerDocument(floatingFocusElement);
+		return addEventListener(doc, "keydown", onKeyDown);
+	}, [
+		disabled,
+		floatingFocusElement,
+		modal,
+		isUntrappedTypeableCombobox,
+		getTabbableContent
+	]);
+	import__wp_global_react.useEffect(() => {
+		if (disabled || !open) return;
+		const doc = ownerDocument(floatingFocusElement);
+		function clearPointerDownOutside() {
+			pointerDownOutsideRef.current = false;
+		}
+		function onPointerDown(event) {
+			const target = getTarget(event);
+			const insideElements = getResolvedInsideElements();
+			const pointerTargetInside = contains(floating, target) || contains(domReference, target) || contains(portalContext?.portalNode, target) || insideElements.some((element) => element === target || contains(element, target));
+			pointerDownOutsideRef.current = !pointerTargetInside;
+			lastInteractionTypeRef.current = event.pointerType || "keyboard";
+			if (closest(target, `[${"data-base-ui-click-trigger"}]`)) {
+				isPointerDownRef.current = true;
+				pointerDownTimeout.start(0, () => {
+					isPointerDownRef.current = false;
+				});
+			}
+		}
+		function onKeyDown() {
+			lastInteractionTypeRef.current = "keyboard";
+		}
+		return mergeCleanups(addEventListener(doc, "pointerdown", onPointerDown, true), addEventListener(doc, "pointerup", clearPointerDownOutside, true), addEventListener(doc, "pointercancel", clearPointerDownOutside, true), addEventListener(doc, "keydown", onKeyDown, true), clearPointerDownOutside);
+	}, [
+		disabled,
+		floating,
+		domReference,
+		floatingFocusElement,
+		open,
+		portalContext,
+		pointerDownTimeout,
+		getResolvedInsideElements
+	]);
+	import__wp_global_react.useEffect(() => {
+		if (disabled || !closeOnFocusOut) return;
+		const doc = ownerDocument(floatingFocusElement);
+		function handlePointerDown() {
+			isPointerDownRef.current = true;
+			pointerDownTimeout.start(0, () => {
+				isPointerDownRef.current = false;
+			});
+		}
+		function handleFocusIn(event) {
+			const target = getTarget(event);
+			if (isTabbable(target)) lastFocusedTabbableRef.current = target;
+		}
+		function handleFocusOutside(event) {
+			const relatedTarget = event.relatedTarget;
+			const currentTarget = event.currentTarget;
+			const target = getTarget(event);
+			if (modal && relatedTarget == null && target != null && contains(floating, target)) addPreviouslyFocusedElement(target);
+			queueMicrotask(() => {
+				const nodeId = getNodeId();
+				const triggers = store.context.triggerElements;
+				const insideElements = getResolvedInsideElements();
+				const isRelatedFocusGuard = relatedTarget?.hasAttribute(createAttribute("focus-guard")) && [
+					beforeGuardRef.current,
+					afterGuardRef.current,
+					portalContext?.beforeInsideRef.current,
+					portalContext?.afterInsideRef.current,
+					portalContext?.beforeOutsideRef.current,
+					portalContext?.afterOutsideRef.current,
+					resolveRef(previousFocusableElement),
+					resolveRef(nextFocusableElement)
+				].includes(relatedTarget);
+				const movedToUnrelatedNode = !(contains(domReference, relatedTarget) || contains(floating, relatedTarget) || contains(relatedTarget, floating) || contains(portalContext?.portalNode, relatedTarget) || insideElements.some((element) => element === relatedTarget || contains(element, relatedTarget)) || triggers.hasMatchingElement((trigger) => contains(trigger, relatedTarget)) || isRelatedFocusGuard || tree && (getNodeChildren(tree.nodesRef.current, nodeId).find((node) => contains(node.context?.elements.floating, relatedTarget) || contains(node.context?.elements.domReference, relatedTarget)) || getNodeAncestors(tree.nodesRef.current, nodeId).find((node) => [node.context?.elements.floating, getFloatingFocusElement(node.context?.elements.floating)].includes(relatedTarget) || node.context?.elements.domReference === relatedTarget)));
+				if (currentTarget === domReference && floatingFocusElement) handleTabIndex(floatingFocusElement);
+				if (restoreFocus && currentTarget !== domReference && !isElementVisible(target) && activeElement(doc) === doc.body) {
+					if (isHTMLElement(floatingFocusElement)) {
+						floatingFocusElement.focus();
+						if (restoreFocus === "popup") {
+							restoreFocusFrame.request(() => {
+								floatingFocusElement.focus();
+							});
+							return;
+						}
+					}
+					const tabbableContent = getTabbableContent();
+					const prevTabbable = lastFocusedTabbableRef.current;
+					const nodeToFocus = (prevTabbable && tabbableContent.includes(prevTabbable) ? prevTabbable : null) || tabbableContent[tabbableContent.length - 1] || floatingFocusElement;
+					if (isHTMLElement(nodeToFocus)) nodeToFocus.focus();
+				}
+				if (dataRef.current.insideReactTree) {
+					dataRef.current.insideReactTree = false;
+					return;
+				}
+				if ((isUntrappedTypeableCombobox ? true : !modal) && relatedTarget && movedToUnrelatedNode && !isPointerDownRef.current && (isUntrappedTypeableCombobox || relatedTarget !== getPreviouslyFocusedElement())) {
+					preventReturnFocusRef.current = true;
+					store.setOpen(false, createChangeEventDetails(focusOut, event));
+				}
+			});
+		}
+		function markInsideReactTree() {
+			if (pointerDownOutsideRef.current) return;
+			dataRef.current.insideReactTree = true;
+			blurTimeout.start(0, () => {
+				dataRef.current.insideReactTree = false;
+			});
+		}
+		const domReferenceElement = isHTMLElement(domReference) ? domReference : null;
+		if (!floating && !domReferenceElement) return;
+		return mergeCleanups(domReferenceElement && addEventListener(domReferenceElement, "focusout", handleFocusOutside), domReferenceElement && addEventListener(domReferenceElement, "pointerdown", handlePointerDown), floating && addEventListener(floating, "focusin", handleFocusIn), floating && addEventListener(floating, "focusout", handleFocusOutside), floating && portalContext && addEventListener(floating, "focusout", markInsideReactTree, true));
+	}, [
+		disabled,
+		domReference,
+		floating,
+		floatingFocusElement,
+		modal,
+		tree,
+		portalContext,
+		store,
+		closeOnFocusOut,
+		restoreFocus,
+		getTabbableContent,
+		isUntrappedTypeableCombobox,
+		getNodeId,
+		dataRef,
+		blurTimeout,
+		pointerDownTimeout,
+		restoreFocusFrame,
+		nextFocusableElement,
+		previousFocusableElement,
+		getResolvedInsideElements
+	]);
+	import__wp_global_react.useEffect(() => {
+		if (disabled || !floating || !open) return;
+		const portalNodes = Array.from(portalContext?.portalNode?.querySelectorAll(`[${createAttribute("portal")}]`) || []);
+		const rootAncestorComboboxDomReference = (tree ? getNodeAncestors(tree.nodesRef.current, getNodeId()) : []).find((node) => isTypeableCombobox(node.context?.elements.domReference || null))?.context?.elements.domReference;
+		const insideElements = [
+			...[
+				floating,
+				...portalNodes,
+				beforeGuardRef.current,
+				afterGuardRef.current,
+				portalContext?.beforeOutsideRef.current,
+				portalContext?.afterOutsideRef.current,
+				...getResolvedInsideElements()
+			],
+			rootAncestorComboboxDomReference,
+			resolveRef(previousFocusableElement),
+			resolveRef(nextFocusableElement),
+			isUntrappedTypeableCombobox ? domReference : null
+		].filter((x) => x != null);
+		const ariaHiddenCleanup = markOthers(insideElements, {
+			ariaHidden: modal || isUntrappedTypeableCombobox,
+			mark: false
+		});
+		const markerInsideElements = [floating, ...portalNodes].filter((x) => x != null);
+		const markerCleanup = markOthers(markerInsideElements);
+		return () => {
+			markerCleanup();
+			ariaHiddenCleanup();
+		};
+	}, [
+		open,
+		disabled,
+		domReference,
+		floating,
+		modal,
+		portalContext,
+		isUntrappedTypeableCombobox,
+		tree,
+		getNodeId,
+		nextFocusableElement,
+		previousFocusableElement,
+		getResolvedInsideElements
+	]);
+	useIsoLayoutEffect(() => {
+		if (!open || disabled || !isHTMLElement(floatingFocusElement)) return;
+		closeTypeRef.current = "";
+		lastInteractionTypeRef.current = "";
+		const doc = ownerDocument(floatingFocusElement);
+		const previouslyFocusedElement = activeElement(doc);
+		queueMicrotask(() => {
+			const initialFocusValueOrFn = initialFocusRef.current;
+			const resolvedInitialFocus = typeof initialFocusValueOrFn === "function" ? initialFocusValueOrFn(openInteractionTypeRef.current || "") : initialFocusValueOrFn;
+			if (resolvedInitialFocus === void 0 || resolvedInitialFocus === false) return;
+			if (contains(floatingFocusElement, previouslyFocusedElement)) return;
+			let focusableElements = null;
+			const getDefaultFocusElement = () => {
+				if (focusableElements == null) focusableElements = getTabbableContent(floatingFocusElement);
+				return focusableElements[0] || floatingFocusElement;
+			};
+			let elToFocus;
+			if (resolvedInitialFocus === true || resolvedInitialFocus === null) elToFocus = getDefaultFocusElement();
+			else elToFocus = resolveRef(resolvedInitialFocus);
+			elToFocus = elToFocus || getDefaultFocusElement();
+			const hadFocusInside = contains(floatingFocusElement, activeElement(doc));
+			const openEvent = dataRef.current.openEvent;
+			const openedByVirtualPress = openEvent?.type === "mousedown" && isVirtualClick(openEvent);
+			enqueueFocus(elToFocus, {
+				sync: openedByVirtualPress,
+				preventScroll: elToFocus === floatingFocusElement,
+				shouldFocus() {
+					if (!openRef.current) return false;
+					if (hadFocusInside) return true;
+					const currentActiveElement = activeElement(doc);
+					return !(currentActiveElement !== elToFocus && contains(floatingFocusElement, currentActiveElement));
+				}
+			});
+		});
+	}, [
+		disabled,
+		open,
+		floatingFocusElement,
+		getTabbableContent,
+		initialFocusRef,
+		openInteractionTypeRef,
+		openRef,
+		dataRef
+	]);
+	const pendingReturnFocusRef = import__wp_global_react.useRef(null);
+	useIsoLayoutEffect(() => {
+		if (disabled || !floatingFocusElement) {
+			pendingReturnFocusRef.current = null;
+			return;
+		}
+		if (pendingReturnFocusRef.current) {
+			pendingReturnFocusRef.current.cancelled = true;
+			pendingReturnFocusRef.current = null;
+		}
+		const doc = ownerDocument(floatingFocusElement);
+		const elementFocusedBeforeOpen = activeElement(doc);
+		const preferPreviousFocus = openInteractionTypeRef.current == null;
+		addPreviouslyFocusedElement(elementFocusedBeforeOpen);
+		function onOpenChangeLocal(details) {
+			if (!details.open) closeTypeRef.current = getEventType(details.nativeEvent, lastInteractionTypeRef.current);
+			if (details.reason === "focus-out" && details.triggerElement?.hasAttribute(createAttribute("focus-guard")) || details.reason === "trigger-hover" && details.nativeEvent.type === "mouseleave") preventReturnFocusRef.current = true;
+			if (details.reason !== "outside-press") return;
+			if (details.nested) preventReturnFocusRef.current = false;
+			else if (isVirtualClick(details.nativeEvent) || isVirtualPointerEvent(details.nativeEvent)) preventReturnFocusRef.current = false;
+			else {
+				let isPreventScrollSupported = false;
+				ownerDocument(floatingFocusElement).createElement("div").focus({ get preventScroll() {
+					isPreventScrollSupported = true;
+					return false;
+				} });
+				if (isPreventScrollSupported) preventReturnFocusRef.current = false;
+				else preventReturnFocusRef.current = true;
+			}
+		}
+		events.on("openchange", onOpenChangeLocal);
+		function getReturnElement(closeType) {
+			const returnFocusValueOrFn = returnFocusRef.current;
+			let resolvedReturnFocusValue = typeof returnFocusValueOrFn === "function" ? returnFocusValueOrFn(closeType) : returnFocusValueOrFn;
+			if (resolvedReturnFocusValue === void 0 || resolvedReturnFocusValue === false) return null;
+			if (resolvedReturnFocusValue === null) resolvedReturnFocusValue = true;
+			const referenceReturnElement = domReference?.isConnected ? domReference : null;
+			const previousReturnElement = elementFocusedBeforeOpen?.isConnected && getNodeName(elementFocusedBeforeOpen) !== "body" ? elementFocusedBeforeOpen : null;
+			let defaultReturnElement = preferPreviousFocus ? previousReturnElement || referenceReturnElement : referenceReturnElement || previousReturnElement;
+			if (!defaultReturnElement) defaultReturnElement = getPreviouslyFocusedElement() || null;
+			if (typeof resolvedReturnFocusValue === "boolean") return defaultReturnElement;
+			return resolveRef(resolvedReturnFocusValue) || defaultReturnElement || null;
+		}
+		return () => {
+			events.off("openchange", onOpenChangeLocal);
+			const activeEl = activeElement(doc);
+			const insideElements = getResolvedInsideElements();
+			const isFocusInsideFloatingTree = contains(floating, activeEl) || insideElements.some((element) => element === activeEl || contains(element, activeEl)) || tree && getNodeChildren(tree.nodesRef.current, getNodeId(), false).some((node) => contains(node.context?.elements.floating, activeEl));
+			const returnFocusValueOrFn = returnFocusRef.current;
+			const closeType = closeTypeRef.current;
+			const returnElement = getReturnElement(closeType);
+			const job = { cancelled: false };
+			pendingReturnFocusRef.current = job;
+			queueMicrotask(() => {
+				if (pendingReturnFocusRef.current === job) pendingReturnFocusRef.current = null;
+				const tabbableReturnElement = getFirstTabbableElement(returnElement);
+				const hasExplicitReturnFocus = explicitReturnFocusRef.current ?? typeof returnFocusValueOrFn !== "boolean";
+				if (!job.cancelled && returnFocusValueOrFn && !preventReturnFocusRef.current && isHTMLElement(tabbableReturnElement) && (!hasExplicitReturnFocus && tabbableReturnElement !== activeEl && activeEl !== doc.body ? isFocusInsideFloatingTree : true)) {
+					const focusOptions = { preventScroll: true };
+					if (closeType === "keyboard") focusOptions.focusVisible = true;
+					tabbableReturnElement.focus(focusOptions);
+				}
+				preventReturnFocusRef.current = false;
+			});
+		};
+	}, [
+		disabled,
+		floating,
+		floatingFocusElement,
+		returnFocusRef,
+		explicitReturnFocusRef,
+		openInteractionTypeRef,
+		events,
+		tree,
+		domReference,
+		getNodeId,
+		getResolvedInsideElements
+	]);
+	useIsoLayoutEffect(() => {
+		if (!webkit || open || !floating) return;
+		const activeEl = activeElement(ownerDocument(floating));
+		if (!isHTMLElement(activeEl) || !isTypeableElement(activeEl)) return;
+		if (contains(floating, activeEl)) activeEl.blur();
+	}, [open, floating]);
+	useIsoLayoutEffect(() => {
+		if (disabled || !portalContext) return;
+		portalContext.setFocusManagerState({
+			modal,
+			closeOnFocusOut,
+			open,
+			onOpenChange: store.setOpen,
+			domReference
+		});
+		return () => {
+			portalContext.setFocusManagerState(null);
+		};
+	}, [
+		disabled,
+		portalContext,
+		modal,
+		open,
+		store,
+		closeOnFocusOut,
+		domReference
+	]);
+	useIsoLayoutEffect(() => {
+		if (disabled || !floatingFocusElement) return;
+		handleTabIndex(floatingFocusElement);
+		return () => {
+			queueMicrotask(clearDisconnectedPreviouslyFocusedElements);
+		};
+	}, [disabled, floatingFocusElement]);
+	const shouldRenderGuards = !disabled && (modal ? !isUntrappedTypeableCombobox : true) && (isInsidePortal || modal);
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsxs)(import__wp_global_react.Fragment, { children: [
+		shouldRenderGuards && /*#__PURE__*/ (0, import_jsx_runtime.jsx)(FocusGuard, {
+			"data-type": "inside",
+			ref: mergedBeforeGuardRef,
+			onFocus: (event) => {
+				if (modal) {
+					const els = getTabbableContent();
+					enqueueFocus(els[els.length - 1]);
+				} else if (portalContext?.portalNode) {
+					preventReturnFocusRef.current = false;
+					if (isOutsideEvent(event, portalContext.portalNode)) getNextTabbable(domReference)?.focus();
+					else resolveRef(previousFocusableElement ?? portalContext.beforeOutsideRef)?.focus();
+				}
+			}
+		}),
+		children,
+		shouldRenderGuards && /*#__PURE__*/ (0, import_jsx_runtime.jsx)(FocusGuard, {
+			"data-type": "inside",
+			ref: mergedAfterGuardRef,
+			onFocus: (event) => {
+				if (modal) enqueueFocus(getTabbableContent()[0]);
+				else if (portalContext?.portalNode) {
+					if (closeOnFocusOut) preventReturnFocusRef.current = true;
+					if (isOutsideEvent(event, portalContext.portalNode)) getPreviousTabbable(domReference)?.focus();
+					else resolveRef(nextFocusableElement ?? portalContext.afterOutsideRef)?.focus();
+				}
+			}
+		})
+	] });
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useClick.mjs
+/**
+* Opens or closes the floating element when clicking the reference element.
+* @see https://floating-ui.com/docs/useClick
+*/
+function useClick(store, props = {}) {
+	const { enabled = true, event: eventOption = "click", toggle = true, ignoreMouse = false, stickIfOpen = true, touchOpenDelay = 0, reason = triggerPress } = props;
+	const dataRef = store.context.dataRef;
+	const pointerTypeRef = import__wp_global_react.useRef(void 0);
+	const frame = useAnimationFrame();
+	const touchOpenTimeout = useTimeout();
+	const reference = import__wp_global_react.useMemo(() => {
+		function setOpenWithTouchDelay(nextOpen, nativeEvent, target, pointerType) {
+			const details = createChangeEventDetails(reason, nativeEvent, target);
+			if (nextOpen && pointerType === "touch" && touchOpenDelay > 0) touchOpenTimeout.start(touchOpenDelay, () => {
+				store.setOpen(true, details);
+			});
+			else store.setOpen(nextOpen, details);
+		}
+		function getNextOpen(open, currentTarget, isClickLikeOpenEvent) {
+			const openEvent = dataRef.current.openEvent;
+			const hasClickedOnInactiveTrigger = store.select("domReferenceElement") !== currentTarget;
+			if (open && hasClickedOnInactiveTrigger) return true;
+			if (!open) return true;
+			if (!toggle) return true;
+			if (openEvent && (typeof stickIfOpen === "function" ? stickIfOpen() : stickIfOpen)) return !isClickLikeOpenEvent(openEvent.type);
+			return false;
+		}
+		return {
+			onPointerDown(event) {
+				pointerTypeRef.current = isMouseLikePointerType(event.pointerType, true) && isVirtualPointerEvent(event.nativeEvent) ? "virtual" : event.pointerType;
+			},
+			onMouseDown(event) {
+				const pointerType = pointerTypeRef.current;
+				const nativeEvent = event.nativeEvent;
+				const open = store.select("open");
+				if (event.button !== 0 || eventOption === "click" || isMouseLikePointerType(pointerType, true) && ignoreMouse) return;
+				const nextOpen = getNextOpen(open, event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown");
+				const target = getTarget(nativeEvent);
+				const isTypeable = isTypeableElement(target);
+				if (isTypeable || pointerType === "virtual") {
+					setOpenWithTouchDelay(nextOpen, nativeEvent, isTypeable ? target : event.currentTarget, pointerType);
+					return;
+				}
+				const eventCurrentTarget = event.currentTarget;
+				frame.request(() => {
+					setOpenWithTouchDelay(nextOpen, nativeEvent, eventCurrentTarget, pointerType);
+				});
+			},
+			onClick(event) {
+				if (eventOption === "mousedown-only") return;
+				const pointerType = pointerTypeRef.current;
+				if (eventOption === "mousedown" && pointerType) {
+					pointerTypeRef.current = void 0;
+					return;
+				}
+				if (isMouseLikePointerType(pointerType, true) && ignoreMouse) return;
+				setOpenWithTouchDelay(getNextOpen(store.select("open"), event.currentTarget, (openEventType) => openEventType === "click" || openEventType === "mousedown" || openEventType === "keydown" || openEventType === "keyup"), event.nativeEvent, event.currentTarget, pointerType);
+			},
+			onKeyDown() {
+				pointerTypeRef.current = void 0;
+			}
+		};
+	}, [
+		dataRef,
+		eventOption,
+		ignoreMouse,
+		reason,
+		store,
+		stickIfOpen,
+		toggle,
+		frame,
+		touchOpenTimeout,
+		touchOpenDelay
+	]);
+	return import__wp_global_react.useMemo(() => enabled ? { reference } : EMPTY_OBJECT, [enabled, reference]);
+}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useClientPoint.mjs
 function createVirtualElement(domElement, data) {
@@ -2905,7 +4147,7 @@ const FOCUSABLE_POPUP_PROPS = {
 * floating element instead of the default positioner.
 */
 function usePopupRootStore(createStore, treatPopupAsFloatingElement = false) {
-	const floatingId = useId$3();
+	const floatingId = useId$4();
 	const nested = useFloatingParentNodeId() != null;
 	const store = useRefWithInit(() => createStore(floatingId, nested)).current;
 	useSyncedFloatingRootContext({
@@ -3941,7 +5183,7 @@ var ReactStore = class extends Store {
 };
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingRootStore.mjs
-const selectors$1 = {
+const selectors$2 = {
 	open: (state) => state.open,
 	transitionStatus: (state) => state.transitionStatus,
 	domReferenceElement: (state) => state.domReferenceElement,
@@ -3962,7 +5204,7 @@ var FloatingRootStore = class extends ReactStore {
 			events: createEventEmitter(),
 			nested,
 			triggerElements
-		}, selectors$1);
+		}, selectors$2);
 		this.syncOnly = syncOnly;
 	}
 	/**
@@ -4112,6 +5354,49 @@ function usePopupHandleStore(handle) {
 		return handle === void 0 ? void 0 : handle.store;
 	}, [handle]);
 	return (0, import_shim.useSyncExternalStore)(subscribe, getSnapshot, () => handle?.serverStore);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFloatingRootContext.mjs
+function useFloatingRootContext(options) {
+	const { open = false, onOpenChange, elements = {} } = options;
+	const floatingId = useId$4();
+	const nested = useFloatingParentNodeId() != null;
+	{
+		const optionDomReference = elements.reference;
+		if (optionDomReference && !isElement(optionDomReference)) console.error("Cannot pass a virtual element to the `elements.reference` option,", "as it must be a real DOM element. Use `context.setPositionReference()`", "instead.");
+	}
+	const store = useRefWithInit(() => new FloatingRootStore({
+		open,
+		transitionStatus: void 0,
+		onOpenChange,
+		referenceElement: elements.reference ?? null,
+		floatingElement: elements.floating ?? null,
+		triggerElements: new PopupTriggerMap(),
+		floatingId,
+		syncOnly: false,
+		nested
+	})).current;
+	useIsoLayoutEffect(() => {
+		const valuesToSync = {
+			open,
+			floatingId
+		};
+		if (elements.reference !== void 0) {
+			valuesToSync.referenceElement = elements.reference;
+			valuesToSync.domReferenceElement = isElement(elements.reference) ? elements.reference : null;
+		}
+		if (elements.floating !== void 0) valuesToSync.floatingElement = elements.floating;
+		store.update(valuesToSync);
+	}, [
+		open,
+		floatingId,
+		elements.reference,
+		elements.floating,
+		store
+	]);
+	store.context.onOpenChange = onOpenChange;
+	store.context.nested = nested;
+	return store;
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFocus.mjs
@@ -4671,6 +5956,536 @@ function useHoverReferenceInteraction(store, props = {}) {
 	]);
 }
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useListNavigation.mjs
+function isStationaryWebKitPointer(event) {
+	return webkit && event.movementX === 0 && event.movementY === 0;
+}
+function doSwitch(orientation, vertical, horizontal) {
+	switch (orientation) {
+		case "vertical": return vertical;
+		case "horizontal": return horizontal;
+		default: return vertical || horizontal;
+	}
+}
+function isMainOrientationKey(key, orientation) {
+	return doSwitch(orientation, key === "ArrowUp" || key === "ArrowDown", key === "ArrowLeft" || key === "ArrowRight");
+}
+function isMainOrientationToEndKey(key, orientation, rtl) {
+	return doSwitch(orientation, key === "ArrowDown", rtl ? key === "ArrowLeft" : key === "ArrowRight") || key === "Enter" || key === " " || key === "";
+}
+function isCrossOrientationOpenKey(key, orientation, rtl) {
+	return doSwitch(orientation, rtl ? key === ARROW_LEFT$1 : key === ARROW_RIGHT$1, key === ARROW_DOWN$1);
+}
+function isCrossOrientationCloseKey(key, orientation, rtl, grid) {
+	const vertical = rtl ? key === ARROW_RIGHT$1 : key === ARROW_LEFT$1;
+	const horizontal = key === ARROW_UP$1;
+	if (orientation === "both" || orientation === "horizontal" && grid) return key === "Escape";
+	return doSwitch(orientation, vertical, horizontal);
+}
+/**
+* Adds arrow key-based navigation of a list of items, either using real DOM
+* focus or virtual focus.
+* @see https://floating-ui.com/docs/useListNavigation
+*/
+function useListNavigation(store, props) {
+	const { listRef, activeIndex, onNavigate: onNavigateProp = () => {}, enabled = true, selectedIndex = null, allowEscape = false, loopFocus = false, nested = false, rtl = false, virtual = false, focusItemOnOpen = "auto", focusItemOnHover = true, openOnArrowKeyDown = true, disabledIndices = void 0, orientation = "vertical", triggerOrientation = orientation, parentOrientation, id, resetOnPointerLeave = true, externalTree, nestedReturnFocusRef, grid: navigateGrid } = props;
+	const isGrid = navigateGrid != null;
+	if (allowEscape) {
+		if (!loopFocus) console.warn("`useListNavigation` looping must be enabled to allow escaping.");
+		if (!virtual) console.warn("`useListNavigation` must be virtual to allow escaping.");
+	}
+	if (orientation === "vertical" && isGrid) console.warn("In grid list navigation mode, the `orientation` should", "be either \"horizontal\" or \"both\".");
+	const open = store.useState("open");
+	const floatingElement = store.useState("floatingElement");
+	const domReferenceElement = store.useState("domReferenceElement");
+	const dataRef = store.context.dataRef;
+	const floatingFocusElement = getFloatingFocusElement(floatingElement);
+	const typeableComboboxReference = isTypeableCombobox(domReferenceElement);
+	const floatingFocusElementRef = useValueAsRef(floatingFocusElement);
+	const parentId = useFloatingParentNodeId();
+	const tree = useFloatingTree(externalTree);
+	const focusItemOnOpenRef = import__wp_global_react.useRef(focusItemOnOpen);
+	const indexRef = import__wp_global_react.useRef(selectedIndex ?? -1);
+	const keyRef = import__wp_global_react.useRef(null);
+	const isPointerModalityRef = import__wp_global_react.useRef(true);
+	const onNavigate = useStableCallback((event) => {
+		onNavigateProp(indexRef.current === -1 ? null : indexRef.current, event);
+	});
+	const previousMountedRef = import__wp_global_react.useRef(!!floatingElement);
+	const previousOpenRef = import__wp_global_react.useRef(open);
+	const forceSyncFocusRef = import__wp_global_react.useRef(false);
+	const forceScrollIntoViewRef = import__wp_global_react.useRef(false);
+	const cancelQueuedFocusRef = import__wp_global_react.useRef(null);
+	const disabledIndicesRef = useValueAsRef(disabledIndices);
+	const latestOpenRef = useValueAsRef(open);
+	const selectedIndexRef = useValueAsRef(selectedIndex);
+	const resetOnPointerLeaveRef = useValueAsRef(resetOnPointerLeave);
+	const focusFrame = useAnimationFrame();
+	const waitForListPopulatedFrame = useAnimationFrame();
+	const focusItem = useStableCallback(() => {
+		focusFrame.cancel();
+		function runFocus(item) {
+			if (!virtual) cancelQueuedFocusRef.current = enqueueFocus(item, {
+				sync: forceSyncFocusRef.current,
+				preventScroll: true
+			});
+		}
+		const initialItem = listRef.current[indexRef.current];
+		const forceScrollIntoView = forceScrollIntoViewRef.current;
+		if (initialItem) runFocus(initialItem);
+		(forceSyncFocusRef.current ? (callback) => callback() : (callback) => focusFrame.request(callback))(() => {
+			const waitedItem = listRef.current[indexRef.current] || initialItem;
+			if (!waitedItem) return;
+			if (!initialItem) runFocus(waitedItem);
+			if (item && (forceScrollIntoView || !isPointerModalityRef.current)) waitedItem.scrollIntoView?.({
+				block: "nearest",
+				inline: "nearest"
+			});
+		});
+	});
+	useIsoLayoutEffect(() => {
+		dataRef.current.orientation = orientation;
+	}, [dataRef, orientation]);
+	useIsoLayoutEffect(() => {
+		if (!open) keyRef.current = null;
+		if (!open || focusItemOnOpen !== "auto") focusItemOnOpenRef.current = focusItemOnOpen;
+	}, [open, focusItemOnOpen]);
+	useIsoLayoutEffect(() => {
+		if (!enabled) return;
+		if (open && floatingElement) {
+			indexRef.current = selectedIndex ?? -1;
+			if (focusItemOnOpenRef.current && selectedIndex != null) {
+				forceScrollIntoViewRef.current = true;
+				onNavigate();
+			}
+		} else if (previousMountedRef.current) {
+			indexRef.current = -1;
+			onNavigate();
+		}
+	}, [
+		enabled,
+		open,
+		floatingElement,
+		selectedIndex,
+		onNavigate
+	]);
+	useIsoLayoutEffect(() => {
+		if (!enabled) return;
+		if (!open) {
+			forceSyncFocusRef.current = false;
+			return;
+		}
+		if (!floatingElement) return;
+		if (activeIndex == null) {
+			forceSyncFocusRef.current = false;
+			if (selectedIndexRef.current != null) return;
+			if (previousMountedRef.current) {
+				indexRef.current = -1;
+				focusItem();
+			}
+			if ((!previousOpenRef.current || !previousMountedRef.current) && focusItemOnOpenRef.current && (keyRef.current != null || focusItemOnOpenRef.current === true && keyRef.current == null)) {
+				let runs = 0;
+				const waitForListPopulated = () => {
+					if (listRef.current[0] == null) {
+						if (runs < 2) (runs ? (callback) => waitForListPopulatedFrame.request(callback) : queueMicrotask)(waitForListPopulated);
+						runs += 1;
+					} else {
+						indexRef.current = keyRef.current == null || isMainOrientationToEndKey(keyRef.current, triggerOrientation, rtl) || nested ? getMinListIndex(listRef) : getMaxListIndex(listRef);
+						keyRef.current = null;
+						onNavigate();
+					}
+				};
+				waitForListPopulated();
+			}
+		} else if (!isIndexOutOfListBounds(listRef.current, activeIndex)) {
+			indexRef.current = activeIndex;
+			focusItem();
+			forceScrollIntoViewRef.current = false;
+		}
+	}, [
+		enabled,
+		open,
+		floatingElement,
+		activeIndex,
+		selectedIndexRef,
+		nested,
+		listRef,
+		triggerOrientation,
+		rtl,
+		onNavigate,
+		focusItem,
+		waitForListPopulatedFrame
+	]);
+	useIsoLayoutEffect(() => {
+		if (!enabled || floatingElement || !tree || virtual || !previousMountedRef.current) return;
+		const nodes = tree.nodesRef.current;
+		const parent = nodes.find((node) => node.id === parentId)?.context?.elements.floating;
+		const activeEl = activeElement(ownerDocument(domReferenceElement ?? parent ?? null));
+		const treeContainsActiveEl = nodes.some((node) => node.context && contains(node.context.elements.floating, activeEl));
+		if (parent && !treeContainsActiveEl && isPointerModalityRef.current) parent.focus({ preventScroll: true });
+	}, [
+		enabled,
+		floatingElement,
+		domReferenceElement,
+		tree,
+		parentId,
+		virtual
+	]);
+	useIsoLayoutEffect(() => {
+		previousOpenRef.current = open;
+		previousMountedRef.current = !!floatingElement;
+	});
+	const hasActiveIndex = activeIndex != null;
+	const syncCurrentTarget = useStableCallback((event) => {
+		if (!latestOpenRef.current) return;
+		const index = listRef.current.indexOf(event.currentTarget);
+		if (index !== -1 && (indexRef.current !== index || activeIndex !== index)) {
+			indexRef.current = index;
+			onNavigate(event);
+		}
+	});
+	const getParentOrientation = useStableCallback(() => {
+		return parentOrientation ?? tree?.nodesRef.current.find((node) => node.id === parentId)?.context?.dataRef?.current.orientation;
+	});
+	const getMinEnabledIndex = useStableCallback(() => {
+		return getMinListIndex(listRef, disabledIndicesRef.current);
+	});
+	const commonOnKeyDown = useStableCallback((event) => {
+		isPointerModalityRef.current = false;
+		forceSyncFocusRef.current = true;
+		if (event.which === 229) return;
+		if (!latestOpenRef.current && event.currentTarget === floatingFocusElementRef.current) return;
+		if (nested && isCrossOrientationCloseKey(event.key, orientation, rtl, isGrid)) {
+			if (!isMainOrientationKey(event.key, getParentOrientation())) stopEvent(event);
+			store.setOpen(false, createChangeEventDetails(listNavigation, event.nativeEvent));
+			const returnElement = nestedReturnFocusRef?.current ?? domReferenceElement;
+			if (isHTMLElement(returnElement)) returnElement.focus();
+			return;
+		}
+		if (activeIndex != null && activeIndex !== indexRef.current && !isIndexOutOfListBounds(listRef.current, activeIndex)) indexRef.current = activeIndex;
+		const currentIndex = indexRef.current;
+		const minIndex = getMinListIndex(listRef, disabledIndices);
+		const maxIndex = getMaxListIndex(listRef, disabledIndices);
+		if (!typeableComboboxReference) {
+			if (event.key === "Home") {
+				stopEvent(event);
+				indexRef.current = minIndex;
+				onNavigate(event);
+			}
+			if (event.key === "End") {
+				stopEvent(event);
+				indexRef.current = maxIndex;
+				onNavigate(event);
+			}
+		}
+		if (navigateGrid != null) {
+			const index = navigateGrid(event, indexRef.current, listRef, orientation, loopFocus, rtl, disabledIndices, minIndex, maxIndex);
+			if (index != null && index !== indexRef.current) {
+				indexRef.current = index;
+				onNavigate(event);
+			}
+			if (orientation === "both") return;
+		}
+		if (isMainOrientationKey(event.key, orientation)) {
+			stopEvent(event);
+			const focusedElement = activeElement(event.currentTarget.ownerDocument);
+			if (open && !virtual && contains(event.currentTarget, focusedElement) && !listRef.current.some((item) => item != null && contains(item, focusedElement))) {
+				indexRef.current = isMainOrientationToEndKey(event.key, orientation, rtl) ? minIndex : maxIndex;
+				onNavigate(event);
+				if (activeIndex === indexRef.current) focusItem();
+				return;
+			}
+			const { index, wrapped } = getNextListIndex(listRef.current, currentIndex, {
+				decrement: !isMainOrientationToEndKey(event.key, orientation, rtl),
+				loopFocus,
+				allowEscape,
+				disabledIndices,
+				minIndex,
+				maxIndex
+			});
+			if (wrapped) forceSyncFocusRef.current = false;
+			indexRef.current = index;
+			onNavigate(event);
+		}
+	});
+	const item = import__wp_global_react.useMemo(() => {
+		return {
+			onFocus(event) {
+				forceSyncFocusRef.current = true;
+				syncCurrentTarget(event);
+			},
+			onClick({ currentTarget }) {
+				if (!virtual) currentTarget.focus({ preventScroll: true });
+			},
+			onMouseMove(event) {
+				if (isStationaryWebKitPointer(event)) return;
+				forceSyncFocusRef.current = true;
+				forceScrollIntoViewRef.current = false;
+				if (focusItemOnHover) syncCurrentTarget(event);
+			},
+			onPointerLeave(event) {
+				if (!latestOpenRef.current || !isPointerModalityRef.current || event.pointerType === "touch") return;
+				forceSyncFocusRef.current = true;
+				const relatedTarget = event.relatedTarget;
+				if (!focusItemOnHover || listRef.current.includes(relatedTarget)) return;
+				if (!resetOnPointerLeaveRef.current) return;
+				cancelQueuedFocusRef.current?.();
+				cancelQueuedFocusRef.current = null;
+				indexRef.current = -1;
+				onNavigate(event);
+				if (!virtual) {
+					const floatingFocusEl = floatingFocusElementRef.current;
+					const activeEl = activeElement(ownerDocument(floatingFocusEl));
+					if (floatingFocusEl && contains(floatingFocusEl, activeEl)) floatingFocusEl.focus({ preventScroll: true });
+				}
+			}
+		};
+	}, [
+		syncCurrentTarget,
+		latestOpenRef,
+		floatingFocusElementRef,
+		focusItemOnHover,
+		listRef,
+		onNavigate,
+		resetOnPointerLeaveRef,
+		virtual
+	]);
+	const ariaActiveDescendantProp = import__wp_global_react.useMemo(() => {
+		return virtual && open && hasActiveIndex && { "aria-activedescendant": `${id}-${activeIndex}` };
+	}, [
+		virtual,
+		open,
+		hasActiveIndex,
+		id,
+		activeIndex
+	]);
+	const floating = import__wp_global_react.useMemo(() => {
+		return {
+			...!typeableComboboxReference ? ariaActiveDescendantProp : {},
+			onKeyDown(event) {
+				if (event.key === "Tab" && event.shiftKey && open && !virtual) {
+					const target = getTarget(event.nativeEvent);
+					if (target && !contains(floatingFocusElementRef.current, target)) return;
+					stopEvent(event);
+					const details = createChangeEventDetails(focusOut, event.nativeEvent);
+					store.setOpen(false, details);
+					const returnElement = nestedReturnFocusRef?.current ?? domReferenceElement;
+					if (!details.isCanceled && isHTMLElement(returnElement)) returnElement.focus();
+					return;
+				}
+				commonOnKeyDown(event);
+			},
+			onPointerMove(event) {
+				if (isStationaryWebKitPointer(event)) return;
+				isPointerModalityRef.current = true;
+			}
+		};
+	}, [
+		ariaActiveDescendantProp,
+		commonOnKeyDown,
+		floatingFocusElementRef,
+		typeableComboboxReference,
+		store,
+		open,
+		virtual,
+		domReferenceElement,
+		nestedReturnFocusRef
+	]);
+	const trigger = import__wp_global_react.useMemo(() => {
+		function openOnNavigationKeyDown(event) {
+			store.setOpen(true, createChangeEventDetails(listNavigation, event.nativeEvent, event.currentTarget));
+		}
+		function checkVirtualMouse(event) {
+			if (focusItemOnOpen === "auto" && isVirtualClick(event.nativeEvent)) focusItemOnOpenRef.current = !virtual;
+		}
+		function checkVirtualPointer(event) {
+			focusItemOnOpenRef.current = focusItemOnOpen;
+			if (focusItemOnOpen === "auto" && isVirtualPointerEvent(event.nativeEvent)) focusItemOnOpenRef.current = true;
+		}
+		return {
+			onKeyDown(event) {
+				const currentOpen = store.select("open");
+				isPointerModalityRef.current = false;
+				const isArrowKey = event.key.startsWith("Arrow");
+				const isParentCrossOpenKey = isCrossOrientationOpenKey(event.key, getParentOrientation(), rtl);
+				const isMainKey = isMainOrientationKey(event.key, currentOpen ? orientation : triggerOrientation);
+				const isNavigationKey = (nested ? isParentCrossOpenKey : isMainKey) || event.key === "Enter" || event.key.trim() === "";
+				if (virtual && currentOpen && (!nested || isTypeableElement(event.currentTarget))) return commonOnKeyDown(event);
+				if (!currentOpen && !openOnArrowKeyDown && isArrowKey) return;
+				if (isNavigationKey) {
+					const isParentMainKey = isMainOrientationKey(event.key, getParentOrientation());
+					keyRef.current = nested && isParentMainKey ? null : event.key;
+				}
+				if (nested) {
+					if (isParentCrossOpenKey) {
+						stopEvent(event);
+						if (currentOpen) {
+							indexRef.current = getMinEnabledIndex();
+							onNavigate(event);
+							if (virtual) floatingFocusElementRef.current?.focus();
+						} else openOnNavigationKeyDown(event);
+					}
+					return;
+				}
+				if (isMainKey) {
+					if (selectedIndexRef.current != null) indexRef.current = selectedIndexRef.current;
+					stopEvent(event);
+					if (!currentOpen && openOnArrowKeyDown) openOnNavigationKeyDown(event);
+					else commonOnKeyDown(event);
+					if (currentOpen) onNavigate(event);
+				}
+			},
+			onFocus(event) {
+				if (event.target !== event.currentTarget) return;
+				if (store.select("open") && !virtual) {
+					indexRef.current = -1;
+					onNavigate(event);
+				}
+			},
+			onPointerDown: checkVirtualPointer,
+			onPointerEnter: checkVirtualPointer,
+			onMouseDown: checkVirtualMouse,
+			onClick: checkVirtualMouse
+		};
+	}, [
+		commonOnKeyDown,
+		focusItemOnOpen,
+		getMinEnabledIndex,
+		nested,
+		onNavigate,
+		store,
+		openOnArrowKeyDown,
+		orientation,
+		triggerOrientation,
+		getParentOrientation,
+		rtl,
+		selectedIndexRef,
+		virtual,
+		floatingFocusElementRef
+	]);
+	const reference = import__wp_global_react.useMemo(() => {
+		return {
+			...ariaActiveDescendantProp,
+			...trigger
+		};
+	}, [ariaActiveDescendantProp, trigger]);
+	return import__wp_global_react.useMemo(() => enabled ? {
+		reference,
+		floating,
+		item,
+		trigger
+	} : {}, [
+		enabled,
+		reference,
+		floating,
+		trigger,
+		item
+	]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useTypeahead.mjs
+/**
+* Provides a matching callback that can be used to focus an item as the user
+* types, often used in tandem with `useListNavigation()`.
+* @see https://floating-ui.com/docs/useTypeahead
+*/
+function useTypeahead(store, props) {
+	const { listRef, elementsRef, activeIndex, onMatch: onMatchProp, disabledIndices, onTyping: onTypingProp, enabled = true, resetMs = 750, selectedIndex = null } = props;
+	const onTyping = useStableCallback(onTypingProp);
+	const open = store.useState("open");
+	const timeout = useTimeout();
+	const stringRef = import__wp_global_react.useRef("");
+	const prevIndexRef = import__wp_global_react.useRef(selectedIndex ?? activeIndex ?? -1);
+	const matchIndexRef = import__wp_global_react.useRef(null);
+	const onKeyDown = useStableCallback((event) => {
+		function getElement(index) {
+			return elementsRef?.current[index];
+		}
+		function isItemAvailable(index) {
+			const element = getElement(index);
+			if (element && !isElementVisible(element) || element?.matches(":disabled")) return false;
+			return disabledIndices == null || !isListIndexDisabled(EMPTY_ARRAY$2, index, disabledIndices);
+		}
+		function getMatchingIndex(list, string, startIndex = 0) {
+			if (list.length === 0) return -1;
+			const normalizedStartIndex = (startIndex % list.length + list.length) % list.length;
+			const lowerString = string.toLowerCase();
+			for (let offset = 0; offset < list.length; offset += 1) {
+				const index = (normalizedStartIndex + offset) % list.length;
+				if (!list[index]?.toLowerCase().startsWith(lowerString) || !isItemAvailable(index)) continue;
+				return index;
+			}
+			return -1;
+		}
+		const listContent = listRef.current;
+		if (stringRef.current.length > 0 && event.key === " ") {
+			stopEvent(event);
+			onTyping?.(true);
+		}
+		if (stringRef.current.length > 0 && stringRef.current[0] !== " ") {
+			if (getMatchingIndex(listContent, stringRef.current) === -1 && event.key !== " ") onTyping?.(false);
+		}
+		if (listContent == null || event.key.length !== 1 || event.ctrlKey || event.metaKey || event.altKey) return;
+		if (open && event.key !== " ") {
+			stopEvent(event);
+			onTyping?.(true);
+		}
+		const isNewSession = stringRef.current === "";
+		if (isNewSession) prevIndexRef.current = selectedIndex ?? activeIndex ?? -1;
+		if (listContent.every((text, index) => text && isItemAvailable(index) ? text[0]?.toLowerCase() !== text[1]?.toLowerCase() : true) && stringRef.current === event.key) {
+			stringRef.current = "";
+			prevIndexRef.current = matchIndexRef.current;
+		}
+		stringRef.current += event.key;
+		timeout.start(resetMs, () => {
+			stringRef.current = "";
+			prevIndexRef.current = matchIndexRef.current;
+			onTyping?.(false);
+		});
+		const startIndex = ((isNewSession ? selectedIndex ?? activeIndex ?? -1 : prevIndexRef.current) ?? 0) + 1;
+		const index = getMatchingIndex(listContent, stringRef.current, startIndex);
+		if (index !== -1) {
+			onMatchProp?.(index, event);
+			matchIndexRef.current = index;
+		} else if (event.key !== " ") {
+			stringRef.current = "";
+			onTyping?.(false);
+		}
+	});
+	const onBlur = useStableCallback((event) => {
+		const next = event.relatedTarget;
+		const currentDomReferenceElement = store.select("domReferenceElement");
+		const currentFloatingElement = store.select("floatingElement");
+		if (contains(currentDomReferenceElement, next) || contains(currentFloatingElement, next)) return;
+		timeout.clear();
+		stringRef.current = "";
+		prevIndexRef.current = matchIndexRef.current;
+		onTyping?.(false);
+	});
+	useIsoLayoutEffect(() => {
+		if (!open && selectedIndex !== null) return;
+		timeout.clear();
+		matchIndexRef.current = null;
+		if (stringRef.current !== "") {
+			stringRef.current = "";
+			onTyping?.(false);
+		}
+	}, [
+		open,
+		selectedIndex,
+		timeout,
+		onTyping
+	]);
+	const sharedProps = import__wp_global_react.useMemo(() => ({
+		onKeyDown,
+		onBlur
+	}), [onKeyDown, onBlur]);
+	return import__wp_global_react.useMemo(() => enabled ? {
+		reference: sharedProps,
+		floating: sharedProps
+	} : {}, [enabled, sharedProps]);
+}
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/safePolygon.mjs
 const CURSOR_SPEED_THRESHOLD = .1;
 const CURSOR_SPEED_THRESHOLD_SQUARED = CURSOR_SPEED_THRESHOLD * CURSOR_SPEED_THRESHOLD;
@@ -5163,7 +6978,7 @@ const shift$1 = function(options) {
 			const mainAxis = getOppositeAxis(crossAxis);
 			let mainAxisCoord = coords[mainAxis];
 			let crossAxisCoord = coords[crossAxis];
-			const clampCoord = (axis, coord) => clamp(coord + overflow[axis === "y" ? "top" : "left"], coord, coord - overflow[axis === "y" ? "bottom" : "right"]);
+			const clampCoord = (axis, coord) => clamp$1(coord + overflow[axis === "y" ? "top" : "left"], coord, coord - overflow[axis === "y" ? "bottom" : "right"]);
 			if (checkMainAxis) mainAxisCoord = clampCoord(mainAxis, mainAxisCoord);
 			if (checkCrossAxis) crossAxisCoord = clampCoord(crossAxis, crossAxisCoord);
 			const limitedCoords = limiter.fn({
@@ -5311,7 +7126,7 @@ function getCssDimensions(element) {
 function unwrapElement(element) {
 	return !isElement(element) ? element.contextElement : element;
 }
-function getScale(element) {
+function getScale$1(element) {
 	const domElement = unwrapElement(element);
 	if (!isHTMLElement(domElement)) return createCoords(1);
 	const rect = domElement.getBoundingClientRect();
@@ -5346,8 +7161,8 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
 	let scale = createCoords(1);
 	if (includeScale) {
 		if (offsetParent) {
-			if (isElement(offsetParent)) scale = getScale(offsetParent);
-		} else scale = getScale(element);
+			if (isElement(offsetParent)) scale = getScale$1(offsetParent);
+		} else scale = getScale$1(element);
 	}
 	const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
 	let x = (clientRect.left + visualOffsets.x) / scale.x;
@@ -5360,7 +7175,7 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
 		let currentWin = win;
 		let currentIFrame = getFrameElement(currentWin);
 		while (currentIFrame && offsetWin !== currentWin) {
-			const iframeScale = getScale(currentIFrame);
+			const iframeScale = getScale$1(currentIFrame);
 			const iframeRect = currentIFrame.getBoundingClientRect();
 			const css = getComputedStyle$1(currentIFrame);
 			const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
@@ -5411,7 +7226,7 @@ function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
 		if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) scroll = getNodeScroll(offsetParent);
 		if (isOffsetParentAnElement) {
 			const offsetRect = getBoundingClientRect(offsetParent);
-			scale = getScale(offsetParent);
+			scale = getScale$1(offsetParent);
 			offsets.x = offsetRect.x + offsetParent.clientLeft;
 			offsets.y = offsetRect.y + offsetParent.clientTop;
 		}
@@ -5489,7 +7304,7 @@ function getInnerBoundingClientRect(element, strategy) {
 	const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
 	const top = clientRect.top + element.clientTop;
 	const left = clientRect.left + element.clientLeft;
-	const scale = getScale(element);
+	const scale = getScale$1(element);
 	return {
 		width: element.clientWidth * scale.x,
 		height: element.clientHeight * scale.y,
@@ -5638,7 +7453,7 @@ const platform = {
 	getElementRects,
 	getClientRects,
 	getDimensions,
-	getScale,
+	getScale: getScale$1,
 	isElement,
 	isRTL: isRTL$4
 };
@@ -6068,6 +7883,84 @@ const size = (options, deps) => {
 	};
 };
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/composite.mjs
+const ARROW_UP = "ArrowUp";
+const ARROW_DOWN = "ArrowDown";
+const ARROW_LEFT = "ArrowLeft";
+const ARROW_RIGHT = "ArrowRight";
+const HOME = "Home";
+const END = "End";
+const COMPOSITE_KEYS = /* @__PURE__ */ new Set([
+	ARROW_UP,
+	ARROW_DOWN,
+	ARROW_LEFT,
+	ARROW_RIGHT,
+	HOME,
+	"End"
+]);
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/inertValue.mjs
+function inertValue(value) {
+	if (isReactVersionAtLeast(19)) return value;
+	return value ? "true" : void 0;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/InternalBackdrop.mjs
+/**
+* @internal
+*/
+const InternalBackdrop = /*#__PURE__*/ import__wp_global_react.forwardRef(function InternalBackdrop(props, ref) {
+	const { cutout, ...otherProps } = props;
+	let clipPath;
+	if (cutout) {
+		const rect = cutout.getBoundingClientRect();
+		clipPath = `polygon(0% 0%,100% 0%,100% 100%,0% 100%,0% 0%,${rect.left}px ${rect.top}px,${rect.left}px ${rect.bottom}px,${rect.right}px ${rect.bottom}px,${rect.right}px ${rect.top}px,${rect.left}px ${rect.top}px)`;
+	}
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsx)("div", {
+		ref,
+		role: "presentation",
+		"data-base-ui-inert": "",
+		...otherProps,
+		style: {
+			position: "fixed",
+			inset: 0,
+			userSelect: "none",
+			WebkitUserSelect: "none",
+			clipPath
+		}
+	});
+});
+InternalBackdrop.displayName = "InternalBackdrop";
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useEnhancedClickHandler.mjs
+/**
+* Provides a cross-browser way to determine the type of the pointer used to click.
+* Safari and Firefox do not provide the PointerEvent to the click handler (they use MouseEvent) yet.
+* Additionally, this implementation detects if the click was triggered by the keyboard.
+*
+* @param handler The function to be called when the button is clicked. The first parameter is the original event and the second parameter is the pointer type.
+*/
+function useEnhancedClickHandler(handler) {
+	const lastClickInteractionTypeRef = import__wp_global_react.useRef("");
+	const handlePointerDown = import__wp_global_react.useCallback((event) => {
+		if (event.defaultPrevented) return;
+		lastClickInteractionTypeRef.current = event.pointerType;
+		handler(event, event.pointerType);
+	}, [handler]);
+	return {
+		onClick: import__wp_global_react.useCallback((event) => {
+			if (event.detail === 0) {
+				handler(event, "keyboard");
+				return;
+			}
+			if ("pointerType" in event) handler(event, event.pointerType);
+			else handler(event, lastClickInteractionTypeRef.current);
+			lastClickInteractionTypeRef.current = "";
+		}, [handler]),
+		onPointerDown: handlePointerDown
+	};
+}
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useValueChanged.mjs
 function useValueChanged(value, onChange) {
 	const valueRef = import__wp_global_react.useRef(value);
@@ -6076,6 +7969,175 @@ function useValueChanged(value, onChange) {
 		if (valueRef.current !== value) onChangeCallback(valueRef.current);
 		valueRef.current = value;
 	}, [value, onChangeCallback]);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useOpenInteractionType.mjs
+function useOpenMethodTriggerProps(open, setOpenMethod) {
+	const handleTriggerClick = useStableCallback((_, interactionType) => {
+		if (!(typeof open === "function" ? open() : open)) setOpenMethod(interactionType || (ios ? "touch" : ""));
+	});
+	const { onClick, onPointerDown } = useEnhancedClickHandler(handleTriggerClick);
+	return import__wp_global_react.useMemo(() => ({
+		onClick,
+		onPointerDown
+	}), [onClick, onPointerDown]);
+}
+/**
+* Determines the interaction type (keyboard, mouse, touch, etc.) that opened the component.
+*
+* @param open The open state of the component.
+*/
+function useOpenInteractionType(open) {
+	const [openMethod, setOpenMethod] = import__wp_global_react.useState(null);
+	const triggerProps = useOpenMethodTriggerProps(open, setOpenMethod);
+	useValueChanged(open, (previousOpen) => {
+		if (previousOpen && !open) setOpenMethod(null);
+	});
+	return import__wp_global_react.useMemo(() => ({
+		openMethod,
+		triggerProps
+	}), [openMethod, triggerProps]);
+}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useOnFirstRender.mjs
+function useOnFirstRender(fn) {
+	const ref = import__wp_global_react.useRef(true);
+	if (ref.current) {
+		ref.current = false;
+		fn();
+	}
+}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/areArraysEqual.mjs
+/**
+* Compares two arrays element-wise.
+*
+* The default comparison is `Object.is`, so `NaN` equals `NaN` and `0` does not equal `-0`.
+*/
+function areArraysEqual(array1, array2, itemComparer = Object.is) {
+	const { length } = array1;
+	if (length !== array2.length) return false;
+	for (let i = 0; i < length; i += 1) if (!itemComparer(array1[i], array2[i])) return false;
+	return true;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/itemEquality.mjs
+const defaultItemEquality = (itemValue, selectedValue) => Object.is(itemValue, selectedValue);
+function compareItemEquality(itemValue, selectedValue, comparer) {
+	if (itemValue == null || selectedValue == null) return Object.is(itemValue, selectedValue);
+	return comparer(itemValue, selectedValue);
+}
+function isSelectedValueDirty(currentValue, initialValue, comparer) {
+	if (Array.isArray(currentValue) && Array.isArray(initialValue)) return !areArraysEqual(currentValue, initialValue, (itemValue, initialItemValue) => compareItemEquality(itemValue, initialItemValue, comparer));
+	return currentValue !== initialValue;
+}
+function selectedValueIncludes(selectedValues, itemValue, comparer) {
+	if (!selectedValues) return false;
+	return selectedValues.some((selectedValue) => {
+		if (selectedValue === void 0) return false;
+		return compareItemEquality(itemValue, selectedValue, comparer);
+	});
+}
+function findItemIndex(itemValues, selectedValue, comparer) {
+	if (!itemValues) return -1;
+	return itemValues.findIndex((itemValue) => {
+		if (itemValue === void 0) return false;
+		return compareItemEquality(itemValue, selectedValue, comparer);
+	});
+}
+function createSelectionMatcher(selectedValues, comparer) {
+	if (comparer !== defaultItemEquality) return (itemValue) => selectedValueIncludes(selectedValues, itemValue, comparer);
+	const index = new Set(selectedValues);
+	index.delete(void 0);
+	return (itemValue) => index.has(itemValue) && (itemValue !== 0 || selectedValues.some((v) => Object.is(itemValue, v)));
+}
+function findSelectionIndex(itemValues, selectedValue, comparer, multiple) {
+	const index = multiple && Array.isArray(selectedValue) ? itemValues.findIndex(createSelectionMatcher(selectedValue, comparer)) : findItemIndex(itemValues, selectedValue, comparer);
+	return index === -1 ? null : index;
+}
+/** Resolves the first selected index as items register or change. */
+function resolveSelectedIndex(index, itemValue, registry, selectedValues, comparer, currentIndex) {
+	if (selectedValueIncludes(selectedValues, itemValue, comparer)) return currentIndex != null && index > currentIndex && selectedValueIncludes(selectedValues, registry[currentIndex], comparer) ? currentIndex : index;
+	return index === currentIndex ? findSelectionIndex(registry, selectedValues, comparer, true) : currentIndex;
+}
+function removeItem(selectedValues, itemValue, comparer) {
+	return selectedValues.filter((selectedValue) => !compareItemEquality(itemValue, selectedValue, comparer));
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/serializeValue.mjs
+function serializeValue(value) {
+	if (value == null) return "";
+	if (typeof value === "string") return value;
+	try {
+		return JSON.stringify(value);
+	} catch {
+		return String(value);
+	}
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/resolveValueLabel.mjs
+function isGroup(item) {
+	return typeof item === "object" && item != null && Array.isArray(item.items);
+}
+function isGroupedItems(items) {
+	return isGroup(items?.[0]);
+}
+function flattenLeafItems(items) {
+	return isGroupedItems(items) ? items.flatMap((group) => group.items) : items;
+}
+/**
+* Checks if the items array contains an item with a null value that has a non-null label.
+*/
+function hasNullItemLabel(items) {
+	if (!Array.isArray(items)) return items != null && "null" in items;
+	const arrayItems = items;
+	if (isGroupedItems(arrayItems)) {
+		for (const group of arrayItems) for (const item of group.items) if (item && item.value == null && item.label != null) return true;
+		return false;
+	}
+	for (const item of arrayItems) if (item && item.value == null && item.label != null) return true;
+	return false;
+}
+function stringifyAsLabel(item, itemToStringLabel) {
+	if (itemToStringLabel && item != null) return itemToStringLabel(item) ?? "";
+	if (item && typeof item === "object") {
+		if ("label" in item && item.label != null) return String(item.label);
+		if ("value" in item) return String(item.value);
+	}
+	return serializeValue(item);
+}
+function stringifyAsValue(item, itemToStringValue) {
+	if (itemToStringValue && item != null) return itemToStringValue(item) ?? "";
+	if (item && typeof item === "object" && "value" in item && "label" in item) return serializeValue(item.value);
+	return serializeValue(item);
+}
+function resolveSelectedLabel(value, items, itemToStringLabel) {
+	function fallback() {
+		return stringifyAsLabel(value, itemToStringLabel);
+	}
+	if (itemToStringLabel && value != null) return itemToStringLabel(value);
+	if (value && typeof value === "object" && "label" in value && value.label != null) return value.label;
+	if (items && !Array.isArray(items)) return (Object.hasOwn(items, value) ? items[value] : void 0) ?? fallback();
+	if (Array.isArray(items)) {
+		const flatItems = flattenLeafItems(items);
+		if (value == null || typeof value !== "object") {
+			const match = flatItems.find((item) => item.value === value);
+			if (match && match.label != null) return match.label;
+			return fallback();
+		}
+		if ("value" in value) {
+			const match = flatItems.find((item) => item && item.value === value.value);
+			if (match && match.label != null) return match.label;
+		}
+	}
+	return fallback();
+}
+function resolveMultipleLabels(values, items, itemToStringLabel) {
+	return values.reduce((acc, value, index) => {
+		if (index > 0) acc.push(", ");
+		acc.push(/*#__PURE__*/ (0, import_jsx_runtime.jsx)(import__wp_global_react.Fragment, { children: resolveSelectedLabel(value, items, itemToStringLabel) }, index));
+		return acc;
+	}, []);
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/field/control/FieldControlDataAttributes.mjs
@@ -6313,6 +8375,44 @@ function useSetFieldFocused(disabled, focusTargetRef, onFocusedChange) {
 	return setFieldFocused;
 }
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getPseudoElementBounds.mjs
+const BOUNDARY_OFFSET = 5;
+/**
+* Determines if a mouse event occurred within the bounds of an element
+* (including its pseudo-elements), with a small tolerance for pointer drift.
+*/
+function isMouseWithinBounds(event, element) {
+	const bounds = getPseudoElementBounds(element);
+	return event.clientX >= bounds.left - BOUNDARY_OFFSET && event.clientX <= bounds.right + BOUNDARY_OFFSET && event.clientY >= bounds.top - BOUNDARY_OFFSET && event.clientY <= bounds.bottom + BOUNDARY_OFFSET;
+}
+function getPseudoElementBounds(element) {
+	const elementRect = element.getBoundingClientRect();
+	const win = getWindow(element);
+	if (jsdom) return elementRect;
+	const beforeStyles = win.getComputedStyle(element, "::before");
+	const afterStyles = win.getComputedStyle(element, "::after");
+	if (!(beforeStyles.content !== "none" || afterStyles.content !== "none")) return elementRect;
+	const beforeWidth = parseFloat(beforeStyles.width) || 0;
+	const beforeHeight = parseFloat(beforeStyles.height) || 0;
+	const afterWidth = parseFloat(afterStyles.width) || 0;
+	const afterHeight = parseFloat(afterStyles.height) || 0;
+	const totalWidth = Math.max(elementRect.width, beforeWidth, afterWidth);
+	const totalHeight = Math.max(elementRect.height, beforeHeight, afterHeight);
+	const widthDiff = totalWidth - elementRect.width;
+	const heightDiff = totalHeight - elementRect.height;
+	return {
+		left: elementRect.left - widthDiff / 2,
+		right: elementRect.right + widthDiff / 2,
+		top: elementRect.top - heightDiff / 2,
+		bottom: elementRect.bottom + heightDiff / 2
+	};
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/resolveAriaLabelledBy.mjs
+function resolveAriaLabelledBy(fieldLabelId, localLabelId) {
+	return fieldLabelId ?? localLabelId;
+}
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/hooks/useFloating.mjs
 /**
 * Provides data to position a floating element and context to add interactions.
@@ -6440,7 +8540,7 @@ const baseArrow = (options) => ({
 		const min = minPadding;
 		const max = clientSize - arrowDimensions[length] - maxPadding;
 		const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
-		const offset = clamp(min, center, max);
+		const offset = clamp$1(min, center, max);
 		const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset && rects.reference[length] / 2 - (center < min ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
 		const alignmentOffset = shouldAddOffset ? center < min ? center - min : center - max : 0;
 		return {
@@ -6511,7 +8611,7 @@ const anchorHeight = "--anchor-height";
 * The coordinates that this element is anchored to. Used for animations and transitions.
 * @type {string}
 */
-const transformOrigin = "--transform-origin";
+const transformOrigin$1 = "--transform-origin";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnchorPositioning.mjs
 const AVAILABLE_WIDTH_VAR = availableWidth;
@@ -6687,7 +8787,7 @@ function useAnchorPositioningWithHook(params, useFloatingHook) {
 			else crossOrigin = `${(isVertical ? middlewareData.arrow?.x || 0 : middlewareData.arrow?.y || 0) + (isVertical ? arrowEl?.clientWidth || 0 : arrowEl?.clientHeight || 0) / 2}px`;
 			let sideOrigin = renderedSide === "top" || renderedSide === "left" ? `calc(100% + ${sideOffsetValue}px)` : `${-sideOffsetValue}px`;
 			if (crossAxisShiftEnabled && isVertical && Math.abs(middlewareData.shift?.y || 0) > sideOffsetValue) sideOrigin = `${rects.reference.y + rects.reference.height / 2 - y}px`;
-			floating.style.setProperty(transformOrigin, isVertical ? `${crossOrigin} ${sideOrigin}` : `${sideOrigin} ${crossOrigin}`);
+			floating.style.setProperty(transformOrigin$1, isVertical ? `${crossOrigin} ${sideOrigin}` : `${sideOrigin} ${crossOrigin}`);
 			return {};
 		}
 	}, hide, adaptiveOrigin);
@@ -6868,6 +8968,48 @@ function usePositioner(componentProps, state, { styles, transitionStatus, props,
 		stateAttributesMapping: popupStateMapping
 	});
 }
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/useAnchoredPopupScrollLock.mjs
+const VIEWPORT_WIDTH_TOLERANCE_PX = 20;
+/**
+* Manages scroll lock for anchored popups. For non-touch opens, scroll lock is applied when
+* enabled. For touch opens, scroll lock is applied only when the positioner width is effectively
+* viewport-sized.
+*/
+function useAnchoredPopupScrollLock(enabled, touchOpen, positionerElement, referenceElement) {
+	const [touchOpenShouldLockScroll, setTouchOpenShouldLockScroll] = import__wp_global_react.useState(false);
+	useIsoLayoutEffect(() => {
+		if (!enabled || !touchOpen || positionerElement == null) {
+			setTouchOpenShouldLockScroll(false);
+			return;
+		}
+		const viewportWidth = ownerDocument(positionerElement).documentElement.clientWidth;
+		const popupWidth = positionerElement.offsetWidth;
+		setTouchOpenShouldLockScroll(viewportWidth > 0 && popupWidth > 0 && popupWidth >= viewportWidth - VIEWPORT_WIDTH_TOLERANCE_PX);
+	}, [
+		enabled,
+		touchOpen,
+		positionerElement
+	]);
+	useScrollLock(enabled && (!touchOpen || touchOpenShouldLockScroll), referenceElement);
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/listbox-separator/ListboxSeparator.mjs
+/**
+* A visual separator between items.
+* Renders a `<div>` element.
+*
+* @internal
+*/
+const ListboxSeparator = /*#__PURE__*/ import__wp_global_react.forwardRef(function ListboxSeparator(componentProps, forwardedRef) {
+	const { className, render, orientation = "horizontal", style, ...elementProps } = componentProps;
+	return useRenderElement("div", componentProps, {
+		state: { orientation },
+		ref: forwardedRef,
+		props: [{ role: "presentation" }, elementProps]
+	});
+});
+ListboxSeparator.displayName = "ListboxSeparator";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/button/Button.mjs
 /**
@@ -7177,6 +9319,33 @@ function focusElementWithVisible(element) {
 	element.focus({ focusVisible: true });
 }
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/toolbar/root/ToolbarRootContext.mjs
+const ToolbarRootContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+ToolbarRootContext.displayName = "ToolbarRootContext";
+function useToolbarRootContext(optional) {
+	const context = import__wp_global_react.useContext(ToolbarRootContext);
+	if (context === void 0 && !optional) throw new Error("Base UI: ToolbarRootContext is missing. Toolbar parts must be placed within <Toolbar.Root>.");
+	return context;
+}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/usePreviousValue.mjs
+/**
+* Returns a previous value of its argument.
+* @param value Current value.
+* @returns Previous value, or null if there is no previous value.
+*/
+function usePreviousValue(value) {
+	const [state, setState] = import__wp_global_react.useState({
+		current: value,
+		previous: null
+	});
+	if (!Object.is(value, state.current)) setState({
+		current: value,
+		previous: state.current
+	});
+	return state.previous;
+}
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
 /**
 * Enables RTL behavior for Base UI components.
@@ -7192,6 +9361,24 @@ const DirectionProvider$1 = function DirectionProvider(props) {
 	});
 };
 DirectionProvider$1.displayName = "DirectionProvider";
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/isElementDisabled.mjs
+function isElementDisabled(element) {
+	return element == null || element.hasAttribute("disabled") || element.getAttribute("aria-disabled") === "true";
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/csp-context/CSPContext.mjs
+const CSPContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+CSPContext.displayName = "CSPContext";
+const DEFAULT_CSP_CONTEXT_VALUE = { disableStyleElements: false };
+function useCSPContext() {
+	return import__wp_global_react.useContext(CSPContext) ?? DEFAULT_CSP_CONTEXT_VALUE;
+}
+
+// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/clamp.mjs
+function clamp(val, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
+	return Math.max(min, Math.min(val, max));
+}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/fieldset/root/FieldsetRootContext.mjs
 const FieldsetRootContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
@@ -7714,6 +9901,1461 @@ const FloatingPortalLite = /*#__PURE__*/ import__wp_global_react.forwardRef(func
 });
 FloatingPortalLite.displayName = "FloatingPortalLite";
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/styles.mjs
+const DISABLE_SCROLLBAR_CLASS_NAME = "base-ui-disable-scrollbar";
+const styleDisableScrollbar = {
+	className: DISABLE_SCROLLBAR_CLASS_NAME,
+	getElement(nonce) {
+		return /*#__PURE__*/ (0, import_jsx_runtime.jsx)("style", {
+			nonce,
+			href: DISABLE_SCROLLBAR_CLASS_NAME,
+			precedence: "base-ui:low",
+			children: `.${DISABLE_SCROLLBAR_CLASS_NAME}{scrollbar-width:none}.${DISABLE_SCROLLBAR_CLASS_NAME}::-webkit-scrollbar{display:none}`
+		});
+	}
+};
+styleDisableScrollbar.getElement.displayName = "styleDisableScrollbar.getElement";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/scrollEdges.mjs
+const SCROLL_EDGE_TOLERANCE_PX = 1;
+function getMaxScrollOffset(scrollSize, clientSize) {
+	return Math.max(0, scrollSize - clientSize);
+}
+function normalizeScrollOffset(value, max) {
+	if (max <= 0) return 0;
+	const clamped = clamp(value, 0, max);
+	const startDistance = clamped;
+	const endDistance = max - clamped;
+	const withinStartTolerance = startDistance <= 1;
+	const withinEndTolerance = endDistance <= 1;
+	if (withinStartTolerance && withinEndTolerance) return startDistance <= endDistance ? 0 : max;
+	if (withinStartTolerance) return 0;
+	if (withinEndTolerance) return max;
+	return clamped;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/root/SelectRootContext.mjs
+const SelectRootContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+SelectRootContext.displayName = "SelectRootContext";
+const SelectFloatingContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+SelectFloatingContext.displayName = "SelectFloatingContext";
+function useSelectRootContext() {
+	const store = import__wp_global_react.useContext(SelectRootContext);
+	if (store === void 0) throw new Error("Base UI: SelectRootContext is missing. Select parts must be placed within <Select.Root>.");
+	return store;
+}
+function useSelectFloatingContext() {
+	const context = import__wp_global_react.useContext(SelectFloatingContext);
+	if (context === void 0) throw new Error("Base UI: SelectFloatingContext is missing. Select parts must be placed within <Select.Root>.");
+	return context;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/store.mjs
+/**
+* Non-reactive values shared with the select parts. Nothing here is observable through
+* `selectors`, so writing to a ref never notifies subscribers.
+*/
+const selectors$1 = {
+	id: (state) => state.id,
+	labelId: (state) => state.labelId,
+	modal: (state) => state.modal,
+	multiple: (state) => state.multiple,
+	disabled: (state) => state.disabled,
+	readOnly: (state) => state.readOnly,
+	required: (state) => state.required,
+	highlightItemOnHover: (state) => state.highlightItemOnHover,
+	items: (state) => state.items,
+	itemToStringLabel: (state) => state.itemToStringLabel,
+	isItemEqualToValue: (state) => state.isItemEqualToValue,
+	value: (state) => state.value,
+	hasSelectedValue: (state) => {
+		const { value, multiple, itemToStringValue } = state;
+		if (value == null) return false;
+		if (multiple && Array.isArray(value)) return value.length > 0;
+		return stringifyAsValue(value, itemToStringValue) !== "";
+	},
+	hasNullItemLabel: (state, enabled) => {
+		return enabled ? hasNullItemLabel(state.items) : false;
+	},
+	open: (state) => state.open,
+	mounted: (state) => state.mounted,
+	forceMount: (state) => state.forceMount,
+	transitionStatus: (state) => state.transitionStatus,
+	openMethod: (state) => state.openMethod,
+	activeIndex: (state) => state.activeIndex,
+	selectedIndex: (state) => state.selectedIndex,
+	isActive: (state, index) => state.activeIndex === index,
+	isSelected: (state, itemValue) => {
+		const comparer = state.isItemEqualToValue;
+		const storeValue = state.value;
+		if (state.multiple) return Array.isArray(storeValue) && storeValue.some((selectedItem) => compareItemEquality(itemValue, selectedItem, comparer));
+		return compareItemEquality(itemValue, storeValue, comparer);
+	},
+	isSelectedByFocus: (state, index) => {
+		return state.selectedIndex === index;
+	},
+	popupProps: (state) => state.popupProps,
+	triggerProps: (state) => state.triggerProps,
+	itemRoot: (state) => state.itemRoot,
+	triggerElement: (state) => state.triggerElement,
+	positionerElement: (state) => state.positionerElement,
+	listElement: (state) => state.listElement,
+	popupSide: (state) => state.popupSide,
+	scrollUpArrowVisible: (state) => state.scrollUpArrowVisible,
+	scrollDownArrowVisible: (state) => state.scrollDownArrowVisible,
+	hasScrollArrows: (state) => state.hasScrollArrows
+};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/root/SelectRoot.mjs
+/**
+* Groups all parts of the select.
+* Doesn't render its own HTML element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+function SelectRoot(props) {
+	const { id, value: valueProp, defaultValue = null, onValueChange, open: openProp, defaultOpen = false, onOpenChange, name: nameProp, form, autoComplete, disabled: disabledProp = false, readOnly = false, required = false, modal = true, actionsRef, inputRef, onOpenChangeComplete, items, multiple = false, itemToStringLabel, itemToStringValue, isItemEqualToValue = defaultItemEquality, highlightItemOnHover = true, children } = props;
+	const { clearErrors } = useFormContext();
+	const { setDirty, setTouched, setFocused, validityData, setFilled, name: fieldName, disabled: fieldDisabled, validation, validationMode } = useFieldRootContext();
+	const generatedId = useLabelableId({ id });
+	const disabled = fieldDisabled || disabledProp;
+	const name = fieldName ?? nameProp;
+	const [value, setValueUnwrapped] = useControlled({
+		controlled: valueProp,
+		default: multiple ? defaultValue ?? EMPTY_ARRAY$2 : defaultValue,
+		name: "Select",
+		state: "value"
+	});
+	const [open, setOpenUnwrapped] = useControlled({
+		controlled: openProp,
+		default: defaultOpen,
+		name: "Select",
+		state: "open"
+	});
+	const listRef = import__wp_global_react.useRef([]);
+	const labelsRef = import__wp_global_react.useRef([]);
+	const popupRef = import__wp_global_react.useRef(null);
+	const scrollHandlerRef = import__wp_global_react.useRef(null);
+	const scrollArrowsMountedCountRef = import__wp_global_react.useRef(0);
+	const valueRef = import__wp_global_react.useRef(null);
+	const valuesRef = import__wp_global_react.useRef([]);
+	const typingRef = import__wp_global_react.useRef(false);
+	const firstItemTextRef = import__wp_global_react.useRef(null);
+	const selectedItemTextRef = import__wp_global_react.useRef(null);
+	const selectionRef = import__wp_global_react.useRef({
+		allowSelectedMouseUp: false,
+		allowUnselectedMouseUp: false,
+		dragY: 0
+	});
+	const alignItemWithTriggerActiveRef = import__wp_global_react.useRef(false);
+	const initialValueRef = import__wp_global_react.useRef(value);
+	const { openMethod, triggerProps: interactionTypeProps } = useOpenInteractionType(open);
+	const store = useRefWithInit(() => new ReactStore({
+		id: generatedId,
+		labelId: void 0,
+		modal,
+		multiple,
+		disabled,
+		readOnly,
+		required,
+		highlightItemOnHover,
+		itemToStringLabel,
+		itemToStringValue,
+		isItemEqualToValue,
+		value,
+		open,
+		mounted: open,
+		transitionStatus: void 0,
+		items,
+		forceMount: false,
+		openMethod: null,
+		activeIndex: null,
+		selectedIndex: null,
+		popupProps: EMPTY_OBJECT,
+		triggerProps: EMPTY_OBJECT,
+		itemRoot: {
+			props: EMPTY_OBJECT,
+			multiple,
+			disabled,
+			readOnly,
+			isItemEqualToValue
+		},
+		triggerElement: null,
+		positionerElement: null,
+		listElement: null,
+		popupSide: null,
+		scrollUpArrowVisible: false,
+		scrollDownArrowVisible: false,
+		hasScrollArrows: false
+	}, {
+		setValue: NOOP,
+		setOpen: NOOP,
+		handleScrollArrowVisibility: NOOP,
+		onOpenChangeComplete: NOOP,
+		listRef,
+		popupRef,
+		scrollHandlerRef,
+		scrollArrowsMountedCountRef,
+		valueRef,
+		valuesRef,
+		labelsRef,
+		typingRef,
+		selectionRef,
+		firstItemTextRef,
+		selectedItemTextRef,
+		alignItemWithTriggerActiveRef,
+		initialValueRef
+	}, selectors$1)).current;
+	const [preventUnmountOnClose, setPreventUnmountOnClose] = import__wp_global_react.useState(false);
+	const { mounted, transitionStatus, forceUnmount: handleUnmount } = useUnmountAfterClose({
+		open,
+		ref: popupRef,
+		preventUnmountOnClose,
+		setPreventUnmountOnClose,
+		onUnmount() {
+			store.update({
+				activeIndex: null,
+				openMethod: null,
+				scrollUpArrowVisible: false,
+				scrollDownArrowVisible: false
+			});
+			onOpenChangeComplete?.(false);
+		}
+	});
+	const activeIndex = store.useState("activeIndex");
+	const selectedIndex = store.useState("selectedIndex");
+	const triggerElement = store.useState("triggerElement");
+	const positionerElement = store.useState("positionerElement");
+	const previousOpenMethod = usePreviousValue(openMethod);
+	const renderedOpenMethod = openMethod ?? previousOpenMethod;
+	const serializedValue = import__wp_global_react.useMemo(() => {
+		if (multiple) return "";
+		return stringifyAsValue(value, itemToStringValue);
+	}, [
+		multiple,
+		value,
+		itemToStringValue
+	]);
+	const fieldStringValue = import__wp_global_react.useMemo(() => {
+		if (multiple && Array.isArray(value)) return value.map((currentValue) => stringifyAsValue(currentValue, itemToStringValue));
+		return stringifyAsValue(value, itemToStringValue);
+	}, [
+		multiple,
+		value,
+		itemToStringValue
+	]);
+	const controlRef = useValueAsRef(triggerElement);
+	const getStringifiedValueForForm = useStableCallback(() => fieldStringValue);
+	useRegisterFieldControl(controlRef, generatedId, value, getStringifiedValueForForm, !disabled, nameProp);
+	const hasSelectedValue = multiple ? Array.isArray(value) && value.length > 0 : value != null && serializedValue !== "";
+	useIsoLayoutEffect(() => {
+		setFilled(hasSelectedValue);
+	}, [hasSelectedValue, setFilled]);
+	useIsoLayoutEffect(function syncSelectedIndex() {
+		const nextIndex = findSelectionIndex(valuesRef.current, value, isItemEqualToValue, multiple);
+		if (nextIndex === null) selectedItemTextRef.current = null;
+		if (open) return;
+		store.set("selectedIndex", nextIndex);
+	}, [
+		multiple,
+		open,
+		value,
+		isItemEqualToValue,
+		store
+	]);
+	useValueChanged(value, () => {
+		clearErrors(name);
+		setDirty(isSelectedValueDirty(value, validityData.initialValue, isItemEqualToValue));
+		validation.change(value);
+	});
+	const setOpen = useStableCallback((nextOpen, eventDetails) => {
+		const openEventDetails = eventDetails;
+		const shouldPreventUnmountOnClose = attachPreventUnmountOnClose(openEventDetails);
+		onOpenChange?.(nextOpen, openEventDetails);
+		if (eventDetails.isCanceled) return;
+		if (!nextOpen) setPreventUnmountOnClose(shouldPreventUnmountOnClose());
+		setOpenUnwrapped(nextOpen);
+		if (!nextOpen && (eventDetails.reason === "focus-out" || eventDetails.reason === "outside-press")) {
+			setTouched(true);
+			setFocused(false);
+			if (validationMode === "onBlur") validation.commit(value);
+		}
+	});
+	import__wp_global_react.useImperativeHandle(actionsRef, () => ({
+		unmount: handleUnmount,
+		close: () => {
+			if (store.state.open) setOpen(false, createChangeEventDetails(imperativeAction));
+		}
+	}), [
+		handleUnmount,
+		setOpen,
+		store
+	]);
+	const setValue = useStableCallback((nextValue, eventDetails) => {
+		onValueChange?.(nextValue, eventDetails);
+		if (eventDetails.isCanceled) return;
+		setValueUnwrapped(nextValue);
+	});
+	const handleScrollArrowVisibility = useStableCallback((scroller) => {
+		const maxScrollTop = getMaxScrollOffset(scroller.scrollHeight, scroller.clientHeight);
+		const scrollTop = normalizeScrollOffset(scroller.scrollTop, maxScrollTop);
+		const shouldShowUp = scrollTop > 0;
+		const shouldShowDown = scrollTop < maxScrollTop;
+		store.set("scrollUpArrowVisible", shouldShowUp);
+		store.set("scrollDownArrowVisible", shouldShowDown);
+	});
+	const floatingContext = useFloatingRootContext({
+		open,
+		onOpenChange: setOpen,
+		elements: {
+			reference: triggerElement,
+			floating: positionerElement
+		}
+	});
+	const click = useClick(floatingContext, {
+		enabled: !disabled,
+		event: "mousedown"
+	});
+	const dismiss = useDismiss(floatingContext);
+	const listNavigation = useListNavigation(floatingContext, {
+		enabled: !disabled,
+		listRef,
+		activeIndex,
+		selectedIndex,
+		disabledIndices: EMPTY_ARRAY$2,
+		onNavigate(nextActiveIndex) {
+			if (nextActiveIndex === null && !open) return;
+			store.set("activeIndex", nextActiveIndex);
+		},
+		focusItemOnHover: highlightItemOnHover
+	});
+	const typeahead = useTypeahead(floatingContext, {
+		enabled: !disabled && (open || !readOnly && !multiple),
+		listRef: labelsRef,
+		activeIndex,
+		selectedIndex,
+		disabledIndices: (index) => isElementDisabled(listRef.current[index]),
+		onMatch(index) {
+			if (open) store.set("activeIndex", index);
+			else setValue(valuesRef.current[index], createChangeEventDetails(none));
+		},
+		onTyping(typing) {
+			typingRef.current = typing;
+		}
+	});
+	const mergedTriggerProps = import__wp_global_react.useMemo(() => mergeProps(typeahead.reference, listNavigation.reference, dismiss.reference, click.reference, interactionTypeProps), [
+		click.reference,
+		typeahead.reference,
+		listNavigation.reference,
+		dismiss.reference,
+		interactionTypeProps
+	]);
+	const popupProps = import__wp_global_react.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, typeahead.floating, listNavigation.floating, dismiss.floating), [
+		typeahead.floating,
+		listNavigation.floating,
+		dismiss.floating
+	]);
+	const itemProps = listNavigation.item ?? EMPTY_OBJECT;
+	const itemRoot = import__wp_global_react.useMemo(() => ({
+		props: itemProps,
+		multiple,
+		disabled,
+		readOnly,
+		isItemEqualToValue
+	}), [
+		itemProps,
+		multiple,
+		disabled,
+		readOnly,
+		isItemEqualToValue
+	]);
+	store.useContextCallback("setValue", setValue);
+	store.useContextCallback("setOpen", setOpen);
+	store.useContextCallback("handleScrollArrowVisibility", handleScrollArrowVisibility);
+	store.useContextCallback("onOpenChangeComplete", onOpenChangeComplete);
+	useOnFirstRender(() => {
+		store.update({
+			popupProps,
+			triggerProps: mergedTriggerProps,
+			itemRoot
+		});
+	});
+	store.useSyncedValues({
+		id: generatedId,
+		modal,
+		multiple,
+		disabled,
+		readOnly,
+		required,
+		highlightItemOnHover,
+		value,
+		open,
+		mounted,
+		transitionStatus,
+		popupProps,
+		triggerProps: mergedTriggerProps,
+		itemRoot,
+		items,
+		itemToStringLabel,
+		itemToStringValue,
+		isItemEqualToValue,
+		openMethod: renderedOpenMethod
+	});
+	const ref = useMergedRefs(inputRef, validation.inputRef);
+	const hiddenInputName = multiple ? void 0 : name;
+	const hiddenInputs = import__wp_global_react.useMemo(() => {
+		if (!multiple || !Array.isArray(value) || !name) return null;
+		return value.map((v) => {
+			const currentSerializedValue = stringifyAsValue(v, itemToStringValue);
+			return /*#__PURE__*/ (0, import_jsx_runtime.jsx)("input", {
+				type: "hidden",
+				form,
+				name,
+				value: currentSerializedValue,
+				disabled
+			}, currentSerializedValue);
+		});
+	}, [
+		multiple,
+		value,
+		form,
+		name,
+		itemToStringValue,
+		disabled
+	]);
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsxs)(SelectRootContext.Provider, {
+		value: store,
+		children: [
+			/*#__PURE__*/ (0, import_jsx_runtime.jsx)(SelectFloatingContext.Provider, {
+				value: floatingContext,
+				children
+			}),
+			/*#__PURE__*/ (0, import_jsx_runtime.jsx)("input", {
+				...validation.getValidationProps(disabled, {
+					onFocus() {
+						store.state.triggerElement?.focus({ focusVisible: true });
+					},
+					onChange(event) {
+						if (event.nativeEvent.defaultPrevented || disabled || readOnly) return;
+						const nextValue = event.currentTarget.value;
+						const details = createChangeEventDetails(none, event.nativeEvent);
+						function handleChange() {
+							if (multiple) return;
+							const nextValueLower = nextValue.toLowerCase();
+							let matchingIndex = valuesRef.current.findIndex((candidate) => stringifyAsValue(candidate, itemToStringValue).toLowerCase() === nextValueLower || stringifyAsLabel(candidate, itemToStringLabel).toLowerCase() === nextValueLower);
+							if (matchingIndex === -1) matchingIndex = valuesRef.current.findIndex((_, index) => {
+								const renderedLabel = labelsRef.current[index];
+								return renderedLabel != null && renderedLabel.toLowerCase() === nextValueLower;
+							});
+							const matchingValue = valuesRef.current[matchingIndex];
+							if (matchingValue != null) setValue(matchingValue, details);
+						}
+						store.set("forceMount", true);
+						queueMicrotask(handleChange);
+					}
+				}),
+				id: generatedId && hiddenInputName == null ? `${generatedId}-hidden-input` : void 0,
+				form,
+				name: hiddenInputName,
+				autoComplete,
+				value: serializedValue,
+				disabled,
+				required: required && !(multiple && hasSelectedValue),
+				readOnly,
+				ref,
+				style: name ? visuallyHiddenInput : visuallyHidden,
+				tabIndex: -1,
+				"aria-hidden": true,
+				suppressHydrationWarning: true
+			}),
+			hiddenInputs
+		]
+	});
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/trigger/SelectTriggerDataAttributes.mjs
+/**
+* Present when the corresponding select is open.
+*/
+const popupOpen = popupOpen$2;
+/**
+* Present when the trigger is pressed.
+*/
+const pressed = pressed$1;
+/**
+* Indicates which side the corresponding popup is positioned relative to its anchor.
+* @type {'top' | 'bottom' | 'left' | 'right' | 'inline-end' | 'inline-start' | null}
+*/
+const popupSide = "data-popup-side";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/trigger/SelectTrigger.mjs
+const SELECTED_DELAY = 400;
+const stateAttributesMapping$2 = {
+	...pressableTriggerOpenStateMapping,
+	...fieldValidityMapping,
+	popupSide: (side) => side ? { [popupSide]: side } : null,
+	value: () => null
+};
+/**
+* A button that opens the select popup.
+* Renders a `<button>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectTrigger = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectTrigger(componentProps, forwardedRef) {
+	const { render, className, id: idProp, disabled: disabledProp = false, nativeButton = true, style, ...elementProps } = componentProps;
+	const { setTouched, validationMode, validation, state: fieldState, disabled: fieldDisabled } = useFieldRootContext();
+	const { labelId: fieldLabelId } = useLabelableContext();
+	const store = useSelectRootContext();
+	const readOnly = store.useState("readOnly");
+	const required = store.useState("required");
+	const selectDisabled = store.useState("disabled");
+	const disabled = fieldDisabled || selectDisabled || disabledProp;
+	const open = store.useState("open");
+	const mounted = store.useState("mounted");
+	const value = store.useState("value");
+	const triggerProps = store.useState("triggerProps");
+	const positionerElement = store.useState("positionerElement");
+	const listElement = store.useState("listElement");
+	const popupSideValue = store.useState("popupSide");
+	const rootId = store.useState("id");
+	const selectLabelId = store.useState("labelId");
+	const hasSelectedValue = store.useState("hasSelectedValue");
+	const popupSide = mounted && positionerElement ? popupSideValue : null;
+	const id = idProp ?? rootId;
+	const ariaLabelledBy = resolveAriaLabelledBy(fieldLabelId, selectLabelId);
+	useLabelableId({ id: idProp });
+	const positionerRef = useValueAsRef(positionerElement);
+	const triggerRef = import__wp_global_react.useRef(null);
+	const setFocused = useSetFieldFocused(disabled, triggerRef);
+	const { getButtonProps, buttonRef } = useButton({
+		disabled,
+		native: nativeButton
+	});
+	const setTriggerElement = store.useStateSetter("triggerElement");
+	const timeoutFocus = useTimeout();
+	const timeoutMouseDown = useTimeout();
+	const selectedDelayTimeout = useTimeout();
+	import__wp_global_react.useEffect(() => {
+		if (open) {
+			selectedDelayTimeout.start(SELECTED_DELAY, () => {
+				store.context.selectionRef.current.allowUnselectedMouseUp = true;
+				store.context.selectionRef.current.allowSelectedMouseUp = true;
+			});
+			return () => {
+				selectedDelayTimeout.clear();
+			};
+		}
+		store.context.selectionRef.current = {
+			allowSelectedMouseUp: false,
+			allowUnselectedMouseUp: false,
+			dragY: 0
+		};
+		timeoutMouseDown.clear();
+	}, [
+		open,
+		store,
+		timeoutMouseDown,
+		selectedDelayTimeout
+	]);
+	const mergedProps = mergeProps(triggerProps, {
+		id,
+		role: "combobox",
+		"aria-expanded": open,
+		"aria-haspopup": "listbox",
+		"aria-controls": open ? listElement?.id ?? getFloatingFocusElement(positionerElement)?.id : void 0,
+		"aria-labelledby": ariaLabelledBy,
+		"aria-readonly": readOnly || void 0,
+		"aria-required": required || void 0,
+		tabIndex: disabled ? -1 : 0,
+		onFocus(event) {
+			setFocused(true);
+			if (open && store.context.alignItemWithTriggerActiveRef.current) store.context.setOpen(false, createChangeEventDetails(none, event.nativeEvent));
+			timeoutFocus.start(0, () => {
+				store.set("forceMount", true);
+			});
+		},
+		onBlur(event) {
+			if (contains(positionerElement, event.relatedTarget)) return;
+			setTouched(true);
+			setFocused(false);
+			if (validationMode === "onBlur") validation.commit(value);
+		},
+		onMouseDown(event) {
+			if (open) return;
+			const doc = ownerDocument(event.currentTarget);
+			function handleMouseUp(mouseEvent) {
+				if (!triggerRef.current) return;
+				const mouseUpTarget = mouseEvent.target;
+				if (contains(triggerRef.current, mouseUpTarget) || contains(positionerRef.current, mouseUpTarget)) return;
+				if (isMouseWithinBounds(mouseEvent, triggerRef.current)) return;
+				store.context.setOpen(false, createChangeEventDetails(cancelOpen, mouseEvent));
+			}
+			timeoutMouseDown.start(0, () => {
+				doc.addEventListener("mouseup", handleMouseUp, { once: true });
+			});
+		}
+	}, elementProps, getButtonProps);
+	const props = validation.getValidationProps(disabled, mergedProps);
+	props.role = "combobox";
+	const state = {
+		...fieldState,
+		open,
+		disabled,
+		value,
+		readOnly,
+		popupSide,
+		placeholder: !hasSelectedValue
+	};
+	return useRenderElement("button", componentProps, {
+		ref: [
+			forwardedRef,
+			triggerRef,
+			buttonRef,
+			setTriggerElement
+		],
+		state,
+		stateAttributesMapping: stateAttributesMapping$2,
+		props
+	});
+});
+SelectTrigger.displayName = "SelectTrigger";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/value/SelectValue.mjs
+const stateAttributesMapping$1 = { value: () => null };
+/**
+* A text label of the currently selected item.
+* Renders a `<span>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectValue = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectValue(componentProps, forwardedRef) {
+	const { className, render, children: childrenProp, placeholder, style, ...elementProps } = componentProps;
+	const store = useSelectRootContext();
+	const value = store.useState("value");
+	const items = store.useState("items");
+	const itemToStringLabel = store.useState("itemToStringLabel");
+	const hasSelectedValue = store.useState("hasSelectedValue");
+	const shouldCheckNullItemLabel = !hasSelectedValue && placeholder != null && childrenProp == null;
+	const hasNullLabel = store.useState("hasNullItemLabel", shouldCheckNullItemLabel);
+	const state = {
+		value,
+		placeholder: !hasSelectedValue
+	};
+	let children = null;
+	if (typeof childrenProp === "function") children = childrenProp(value);
+	else if (childrenProp != null) children = childrenProp;
+	else if (shouldCheckNullItemLabel && !hasNullLabel) children = placeholder;
+	else if (Array.isArray(value)) children = resolveMultipleLabels(value, items, itemToStringLabel);
+	else children = resolveSelectedLabel(value, items, itemToStringLabel);
+	return useRenderElement("span", componentProps, {
+		state,
+		ref: [forwardedRef, store.context.valueRef],
+		props: [{ children }, elementProps],
+		stateAttributesMapping: stateAttributesMapping$1
+	});
+});
+SelectValue.displayName = "SelectValue";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/portal/SelectPortal.mjs
+/**
+* A portal element that moves the popup to a different part of the DOM.
+* By default, the portal element is appended to `<body>`.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectPortal = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectPortal(portalProps, forwardedRef) {
+	const store = useSelectRootContext();
+	const mounted = store.useState("mounted");
+	const forceMount = store.useState("forceMount");
+	if (!(mounted || forceMount)) return null;
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsx)(FloatingPortal, {
+		ref: forwardedRef,
+		...portalProps
+	});
+});
+SelectPortal.displayName = "SelectPortal";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositionerContext.mjs
+const SelectPositionerContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+SelectPositionerContext.displayName = "SelectPositionerContext";
+function useSelectPositionerContext() {
+	const context = import__wp_global_react.useContext(SelectPositionerContext);
+	if (!context) throw new Error("Base UI: SelectPositionerContext is missing. SelectPositioner parts must be placed within <Select.Positioner>.");
+	return context;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/popup/utils.mjs
+function clearStyles(element, originalStyles) {
+	if (element) Object.assign(element.style, originalStyles);
+}
+const LIST_FUNCTIONAL_STYLES = {
+	position: "relative",
+	maxHeight: "100%",
+	overflowX: "hidden",
+	overflowY: "auto"
+};
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositioner.mjs
+const FIXED = { position: "fixed" };
+/**
+* Positions the select popup.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectPositioner = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectPositioner(componentProps, forwardedRef) {
+	const { anchor, className, render, positionMethod, side, align, sideOffset, alignOffset, collisionBoundary = "clipping-ancestors", collisionPadding, arrowPadding, sticky, disableAnchorTracking, alignItemWithTrigger = true, collisionAvoidance = DROPDOWN_COLLISION_AVOIDANCE, style, ...elementProps } = componentProps;
+	const store = useSelectRootContext();
+	const floatingRootContext = useSelectFloatingContext();
+	const open = store.useState("open");
+	const mounted = store.useState("mounted");
+	const modal = store.useState("modal");
+	const value = store.useState("value");
+	const openMethod = store.useState("openMethod");
+	const positionerElement = store.useState("positionerElement");
+	const triggerElement = store.useState("triggerElement");
+	const isItemEqualToValue = store.useState("isItemEqualToValue");
+	const transitionStatus = store.useState("transitionStatus");
+	const scrollUpArrowRef = import__wp_global_react.useRef(null);
+	const scrollDownArrowRef = import__wp_global_react.useRef(null);
+	const [controlledAlignItemWithTrigger, setControlledAlignItemWithTrigger] = import__wp_global_react.useState(alignItemWithTrigger);
+	const alignItemWithTriggerActive = mounted && controlledAlignItemWithTrigger && openMethod !== "touch";
+	if (!mounted && controlledAlignItemWithTrigger !== alignItemWithTrigger) setControlledAlignItemWithTrigger(alignItemWithTrigger);
+	import__wp_global_react.useImperativeHandle(store.context.alignItemWithTriggerActiveRef, () => alignItemWithTriggerActive);
+	useAnchoredPopupScrollLock((alignItemWithTriggerActive || modal) && open, openMethod === "touch", positionerElement, triggerElement);
+	const positioning = useAnchorPositioning({
+		anchor,
+		floatingRootContext,
+		positionMethod,
+		mounted,
+		side,
+		sideOffset,
+		align,
+		alignOffset,
+		arrowPadding,
+		collisionBoundary,
+		collisionPadding,
+		sticky,
+		disableAnchorTracking: disableAnchorTracking ?? alignItemWithTriggerActive,
+		collisionAvoidance,
+		keepMounted: true
+	});
+	const renderedSide = alignItemWithTriggerActive ? "none" : positioning.side;
+	const positionerStyles = alignItemWithTriggerActive ? FIXED : positioning.positionerStyles;
+	const state = {
+		open,
+		side: renderedSide,
+		align: positioning.align,
+		anchorHidden: positioning.anchorHidden
+	};
+	useIsoLayoutEffect(() => {
+		store.set("popupSide", positioning.side);
+	}, [store, positioning.side]);
+	const setPositionerElement = store.useStateSetter("positionerElement");
+	const element = usePositioner(componentProps, state, {
+		styles: positionerStyles,
+		transitionStatus,
+		props: elementProps,
+		refs: [forwardedRef, setPositionerElement],
+		hidden: !mounted,
+		inert: !open
+	});
+	const prevMapSizeRef = import__wp_global_react.useRef(0);
+	const onMapChange = useStableCallback((map) => {
+		if (store.context.valuesRef.current.length === 0) return;
+		const prevSize = prevMapSizeRef.current;
+		prevMapSizeRef.current = map.size;
+		const eventDetails = createChangeEventDetails(none);
+		if (prevSize !== 0 && !store.state.multiple && value !== null) {
+			if (findItemIndex(store.context.valuesRef.current, value, isItemEqualToValue) === -1) {
+				const initialSelectedValue = store.context.initialValueRef.current;
+				const nextValue = initialSelectedValue != null && findItemIndex(store.context.valuesRef.current, initialSelectedValue, isItemEqualToValue) !== -1 ? initialSelectedValue : null;
+				store.context.setValue(nextValue, eventDetails);
+				if (nextValue === null) {
+					store.set("selectedIndex", null);
+					store.context.selectedItemTextRef.current = null;
+				}
+			}
+		}
+		if (prevSize !== 0 && store.state.multiple && Array.isArray(value)) {
+			const nextValue = value.filter((selectedItemValue) => findItemIndex(store.context.valuesRef.current, selectedItemValue, isItemEqualToValue) !== -1);
+			if (nextValue.length !== value.length) {
+				store.context.setValue(nextValue, eventDetails);
+				if (nextValue.length === 0) {
+					store.set("selectedIndex", null);
+					store.context.selectedItemTextRef.current = null;
+				}
+			}
+		}
+		if (open && alignItemWithTriggerActive) {
+			store.update({
+				scrollUpArrowVisible: false,
+				scrollDownArrowVisible: false
+			});
+			const stylesToClear = { height: "" };
+			clearStyles(positionerElement, stylesToClear);
+			clearStyles(store.context.popupRef.current, stylesToClear);
+		}
+	});
+	const contextValue = import__wp_global_react.useMemo(() => ({
+		...positioning,
+		side: renderedSide,
+		alignItemWithTriggerActive,
+		setControlledAlignItemWithTrigger,
+		scrollUpArrowRef,
+		scrollDownArrowRef
+	}), [
+		positioning,
+		renderedSide,
+		alignItemWithTriggerActive,
+		setControlledAlignItemWithTrigger
+	]);
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsx)(CompositeList, {
+		elementsRef: store.context.listRef,
+		labelsRef: store.context.labelsRef,
+		onMapChange,
+		children: /*#__PURE__*/ (0, import_jsx_runtime.jsxs)(SelectPositionerContext.Provider, {
+			value: contextValue,
+			children: [mounted && modal && /*#__PURE__*/ (0, import_jsx_runtime.jsx)(InternalBackdrop, {
+				inert: inertValue(!open),
+				cutout: triggerElement
+			}), element]
+		})
+	});
+});
+SelectPositioner.displayName = "SelectPositioner";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositionerCssVars.mjs
+/**
+* The coordinates that this element is anchored to. Used for animations and transitions.
+* @type {string}
+*/
+const transformOrigin = "--transform-origin";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/popup/SelectPopup.mjs
+const stateAttributesMapping = {
+	...popupStateMapping,
+	...transitionStatusMapping
+};
+/**
+* A container for the select list.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectPopup = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectPopup(componentProps, forwardedRef) {
+	const { render, className, style, finalFocus, ...elementProps } = componentProps;
+	const store = useSelectRootContext();
+	const multiple = store.useState("multiple");
+	const readOnly = store.useState("readOnly");
+	const highlightItemOnHover = store.useState("highlightItemOnHover");
+	const floatingRootContext = useSelectFloatingContext();
+	const { side, align, alignItemWithTriggerActive, isPositioned, setControlledAlignItemWithTrigger } = useSelectPositionerContext();
+	const insideToolbar = useToolbarRootContext(true) != null;
+	const direction = useDirection();
+	const { nonce, disableStyleElements } = useCSPContext();
+	const id = store.useState("id");
+	const open = store.useState("open");
+	const openMethod = store.useState("openMethod");
+	const mounted = store.useState("mounted");
+	const popupProps = store.useState("popupProps");
+	const transitionStatus = store.useState("transitionStatus");
+	const triggerElement = store.useState("triggerElement");
+	const positionerElement = store.useState("positionerElement");
+	const listElement = store.useState("listElement");
+	const reachedMaxHeightRef = import__wp_global_react.useRef(false);
+	const initialPlacedRef = import__wp_global_react.useRef(false);
+	const originalPositionerStylesRef = import__wp_global_react.useRef({});
+	const scrollArrowFrame = useAnimationFrame();
+	const handleScroll = useStableCallback((scroller) => {
+		if (!positionerElement || !store.context.popupRef.current || !initialPlacedRef.current) return;
+		const isTopPositioned = positionerElement.style.top === "0px";
+		const isBottomPositioned = positionerElement.style.bottom === "0px";
+		if (reachedMaxHeightRef.current || !alignItemWithTriggerActive || !isTopPositioned && !isBottomPositioned) {
+			store.context.handleScrollArrowVisibility(scroller);
+			return;
+		}
+		const scale = getScale(positionerElement);
+		const currentHeight = normalizeSize(positionerElement.getBoundingClientRect().height, "y", scale);
+		const doc = ownerDocument(positionerElement);
+		const win = getWindow(positionerElement);
+		const positionerStyles = win.getComputedStyle(positionerElement);
+		const marginTop = parseFloat(positionerStyles.marginTop);
+		const marginBottom = parseFloat(positionerStyles.marginBottom);
+		const maxPopupHeight = getMaxPopupHeight(win.getComputedStyle(store.context.popupRef.current));
+		const maxAvailableHeight = Math.min(doc.documentElement.clientHeight - marginTop - marginBottom, maxPopupHeight);
+		const scrollTop = scroller.scrollTop;
+		const maxScrollTop = getMaxScrollTop(scroller);
+		let nextScrollTop = null;
+		const setHeight = (height) => {
+			positionerElement.style.height = `${height}px`;
+		};
+		const diff = isTopPositioned ? maxScrollTop - scrollTop : scrollTop;
+		const nextHeight = Math.min(currentHeight + diff, maxAvailableHeight);
+		if (diff <= 1) {
+			const heightDelta = clamp(diff, 0, maxAvailableHeight - currentHeight);
+			if (heightDelta > 0) setHeight(currentHeight + heightDelta);
+			scroller.scrollTop = isTopPositioned ? maxScrollTop : 0;
+			if (maxAvailableHeight - (currentHeight + heightDelta) <= 1) reachedMaxHeightRef.current = true;
+			store.context.handleScrollArrowVisibility(scroller);
+			return;
+		}
+		if (maxAvailableHeight - nextHeight > 1) nextScrollTop = isTopPositioned ? Infinity : 0;
+		else if (isBottomPositioned && scrollTop < maxScrollTop) nextScrollTop = scrollTop - (diff - (currentHeight + diff - maxAvailableHeight));
+		const nextPositionerHeight = Math.ceil(nextHeight);
+		if (nextPositionerHeight !== 0) setHeight(nextPositionerHeight);
+		if (nextScrollTop != null) {
+			const target = clamp(nextScrollTop, 0, getMaxScrollTop(scroller));
+			if (Math.abs(scroller.scrollTop - target) > 1) scroller.scrollTop = target;
+		}
+		if (nextPositionerHeight >= maxAvailableHeight - 1) reachedMaxHeightRef.current = true;
+		store.context.handleScrollArrowVisibility(scroller);
+	});
+	import__wp_global_react.useImperativeHandle(store.context.scrollHandlerRef, () => handleScroll, [handleScroll]);
+	useOpenChangeComplete({
+		open,
+		ref: store.context.popupRef,
+		onComplete() {
+			if (open) store.context.onOpenChangeComplete(true);
+		}
+	});
+	const state = {
+		open,
+		transitionStatus,
+		side,
+		align
+	};
+	useIsoLayoutEffect(() => {
+		if (!positionerElement || !store.context.popupRef.current || Object.keys(originalPositionerStylesRef.current).length) return;
+		originalPositionerStylesRef.current = {
+			top: positionerElement.style.top || "0",
+			left: positionerElement.style.left || "0",
+			right: positionerElement.style.right,
+			height: positionerElement.style.height,
+			bottom: positionerElement.style.bottom,
+			minHeight: positionerElement.style.minHeight,
+			maxHeight: positionerElement.style.maxHeight,
+			marginTop: positionerElement.style.marginTop,
+			marginBottom: positionerElement.style.marginBottom
+		};
+	}, [store, positionerElement]);
+	useIsoLayoutEffect(() => {
+		if (open || alignItemWithTriggerActive) return;
+		initialPlacedRef.current = false;
+		reachedMaxHeightRef.current = false;
+		clearStyles(positionerElement, originalPositionerStylesRef.current);
+	}, [
+		open,
+		alignItemWithTriggerActive,
+		positionerElement
+	]);
+	useIsoLayoutEffect(() => {
+		const popupElement = store.context.popupRef.current;
+		if (!open || !triggerElement || !positionerElement || !popupElement || alignItemWithTriggerActive && !isPositioned || store.state.transitionStatus === "ending") return;
+		initialPlacedRef.current = true;
+		popupElement.style.removeProperty(transformOrigin);
+		if (!alignItemWithTriggerActive) {
+			scrollArrowFrame.request(() => store.context.handleScrollArrowVisibility(listElement || popupElement));
+			return;
+		}
+		const restoreTransformStyles = unsetTransformStyles(popupElement);
+		try {
+			let textElement = store.context.selectedItemTextRef.current;
+			if (!textElement?.isConnected) textElement = !store.select("hasSelectedValue") && store.context.firstItemTextRef.current?.isConnected ? store.context.firstItemTextRef.current : null;
+			const valueElement = store.context.valueRef.current;
+			const win = getWindow(positionerElement);
+			const positionerStyles = win.getComputedStyle(positionerElement);
+			const popupStyles = win.getComputedStyle(popupElement);
+			const doc = ownerDocument(triggerElement);
+			const scale = getScale(triggerElement);
+			const triggerRect = normalizeRect(triggerElement.getBoundingClientRect(), scale);
+			const positionerRect = normalizeRect(positionerElement.getBoundingClientRect(), scale);
+			const triggerHeight = triggerRect.height;
+			const scroller = listElement || popupElement;
+			const scrollHeight = scroller.scrollHeight;
+			const borderBottom = parseFloat(popupStyles.borderBottomWidth);
+			const marginTop = parseFloat(positionerStyles.marginTop) || 10;
+			const marginBottom = parseFloat(positionerStyles.marginBottom) || 10;
+			const minHeight = parseFloat(positionerStyles.minHeight) || 100;
+			const maxPopupHeight = getMaxPopupHeight(popupStyles);
+			const paddingLeft = 5;
+			const paddingRight = 5;
+			const triggerCollisionThreshold = 20;
+			const viewportHeight = doc.documentElement.clientHeight - marginTop - marginBottom;
+			const viewportWidth = doc.documentElement.clientWidth;
+			const availableSpaceBeneathTrigger = viewportHeight - triggerRect.bottom + triggerHeight;
+			let textRect;
+			let alignedLeft = direction === "rtl" ? triggerRect.right - positionerRect.width : triggerRect.left;
+			let offsetY = 0;
+			if (textElement && valueElement) {
+				const valueRect = normalizeRect(valueElement.getBoundingClientRect(), scale);
+				textRect = normalizeRect(textElement.getBoundingClientRect(), scale);
+				alignedLeft = positionerRect.left + (direction === "rtl" ? valueRect.right - textRect.right : valueRect.left - textRect.left);
+				const valueCenterFromTriggerTop = valueRect.top - triggerRect.top + valueRect.height / 2;
+				offsetY = textRect.top - positionerRect.top + textRect.height / 2 - valueCenterFromTriggerTop;
+			}
+			const idealHeight = availableSpaceBeneathTrigger + offsetY + marginBottom + borderBottom;
+			let height = Math.min(viewportHeight, idealHeight);
+			const maxHeight = viewportHeight - marginTop - marginBottom;
+			const scrollTop = idealHeight - height;
+			const maxRight = viewportWidth - paddingRight;
+			positionerElement.style.left = `${clamp(alignedLeft, paddingLeft, maxRight - positionerRect.width)}px`;
+			positionerElement.style.height = `${height}px`;
+			positionerElement.style.maxHeight = "none";
+			positionerElement.style.marginTop = `${marginTop}px`;
+			positionerElement.style.marginBottom = `${marginBottom}px`;
+			popupElement.style.height = "100%";
+			const maxScrollTop = getMaxScrollTop(scroller);
+			const isTopPositioned = scrollTop >= maxScrollTop - 1;
+			if (isTopPositioned) height = Math.min(viewportHeight, positionerRect.height) - (scrollTop - maxScrollTop);
+			const fallbackToAlignPopupToTrigger = triggerRect.top < triggerCollisionThreshold || triggerRect.bottom > viewportHeight - triggerCollisionThreshold || Math.ceil(height) + 1 < Math.min(scrollHeight, minHeight);
+			const isPinchZoomed = (win.visualViewport?.scale ?? 1) !== 1 && webkit;
+			if (fallbackToAlignPopupToTrigger || isPinchZoomed) {
+				clearStyles(positionerElement, originalPositionerStylesRef.current);
+				setControlledAlignItemWithTrigger(false);
+				return;
+			}
+			const initialHeight = Math.max(minHeight, height);
+			if (isTopPositioned) {
+				const topOffset = Math.max(0, viewportHeight - idealHeight);
+				positionerElement.style.top = positionerRect.height >= maxHeight ? "0" : `${topOffset}px`;
+				positionerElement.style.height = `${height}px`;
+				scroller.scrollTop = getMaxScrollTop(scroller);
+			} else {
+				positionerElement.style.bottom = "0";
+				scroller.scrollTop = scrollTop;
+			}
+			if (textRect) {
+				const popupTop = positionerRect.top;
+				const popupHeight = positionerRect.height;
+				const textCenterY = textRect.top + textRect.height / 2;
+				const clampedY = clamp(popupHeight > 0 ? (textCenterY - popupTop) / popupHeight * 100 : 50, 0, 100);
+				popupElement.style.setProperty(transformOrigin, `50% ${clampedY}%`);
+			}
+			if (initialHeight === viewportHeight || height >= maxPopupHeight) reachedMaxHeightRef.current = true;
+			store.context.handleScrollArrowVisibility(scroller);
+			if (highlightItemOnHover && store.state.selectedIndex === null && store.state.activeIndex === null && store.context.listRef.current[0] != null) store.set("activeIndex", 0);
+		} finally {
+			restoreTransformStyles();
+		}
+	}, [
+		store,
+		open,
+		positionerElement,
+		triggerElement,
+		alignItemWithTriggerActive,
+		setControlledAlignItemWithTrigger,
+		scrollArrowFrame,
+		listElement,
+		highlightItemOnHover,
+		direction,
+		isPositioned
+	]);
+	import__wp_global_react.useEffect(() => {
+		if (!alignItemWithTriggerActive || !positionerElement || !open) return;
+		const win = getWindow(positionerElement);
+		function handleResize(event) {
+			store.context.setOpen(false, createChangeEventDetails(windowResize, event));
+		}
+		return addEventListener(win, "resize", handleResize);
+	}, [
+		store,
+		alignItemWithTriggerActive,
+		positionerElement,
+		open
+	]);
+	const defaultProps = {
+		...listElement ? { role: "presentation" } : {
+			role: "listbox",
+			"aria-multiselectable": multiple || void 0,
+			"aria-readonly": readOnly || void 0,
+			id: `${id}-list`
+		},
+		onKeyDown(event) {
+			if (insideToolbar && COMPOSITE_KEYS.has(event.key)) event.stopPropagation();
+		},
+		onScroll(event) {
+			if (listElement) return;
+			handleScroll(event.currentTarget);
+		},
+		...alignItemWithTriggerActive && { style: listElement ? { height: "100%" } : LIST_FUNCTIONAL_STYLES },
+		className: !listElement && alignItemWithTriggerActive ? styleDisableScrollbar.className : void 0
+	};
+	const element = useRenderElement("div", componentProps, {
+		ref: [forwardedRef, store.context.popupRef],
+		state,
+		stateAttributesMapping,
+		props: [
+			popupProps,
+			defaultProps,
+			getDisabledMountTransitionStyles(transitionStatus),
+			elementProps
+		]
+	});
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsxs)(import__wp_global_react.Fragment, { children: [!disableStyleElements && styleDisableScrollbar.getElement(nonce), /*#__PURE__*/ (0, import_jsx_runtime.jsx)(FloatingFocusManager, {
+		context: floatingRootContext,
+		modal: false,
+		disabled: !mounted,
+		openInteractionType: openMethod,
+		returnFocus: finalFocus,
+		restoreFocus: true,
+		children: element
+	})] });
+});
+SelectPopup.displayName = "SelectPopup";
+function getMaxPopupHeight(popupStyles) {
+	const maxHeightStyle = popupStyles.maxHeight;
+	return maxHeightStyle.endsWith("px") ? parseFloat(maxHeightStyle) || Infinity : Infinity;
+}
+function getMaxScrollTop(scroller) {
+	return getMaxScrollOffset(scroller.scrollHeight, scroller.clientHeight);
+}
+function getScale(element) {
+	return platform.getScale(element);
+}
+function normalizeSize(size, axis, scale) {
+	return size / scale[axis];
+}
+function normalizeRect(rect, scale) {
+	return rectToClientRect({
+		x: normalizeSize(rect.x, "x", scale),
+		y: normalizeSize(rect.y, "y", scale),
+		width: normalizeSize(rect.width, "x", scale),
+		height: normalizeSize(rect.height, "y", scale)
+	});
+}
+const TRANSFORM_STYLE_RESETS = [
+	["transform", "none"],
+	["scale", "1"],
+	["translate", "0 0"]
+];
+function unsetTransformStyles(popupElement) {
+	const { style } = popupElement;
+	const originalStyles = {};
+	for (const [property, value] of TRANSFORM_STYLE_RESETS) {
+		originalStyles[property] = style.getPropertyValue(property);
+		style.setProperty(property, value, "important");
+	}
+	return () => {
+		for (const [property] of TRANSFORM_STYLE_RESETS) {
+			const originalValue = originalStyles[property];
+			if (originalValue) style.setProperty(property, originalValue);
+			else style.removeProperty(property);
+		}
+	};
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/list/SelectList.mjs
+/**
+* A container for the select items.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectList = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectList(componentProps, forwardedRef) {
+	const { render, className, style, ...elementProps } = componentProps;
+	const store = useSelectRootContext();
+	const multiple = store.useState("multiple");
+	const readOnly = store.useState("readOnly");
+	const { alignItemWithTriggerActive } = useSelectPositionerContext();
+	const hasScrollArrows = store.useState("hasScrollArrows");
+	const openMethod = store.useState("openMethod");
+	const defaultProps = {
+		id: `${store.useState("id")}-list`,
+		role: "listbox",
+		"aria-multiselectable": multiple || void 0,
+		"aria-readonly": readOnly || void 0,
+		onScroll(event) {
+			store.context.scrollHandlerRef.current?.(event.currentTarget);
+		},
+		...alignItemWithTriggerActive && { style: LIST_FUNCTIONAL_STYLES },
+		className: hasScrollArrows && openMethod !== "touch" ? styleDisableScrollbar.className : void 0
+	};
+	const setListElement = store.useStateSetter("listElement");
+	return useRenderElement("div", componentProps, {
+		ref: [forwardedRef, setListElement],
+		props: [defaultProps, elementProps]
+	});
+});
+SelectList.displayName = "SelectList";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item/SelectItemContext.mjs
+const SelectItemContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+SelectItemContext.displayName = "SelectItemContext";
+function useSelectItemContext() {
+	const context = import__wp_global_react.useContext(SelectItemContext);
+	if (!context) throw new Error("Base UI: SelectItemContext is missing. SelectItem parts must be placed within <Select.Item>.");
+	return context;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item/SelectItem.mjs
+/**
+* An individual option in the select popup.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectItem = /*#__PURE__*/ import__wp_global_react.memo(/*#__PURE__*/ import__wp_global_react.forwardRef(function SelectItem(componentProps, forwardedRef) {
+	const { render, className, style, value: itemValue = null, label, disabled: disabledProp = false, nativeButton = false, ...elementProps } = componentProps;
+	const textRef = import__wp_global_react.useRef(null);
+	const listItem = useCompositeListItem({
+		guess: true,
+		label,
+		textRef
+	});
+	const store = useSelectRootContext();
+	const { props: itemProps, multiple, disabled: selectDisabled, readOnly, isItemEqualToValue } = store.useState("itemRoot");
+	const disabled = selectDisabled || disabledProp;
+	const highlighted = store.useState("isActive", listItem.index);
+	const open = store.useState("open");
+	const selected = store.useState("isSelected", itemValue);
+	const selectedByFocus = store.useState("isSelectedByFocus", listItem.index);
+	const index = listItem.index;
+	const itemRef = import__wp_global_react.useRef(null);
+	useIsoLayoutEffect(() => {
+		const values = store.context.valuesRef.current;
+		values[index] = itemValue;
+		return () => {
+			delete values[index];
+		};
+	}, [
+		index,
+		itemValue,
+		store
+	]);
+	useIsoLayoutEffect(() => {
+		const selectedValue = store.state.value;
+		const currentIndex = store.state.selectedIndex;
+		let nextIndex = currentIndex;
+		let claims;
+		if (multiple && Array.isArray(selectedValue)) {
+			nextIndex = resolveSelectedIndex(index, itemValue, store.context.valuesRef.current, selectedValue, isItemEqualToValue, currentIndex);
+			claims = nextIndex === index;
+			if (index === currentIndex && !claims) store.context.selectedItemTextRef.current = null;
+		} else {
+			claims = selectedValue !== void 0 && compareItemEquality(itemValue, selectedValue, isItemEqualToValue);
+			if (claims) nextIndex = index;
+		}
+		store.set("selectedIndex", nextIndex);
+		if (claims && textRef.current) store.context.selectedItemTextRef.current = textRef.current;
+	}, [
+		index,
+		multiple,
+		isItemEqualToValue,
+		store,
+		itemValue
+	]);
+	const pointerTypeRef = import__wp_global_react.useRef("mouse");
+	const allowMouseSelectionRef = import__wp_global_react.useRef(false);
+	const { getButtonProps, buttonRef } = useButton({
+		disabled,
+		focusableWhenDisabled: true,
+		native: nativeButton,
+		composite: true
+	});
+	const state = {
+		disabled,
+		selected,
+		highlighted
+	};
+	function commitSelection(event) {
+		if (selectDisabled || readOnly) return;
+		const selectedValue = store.state.value;
+		if (multiple) {
+			const currentValue = Array.isArray(selectedValue) ? selectedValue : [];
+			const nextValue = selected ? removeItem(currentValue, itemValue, isItemEqualToValue) : [...currentValue, itemValue];
+			store.context.setValue(nextValue, createChangeEventDetails(itemPress, event));
+		} else {
+			store.context.setValue(itemValue, createChangeEventDetails(itemPress, event));
+			store.context.setOpen(false, createChangeEventDetails(itemPress, event));
+		}
+	}
+	function resetDragMovement() {
+		store.context.selectionRef.current.dragY = 0;
+	}
+	const defaultProps = {
+		role: "option",
+		"aria-selected": selected,
+		tabIndex: open && highlighted ? 0 : -1,
+		onKeyDown(event) {
+			store.set("activeIndex", index);
+			if (event.key === " " && store.context.typingRef.current) event.preventDefault();
+		},
+		onClick(event) {
+			const isMouseClick = pointerTypeRef.current !== "touch";
+			const clickPointerType = event.nativeEvent.pointerType;
+			const isVirtualMouseClick = isMouseClick && isVirtualClick(event.nativeEvent) && (clickPointerType !== void 0 || highlighted);
+			const isInvalidMouseClick = isMouseClick && !isVirtualMouseClick && !allowMouseSelectionRef.current;
+			allowMouseSelectionRef.current = false;
+			if (disabled || isInvalidMouseClick) return;
+			commitSelection(event.nativeEvent);
+		},
+		onPointerEnter(event) {
+			pointerTypeRef.current = event.pointerType;
+		},
+		onPointerMove(event) {
+			if (event.pointerType === "mouse" && event.buttons === 1) {
+				const selection = store.context.selectionRef.current;
+				selection.dragY += event.movementY;
+				if (selection.dragY ** 2 >= 64) selection.allowUnselectedMouseUp = true;
+			}
+		},
+		onPointerDown(event) {
+			pointerTypeRef.current = event.pointerType;
+			allowMouseSelectionRef.current = true;
+			resetDragMovement();
+		},
+		onMouseUp() {
+			resetDragMovement();
+			if (disabled || pointerTypeRef.current === "touch") return;
+			if (allowMouseSelectionRef.current) return;
+			const disallowSelectedMouseUp = !store.context.selectionRef.current.allowSelectedMouseUp && selected;
+			const disallowUnselectedMouseUp = !store.context.selectionRef.current.allowUnselectedMouseUp && !selected;
+			if (disallowSelectedMouseUp || disallowUnselectedMouseUp) return;
+			allowMouseSelectionRef.current = true;
+			itemRef.current?.click();
+			allowMouseSelectionRef.current = false;
+		}
+	};
+	const element = useRenderElement("div", componentProps, {
+		ref: [
+			buttonRef,
+			forwardedRef,
+			listItem.ref,
+			itemRef
+		],
+		state,
+		props: [
+			itemProps,
+			defaultProps,
+			elementProps,
+			getButtonProps
+		]
+	});
+	const contextValue = import__wp_global_react.useMemo(() => ({
+		selected,
+		index,
+		textRef,
+		selectedByFocus
+	}), [
+		selected,
+		index,
+		textRef,
+		selectedByFocus
+	]);
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsx)(SelectItemContext.Provider, {
+		value: contextValue,
+		children: element
+	});
+}));
+SelectItem.displayName = "SelectItem";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item-text/SelectItemText.mjs
+/**
+* A text label of the select item.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectItemText = /*#__PURE__*/ import__wp_global_react.memo(/*#__PURE__*/ import__wp_global_react.forwardRef(function SelectItemText(componentProps, forwardedRef) {
+	const { index, textRef, selectedByFocus } = useSelectItemContext();
+	const store = useSelectRootContext();
+	const { render, className, style, ...elementProps } = componentProps;
+	const localRef = import__wp_global_react.useCallback((node) => {
+		if (!node) return;
+		if (index === 0) store.context.firstItemTextRef.current = node;
+		if (selectedByFocus) store.context.selectedItemTextRef.current = node;
+	}, [
+		store,
+		index,
+		selectedByFocus
+	]);
+	return useRenderElement("div", componentProps, {
+		ref: [
+			localRef,
+			forwardedRef,
+			textRef
+		],
+		props: elementProps
+	});
+}));
+SelectItemText.displayName = "SelectItemText";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroupContext.mjs
+const SelectGroupContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+SelectGroupContext.displayName = "SelectGroupContext";
+function useSelectGroupContext() {
+	const context = import__wp_global_react.useContext(SelectGroupContext);
+	if (context === void 0) throw new Error("Base UI: SelectGroupContext is missing. SelectGroup parts must be placed within <Select.Group>.");
+	return context;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroup.mjs
+/**
+* Groups related select items with the corresponding label.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectGroup = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectGroup(componentProps, forwardedRef) {
+	const { render, className, style, ...elementProps } = componentProps;
+	const [labelId, setLabelId] = import__wp_global_react.useState();
+	const contextValue = import__wp_global_react.useMemo(() => ({
+		labelId,
+		setLabelId
+	}), [labelId, setLabelId]);
+	const element = useRenderElement("div", componentProps, {
+		ref: forwardedRef,
+		props: [{
+			role: "group",
+			"aria-labelledby": labelId
+		}, elementProps]
+	});
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsx)(SelectGroupContext.Provider, {
+		value: contextValue,
+		children: element
+	});
+});
+SelectGroup.displayName = "SelectGroup";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group-label/SelectGroupLabel.mjs
+/**
+* An accessible label that is automatically associated with its parent group.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectGroupLabel = /*#__PURE__*/ import__wp_global_react.forwardRef(function SelectGroupLabel(componentProps, forwardedRef) {
+	const { render, className, style, id: idProp, ...elementProps } = componentProps;
+	const { setLabelId } = useSelectGroupContext();
+	const id = useBaseUiId(idProp);
+	useIsoLayoutEffect(() => {
+		setLabelId(id);
+		return () => {
+			setLabelId((currentId) => currentId === id ? void 0 : currentId);
+		};
+	}, [id, setLabelId]);
+	return useRenderElement("div", componentProps, {
+		ref: forwardedRef,
+		props: [{
+			id,
+			"aria-hidden": true
+		}, elementProps]
+	});
+});
+SelectGroupLabel.displayName = "SelectGroupLabel";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/separator/SelectSeparator.mjs
+/**
+* A visual separator between items or groups.
+* Renders a `<div>` element.
+*
+* Documentation: [Base UI Select](https://base-ui.com/react/components/select)
+*/
+const SelectSeparator = ListboxSeparator;
+
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tooltip/root/TooltipRootContext.mjs
 const TooltipRootContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
 TooltipRootContext.displayName = "TooltipRootContext";
@@ -8224,7 +11866,7 @@ var require_i18n = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 }));
 
 // packages/ui/build-module/spinner/spinner.mjs
-const STYLE_HASH_ATTRIBUTE$19 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$30 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -8233,7 +11875,7 @@ const STYLE_HASH_ATTRIBUTE$19 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$19() {
+function getRuntime$30() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -8241,7 +11883,7 @@ function getRuntime$19() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$19(document);
+	if (typeof document !== "undefined") registerDocument$30(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -8252,9 +11894,9 @@ function getRuntime$19() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$19(targetDocument, hash) {
+function documentContainsStyleHash$30(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$19}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$19) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$30}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$30) === hash) return true;
 	return false;
 }
 /**
@@ -8265,21 +11907,21 @@ function documentContainsStyleHash$19(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$19(targetDocument, hash, css) {
+function injectStyle$30(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$19();
+	const runtime = getRuntime$30();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$19(targetDocument, hash)) {
+	if (documentContainsStyleHash$30(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$19, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$30, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -8295,10 +11937,10 @@ function injectStyle$19(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$19(targetDocument) {
-	const runtime = getRuntime$19();
+function registerDocument$30(targetDocument) {
+	const runtime = getRuntime$30();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$19(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$30(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -8320,13 +11962,13 @@ function registerDocument$19(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$19(hash, css) {
-	const runtime = getRuntime$19();
+function registerStyle$30(hash, css) {
+	const runtime = getRuntime$30();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$19(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$30(targetDocument, hash, css);
 }
-registerStyle$19("b081213352", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.da418dc15e63be57__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}._8b83deccaefa3c92__indicator{fill:transparent;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_0da63cf2c7b08803__spinner-spin 1.4s linear infinite both}@keyframes _0da63cf2c7b08803__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
-var style_module_default$14 = {
+registerStyle$30("b081213352", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.da418dc15e63be57__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}._8b83deccaefa3c92__indicator{fill:transparent;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_0da63cf2c7b08803__spinner-spin 1.4s linear infinite both}@keyframes _0da63cf2c7b08803__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+var style_module_default$17 = {
 	"spinner": "da418dc15e63be57__spinner",
 	"indicator": "_8b83deccaefa3c92__indicator",
 	"spinner-spin": "_0da63cf2c7b08803__spinner-spin"
@@ -8336,7 +11978,7 @@ var style_module_default$14 = {
 */
 const Spinner$5 = (0, import_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
-		className: clsx(style_module_default$14.spinner, className),
+		className: clsx(style_module_default$17.spinner, className),
 		style: color === void 0 ? style : {
 			...style,
 			color
@@ -8348,7 +11990,7 @@ const Spinner$5 = (0, import_element.forwardRef)(function UnforwardedSpinner({ c
 		...props,
 		ref,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
-			className: style_module_default$14.indicator,
+			className: style_module_default$17.indicator,
 			d: "m 12 0 a 12 12 0 0 1 0 24"
 		})
 	});
@@ -8356,7 +11998,7 @@ const Spinner$5 = (0, import_element.forwardRef)(function UnforwardedSpinner({ c
 
 // packages/ui/build-module/button/button.mjs
 var import_i18n = require_i18n();
-const STYLE_HASH_ATTRIBUTE$18 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$29 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -8365,7 +12007,7 @@ const STYLE_HASH_ATTRIBUTE$18 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$18() {
+function getRuntime$29() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -8373,7 +12015,7 @@ function getRuntime$18() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$18(document);
+	if (typeof document !== "undefined") registerDocument$29(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -8384,9 +12026,9 @@ function getRuntime$18() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$18(targetDocument, hash) {
+function documentContainsStyleHash$29(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$18}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$18) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$29}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$29) === hash) return true;
 	return false;
 }
 /**
@@ -8397,21 +12039,21 @@ function documentContainsStyleHash$18(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$18(targetDocument, hash, css) {
+function injectStyle$29(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$18();
+	const runtime = getRuntime$29();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$18(targetDocument, hash)) {
+	if (documentContainsStyleHash$29(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$18, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$29, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -8427,10 +12069,10 @@ function injectStyle$18(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$18(targetDocument) {
-	const runtime = getRuntime$18();
+function registerDocument$29(targetDocument) {
+	const runtime = getRuntime$29();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$18(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$29(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -8452,13 +12094,13 @@ function registerDocument$18(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$18(hash, css) {
-	const runtime = getRuntime$18();
+function registerStyle$29(hash, css) {
+	const runtime = getRuntime$29();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$18(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$29(targetDocument, hash, css);
 }
-registerStyle$18("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
-var style_module_default$13 = {
+registerStyle$29("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
+var style_module_default$16 = {
 	"button": "e01b07636421375d__button",
 	"is-unstyled": "ec10ae721bc68934__is-unstyled",
 	"is-loading": "_414eb921eb9928fa__is-loading",
@@ -8472,18 +12114,18 @@ var style_module_default$13 = {
 	"is-compact": "df99f7773c9c8915__is-compact",
 	"spinner": "_20f9e334daee91a7__spinner"
 };
-registerStyle$18("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$18("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default$2 = {
+registerStyle$29("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$6 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$29("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default$3 = {
 	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
 	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
 	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
 	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
 	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
 };
-registerStyle$18("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$5 = {
+registerStyle$29("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$7 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
 	"textarea": "_980b3b4776ac8f81__textarea",
@@ -8502,7 +12144,7 @@ var global_css_defense_module_default$5 = {
 * for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
 const Button$4 = (0, import_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, import_i18n.__)("Loading"), children, ...props }, ref) {
-	const mergedClassName = clsx(global_css_defense_module_default$5.button, resets_module_default$4["box-sizing"], focus_module_default$2["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$13.button, style_module_default$13[`is-${tone}`], style_module_default$13[`is-${variant}`], style_module_default$13[`is-${size}`], loading && style_module_default$13["is-loading"], className);
+	const mergedClassName = clsx(global_css_defense_module_default$7.button, resets_module_default$6["box-sizing"], focus_module_default$3["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$16.button, style_module_default$16[`is-${tone}`], style_module_default$16[`is-${variant}`], style_module_default$16[`is-${size}`], loading && style_module_default$16["is-loading"], className);
 	(0, import_element.useEffect)(() => {
 		if (loading && loadingAnnouncement) speak(loadingAnnouncement);
 	}, [loading, loadingAnnouncement]);
@@ -8512,12 +12154,12 @@ const Button$4 = (0, import_element.forwardRef)(function UnforwardedButton({ ton
 		focusableWhenDisabled,
 		disabled: disabled ?? loading,
 		...props,
-		children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner$5, { className: style_module_default$13.spinner })]
+		children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner$5, { className: style_module_default$16.spinner })]
 	});
 });
 
 // packages/ui/build-module/button/icon.mjs
-const STYLE_HASH_ATTRIBUTE$17 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$28 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -8526,7 +12168,7 @@ const STYLE_HASH_ATTRIBUTE$17 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$17() {
+function getRuntime$28() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -8534,7 +12176,7 @@ function getRuntime$17() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$17(document);
+	if (typeof document !== "undefined") registerDocument$28(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -8545,9 +12187,9 @@ function getRuntime$17() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$17(targetDocument, hash) {
+function documentContainsStyleHash$28(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$17}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$17) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$28}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$28) === hash) return true;
 	return false;
 }
 /**
@@ -8558,21 +12200,21 @@ function documentContainsStyleHash$17(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$17(targetDocument, hash, css) {
+function injectStyle$28(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$17();
+	const runtime = getRuntime$28();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$17(targetDocument, hash)) {
+	if (documentContainsStyleHash$28(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$17, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$28, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -8588,10 +12230,10 @@ function injectStyle$17(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$17(targetDocument) {
-	const runtime = getRuntime$17();
+function registerDocument$28(targetDocument) {
+	const runtime = getRuntime$28();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$17(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$28(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -8613,13 +12255,13 @@ function registerDocument$17(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$17(hash, css) {
-	const runtime = getRuntime$17();
+function registerStyle$28(hash, css) {
+	const runtime = getRuntime$28();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$17(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$28(targetDocument, hash, css);
 }
-registerStyle$17("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
-var style_module_default$12 = {
+registerStyle$28("06ca4dbe45", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e01b07636421375d__button,.ec10ae721bc68934__is-unstyled{appearance:none;padding:0}.e01b07636421375d__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(._414eb921eb9928fa__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._36aecfa8aa1c059c__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}._6e27e09880945492__icon{margin:var(--wp-ui-button-icon-margin)}.e861e38ec209c386__is-brand{&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 85%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 12%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._4f1e6661283d0b09__is-neutral{&._52d3a0733adabb28__is-minimal[aria-pressed=true],&._7b8ab25ed58515d2__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline,&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&._126c37d7228179eb__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._52d3a0733adabb28__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}}.ec10ae721bc68934__is-unstyled{background:none;border:none;min-width:unset}.df99f7773c9c8915__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}._414eb921eb9928fa__is-loading:not(.ec10ae721bc68934__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(._20f9e334daee91a7__spinner){opacity:0}}}@layer compositions{._20f9e334daee91a7__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
+var style_module_default$15 = {
 	"button": "e01b07636421375d__button",
 	"is-unstyled": "ec10ae721bc68934__is-unstyled",
 	"is-loading": "_414eb921eb9928fa__is-loading",
@@ -8637,7 +12279,7 @@ const ButtonIcon = (0, import_element.forwardRef)(function UnforwardedButtonIcon
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
 		ref,
 		icon,
-		className: clsx(style_module_default$12.icon, className),
+		className: clsx(style_module_default$15.icon, className),
 		size: 24,
 		...props
 	});
@@ -8657,6 +12299,26 @@ const Button$3 = Object.assign(Button$4, {
 * a `Button` component.
 */
 Icon: ButtonIcon });
+
+// packages/icons/build-module/library/check.mjs
+var check_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+	xmlns: "http://www.w3.org/2000/svg",
+	viewBox: "0 0 24 24",
+	style: { fill: "none" },
+	stroke: "currentColor",
+	strokeWidth: "1.5",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M7 12L10 15L17 8" })
+});
+
+// packages/icons/build-module/library/chevron-down.mjs
+var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+	xmlns: "http://www.w3.org/2000/svg",
+	viewBox: "0 0 24 24",
+	style: { fill: "none" },
+	stroke: "currentColor",
+	strokeWidth: "1.5",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M7 11L12 15L17 11" })
+});
 
 // packages/icons/build-module/library/chevron-left.mjs
 var chevron_left_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
@@ -8760,7 +12422,7 @@ var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_primiti
 });
 
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-const STYLE_HASH_ATTRIBUTE$16 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$27 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -8769,7 +12431,7 @@ const STYLE_HASH_ATTRIBUTE$16 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$16() {
+function getRuntime$27() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -8777,7 +12439,7 @@ function getRuntime$16() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$16(document);
+	if (typeof document !== "undefined") registerDocument$27(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -8788,9 +12450,9 @@ function getRuntime$16() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$16(targetDocument, hash) {
+function documentContainsStyleHash$27(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$16}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$16) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$27}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$27) === hash) return true;
 	return false;
 }
 /**
@@ -8801,21 +12463,21 @@ function documentContainsStyleHash$16(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$16(targetDocument, hash, css) {
+function injectStyle$27(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$16();
+	const runtime = getRuntime$27();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$16(targetDocument, hash)) {
+	if (documentContainsStyleHash$27(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$16, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$27, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -8831,10 +12493,10 @@ function injectStyle$16(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$16(targetDocument) {
-	const runtime = getRuntime$16();
+function registerDocument$27(targetDocument) {
+	const runtime = getRuntime$27();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$16(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$27(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -8856,13 +12518,13 @@ function registerDocument$16(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$16(hash, css) {
-	const runtime = getRuntime$16();
+function registerStyle$27(hash, css) {
+	const runtime = getRuntime$27();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$16(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$27(targetDocument, hash, css);
 }
-registerStyle$16("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
-var style_module_default$11 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
+registerStyle$27("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+var style_module_default$14 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
 /**
 * Visually hides content while keeping it accessible to screen readers.
 * Useful when providing context that's only meaningful to assistive technology.
@@ -8889,7 +12551,7 @@ const VisuallyHidden = (0, import_element.forwardRef)(function UnforwardedVisual
 	return useRender({
 		render,
 		ref,
-		props: mergeProps({ className: style_module_default$11["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
+		props: mergeProps({ className: style_module_default$14["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
 	});
 });
 
@@ -8936,6 +12598,189 @@ const KeyboardShortcutDisplay = (0, import_element.forwardRef)(function Unforwar
 	});
 });
 
+// packages/ui/build-module/utils/item-popup/item-content.mjs
+function parseItemContent(children, { Label, Description, validationMessage }) {
+	const [label, ...descriptions] = import_element.Children.toArray(children);
+	const hasLabel = (0, import_element.isValidElement)(label) && label.type === Label;
+	const descriptionElements = descriptions.filter((description) => (0, import_element.isValidElement)(description) && description.type === Description);
+	if (!hasLabel || descriptionElements.length !== descriptions.length) throw new Error(validationMessage);
+	return {
+		descriptionIds: descriptionElements.map((description) => description.props.id),
+		hasLabel,
+		labelId: hasLabel ? label.props.id : void 0
+	};
+}
+function useItemContent(children, components, { "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy } = {}) {
+	const generatedLabelId = (0, import_element.useId)();
+	const generatedDescriptionId = (0, import_element.useId)();
+	const { descriptionIds, hasLabel, labelId } = parseItemContent(children, components);
+	const resolvedLabelId = hasLabel ? labelId ?? generatedLabelId : void 0;
+	const resolvedDescriptionIds = descriptionIds.map((descriptionId, index) => descriptionId ?? `${generatedDescriptionId}-${index}`);
+	const itemDescribedBy = Array.from(/* @__PURE__ */ new Set([...ariaDescribedBy?.split(/\s+/).filter(Boolean) ?? [], ...resolvedDescriptionIds])).join(" ");
+	let descriptionIndex = 0;
+	const { Label, Description, descriptionValidationToken } = components;
+	return {
+		contentChildren: import_element.Children.map(children, (child) => {
+			if (!(0, import_element.isValidElement)(child)) return child;
+			if (child.type === Label) return child.props.id === resolvedLabelId ? child : (0, import_element.cloneElement)(child, { id: resolvedLabelId });
+			if (child.type !== Description) return child;
+			const descriptionId = resolvedDescriptionIds[descriptionIndex++];
+			if (!descriptionValidationToken && child.props.id === descriptionId) return child;
+			return (0, import_element.cloneElement)(child, {
+				id: descriptionId,
+				...descriptionValidationToken && { validationToken: descriptionValidationToken }
+			});
+		}),
+		resolvedLabelId,
+		itemAriaProps: {
+			"aria-describedby": itemDescribedBy || void 0,
+			"aria-label": ariaLabel,
+			"aria-labelledby": ariaLabelledBy ?? (ariaLabel ? void 0 : resolvedLabelId)
+		}
+	};
+}
+
+// packages/ui/build-module/text/text.mjs
+const STYLE_HASH_ATTRIBUTE$26 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$26() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$26(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$26(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$26}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$26) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$26(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$26();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$26(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$26, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$26(targetDocument) {
+	const runtime = getRuntime$26();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$26(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$26(hash, css) {
+	const runtime = getRuntime$26();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$26(targetDocument, hash, css);
+}
+registerStyle$26("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var style_module_default$13 = {
+	"text": "_9745ffa515d864cf__text",
+	"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
+	"heading-xl": "_664e3e7687c45603__heading-xl",
+	"heading-lg": "dac661a5de0ed2bd__heading-lg",
+	"heading-md": "_59c7f3f740e2f96e__heading-md",
+	"heading-sm": "cf052fbad8d93b7e__heading-sm",
+	"body-xl": "_212b9cfef57a0af4__body-xl",
+	"body-lg": "_07f57bc0aa36b2c6__body-lg",
+	"body-md": "_0c6da4457aec9e62__body-md",
+	"body-sm": "b998f87ff17b7bec__body-sm"
+};
+registerStyle$26("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$6 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+/**
+* A text component for rendering content with predefined typographic variants.
+* Built on design tokens for consistent typography across the UI.
+*/
+const Text$1 = (0, import_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
+	return useRender({
+		render,
+		defaultTagName: "span",
+		ref,
+		props: mergeProps(props, { className: clsx(style_module_default$13.text, global_css_defense_module_default$6.heading, global_css_defense_module_default$6.p, style_module_default$13[variant], className) })
+	});
+});
+
 // packages/ui/build-module/utils/render-slot-with-children.mjs
 /**
 * Fills an optional "slot" element prop with content by cloning it and
@@ -8962,8 +12807,8 @@ function renderSlotWithChildren(slot, defaultSlot, children) {
 	return (0, import_element.cloneElement)(slot ?? defaultSlot, { children });
 }
 
-// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
-const STYLE_HASH_ATTRIBUTE$15 = "data-wp-hash";
+// packages/ui/build-module/utils/css/item-popup.mjs
+const STYLE_HASH_ATTRIBUTE$25 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -8972,7 +12817,7 @@ const STYLE_HASH_ATTRIBUTE$15 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$15() {
+function getRuntime$25() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -8980,7 +12825,7 @@ function getRuntime$15() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$15(document);
+	if (typeof document !== "undefined") registerDocument$25(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -8991,9 +12836,9 @@ function getRuntime$15() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$15(targetDocument, hash) {
+function documentContainsStyleHash$25(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$15}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$15) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$25}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$25) === hash) return true;
 	return false;
 }
 /**
@@ -9004,21 +12849,21 @@ function documentContainsStyleHash$15(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$15(targetDocument, hash, css) {
+function injectStyle$25(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$15();
+	const runtime = getRuntime$25();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$15(targetDocument, hash)) {
+	if (documentContainsStyleHash$25(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$15, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$25, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -9034,10 +12879,10 @@ function injectStyle$15(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$15(targetDocument) {
-	const runtime = getRuntime$15();
+function registerDocument$25(targetDocument) {
+	const runtime = getRuntime$25();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$15(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$25(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -9059,12 +12904,155 @@ function registerDocument$15(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$15(hash, css) {
-	const runtime = getRuntime$15();
+function registerStyle$25(hash, css) {
+	const runtime = getRuntime$25();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$15(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$25(targetDocument, hash, css);
 }
-registerStyle$15("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
+registerStyle$25("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$8 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
+};
+function getItemPopupWidthClassName(width = "anchor") {
+	switch (width) {
+		case "available": return item_popup_module_default$8["is-width-available"];
+		case "content": return item_popup_module_default$8["is-width-content"];
+		case "lg": return item_popup_module_default$8["is-width-lg"];
+		case "md": return item_popup_module_default$8["is-width-md"];
+		case "sm": return item_popup_module_default$8["is-width-sm"];
+		case "anchor": return item_popup_module_default$8["is-width-anchor"];
+		default: return false;
+	}
+}
+
+// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$24() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$24(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$24(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$24}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$24) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$24(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$24();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$24(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$24, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$24(targetDocument) {
+	const runtime = getRuntime$24();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$24(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$24(hash, css) {
+	const runtime = getRuntime$24();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
+}
+registerStyle$24("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
 var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
 /**
 * Marker attribute on the compat overlay slot element.
@@ -9129,6 +13117,17 @@ function getWpCompatOverlaySlot() {
 	return cachedSlot;
 }
 
+// packages/ui/build-module/form/primitives/constants.mjs
+/**
+* Shared positioning defaults for item-list popups, e.g. Select, Combobox,
+* or Autocomplete.
+*/
+const ITEM_POPUP_POSITIONER_PROPS = {
+	align: "start",
+	sideOffset: 8,
+	collisionPadding: 12
+};
+
 // packages/ui/build-module/utils/direction-provider.mjs
 /**
 * Provides WordPress's text direction to Base UI components.
@@ -9145,7 +13144,7 @@ function DirectionProvider({ children }) {
 * Used to apply custom portal behavior to `Tooltip`'s floating content.
 * `container` defaults to the `@wordpress/ui` compat overlay slot.
 */
-const Portal = (0, import_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
+const Portal$1 = (0, import_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPortal, {
 		container: container === void 0 ? getWpCompatOverlaySlot() : container,
 		...restProps,
@@ -9154,7 +13153,7 @@ const Portal = (0, import_element.forwardRef)(function TooltipPortal$1({ contain
 });
 
 // packages/ui/build-module/tooltip/positioner.mjs
-const STYLE_HASH_ATTRIBUTE$14 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -9163,7 +13162,7 @@ const STYLE_HASH_ATTRIBUTE$14 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$14() {
+function getRuntime$23() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -9171,7 +13170,7 @@ function getRuntime$14() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$14(document);
+	if (typeof document !== "undefined") registerDocument$23(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -9182,9 +13181,9 @@ function getRuntime$14() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$14(targetDocument, hash) {
+function documentContainsStyleHash$23(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$14}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$14) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$23}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$23) === hash) return true;
 	return false;
 }
 /**
@@ -9195,21 +13194,21 @@ function documentContainsStyleHash$14(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$14(targetDocument, hash, css) {
+function injectStyle$23(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$14();
+	const runtime = getRuntime$23();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$14(targetDocument, hash)) {
+	if (documentContainsStyleHash$23(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$14, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$23, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -9225,10 +13224,10 @@ function injectStyle$14(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$14(targetDocument) {
-	const runtime = getRuntime$14();
+function registerDocument$23(targetDocument) {
+	const runtime = getRuntime$23();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$14(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$23(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -9250,29 +13249,29 @@ function registerDocument$14(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$14(hash, css) {
-	const runtime = getRuntime$14();
+function registerStyle$23(hash, css) {
+	const runtime = getRuntime$23();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$14(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
 }
-registerStyle$14("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$3 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$14("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
-var style_module_default$10 = {
+registerStyle$23("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$5 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$23("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+var style_module_default$12 = {
 	"positioner": "b9266862d9435660__positioner",
 	"popup": "_7bb3fd8a0810be6d__popup"
 };
 /**
 * Used to apply custom positioning to `Tooltip`'s floating content.
 */
-const Positioner = (0, import_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+const Positioner$1 = (0, import_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPositioner, {
 		ref,
 		align,
 		side,
 		sideOffset,
 		...props,
-		className: clsx(resets_module_default$3["box-sizing"], style_module_default$10.positioner, className)
+		className: clsx(resets_module_default$5["box-sizing"], style_module_default$12.positioner, className)
 	});
 });
 
@@ -9301,7 +13300,7 @@ function getThemeProvider() {
 const ThemeProvider = getThemeProvider();
 
 // packages/ui/build-module/tooltip/popup.mjs
-const STYLE_HASH_ATTRIBUTE$13 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -9310,7 +13309,7 @@ const STYLE_HASH_ATTRIBUTE$13 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$13() {
+function getRuntime$22() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -9318,7 +13317,7 @@ function getRuntime$13() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$13(document);
+	if (typeof document !== "undefined") registerDocument$22(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -9329,9 +13328,9 @@ function getRuntime$13() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$13(targetDocument, hash) {
+function documentContainsStyleHash$22(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$13}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$13) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$22}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$22) === hash) return true;
 	return false;
 }
 /**
@@ -9342,21 +13341,21 @@ function documentContainsStyleHash$13(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$13(targetDocument, hash, css) {
+function injectStyle$22(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$13();
+	const runtime = getRuntime$22();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$13(targetDocument, hash)) {
+	if (documentContainsStyleHash$22(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$13, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$22, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -9372,10 +13371,10 @@ function injectStyle$13(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$13(targetDocument) {
-	const runtime = getRuntime$13();
+function registerDocument$22(targetDocument) {
+	const runtime = getRuntime$22();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$13(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$22(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -9397,33 +13396,33 @@ function registerDocument$13(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$13(hash, css) {
-	const runtime = getRuntime$13();
+function registerStyle$22(hash, css) {
+	const runtime = getRuntime$22();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$13(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
 }
-registerStyle$13("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
-var style_module_default$9 = {
+registerStyle$22("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+var style_module_default$11 = {
 	"positioner": "b9266862d9435660__positioner",
 	"popup": "_7bb3fd8a0810be6d__popup"
 };
 const POPUP_COLOR = { background: "#1e1e1e" };
-const Popup = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
+const Popup$1 = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
 	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeProvider, {
 		color: POPUP_COLOR,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPopup, {
 			ref,
-			className: clsx(style_module_default$9.popup, className),
+			className: clsx(style_module_default$11.popup, className),
 			...props,
 			children
 		})
 	});
-	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner, {}), popupContent);
-	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {}), positionedPopup);
+	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner$1, {}), popupContent);
+	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$1, {}), positionedPopup);
 });
 
 // packages/ui/build-module/tooltip/trigger.mjs
-const Trigger = (0, import_element.forwardRef)(function TooltipTrigger$1(props, ref) {
+const Trigger$2 = (0, import_element.forwardRef)(function TooltipTrigger$1(props, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipTrigger, {
 		ref,
 		...props
@@ -9444,12 +13443,12 @@ const Trigger = (0, import_element.forwardRef)(function TooltipTrigger$1(props, 
 * @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
 * @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
 */
-function Root$3(props) {
+function Root$4(props) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
 }
 
 // packages/ui/build-module/stack/stack.mjs
-const STYLE_HASH_ATTRIBUTE$12 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -9458,7 +13457,7 @@ const STYLE_HASH_ATTRIBUTE$12 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$12() {
+function getRuntime$21() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -9466,7 +13465,7 @@ function getRuntime$12() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$12(document);
+	if (typeof document !== "undefined") registerDocument$21(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -9477,9 +13476,9 @@ function getRuntime$12() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$12(targetDocument, hash) {
+function documentContainsStyleHash$21(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$12}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$12) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$21}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$21) === hash) return true;
 	return false;
 }
 /**
@@ -9490,21 +13489,21 @@ function documentContainsStyleHash$12(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$12(targetDocument, hash, css) {
+function injectStyle$21(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$12();
+	const runtime = getRuntime$21();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$12(targetDocument, hash)) {
+	if (documentContainsStyleHash$21(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$12, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$21, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -9520,10 +13519,10 @@ function injectStyle$12(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$12(targetDocument) {
-	const runtime = getRuntime$12();
+function registerDocument$21(targetDocument) {
+	const runtime = getRuntime$21();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$12(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$21(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -9545,13 +13544,13 @@ function registerDocument$12(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$12(hash, css) {
-	const runtime = getRuntime$12();
+function registerStyle$21(hash, css) {
+	const runtime = getRuntime$21();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$12(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$21(targetDocument, hash, css);
 }
-registerStyle$12("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
-var style_module_default$8 = { "stack": "_8e8e79c1a2eec43b__stack" };
+registerStyle$21("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
+var style_module_default$10 = { "stack": "_8e8e79c1a2eec43b__stack" };
 const gapTokens = {
 	xs: "var(--wpds-dimension-gap-xs, 4px)",
 	sm: "var(--wpds-dimension-gap-sm, 8px)",
@@ -9578,13 +13577,13 @@ const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ directi
 		ref,
 		props: mergeProps(props, {
 			style,
-			className: style_module_default$8.stack
+			className: style_module_default$10.stack
 		})
 	});
 });
 
 // packages/ui/build-module/icon-button/icon-button.mjs
-const STYLE_HASH_ATTRIBUTE$11 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$20 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -9593,7 +13592,7 @@ const STYLE_HASH_ATTRIBUTE$11 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$11() {
+function getRuntime$20() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -9601,7 +13600,7 @@ function getRuntime$11() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$11(document);
+	if (typeof document !== "undefined") registerDocument$20(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -9612,9 +13611,9 @@ function getRuntime$11() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$11(targetDocument, hash) {
+function documentContainsStyleHash$20(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$11}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$11) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$20}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$20) === hash) return true;
 	return false;
 }
 /**
@@ -9625,21 +13624,21 @@ function documentContainsStyleHash$11(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$11(targetDocument, hash, css) {
+function injectStyle$20(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$11();
+	const runtime = getRuntime$20();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$11(targetDocument, hash)) {
+	if (documentContainsStyleHash$20(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$11, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$20, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -9655,10 +13654,10 @@ function injectStyle$11(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$11(targetDocument) {
-	const runtime = getRuntime$11();
+function registerDocument$20(targetDocument) {
+	const runtime = getRuntime$20();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$11(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$20(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -9680,13 +13679,13 @@ function registerDocument$11(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$11(hash, css) {
-	const runtime = getRuntime$11();
+function registerStyle$20(hash, css) {
+	const runtime = getRuntime$20();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$11(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$20(targetDocument, hash, css);
 }
-registerStyle$11("2a111665b3", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._7f5dbf30e44a43dd__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}._1b3c0d159ecbf3d5__icon{margin:-1px}}}");
-var style_module_default$7 = {
+registerStyle$20("2a111665b3", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._7f5dbf30e44a43dd__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}._1b3c0d159ecbf3d5__icon{margin:-1px}}}");
+var style_module_default$9 = {
 	"icon-button": "_7f5dbf30e44a43dd__icon-button",
 	"icon": "_1b3c0d159ecbf3d5__icon"
 };
@@ -9701,13 +13700,13 @@ var style_module_default$7 = {
 * for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
 const IconButton = (0, import_element.forwardRef)(function UnforwardedIconButton({ label, className, children: _children, disabled, focusableWhenDisabled = true, icon, size, shortcut, positioner, "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, ...restProps }, ref) {
-	const classes = clsx(style_module_default$7["icon-button"], className);
+	const classes = clsx(style_module_default$9["icon-button"], className);
 	const { descriptionId, targetProps } = useKeyboardShortcutProps({
 		"aria-describedby": ariaDescribedBy,
 		"aria-keyshortcuts": ariaKeyShortcuts,
 		shortcut
 	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$3, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger$2, {
 		ref,
 		...targetProps,
 		disabled: disabled && !focusableWhenDisabled,
@@ -9722,12 +13721,12 @@ const IconButton = (0, import_element.forwardRef)(function UnforwardedIconButton
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
 			icon,
 			size: 24,
-			className: style_module_default$7.icon
+			className: style_module_default$9.icon
 		}), shortcut && descriptionId && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDescription, {
 			descriptionId,
 			shortcut
 		})]
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popup, {
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popup$1, {
 		positioner,
 		children: [label, shortcut && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [" ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDisplay, { shortcut })] })]
 	})] });
@@ -16579,7 +20578,7 @@ function PreviousMonthButton$1(props) {
 * @group Components
 * @see https://daypicker.dev/guides/custom-components
 */
-function Root$2(props) {
+function Root$3(props) {
 	const { rootRef, ...rest } = props;
 	return import__wp_global_react.default.createElement("div", {
 		...rest,
@@ -16696,7 +20695,7 @@ var custom_components_exports = /* @__PURE__ */ __exportAll({
 	NextMonthButton: () => NextMonthButton$1,
 	Option: () => Option,
 	PreviousMonthButton: () => PreviousMonthButton$1,
-	Root: () => Root$2,
+	Root: () => Root$3,
 	Select: () => Select$1,
 	Week: () => Week,
 	WeekNumber: () => WeekNumber,
@@ -19136,7 +23135,7 @@ function Day(props) {
 * through the `render` prop, like every other `@wordpress/ui` component.
 * @see https://daypicker.dev/guides/custom-components
 */
-function Root$1({ rootRef, ...props }) {
+function Root$2({ rootRef, ...props }) {
 	const { render, ref, role, defaultAriaLabel } = (0, import_element.useContext)(RootContext);
 	const { months, labels } = useDayPicker();
 	const hasExplicitLabel = props["aria-label"] !== void 0 || props["aria-labelledby"] !== void 0;
@@ -19194,7 +23193,7 @@ function NextMonthButton(props) {
 }
 
 // packages/ui/build-module/calendar/utils/constants.mjs
-const STYLE_HASH_ATTRIBUTE$10 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$19 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -19203,7 +23202,7 @@ const STYLE_HASH_ATTRIBUTE$10 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$10() {
+function getRuntime$19() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -19211,7 +23210,7 @@ function getRuntime$10() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$10(document);
+	if (typeof document !== "undefined") registerDocument$19(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -19222,9 +23221,9 @@ function getRuntime$10() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$10(targetDocument, hash) {
+function documentContainsStyleHash$19(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$10}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$10) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$19}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$19) === hash) return true;
 	return false;
 }
 /**
@@ -19235,21 +23234,21 @@ function documentContainsStyleHash$10(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$10(targetDocument, hash, css) {
+function injectStyle$19(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$10();
+	const runtime = getRuntime$19();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$10(targetDocument, hash)) {
+	if (documentContainsStyleHash$19(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$10, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$19, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -19265,10 +23264,10 @@ function injectStyle$10(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$10(targetDocument) {
-	const runtime = getRuntime$10();
+function registerDocument$19(targetDocument) {
+	const runtime = getRuntime$19();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$10(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$19(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -19290,13 +23289,13 @@ function registerDocument$10(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$10(hash, css) {
-	const runtime = getRuntime$10();
+function registerStyle$19(hash, css) {
+	const runtime = getRuntime$19();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$10(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$19(targetDocument, hash, css);
 }
-registerStyle$10("e870b205d5", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d67ac5940b3db040__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-block;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);position:relative;z-index:0}._6b8244eeebcb141c__day{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);padding:0;position:relative;&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:has(._2326449c1ec1ccf4__day-button:focus-visible),&:has(._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}}._2326449c1ec1ccf4__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:var(--wp-ui-calendar-cell-size);&:before{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:none;border-radius:var(--wpds-border-radius-sm,2px);z-index:-1}&:after,&:before{content:\"\";inset:0;position:absolute}&:after{pointer-events:none;z-index:1}&:disabled{cursor:revert;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}@media (forced-colors:active){text-decoration:line-through}}&:focus-visible:before,&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._346164a767356104__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}.d67ac5940b3db040__root[dir=rtl] ._88966391f27fd845__nav-button{transform:rotate(180deg);transform-origin:50%}.bac4b28345f14fe6__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}._226a2d5b1606f462__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);justify-content:center;max-width:fit-content;position:relative}.b5cd5413fc4f1e0e__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px)}._3c49e5eebd49ce33__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}.ea5dc5e279591e40__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase;width:var(--wp-ui-calendar-cell-size)}._361d685bc7a465e9__today:after{border:2px solid;border-radius:50%;content:\"\";height:0;inset-block-start:2px;inset-inline-end:2px;position:absolute;width:0;z-index:1}._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle){&:has(._2326449c1ec1ccf4__day-button,._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}._485aca6ce0a23a05__outside{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}.cd568589a03e3e05__hidden{visibility:hidden}._8638d195805d7395__range-start:not(._5c9d35f37a7da85e__range-end) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}._5c9d35f37a7da85e__range-end:not(._8638d195805d7395__range-start) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._553023aea73828e1__preview svg{color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);inset:0;pointer-events:none;position:absolute;@media (forced-colors:active){color:inherit}}._553023aea73828e1__preview._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle) svg{display:none}.d67ac5940b3db040__root[dir=rtl] ._553023aea73828e1__preview svg{transform:scaleX(-1)}._553023aea73828e1__preview._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button:before{border:none}@keyframes c2faa611ba1488be__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes c4980e1313f9993a__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes _1c1656e86f6f632c__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes c3793bdbceb0750e__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes _22a1a70f5db25e5c__fade-in{0%{opacity:0}to{opacity:1}}@keyframes _25e4fa1d41281b90__fade-out{0%{opacity:1}to{opacity:0}}._1e3b69aa679f8655__caption-before-exit,._4f9d6e3dc0d6f392__caption-after-enter,._6c19d1b31fe17f76__weeks-before-enter,._747d985c3c395f78__caption-before-enter,._75c3ff871d74d8f8__weeks-before-exit,._854319d82ea3790a__weeks-after-enter,.c555a192f01c276c__weeks-after-exit,.ee9bc34717c59541__caption-after-exit{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}._6c19d1b31fe17f76__weeks-before-enter,.d67ac5940b3db040__root[dir=rtl] ._854319d82ea3790a__weeks-after-enter{animation-name:c2faa611ba1488be__slide-in-left}._75c3ff871d74d8f8__weeks-before-exit,.d67ac5940b3db040__root[dir=rtl] .c555a192f01c276c__weeks-after-exit{animation-name:_1c1656e86f6f632c__slide-out-left}._854319d82ea3790a__weeks-after-enter,.d67ac5940b3db040__root[dir=rtl] ._6c19d1b31fe17f76__weeks-before-enter{animation-name:c4980e1313f9993a__slide-in-right}.c555a192f01c276c__weeks-after-exit,.d67ac5940b3db040__root[dir=rtl] ._75c3ff871d74d8f8__weeks-before-exit{animation-name:c3793bdbceb0750e__slide-out-right}._4f9d6e3dc0d6f392__caption-after-enter,._747d985c3c395f78__caption-before-enter{animation-name:_22a1a70f5db25e5c__fade-in}._1e3b69aa679f8655__caption-before-exit,.ee9bc34717c59541__caption-after-exit{animation-name:_25e4fa1d41281b90__fade-out}}}");
-var style_module_default$6 = {
+registerStyle$19("e870b205d5", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d67ac5940b3db040__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-block;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);position:relative;z-index:0}._6b8244eeebcb141c__day{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);padding:0;position:relative;&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:has(._2326449c1ec1ccf4__day-button:focus-visible),&:has(._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}}._2326449c1ec1ccf4__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:var(--wp-ui-calendar-cell-size);&:before{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:none;border-radius:var(--wpds-border-radius-sm,2px);z-index:-1}&:after,&:before{content:\"\";inset:0;position:absolute}&:after{pointer-events:none;z-index:1}&:disabled{cursor:revert;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}@media (forced-colors:active){text-decoration:line-through}}&:focus-visible:before,&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._346164a767356104__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}.d67ac5940b3db040__root[dir=rtl] ._88966391f27fd845__nav-button{transform:rotate(180deg);transform-origin:50%}.bac4b28345f14fe6__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}._226a2d5b1606f462__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);justify-content:center;max-width:fit-content;position:relative}.b5cd5413fc4f1e0e__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px)}._3c49e5eebd49ce33__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}.ea5dc5e279591e40__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase;width:var(--wp-ui-calendar-cell-size)}._361d685bc7a465e9__today:after{border:2px solid;border-radius:50%;content:\"\";height:0;inset-block-start:2px;inset-inline-end:2px;position:absolute;width:0;z-index:1}._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle){&:has(._2326449c1ec1ccf4__day-button,._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}._485aca6ce0a23a05__outside{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}.cd568589a03e3e05__hidden{visibility:hidden}._8638d195805d7395__range-start:not(._5c9d35f37a7da85e__range-end) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}._5c9d35f37a7da85e__range-end:not(._8638d195805d7395__range-start) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._553023aea73828e1__preview svg{color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);inset:0;pointer-events:none;position:absolute;@media (forced-colors:active){color:inherit}}._553023aea73828e1__preview._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle) svg{display:none}.d67ac5940b3db040__root[dir=rtl] ._553023aea73828e1__preview svg{transform:scaleX(-1)}._553023aea73828e1__preview._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button:before{border:none}@keyframes c2faa611ba1488be__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes c4980e1313f9993a__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes _1c1656e86f6f632c__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes c3793bdbceb0750e__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes _22a1a70f5db25e5c__fade-in{0%{opacity:0}to{opacity:1}}@keyframes _25e4fa1d41281b90__fade-out{0%{opacity:1}to{opacity:0}}._1e3b69aa679f8655__caption-before-exit,._4f9d6e3dc0d6f392__caption-after-enter,._6c19d1b31fe17f76__weeks-before-enter,._747d985c3c395f78__caption-before-enter,._75c3ff871d74d8f8__weeks-before-exit,._854319d82ea3790a__weeks-after-enter,.c555a192f01c276c__weeks-after-exit,.ee9bc34717c59541__caption-after-exit{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}._6c19d1b31fe17f76__weeks-before-enter,.d67ac5940b3db040__root[dir=rtl] ._854319d82ea3790a__weeks-after-enter{animation-name:c2faa611ba1488be__slide-in-left}._75c3ff871d74d8f8__weeks-before-exit,.d67ac5940b3db040__root[dir=rtl] .c555a192f01c276c__weeks-after-exit{animation-name:_1c1656e86f6f632c__slide-out-left}._854319d82ea3790a__weeks-after-enter,.d67ac5940b3db040__root[dir=rtl] ._6c19d1b31fe17f76__weeks-before-enter{animation-name:c4980e1313f9993a__slide-in-right}.c555a192f01c276c__weeks-after-exit,.d67ac5940b3db040__root[dir=rtl] ._75c3ff871d74d8f8__weeks-before-exit{animation-name:c3793bdbceb0750e__slide-out-right}._4f9d6e3dc0d6f392__caption-after-enter,._747d985c3c395f78__caption-before-enter{animation-name:_22a1a70f5db25e5c__fade-in}._1e3b69aa679f8655__caption-before-exit,.ee9bc34717c59541__caption-after-exit{animation-name:_25e4fa1d41281b90__fade-out}}}");
+var style_module_default$8 = {
 	"root": "d67ac5940b3db040__root",
 	"day": "_6b8244eeebcb141c__day",
 	"day-button": "_2326449c1ec1ccf4__day-button",
@@ -19330,21 +23329,21 @@ var style_module_default$6 = {
 	"fade-in": "_22a1a70f5db25e5c__fade-in",
 	"fade-out": "_25e4fa1d41281b90__fade-out"
 };
-registerStyle$10("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$2 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$10("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default$1 = {
+registerStyle$19("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$19("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default$2 = {
 	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
 	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
 	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
 	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
 	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
 };
-registerStyle$10("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+registerStyle$19("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 const CLASSNAMES = {
-	root: clsx(style_module_default$6.root, resets_module_default$2["box-sizing"]),
-	day: style_module_default$6.day,
-	day_button: clsx(style_module_default$6["day-button"], {
+	root: clsx(style_module_default$8.root, resets_module_default$4["box-sizing"]),
+	day: style_module_default$8.day,
+	day_button: clsx(style_module_default$8["day-button"], {
 		"button": "_78c10a0773e51a91__button",
 		"input": "_5b33aa2d48624b4f__input",
 		"textarea": "_980b3b4776ac8f81__textarea",
@@ -19355,33 +23354,33 @@ const CLASSNAMES = {
 		"ol": "_3f05789653864a73__ol",
 		"li": "_3c72ff72abe57859__li",
 		"span": "_79d16267c15d9eb2__span"
-	}.button, focus_module_default$1["outset-ring--focus-visible"]),
-	outside: style_module_default$6.outside,
-	caption_label: style_module_default$6["caption-label"],
-	button_next: style_module_default$6["nav-button"],
-	button_previous: style_module_default$6["nav-button"],
-	nav: style_module_default$6.nav,
-	month_caption: style_module_default$6["month-caption"],
-	months: style_module_default$6.months,
-	month_grid: style_module_default$6["month-grid"],
-	weekday: style_module_default$6.weekday,
-	today: style_module_default$6.today,
-	selected: style_module_default$6.selected,
+	}.button, focus_module_default$2["outset-ring--focus-visible"]),
+	outside: style_module_default$8.outside,
+	caption_label: style_module_default$8["caption-label"],
+	button_next: style_module_default$8["nav-button"],
+	button_previous: style_module_default$8["nav-button"],
+	nav: style_module_default$8.nav,
+	month_caption: style_module_default$8["month-caption"],
+	months: style_module_default$8.months,
+	month_grid: style_module_default$8["month-grid"],
+	weekday: style_module_default$8.weekday,
+	today: style_module_default$8.today,
+	selected: style_module_default$8.selected,
 	disabled: void 0,
-	hidden: style_module_default$6.hidden,
-	range_start: style_module_default$6["range-start"],
-	range_end: style_module_default$6["range-end"],
-	range_middle: style_module_default$6["range-middle"],
-	weeks_before_enter: style_module_default$6["weeks-before-enter"],
-	weeks_before_exit: style_module_default$6["weeks-before-exit"],
-	weeks_after_enter: style_module_default$6["weeks-after-enter"],
-	weeks_after_exit: style_module_default$6["weeks-after-exit"],
-	caption_after_enter: style_module_default$6["caption-after-enter"],
-	caption_after_exit: style_module_default$6["caption-after-exit"],
-	caption_before_enter: style_module_default$6["caption-before-enter"],
-	caption_before_exit: style_module_default$6["caption-before-exit"]
+	hidden: style_module_default$8.hidden,
+	range_start: style_module_default$8["range-start"],
+	range_end: style_module_default$8["range-end"],
+	range_middle: style_module_default$8["range-middle"],
+	weeks_before_enter: style_module_default$8["weeks-before-enter"],
+	weeks_before_exit: style_module_default$8["weeks-before-exit"],
+	weeks_after_enter: style_module_default$8["weeks-after-enter"],
+	weeks_after_exit: style_module_default$8["weeks-after-exit"],
+	caption_after_enter: style_module_default$8["caption-after-enter"],
+	caption_after_exit: style_module_default$8["caption-after-exit"],
+	caption_before_enter: style_module_default$8["caption-before-enter"],
+	caption_before_exit: style_module_default$8["caption-before-exit"]
 };
-const MODIFIER_CLASSNAMES = { preview: style_module_default$6.preview };
+const MODIFIER_CLASSNAMES = { preview: style_module_default$8.preview };
 const COMMON_PROPS = {
 	animate: true,
 	showOutsideDays: false,
@@ -19393,7 +23392,7 @@ const COMMON_PROPS = {
 	classNames: CLASSNAMES,
 	components: {
 		Day,
-		Root: Root$1,
+		Root: Root$2,
 		PreviousMonthButton,
 		NextMonthButton
 	}
@@ -19826,7 +23825,7 @@ const RangeCalendar = (0, import_element.forwardRef)(function UnforwardedRangeCa
 });
 
 // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
-const STYLE_HASH_ATTRIBUTE$9 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$18 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -19835,7 +23834,7 @@ const STYLE_HASH_ATTRIBUTE$9 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$9() {
+function getRuntime$18() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -19843,7 +23842,7 @@ function getRuntime$9() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$9(document);
+	if (typeof document !== "undefined") registerDocument$18(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -19854,9 +23853,9 @@ function getRuntime$9() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$9(targetDocument, hash) {
+function documentContainsStyleHash$18(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$9}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$9) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$18}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$18) === hash) return true;
 	return false;
 }
 /**
@@ -19867,21 +23866,21 @@ function documentContainsStyleHash$9(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$9(targetDocument, hash, css) {
+function injectStyle$18(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$9();
+	const runtime = getRuntime$18();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$9(targetDocument, hash)) {
+	if (documentContainsStyleHash$18(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$9, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$18, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -19897,10 +23896,10 @@ function injectStyle$9(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$9(targetDocument) {
-	const runtime = getRuntime$9();
+function registerDocument$18(targetDocument) {
+	const runtime = getRuntime$18();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$9(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$18(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -19922,13 +23921,13 @@ function registerDocument$9(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$9(hash, css) {
-	const runtime = getRuntime$9();
+function registerStyle$18(hash, css) {
+	const runtime = getRuntime$18();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$9(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$18(targetDocument, hash, css);
 }
-registerStyle$9("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$4 = {
+registerStyle$18("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$5 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
 	"textarea": "_980b3b4776ac8f81__textarea",
@@ -19940,10 +23939,10 @@ var global_css_defense_module_default$4 = {
 	"li": "_3c72ff72abe57859__li",
 	"span": "_79d16267c15d9eb2__span"
 };
-registerStyle$9("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$9("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
-var style_module_default$5 = {
+registerStyle$18("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$3 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$18("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
+var style_module_default$7 = {
 	"input-layout": "b58f09bec1a5dbde__input-layout",
 	"is-size-compact": "c6959524c70627d6__is-size-compact",
 	"is-size-small": "aa52ad890a16cc91__is-size-small",
@@ -19960,17 +23959,17 @@ var style_module_default$5 = {
 const InputLayout$1 = (0, import_element.forwardRef)(function UnforwardedInputLayout({ className, children, visuallyDisabled, size = "default", isBorderless, prefix, suffix, ...restProps }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		ref,
-		className: clsx(global_css_defense_module_default$4.div, resets_module_default$1["box-sizing"], style_module_default$5["input-layout"], style_module_default$5[`is-size-${size}`], visuallyDisabled && style_module_default$5["is-disabled"], isBorderless && style_module_default$5["is-borderless"], className),
+		className: clsx(global_css_defense_module_default$5.div, resets_module_default$3["box-sizing"], style_module_default$7["input-layout"], style_module_default$7[`is-size-${size}`], visuallyDisabled && style_module_default$7["is-disabled"], isBorderless && style_module_default$7["is-borderless"], className),
 		...restProps,
 		children: [
 			import_element.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: style_module_default$5["slot-wrapper"],
+				className: style_module_default$7["slot-wrapper"],
 				"data-slot-type": "prefix",
 				children: prefix
 			}),
 			children,
 			import_element.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: style_module_default$5["slot-wrapper"],
+				className: style_module_default$7["slot-wrapper"],
 				"data-slot-type": "suffix",
 				children: suffix
 			})
@@ -19979,7 +23978,7 @@ const InputLayout$1 = (0, import_element.forwardRef)(function UnforwardedInputLa
 });
 
 // packages/ui/build-module/form/primitives/input-layout/slot.mjs
-const STYLE_HASH_ATTRIBUTE$8 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$17 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -19988,7 +23987,7 @@ const STYLE_HASH_ATTRIBUTE$8 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$8() {
+function getRuntime$17() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -19996,7 +23995,7 @@ function getRuntime$8() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$8(document);
+	if (typeof document !== "undefined") registerDocument$17(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -20007,9 +24006,9 @@ function getRuntime$8() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$8(targetDocument, hash) {
+function documentContainsStyleHash$17(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$8}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$8) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$17}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$17) === hash) return true;
 	return false;
 }
 /**
@@ -20020,21 +24019,21 @@ function documentContainsStyleHash$8(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$8(targetDocument, hash, css) {
+function injectStyle$17(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$8();
+	const runtime = getRuntime$17();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$8(targetDocument, hash)) {
+	if (documentContainsStyleHash$17(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$8, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$17, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -20050,10 +24049,10 @@ function injectStyle$8(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$8(targetDocument) {
-	const runtime = getRuntime$8();
+function registerDocument$17(targetDocument) {
+	const runtime = getRuntime$17();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$8(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$17(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -20075,13 +24074,13 @@ function registerDocument$8(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$8(hash, css) {
-	const runtime = getRuntime$8();
+function registerStyle$17(hash, css) {
+	const runtime = getRuntime$17();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$8(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$17(targetDocument, hash, css);
 }
-registerStyle$8("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
-var style_module_default$4 = {
+registerStyle$17("a933c8f665", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}");
+var style_module_default$6 = {
 	"input-layout": "b58f09bec1a5dbde__input-layout",
 	"is-size-compact": "c6959524c70627d6__is-size-compact",
 	"is-size-small": "aa52ad890a16cc91__is-size-small",
@@ -20097,7 +24096,7 @@ var style_module_default$4 = {
 const InputLayoutSlot = (0, import_element.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref,
-		className: clsx(style_module_default$4["input-layout-slot"], style_module_default$4[`is-padding-${padding}`], className),
+		className: clsx(style_module_default$6["input-layout-slot"], style_module_default$6[`is-padding-${padding}`], className),
 		...restProps
 	});
 });
@@ -20111,7 +24110,7 @@ InputLayoutSlot.displayName = "InputLayout.Slot";
 const InputLayout = Object.assign(InputLayout$1, { Slot: InputLayoutSlot });
 
 // packages/ui/build-module/form/primitives/input/input.mjs
-const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
+const STYLE_HASH_ATTRIBUTE$16 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
 *
@@ -20120,7 +24119,7 @@ const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
 *
 * @return The shared runtime registry.
 */
-function getRuntime$7() {
+function getRuntime$16() {
 	const globalScope = globalThis;
 	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 	globalScope.__wpStyleRuntime = {
@@ -20128,7 +24127,7 @@ function getRuntime$7() {
 		styles: /* @__PURE__ */ new Map(),
 		injectedStyles: /* @__PURE__ */ new WeakMap()
 	};
-	if (typeof document !== "undefined") registerDocument$7(document);
+	if (typeof document !== "undefined") registerDocument$16(document);
 	return globalScope.__wpStyleRuntime;
 }
 /**
@@ -20139,9 +24138,9 @@ function getRuntime$7() {
 *
 * @return Whether the style hash already exists in the document.
 */
-function documentContainsStyleHash$7(targetDocument, hash) {
+function documentContainsStyleHash$16(targetDocument, hash) {
 	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$7}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$7) === hash) return true;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$16}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$16) === hash) return true;
 	return false;
 }
 /**
@@ -20152,21 +24151,21 @@ function documentContainsStyleHash$7(targetDocument, hash) {
 * @param hash           Stable hash for the transformed CSS.
 * @param css            CSS text to inject.
 */
-function injectStyle$7(targetDocument, hash, css) {
+function injectStyle$16(targetDocument, hash, css) {
 	if (!targetDocument.head) return;
-	const runtime = getRuntime$7();
+	const runtime = getRuntime$16();
 	let injectedStyles = runtime.injectedStyles.get(targetDocument);
 	if (!injectedStyles) {
 		injectedStyles = /* @__PURE__ */ new Set();
 		runtime.injectedStyles.set(targetDocument, injectedStyles);
 	}
 	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$7(targetDocument, hash)) {
+	if (documentContainsStyleHash$16(targetDocument, hash)) {
 		injectedStyles.add(hash);
 		return;
 	}
 	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$7, hash);
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$16, hash);
 	style.appendChild(targetDocument.createTextNode(css));
 	targetDocument.head.appendChild(style);
 	injectedStyles.add(hash);
@@ -20182,10 +24181,10 @@ function injectStyle$7(targetDocument, hash, css) {
 * @param targetDocument Document to receive registered styles.
 * @return Cleanup function that unregisters this document registration.
 */
-function registerDocument$7(targetDocument) {
-	const runtime = getRuntime$7();
+function registerDocument$16(targetDocument) {
+	const runtime = getRuntime$16();
 	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$7(targetDocument, hash, css);
+	for (const [hash, css] of runtime.styles) injectStyle$16(targetDocument, hash, css);
 	return () => {
 		const count = runtime.documents.get(targetDocument);
 		if (count === void 0) return;
@@ -20207,12 +24206,161 @@ function registerDocument$7(targetDocument) {
 * @param hash Stable hash for the transformed CSS.
 * @param css  CSS text to inject.
 */
-function registerStyle$7(hash, css) {
-	const runtime = getRuntime$7();
+function registerStyle$16(hash, css) {
+	const runtime = getRuntime$16();
 	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$16(targetDocument, hash, css);
 }
-registerStyle$7("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+registerStyle$16("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$4 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+registerStyle$16("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default$1 = {
+	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+};
+registerStyle$16("a53cd10a80", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9edfcd97eeaee9dc__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);--_gcd-input-font-size:max(var(--wpds-typography-font-size-md,13px),16px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;@media (min-width:600px){--_gcd-input-font-size:inherit}&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}@layer compositions{.edc52bf0fe80b57f__layout{font-size:max(var(--wpds-typography-font-size-md,13px),16px);@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}}}}");
+var style_module_default$5 = {
+	"input": "_9edfcd97eeaee9dc__input",
+	"layout": "edc52bf0fe80b57f__layout"
+};
+/**
+* A low-level primitive for an input field.
+*
+* Prefer `InputControl` when using with a standard label and description.
+*/
+const Input = (0, import_element.forwardRef)(function UnforwardedInput({ className, size = "default", prefix, suffix, style, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout, {
+		className: clsx(style_module_default$5.layout, focus_module_default$1["outset-ring--focus-within"], className),
+		style,
+		size,
+		visuallyDisabled: restProps.disabled,
+		prefix,
+		suffix,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input$1, {
+			ref,
+			className: clsx(global_css_defense_module_default$4.input, style_module_default$5.input),
+			...restProps
+		})
+	});
+});
+
+// packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
+const STYLE_HASH_ATTRIBUTE$15 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$15() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$15(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$15(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$15}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$15) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$15(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$15();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$15(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$15, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$15(targetDocument) {
+	const runtime = getRuntime$15();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$15(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$15(hash, css) {
+	const runtime = getRuntime$15();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$15(targetDocument, hash, css);
+}
+registerStyle$15("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 var global_css_defense_module_default$3 = {
 	"button": "_78c10a0773e51a91__button",
 	"input": "_5b33aa2d48624b4f__input",
@@ -20225,157 +24373,8 @@ var global_css_defense_module_default$3 = {
 	"li": "_3c72ff72abe57859__li",
 	"span": "_79d16267c15d9eb2__span"
 };
-registerStyle$7("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default = {
-	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-};
-registerStyle$7("a53cd10a80", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9edfcd97eeaee9dc__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);--_gcd-input-font-size:max(var(--wpds-typography-font-size-md,13px),16px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;@media (min-width:600px){--_gcd-input-font-size:inherit}&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}@layer compositions{.edc52bf0fe80b57f__layout{font-size:max(var(--wpds-typography-font-size-md,13px),16px);@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}}}}");
-var style_module_default$3 = {
-	"input": "_9edfcd97eeaee9dc__input",
-	"layout": "edc52bf0fe80b57f__layout"
-};
-/**
-* A low-level primitive for an input field.
-*
-* Prefer `InputControl` when using with a standard label and description.
-*/
-const Input = (0, import_element.forwardRef)(function UnforwardedInput({ className, size = "default", prefix, suffix, style, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout, {
-		className: clsx(style_module_default$3.layout, focus_module_default["outset-ring--focus-within"], className),
-		style,
-		size,
-		visuallyDisabled: restProps.disabled,
-		prefix,
-		suffix,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input$1, {
-			ref,
-			className: clsx(global_css_defense_module_default$3.input, style_module_default$3.input),
-			...restProps
-		})
-	});
-});
-
-// packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
-const STYLE_HASH_ATTRIBUTE$6 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$6() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$6(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$6(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$6}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$6) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$6(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$6();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$6(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$6, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$6(targetDocument) {
-	const runtime = getRuntime$6();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$6(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$6(hash, css) {
-	const runtime = getRuntime$6();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$6(targetDocument, hash, css);
-}
-registerStyle$6("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$2 = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
-};
-registerStyle$6("aba5ec2cd2", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._065156d308cd9e34__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);@media not (prefers-reduced-motion){animation:_0b9b0205648471e6__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._1433e92faa429aa6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._8f2844793b7e3dbd__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}._9b4c4f0124b71294__indicator-icon{flex-shrink:0}.c07a36506fa9f62a__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _0b9b0205648471e6__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}");
-var style_module_default$2 = {
+registerStyle$15("aba5ec2cd2", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._065156d308cd9e34__indicator{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);align-items:flex-start;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);gap:var(--wpds-dimension-gap-xs,4px);line-height:var(--wpds-typography-line-height-xs,16px);@media not (prefers-reduced-motion){animation:_0b9b0205648471e6__indicator-jump var(--wpds-motion-duration-md,.2s) cubic-bezier(.68,-.55,.27,1.55)}}._1433e92faa429aa6__is-invalid{color:var(--wpds-color-foreground-content-error-weak,#cc1818)}._8f2844793b7e3dbd__is-valid{color:var(--wpds-color-foreground-content-success-weak,#008030)}._9b4c4f0124b71294__indicator-icon{flex-shrink:0}.c07a36506fa9f62a__indicator-spinner{height:var(--wpds-dimension-size-3xs,12px);margin:2px;width:var(--wpds-dimension-size-3xs,12px)}@keyframes _0b9b0205648471e6__indicator-jump{0%{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}}}");
+var style_module_default$4 = {
 	"indicator": "_065156d308cd9e34__indicator",
 	"indicator-jump": "_0b9b0205648471e6__indicator-jump",
 	"is-invalid": "_1433e92faa429aa6__is-invalid",
@@ -20398,9 +24397,9 @@ const ICON = {
 function ValidityIndicator({ id, type, message }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 		id,
-		className: clsx(global_css_defense_module_default$2.p, style_module_default$2.indicator, style_module_default$2[`is-${type}`]),
-		children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner$5, { className: style_module_default$2["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
-			className: style_module_default$2["indicator-icon"],
+		className: clsx(global_css_defense_module_default$3.p, style_module_default$4.indicator, style_module_default$4[`is-${type}`]),
+		children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner$5, { className: style_module_default$4["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
+			className: style_module_default$4["indicator-icon"],
 			icon: ICON[type],
 			size: 16,
 			fill: "currentColor"
@@ -20549,6 +24548,1289 @@ const ControlWithError = (0, import_element.forwardRef)(function UnforwardedCont
 });
 
 // packages/ui/build-module/form/primitives/field/root.mjs
+const STYLE_HASH_ATTRIBUTE$14 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$14() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$14(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$14(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$14}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$14) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$14(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$14();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$14(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$14, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$14(targetDocument) {
+	const runtime = getRuntime$14();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$14(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$14(hash, css) {
+	const runtime = getRuntime$14();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$14(targetDocument, hash, css);
+}
+registerStyle$14("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$2 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+const DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
+	...props,
+	direction: "column",
+	gap: "sm"
+});
+/**
+* A low-level component that associates an accessible label and description
+* with a single form control element.
+*
+* To label a group of multiple form control elements, use the `Fieldset` component instead.
+*
+* Simply wrapping a control with this component does not guarantee
+* accessible labeling. See examples for how to associate the label in different cases.
+*/
+const Root$1 = (0, import_element.forwardRef)(function UnforwardedRoot({ className, render = DEFAULT_RENDER, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldRoot, {
+		ref,
+		className: clsx(resets_module_default$2["box-sizing"], className),
+		render,
+		...restProps
+	});
+});
+
+// packages/ui/build-module/form/primitives/field/label.mjs
+const STYLE_HASH_ATTRIBUTE$13 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$13() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$13(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$13(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$13}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$13) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$13(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$13();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$13(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$13, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$13(targetDocument) {
+	const runtime = getRuntime$13();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$13(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$13(hash, css) {
+	const runtime = getRuntime$13();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$13(targetDocument, hash, css);
+}
+registerStyle$13("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var field_module_default$2 = {
+	"label": "b83e088455118c35__label",
+	"is-plain": "_7cbfa5d2e598834a__is-plain",
+	"description": "_507b5c7970fe2ffd__description"
+};
+const Label = (0, import_element.forwardRef)(function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
+	const label = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldLabel, {
+		ref,
+		className: clsx(field_module_default$2.label, variant && field_module_default$2[`is-${variant}`], className),
+		...restProps
+	});
+	if (hideFromVision) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, { render: label });
+	return label;
+});
+
+// packages/ui/build-module/form/primitives/field/description.mjs
+const STYLE_HASH_ATTRIBUTE$12 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$12() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$12(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$12(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$12}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$12) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$12(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$12();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$12(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$12, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$12(targetDocument) {
+	const runtime = getRuntime$12();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$12(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$12(hash, css) {
+	const runtime = getRuntime$12();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$12(targetDocument, hash, css);
+}
+registerStyle$12("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$2 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+registerStyle$12("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var field_module_default$1 = {
+	"label": "b83e088455118c35__label",
+	"is-plain": "_7cbfa5d2e598834a__is-plain",
+	"description": "_507b5c7970fe2ffd__description"
+};
+const Description = (0, import_element.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldDescription, {
+		ref,
+		className: clsx(global_css_defense_module_default$2.p, field_module_default$1.description, className),
+		...restProps
+	});
+});
+
+// packages/ui/build-module/form/primitives/field/details.mjs
+const STYLE_HASH_ATTRIBUTE$11 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$11() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$11(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$11(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$11}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$11) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$11(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$11();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$11(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$11, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$11(targetDocument) {
+	const runtime = getRuntime$11();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$11(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$11(hash, css) {
+	const runtime = getRuntime$11();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$11(targetDocument, hash, css);
+}
+registerStyle$11("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var field_module_default = {
+	"label": "b83e088455118c35__label",
+	"is-plain": "_7cbfa5d2e598834a__is-plain",
+	"description": "_507b5c7970fe2ffd__description"
+};
+/**
+* A component for showing additional information about the field,
+* styled similarly to a normal `Field.Description`.
+* Unlike a normal description, it can include links and other semantic elements.
+*
+* Although this content is not associated with the field using direct semantics,
+* it is made discoverable to screen reader users via a visually hidden description,
+* alerting them to the presence of additional information below.
+*
+* If the content only includes plain text, use `Field.Description` instead,
+* so the readout is not unnecessarily verbose for screen reader users.
+*/
+const Details = (0, import_element.forwardRef)(function UnforwardedDetails({ className, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldDescription, {}),
+		children: (0, import_i18n.__)("More details follow the field.")
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		ref,
+		className: clsx(field_module_default.description, className),
+		...restProps
+	})] });
+});
+
+// packages/ui/build-module/form/primitives/select/group.mjs
+const STYLE_HASH_ATTRIBUTE$10 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$10() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$10(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$10(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$10}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$10) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$10(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$10();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$10(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$10, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$10(targetDocument) {
+	const runtime = getRuntime$10();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$10(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$10(hash, css) {
+	const runtime = getRuntime$10();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$10(targetDocument, hash, css);
+}
+registerStyle$10("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$7 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
+};
+/**
+* Groups related items together with an associated label rendered by
+* `Select.GroupLabel`.
+*/
+const Group = (0, import_element.forwardRef)(function UnforwardedGroup({ className, children, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectGroup, {
+		className: clsx(item_popup_module_default$7.group, className),
+		ref,
+		...restProps,
+		children
+	});
+});
+
+// packages/ui/build-module/form/primitives/select/group-label.mjs
+const STYLE_HASH_ATTRIBUTE$9 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$9() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$9(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$9(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$9}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$9) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$9(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$9();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$9(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$9, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$9(targetDocument) {
+	const runtime = getRuntime$9();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$9(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$9(hash, css) {
+	const runtime = getRuntime$9();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$9(targetDocument, hash, css);
+}
+registerStyle$9("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$6 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
+};
+/**
+* Renders a label for a `Select.Group`, describing the group of items
+* it is associated with.
+*/
+const GroupLabel = (0, import_element.forwardRef)(function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
+		variant: "heading-sm",
+		className: clsx(item_popup_module_default$6["group-label"], className),
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectGroupLabel, {
+			ref,
+			...restProps
+		}),
+		children
+	});
+});
+
+// packages/ui/build-module/form/primitives/select/item-description.mjs
+const STYLE_HASH_ATTRIBUTE$8 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$8() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$8(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$8(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$8}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$8) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$8(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$8();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$8(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$8, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$8(targetDocument) {
+	const runtime = getRuntime$8();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$8(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$8(hash, css) {
+	const runtime = getRuntime$8();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$8(targetDocument, hash, css);
+}
+registerStyle$8("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$5 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
+};
+const ITEM_DESCRIPTION_DIRECT_CHILD = Symbol();
+/**
+* Supplementary content for a select item. Its text contributes to the item's
+* accessible description. Use it as a direct child after `Select.ItemLabel`.
+* Content should be text or non-interactive inline markup.
+*/
+const ItemDescription = (0, import_element.forwardRef)(function UnforwardedItemDescription(props, ref) {
+	const { className, validationToken, ...restProps } = props;
+	if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD) throw new Error("Select.ItemDescription: Missing direct select item parent. Render <Select.ItemDescription> as a direct child of <Select.Item>.");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
+		ref,
+		variant: "body-sm",
+		className: clsx(item_popup_module_default$5["item-description"], className),
+		...restProps
+	});
+});
+
+// packages/ui/build-module/form/primitives/select/item-label.mjs
+const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$7() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$7(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$7(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$7}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$7) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$7(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$7();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$7(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$7, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$7(targetDocument) {
+	const runtime = getRuntime$7();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$7(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$7(hash, css) {
+	const runtime = getRuntime$7();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
+}
+registerStyle$7("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$4 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
+};
+/**
+* The primary label of a select item. Use it as the first direct child of
+* every item. Its content is the item's accessible name. The trigger label
+* still comes from the selected item's `label` (via `items` or an object
+* value) or from `Select.Trigger` children.
+*/
+const ItemLabel = (0, import_element.forwardRef)(function UnforwardedItemLabel({ children, className, render, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
+		ref,
+		variant: "body-md",
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItemText, { render }),
+		className: clsx(item_popup_module_default$4["item-label"], className),
+		...restProps,
+		children
+	});
+});
+
+// packages/ui/build-module/form/primitives/select/item.mjs
+const STYLE_HASH_ATTRIBUTE$6 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$6() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$6(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$6(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$6}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$6) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$6(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$6();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$6(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$6, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$6(targetDocument) {
+	const runtime = getRuntime$6();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$6(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$6(hash, css) {
+	const runtime = getRuntime$6();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$6(targetDocument, hash, css);
+}
+registerStyle$6("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$1 = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+registerStyle$6("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$3 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
+};
+registerStyle$6("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+const ITEM_CONTENT_COMPONENTS = {
+	Label: ItemLabel,
+	Description: ItemDescription,
+	descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD,
+	validationMessage: "Select.ItemLabel must be the first direct child of every select item, followed only by Select.ItemDescription components."
+};
+const Item$1 = (0, import_element.forwardRef)(function UnforwardedItem({ className, value, size = "default", children, "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...restProps }, ref) {
+	const { contentChildren, itemAriaProps } = useItemContent(children, ITEM_CONTENT_COMPONENTS, {
+		"aria-describedby": ariaDescribedBy,
+		"aria-label": ariaLabel,
+		"aria-labelledby": ariaLabelledBy
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectItem, {
+		className: clsx(global_css_defense_module_default$1.div, resets_module_default$1["box-sizing"], item_popup_module_default$3.item, size === "small" && item_popup_module_default$3["is-size-small"], className),
+		value,
+		ref,
+		...itemAriaProps,
+		...restProps,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: item_popup_module_default$3["item-icon"],
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
+				icon: check_default,
+				className: item_popup_module_default$3["item-indicator-icon"],
+				size: 16
+			})
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: item_popup_module_default$3["item-text"],
+			children: contentChildren
+		})]
+	});
+});
+
+// packages/ui/build-module/form/primitives/select/portal.mjs
+/**
+* Used to apply custom portal behavior to `Select`'s listbox content.
+* `container` defaults to the `@wordpress/ui` compat overlay slot.
+*/
+const Portal = (0, import_element.forwardRef)(function SelectPortal$1({ container, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPortal, {
+		container: container === void 0 ? getWpCompatOverlaySlot() : container,
+		...restProps,
+		ref
+	});
+});
+
+// packages/ui/build-module/form/primitives/select/positioner.mjs
 const STYLE_HASH_ATTRIBUTE$5 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -20652,30 +25934,54 @@ function registerStyle$5(hash, css) {
 }
 registerStyle$5("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-const DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
-	...props,
-	direction: "column",
-	gap: "sm"
-});
+registerStyle$5("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$2 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
+};
+registerStyle$5("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
+var style_module_default$3 = {
+	"positioner": "cc0f09fba19eb669__positioner",
+	"list": "_3a3c25e09f4fd1ec__list"
+};
 /**
-* A low-level component that associates an accessible label and description
-* with a single form control element.
-*
-* To label a group of multiple form control elements, use the `Fieldset` component instead.
-*
-* Simply wrapping a control with this component does not guarantee
-* accessible labeling. See examples for how to associate the label in different cases.
+* Used to apply custom positioning to `Select`'s listbox content.
 */
-const Root = (0, import_element.forwardRef)(function UnforwardedRoot({ className, render = DEFAULT_RENDER, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldRoot, {
+const Positioner = (0, import_element.forwardRef)(function SelectPositioner$1({ className, alignItemWithTrigger = true, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPositioner, {
+		...ITEM_POPUP_POSITIONER_PROPS,
+		...props,
+		alignItemWithTrigger,
 		ref,
-		className: clsx(resets_module_default["box-sizing"], className),
-		render,
-		...restProps
+		className: clsx(resets_module_default["box-sizing"], style_module_default$3.positioner, alignItemWithTrigger && item_popup_module_default$2["is-align-item-with-trigger"], className)
 	});
 });
 
-// packages/ui/build-module/form/primitives/field/label.mjs
+// packages/ui/build-module/form/primitives/select/popup.mjs
 const STYLE_HASH_ATTRIBUTE$4 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -20777,23 +26083,73 @@ function registerStyle$4(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$4(targetDocument, hash, css);
 }
-registerStyle$4("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var field_module_default$2 = {
-	"label": "b83e088455118c35__label",
-	"is-plain": "_7cbfa5d2e598834a__is-plain",
-	"description": "_507b5c7970fe2ffd__description"
+registerStyle$4("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default$1 = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
 };
-const Label = (0, import_element.forwardRef)(function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
-	const label = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldLabel, {
+registerStyle$4("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
+var style_module_default$2 = {
+	"positioner": "cc0f09fba19eb669__positioner",
+	"list": "_3a3c25e09f4fd1ec__list"
+};
+const Popup = (0, import_element.forwardRef)(function UnforwardedPopup({ className, portal, positioner, width, children, ...restProps }, ref) {
+	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectPopup, {
 		ref,
-		className: clsx(field_module_default$2.label, variant && field_module_default$2[`is-${variant}`], className),
-		...restProps
+		className: clsx(item_popup_module_default$1.popup, getItemPopupWidthClassName(width), className),
+		...restProps,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectList, {
+			className: clsx(item_popup_module_default$1["list-chrome"], style_module_default$2.list),
+			children
+		})
 	});
-	if (hideFromVision) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, { render: label });
-	return label;
+	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner, {}), popupContent);
+	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {}), positionedPopup);
 });
 
-// packages/ui/build-module/form/primitives/field/description.mjs
+// packages/ui/build-module/form/primitives/select/root.mjs
+/**
+* A component that lets users choose one option from a list.
+*
+* Prefer `SelectControl` when using with a standard label and description.
+*
+* When using object values, pass an `items` array so `Select.Trigger` can
+* auto-resolve the selected item's label. By default, items should use a
+* `{ value, label }` shape, or provide `itemToStringLabel` for a custom shape.
+*
+* Object values are compared with `Object.is` by default, so use the same
+* object references for `value` / `defaultValue` and `Select.Item` values, or
+* provide `isItemEqualToValue`.
+*/
+function Root(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectRoot, { ...props }) });
+}
+
+// packages/ui/build-module/form/primitives/select/separator.mjs
 const STYLE_HASH_ATTRIBUTE$3 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -20895,34 +26251,47 @@ function registerStyle$3(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
 }
-registerStyle$3("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$1 = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
+registerStyle$3("fcb2998284", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._3b33276877ba68df__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}._9668806145ec5a57__is-width-anchor{width:var(--anchor-width)}._80926ed7e7d54be0__is-width-available,._8f1224a085e41ee8__is-width-content,._9668806145ec5a57__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._8f1224a085e41ee8__is-width-content{width:auto}.d08be1bfb7489969__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}.b38610fddbff3473__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._2fd0a9b6034e6687__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}.cbf56726bed07aba__fixed-width-presets{&._2fd0a9b6034e6687__is-width-lg,&.b38610fddbff3473__is-width-md,&.d08be1bfb7489969__is-width-sm{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._80926ed7e7d54be0__is-width-available{width:var(--available-width)}.f58aca5511b45bdb__is-align-item-with-trigger[data-side=none] ._3b33276877ba68df__popup{max-height:none}._750bf16b8304f204__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.d786737b2e57c2d3__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._60b53596225bee07__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}._1f24c4759492a48d__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._759a12af5db7a8dd__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._1f24c4759492a48d__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._74a6a24cc319fdba__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._09632da7090fc022__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.d9a1c5812534c804__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.bbed87bc28f61ead__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>.d786737b2e57c2d3__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._2426aa84de39c4dd__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.e0c06ac0921f8067__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}}.d786737b2e57c2d3__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}.e0c06ac0921f8067__item-indicator-icon{translate:0 1px}._6fc483b6919abf79__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._583f0728d87c5db1__item-text{display:flex;flex-direction:column;min-width:0}.aa96b6c7fcb20ae8__item-label{--_gcd-heading-color:currentColor;min-width:0}._26fffe8e4119e36e__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.bbed87bc28f61ead__item[data-disabled] ._26fffe8e4119e36e__item-description,.bbed87bc28f61ead__item[data-highlighted]:not([data-disabled]) ._26fffe8e4119e36e__item-description{--_gcd-heading-color:currentColor;color:inherit}._7738d24c2d5904c5__status{grid-area:status}.bb720e36b47aa491__empty:not(:empty){grid-area:main}._7738d24c2d5904c5__status:not(:empty):not(:has([data-visually-hidden])),.bb720e36b47aa491__empty:not(:empty){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}");
+var item_popup_module_default = {
+	"popup": "_3b33276877ba68df__popup _069972d5e326bada__dropdown-motion",
+	"is-width-anchor": "_9668806145ec5a57__is-width-anchor",
+	"is-width-content": "_8f1224a085e41ee8__is-width-content",
+	"is-width-available": "_80926ed7e7d54be0__is-width-available",
+	"is-width-sm": "d08be1bfb7489969__is-width-sm",
+	"is-width-md": "b38610fddbff3473__is-width-md",
+	"is-width-lg": "_2fd0a9b6034e6687__is-width-lg",
+	"fixed-width-presets": "cbf56726bed07aba__fixed-width-presets",
+	"is-align-item-with-trigger": "f58aca5511b45bdb__is-align-item-with-trigger",
+	"list-chrome": "_750bf16b8304f204__list-chrome",
+	"item-icon": "d786737b2e57c2d3__item-icon",
+	"list": "_60b53596225bee07__list _750bf16b8304f204__list-chrome",
+	"list-scrollable-container": "_1f24c4759492a48d__list-scrollable-container",
+	"list-footer": "_759a12af5db7a8dd__list-footer",
+	"group": "_74a6a24cc319fdba__group",
+	"group-label": "_09632da7090fc022__group-label",
+	"separator": "d9a1c5812534c804__separator",
+	"item": "bbed87bc28f61ead__item",
+	"is-size-small": "_2426aa84de39c4dd__is-size-small",
+	"item-indicator-icon": "e0c06ac0921f8067__item-indicator-icon",
+	"item-content": "_6fc483b6919abf79__item-content",
+	"item-text": "_583f0728d87c5db1__item-text",
+	"item-label": "aa96b6c7fcb20ae8__item-label",
+	"item-description": "_26fffe8e4119e36e__item-description",
+	"status": "_7738d24c2d5904c5__status",
+	"empty": "bb720e36b47aa491__empty"
 };
-registerStyle$3("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var field_module_default$1 = {
-	"label": "b83e088455118c35__label",
-	"is-plain": "_7cbfa5d2e598834a__is-plain",
-	"description": "_507b5c7970fe2ffd__description"
-};
-const Description = (0, import_element.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldDescription, {
+/**
+* Renders a visual separator between select items or groups.
+*/
+const Separator = (0, import_element.forwardRef)(function SelectSeparator$1({ className, orientation: _orientation, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectSeparator, {
 		ref,
-		className: clsx(global_css_defense_module_default$1.p, field_module_default$1.description, className),
-		...restProps
+		className: clsx(item_popup_module_default.separator, className),
+		...props
 	});
 });
 
-// packages/ui/build-module/form/primitives/field/details.mjs
+// packages/ui/build-module/form/primitives/select/trigger.mjs
 const STYLE_HASH_ATTRIBUTE$2 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -21024,33 +26393,43 @@ function registerStyle$2(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$2(targetDocument, hash, css);
 }
-registerStyle$2("71ecfbcef4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var field_module_default = {
-	"label": "b83e088455118c35__label",
-	"is-plain": "_7cbfa5d2e598834a__is-plain",
-	"description": "_507b5c7970fe2ffd__description"
+registerStyle$2("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default = {
+	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
 };
-/**
-* A component for showing additional information about the field,
-* styled similarly to a normal `Field.Description`.
-* Unlike a normal description, it can include links and other semantic elements.
-*
-* Although this content is not associated with the field using direct semantics,
-* it is made discoverable to screen reader users via a visually hidden description,
-* alerting them to the presence of additional information below.
-*
-* If the content only includes plain text, use `Field.Description` instead,
-* so the readout is not unnecessarily verbose for screen reader users.
-*/
-const Details = (0, import_element.forwardRef)(function UnforwardedDetails({ className, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldDescription, {}),
-		children: (0, import_i18n.__)("More details follow the field.")
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref,
-		className: clsx(field_module_default.description, className),
-		...restProps
-	})] });
+registerStyle$2("56b0509c70", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.f19aaaa579fccf54__trigger-wrapper{&.bfac6d240be543bd__is-minimal{width:fit-content}}.e1f5987e5bdc9112__trigger{align-items:center;background-color:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:inherit;font-size:inherit;gap:var(--wpds-dimension-gap-xs,4px);justify-content:space-between;line-height:1.4;padding-block:4px;padding-inline-end:calc(var(--wp-ui-input-layout-padding-inline) - 4px);padding-inline-start:var(--wp-ui-input-layout-padding-inline);text-align:start;user-select:none;width:100%;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&.bfac6d240be543bd__is-minimal{width:auto}&:focus{outline:none}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}}.ba63264311039401__trigger-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;.e1f5987e5bdc9112__trigger[data-placeholder]:not([data-disabled]) &{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}}.cb34834e4f533240__trigger-caret{flex:0 0 auto}}}");
+var select_trigger_module_default = {
+	"trigger-wrapper": "f19aaaa579fccf54__trigger-wrapper",
+	"is-minimal": "bfac6d240be543bd__is-minimal",
+	"trigger": "e1f5987e5bdc9112__trigger",
+	"trigger-value": "ba63264311039401__trigger-value",
+	"trigger-caret": "cb34834e4f533240__trigger-caret"
+};
+const Trigger$1 = (0, import_element.forwardRef)(function UnforwardedTrigger({ className, size, variant, children, placeholder = (0, import_i18n.__)("Select"), ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout, {
+		className: clsx(focus_module_default["outset-ring--focus-within-except-active"], select_trigger_module_default["trigger-wrapper"], variant === "minimal" && select_trigger_module_default["is-minimal"], className),
+		size,
+		isBorderless: variant === "minimal",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectTrigger, {
+			...restProps,
+			className: clsx(select_trigger_module_default.trigger, variant === "minimal" && select_trigger_module_default["is-minimal"]),
+			"data-can-disable-input-layout": true,
+			ref,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectValue, {
+				placeholder,
+				className: select_trigger_module_default["trigger-value"],
+				children
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
+				className: select_trigger_module_default["trigger-caret"],
+				icon: chevron_down_default,
+				size: 18
+			})]
+		})
+	});
 });
 
 // packages/ui/build-module/form/primitives/textarea/textarea.mjs
@@ -21308,7 +26687,7 @@ var style_module_default = { "root": "df5861c8fb684609__root" };
 * A complete input field with integrated label and description.
 */
 const InputControl = (0, import_element.forwardRef)(function UnforwardedInputControl({ className, label, description, details, hideLabelFromVision, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$1, {
 		className: clsx(style_module_default.root, className),
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label, {
@@ -21325,12 +26704,122 @@ const InputControl = (0, import_element.forwardRef)(function UnforwardedInputCon
 	});
 });
 
+// packages/ui/build-module/form/select-control/dev-warnings.mjs
+var import_warning = /* @__PURE__ */ __toESM(require_warning(), 1);
+function warnSelectControlProps(items, itemToStringValue) {
+	if (!itemToStringValue && items?.some((item) => item.value === "")) (0, import_warning.default)("SelectControl: empty string item values are treated as empty selections by default. Use a non-empty item value or return a non-empty string from `itemToStringValue`. Use `null` for an option that clears the selection.");
+}
+
+// packages/ui/build-module/form/select-control/item.mjs
+const Item = (0, import_element.forwardRef)(function UnforwardedItem(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$1, {
+		ref,
+		...props
+	});
+});
+
+// packages/ui/build-module/form/select-control/trigger.mjs
+/**
+* The trigger button for a `SelectControl`.
+*/
+const Trigger = (0, import_element.forwardRef)(function UnforwardedTrigger(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$1, {
+		ref,
+		...props
+	});
+});
+
+// packages/ui/build-module/form/select-control/select-control.mjs
+const DEFAULT_TRIGGER = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger, {});
+/**
+* A complete select field with integrated label and description.
+*/
+const SelectControl$1 = (0, import_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	warnSelectControlProps(items, restProps.itemToStringValue);
+	const triggerElement = useRender({
+		render: trigger ?? DEFAULT_TRIGGER,
+		ref,
+		props: {
+			placeholder,
+			size
+		}
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$1, {
+		className,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label, {
+				hideFromVision: hideLabelFromVision,
+				children: label
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root, {
+				items,
+				...restProps,
+				children: [triggerElement, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup, {
+					width: popupWidth,
+					children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Item, {
+						value: item,
+						label: item.label,
+						disabled: item.disabled,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel, { children: item.label }), item.description ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemDescription, { children: item.description }) : null]
+					}, item.value ?? "null"))
+				})]
+			}),
+			description && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Description, { children: description }),
+			details && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Details, { children: details })
+		]
+	});
+});
+
+// packages/ui/build-module/form/select-control/index.mjs
+Trigger.displayName = "SelectControl.Trigger";
+Group.displayName = "SelectControl.Group";
+GroupLabel.displayName = "SelectControl.GroupLabel";
+Item.displayName = "SelectControl.Item";
+ItemLabel.displayName = "SelectControl.ItemLabel";
+ItemDescription.displayName = "SelectControl.ItemDescription";
+/**
+* A complete select field with integrated label and description.
+*/
+const SelectControl$2 = Object.assign(SelectControl$1, {
+	/**
+	* The trigger button, passed through the `trigger` prop to customize
+	* its props while retaining the control's label and selected content.
+	*/
+	Trigger,
+	/**
+	* Groups related items together with an associated label rendered by
+	* `SelectControl.GroupLabel`.
+	*/
+	Group,
+	/**
+	* Renders a label for a `SelectControl.Group`.
+	*/
+	GroupLabel,
+	/**
+	* An item rendered inside a `SelectControl` popup.
+	*/
+	Item,
+	/**
+	* The primary label of a select item.
+	*/
+	ItemLabel,
+	/**
+	* Supplementary content that describes a select item via
+	* `aria-describedby`.
+	*/
+	ItemDescription,
+	/**
+	* Renders a visual separator between items or groups.
+	*/
+	Separator
+});
+
 // packages/ui/build-module/form/textarea-control/textarea-control.mjs
 /**
 * A complete textarea field with integrated label and description.
 */
 const TextareaControl = (0, import_element.forwardRef)(function UnforwardedTextareaControl({ className, label, description, details, hideLabelFromVision, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$1, {
 		className,
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Label, {
@@ -22566,6 +28055,7 @@ function RelativeDateControl({ className, data, field, onChange, hideLabelFromVi
 	});
 	const fieldValue = getValue({ item: data });
 	const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
+	const selectedUnitItem = options.find((item) => item.value === unit) ?? options[0];
 	const onChangeValue = (0, import_element.useCallback)((newValue) => onChange(setValue({
 		item: data,
 		value: {
@@ -22607,12 +28097,14 @@ function RelativeDateControl({ className, data, field, onChange, hideLabelFromVi
 				value: relValue,
 				onChange: onChangeValue,
 				disabled
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.SelectControl, {
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectControl$2, {
 				className: "dataviews-controls__relative-date-unit",
 				label: (0, import_i18n.__)("Unit"),
-				value: unit,
-				options,
-				onChange: onChangeUnit,
+				value: selectedUnitItem,
+				items: options,
+				onValueChange: (item) => {
+					if (item?.value && item.value !== selectedUnitItem.value) onChangeUnit(item.value);
+				},
 				hideLabelFromVision: true,
 				disabled
 			})]
