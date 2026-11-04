@@ -15705,6 +15705,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 					if (value.start === void 0) return;
 					const newReplacements = value.replacements.slice();
 					newReplacements[value.start] = {
+						...value.replacements[value.start],
 						type: name$12,
 						attributes: {
 							...activeObjectAttributes,
