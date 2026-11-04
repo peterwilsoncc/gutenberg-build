@@ -2024,6 +2024,7 @@ var populateServerData = (data) => {
 
 // packages/interactivity/build-module/vdom.mjs
 init_preact_module();
+var htmlFallbacks = /* @__PURE__ */ new WeakMap();
 var directivePrefix = `data-wp-`;
 var namespaces = [];
 var currentNamespace = () => namespaces[namespaces.length - 1] ?? null;
@@ -2068,6 +2069,30 @@ function splitDirectiveName(directiveName) {
   return { prefix, suffix: suffix || null, uniqueId: null };
 }
 var nsPathRegExp = /^([\w_\/-]+)::(.+)$/;
+function copyFallbackChildren(source, target) {
+  for (const child of Array.from(source.childNodes)) {
+    if (child.nodeType === 1 && child.localName === "script") {
+      continue;
+    }
+    const clone = target.ownerDocument.importNode(child, false);
+    target.appendChild(clone);
+    if (child.nodeType === 1 && child.namespaceURI === "http://www.w3.org/1999/xhtml" && child.localName === "template") {
+      copyFallbackChildren(
+        child.content,
+        clone.content
+      );
+    } else {
+      copyFallbackChildren(child, clone);
+    }
+  }
+}
+function getTemplateContentsOwnerDocument() {
+  return document.createElement("template").content.ownerDocument;
+}
+function getHtmlFallback(element) {
+  const htmlProps = element.props.dangerouslySetInnerHTML;
+  return htmlProps && htmlFallbacks.get(htmlProps);
+}
 function parseDirectiveValue(rawValue) {
   const regexResult = nsPathRegExp.exec(rawValue);
   const namespace = regexResult?.[1] ?? null;
@@ -2210,9 +2235,15 @@ function toVdom(root) {
       ({ suffix }) => suffix === null
     );
     if (props.__directives?.["each-child"] || hasDefaultHtmlDirective) {
-      props.dangerouslySetInnerHTML = {
+      const htmlProps = {
         __html: elementNode.innerHTML
       };
+      props.dangerouslySetInnerHTML = htmlProps;
+      if (hasDefaultHtmlDirective) {
+        const snapshot = getTemplateContentsOwnerDocument().createDocumentFragment();
+        copyFallbackChildren(elementNode, snapshot);
+        htmlFallbacks.set(htmlProps, snapshot);
+      }
     } else if (localName === "template") {
       props.content = [
         ...elementNode.content.childNodes
@@ -2905,6 +2936,8 @@ directive(
   ({ directives: { html: htmlEntries }, element, evaluate }) => {
     const entry = htmlEntries.find(isDefaultDirectiveSuffix);
     const lastAppliedKey = A2(void 0);
+    const previousHost = A2(null);
+    const previousInputs = A2(null);
     const preactHtml = A2();
     let result;
     if (!entry) {
@@ -2932,8 +2965,36 @@ directive(
     const preserveContent = result === PENDING_GETTER || serverHTMLRepresentation;
     const trusted = isDangerousHTML(result);
     const resolvedValue = trusted ? getDangerousHTML(result) : emptyHTML;
+    const fallback = getHtmlFallback(element);
     useLayoutEffect(() => {
+      const node = element.ref.current;
+      const hostChanged = previousHost.current !== node;
+      const inputs = [
+        result,
+        active,
+        preserveContent,
+        serverHTMLRepresentation,
+        trusted,
+        resolvedValue,
+        element.ref
+      ];
+      const inputsChanged = previousInputs.current === null || inputs.some(
+        (input, index) => input !== previousInputs.current[index]
+      );
+      previousInputs.current = inputs;
+      if (hostChanged) {
+        previousHost.current = node;
+        lastAppliedKey.current = void 0;
+        if (active && preserveContent && !node.hasChildNodes() && fallback?.hasChildNodes()) {
+          node.append(
+            node.ownerDocument.importNode(fallback, true)
+          );
+        }
+      }
       if (!active) {
+        return;
+      }
+      if (!hostChanged && !inputsChanged) {
         return;
       }
       if (preserveContent) {
@@ -2951,7 +3012,6 @@ directive(
       if (lastAppliedKey.current === key) {
         return;
       }
-      const node = element.ref.current;
       if (lastAppliedKey.current === void 0 && node.innerHTML === key) {
         lastAppliedKey.current = key;
         return;
@@ -2974,10 +3034,14 @@ directive(
       serverHTMLRepresentation,
       trusted,
       resolvedValue,
-      element.ref
+      fallback,
+      element.ref,
+      element
     ]);
     if (active) {
-      preactHtml.current ??= preserveContent && element.props.dangerouslySetInnerHTML?.__html ? element.props.dangerouslySetInnerHTML : { __html: emptyHTML };
+      preactHtml.current ??= {
+        __html: emptyHTML
+      };
       element.props.dangerouslySetInnerHTML = preactHtml.current;
       element.props.children = void 0;
     }
