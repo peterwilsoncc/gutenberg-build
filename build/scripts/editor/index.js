@@ -100385,7 +100385,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 	function HistoryActions() {
-		const { isImage, isSaving, isUndoRedoDisabled, isWide, activePanel, canRestoreOriginal, isSourceReplaced, onRestoreOriginal } = useMediaEditorFrameContext();
+		const { isImage, isSaving, isUndoRedoDisabled, isWide, activePanel, canRestoreOriginal, isSourceReplaced, opensOriginal, onRestoreOriginal } = useMediaEditorFrameContext();
 		const { reset, isDirty, hasUndo, hasRedo, undo: undoCrop, redo: redoCrop } = useMediaEditor();
 		if (!isImage || !isWide && !!activePanel) return null;
 		const handleUndo = () => {
@@ -100448,7 +100448,7 @@ If there's a particular need for this, please submit a feature request at https:
 							onRestoreOriginal();
 							closeMenu();
 						},
-						children: (0, _wordpress_i18n.__)("Restore original")
+						children: opensOriginal ? (0, _wordpress_i18n.__)("Edit original") : (0, _wordpress_i18n.__)("Restore original")
 					}) })] })
 				})
 			]
@@ -100482,7 +100482,7 @@ If there's a particular need for this, please submit a feature request at https:
 			})]
 		});
 	}
-	function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose, onSaved, renderFrame, noticesClassName = "media-editor__snackbar", noticesPortalElement, shouldCloseOnEsc = false }) {
+	function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose, onSaved, onEditOriginal, renderFrame, noticesClassName = "media-editor__snackbar", noticesPortalElement, shouldCloseOnEsc = false }) {
 		const session = useMediaEditor();
 		const isWide = (0, _wordpress_compose.useViewportMatch)("small");
 		const sidebarTransition = {
@@ -100560,8 +100560,17 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [activeId, invalidateResolution]);
 		const handleRestoreOriginal = (0, _wordpress_element.useCallback)(() => {
 			clearEntityRecordEdits("postType", "attachment", id);
+			if (onEditOriginal && originalId) {
+				onEditOriginal(originalId);
+				return;
+			}
 			setIsSourceReplaced(true);
-		}, [clearEntityRecordEdits, id]);
+		}, [
+			clearEntityRecordEdits,
+			id,
+			onEditOriginal,
+			originalId
+		]);
 		const hasChanges = session.hasOutputEdits || hasEdits || isSourceReplaced;
 		const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
 		const isImage = !!media && mediaType === "image";
@@ -100734,6 +100743,7 @@ If there's a particular need for this, please submit a feature request at https:
 			onSave: saveMediaEditor,
 			canRestoreOriginal,
 			isSourceReplaced,
+			opensOriginal: !!onEditOriginal,
 			onRestoreOriginal: handleRestoreOriginal
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorFrameContext.Provider, {

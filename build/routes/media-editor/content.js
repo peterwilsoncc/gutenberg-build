@@ -45746,7 +45746,7 @@ function HeaderActions({ showCloseButton = false }) {
 	});
 }
 function HistoryActions() {
-	const { isImage, isSaving, isUndoRedoDisabled, isWide, activePanel, canRestoreOriginal, isSourceReplaced, onRestoreOriginal } = useMediaEditorFrameContext();
+	const { isImage, isSaving, isUndoRedoDisabled, isWide, activePanel, canRestoreOriginal, isSourceReplaced, opensOriginal, onRestoreOriginal } = useMediaEditorFrameContext();
 	const { reset, isDirty, hasUndo, hasRedo, undo: undoCrop, redo: redoCrop } = useMediaEditor();
 	if (!isImage || !isWide && !!activePanel) return null;
 	const handleUndo = () => {
@@ -45809,7 +45809,7 @@ function HistoryActions() {
 						onRestoreOriginal();
 						closeMenu();
 					},
-					children: (0, import_i18n.__)("Restore original")
+					children: opensOriginal ? (0, import_i18n.__)("Edit original") : (0, import_i18n.__)("Restore original")
 				}) })] })
 			})
 		]
@@ -45843,7 +45843,7 @@ function SaveActions({ size = "default" }) {
 		})]
 	});
 }
-function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose, onSaved, renderFrame, noticesClassName = "media-editor__snackbar", noticesPortalElement, shouldCloseOnEsc = false }) {
+function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose, onSaved, onEditOriginal, renderFrame, noticesClassName = "media-editor__snackbar", noticesPortalElement, shouldCloseOnEsc = false }) {
 	const session = useMediaEditor();
 	const isWide = (0, import_compose.useViewportMatch)("small");
 	const sidebarTransition = {
@@ -45921,8 +45921,17 @@ function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose
 	}, [activeId, invalidateResolution]);
 	const handleRestoreOriginal = (0, import_element.useCallback)(() => {
 		clearEntityRecordEdits("postType", "attachment", id);
+		if (onEditOriginal && originalId) {
+			onEditOriginal(originalId);
+			return;
+		}
 		setIsSourceReplaced(true);
-	}, [clearEntityRecordEdits, id]);
+	}, [
+		clearEntityRecordEdits,
+		id,
+		onEditOriginal,
+		originalId
+	]);
 	const hasChanges = session.hasOutputEdits || hasEdits || isSourceReplaced;
 	const mediaType = getMediaTypeFromMimeType(media?.mime_type).type;
 	const isImage = !!media && mediaType === "image";
@@ -46095,6 +46104,7 @@ function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose
 		onSave: saveMediaEditor,
 		canRestoreOriginal,
 		isSourceReplaced,
+		opensOriginal: !!onEditOriginal,
 		onRestoreOriginal: handleRestoreOriginal
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditorFrameContext.Provider, {
@@ -46357,14 +46367,19 @@ function MediaEditorRoute() {
 		}
 		navigate({ to: MEDIA_LIST_PATH });
 	};
+	const openAttachment = (newId) => navigate({
+		to: `/media-editor/${newId}`,
+		replace: true
+	});
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor, {
 		id: attachmentId,
 		fields,
 		form,
 		onClose: navigateBack,
 		onSaved: ({ id: savedId }) => {
-			if (savedId !== attachmentId) navigate({ to: `/media-editor/${savedId}` });
+			if (savedId !== attachmentId) openAttachment(savedId);
 		},
+		onEditOriginal: openAttachment,
 		renderFrame: ({ children, isImage, layout, onKeyDown }) => {
 			const isNarrow = layout === "narrow";
 			return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
