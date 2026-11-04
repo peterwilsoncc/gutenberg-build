@@ -23718,7 +23718,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* application, the appropriate permissions and the resolution details will be retrieved from
 	* the store state using `canUser()`, or resolved if missing.
 	*
-	* @return Entity records data.
+	* @return Resource permissions and resolution details.
 	* @template IdType
 	*/
 	function useResourcePermissions(resource, id) {
