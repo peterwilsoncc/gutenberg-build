@@ -441,6 +441,16 @@ body.admin-color-fresh {
   border-radius: var(--wpds-border-radius-md, 4px);
 }
 
+.dataviews-filters__summary-popover .components-popover__content:has(.dataviews-filters__user-input-widget) {
+  width: min-content;
+  min-width: 230px;
+  max-width: none;
+}
+
+.dataviews-filters__summary-popover .components-popover__content:has(.dataviews-filters__user-input-widget) .dataviews-filters__summary-operators-container {
+  contain: inline-size;
+}
+
 .dataviews-filters__summary-popover.components-dropdown__content .components-popover__content {
   padding: 0;
 }
