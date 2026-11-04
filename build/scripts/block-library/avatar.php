@@ -108,48 +108,7 @@ function gutenberg_render_block_core_avatar( $attributes, $content, $block ) {
  * @return array The border-related classnames and styles for the block.
  */
 function gutenberg_get_block_core_avatar_border_attributes( $attributes ) {
-	$border_styles = array();
-	$sides         = array( 'top', 'right', 'bottom', 'left' );
-
-	// Border radius.
-	if ( isset( $attributes['style']['border']['radius'] ) ) {
-		$border_styles['radius'] = $attributes['style']['border']['radius'];
-	}
-
-	// Border style.
-	if ( isset( $attributes['style']['border']['style'] ) ) {
-		$border_styles['style'] = $attributes['style']['border']['style'];
-	}
-
-	// Border width.
-	if ( isset( $attributes['style']['border']['width'] ) ) {
-		$border_styles['width'] = $attributes['style']['border']['width'];
-	}
-
-	// Border color.
-	$preset_color           = array_key_exists( 'borderColor', $attributes ) ? "var:preset|color|{$attributes['borderColor']}" : null;
-	$custom_color           = $attributes['style']['border']['color'] ?? null;
-	$border_styles['color'] = $preset_color ? $preset_color : $custom_color;
-
-	// Individual border styles e.g. top, left etc.
-	foreach ( $sides as $side ) {
-		$border                 = $attributes['style']['border'][ $side ] ?? null;
-		$border_styles[ $side ] = array(
-			'color' => $border['color'] ?? null,
-			'style' => $border['style'] ?? null,
-			'width' => $border['width'] ?? null,
-		);
-	}
-
-	$styles     = gutenberg_style_engine_get_styles( array( 'border' => $border_styles ) );
-	$attributes = array();
-	if ( ! empty( $styles['classnames'] ) ) {
-		$attributes['class'] = $styles['classnames'];
-	}
-	if ( ! empty( $styles['css'] ) ) {
-		$attributes['style'] = $styles['css'];
-	}
-	return $attributes;
+	return gutenberg_get_border_classes_and_styles( $attributes );
 }
 
 /**
