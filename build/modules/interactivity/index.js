@@ -2132,6 +2132,8 @@ const populateServerData = (data) => {
 
 // packages/interactivity/build-module/vdom.mjs
 init_preact_module();
+/** Associates opaque HTML props with script-free snapshots owned by the live document's template-contents document. */
+const htmlFallbacks = /* @__PURE__ */ new WeakMap();
 const directivePrefix = `data-wp-`;
 const namespaces = [];
 const currentNamespace = () => namespaces[namespaces.length - 1] ?? null;
@@ -2196,6 +2198,44 @@ function splitDirectiveName(directiveName) {
 	};
 }
 const nsPathRegExp = /^([\w_\/-]+)::(.+)$/;
+/**
+* Copies a node tree into the target's owner document, omitting script
+* elements recursively. HTML-namespace template contents are traversed
+* separately because they are not ordinary child nodes of their template
+* element; elements named `template` in other namespaces use their child nodes.
+*
+* @param source The node whose child nodes are copied.
+* @param target The fragment or cloned node that receives those children.
+*/
+function copyFallbackChildren(source, target) {
+	for (const child of Array.from(source.childNodes)) {
+		if (child.nodeType === 1 && child.localName === "script") continue;
+		const clone = target.ownerDocument.importNode(child, false);
+		target.appendChild(clone);
+		if (child.nodeType === 1 && child.namespaceURI === "http://www.w3.org/1999/xhtml" && child.localName === "template") copyFallbackChildren(child.content, clone.content);
+		else copyFallbackChildren(child, clone);
+	}
+}
+/**
+* Gets the inert template-contents document associated with the live document.
+*
+* @return The live document's shared template-contents owner document.
+*/
+function getTemplateContentsOwnerDocument() {
+	return document.createElement("template").content.ownerDocument;
+}
+/**
+* Reads the script-free fallback snapshot recorded for an element vnode. The
+* snapshot is owned by the live document's shared template-contents document.
+* Callers must leave it detached and unmodified; insert a clone.
+*
+* @param element The element vnode passed to a directive callback.
+* @return The detached fallback snapshot, or `undefined` when absent.
+*/
+function getHtmlFallback(element) {
+	const htmlProps = element.props.dangerouslySetInnerHTML;
+	return htmlProps && htmlFallbacks.get(htmlProps);
+}
 /**
 * Parses the namespace and value from a directive attribute value.
 *
@@ -2318,8 +2358,15 @@ function toVdom(root) {
 			}
 		}
 		const hasDefaultHtmlDirective = props.__directives?.html?.some(({ suffix }) => suffix === null);
-		if (props.__directives?.["each-child"] || hasDefaultHtmlDirective) props.dangerouslySetInnerHTML = { __html: elementNode.innerHTML };
-		else if (localName === "template") props.content = [...elementNode.content.childNodes].map((childNode) => toVdom(childNode));
+		if (props.__directives?.["each-child"] || hasDefaultHtmlDirective) {
+			const htmlProps = { __html: elementNode.innerHTML };
+			props.dangerouslySetInnerHTML = htmlProps;
+			if (hasDefaultHtmlDirective) {
+				const snapshot = getTemplateContentsOwnerDocument().createDocumentFragment();
+				copyFallbackChildren(elementNode, snapshot);
+				htmlFallbacks.set(htmlProps, snapshot);
+			}
+		} else if (localName === "template") props.content = [...elementNode.content.childNodes].map((childNode) => toVdom(childNode));
 		else {
 			let child = treeWalker.firstChild();
 			if (child) {
@@ -3012,6 +3059,8 @@ const isServerHTMLRepresentation = (value) => isPlainObject(value) && value.wpSe
 directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => {
 	const entry = htmlEntries.find(isDefaultDirectiveSuffix);
 	const lastAppliedKey = A(void 0);
+	const previousHost = A(null);
+	const previousInputs = A(null);
 	const preactHtml = A();
 	let result;
 	if (!entry) warn("The usage of data-wp-html--suffix is not supported. Please use data-wp-html instead.");
@@ -3027,8 +3076,28 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 	const preserveContent = result === PENDING_GETTER || serverHTMLRepresentation;
 	const trusted = isDangerousHTML(result);
 	const resolvedValue = trusted ? getDangerousHTML(result) : emptyHTML;
+	const fallback = getHtmlFallback(element);
 	useLayoutEffect(() => {
+		const node = element.ref.current;
+		const hostChanged = previousHost.current !== node;
+		const inputs = [
+			result,
+			active,
+			preserveContent,
+			serverHTMLRepresentation,
+			trusted,
+			resolvedValue,
+			element.ref
+		];
+		const inputsChanged = previousInputs.current === null || inputs.some((input, index) => input !== previousInputs.current[index]);
+		previousInputs.current = inputs;
+		if (hostChanged) {
+			previousHost.current = node;
+			lastAppliedKey.current = void 0;
+			if (active && preserveContent && !node.hasChildNodes() && fallback?.hasChildNodes()) node.append(node.ownerDocument.importNode(fallback, true));
+		}
 		if (!active) return;
+		if (!hostChanged && !inputsChanged) return;
 		if (preserveContent) {
 			if (serverHTMLRepresentation) lastAppliedKey.current = void 0;
 			return;
@@ -3036,7 +3105,6 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 		if (!trusted && result !== null && result !== void 0) warn("data-wp-html: the value is not trusted HTML. Use asDangerousHTML() to explicitly trust the markup.");
 		const key = String(resolvedValue);
 		if (lastAppliedKey.current === key) return;
-		const node = element.ref.current;
 		if (lastAppliedKey.current === void 0 && node.innerHTML === key) {
 			lastAppliedKey.current = key;
 			return;
@@ -3055,10 +3123,12 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 		serverHTMLRepresentation,
 		trusted,
 		resolvedValue,
-		element.ref
+		fallback,
+		element.ref,
+		element
 	]);
 	if (active) {
-		preactHtml.current ??= preserveContent && element.props.dangerouslySetInnerHTML?.__html ? element.props.dangerouslySetInnerHTML : { __html: emptyHTML };
+		preactHtml.current ??= { __html: emptyHTML };
 		element.props.dangerouslySetInnerHTML = preactHtml.current;
 		element.props.children = void 0;
 	}
