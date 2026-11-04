@@ -717,7 +717,8 @@ var {
   sessionId,
   warn,
   afterNextFrame,
-  getScope
+  getScope,
+  runWithoutScope
 } = privateApis2(
   "I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress."
 );
@@ -909,7 +910,7 @@ var renderPage = (page) => {
         );
       }
       const fragment = rootFragmentsByParent.get(parent);
-      render(vdoms, fragment);
+      runWithoutScope(() => render(vdoms, fragment));
     });
   });
   if (page.title) {

@@ -1267,14 +1267,12 @@ var onDOMReady = (callback) => {
     document.addEventListener("DOMContentLoaded", callback);
   }
 };
-var watch = (callback) => E2(() => {
-  setScope();
-  try {
-    return callback();
-  } finally {
-    resetScope();
-  }
-});
+var watch = (callback) => E2(
+  () => runWithoutScope(() => {
+    const cleanup = callback();
+    return typeof cleanup === "function" ? () => runWithoutScope(cleanup) : cleanup;
+  })
+);
 function createFlusher(compute, notify) {
   let flush = () => void 0;
   const dispose = E2(function() {
@@ -1480,6 +1478,14 @@ var setScope = (scope) => {
 };
 var resetScope = () => {
   scopeStack.pop();
+};
+var runWithoutScope = (fn) => {
+  setScope();
+  try {
+    return fn();
+  } finally {
+    resetScope();
+  }
 };
 var throwNotInScope = (method) => {
   throw Error(
@@ -2456,13 +2462,16 @@ var Directives = ({
     evaluate: scope.evaluate
   };
   setScope(scope);
-  for (const directiveName of currentPriorityLevel) {
-    const wrapper = directiveCallbacks[directiveName]?.(directiveArgs);
-    if (wrapper !== void 0) {
-      props.children = wrapper;
+  try {
+    for (const directiveName of currentPriorityLevel) {
+      const wrapper = directiveCallbacks[directiveName]?.(directiveArgs);
+      if (wrapper !== void 0) {
+        props.children = wrapper;
+      }
     }
+  } finally {
+    resetScope();
   }
-  resetScope();
   return props.children;
 };
 var old = l.vnode;
@@ -3561,7 +3570,9 @@ var privateApis = (lock) => {
       sessionId,
       warn,
       afterNextFrame,
-      getScope
+      getScope,
+      /** Runs a callback without a directive scope and restores the caller's stack. */
+      runWithoutScope
     };
   }
   throw new Error("Forbidden access.");
