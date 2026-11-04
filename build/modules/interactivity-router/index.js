@@ -2482,7 +2482,7 @@ const preloadScriptModules = (doc) => {
 const importScriptModules = (modules) => Promise.all(modules.map((m) => importPreloadedModule(m)));
 
 // packages/interactivity-router/build-module/index.mjs
-const { getRegionRootFragment, initialVdomPromise, toVdom, parseDirectiveValue, getInteractiveNamespace, render, parseServerData, populateServerData, batch, routerRegions, h: createElement, navigationSignal, sessionId, warn, afterNextFrame, getScope } = privateApis("I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress.");
+const { getRegionRootFragment, initialVdomPromise, toVdom, parseDirectiveValue, getInteractiveNamespace, render, parseServerData, populateServerData, batch, routerRegions, h: createElement, navigationSignal, sessionId, warn, afterNextFrame, getScope, runWithoutScope } = privateApis("I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress.");
 const regionAttr = `data-wp-router-region`;
 const interactiveAttr = `data-wp-interactive`;
 const regionsSelector = `[${interactiveAttr}][${regionAttr}], [${interactiveAttr}] [${regionAttr}]`;
@@ -2705,6 +2705,8 @@ const resolveAttachTarget = (selector) => {
 * and updating the document title. Pending attachments resolve against the live
 * document on every render, including history restores. A region without a
 * usable target is omitted from this render without altering the cached page.
+* Preact callbacks invoked while attaching regions run without a directive
+* scope.
 *
 * @param page The {@link Page} object to render.
 */
@@ -2744,7 +2746,7 @@ const renderPage = (page) => {
 				rootFragmentsByParent.set(parent, getRegionRootFragment(roots));
 			}
 			const fragment = rootFragmentsByParent.get(parent);
-			render(vdoms, fragment);
+			runWithoutScope(() => render(vdoms, fragment));
 		});
 	});
 	if (page.title) document.title = page.title;

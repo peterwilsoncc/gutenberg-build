@@ -1163,8 +1163,9 @@ const onDOMReady = (callback) => {
 };
 /**
 * Subscribes to changes in any signal accessed inside the callback, re-running
-* the callback whenever those signals change. The callback runs without an
-* ambient directive scope and the previous scope is restored afterwards.
+* the callback whenever those signals change. The callback and any cleanup it
+* returns run without an ambient directive scope; when either returns or
+* throws, the scope frame that was on top before it ran is on top again.
 *
 * @example
 * ```js
@@ -1179,14 +1180,10 @@ const onDOMReady = (callback) => {
 * @param callback The callback to execute when a dependency changes.
 * @return A cleanup function to stop watching.
 */
-const watch = (callback) => E(() => {
-	setScope();
-	try {
-		return callback();
-	} finally {
-		resetScope();
-	}
-});
+const watch = (callback) => E(() => runWithoutScope(() => {
+	const cleanup = callback();
+	return typeof cleanup === "function" ? () => runWithoutScope(cleanup) : cleanup;
+}));
 /**
 * Creates a Flusher object that can be used to flush computed values and notify listeners.
 *
@@ -1581,6 +1578,25 @@ const setScope = (scope) => {
 */
 const resetScope = () => {
 	scopeStack.pop();
+};
+/**
+* Runs a callback without inheriting an ambient directive scope.
+*
+* Installs an empty execution frame on top of the scope stack, runs the
+* callback, and removes that frame whether the callback returns or throws, as
+* `withScope()` does with the scope it captured. Errors thrown by the callback
+* are rethrown.
+*
+* @param fn Callback to execute without an ambient directive scope.
+* @return The callback's return value.
+*/
+const runWithoutScope = (fn) => {
+	setScope();
+	try {
+		return fn();
+	} finally {
+		resetScope();
+	}
 };
 const throwNotInScope = (method) => {
 	throw Error(`Cannot call \`${method}()\` when there is no scope. If you are using an async function, please consider using a generator instead. If you are using some sort of async callbacks, like \`setTimeout\`, please wrap the callback with \`withScope(callback)\`.`);
@@ -2639,11 +2655,14 @@ const Directives = ({ directives, priorityLevels: [currentPriorityLevel, ...next
 		evaluate: scope.evaluate
 	};
 	setScope(scope);
-	for (const directiveName of currentPriorityLevel) {
-		const wrapper = directiveCallbacks[directiveName]?.(directiveArgs);
-		if (wrapper !== void 0) props.children = wrapper;
+	try {
+		for (const directiveName of currentPriorityLevel) {
+			const wrapper = directiveCallbacks[directiveName]?.(directiveArgs);
+			if (wrapper !== void 0) props.children = wrapper;
+		}
+	} finally {
+		resetScope();
 	}
-	resetScope();
 	return props.children;
 };
 const old = l$4.vnode;
@@ -3804,6 +3823,12 @@ var init_debug_module = __esmMin((() => {
 init_preact_module();
 await Promise.resolve().then(() => (init_debug_module(), debug_module_exports));
 const requiredConsent = "I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress.";
+/**
+* Returns the consent-gated private APIs used by internal consumers.
+*
+* @param lock Required acknowledgment of private API use.
+* @return The private interactivity APIs.
+*/
 const privateApis = (lock) => {
 	if (lock === requiredConsent) return {
 		getRegionRootFragment,
@@ -3827,7 +3852,9 @@ const privateApis = (lock) => {
 		sessionId,
 		warn,
 		afterNextFrame,
-		getScope
+		getScope,
+		/** Runs a callback without a directive scope and restores the caller's stack. */
+		runWithoutScope
 	};
 	throw new Error("Forbidden access.");
 };
