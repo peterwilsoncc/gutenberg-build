@@ -112467,7 +112467,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function usePickNote({ drafts, onDiscard }) {
 		const { getSelectedBlockClientId } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const { getSelectedNote } = unlock$5((0, _wordpress_data.useSelect)(store));
-		const { selectBlock, toggleBlockHighlight } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
+		const { selectBlock, toggleBlockHighlight } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		return (noteId, clientId, options) => {
 			if (clientId) {
@@ -112684,7 +112684,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const { useBlockElement: useBlockElement$2 } = unlock$5(_wordpress_block_editor.privateApis);
 	function AddNote({ clientId, floating }) {
 		const blockElement = useBlockElement$2(clientId);
-		const { toggleBlockHighlight } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
+		const { toggleBlockHighlight } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		const { getSelectedNote } = unlock$5((0, _wordpress_data.useSelect)(store));
 		const { onCreate, onDiscard } = useNoteActions();
@@ -113210,7 +113210,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function NoteThread({ note, anchorClientId, focusThreadOrAdjacent, isSelected, expandReplies = false, sidebarRef, floating, onKeyDown }) {
 		const isFloating = !!floating;
 		const { onCreate, onEdit, onDiscard, onDelete } = useNoteActions();
-		const { toggleBlockHighlight } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
+		const { toggleBlockHighlight } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const drafts = (0, _wordpress_element.useContext)(NoteDraftsContext);
 		const pickNote = usePickNote({
 			drafts,
@@ -113493,7 +113493,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const { onDiscard } = useNoteActions();
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		const { getSelectedNote } = unlock$5((0, _wordpress_data.useSelect)(store));
-		const { toggleBlockHighlight } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
+		const { toggleBlockHighlight } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const drafts = (0, _wordpress_element.useContext)(NoteDraftsContext);
 		const pickNote = usePickNote({
 			drafts,
