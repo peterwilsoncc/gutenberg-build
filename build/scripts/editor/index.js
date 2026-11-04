@@ -83037,18 +83037,26 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 	function SummaryValue({ item, field, showPlaceholderIfEmpty }) {
-		if (showPlaceholderIfEmpty && field.placeholder && [
-			void 0,
-			null,
-			""
-		].includes(field.getValue({ item }))) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-			className: "dataforms-layouts-panel__field-placeholder",
-			children: field.placeholder
-		});
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(field.render, {
+		if (!showPlaceholderIfEmpty || !field.placeholder) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(field.render, {
 			item,
 			field
 		});
+		const placeholder = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+			className: "dataforms-layouts-panel__field-placeholder",
+			children: field.placeholder
+		});
+		if ([
+			void 0,
+			null,
+			""
+		].includes(field.getValue({ item }))) return placeholder;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+			className: "dataforms-layouts-panel__field-value",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(field.render, {
+				item,
+				field
+			})
+		}), placeholder] });
 	}
 	function SummaryButton({ data, field, fieldLabel, summaryFields, validity, touched, disabled, isOpen, onClick }) {
 		const { labelPosition, editVisibility, showPlaceholderIfEmpty } = field.layout;
@@ -94721,7 +94729,13 @@ If there's a particular need for this, please submit a feature request at https:
 				}
 			})),
 			"date",
-			"author",
+			{
+				id: "author",
+				layout: {
+					type: "panel",
+					showPlaceholderIfEmpty: true
+				}
+			},
 			"filename",
 			"mime_type",
 			"filesize",

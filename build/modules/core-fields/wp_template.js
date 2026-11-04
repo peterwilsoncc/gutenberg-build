@@ -595,147 +595,6 @@ var require_i18n = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.i18n;
 }));
 
-// packages/ui/build-module/text/text.mjs
-const STYLE_HASH_ATTRIBUTE$3 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$3() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$3(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$3(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$3}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$3) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$3(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$3();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$3(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$3, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$3(targetDocument) {
-	const runtime = getRuntime$3();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$3(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$3(hash, css) {
-	const runtime = getRuntime$3();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
-}
-registerStyle$3("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var style_module_default$3 = {
-	"text": "_9745ffa515d864cf__text",
-	"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
-	"heading-xl": "_664e3e7687c45603__heading-xl",
-	"heading-lg": "dac661a5de0ed2bd__heading-lg",
-	"heading-md": "_59c7f3f740e2f96e__heading-md",
-	"heading-sm": "cf052fbad8d93b7e__heading-sm",
-	"body-xl": "_212b9cfef57a0af4__body-xl",
-	"body-lg": "_07f57bc0aa36b2c6__body-lg",
-	"body-md": "_0c6da4457aec9e62__body-md",
-	"body-sm": "b998f87ff17b7bec__body-sm"
-};
-registerStyle$3("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
-};
-/**
-* A text component for rendering content with predefined typographic variants.
-* Built on design tokens for consistent typography across the UI.
-*/
-const Text = (0, import_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
-	return useRender({
-		render,
-		defaultTagName: "span",
-		ref,
-		props: mergeProps(props, { className: clsx(style_module_default$3.text, global_css_defense_module_default.heading, global_css_defense_module_default.p, style_module_default$3[variant], className) })
-	});
-});
-
 // packages/ui/build-module/stack/stack.mjs
 const STYLE_HASH_ATTRIBUTE$2 = "data-wp-hash";
 /**
@@ -1093,7 +952,8 @@ const isCustomTemplate = (item) => item.source === "custom" && !item.has_theme_f
 */
 const getValue = ({ item }) => (0, import_html_entities.decodeEntities)(item.description || "");
 /**
-* Renders the description of a template.
+* Renders the description of a template, as plain text that takes the
+* typography of where it renders, like the values of other fields.
 *
 * @param props      The props.
 * @param props.item The template.
@@ -1101,7 +961,7 @@ const getValue = ({ item }) => (0, import_html_entities.decodeEntities)(item.des
 */
 const render = ({ item }) => {
 	const { description } = item;
-	return description ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, { children: (0, import_html_entities.decodeEntities)(description) }) : null;
+	return description ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: (0, import_html_entities.decodeEntities)(description) }) : null;
 };
 
 // packages/core-fields/build-module/wp_template/description/field.mjs

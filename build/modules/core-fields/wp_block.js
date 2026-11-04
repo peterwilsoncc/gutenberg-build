@@ -30,6 +30,141 @@ var require_html_entities = /* @__PURE__ */ __commonJSMin(((exports, module) => 
 	module.exports = window.wp.htmlEntities;
 }));
 
+// \0wp-global:react/jsx-runtime
+var require_jsx_runtime = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.ReactJSXRuntime;
+}));
+
+// packages/core-fields/build-module/wp_block/description/field.mjs
+var import_html_entities = require_html_entities();
+var import_jsx_runtime = require_jsx_runtime();
+function getPatternDescription(item) {
+	if (typeof item.excerpt === "string") return (0, import_html_entities.decodeEntities)(item.excerpt);
+	return (0, import_html_entities.decodeEntities)(item.excerpt?.raw || "");
+}
+/**
+* The JavaScript parts of the pattern description field; its data is in
+* `field.php`.
+*/
+const fieldExtensions$2 = {
+	getValue: ({ item }) => getPatternDescription(item),
+	render: ({ item }) => {
+		const description = getPatternDescription(item);
+		return description ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: description }) : null;
+	}
+};
+
+// \0wp-global:@wordpress/i18n
+var require_i18n = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.i18n;
+}));
+
+// packages/core-fields/build-module/wp_block/sync_status/field.mjs
+var import_i18n = require_i18n();
+const SYNC_STATUS_FILTERS = [{
+	value: "fully",
+	label: (0, import_i18n._x)("Synced", "pattern (singular)"),
+	description: (0, import_i18n.__)("Patterns that are kept in sync across the site.")
+}, {
+	value: "unsynced",
+	label: (0, import_i18n._x)("Not synced", "pattern (singular)"),
+	description: (0, import_i18n.__)("Patterns that can be changed freely without affecting the site.")
+}];
+function getPatternSyncStatus(item) {
+	if (item.type && item.type !== "wp_block") return "unsynced";
+	if (item.meta?.wp_pattern_sync_status === "unsynced") return "unsynced";
+	return item.wp_pattern_sync_status || "fully";
+}
+/**
+* The JavaScript parts of the pattern sync status field; its data is in
+* `field.php`.
+*/
+const fieldExtensions$1 = { render: ({ item }) => {
+	const syncStatus = getPatternSyncStatus(item);
+	const label = SYNC_STATUS_FILTERS.find(({ value }) => value === syncStatus)?.label;
+	return label ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: `fields-field__pattern-sync-status fields-field__pattern-sync-status-${syncStatus}`,
+		children: label
+	}) : null;
+} };
+
+// packages/core-fields/build-module/shared/title/get-item-title.mjs
+/**
+* The decoded title of an entity, whether the REST API returns it as a string or as `rendered` and
+* `raw`.
+*
+* @param item     The entity.
+* @param fallback The title of an entity without one.
+* @return The title.
+*/
+function getItemTitle(item, fallback = (0, import_i18n.__)("(no title)")) {
+	let title = "";
+	if (typeof item.title === "string") title = (0, import_html_entities.decodeEntities)(item.title);
+	else if (item.title && "rendered" in item.title) title = (0, import_html_entities.decodeEntities)(item.title.rendered ?? "");
+	else if (item.title && "raw" in item.title) title = (0, import_html_entities.decodeEntities)(item.title.raw ?? "");
+	return title || fallback;
+}
+
+// node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
+function r(e) {
+	var t, f, n = "";
+	if ("string" == typeof e || "number" == typeof e) n += e;
+	else if ("object" == typeof e) if (Array.isArray(e)) {
+		var o = e.length;
+		for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+	} else for (f in e) e[f] && (n && (n += " "), n += f);
+	return n;
+}
+function clsx() {
+	for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+	return n;
+}
+
+// \0wp-global:@wordpress/element
+var require_element = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.element;
+}));
+
+// packages/icons/build-module/icon/index.mjs
+var import_element = require_element();
+/**
+* Return an SVG icon.
+*
+* @param props The component props.
+*
+* @return Icon component
+*/
+var icon_default = (0, import_element.forwardRef)(({ icon, size = 24, style, ...props }, ref) => {
+	const intrinsicStyle = icon.props.style;
+	const mergedStyle = intrinsicStyle || style ? {
+		...intrinsicStyle,
+		...style
+	} : void 0;
+	return (0, import_element.cloneElement)(icon, {
+		width: size,
+		height: size,
+		...props,
+		...mergedStyle ? { style: mergedStyle } : {},
+		ref
+	});
+});
+
+// \0wp-global:@wordpress/primitives
+var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.primitives;
+}));
+
+// packages/icons/build-module/library/lock.mjs
+var import_primitives = require_primitives();
+var lock_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+	xmlns: "http://www.w3.org/2000/svg",
+	viewBox: "0 0 24 24",
+	style: { fill: "none" },
+	stroke: "currentColor",
+	strokeWidth: "1.5",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M9.25 10.75H7.75C7.47386 10.75 7.25 10.9739 7.25 11.25V17.25C7.25 17.5261 7.47386 17.75 7.75 17.75H16.25C16.5261 17.75 16.75 17.5261 16.75 17.25V11.25C16.75 10.9739 16.5261 10.75 16.25 10.75H14.75M9.25 10.75V7.5C9.25 5.98122 10.4812 4.75 12 4.75C13.5188 4.75 14.75 5.98122 14.75 7.5V10.75M9.25 10.75H14.75" })
+});
+
 // \0wp-global:react
 var require__wp_global_react = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.React;
@@ -468,11 +603,6 @@ function renderTag(Tag, props) {
 	return /*#__PURE__*/ import__wp_global_react.createElement(Tag, props);
 }
 
-// \0wp-global:react/jsx-runtime
-var require_jsx_runtime = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.ReactJSXRuntime;
-}));
-
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/safeReact.mjs
 /**
 * A clone of the React namespace for reading APIs that may be missing in older
@@ -876,33 +1006,6 @@ function useTimeout() {
 	useOnMount(timeout.disposeEffect);
 	return timeout;
 }
-
-// node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
-var import_html_entities = require_html_entities();
-var import_jsx_runtime = require_jsx_runtime();
-function r(e) {
-	var t, f, n = "";
-	if ("string" == typeof e || "number" == typeof e) n += e;
-	else if ("object" == typeof e) if (Array.isArray(e)) {
-		var o = e.length;
-		for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-	} else for (f in e) e[f] && (n && (n += " "), n += f);
-	return n;
-}
-function clsx() {
-	for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
-	return n;
-}
-
-// \0wp-global:@wordpress/element
-var require_element = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.element;
-}));
-
-// \0wp-global:@wordpress/primitives
-var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.primitives;
-}));
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useForcedRerendering.mjs
 /**
@@ -6929,181 +7032,7 @@ function useRender(params) {
 	return useRenderElement(params.defaultTagName ?? "div", params, params);
 }
 
-// \0wp-global:@wordpress/i18n
-var require_i18n = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.i18n;
-}));
-
-// packages/icons/build-module/icon/index.mjs
-var import_element = require_element();
-/**
-* Return an SVG icon.
-*
-* @param props The component props.
-*
-* @return Icon component
-*/
-var icon_default = (0, import_element.forwardRef)(({ icon, size = 24, style, ...props }, ref) => {
-	const intrinsicStyle = icon.props.style;
-	const mergedStyle = intrinsicStyle || style ? {
-		...intrinsicStyle,
-		...style
-	} : void 0;
-	return (0, import_element.cloneElement)(icon, {
-		width: size,
-		height: size,
-		...props,
-		...mergedStyle ? { style: mergedStyle } : {},
-		ref
-	});
-});
-
-// packages/icons/build-module/library/lock.mjs
-var import_primitives = require_primitives();
-var lock_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
-	xmlns: "http://www.w3.org/2000/svg",
-	viewBox: "0 0 24 24",
-	style: { fill: "none" },
-	stroke: "currentColor",
-	strokeWidth: "1.5",
-	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M9.25 10.75H7.75C7.47386 10.75 7.25 10.9739 7.25 11.25V17.25C7.25 17.5261 7.47386 17.75 7.75 17.75H16.25C16.5261 17.75 16.75 17.5261 16.75 17.25V11.25C16.75 10.9739 16.5261 10.75 16.25 10.75H14.75M9.25 10.75V7.5C9.25 5.98122 10.4812 4.75 12 4.75C13.5188 4.75 14.75 5.98122 14.75 7.5V10.75M9.25 10.75H14.75" })
-});
-
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
-const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$7() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$7(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$7(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$7}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$7) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$7(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$7();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$7(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$7, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$7(targetDocument) {
-	const runtime = getRuntime$7();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$7(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$7(hash, css) {
-	const runtime = getRuntime$7();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
-}
-registerStyle$7("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
-var style_module_default$6 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
-/**
-* Visually hides content while keeping it accessible to screen readers.
-* Useful when providing context that's only meaningful to assistive technology.
-*
-* Renders a `<div>` by default. Use the `render` prop to swap the
-* underlying element while preserving the visually-hidden behavior.
-*
-* ## Composing with other components
-*
-* When composing with another component that uses the `render` prop
-* pattern, keep `VisuallyHidden` as the **host** (outer component) and
-* pass the other component via `render`. This keeps the other
-* component's HTML element and semantics intact, while `VisuallyHidden`
-* only adds its hiding styles:
-*
-* ```jsx
-* // OtherComponent keeps its semantic element (e.g. <h2>).
-* <VisuallyHidden render={ <OtherComponent /> }>
-*   Accessible text
-* </VisuallyHidden>
-* ```
-*/
-const VisuallyHidden = (0, import_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
-	return useRender({
-		render,
-		ref,
-		props: mergeProps({ className: style_module_default$6["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
-	});
-});
-
-// packages/ui/build-module/text/text.mjs
 const STYLE_HASH_ATTRIBUTE$6 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7205,42 +7134,35 @@ function registerStyle$6(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$6(targetDocument, hash, css);
 }
-registerStyle$6("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var style_module_default$5 = {
-	"text": "_9745ffa515d864cf__text",
-	"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
-	"heading-xl": "_664e3e7687c45603__heading-xl",
-	"heading-lg": "dac661a5de0ed2bd__heading-lg",
-	"heading-md": "_59c7f3f740e2f96e__heading-md",
-	"heading-sm": "cf052fbad8d93b7e__heading-sm",
-	"body-xl": "_212b9cfef57a0af4__body-xl",
-	"body-lg": "_07f57bc0aa36b2c6__body-lg",
-	"body-md": "_0c6da4457aec9e62__body-md",
-	"body-sm": "b998f87ff17b7bec__body-sm"
-};
-registerStyle$6("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default = {
-	"button": "_78c10a0773e51a91__button",
-	"input": "_5b33aa2d48624b4f__input",
-	"textarea": "_980b3b4776ac8f81__textarea",
-	"div": "_43e478b4279a076c__div",
-	"p": "_698099e25b0fb1a6__p",
-	"heading": "_326aee4184d261fd__heading",
-	"a": "e9576240835601ba__a",
-	"ol": "_3f05789653864a73__ol",
-	"li": "_3c72ff72abe57859__li",
-	"span": "_79d16267c15d9eb2__span"
-};
+registerStyle$6("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+var style_module_default$5 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
 /**
-* A text component for rendering content with predefined typographic variants.
-* Built on design tokens for consistent typography across the UI.
+* Visually hides content while keeping it accessible to screen readers.
+* Useful when providing context that's only meaningful to assistive technology.
+*
+* Renders a `<div>` by default. Use the `render` prop to swap the
+* underlying element while preserving the visually-hidden behavior.
+*
+* ## Composing with other components
+*
+* When composing with another component that uses the `render` prop
+* pattern, keep `VisuallyHidden` as the **host** (outer component) and
+* pass the other component via `render`. This keeps the other
+* component's HTML element and semantics intact, while `VisuallyHidden`
+* only adds its hiding styles:
+*
+* ```jsx
+* // OtherComponent keeps its semantic element (e.g. <h2>).
+* <VisuallyHidden render={ <OtherComponent /> }>
+*   Accessible text
+* </VisuallyHidden>
+* ```
 */
-const Text = (0, import_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
+const VisuallyHidden = (0, import_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
 	return useRender({
 		render,
-		defaultTagName: "span",
 		ref,
-		props: mergeProps(props, { className: clsx(style_module_default$5.text, global_css_defense_module_default.heading, global_css_defense_module_default.p, style_module_default$5[variant], className) })
+		props: mergeProps({ className: style_module_default$5["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
 	});
 });
 
@@ -7438,7 +7360,6 @@ function getWpCompatOverlaySlot() {
 }
 
 // packages/ui/build-module/utils/direction-provider.mjs
-var import_i18n = require_i18n();
 /**
 * Provides WordPress's text direction to Base UI components.
 */
@@ -7891,68 +7812,6 @@ const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ directi
 		})
 	});
 });
-
-// packages/core-fields/build-module/wp_block/description/field.mjs
-function getPatternDescription(item) {
-	if (typeof item.excerpt === "string") return (0, import_html_entities.decodeEntities)(item.excerpt);
-	return (0, import_html_entities.decodeEntities)(item.excerpt?.raw || "");
-}
-/**
-* The JavaScript parts of the pattern description field; its data is in
-* `field.php`.
-*/
-const fieldExtensions$2 = {
-	getValue: ({ item }) => getPatternDescription(item),
-	render: ({ item }) => {
-		const description = getPatternDescription(item);
-		return description ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, { children: description }) : null;
-	}
-};
-
-// packages/core-fields/build-module/wp_block/sync_status/field.mjs
-const SYNC_STATUS_FILTERS = [{
-	value: "fully",
-	label: (0, import_i18n._x)("Synced", "pattern (singular)"),
-	description: (0, import_i18n.__)("Patterns that are kept in sync across the site.")
-}, {
-	value: "unsynced",
-	label: (0, import_i18n._x)("Not synced", "pattern (singular)"),
-	description: (0, import_i18n.__)("Patterns that can be changed freely without affecting the site.")
-}];
-function getPatternSyncStatus(item) {
-	if (item.type && item.type !== "wp_block") return "unsynced";
-	if (item.meta?.wp_pattern_sync_status === "unsynced") return "unsynced";
-	return item.wp_pattern_sync_status || "fully";
-}
-/**
-* The JavaScript parts of the pattern sync status field; its data is in
-* `field.php`.
-*/
-const fieldExtensions$1 = { render: ({ item }) => {
-	const syncStatus = getPatternSyncStatus(item);
-	const label = SYNC_STATUS_FILTERS.find(({ value }) => value === syncStatus)?.label;
-	return label ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: `fields-field__pattern-sync-status fields-field__pattern-sync-status-${syncStatus}`,
-		children: label
-	}) : null;
-} };
-
-// packages/core-fields/build-module/shared/title/get-item-title.mjs
-/**
-* The decoded title of an entity, whether the REST API returns it as a string or as `rendered` and
-* `raw`.
-*
-* @param item     The entity.
-* @param fallback The title of an entity without one.
-* @return The title.
-*/
-function getItemTitle(item, fallback = (0, import_i18n.__)("(no title)")) {
-	let title = "";
-	if (typeof item.title === "string") title = (0, import_html_entities.decodeEntities)(item.title);
-	else if (item.title && "rendered" in item.title) title = (0, import_html_entities.decodeEntities)(item.title.rendered ?? "");
-	else if (item.title && "raw" in item.title) title = (0, import_html_entities.decodeEntities)(item.title.raw ?? "");
-	return title || fallback;
-}
 
 // packages/core-fields/build-module/shared/title/view.mjs
 const STYLE_HASH_ATTRIBUTE$1 = "data-wp-hash";

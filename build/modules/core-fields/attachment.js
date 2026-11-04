@@ -8377,6 +8377,7 @@ function AuthorView({ item }) {
 	const handleLoad = () => {
 		if (loadingState === "loading") setLoadingState("loaded");
 	};
+	if (!text) return null;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
 		direction: "row",
 		align: "flex-start",

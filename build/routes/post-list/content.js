@@ -50580,18 +50580,26 @@ function getFirstValidationError(validity) {
 
 // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
 function SummaryValue({ item, field, showPlaceholderIfEmpty }) {
-	if (showPlaceholderIfEmpty && field.placeholder && [
-		void 0,
-		null,
-		""
-	].includes(field.getValue({ item }))) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		className: "dataforms-layouts-panel__field-placeholder",
-		children: field.placeholder
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(field.render, {
+	if (!showPlaceholderIfEmpty || !field.placeholder) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(field.render, {
 		item,
 		field
 	});
+	const placeholder = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: "dataforms-layouts-panel__field-placeholder",
+		children: field.placeholder
+	});
+	if ([
+		void 0,
+		null,
+		""
+	].includes(field.getValue({ item }))) return placeholder;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: "dataforms-layouts-panel__field-value",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(field.render, {
+			item,
+			field
+		})
+	}), placeholder] });
 }
 function SummaryButton({ data, field, fieldLabel, summaryFields, validity, touched, disabled, isOpen, onClick }) {
 	const { labelPosition, editVisibility, showPlaceholderIfEmpty } = field.layout;
@@ -52298,7 +52306,7 @@ function viewToQuery(view, postType) {
 		if (date.operator === "before") result.before = date.value;
 		else if (date.operator === "after") result.after = date.value;
 	}
-	if (postType === "attachment") result._embed = "wp:attached-to";
+	if (postType === "attachment") result._embed = "author,wp:attached-to";
 	return result;
 }
 

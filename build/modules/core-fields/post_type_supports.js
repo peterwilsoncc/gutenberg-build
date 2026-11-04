@@ -14183,19 +14183,30 @@ function AuthorView({ item }) {
 	const authorId = item?.author;
 	const embeddedAuthorId = item?._embedded?.author?.[0]?.id;
 	const shouldFetch = Boolean(authorId && (!embeddedAuthorId || authorId !== embeddedAuthorId));
-	const author = (0, import_data.useSelect)((select) => {
-		if (!shouldFetch) return null;
-		const { getEntityRecords } = select(import_core_data.store);
-		return getEntityRecords("root", "user", {
+	const { author, hasResolved } = (0, import_data.useSelect)((select) => {
+		if (!shouldFetch) return {
+			author: null,
+			hasResolved: true
+		};
+		const { getEntityRecords, hasFinishedResolution } = select(import_core_data.store);
+		const query = {
 			include: [authorId],
 			who: "authors",
 			context: "view"
-		})?.[0] ?? null;
+		};
+		return {
+			author: getEntityRecords("root", "user", query)?.[0] ?? null,
+			hasResolved: hasFinishedResolution("getEntityRecords", [
+				"root",
+				"user",
+				query
+			])
+		};
 	}, [authorId, shouldFetch]);
 	const text = author?.name || item?._embedded?.author?.[0]?.name;
 	const imageUrl = author?.avatar_urls?.[48] || item?._embedded?.author?.[0]?.avatar_urls?.[48];
 	const [isImageLoaded, setIsImageLoaded] = (0, import_element.useState)(false);
-	if (!authorId) return null;
+	if (!authorId || !text && hasResolved) return null;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
 		direction: "row",
 		align: "flex-start",
@@ -14429,7 +14440,7 @@ const fieldExtensions$12 = {
 	}),
 	render: ({ item }) => {
 		const excerpt = typeof item.excerpt === "string" ? item.excerpt : item.excerpt?.raw;
-		return excerpt ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
+		return excerpt ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			className: style_module_default$7.excerpt,
 			children: (0, import_html_entities.decodeEntities)(excerpt)
 		}) : null;

@@ -276,7 +276,7 @@ function viewToQuery(view, postType) {
 		if (date.operator === "before") result.before = date.value;
 		else if (date.operator === "after") result.after = date.value;
 	}
-	if (postType === "attachment") result._embed = "wp:attached-to";
+	if (postType === "attachment") result._embed = "author,wp:attached-to";
 	return result;
 }
 
