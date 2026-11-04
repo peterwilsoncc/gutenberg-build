@@ -16228,24 +16228,32 @@ function AuthorView({ item }) {
   const shouldFetch = Boolean(
     authorId && (!embeddedAuthorId || authorId !== embeddedAuthorId)
   );
-  const author = (0, import_data.useSelect)(
+  const { author, hasResolved } = (0, import_data.useSelect)(
     (select) => {
       if (!shouldFetch) {
-        return null;
+        return { author: null, hasResolved: true };
       }
-      const { getEntityRecords } = select(import_core_data.store);
-      return getEntityRecords("root", "user", {
+      const { getEntityRecords, hasFinishedResolution } = select(import_core_data.store);
+      const query = {
         include: [authorId],
         who: "authors",
         context: "view"
-      })?.[0] ?? null;
+      };
+      return {
+        author: getEntityRecords("root", "user", query)?.[0] ?? null,
+        hasResolved: hasFinishedResolution("getEntityRecords", [
+          "root",
+          "user",
+          query
+        ])
+      };
     },
     [authorId, shouldFetch]
   );
   const text = author?.name || item?._embedded?.author?.[0]?.name;
   const imageUrl = author?.avatar_urls?.[48] || item?._embedded?.author?.[0]?.avatar_urls?.[48];
   const [isImageLoaded, setIsImageLoaded] = (0, import_element40.useState)(false);
-  if (!authorId) {
+  if (!authorId || !text && hasResolved) {
     return null;
   }
   return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(Stack, { direction: "row", align: "flex-start", children: [
@@ -16502,10 +16510,11 @@ var fieldExtensions4 = {
       children: (0, import_i18n8.__)("Learn more about manual excerpts")
     }
   ),
-  // Shows the first three lines of the excerpt.
+  // Shows the first three lines of the excerpt, as plain text that takes the
+  // typography of where it renders, like the values of other fields.
   render: ({ item }) => {
     const excerpt = typeof item.excerpt === "string" ? item.excerpt : item.excerpt?.raw;
-    return excerpt ? /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(Text, { className: style_default14.excerpt, children: (0, import_html_entities.decodeEntities)(excerpt) }) : null;
+    return excerpt ? /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("span", { className: style_default14.excerpt, children: (0, import_html_entities.decodeEntities)(excerpt) }) : null;
   }
 };
 

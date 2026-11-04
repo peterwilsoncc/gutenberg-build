@@ -89604,10 +89604,17 @@ If there's a particular need for this, please submit a feature request at https:
     field,
     showPlaceholderIfEmpty
   }) {
-    if (showPlaceholderIfEmpty && field.placeholder && [void 0, null, ""].includes(field.getValue({ item }))) {
-      return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("span", { className: "dataforms-layouts-panel__field-placeholder", children: field.placeholder });
+    if (!showPlaceholderIfEmpty || !field.placeholder) {
+      return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(field.render, { item, field });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(field.render, { item, field });
+    const placeholder = /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("span", { className: "dataforms-layouts-panel__field-placeholder", children: field.placeholder });
+    if ([void 0, null, ""].includes(field.getValue({ item }))) {
+      return placeholder;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime453.jsxs)(import_jsx_runtime453.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime453.jsx)("span", { className: "dataforms-layouts-panel__field-value", children: /* @__PURE__ */ (0, import_jsx_runtime453.jsx)(field.render, { item, field }) }),
+      placeholder
+    ] });
   }
   function SummaryButton({
     data,
@@ -103709,7 +103716,13 @@ ${content}
         }
       })),
       "date",
-      "author",
+      {
+        id: "author",
+        layout: {
+          type: "panel",
+          showPlaceholderIfEmpty: true
+        }
+      },
       "filename",
       "mime_type",
       "filesize",

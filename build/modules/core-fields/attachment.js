@@ -9800,6 +9800,9 @@ function AuthorView({ item }) {
       setLoadingState("loaded");
     }
   };
+  if (!text) {
+    return null;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Stack, { direction: "row", align: "flex-start", justify: "flex-start", children: [
     !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
       "div",

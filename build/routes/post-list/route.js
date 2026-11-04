@@ -295,7 +295,7 @@ function viewToQuery(view, postType) {
     }
   }
   if (postType === "attachment") {
-    result._embed = "wp:attached-to";
+    result._embed = "author,wp:attached-to";
   }
   return result;
 }

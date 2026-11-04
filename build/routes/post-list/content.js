@@ -54120,10 +54120,17 @@ function SummaryValue({
   field,
   showPlaceholderIfEmpty
 }) {
-  if (showPlaceholderIfEmpty && field.placeholder && [void 0, null, ""].includes(field.getValue({ item }))) {
-    return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("span", { className: "dataforms-layouts-panel__field-placeholder", children: field.placeholder });
+  if (!showPlaceholderIfEmpty || !field.placeholder) {
+    return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(field.render, { item, field });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(field.render, { item, field });
+  const placeholder = /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("span", { className: "dataforms-layouts-panel__field-placeholder", children: field.placeholder });
+  if ([void 0, null, ""].includes(field.getValue({ item }))) {
+    return placeholder;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime249.jsxs)(import_jsx_runtime249.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime249.jsx)("span", { className: "dataforms-layouts-panel__field-value", children: /* @__PURE__ */ (0, import_jsx_runtime249.jsx)(field.render, { item, field }) }),
+    placeholder
+  ] });
 }
 function SummaryButton({
   data,
@@ -56395,7 +56402,7 @@ function viewToQuery(view, postType) {
     }
   }
   if (postType === "attachment") {
-    result._embed = "wp:attached-to";
+    result._embed = "author,wp:attached-to";
   }
   return result;
 }
