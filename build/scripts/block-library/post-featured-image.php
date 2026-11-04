@@ -64,12 +64,9 @@ function gutenberg_render_block_core_post_featured_image( $attributes, $content,
 	if ( ! empty( $attributes['scale'] ) ) {
 		$extra_styles .= esc_attr( safecss_filter_attr( 'object-fit:' . $attributes['scale'] ) ) . ';';
 	}
-	if ( ! empty( $attributes['style']['shadow'] ) ) {
-		$shadow_styles = gutenberg_style_engine_get_styles( array( 'shadow' => $attributes['style']['shadow'] ) );
-
-		if ( ! empty( $shadow_styles['css'] ) ) {
-			$extra_styles .= $shadow_styles['css'];
-		}
+	$shadow_attributes = gutenberg_get_shadow_classes_and_styles( $attributes );
+	if ( ! empty( $shadow_attributes['style'] ) ) {
+		$extra_styles .= $shadow_attributes['style'];
 	}
 
 	if ( ! empty( $extra_styles ) ) {
