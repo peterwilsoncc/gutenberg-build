@@ -124730,7 +124730,7 @@ ${content}
   // packages/editor/build-module/components/collab-sidebar/add-note.mjs
   var import_jsx_runtime673 = __toESM(require_jsx_runtime(), 1);
   var { useBlockElement } = unlock(import_block_editor99.privateApis);
-  function AddNote({ clientId, sidebarRef, floating }) {
+  function AddNote({ clientId, floating }) {
     const blockElement = useBlockElement(clientId);
     const { toggleBlockHighlight } = unlock((0, import_data232.useDispatch)(import_block_editor99.store));
     const { selectNote: selectNote2 } = unlock((0, import_data232.useDispatch)(store));
@@ -124783,11 +124783,7 @@ ${content}
                   content: inputComment
                 });
                 if (savedRecord) {
-                  selectNote2(savedRecord.id);
-                  focusNoteThread(
-                    savedRecord.id,
-                    sidebarRef.current
-                  );
+                  selectNote2(savedRecord.id, { focus: true });
                 }
                 return savedRecord;
               } finally {
@@ -125504,12 +125500,20 @@ ${content}
       }
       return () => unregisterThread?.(note.id);
     }, [relatedBlockElement, note.id, registerThread, unregisterThread]);
+    const isPlaced = !floating || floating.y !== void 0;
     (0, import_element433.useEffect)(() => {
-      if (!isSelected2 || note.id === "new") {
+      if (!isSelected2 || !isPlaced || note.id === "new") {
         return;
       }
       scrollNoteThreadIntoView(note.id, sidebarRef.current);
-    }, [isSelected2, floating?.y, floating?.height, note.id, sidebarRef]);
+    }, [
+      isSelected2,
+      isPlaced,
+      floating?.y,
+      floating?.height,
+      note.id,
+      sidebarRef
+    ]);
     const focusOutside = (0, import_compose98.__experimentalUseFocusOutside)((event) => {
       setHasFocus(false);
       const isNoteFocused2 = event.relatedTarget?.closest(
@@ -125596,7 +125600,6 @@ ${content}
         AddNote,
         {
           clientId: note.blockClientId,
-          sidebarRef,
           floating: { y: floating.y, ref: floatingRef }
         },
         note.blockClientId
@@ -126001,8 +126004,7 @@ ${content}
             isAddingNote && /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
               AddNote,
               {
-                clientId: selectedBlockClientId,
-                sidebarRef
+                clientId: selectedBlockClientId
               },
               selectedBlockClientId
             ),
