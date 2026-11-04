@@ -31399,12 +31399,7 @@ Icon: ButtonIcon });
 		}
 		function onSelectAudio(media) {
 			if (!media || !media.url) {
-				setAttributes({
-					src: void 0,
-					id: void 0,
-					caption: void 0,
-					blob: void 0
-				});
+				setAttributes({ blob: void 0 });
 				setTemporaryURL();
 				return;
 			}
@@ -31417,6 +31412,15 @@ Icon: ButtonIcon });
 				src: media.url,
 				id: media.id,
 				caption: media.caption
+			});
+			setTemporaryURL();
+		}
+		function onResetAudio() {
+			setAttributes({
+				src: void 0,
+				id: void 0,
+				caption: void 0,
+				blob: void 0
 			});
 			setTemporaryURL();
 		}
@@ -31446,7 +31450,7 @@ Icon: ButtonIcon });
 					onSelect: onSelectAudio,
 					onSelectURL,
 					onError: onUploadError,
-					onReset: () => onSelectAudio(void 0),
+					onReset: onResetAudio,
 					variant: "toolbar"
 				})
 			}),
@@ -53910,7 +53914,7 @@ Icon: ButtonIcon });
 			})
 		] });
 	}
-	function Image$1({ temporaryURL, isSideloading, attributes, setAttributes, isSingleSelected, insertBlocksAfter, onReplace, onSelectImage, onSelectURL, onUploadError, context, clientId, blockEditingMode, parentLayoutType, maxContentWidth }) {
+	function Image$1({ temporaryURL, isSideloading, attributes, setAttributes, isSingleSelected, insertBlocksAfter, onReplace, onSelectImage, onSelectURL, onUploadError, onResetImage, context, clientId, blockEditingMode, parentLayoutType, maxContentWidth }) {
 		const { url = "", alt, align, id, href, rel, linkClass, linkDestination, title, width, height, aspectRatio, scale, focalPoint, linkTarget, sizeSlug, lightbox, metadata, isDecorative } = attributes;
 		const [imageElement, setImageElement] = (0, _wordpress_element.useState)();
 		const [resizeDelta, setResizeDelta] = (0, _wordpress_element.useState)(null);
@@ -54233,7 +54237,7 @@ Icon: ButtonIcon });
 				onSelectURL,
 				onError: onUploadError,
 				name: !url ? (0, _wordpress_i18n.__)("Add image") : (0, _wordpress_i18n.__)("Replace"),
-				onReset: () => onSelectImage(void 0),
+				onReset: onResetImage,
 				variant: "toolbar"
 			})
 		}) });
@@ -54291,7 +54295,7 @@ Icon: ButtonIcon });
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanel, {
 					label: (0, _wordpress_i18n.__)("Media"),
 					resetAll: () => {
-						onSelectImage(void 0);
+						onResetImage();
 						setAttributes({ isDecorative: false });
 					},
 					dropdownMenuProps,
@@ -54299,7 +54303,7 @@ Icon: ButtonIcon });
 						!lockUrlControls && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 							label: (0, _wordpress_i18n.__)("Image"),
 							hasValue: () => !!url,
-							onDeselect: () => onSelectImage(void 0),
+							onDeselect: onResetImage,
 							isShownByDefault: true,
 							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaControl, {
 								mediaId: id,
@@ -54310,7 +54314,7 @@ Icon: ButtonIcon });
 								onSelect: onSelectImage,
 								onSelectURL,
 								onError: onUploadError,
-								onReset: () => onSelectImage(void 0),
+								onReset: onResetImage,
 								isUploading,
 								emptyLabel: (0, _wordpress_i18n.__)("Add image")
 							})
@@ -54631,12 +54635,7 @@ Icon: ButtonIcon });
 				explicitDismiss: true
 			});
 			setTemporaryURL();
-			setAttributes({
-				src: void 0,
-				id: void 0,
-				url: void 0,
-				blob: void 0
-			});
+			setAttributes({ blob: void 0 });
 		}
 		function onFilesPreUpload(files) {
 			if (files.length === 1) setTemporaryURL((0, _wordpress_blob.createBlobURL)(files[0]));
@@ -54665,14 +54664,7 @@ Icon: ButtonIcon });
 				return;
 			}
 			if (!media || !media.url) {
-				setAttributes({
-					url: void 0,
-					alt: void 0,
-					id: void 0,
-					title: void 0,
-					caption: void 0,
-					blob: void 0
-				});
+				setAttributes({ blob: void 0 });
 				setTemporaryURL();
 				return;
 			}
@@ -54720,6 +54712,17 @@ Icon: ButtonIcon });
 				...mediaAttributes,
 				...additionalAttributes,
 				linkDestination
+			});
+			setTemporaryURL();
+		}
+		function onResetImage() {
+			setAttributes({
+				url: void 0,
+				alt: void 0,
+				id: void 0,
+				title: void 0,
+				caption: void 0,
+				blob: void 0
 			});
 			setTemporaryURL();
 		}
@@ -54816,6 +54819,7 @@ Icon: ButtonIcon });
 				onSelectImage,
 				onSelectURL,
 				onUploadError,
+				onResetImage,
 				context,
 				clientId,
 				blockEditingMode,
@@ -90066,13 +90070,7 @@ Icon: ButtonIcon });
 		}, [poster, prefersReducedMotion]);
 		function onSelectVideo(media) {
 			if (!media || !media.url) {
-				setAttributes({
-					src: void 0,
-					id: void 0,
-					poster: void 0,
-					caption: void 0,
-					blob: void 0
-				});
+				setAttributes({ blob: void 0 });
 				setTemporaryURL();
 				return;
 			}
@@ -90086,6 +90084,16 @@ Icon: ButtonIcon });
 				id: media.id,
 				poster: media.image?.src !== media.icon ? media.image?.src : void 0,
 				caption: media.caption
+			});
+			setTemporaryURL();
+		}
+		function onResetVideo() {
+			setAttributes({
+				src: void 0,
+				id: void 0,
+				poster: void 0,
+				caption: void 0,
+				blob: void 0
 			});
 			setTemporaryURL();
 		}
@@ -90151,7 +90159,7 @@ Icon: ButtonIcon });
 					onSelect: onSelectVideo,
 					onSelectURL,
 					onError: onUploadError,
-					onReset: () => onSelectVideo(void 0),
+					onReset: onResetVideo,
 					variant: "toolbar"
 				})
 			})] }),
