@@ -2482,20 +2482,26 @@ const preloadScriptModules = (doc) => {
 const importScriptModules = (modules) => Promise.all(modules.map((m) => importPreloadedModule(m)));
 
 // packages/interactivity-router/build-module/index.mjs
-const { getRegionRootFragment, initialVdomPromise, toVdom, parseDirectiveValue, render, parseServerData, populateServerData, batch, routerRegions, h: createElement, navigationSignal, sessionId, warn, afterNextFrame, getScope } = privateApis("I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress.");
+const { getRegionRootFragment, initialVdomPromise, toVdom, parseDirectiveValue, getInteractiveNamespace, render, parseServerData, populateServerData, batch, routerRegions, h: createElement, navigationSignal, sessionId, warn, afterNextFrame, getScope } = privateApis("I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress.");
 const regionAttr = `data-wp-router-region`;
 const interactiveAttr = `data-wp-interactive`;
-const regionsSelector = `[${interactiveAttr}][${regionAttr}], [${interactiveAttr}] [${interactiveAttr}][${regionAttr}]`;
+const regionsSelector = `[${interactiveAttr}][${regionAttr}], [${interactiveAttr}] [${regionAttr}]`;
 /**
 * Finds router regions outside `data-wp-html` content, in document order.
 *
-* The check starts at the region's parent, because `data-wp-router-region`
-* takes precedence over `data-wp-html` on the region itself. Regions nested in
-* other regions are kept, so `preparePage()` can handle them as part of their
-* parent's content.
+* A region is admitted when it carries `data-wp-interactive` itself or sits
+* inside an element that does; a region without its own `data-wp-interactive`
+* uses the namespace of its nearest interactive ancestor. Regions with neither
+* are never hydrated and are not discovered.
+*
+* The `data-wp-html` check starts at the region's parent, because
+* `data-wp-router-region` takes precedence over `data-wp-html` on the region
+* itself. Regions nested in other regions are kept, so `preparePage()` can
+* handle them as part of their parent's content.
 *
 * @param dom Document whose regions should be discovered.
-* @return Router region elements outside `data-wp-html` content.
+* @return Router region elements that carry or inherit a namespace, outside
+*         `data-wp-html` content.
 */
 const discoverRegions = (dom) => Array.from(dom.querySelectorAll(regionsSelector)).filter((region) => !closestHtmlDirectiveElement(region.parentElement));
 const pages = /* @__PURE__ */ new Map();
@@ -2532,6 +2538,22 @@ const parseRegionId = (value) => {
 	const { value: parsedValue } = parseDirectiveValue(value);
 	const id = typeof parsedValue === "string" ? parsedValue : parsedValue.id;
 	return typeof id === "string" && id ? id : null;
+};
+/**
+* Converts a top-level router region to vDOM.
+*
+* The region's unprefixed directives resolve against the namespace of its
+* nearest `data-wp-interactive` ancestor in the document that supplied it,
+* exactly as hydrating that document would resolve them. A
+* `data-wp-interactive` on the region or inside it takes precedence. A region
+* without such an ancestor is converted without a namespace.
+*
+* @param region Region element, in the document that supplies it.
+* @return The region's vDOM.
+*/
+const regionToVdom = (region) => {
+	const ancestor = region.parentElement?.closest(`[${interactiveAttr}]`);
+	return ancestor ? toVdom(region, getInteractiveNamespace(parseDirectiveValue(ancestor.getAttribute(interactiveAttr) ?? "").value)) : toVdom(region);
 };
 /**
 * Clones the content of the router region vDOM passed as argument.
@@ -2648,7 +2670,7 @@ const preparePage = async (url, dom, { vdom } = {}) => {
 	discoverRegions(dom).forEach((region) => {
 		const { id, attachTo } = parseRegionAttribute(region);
 		if (region.parentElement.closest(`[${regionAttr}]`)) regions[id] = void 0;
-		else regions[id] = vdom?.has(region) ? vdom.get(region) : toVdom(region);
+		else regions[id] = vdom?.has(region) ? vdom.get(region) : regionToVdom(region);
 		if (attachTo && !initialRegionsToAttach.has(id)) regionsToAttach[id] = attachTo;
 	});
 	const title = dom.querySelector("title")?.innerText;
