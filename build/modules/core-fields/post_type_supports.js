@@ -100,7 +100,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       function useSyncExternalStore$2(subscribe, getSnapshot) {
-        didWarnOld18Alpha || void 0 === React94.startTransition || (didWarnOld18Alpha = true, console.error(
+        didWarnOld18Alpha || void 0 === React96.startTransition || (didWarnOld18Alpha = true, console.error(
           "You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."
         ));
         var value = getSnapshot();
@@ -110,7 +110,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState24({
+        cachedValue = useState27({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -122,7 +122,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           },
           [subscribe, value, getSnapshot]
         );
-        useEffect14(
+        useEffect16(
           function() {
             checkIfSnapshotChanged(inst) && forceUpdate({ inst });
             return subscribe(function() {
@@ -148,8 +148,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React94 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState24 = React94.useState, useEffect14 = React94.useEffect, useLayoutEffect3 = React94.useLayoutEffect, useDebugValue2 = React94.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-      exports.useSyncExternalStore = void 0 !== React94.useSyncExternalStore ? React94.useSyncExternalStore : shim;
+      var React96 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState27 = React96.useState, useEffect16 = React96.useEffect, useLayoutEffect3 = React96.useLayoutEffect, useDebugValue2 = React96.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      exports.useSyncExternalStore = void 0 !== React96.useSyncExternalStore ? React96.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
   }
@@ -176,14 +176,14 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React94 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef37 = React94.useRef, useEffect14 = React94.useEffect, useMemo28 = React94.useMemo, useDebugValue2 = React94.useDebugValue;
+      var React96 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef37 = React96.useRef, useEffect16 = React96.useEffect, useMemo31 = React96.useMemo, useDebugValue2 = React96.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
         var instRef = useRef37(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
         } else inst = instRef.current;
-        instRef = useMemo28(
+        instRef = useMemo31(
           function() {
             function memoizedSelector(nextSnapshot) {
               if (!hasMemo) {
@@ -219,7 +219,7 @@ var require_with_selector_development = __commonJS({
           [getSnapshot, getServerSnapshot, selector, isEqual]
         );
         var value = useSyncExternalStore2(subscribe, instRef[0], instRef[1]);
-        useEffect14(
+        useEffect16(
           function() {
             inst.hasValue = true;
             inst.value = value;
@@ -260,6 +260,13 @@ var require_private_apis = __commonJS({
   }
 });
 
+// package-external:@wordpress/components
+var require_components = __commonJS({
+  "package-external:@wordpress/components"(exports, module) {
+    module.exports = window.wp.components;
+  }
+});
+
 // package-external:@wordpress/date
 var require_date = __commonJS({
   "package-external:@wordpress/date"(exports, module) {
@@ -271,13 +278,6 @@ var require_date = __commonJS({
 var require_html_entities = __commonJS({
   "package-external:@wordpress/html-entities"(exports, module) {
     module.exports = window.wp.htmlEntities;
-  }
-});
-
-// package-external:@wordpress/components
-var require_components = __commonJS({
-  "package-external:@wordpress/components"(exports, module) {
-    module.exports = window.wp.components;
   }
 });
 
@@ -812,8 +812,8 @@ function clsx() {
 var clsx_default = clsx;
 
 // packages/core-fields/build-module/post_type_supports/author/view.mjs
-var import_i18n5 = __toESM(require_i18n(), 1);
-var import_element40 = __toESM(require_element(), 1);
+var import_i18n6 = __toESM(require_i18n(), 1);
+var import_element45 = __toESM(require_element(), 1);
 
 // packages/icons/build-module/library/check.mjs
 var import_primitives = __toESM(require_primitives(), 1);
@@ -10808,11 +10808,84 @@ var FieldItem = /* @__PURE__ */ React69.forwardRef(function FieldItem2(component
 });
 if (true) FieldItem.displayName = "FieldItem";
 
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/input/Input.mjs
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/fieldset/index.parts.mjs
+var index_parts_exports3 = {};
+__export(index_parts_exports3, {
+  Legend: () => FieldsetLegend,
+  Root: () => FieldsetRoot
+});
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/fieldset/root/FieldsetRoot.mjs
 var React70 = __toESM(require_react(), 1);
 var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
-var Input = /* @__PURE__ */ React70.forwardRef(function Input2(props, forwardedRef) {
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(index_parts_exports2.Control, {
+var FieldsetRoot = /* @__PURE__ */ React70.forwardRef(function FieldsetRoot2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    disabled: disabledProp = false,
+    ...elementProps
+  } = componentProps;
+  const [legendId, setLegendId] = React70.useState(void 0);
+  const parentDisabled = useFieldsetRootContext(true)?.disabled;
+  const disabled2 = parentDisabled || disabledProp;
+  const state = {
+    disabled: disabled2
+  };
+  const element = useRenderElement("fieldset", componentProps, {
+    ref: forwardedRef,
+    state,
+    props: [{
+      "aria-labelledby": legendId,
+      disabled: disabled2
+    }, elementProps]
+  });
+  const contextValue = React70.useMemo(() => ({
+    legendId,
+    setLegendId,
+    disabled: disabled2
+  }), [legendId, setLegendId, disabled2]);
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(FieldsetRootContext.Provider, {
+    value: contextValue,
+    children: element
+  });
+});
+if (true) FieldsetRoot.displayName = "FieldsetRoot";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/fieldset/legend/FieldsetLegend.mjs
+var React71 = __toESM(require_react(), 1);
+var FieldsetLegend = /* @__PURE__ */ React71.forwardRef(function FieldsetLegend2(componentProps, forwardedRef) {
+  const {
+    render,
+    className,
+    style,
+    id: idProp,
+    ...elementProps
+  } = componentProps;
+  const {
+    disabled: disabled2,
+    setLegendId
+  } = useFieldsetRootContext();
+  const id = useRegisteredLabelId(idProp, setLegendId);
+  const state = {
+    disabled: disabled2
+  };
+  const element = useRenderElement("div", componentProps, {
+    state,
+    ref: forwardedRef,
+    props: [{
+      id
+    }, elementProps]
+  });
+  return element;
+});
+if (true) FieldsetLegend.displayName = "FieldsetLegend";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/input/Input.mjs
+var React72 = __toESM(require_react(), 1);
+var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var Input = /* @__PURE__ */ React72.forwardRef(function Input2(props, forwardedRef) {
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(index_parts_exports2.Control, {
     ref: forwardedRef,
     ...props
   });
@@ -10820,12 +10893,12 @@ var Input = /* @__PURE__ */ React70.forwardRef(function Input2(props, forwardedR
 if (true) Input.displayName = "Input";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/styles.mjs
-var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
 var DISABLE_SCROLLBAR_CLASS_NAME = "base-ui-disable-scrollbar";
 var styleDisableScrollbar = {
   className: DISABLE_SCROLLBAR_CLASS_NAME,
   getElement(nonce) {
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("style", {
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("style", {
       nonce,
       href: DISABLE_SCROLLBAR_CLASS_NAME,
       precedence: "base-ui:low",
@@ -10862,8 +10935,8 @@ function normalizeScrollOffset(value, max2) {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/index.parts.mjs
-var index_parts_exports3 = {};
-__export(index_parts_exports3, {
+var index_parts_exports4 = {};
+__export(index_parts_exports4, {
   Arrow: () => SelectArrow,
   Backdrop: () => SelectBackdrop,
   Group: () => SelectGroup,
@@ -10886,23 +10959,23 @@ __export(index_parts_exports3, {
 });
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/root/SelectRoot.mjs
-var React72 = __toESM(require_react(), 1);
+var React74 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/root/SelectRootContext.mjs
-var React71 = __toESM(require_react(), 1);
-var SelectRootContext = /* @__PURE__ */ React71.createContext(void 0);
+var React73 = __toESM(require_react(), 1);
+var SelectRootContext = /* @__PURE__ */ React73.createContext(void 0);
 if (true) SelectRootContext.displayName = "SelectRootContext";
-var SelectFloatingContext = /* @__PURE__ */ React71.createContext(void 0);
+var SelectFloatingContext = /* @__PURE__ */ React73.createContext(void 0);
 if (true) SelectFloatingContext.displayName = "SelectFloatingContext";
 function useSelectRootContext() {
-  const store = React71.useContext(SelectRootContext);
+  const store = React73.useContext(SelectRootContext);
   if (store === void 0) {
     throw new Error(true ? "Base UI: SelectRootContext is missing. Select parts must be placed within <Select.Root>." : formatErrorMessage_default(60));
   }
   return store;
 }
 function useSelectFloatingContext() {
-  const context = React71.useContext(SelectFloatingContext);
+  const context = React73.useContext(SelectFloatingContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: SelectFloatingContext is missing. Select parts must be placed within <Select.Root>." : formatErrorMessage_default(61));
   }
@@ -10972,7 +11045,7 @@ var selectors2 = {
 };
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/root/SelectRoot.mjs
-var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
 function SelectRoot(props) {
   const {
     id,
@@ -11031,23 +11104,23 @@ function SelectRoot(props) {
     name: "Select",
     state: "open"
   });
-  const listRef = React72.useRef([]);
-  const labelsRef = React72.useRef([]);
-  const popupRef = React72.useRef(null);
-  const scrollHandlerRef = React72.useRef(null);
-  const scrollArrowsMountedCountRef = React72.useRef(0);
-  const valueRef = React72.useRef(null);
-  const valuesRef = React72.useRef([]);
-  const typingRef = React72.useRef(false);
-  const firstItemTextRef = React72.useRef(null);
-  const selectedItemTextRef = React72.useRef(null);
-  const selectionRef = React72.useRef({
+  const listRef = React74.useRef([]);
+  const labelsRef = React74.useRef([]);
+  const popupRef = React74.useRef(null);
+  const scrollHandlerRef = React74.useRef(null);
+  const scrollArrowsMountedCountRef = React74.useRef(0);
+  const valueRef = React74.useRef(null);
+  const valuesRef = React74.useRef([]);
+  const typingRef = React74.useRef(false);
+  const firstItemTextRef = React74.useRef(null);
+  const selectedItemTextRef = React74.useRef(null);
+  const selectionRef = React74.useRef({
     allowSelectedMouseUp: false,
     allowUnselectedMouseUp: false,
     dragY: 0
   });
-  const alignItemWithTriggerActiveRef = React72.useRef(false);
-  const initialValueRef = React72.useRef(value);
+  const alignItemWithTriggerActiveRef = React74.useRef(false);
+  const initialValueRef = React74.useRef(value);
   const {
     openMethod,
     triggerProps: interactionTypeProps
@@ -11110,7 +11183,7 @@ function SelectRoot(props) {
     alignItemWithTriggerActiveRef,
     initialValueRef
   }, selectors2)).current;
-  const [preventUnmountOnClose, setPreventUnmountOnClose] = React72.useState(false);
+  const [preventUnmountOnClose, setPreventUnmountOnClose] = React74.useState(false);
   const {
     mounted,
     transitionStatus,
@@ -11136,13 +11209,13 @@ function SelectRoot(props) {
   const positionerElement = store.useState("positionerElement");
   const previousOpenMethod = usePreviousValue(openMethod);
   const renderedOpenMethod = openMethod ?? previousOpenMethod;
-  const serializedValue = React72.useMemo(() => {
+  const serializedValue = React74.useMemo(() => {
     if (multiple) {
       return "";
     }
     return stringifyAsValue(value, itemToStringValue);
   }, [multiple, value, itemToStringValue]);
-  const fieldStringValue = React72.useMemo(() => {
+  const fieldStringValue = React74.useMemo(() => {
     if (multiple && Array.isArray(value)) {
       return value.map((currentValue) => stringifyAsValue(currentValue, itemToStringValue));
     }
@@ -11189,7 +11262,7 @@ function SelectRoot(props) {
       }
     }
   });
-  React72.useImperativeHandle(actionsRef, () => ({
+  React74.useImperativeHandle(actionsRef, () => ({
     unmount: handleUnmount,
     close: () => {
       if (store.state.open) {
@@ -11263,10 +11336,10 @@ function SelectRoot(props) {
       typingRef.current = typing;
     }
   });
-  const mergedTriggerProps = React72.useMemo(() => mergeProps(typeahead.reference, listNavigation2.reference, dismiss.reference, click.reference, interactionTypeProps), [click.reference, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps]);
-  const popupProps = React72.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, typeahead.floating, listNavigation2.floating, dismiss.floating), [typeahead.floating, listNavigation2.floating, dismiss.floating]);
+  const mergedTriggerProps = React74.useMemo(() => mergeProps(typeahead.reference, listNavigation2.reference, dismiss.reference, click.reference, interactionTypeProps), [click.reference, typeahead.reference, listNavigation2.reference, dismiss.reference, interactionTypeProps]);
+  const popupProps = React74.useMemo(() => mergeProps(FOCUSABLE_POPUP_PROPS, typeahead.floating, listNavigation2.floating, dismiss.floating), [typeahead.floating, listNavigation2.floating, dismiss.floating]);
   const itemProps = listNavigation2.item ?? EMPTY_OBJECT;
-  const itemRoot = React72.useMemo(() => ({
+  const itemRoot = React74.useMemo(() => ({
     props: itemProps,
     multiple,
     disabled: disabled2,
@@ -11307,13 +11380,13 @@ function SelectRoot(props) {
   });
   const ref = useMergedRefs(inputRef, validation.inputRef);
   const hiddenInputName = multiple ? void 0 : name;
-  const hiddenInputs = React72.useMemo(() => {
+  const hiddenInputs = React74.useMemo(() => {
     if (!multiple || !Array.isArray(value) || !name) {
       return null;
     }
     return value.map((v) => {
       const currentSerializedValue = stringifyAsValue(v, itemToStringValue);
-      return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", {
+      return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", {
         type: "hidden",
         form,
         name,
@@ -11322,12 +11395,12 @@ function SelectRoot(props) {
       }, currentSerializedValue);
     });
   }, [multiple, value, form, name, itemToStringValue, disabled2]);
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(SelectRootContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(SelectRootContext.Provider, {
     value: store,
-    children: [/* @__PURE__ */ (0, import_jsx_runtime29.jsx)(SelectFloatingContext.Provider, {
+    children: [/* @__PURE__ */ (0, import_jsx_runtime30.jsx)(SelectFloatingContext.Provider, {
       value: floatingContext,
       children
-    }), /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("input", {
+    }), /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("input", {
       ...validation.getValidationProps(disabled2, {
         onFocus() {
           store.state.triggerElement?.focus({
@@ -11381,8 +11454,8 @@ function SelectRoot(props) {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/label/SelectLabel.mjs
-var React73 = __toESM(require_react(), 1);
-var SelectLabel = /* @__PURE__ */ React73.forwardRef(function SelectLabel2(componentProps, forwardedRef) {
+var React75 = __toESM(require_react(), 1);
+var SelectLabel = /* @__PURE__ */ React75.forwardRef(function SelectLabel2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -11414,7 +11487,7 @@ var SelectLabel = /* @__PURE__ */ React73.forwardRef(function SelectLabel2(compo
 if (true) SelectLabel.displayName = "SelectLabel";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/trigger/SelectTrigger.mjs
-var React74 = __toESM(require_react(), 1);
+var React76 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/trigger/SelectTriggerDataAttributes.mjs
 var popupOpen2 = CommonTriggerDataAttributes_exports.popupOpen;
@@ -11431,7 +11504,7 @@ var stateAttributesMapping2 = {
   } : null,
   value: () => null
 };
-var SelectTrigger = /* @__PURE__ */ React74.forwardRef(function SelectTrigger2(componentProps, forwardedRef) {
+var SelectTrigger = /* @__PURE__ */ React76.forwardRef(function SelectTrigger2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -11473,7 +11546,7 @@ var SelectTrigger = /* @__PURE__ */ React74.forwardRef(function SelectTrigger2(c
     id: idProp
   });
   const positionerRef = useValueAsRef(positionerElement);
-  const triggerRef = React74.useRef(null);
+  const triggerRef = React76.useRef(null);
   const setFocused = useSetFieldFocused(disabled2, triggerRef);
   const {
     getButtonProps,
@@ -11486,7 +11559,7 @@ var SelectTrigger = /* @__PURE__ */ React74.forwardRef(function SelectTrigger2(c
   const timeoutFocus = useTimeout();
   const timeoutMouseDown = useTimeout();
   const selectedDelayTimeout = useTimeout();
-  React74.useEffect(() => {
+  React76.useEffect(() => {
     if (open2) {
       selectedDelayTimeout.start(SELECTED_DELAY, () => {
         store.context.selectionRef.current.allowUnselectedMouseUp = true;
@@ -11579,11 +11652,11 @@ var SelectTrigger = /* @__PURE__ */ React74.forwardRef(function SelectTrigger2(c
 if (true) SelectTrigger.displayName = "SelectTrigger";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/value/SelectValue.mjs
-var React75 = __toESM(require_react(), 1);
+var React77 = __toESM(require_react(), 1);
 var stateAttributesMapping3 = {
   value: () => null
 };
-var SelectValue = /* @__PURE__ */ React75.forwardRef(function SelectValue2(componentProps, forwardedRef) {
+var SelectValue = /* @__PURE__ */ React77.forwardRef(function SelectValue2(componentProps, forwardedRef) {
   const {
     className,
     render,
@@ -11628,8 +11701,8 @@ var SelectValue = /* @__PURE__ */ React75.forwardRef(function SelectValue2(compo
 if (true) SelectValue.displayName = "SelectValue";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/icon/SelectIcon.mjs
-var React76 = __toESM(require_react(), 1);
-var SelectIcon = /* @__PURE__ */ React76.forwardRef(function SelectIcon2(componentProps, forwardedRef) {
+var React78 = __toESM(require_react(), 1);
+var SelectIcon = /* @__PURE__ */ React78.forwardRef(function SelectIcon2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -11655,9 +11728,9 @@ var SelectIcon = /* @__PURE__ */ React76.forwardRef(function SelectIcon2(compone
 if (true) SelectIcon.displayName = "SelectIcon";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/portal/SelectPortal.mjs
-var React77 = __toESM(require_react(), 1);
-var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
-var SelectPortal = /* @__PURE__ */ React77.forwardRef(function SelectPortal2(portalProps, forwardedRef) {
+var React79 = __toESM(require_react(), 1);
+var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var SelectPortal = /* @__PURE__ */ React79.forwardRef(function SelectPortal2(portalProps, forwardedRef) {
   const store = useSelectRootContext();
   const mounted = store.useState("mounted");
   const forceMount = store.useState("forceMount");
@@ -11665,7 +11738,7 @@ var SelectPortal = /* @__PURE__ */ React77.forwardRef(function SelectPortal2(por
   if (!shouldRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(FloatingPortal, {
+  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(FloatingPortal, {
     ref: forwardedRef,
     ...portalProps
   });
@@ -11673,12 +11746,12 @@ var SelectPortal = /* @__PURE__ */ React77.forwardRef(function SelectPortal2(por
 if (true) SelectPortal.displayName = "SelectPortal";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/backdrop/SelectBackdrop.mjs
-var React78 = __toESM(require_react(), 1);
+var React80 = __toESM(require_react(), 1);
 var stateAttributesMapping4 = {
   ...popupStateMapping,
   ...transitionStatusMapping
 };
-var SelectBackdrop = /* @__PURE__ */ React78.forwardRef(function SelectBackdrop2(componentProps, forwardedRef) {
+var SelectBackdrop = /* @__PURE__ */ React80.forwardRef(function SelectBackdrop2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -11711,14 +11784,14 @@ var SelectBackdrop = /* @__PURE__ */ React78.forwardRef(function SelectBackdrop2
 if (true) SelectBackdrop.displayName = "SelectBackdrop";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositioner.mjs
-var React80 = __toESM(require_react(), 1);
+var React82 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositionerContext.mjs
-var React79 = __toESM(require_react(), 1);
-var SelectPositionerContext = /* @__PURE__ */ React79.createContext(void 0);
+var React81 = __toESM(require_react(), 1);
+var SelectPositionerContext = /* @__PURE__ */ React81.createContext(void 0);
 if (true) SelectPositionerContext.displayName = "SelectPositionerContext";
 function useSelectPositionerContext() {
-  const context = React79.useContext(SelectPositionerContext);
+  const context = React81.useContext(SelectPositionerContext);
   if (!context) {
     throw new Error(true ? "Base UI: SelectPositionerContext is missing. SelectPositioner parts must be placed within <Select.Positioner>." : formatErrorMessage_default(59));
   }
@@ -11739,11 +11812,11 @@ var LIST_FUNCTIONAL_STYLES = {
 };
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositioner.mjs
-var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
 var FIXED = {
   position: "fixed"
 };
-var SelectPositioner = /* @__PURE__ */ React80.forwardRef(function SelectPositioner2(componentProps, forwardedRef) {
+var SelectPositioner = /* @__PURE__ */ React82.forwardRef(function SelectPositioner2(componentProps, forwardedRef) {
   const {
     anchor,
     className,
@@ -11776,14 +11849,14 @@ var SelectPositioner = /* @__PURE__ */ React80.forwardRef(function SelectPositio
   const triggerElement = store.useState("triggerElement");
   const isItemEqualToValue = store.useState("isItemEqualToValue");
   const transitionStatus = store.useState("transitionStatus");
-  const scrollUpArrowRef = React80.useRef(null);
-  const scrollDownArrowRef = React80.useRef(null);
-  const [controlledAlignItemWithTrigger, setControlledAlignItemWithTrigger] = React80.useState(alignItemWithTrigger);
+  const scrollUpArrowRef = React82.useRef(null);
+  const scrollDownArrowRef = React82.useRef(null);
+  const [controlledAlignItemWithTrigger, setControlledAlignItemWithTrigger] = React82.useState(alignItemWithTrigger);
   const alignItemWithTriggerActive = mounted && controlledAlignItemWithTrigger && openMethod !== "touch";
   if (!mounted && controlledAlignItemWithTrigger !== alignItemWithTrigger) {
     setControlledAlignItemWithTrigger(alignItemWithTrigger);
   }
-  React80.useImperativeHandle(store.context.alignItemWithTriggerActiveRef, () => alignItemWithTriggerActive);
+  React82.useImperativeHandle(store.context.alignItemWithTriggerActiveRef, () => alignItemWithTriggerActive);
   useAnchoredPopupScrollLock((alignItemWithTriggerActive || modal) && open2, openMethod === "touch", positionerElement, triggerElement);
   const positioning = useAnchorPositioning({
     anchor,
@@ -11822,7 +11895,7 @@ var SelectPositioner = /* @__PURE__ */ React80.forwardRef(function SelectPositio
     hidden: !mounted,
     inert: !open2
   });
-  const prevMapSizeRef = React80.useRef(0);
+  const prevMapSizeRef = React82.useRef(0);
   const onMapChange = useStableCallback((map) => {
     if (store.context.valuesRef.current.length === 0) {
       return;
@@ -11865,7 +11938,7 @@ var SelectPositioner = /* @__PURE__ */ React80.forwardRef(function SelectPositio
       clearStyles(store.context.popupRef.current, stylesToClear);
     }
   });
-  const contextValue = React80.useMemo(() => ({
+  const contextValue = React82.useMemo(() => ({
     ...positioning,
     side: renderedSide,
     alignItemWithTriggerActive,
@@ -11873,13 +11946,13 @@ var SelectPositioner = /* @__PURE__ */ React80.forwardRef(function SelectPositio
     scrollUpArrowRef,
     scrollDownArrowRef
   }), [positioning, renderedSide, alignItemWithTriggerActive, setControlledAlignItemWithTrigger]);
-  return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(CompositeList, {
+  return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(CompositeList, {
     elementsRef: store.context.listRef,
     labelsRef: store.context.labelsRef,
     onMapChange,
-    children: /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(SelectPositionerContext.Provider, {
+    children: /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(SelectPositionerContext.Provider, {
       value: contextValue,
-      children: [mounted && modal && /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(InternalBackdrop, {
+      children: [mounted && modal && /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(InternalBackdrop, {
         inert: inertValue(!open2),
         cutout: triggerElement
       }), element]
@@ -11889,18 +11962,18 @@ var SelectPositioner = /* @__PURE__ */ React80.forwardRef(function SelectPositio
 if (true) SelectPositioner.displayName = "SelectPositioner";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/popup/SelectPopup.mjs
-var React81 = __toESM(require_react(), 1);
+var React83 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/positioner/SelectPositionerCssVars.mjs
 var transformOrigin2 = "--transform-origin";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/popup/SelectPopup.mjs
-var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
 var stateAttributesMapping5 = {
   ...popupStateMapping,
   ...transitionStatusMapping
 };
-var SelectPopup = /* @__PURE__ */ React81.forwardRef(function SelectPopup2(componentProps, forwardedRef) {
+var SelectPopup = /* @__PURE__ */ React83.forwardRef(function SelectPopup2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -11935,9 +12008,9 @@ var SelectPopup = /* @__PURE__ */ React81.forwardRef(function SelectPopup2(compo
   const triggerElement = store.useState("triggerElement");
   const positionerElement = store.useState("positionerElement");
   const listElement = store.useState("listElement");
-  const reachedMaxHeightRef = React81.useRef(false);
-  const initialPlacedRef = React81.useRef(false);
-  const originalPositionerStylesRef = React81.useRef({});
+  const reachedMaxHeightRef = React83.useRef(false);
+  const initialPlacedRef = React83.useRef(false);
+  const originalPositionerStylesRef = React83.useRef({});
   const scrollArrowFrame = useAnimationFrame();
   const handleScroll = useStableCallback((scroller) => {
     if (!positionerElement || !store.context.popupRef.current || !initialPlacedRef.current) {
@@ -11999,7 +12072,7 @@ var SelectPopup = /* @__PURE__ */ React81.forwardRef(function SelectPopup2(compo
     }
     store.context.handleScrollArrowVisibility(scroller);
   });
-  React81.useImperativeHandle(store.context.scrollHandlerRef, () => handleScroll, [handleScroll]);
+  React83.useImperativeHandle(store.context.scrollHandlerRef, () => handleScroll, [handleScroll]);
   useOpenChangeComplete({
     open: open2,
     ref: store.context.popupRef,
@@ -12141,7 +12214,7 @@ var SelectPopup = /* @__PURE__ */ React81.forwardRef(function SelectPopup2(compo
       restoreTransformStyles();
     }
   }, [store, open2, positionerElement, triggerElement, alignItemWithTriggerActive, setControlledAlignItemWithTrigger, scrollArrowFrame, listElement, highlightItemOnHover, direction, isPositioned]);
-  React81.useEffect(() => {
+  React83.useEffect(() => {
     if (!alignItemWithTriggerActive || !positionerElement || !open2) {
       return void 0;
     }
@@ -12184,8 +12257,8 @@ var SelectPopup = /* @__PURE__ */ React81.forwardRef(function SelectPopup2(compo
     stateAttributesMapping: stateAttributesMapping5,
     props: [popupProps, defaultProps, getDisabledMountTransitionStyles(transitionStatus), elementProps]
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(React81.Fragment, {
-    children: [!disableStyleElements && styleDisableScrollbar.getElement(nonce), /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(FloatingFocusManager, {
+  return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(React83.Fragment, {
+    children: [!disableStyleElements && styleDisableScrollbar.getElement(nonce), /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(FloatingFocusManager, {
       context: floatingRootContext,
       modal: false,
       disabled: !mounted,
@@ -12241,8 +12314,8 @@ function unsetTransformStyles(popupElement) {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/list/SelectList.mjs
-var React82 = __toESM(require_react(), 1);
-var SelectList = /* @__PURE__ */ React82.forwardRef(function SelectList2(componentProps, forwardedRef) {
+var React84 = __toESM(require_react(), 1);
+var SelectList = /* @__PURE__ */ React84.forwardRef(function SelectList2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -12280,14 +12353,14 @@ var SelectList = /* @__PURE__ */ React82.forwardRef(function SelectList2(compone
 if (true) SelectList.displayName = "SelectList";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item/SelectItem.mjs
-var React84 = __toESM(require_react(), 1);
+var React86 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item/SelectItemContext.mjs
-var React83 = __toESM(require_react(), 1);
-var SelectItemContext = /* @__PURE__ */ React83.createContext(void 0);
+var React85 = __toESM(require_react(), 1);
+var SelectItemContext = /* @__PURE__ */ React85.createContext(void 0);
 if (true) SelectItemContext.displayName = "SelectItemContext";
 function useSelectItemContext() {
-  const context = React83.useContext(SelectItemContext);
+  const context = React85.useContext(SelectItemContext);
   if (!context) {
     throw new Error(true ? "Base UI: SelectItemContext is missing. SelectItem parts must be placed within <Select.Item>." : formatErrorMessage_default(57));
   }
@@ -12295,8 +12368,8 @@ function useSelectItemContext() {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item/SelectItem.mjs
-var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
-var SelectItem = /* @__PURE__ */ React84.memo(/* @__PURE__ */ React84.forwardRef(function SelectItem2(componentProps, forwardedRef) {
+var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+var SelectItem = /* @__PURE__ */ React86.memo(/* @__PURE__ */ React86.forwardRef(function SelectItem2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -12307,7 +12380,7 @@ var SelectItem = /* @__PURE__ */ React84.memo(/* @__PURE__ */ React84.forwardRef
     nativeButton = false,
     ...elementProps
   } = componentProps;
-  const textRef = React84.useRef(null);
+  const textRef = React86.useRef(null);
   const listItem = useCompositeListItem({
     guess: true,
     label,
@@ -12327,7 +12400,7 @@ var SelectItem = /* @__PURE__ */ React84.memo(/* @__PURE__ */ React84.forwardRef
   const selected = store.useState("isSelected", itemValue);
   const selectedByFocus = store.useState("isSelectedByFocus", listItem.index);
   const index2 = listItem.index;
-  const itemRef = React84.useRef(null);
+  const itemRef = React86.useRef(null);
   useIsoLayoutEffect(() => {
     const values = store.context.valuesRef.current;
     values[index2] = itemValue;
@@ -12357,8 +12430,8 @@ var SelectItem = /* @__PURE__ */ React84.memo(/* @__PURE__ */ React84.forwardRef
       store.context.selectedItemTextRef.current = textRef.current;
     }
   }, [index2, multiple, isItemEqualToValue, store, itemValue]);
-  const pointerTypeRef = React84.useRef("mouse");
-  const allowMouseSelectionRef = React84.useRef(false);
+  const pointerTypeRef = React86.useRef("mouse");
+  const allowMouseSelectionRef = React86.useRef(false);
   const {
     getButtonProps,
     buttonRef
@@ -12454,13 +12527,13 @@ var SelectItem = /* @__PURE__ */ React84.memo(/* @__PURE__ */ React84.forwardRef
     state,
     props: [itemProps, defaultProps, elementProps, getButtonProps]
   });
-  const contextValue = React84.useMemo(() => ({
+  const contextValue = React86.useMemo(() => ({
     selected,
     index: index2,
     textRef,
     selectedByFocus
   }), [selected, index2, textRef, selectedByFocus]);
-  return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(SelectItemContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(SelectItemContext.Provider, {
     value: contextValue,
     children: element
   });
@@ -12468,9 +12541,9 @@ var SelectItem = /* @__PURE__ */ React84.memo(/* @__PURE__ */ React84.forwardRef
 if (true) SelectItem.displayName = "SelectItem";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item-indicator/SelectItemIndicator.mjs
-var React85 = __toESM(require_react(), 1);
-var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
-var SelectItemIndicator = /* @__PURE__ */ React85.forwardRef(function SelectItemIndicator2(componentProps, forwardedRef) {
+var React87 = __toESM(require_react(), 1);
+var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+var SelectItemIndicator = /* @__PURE__ */ React87.forwardRef(function SelectItemIndicator2(componentProps, forwardedRef) {
   const {
     selected
   } = useSelectItemContext();
@@ -12478,7 +12551,7 @@ var SelectItemIndicator = /* @__PURE__ */ React85.forwardRef(function SelectItem
   if (!shouldRender) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(ItemIndicator, {
+  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(ItemIndicator, {
     ...componentProps,
     selected,
     ref: forwardedRef
@@ -12487,8 +12560,8 @@ var SelectItemIndicator = /* @__PURE__ */ React85.forwardRef(function SelectItem
 if (true) SelectItemIndicator.displayName = "SelectItemIndicator";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/item-text/SelectItemText.mjs
-var React86 = __toESM(require_react(), 1);
-var SelectItemText = /* @__PURE__ */ React86.memo(/* @__PURE__ */ React86.forwardRef(function SelectItemText2(componentProps, forwardedRef) {
+var React88 = __toESM(require_react(), 1);
+var SelectItemText = /* @__PURE__ */ React88.memo(/* @__PURE__ */ React88.forwardRef(function SelectItemText2(componentProps, forwardedRef) {
   const {
     index: index2,
     textRef,
@@ -12501,7 +12574,7 @@ var SelectItemText = /* @__PURE__ */ React86.memo(/* @__PURE__ */ React86.forwar
     style,
     ...elementProps
   } = componentProps;
-  const localRef = React86.useCallback((node) => {
+  const localRef = React88.useCallback((node) => {
     if (!node) {
       return;
     }
@@ -12521,8 +12594,8 @@ var SelectItemText = /* @__PURE__ */ React86.memo(/* @__PURE__ */ React86.forwar
 if (true) SelectItemText.displayName = "SelectItemText";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/arrow/SelectArrow.mjs
-var React87 = __toESM(require_react(), 1);
-var SelectArrow = /* @__PURE__ */ React87.forwardRef(function SelectArrow2(componentProps, forwardedRef) {
+var React89 = __toESM(require_react(), 1);
+var SelectArrow = /* @__PURE__ */ React89.forwardRef(function SelectArrow2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -12562,11 +12635,11 @@ var SelectArrow = /* @__PURE__ */ React87.forwardRef(function SelectArrow2(compo
 if (true) SelectArrow.displayName = "SelectArrow";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/scroll-down-arrow/SelectScrollDownArrow.mjs
-var React89 = __toESM(require_react(), 1);
+var React91 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/scroll-arrow/SelectScrollArrow.mjs
-var React88 = __toESM(require_react(), 1);
-var SelectScrollArrow = /* @__PURE__ */ React88.forwardRef(function SelectScrollArrow2(componentProps, forwardedRef) {
+var React90 = __toESM(require_react(), 1);
+var SelectScrollArrow = /* @__PURE__ */ React90.forwardRef(function SelectScrollArrow2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -12702,9 +12775,9 @@ function getTargetScrollTop(items, isUp, scrollTop, clientHeight, scrollArrowHei
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/scroll-down-arrow/SelectScrollDownArrow.mjs
-var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
-var SelectScrollDownArrow = /* @__PURE__ */ React89.forwardRef(function SelectScrollDownArrow2(props, forwardedRef) {
-  return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(SelectScrollArrow, {
+var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+var SelectScrollDownArrow = /* @__PURE__ */ React91.forwardRef(function SelectScrollDownArrow2(props, forwardedRef) {
+  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SelectScrollArrow, {
     ...props,
     ref: forwardedRef,
     direction: "down"
@@ -12713,10 +12786,10 @@ var SelectScrollDownArrow = /* @__PURE__ */ React89.forwardRef(function SelectSc
 if (true) SelectScrollDownArrow.displayName = "SelectScrollDownArrow";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/scroll-up-arrow/SelectScrollUpArrow.mjs
-var React90 = __toESM(require_react(), 1);
-var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
-var SelectScrollUpArrow = /* @__PURE__ */ React90.forwardRef(function SelectScrollUpArrow2(props, forwardedRef) {
-  return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(SelectScrollArrow, {
+var React92 = __toESM(require_react(), 1);
+var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+var SelectScrollUpArrow = /* @__PURE__ */ React92.forwardRef(function SelectScrollUpArrow2(props, forwardedRef) {
+  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(SelectScrollArrow, {
     ...props,
     ref: forwardedRef,
     direction: "up"
@@ -12725,14 +12798,14 @@ var SelectScrollUpArrow = /* @__PURE__ */ React90.forwardRef(function SelectScro
 if (true) SelectScrollUpArrow.displayName = "SelectScrollUpArrow";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroup.mjs
-var React92 = __toESM(require_react(), 1);
+var React94 = __toESM(require_react(), 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroupContext.mjs
-var React91 = __toESM(require_react(), 1);
-var SelectGroupContext = /* @__PURE__ */ React91.createContext(void 0);
+var React93 = __toESM(require_react(), 1);
+var SelectGroupContext = /* @__PURE__ */ React93.createContext(void 0);
 if (true) SelectGroupContext.displayName = "SelectGroupContext";
 function useSelectGroupContext() {
-  const context = React91.useContext(SelectGroupContext);
+  const context = React93.useContext(SelectGroupContext);
   if (context === void 0) {
     throw new Error(true ? "Base UI: SelectGroupContext is missing. SelectGroup parts must be placed within <Select.Group>." : formatErrorMessage_default(56));
   }
@@ -12740,16 +12813,16 @@ function useSelectGroupContext() {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group/SelectGroup.mjs
-var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
-var SelectGroup = /* @__PURE__ */ React92.forwardRef(function SelectGroup2(componentProps, forwardedRef) {
+var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var SelectGroup = /* @__PURE__ */ React94.forwardRef(function SelectGroup2(componentProps, forwardedRef) {
   const {
     render,
     className,
     style,
     ...elementProps
   } = componentProps;
-  const [labelId, setLabelId] = React92.useState();
-  const contextValue = React92.useMemo(() => ({
+  const [labelId, setLabelId] = React94.useState();
+  const contextValue = React94.useMemo(() => ({
     labelId,
     setLabelId
   }), [labelId, setLabelId]);
@@ -12760,7 +12833,7 @@ var SelectGroup = /* @__PURE__ */ React92.forwardRef(function SelectGroup2(compo
       "aria-labelledby": labelId
     }, elementProps]
   });
-  return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(SelectGroupContext.Provider, {
+  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(SelectGroupContext.Provider, {
     value: contextValue,
     children: element
   });
@@ -12768,8 +12841,8 @@ var SelectGroup = /* @__PURE__ */ React92.forwardRef(function SelectGroup2(compo
 if (true) SelectGroup.displayName = "SelectGroup";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/group-label/SelectGroupLabel.mjs
-var React93 = __toESM(require_react(), 1);
-var SelectGroupLabel = /* @__PURE__ */ React93.forwardRef(function SelectGroupLabel2(componentProps, forwardedRef) {
+var React95 = __toESM(require_react(), 1);
+var SelectGroupLabel = /* @__PURE__ */ React95.forwardRef(function SelectGroupLabel2(componentProps, forwardedRef) {
   const {
     render,
     className,
@@ -13255,15 +13328,15 @@ var ITEM_POPUP_POSITIONER_PROPS = {
 
 // packages/ui/build-module/utils/direction-provider.mjs
 var import_i18n = __toESM(require_i18n(), 1);
-var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
 function DirectionProvider3({ children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(DirectionProvider, { direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr", children });
+  return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(DirectionProvider, { direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr", children });
 }
 
 // packages/ui/build-module/link/link.mjs
 var import_element12 = __toESM(require_element(), 1);
 var import_i18n2 = __toESM(require_i18n(), 1);
-var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE4 = "data-wp-hash";
 function getRuntime4() {
   const globalScope = globalThis;
@@ -13388,9 +13461,9 @@ var Link = (0, import_element12.forwardRef)(
           className
         ),
         target: target ?? (openInNewTab ? "_blank" : void 0),
-        children: /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
-          shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { className: style_default3["link-contents"], children }) : children,
-          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, { children: [
+          shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", { className: style_default3["link-contents"], children }) : children,
+          shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
             "span",
             {
               className: style_default3["link-icon"],
@@ -13529,7 +13602,7 @@ var import_element16 = __toESM(require_element(), 1);
 
 // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
 var import_element14 = __toESM(require_element(), 1);
-var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE6 = "data-wp-hash";
 function getRuntime6() {
   const globalScope = globalThis;
@@ -13633,7 +13706,7 @@ var InputLayout = (0, import_element14.forwardRef)(
     suffix,
     ...restProps
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
       "div",
       {
         ref,
@@ -13648,7 +13721,7 @@ var InputLayout = (0, import_element14.forwardRef)(
         ),
         ...restProps,
         children: [
-          import_element14.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+          import_element14.Children.count(prefix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
             "div",
             {
               className: style_default5["slot-wrapper"],
@@ -13657,7 +13730,7 @@ var InputLayout = (0, import_element14.forwardRef)(
             }
           ),
           children,
-          import_element14.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+          import_element14.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
             "div",
             {
               className: style_default5["slot-wrapper"],
@@ -13673,7 +13746,7 @@ var InputLayout = (0, import_element14.forwardRef)(
 
 // packages/ui/build-module/form/primitives/input-layout/slot.mjs
 var import_element15 = __toESM(require_element(), 1);
-var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE7 = "data-wp-hash";
 function getRuntime7() {
   const globalScope = globalThis;
@@ -13759,7 +13832,7 @@ if (typeof process === "undefined" || true) {
 }
 var style_default6 = { "input-layout": "b58f09bec1a5dbde__input-layout", "is-size-compact": "c6959524c70627d6__is-size-compact", "is-size-small": "aa52ad890a16cc91__is-size-small", "is-disabled": "_50a72abb47530e8a__is-disabled", "is-borderless": "_33a5f404fc55a9f2__is-borderless", "input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot", "slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper", "is-padding-minimal": "_50d0eced305893d5__is-padding-minimal" };
 var InputLayoutSlot = (0, import_element15.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     "div",
     {
       ref,
@@ -13780,7 +13853,7 @@ var InputLayout2 = Object.assign(InputLayout, {
 });
 
 // packages/ui/build-module/form/primitives/input/input.mjs
-var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE8 = "data-wp-hash";
 function getRuntime8() {
   const globalScope = globalThis;
@@ -13875,7 +13948,7 @@ if (typeof process === "undefined" || true) {
 var style_default7 = { "input": "_9edfcd97eeaee9dc__input", "layout": "edc52bf0fe80b57f__layout" };
 var Input3 = (0, import_element16.forwardRef)(
   function UnforwardedInput({ className, size: size4 = "default", prefix, suffix, style, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
       InputLayout2,
       {
         className: clsx_default(
@@ -13888,7 +13961,7 @@ var Input3 = (0, import_element16.forwardRef)(
         visuallyDisabled: restProps.disabled,
         prefix,
         suffix,
-        children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
           Input,
           {
             ref,
@@ -14007,7 +14080,7 @@ function getItemPopupWidthClassName(width = "anchor") {
 
 // packages/ui/build-module/form/primitives/checkbox/checkbox.mjs
 var import_element17 = __toESM(require_element(), 1);
-var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE10 = "data-wp-hash";
 function getRuntime10() {
   const globalScope = globalThis;
@@ -14102,7 +14175,7 @@ if (typeof process === "undefined" || true) {
 var style_default8 = { "root": "_63457135733e4745__root", "indicator-icon": "e5da9f589362d532__indicator-icon" };
 var Checkbox = (0, import_element17.forwardRef)(
   function UnforwardedCheckbox({ className, indeterminate, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
       index_parts_exports.Root,
       {
         ref,
@@ -14114,11 +14187,11 @@ var Checkbox = (0, import_element17.forwardRef)(
         ),
         indeterminate,
         ...restProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
           index_parts_exports.Indicator,
           {
             className: style_default8["indicator-icon"],
-            render: (props, state) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+            render: (props, state) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
               Icon,
               {
                 ...props,
@@ -14148,7 +14221,7 @@ __export(field_exports, {
 
 // packages/ui/build-module/form/primitives/field/root.mjs
 var import_element18 = __toESM(require_element(), 1);
-var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE11 = "data-wp-hash";
 function getRuntime11() {
   const globalScope = globalThis;
@@ -14233,10 +14306,10 @@ if (typeof process === "undefined" || true) {
   registerStyle11("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
 var resets_default4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
+var DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
 var Root = (0, import_element18.forwardRef)(
   function UnforwardedRoot({ className, render = DEFAULT_RENDER, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
       index_parts_exports2.Root,
       {
         ref,
@@ -14250,14 +14323,14 @@ var Root = (0, import_element18.forwardRef)(
 
 // packages/ui/build-module/form/primitives/field/item.mjs
 var import_element19 = __toESM(require_element(), 1);
-var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
 var Item = (0, import_element19.forwardRef)(function UnforwardedItem(props, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(index_parts_exports2.Item, { ref, ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(index_parts_exports2.Item, { ref, ...props });
 });
 
 // packages/ui/build-module/form/primitives/field/label.mjs
 var import_element20 = __toESM(require_element(), 1);
-var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE12 = "data-wp-hash";
 function getRuntime12() {
   const globalScope = globalThis;
@@ -14344,7 +14417,7 @@ if (typeof process === "undefined" || true) {
 var field_default = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
 var Label = (0, import_element20.forwardRef)(
   function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
-    const label = /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
+    const label = /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
       index_parts_exports2.Label,
       {
         ref,
@@ -14357,7 +14430,7 @@ var Label = (0, import_element20.forwardRef)(
       }
     );
     if (hideFromVision) {
-      return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(VisuallyHidden, { render: label });
+      return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(VisuallyHidden, { render: label });
     }
     return label;
   }
@@ -14365,7 +14438,7 @@ var Label = (0, import_element20.forwardRef)(
 
 // packages/ui/build-module/form/primitives/field/description.mjs
 var import_element21 = __toESM(require_element(), 1);
-var import_jsx_runtime47 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE13 = "data-wp-hash";
 function getRuntime13() {
   const globalScope = globalThis;
@@ -14455,7 +14528,7 @@ if (typeof process === "undefined" || true) {
 }
 var field_default2 = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
 var Description = (0, import_element21.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
     index_parts_exports2.Description,
     {
       ref,
@@ -14472,7 +14545,7 @@ var Description = (0, import_element21.forwardRef)(function UnforwardedDescripti
 // packages/ui/build-module/form/primitives/field/details.mjs
 var import_element22 = __toESM(require_element(), 1);
 var import_i18n3 = __toESM(require_i18n(), 1);
-var import_jsx_runtime48 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE14 = "data-wp-hash";
 function getRuntime14() {
   const globalScope = globalThis;
@@ -14559,9 +14632,9 @@ if (typeof process === "undefined" || true) {
 var field_default3 = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
 var Details = (0, import_element22.forwardRef)(
   function UnforwardedDetails({ className, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(import_jsx_runtime48.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n3.__)("More details follow the field.") }),
-      /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(import_jsx_runtime49.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(index_parts_exports2.Description, {}), children: (0, import_i18n3.__)("More details follow the field.") }),
+      /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
         "div",
         {
           ref,
@@ -14575,10 +14648,10 @@ var Details = (0, import_element22.forwardRef)(
 
 // packages/ui/build-module/form/primitives/field/control.mjs
 var import_element23 = __toESM(require_element(), 1);
-var import_jsx_runtime49 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
 var Control = (0, import_element23.forwardRef)(
   function UnforwardedControl(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(index_parts_exports2.Control, { ref, ...props });
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(index_parts_exports2.Control, { ref, ...props });
   }
 );
 
@@ -14686,25 +14759,41 @@ var VisualLabel = (0, import_element24.forwardRef)(
 );
 VisualLabel.displayName = "Field.VisualLabel";
 
-// packages/ui/build-module/form/primitives/select/index.mjs
-var select_exports = {};
-__export(select_exports, {
-  Group: () => Group,
-  GroupLabel: () => GroupLabel,
-  Item: () => Item2,
-  ItemDescription: () => ItemDescription,
-  ItemLabel: () => ItemLabel,
-  Popup: () => Popup,
-  Portal: () => Portal,
-  Positioner: () => Positioner,
-  Root: () => Root2,
-  Separator: () => Separator,
-  Trigger: () => Trigger
+// packages/ui/build-module/form/primitives/fieldset/index.mjs
+var fieldset_exports = {};
+__export(fieldset_exports, {
+  Description: () => FieldsetDescription,
+  Details: () => FieldsetDetails,
+  Legend: () => FieldsetLegend3,
+  Root: () => FieldsetRoot3
 });
 
-// packages/ui/build-module/form/primitives/select/group.mjs
+// packages/ui/build-module/form/primitives/fieldset/root.mjs
+var import_element26 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/form/primitives/fieldset/context.mjs
 var import_element25 = __toESM(require_element(), 1);
-var import_jsx_runtime50 = __toESM(require_jsx_runtime(), 1);
+var fallbackContext = {
+  registerDescriptionId: () => {
+  },
+  unregisterDescriptionId: () => {
+  }
+};
+var FieldsetContext = (0, import_element25.createContext)(
+  null
+);
+var useFieldsetContext = (componentName) => {
+  const context = (0, import_element25.useContext)(FieldsetContext);
+  if (!context) {
+    throw new Error(
+      `${componentName}: Missing parent <Fieldset.Root>. Render <${componentName}> inside <Fieldset.Root>.`
+    );
+  }
+  return context ?? fallbackContext;
+};
+
+// packages/ui/build-module/form/primitives/fieldset/root.mjs
+var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE16 = "data-wp-hash";
 function getRuntime16() {
   const globalScope = globalThis;
@@ -14786,26 +14875,33 @@ function registerStyle16(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle16("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
+  registerStyle16("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
 }
-var item_popup_default2 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
-var Group = (0, import_element25.forwardRef)(
-  function UnforwardedGroup({ className, children, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
-      index_parts_exports3.Group,
-      {
-        className: clsx_default(item_popup_default2.group, className),
-        ref,
-        ...restProps,
-        children
-      }
-    );
-  }
-);
+var style_default9 = { "root": "e261be5ffdbff866__root", "legend": "_9c09ae15728936d6__legend", "is-hidden": "_76f0f4f5a833a38d__is-hidden", "description": "cac73664494ce854__description" };
+var FieldsetRoot3 = (0, import_element26.forwardRef)(function UnforwardedFieldsetRoot({ className, children, ...restProps }, ref) {
+  const [descriptionId, setDescriptionId] = (0, import_element26.useState)();
+  const contextValue = (0, import_element26.useMemo)(
+    () => ({
+      registerDescriptionId: (id) => setDescriptionId(id),
+      unregisterDescriptionId: () => setDescriptionId(void 0)
+    }),
+    []
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(FieldsetContext.Provider, { value: contextValue, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+    index_parts_exports3.Root,
+    {
+      ref,
+      className: clsx_default(style_default9.root, className),
+      "aria-describedby": descriptionId,
+      ...restProps,
+      children
+    }
+  ) });
+});
 
-// packages/ui/build-module/form/primitives/select/group-label.mjs
-var import_element26 = __toESM(require_element(), 1);
-var import_jsx_runtime51 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/fieldset/legend.mjs
+var import_element27 = __toESM(require_element(), 1);
+var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE17 = "data-wp-hash";
 function getRuntime17() {
   const globalScope = globalThis;
@@ -14887,32 +14983,37 @@ function registerStyle17(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle17("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
+  registerStyle17("71ecfbcef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
 }
-var item_popup_default3 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
-var GroupLabel = (0, import_element26.forwardRef)(
-  function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
-      Text,
+var field_default5 = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
+if (typeof process === "undefined" || true) {
+  registerStyle17("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
+}
+var style_default10 = { "root": "e261be5ffdbff866__root", "legend": "_9c09ae15728936d6__legend", "is-hidden": "_76f0f4f5a833a38d__is-hidden", "description": "cac73664494ce854__description" };
+var FieldsetLegend3 = (0, import_element27.forwardRef)(
+  function UnforwardedFieldsetLegend({ className, hideFromVision, ...restProps }, ref) {
+    const legend = /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+      index_parts_exports3.Legend,
       {
-        variant: "heading-sm",
+        ref,
         className: clsx_default(
-          item_popup_default3["group-label"],
+          style_default10.legend,
+          hideFromVision && style_default10["is-hidden"],
+          field_default5.label,
           className
         ),
-        render: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(index_parts_exports3.GroupLabel, { ref, ...restProps }),
-        children
+        ...restProps
       }
     );
+    if (hideFromVision) {
+      return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(VisuallyHidden, { render: legend });
+    }
+    return legend;
   }
 );
 
-// packages/ui/build-module/form/primitives/select/item.mjs
-var import_element29 = __toESM(require_element(), 1);
-
-// packages/ui/build-module/form/primitives/select/item-description.mjs
-var import_element27 = __toESM(require_element(), 1);
-var import_jsx_runtime52 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/fieldset/description.mjs
+var import_element28 = __toESM(require_element(), 1);
 var STYLE_HASH_ATTRIBUTE18 = "data-wp-hash";
 function getRuntime18() {
   const globalScope = globalThis;
@@ -14994,33 +15095,48 @@ function registerStyle18(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle18("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
+  registerStyle18("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 }
-var item_popup_default4 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
-var ITEM_DESCRIPTION_DIRECT_CHILD = /* @__PURE__ */ Symbol();
-var ItemDescription = (0, import_element27.forwardRef)(function UnforwardedItemDescription(props, ref) {
-  const { className, validationToken, ...restProps } = props;
-  if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD) {
-    throw new Error(
-      "Select.ItemDescription: Missing direct select item parent. Render <Select.ItemDescription> as a direct child of <Select.Item>."
-    );
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
-    Text,
-    {
-      ref,
-      variant: "body-sm",
-      className: clsx_default(
-        item_popup_default4["item-description"],
-        className
-      ),
-      ...restProps
-    }
-  );
+var global_css_defense_default6 = { "button": "_78c10a0773e51a91__button", "input": "_5b33aa2d48624b4f__input", "textarea": "_980b3b4776ac8f81__textarea", "div": "_43e478b4279a076c__div", "p": "_698099e25b0fb1a6__p", "heading": "_326aee4184d261fd__heading", "a": "e9576240835601ba__a", "ol": "_3f05789653864a73__ol", "li": "_3c72ff72abe57859__li", "span": "_79d16267c15d9eb2__span" };
+if (typeof process === "undefined" || true) {
+  registerStyle18("71ecfbcef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
+}
+var field_default6 = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
+if (typeof process === "undefined" || true) {
+  registerStyle18("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
+}
+var style_default11 = { "root": "e261be5ffdbff866__root", "legend": "_9c09ae15728936d6__legend", "is-hidden": "_76f0f4f5a833a38d__is-hidden", "description": "cac73664494ce854__description" };
+var FieldsetDescription = (0, import_element28.forwardRef)(function UnforwardedFieldsetDescription({ className, id: idProp, render, ...restProps }, ref) {
+  const generatedId = (0, import_element28.useId)();
+  const id = idProp ?? generatedId;
+  const { registerDescriptionId, unregisterDescriptionId } = useFieldsetContext("Fieldset.Description");
+  (0, import_element28.useEffect)(() => {
+    registerDescriptionId(id);
+    return unregisterDescriptionId;
+  }, [registerDescriptionId, unregisterDescriptionId, id]);
+  const element = useRender({
+    defaultTagName: "p",
+    render,
+    ref,
+    props: mergeProps(
+      {
+        className: clsx_default(
+          global_css_defense_default6.p,
+          style_default11.description,
+          field_default6.description,
+          className
+        ),
+        id
+      },
+      restProps
+    )
+  });
+  return element;
 });
 
-// packages/ui/build-module/form/primitives/select/item-label.mjs
-var import_element28 = __toESM(require_element(), 1);
+// packages/ui/build-module/form/primitives/fieldset/details.mjs
+var import_element29 = __toESM(require_element(), 1);
+var import_i18n4 = __toESM(require_i18n(), 1);
 var import_jsx_runtime53 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE19 = "data-wp-hash";
 function getRuntime19() {
@@ -15103,26 +15219,56 @@ function registerStyle19(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle19("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
+  registerStyle19("71ecfbcef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
 }
-var item_popup_default5 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
-var ItemLabel = (0, import_element28.forwardRef)(
-  function UnforwardedItemLabel({ children, className, render, ...restProps }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
-      Text,
-      {
-        ref,
-        variant: "body-md",
-        render: /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(index_parts_exports3.ItemText, { render }),
-        className: clsx_default(item_popup_default5["item-label"], className),
-        ...restProps,
+var field_default7 = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
+if (typeof process === "undefined" || true) {
+  registerStyle19("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
+}
+var style_default12 = { "root": "e261be5ffdbff866__root", "legend": "_9c09ae15728936d6__legend", "is-hidden": "_76f0f4f5a833a38d__is-hidden", "description": "cac73664494ce854__description" };
+var FieldsetDetails = (0, import_element29.forwardRef)(function UnforwardedFieldsetDetails({ className, children, ...restProps }, ref) {
+  const id = (0, import_element29.useId)();
+  const { registerDescriptionId, unregisterDescriptionId } = useFieldsetContext("Fieldset.Details");
+  (0, import_element29.useEffect)(() => {
+    registerDescriptionId(id);
+    return unregisterDescriptionId;
+  }, [registerDescriptionId, unregisterDescriptionId, id]);
+  return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
+    "div",
+    {
+      ref,
+      className: clsx_default(
+        style_default12.description,
+        field_default7.description,
+        className
+      ),
+      ...restProps,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(VisuallyHidden, { id, children: (0, import_i18n4.__)("More details follow.") }),
         children
-      }
-    );
-  }
-);
+      ]
+    }
+  );
+});
 
-// packages/ui/build-module/form/primitives/select/item.mjs
+// packages/ui/build-module/form/primitives/select/index.mjs
+var select_exports = {};
+__export(select_exports, {
+  Group: () => Group,
+  GroupLabel: () => GroupLabel,
+  Item: () => Item2,
+  ItemDescription: () => ItemDescription,
+  ItemLabel: () => ItemLabel,
+  Popup: () => Popup,
+  Portal: () => Portal,
+  Positioner: () => Positioner,
+  Root: () => Root2,
+  Separator: () => Separator,
+  Trigger: () => Trigger
+});
+
+// packages/ui/build-module/form/primitives/select/group.mjs
+var import_element30 = __toESM(require_element(), 1);
 var import_jsx_runtime54 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
 function getRuntime20() {
@@ -15205,93 +15351,26 @@ function registerStyle20(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle20("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-}
-var global_css_defense_default6 = { "button": "_78c10a0773e51a91__button", "input": "_5b33aa2d48624b4f__input", "textarea": "_980b3b4776ac8f81__textarea", "div": "_43e478b4279a076c__div", "p": "_698099e25b0fb1a6__p", "heading": "_326aee4184d261fd__heading", "a": "e9576240835601ba__a", "ol": "_3f05789653864a73__ol", "li": "_3c72ff72abe57859__li", "span": "_79d16267c15d9eb2__span" };
-if (typeof process === "undefined" || true) {
   registerStyle20("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
 }
-var item_popup_default6 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
-if (typeof process === "undefined" || true) {
-  registerStyle20("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-}
-var resets_default5 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-var ITEM_CONTENT_COMPONENTS = {
-  Label: ItemLabel,
-  Description: ItemDescription,
-  descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD,
-  validationMessage: "Select.ItemLabel must be the first direct child of every select item, followed only by Select.ItemDescription components."
-};
-var Item2 = (0, import_element29.forwardRef)(
-  function UnforwardedItem2({
-    className,
-    value,
-    size: size4 = "default",
-    children,
-    "aria-describedby": ariaDescribedBy,
-    "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledBy,
-    ...restProps
-  }, ref) {
-    const { contentChildren, itemAriaProps } = useItemContent(
-      children,
-      ITEM_CONTENT_COMPONENTS,
+var item_popup_default2 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
+var Group = (0, import_element30.forwardRef)(
+  function UnforwardedGroup({ className, children, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+      index_parts_exports4.Group,
       {
-        "aria-describedby": ariaDescribedBy,
-        "aria-label": ariaLabel,
-        "aria-labelledby": ariaLabelledBy
-      }
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
-      index_parts_exports3.Item,
-      {
-        className: clsx_default(
-          global_css_defense_default6.div,
-          resets_default5["box-sizing"],
-          item_popup_default6.item,
-          size4 === "small" && item_popup_default6["is-size-small"],
-          className
-        ),
-        value,
+        className: clsx_default(item_popup_default2.group, className),
         ref,
-        ...itemAriaProps,
         ...restProps,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("span", { className: item_popup_default6["item-icon"], children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
-            Icon,
-            {
-              icon: check_default,
-              className: item_popup_default6["item-indicator-icon"],
-              size: 16
-            }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("div", { className: item_popup_default6["item-text"], children: contentChildren })
-        ]
+        children
       }
     );
   }
 );
 
-// packages/ui/build-module/form/primitives/select/popup.mjs
-var import_element32 = __toESM(require_element(), 1);
-
-// packages/ui/build-module/form/primitives/select/portal.mjs
-var import_element30 = __toESM(require_element(), 1);
-var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
-var Portal = (0, import_element30.forwardRef)(function SelectPortal3({ container, ...restProps }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
-    index_parts_exports3.Portal,
-    {
-      container: container === void 0 ? getWpCompatOverlaySlot() : container,
-      ...restProps,
-      ref
-    }
-  );
-});
-
-// packages/ui/build-module/form/primitives/select/positioner.mjs
+// packages/ui/build-module/form/primitives/select/group-label.mjs
 var import_element31 = __toESM(require_element(), 1);
-var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime55 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
 function getRuntime21() {
   const globalScope = globalThis;
@@ -15373,39 +15452,32 @@ function registerStyle21(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle21("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-}
-var resets_default6 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-if (typeof process === "undefined" || true) {
   registerStyle21("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
 }
-var item_popup_default7 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
-if (typeof process === "undefined" || true) {
-  registerStyle21("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
-}
-var style_default9 = { "positioner": "cc0f09fba19eb669__positioner", "list": "_3a3c25e09f4fd1ec__list" };
-var Positioner = (0, import_element31.forwardRef)(
-  function SelectPositioner3({ className, alignItemWithTrigger = true, ...props }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
-      index_parts_exports3.Positioner,
+var item_popup_default3 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
+var GroupLabel = (0, import_element31.forwardRef)(
+  function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+      Text,
       {
-        ...ITEM_POPUP_POSITIONER_PROPS,
-        ...props,
-        alignItemWithTrigger,
-        ref,
+        variant: "heading-sm",
         className: clsx_default(
-          resets_default6["box-sizing"],
-          style_default9.positioner,
-          alignItemWithTrigger && item_popup_default7["is-align-item-with-trigger"],
+          item_popup_default3["group-label"],
           className
-        )
+        ),
+        render: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(index_parts_exports4.GroupLabel, { ref, ...restProps }),
+        children
       }
     );
   }
 );
 
-// packages/ui/build-module/form/primitives/select/popup.mjs
-var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/select/item.mjs
+var import_element34 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/form/primitives/select/item-description.mjs
+var import_element32 = __toESM(require_element(), 1);
+var import_jsx_runtime56 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
 function getRuntime22() {
   const globalScope = globalThis;
@@ -15489,53 +15561,32 @@ function registerStyle22(hash, css) {
 if (typeof process === "undefined" || true) {
   registerStyle22("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
 }
-var item_popup_default8 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
-if (typeof process === "undefined" || true) {
-  registerStyle22("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
-}
-var style_default10 = { "positioner": "cc0f09fba19eb669__positioner", "list": "_3a3c25e09f4fd1ec__list" };
-var Popup = (0, import_element32.forwardRef)(
-  function UnforwardedPopup({ className, portal, positioner, width, children, ...restProps }, ref) {
-    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-      index_parts_exports3.Popup,
-      {
-        ref,
-        className: clsx_default(
-          item_popup_default8.popup,
-          getItemPopupWidthClassName(width),
-          className
-        ),
-        ...restProps,
-        children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-          index_parts_exports3.List,
-          {
-            className: clsx_default(
-              item_popup_default8["list-chrome"],
-              style_default10.list
-            ),
-            children
-          }
-        )
-      }
+var item_popup_default4 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
+var ITEM_DESCRIPTION_DIRECT_CHILD = /* @__PURE__ */ Symbol();
+var ItemDescription = (0, import_element32.forwardRef)(function UnforwardedItemDescription(props, ref) {
+  const { className, validationToken, ...restProps } = props;
+  if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD) {
+    throw new Error(
+      "Select.ItemDescription: Missing direct select item parent. Render <Select.ItemDescription> as a direct child of <Select.Item>."
     );
-    const positionedPopup = renderSlotWithChildren(
-      positioner,
-      /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Positioner, {}),
-      popupContent
-    );
-    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Portal, {}), positionedPopup);
   }
-);
+  return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+    Text,
+    {
+      ref,
+      variant: "body-sm",
+      className: clsx_default(
+        item_popup_default4["item-description"],
+        className
+      ),
+      ...restProps
+    }
+  );
+});
 
-// packages/ui/build-module/form/primitives/select/root.mjs
-var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
-function Root2(props) {
-  return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(index_parts_exports3.Root, { ...props }) });
-}
-
-// packages/ui/build-module/form/primitives/select/separator.mjs
+// packages/ui/build-module/form/primitives/select/item-label.mjs
 var import_element33 = __toESM(require_element(), 1);
-var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime57 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE23 = "data-wp-hash";
 function getRuntime23() {
   const globalScope = globalThis;
@@ -15619,28 +15670,25 @@ function registerStyle23(hash, css) {
 if (typeof process === "undefined" || true) {
   registerStyle23("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
 }
-var item_popup_default9 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
-var Separator = (0, import_element33.forwardRef)(
-  function SelectSeparator2({
-    className,
-    orientation: _orientation,
-    ...props
-  }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
-      index_parts_exports3.Separator,
+var item_popup_default5 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
+var ItemLabel = (0, import_element33.forwardRef)(
+  function UnforwardedItemLabel({ children, className, render, ...restProps }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
+      Text,
       {
         ref,
-        className: clsx_default(item_popup_default9.separator, className),
-        ...props
+        variant: "body-md",
+        render: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(index_parts_exports4.ItemText, { render }),
+        className: clsx_default(item_popup_default5["item-label"], className),
+        ...restProps,
+        children
       }
     );
   }
 );
 
-// packages/ui/build-module/form/primitives/select/trigger.mjs
-var import_element34 = __toESM(require_element(), 1);
-var import_i18n4 = __toESM(require_i18n(), 1);
-var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/select/item.mjs
+var import_jsx_runtime58 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE24 = "data-wp-hash";
 function getRuntime24() {
   const globalScope = globalThis;
@@ -15722,71 +15770,93 @@ function registerStyle24(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle24("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+  registerStyle24("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 }
-var focus_module_default4 = { "outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus", "outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible", "outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within", "outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active" };
+var global_css_defense_default7 = { "button": "_78c10a0773e51a91__button", "input": "_5b33aa2d48624b4f__input", "textarea": "_980b3b4776ac8f81__textarea", "div": "_43e478b4279a076c__div", "p": "_698099e25b0fb1a6__p", "heading": "_326aee4184d261fd__heading", "a": "e9576240835601ba__a", "ol": "_3f05789653864a73__ol", "li": "_3c72ff72abe57859__li", "span": "_79d16267c15d9eb2__span" };
 if (typeof process === "undefined" || true) {
-  registerStyle24("56b0509c70", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.f19aaaa579fccf54__trigger-wrapper{&.bfac6d240be543bd__is-minimal{width:fit-content}}.e1f5987e5bdc9112__trigger{align-items:center;background-color:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:inherit;font-size:inherit;gap:var(--wpds-dimension-gap-xs,4px);justify-content:space-between;line-height:1.4;padding-block:4px;padding-inline-end:calc(var(--wp-ui-input-layout-padding-inline) - 4px);padding-inline-start:var(--wp-ui-input-layout-padding-inline);text-align:start;user-select:none;width:100%;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&.bfac6d240be543bd__is-minimal{width:auto}&:focus{outline:none}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}}.ba63264311039401__trigger-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;.e1f5987e5bdc9112__trigger[data-placeholder]:not([data-disabled]) &{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}}.cb34834e4f533240__trigger-caret{flex:0 0 auto}}}");
+  registerStyle24("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
 }
-var select_trigger_default = { "trigger-wrapper": "f19aaaa579fccf54__trigger-wrapper", "is-minimal": "bfac6d240be543bd__is-minimal", "trigger": "e1f5987e5bdc9112__trigger", "trigger-value": "ba63264311039401__trigger-value", "trigger-caret": "cb34834e4f533240__trigger-caret" };
-var Trigger = (0, import_element34.forwardRef)(
-  function UnforwardedTrigger({
+var item_popup_default6 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
+if (typeof process === "undefined" || true) {
+  registerStyle24("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+}
+var resets_default5 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+var ITEM_CONTENT_COMPONENTS = {
+  Label: ItemLabel,
+  Description: ItemDescription,
+  descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD,
+  validationMessage: "Select.ItemLabel must be the first direct child of every select item, followed only by Select.ItemDescription components."
+};
+var Item2 = (0, import_element34.forwardRef)(
+  function UnforwardedItem2({
     className,
-    size: size4,
-    variant,
+    value,
+    size: size4 = "default",
     children,
-    placeholder = (0, import_i18n4.__)("Select"),
+    "aria-describedby": ariaDescribedBy,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
     ...restProps
   }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
-      InputLayout2,
+    const { contentChildren, itemAriaProps } = useItemContent(
+      children,
+      ITEM_CONTENT_COMPONENTS,
+      {
+        "aria-describedby": ariaDescribedBy,
+        "aria-label": ariaLabel,
+        "aria-labelledby": ariaLabelledBy
+      }
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)(
+      index_parts_exports4.Item,
       {
         className: clsx_default(
-          focus_module_default4["outset-ring--focus-within-except-active"],
-          select_trigger_default["trigger-wrapper"],
-          variant === "minimal" && select_trigger_default["is-minimal"],
+          global_css_defense_default7.div,
+          resets_default5["box-sizing"],
+          item_popup_default6.item,
+          size4 === "small" && item_popup_default6["is-size-small"],
           className
         ),
-        size: size4,
-        isBorderless: variant === "minimal",
-        children: /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(
-          index_parts_exports3.Trigger,
-          {
-            ...restProps,
-            className: clsx_default(
-              select_trigger_default.trigger,
-              variant === "minimal" && select_trigger_default["is-minimal"]
-            ),
-            "data-can-disable-input-layout": true,
-            ref,
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
-                index_parts_exports3.Value,
-                {
-                  placeholder,
-                  className: select_trigger_default["trigger-value"],
-                  children
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
-                Icon,
-                {
-                  className: select_trigger_default["trigger-caret"],
-                  icon: chevron_down_default,
-                  size: 18
-                }
-              )
-            ]
-          }
-        )
+        value,
+        ref,
+        ...itemAriaProps,
+        ...restProps,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("span", { className: item_popup_default6["item-icon"], children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(
+            Icon,
+            {
+              icon: check_default,
+              className: item_popup_default6["item-indicator-icon"],
+              size: 16
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("div", { className: item_popup_default6["item-text"], children: contentChildren })
+        ]
       }
     );
   }
 );
 
-// packages/ui/build-module/form/checkbox-control/checkbox-control.mjs
+// packages/ui/build-module/form/primitives/select/popup.mjs
+var import_element37 = __toESM(require_element(), 1);
+
+// packages/ui/build-module/form/primitives/select/portal.mjs
 var import_element35 = __toESM(require_element(), 1);
-var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime59 = __toESM(require_jsx_runtime(), 1);
+var Portal = (0, import_element35.forwardRef)(function SelectPortal3({ container, ...restProps }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(
+    index_parts_exports4.Portal,
+    {
+      container: container === void 0 ? getWpCompatOverlaySlot() : container,
+      ...restProps,
+      ref
+    }
+  );
+});
+
+// packages/ui/build-module/form/primitives/select/positioner.mjs
+var import_element36 = __toESM(require_element(), 1);
+var import_jsx_runtime60 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
 function getRuntime25() {
   const globalScope = globalThis;
@@ -15868,52 +15938,39 @@ function registerStyle25(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle25("7980f7e8b8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.bbea3dac6f8712ee__root{--_wp-ui-checkbox-control-checkbox-height:16px;--_wp-ui-checkbox-control-label-line-height:max(var(--_wp-ui-checkbox-control-checkbox-height),var(--wpds-typography-line-height-xs,16px))}.d92ba193f3d659b9__checkbox-wrapper{align-items:center;display:flex;height:1lh;line-height:var(--_wp-ui-checkbox-control-label-line-height);overflow:visible}.eafaf9baabcb892a__checkbox{--wp-ui-checkbox-input-size:var(--_wp-ui-checkbox-control-checkbox-height)}.f18cb6bc3fecc497__label{--wp-ui-field-label-line-height:var(--_wp-ui-checkbox-control-label-line-height)}.bbea3dac6f8712ee__root:not(:has(.eafaf9baabcb892a__checkbox[data-disabled])) .f18cb6bc3fecc497__label{cursor:var(--wpds-cursor-control,pointer)}}}");
+  registerStyle25("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 }
-var style_default11 = { "root": "bbea3dac6f8712ee__root", "checkbox-wrapper": "d92ba193f3d659b9__checkbox-wrapper", "checkbox": "eafaf9baabcb892a__checkbox", "label": "f18cb6bc3fecc497__label" };
-var ITEM_RENDER = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Stack, { gap: "sm", align: "start" });
-var TextContainer = ({
-  isStack,
-  ...restProps
-}) => isStack ? /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Stack, { direction: "column", gap: "xs", ...restProps }) : /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(import_element35.Fragment, { ...restProps });
-var CheckboxControl = (0, import_element35.forwardRef)(function UnforwardedCheckboxControl({
-  label,
-  description,
-  details,
-  hideLabelFromVision,
-  className,
-  name,
-  ...checkboxProps
-}, ref) {
-  const hasSupportingText = !!description || !!details;
-  return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(field_exports.Root, { name, className: clsx_default(style_default11.root, className), children: /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(field_exports.Item, { render: ITEM_RENDER, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime61.jsx)("div", { className: style_default11["checkbox-wrapper"], children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-      Checkbox,
+var resets_default6 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+if (typeof process === "undefined" || true) {
+  registerStyle25("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
+}
+var item_popup_default7 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
+if (typeof process === "undefined" || true) {
+  registerStyle25("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
+}
+var style_default13 = { "positioner": "cc0f09fba19eb669__positioner", "list": "_3a3c25e09f4fd1ec__list" };
+var Positioner = (0, import_element36.forwardRef)(
+  function SelectPositioner3({ className, alignItemWithTrigger = true, ...props }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+      index_parts_exports4.Positioner,
       {
+        ...ITEM_POPUP_POSITIONER_PROPS,
+        ...props,
+        alignItemWithTrigger,
         ref,
-        className: style_default11.checkbox,
-        ...checkboxProps
+        className: clsx_default(
+          resets_default6["box-sizing"],
+          style_default13.positioner,
+          alignItemWithTrigger && item_popup_default7["is-align-item-with-trigger"],
+          className
+        )
       }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(TextContainer, { isStack: hasSupportingText, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
-        field_exports.Label,
-        {
-          variant: "plain",
-          hideFromVision: hideLabelFromVision,
-          className: style_default11.label,
-          children: label
-        }
-      ),
-      description && /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(field_exports.Description, { children: description }),
-      details && /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(field_exports.Details, { children: details })
-    ] })
-  ] }) });
-});
+    );
+  }
+);
 
-// packages/ui/build-module/form/input-control/input-control.mjs
-var import_element36 = __toESM(require_element(), 1);
-var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/select/popup.mjs
+var import_jsx_runtime61 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE26 = "data-wp-hash";
 function getRuntime26() {
   const globalScope = globalThis;
@@ -15995,149 +16052,55 @@ function registerStyle26(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle26("1122fa5d0a", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{@supports (-webkit-hyphens:none) and (not (-moz-appearance:none)){.df5861c8fb684609__root input[type=date]:not([data-filled]):not(:focus),.df5861c8fb684609__root input[type=datetime-local]:not([data-filled]):not(:focus),.df5861c8fb684609__root input[type=time]:not([data-filled]):not(:focus){--_gcd-input-color:transparent;--_gcd-input-color-disabled:transparent;color:transparent;&:disabled::-webkit-datetime-edit-text{color:transparent}}}}}");
+  registerStyle26("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
 }
-var style_default12 = { "root": "df5861c8fb684609__root" };
-var InputControl = (0, import_element36.forwardRef)(
-  function UnforwardedInputControl({
-    className,
-    label,
-    description,
-    details,
-    hideLabelFromVision,
-    ...restProps
-  }, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime62.jsxs)(field_exports.Root, { className: clsx_default(style_default12.root, className), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Input3, { ref, ...restProps }),
-      description && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(field_exports.Description, { children: description }),
-      details && /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(field_exports.Details, { children: details })
-    ] });
-  }
-);
-
-// packages/ui/build-module/form/select-control/select-control.mjs
-var import_element39 = __toESM(require_element(), 1);
-
-// packages/ui/build-module/form/select-control/dev-warnings.mjs
-var import_warning = __toESM(require_warning(), 1);
-function warnSelectControlProps(items, itemToStringValue) {
-  if (!itemToStringValue && items?.some((item) => item.value === "")) {
-    (0, import_warning.default)(
-      "SelectControl: empty string item values are treated as empty selections by default. Use a non-empty item value or return a non-empty string from `itemToStringValue`. Use `null` for an option that clears the selection."
+var item_popup_default8 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
+if (typeof process === "undefined" || true) {
+  registerStyle26("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
+}
+var style_default14 = { "positioner": "cc0f09fba19eb669__positioner", "list": "_3a3c25e09f4fd1ec__list" };
+var Popup = (0, import_element37.forwardRef)(
+  function UnforwardedPopup({ className, portal, positioner, width, children, ...restProps }, ref) {
+    const popupContent = /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+      index_parts_exports4.Popup,
+      {
+        ref,
+        className: clsx_default(
+          item_popup_default8.popup,
+          getItemPopupWidthClassName(width),
+          className
+        ),
+        ...restProps,
+        children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+          index_parts_exports4.List,
+          {
+            className: clsx_default(
+              item_popup_default8["list-chrome"],
+              style_default14.list
+            ),
+            children
+          }
+        )
+      }
     );
-  }
-}
-
-// packages/ui/build-module/form/select-control/item.mjs
-var import_element37 = __toESM(require_element(), 1);
-var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
-var Item3 = (0, import_element37.forwardRef)(
-  function UnforwardedItem3(props, ref) {
-    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(select_exports.Item, { ref, ...props });
+    const positionedPopup = renderSlotWithChildren(
+      positioner,
+      /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Positioner, {}),
+      popupContent
+    );
+    return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Portal, {}), positionedPopup);
   }
 );
 
-// packages/ui/build-module/form/select-control/trigger.mjs
+// packages/ui/build-module/form/primitives/select/root.mjs
+var import_jsx_runtime62 = __toESM(require_jsx_runtime(), 1);
+function Root2(props) {
+  return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(index_parts_exports4.Root, { ...props }) });
+}
+
+// packages/ui/build-module/form/primitives/select/separator.mjs
 var import_element38 = __toESM(require_element(), 1);
-var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
-var Trigger2 = (0, import_element38.forwardRef)(function UnforwardedTrigger2(props, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(select_exports.Trigger, { ref, ...props });
-});
-
-// packages/ui/build-module/form/select-control/select-control.mjs
-var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
-var DEFAULT_TRIGGER = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(Trigger2, {});
-var SelectControl = (0, import_element39.forwardRef)(function UnforwardedSelectControl({
-  className,
-  children,
-  items,
-  label,
-  description,
-  details,
-  hideLabelFromVision,
-  placeholder,
-  popupWidth = "content",
-  size: size4 = "default",
-  trigger,
-  ...restProps
-}, ref) {
-  if (true) {
-    warnSelectControlProps(items, restProps.itemToStringValue);
-  }
-  const triggerElement = useRender({
-    render: trigger ?? DEFAULT_TRIGGER,
-    ref,
-    props: { placeholder, size: size4 }
-  });
-  return /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)(field_exports.Root, { className, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
-    /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)(select_exports.Root, { items, ...restProps, children: [
-      triggerElement,
-      /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(select_exports.Popup, { width: popupWidth, children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)(
-        Item3,
-        {
-          value: item,
-          label: item.label,
-          disabled: item.disabled,
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(select_exports.ItemLabel, { children: item.label }),
-            item.description ? /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(select_exports.ItemDescription, { children: item.description }) : null
-          ]
-        },
-        item.value ?? "null"
-      )) })
-    ] }),
-    description && /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(field_exports.Description, { children: description }),
-    details && /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(field_exports.Details, { children: details })
-  ] });
-});
-
-// packages/ui/build-module/form/select-control/index.mjs
-Trigger2.displayName = "SelectControl.Trigger";
-Group.displayName = "SelectControl.Group";
-GroupLabel.displayName = "SelectControl.GroupLabel";
-Item3.displayName = "SelectControl.Item";
-ItemLabel.displayName = "SelectControl.ItemLabel";
-ItemDescription.displayName = "SelectControl.ItemDescription";
-var SelectControl2 = Object.assign(SelectControl, {
-  /**
-   * The trigger button, passed through the `trigger` prop to customize
-   * its props while retaining the control's label and selected content.
-   */
-  Trigger: Trigger2,
-  /**
-   * Groups related items together with an associated label rendered by
-   * `SelectControl.GroupLabel`.
-   */
-  Group,
-  /**
-   * Renders a label for a `SelectControl.Group`.
-   */
-  GroupLabel,
-  /**
-   * An item rendered inside a `SelectControl` popup.
-   */
-  Item: Item3,
-  /**
-   * The primary label of a select item.
-   */
-  ItemLabel,
-  /**
-   * Supplementary content that describes a select item via
-   * `aria-describedby`.
-   */
-  ItemDescription,
-  /**
-   * Renders a visual separator between items or groups.
-   */
-  Separator
-});
-
-// packages/core-fields/build-module/post_type_supports/author/view.mjs
-var import_data = __toESM(require_data(), 1);
-var import_core_data = __toESM(require_core_data(), 1);
-var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime63 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
 function getRuntime27() {
   const globalScope = globalThis;
@@ -16219,202 +16182,30 @@ function registerStyle27(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle27("9c246501a5", "._66de93a96eb5a44f__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}._66de93a96eb5a44f__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){._66de93a96eb5a44f__avatar img{transition:opacity .1s linear}}._66de93a96eb5a44f__avatar.fe521286e51cb220__is-loaded img{opacity:1}.dbd5d0f448658ef9__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.dbd5d0f448658ef9__icon svg{fill:currentColor;margin-inline-start:-4px}._5026ec0f3be21164__name{overflow:hidden;text-overflow:ellipsis}");
+  registerStyle27("3216063ee3", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.d9264111e7a7c67f__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._45e171550f9aeb70__is-width-anchor{width:var(--anchor-width)}&._4a693d46f1bbdf9b__is-width-content{width:auto}&._0d9357ab03bad665__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._505a04375887a2d9__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._2c937799ce4ea16b__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&.c3730374f7c6415d__is-width-available{width:var(--available-width)}}._45c0b816f6580978__is-align-item-with-trigger[data-side=none] .d9264111e7a7c67f__popup{max-height:none}.b648eeba36fedb7a__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._9cb28630e0879b7e__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}.eacd4d947002e6ad__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._53f38edc8fb4ee8e__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}.e221ad93b4009947__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._53f38edc8fb4ee8e__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._6f8b166a5c103d8d__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._5f19eca4fc579760__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}.f76795affa90d2ce__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.dbf1be2276d928fb__item{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:has(>._9cb28630e0879b7e__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}&._064773e63510c37f__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._9dbf0356b5d1bc84__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._9cb28630e0879b7e__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);pointer-events:none}._9dbf0356b5d1bc84__item-indicator-icon{translate:0 1px}.cc76b8a5bd204637__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._8ee93f1cb7ea3257__item-text{display:flex;flex-direction:column;min-width:0}.fe3a67e5d93ab750__item-label{--_gcd-heading-color:currentColor;min-width:0}.e3234169b006e026__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.dbf1be2276d928fb__item[data-disabled] .e3234169b006e026__item-description,.dbf1be2276d928fb__item[data-highlighted]:not([data-disabled]) .e3234169b006e026__item-description{--_gcd-heading-color:currentColor;color:inherit}.a3fd6666fe22b502__status{grid-area:status}._07e9f58b0a710305__empty:not(:empty){grid-area:main}._07e9f58b0a710305__empty:not(:empty),.a3fd6666fe22b502__status:not(:empty):not(:has([data-visually-hidden])){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}}');
 }
-var style_default13 = { "avatar": "_66de93a96eb5a44f__avatar", "is-loaded": "fe521286e51cb220__is-loaded", "icon": "dbd5d0f448658ef9__icon", "name": "_5026ec0f3be21164__name" };
-function AuthorView({ item }) {
-  const authorId = item?.author;
-  const embeddedAuthorId = item?._embedded?.author?.[0]?.id;
-  const shouldFetch = Boolean(
-    authorId && (!embeddedAuthorId || authorId !== embeddedAuthorId)
-  );
-  const { author, hasResolved } = (0, import_data.useSelect)(
-    (select) => {
-      if (!shouldFetch) {
-        return { author: null, hasResolved: true };
-      }
-      const { getEntityRecords, hasFinishedResolution } = select(import_core_data.store);
-      const query = {
-        include: [authorId],
-        who: "authors",
-        context: "view"
-      };
-      return {
-        author: getEntityRecords("root", "user", query)?.[0] ?? null,
-        hasResolved: hasFinishedResolution("getEntityRecords", [
-          "root",
-          "user",
-          query
-        ])
-      };
-    },
-    [authorId, shouldFetch]
-  );
-  const text = author?.name || item?._embedded?.author?.[0]?.name;
-  const imageUrl = author?.avatar_urls?.[48] || item?._embedded?.author?.[0]?.avatar_urls?.[48];
-  const [isImageLoaded, setIsImageLoaded] = (0, import_element40.useState)(false);
-  if (!authorId || !text && hasResolved) {
-    return null;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(Stack, { direction: "row", align: "flex-start", children: [
-    !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
-      "div",
+var item_popup_default9 = { "popup": "d9264111e7a7c67f__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_45e171550f9aeb70__is-width-anchor", "is-width-content": "_4a693d46f1bbdf9b__is-width-content", "is-width-sm": "_0d9357ab03bad665__is-width-sm", "is-width-md": "_505a04375887a2d9__is-width-md", "is-width-lg": "_2c937799ce4ea16b__is-width-lg", "is-width-available": "c3730374f7c6415d__is-width-available", "is-align-item-with-trigger": "_45c0b816f6580978__is-align-item-with-trigger", "list-chrome": "b648eeba36fedb7a__list-chrome", "item-icon": "_9cb28630e0879b7e__item-icon", "list": "eacd4d947002e6ad__list b648eeba36fedb7a__list-chrome", "list-scrollable-container": "_53f38edc8fb4ee8e__list-scrollable-container", "list-footer": "e221ad93b4009947__list-footer", "group": "_6f8b166a5c103d8d__group", "group-label": "_5f19eca4fc579760__group-label", "separator": "f76795affa90d2ce__separator", "item": "dbf1be2276d928fb__item", "is-size-small": "_064773e63510c37f__is-size-small", "item-indicator-icon": "_9dbf0356b5d1bc84__item-indicator-icon", "item-content": "cc76b8a5bd204637__item-content", "item-text": "_8ee93f1cb7ea3257__item-text", "item-label": "fe3a67e5d93ab750__item-label", "item-description": "e3234169b006e026__item-description", "status": "a3fd6666fe22b502__status", "empty": "_07e9f58b0a710305__empty" };
+var Separator = (0, import_element38.forwardRef)(
+  function SelectSeparator2({
+    className,
+    orientation: _orientation,
+    ...props
+  }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
+      index_parts_exports4.Separator,
       {
-        className: clsx_default(style_default13.avatar, {
-          [style_default13["is-loaded"]]: isImageLoaded
-        }),
-        children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(
-          "img",
-          {
-            onLoad: () => setIsImageLoaded(true),
-            alt: (0, import_i18n5.__)("Author avatar"),
-            src: imageUrl
-          }
-        )
+        ref,
+        className: clsx_default(item_popup_default9.separator, className),
+        ...props
       }
-    ),
-    !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)("div", { className: style_default13.icon, children: /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(Icon, { icon: comment_author_avatar_default }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime66.jsx)("span", { className: style_default13.name, children: text })
-  ] });
-}
-
-// packages/core-fields/build-module/post_type_supports/author/field.mjs
-var fieldExtensions = {
-  getElements: async () => {
-    const authors = await (0, import_data2.resolveSelect)(import_core_data2.store).getEntityRecords(
-      "root",
-      "user",
-      {
-        per_page: -1,
-        who: "authors",
-        _fields: "id,name",
-        context: "view"
-      }
-    ) ?? [];
-    return authors.map(({ id, name }) => ({
-      value: id,
-      label: name
-    }));
-  },
-  setValue: ({ value }) => ({ author: Number(value) }),
-  render: AuthorView,
-  // A record without `_links` (a bulk edit form has no record) is
-  // treated as allowed, so only an explicit absence of the action hides
-  // the control.
-  isVisible: (item) => !item._links || !!item._links["wp:action-assign-author"]
-};
-
-// packages/core-fields/build-module/shared/has-action-link.mjs
-function hasActionLink(item, action) {
-  if (!item._links) {
-    return true;
+    );
   }
-  return !!item._links[action];
-}
-
-// packages/core-fields/build-module/post_type_supports/date/view.mjs
-var import_i18n6 = __toESM(require_i18n(), 1);
-var import_element41 = __toESM(require_element(), 1);
-var import_date = __toESM(require_date(), 1);
-var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
-var getFormattedDate = (dateToDisplay) => (0, import_date.dateI18n)(
-  (0, import_date.getSettings)().formats.datetimeAbbreviated,
-  (0, import_date.getDate)(dateToDisplay)
 );
-var DateView = ({ item }) => {
-  const isDraftOrPrivate = ["draft", "private"].includes(
-    item.status ?? ""
-  );
-  if (isDraftOrPrivate) {
-    return (0, import_element41.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
-        /* translators: %s: page creation or modification date. */
-        (0, import_i18n6.__)("<span>Modified: <time>%s</time></span>"),
-        getFormattedDate(item.date ?? null)
-      ),
-      {
-        span: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", {}),
-        time: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("time", {})
-      }
-    );
-  }
-  const isScheduled = item.status === "future";
-  if (isScheduled) {
-    return (0, import_element41.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
-        /* translators: %s: page creation date */
-        (0, import_i18n6.__)("<span>Scheduled: <time>%s</time></span>"),
-        getFormattedDate(item.date ?? null)
-      ),
-      {
-        span: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", {}),
-        time: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("time", {})
-      }
-    );
-  }
-  const isPublished = item.status === "publish";
-  if (isPublished) {
-    return (0, import_element41.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
-        /* translators: %s: page creation time */
-        (0, import_i18n6.__)("<span>Published: <time>%s</time></span>"),
-        getFormattedDate(item.date ?? null)
-      ),
-      {
-        span: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", {}),
-        time: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("time", {})
-      }
-    );
-  }
-  const dateToDisplay = (0, import_date.getDate)(item.modified ?? null) > (0, import_date.getDate)(item.date ?? null) ? item.modified : item.date;
-  const isPending = item.status === "pending";
-  if (isPending) {
-    return (0, import_element41.createInterpolateElement)(
-      (0, import_i18n6.sprintf)(
-        /* translators: %s: page creation or modification date. */
-        (0, import_i18n6.__)("<span>Modified: <time>%s</time></span>"),
-        getFormattedDate(dateToDisplay ?? null)
-      ),
-      {
-        span: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", {}),
-        time: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("time", {})
-      }
-    );
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("time", { children: getFormattedDate(item.date ?? null) });
-};
-var view_default = DateView;
 
-// packages/core-fields/build-module/post_type_supports/date/field.mjs
-var fieldExtensions2 = {
-  // Only the users who can publish the post see the control.
-  isVisible: (item) => hasActionLink(item, "wp:action-publish"),
-  render: view_default
-};
-
-// packages/core-fields/build-module/post_type_supports/discussion/field.mjs
-var import_i18n7 = __toESM(require_i18n(), 1);
-var fieldExtensions3 = {
-  render: ({ item }) => {
-    const commentsOpen = item.comment_status === "open";
-    const pingsOpen = item.ping_status === "open";
-    if (commentsOpen && pingsOpen) {
-      return (0, import_i18n7.__)("Open");
-    }
-    if (commentsOpen && !pingsOpen) {
-      return (0, import_i18n7.__)("Comments only");
-    }
-    if (!commentsOpen && pingsOpen) {
-      return (0, import_i18n7.__)("Pings only");
-    }
-    return (0, import_i18n7.__)("Closed");
-  }
-};
-
-// packages/core-fields/build-module/post_type_supports/excerpt/field.mjs
-var import_html_entities = __toESM(require_html_entities(), 1);
-var import_i18n8 = __toESM(require_i18n(), 1);
-var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/primitives/select/trigger.mjs
+var import_element39 = __toESM(require_element(), 1);
+var import_i18n5 = __toESM(require_i18n(), 1);
+var import_jsx_runtime64 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
 function getRuntime28() {
   const globalScope = globalThis;
@@ -16496,116 +16287,71 @@ function registerStyle28(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle28("a762a4ff63", "._6cbb3f8b4541adef__excerpt{-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;display:-webkit-box;overflow:hidden;text-align:start}");
+  registerStyle28("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
 }
-var style_default14 = { "excerpt": "_6cbb3f8b4541adef__excerpt" };
-var fieldExtensions4 = {
-  description: /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(
-    Link,
-    {
-      href: (0, import_i18n8.__)(
-        "https://wordpress.org/documentation/article/page-post-settings-sidebar/#excerpt"
-      ),
-      openInNewTab: true,
-      children: (0, import_i18n8.__)("Learn more about manual excerpts")
-    }
-  ),
-  // Shows the first three lines of the excerpt, as plain text that takes the
-  // typography of where it renders, like the values of other fields.
-  render: ({ item }) => {
-    const excerpt = typeof item.excerpt === "string" ? item.excerpt : item.excerpt?.raw;
-    return excerpt ? /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("span", { className: style_default14.excerpt, children: (0, import_html_entities.decodeEntities)(excerpt) }) : null;
-  }
-};
-
-// packages/core-fields/build-module/post_type_supports/featured_media/edit.mjs
-var import_components = __toESM(require_components(), 1);
-var import_core_data3 = __toESM(require_core_data(), 1);
-var import_data3 = __toESM(require_data(), 1);
-var import_element42 = __toESM(require_element(), 1);
-var import_media_utils = __toESM(require_media_utils(), 1);
-
-// packages/core-fields/build-module/lock-unlock.mjs
-var import_private_apis = __toESM(require_private_apis(), 1);
-var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
-  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
-  "@wordpress/core-fields"
-);
-
-// packages/core-fields/build-module/post_type_supports/featured_media/edit.mjs
-var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
-var { MediaEditControl } = unlock(import_media_utils.privateApis);
-var FilteredMediaEdit = (0, import_components.withFilters)("editor.PostFeaturedImage")(
-  function PostFeaturedImage(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-      MediaEditControl,
+var focus_module_default4 = { "outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus", "outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible", "outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within", "outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active" };
+if (typeof process === "undefined" || true) {
+  registerStyle28("56b0509c70", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.f19aaaa579fccf54__trigger-wrapper{&.bfac6d240be543bd__is-minimal{width:fit-content}}.e1f5987e5bdc9112__trigger{align-items:center;background-color:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:inherit;font-size:inherit;gap:var(--wpds-dimension-gap-xs,4px);justify-content:space-between;line-height:1.4;padding-block:4px;padding-inline-end:calc(var(--wp-ui-input-layout-padding-inline) - 4px);padding-inline-start:var(--wp-ui-input-layout-padding-inline);text-align:start;user-select:none;width:100%;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&.bfac6d240be543bd__is-minimal{width:auto}&:focus{outline:none}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}}.ba63264311039401__trigger-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;.e1f5987e5bdc9112__trigger[data-placeholder]:not([data-disabled]) &{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}}.cb34834e4f533240__trigger-caret{flex:0 0 auto}}}");
+}
+var select_trigger_default = { "trigger-wrapper": "f19aaaa579fccf54__trigger-wrapper", "is-minimal": "bfac6d240be543bd__is-minimal", "trigger": "e1f5987e5bdc9112__trigger", "trigger-value": "ba63264311039401__trigger-value", "trigger-caret": "cb34834e4f533240__trigger-caret" };
+var Trigger = (0, import_element39.forwardRef)(
+  function UnforwardedTrigger({
+    className,
+    size: size4,
+    variant,
+    children,
+    placeholder = (0, import_i18n5.__)("Select"),
+    ...restProps
+  }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+      InputLayout2,
       {
-        ...props,
-        isExpanded: true,
-        isPickerFiltered: true,
-        featuredImageFlow: true,
-        pickerTitle: props.postType?.labels?.featured_image || props.field.label
+        className: clsx_default(
+          focus_module_default4["outset-ring--focus-within-except-active"],
+          select_trigger_default["trigger-wrapper"],
+          variant === "minimal" && select_trigger_default["is-minimal"],
+          className
+        ),
+        size: size4,
+        isBorderless: variant === "minimal",
+        children: /* @__PURE__ */ (0, import_jsx_runtime64.jsxs)(
+          index_parts_exports4.Trigger,
+          {
+            ...restProps,
+            className: clsx_default(
+              select_trigger_default.trigger,
+              variant === "minimal" && select_trigger_default["is-minimal"]
+            ),
+            "data-can-disable-input-layout": true,
+            ref,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+                index_parts_exports4.Value,
+                {
+                  placeholder,
+                  className: select_trigger_default["trigger-value"],
+                  children
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(
+                Icon,
+                {
+                  className: select_trigger_default["trigger-caret"],
+                  icon: chevron_down_default,
+                  size: 18
+                }
+              )
+            ]
+          }
+        )
       }
     );
   }
 );
-function FilteredFeaturedImageEdit(props) {
-  const { data, field, onChange } = props;
-  const featuredImageId = field.getValue({ item: data }) ?? 0;
-  const { media, postType } = (0, import_data3.useSelect)(
-    (select) => {
-      const { getEntityRecords, getPostType } = select(import_core_data3.store);
-      return {
-        // The same query the media control runs, so this adds no request.
-        media: featuredImageId ? getEntityRecords("postType", "attachment", {
-          include: [featuredImageId]
-        })?.[0] ?? null : null,
-        postType: getPostType(data.type)
-      };
-    },
-    [featuredImageId, data.type]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-    FilteredMediaEdit,
-    {
-      ...props,
-      currentPostId: data.id,
-      featuredImageId,
-      media,
-      postType,
-      onRemoveImage: () => onChange(field.setValue({ item: data, value: void 0 }))
-    }
-  );
-}
-function FeaturedImageEdit(props) {
-  const { data } = props;
-  const labels = (0, import_data3.useSelect)(
-    (select) => select(import_core_data3.store).getPostType(data.type)?.labels,
-    [data.type]
-  );
-  const setFeaturedImageLabel = labels?.set_featured_image;
-  const field = (0, import_element42.useMemo)(
-    () => setFeaturedImageLabel ? { ...props.field, placeholder: setFeaturedImageLabel } : props.field,
-    [props.field, setFeaturedImageLabel]
-  );
-  const contextId = (0, import_core_data3.useEntityId)("postType", data.type);
-  if (contextId === void 0 || String(contextId) !== String(data.id)) {
-    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(
-      MediaEditControl,
-      {
-        ...props,
-        field,
-        isExpanded: true,
-        featuredImageFlow: true,
-        pickerTitle: labels?.featured_image || field.label
-      }
-    );
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(FilteredFeaturedImageEdit, { ...props, field });
-}
 
-// packages/core-fields/build-module/post_type_supports/featured_media/view.mjs
-var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/checkbox-control/checkbox-control.mjs
+var import_element40 = __toESM(require_element(), 1);
+var import_jsx_runtime65 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE29 = "data-wp-hash";
 function getRuntime29() {
   const globalScope = globalThis;
@@ -16687,98 +16433,52 @@ function registerStyle29(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle29("1d3386c051", "._6c38af90102e4699__image,._8a1ece60abf4242c__placeholder{border-radius:var(--wpds-border-radius-md,4px);display:block;height:100%;width:100%}._8a1ece60abf4242c__placeholder{background:#f0f0f0;box-shadow:none}");
+  registerStyle29("7980f7e8b8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.bbea3dac6f8712ee__root{--_wp-ui-checkbox-control-checkbox-height:16px;--_wp-ui-checkbox-control-label-line-height:max(var(--_wp-ui-checkbox-control-checkbox-height),var(--wpds-typography-line-height-xs,16px))}.d92ba193f3d659b9__checkbox-wrapper{align-items:center;display:flex;height:1lh;line-height:var(--_wp-ui-checkbox-control-label-line-height);overflow:visible}.eafaf9baabcb892a__checkbox{--wp-ui-checkbox-input-size:var(--_wp-ui-checkbox-control-checkbox-height)}.f18cb6bc3fecc497__label{--wp-ui-field-label-line-height:var(--_wp-ui-checkbox-control-label-line-height)}.bbea3dac6f8712ee__root:not(:has(.eafaf9baabcb892a__checkbox[data-disabled])) .f18cb6bc3fecc497__label{cursor:var(--wpds-cursor-control,pointer)}}}");
 }
-var style_default15 = { "image": "_6c38af90102e4699__image", "placeholder": "_8a1ece60abf4242c__placeholder" };
-function FeaturedImageView({
-  item,
-  config
-}) {
-  const media = item?._embedded?.["wp:featuredmedia"]?.[0];
-  const url = media?.source_url;
-  if (!url) {
-    return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
-      "span",
+var style_default15 = { "root": "bbea3dac6f8712ee__root", "checkbox-wrapper": "d92ba193f3d659b9__checkbox-wrapper", "checkbox": "eafaf9baabcb892a__checkbox", "label": "f18cb6bc3fecc497__label" };
+var ITEM_RENDER = /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(Stack, { gap: "sm", align: "start" });
+var TextContainer = ({
+  isStack,
+  ...restProps
+}) => isStack ? /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(Stack, { direction: "column", gap: "xs", ...restProps }) : /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(import_element40.Fragment, { ...restProps });
+var CheckboxControl = (0, import_element40.forwardRef)(function UnforwardedCheckboxControl({
+  label,
+  description,
+  details,
+  hideLabelFromVision,
+  className,
+  name,
+  ...checkboxProps
+}, ref) {
+  const hasSupportingText = !!description || !!details;
+  return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(field_exports.Root, { name, className: clsx_default(style_default15.root, className), children: /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)(field_exports.Item, { render: ITEM_RENDER, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("div", { className: style_default15["checkbox-wrapper"], children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
+      Checkbox,
       {
-        className: clsx_default(
-          "fields-controls__featured-image-placeholder",
-          style_default15.placeholder
-        )
+        ref,
+        className: style_default15.checkbox,
+        ...checkboxProps
       }
-    );
-  }
-  const sizes = media?.media_details?.sizes;
-  return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
-    "img",
-    {
-      className: clsx_default(
-        "fields-controls__featured-image-image",
-        style_default15.image
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)(TextContainer, { isStack: hasSupportingText, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(
+        field_exports.Label,
+        {
+          variant: "plain",
+          hideFromVision: hideLabelFromVision,
+          className: style_default15.label,
+          children: label
+        }
       ),
-      src: url,
-      alt: "",
-      srcSet: sizes ? Object.values(sizes).map(
-        (size4) => `${size4.source_url} ${size4.width}w`
-      ).join(", ") : void 0,
-      sizes: config?.sizes || "100vw"
-    }
-  );
-}
+      description && /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(field_exports.Description, { children: description }),
+      details && /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(field_exports.Details, { children: details })
+    ] })
+  ] }) });
+});
 
-// packages/core-fields/build-module/post_type_supports/featured_media/field.mjs
-var fieldExtensions5 = {
-  Edit: FeaturedImageEdit,
-  render: FeaturedImageView,
-  // A post without a featured image stores `0`, not an empty value.
-  setValue: ({ value }) => ({
-    featured_media: value ?? 0
-  })
-};
-
-// packages/core-fields/build-module/post_type_supports/last_edited_date/view.mjs
-var import_i18n9 = __toESM(require_i18n(), 1);
-var import_date2 = __toESM(require_date(), 1);
-var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
-function LastEditedDateView({
-  item
-}) {
-  if (!item.modified) {
-    return null;
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(Text, { children: (0, import_i18n9.sprintf)(
-    // translators: %s: Human-readable time difference, e.g. "2 days ago".
-    (0, import_i18n9.__)("Last edited %s."),
-    (0, import_date2.humanTimeDiff)(item.modified)
-  ) });
-}
-
-// packages/core-fields/build-module/post_type_supports/last_edited_date/field.mjs
-var fieldExtensions6 = {
-  getValue: ({ item }) => item.modified,
-  isVisible: (item) => !!item.modified,
-  render: LastEditedDateView
-};
-
-// packages/core-fields/build-module/post_type_supports/parent/edit.mjs
-var import_remove_accents = __toESM(require_remove_accents(), 1);
-var import_components2 = __toESM(require_components(), 1);
-var import_data4 = __toESM(require_data(), 1);
-var import_element43 = __toESM(require_element(), 1);
-var import_core_data4 = __toESM(require_core_data(), 1);
-var import_compose = __toESM(require_compose(), 1);
-var import_html_entities3 = __toESM(require_html_entities(), 1);
-var import_i18n11 = __toESM(require_i18n(), 1);
-var import_url = __toESM(require_url(), 1);
-
-// packages/core-fields/build-module/post_type_supports/parent/utils.mjs
-var import_html_entities2 = __toESM(require_html_entities(), 1);
-var import_i18n10 = __toESM(require_i18n(), 1);
-function getTitleWithFallbackName(post) {
-  return typeof post.title === "object" && "rendered" in post.title && post.title.rendered ? (0, import_html_entities2.decodeEntities)(post.title.rendered) : `#${post?.id} (${(0, import_i18n10.__)("no title")})`;
-}
-
-// packages/core-fields/build-module/post_type_supports/parent/edit.mjs
-var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+// packages/ui/build-module/form/input-control/input-control.mjs
+var import_element41 = __toESM(require_element(), 1);
+var import_jsx_runtime66 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
 function getRuntime30() {
   const globalScope = globalThis;
@@ -16860,258 +16560,149 @@ function registerStyle30(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle30("b954f68ff1", "._9f5fd4053ee0af14__parent{border:0;margin:0;padding:0}");
+  registerStyle30("1122fa5d0a", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{@supports (-webkit-hyphens:none) and (not (-moz-appearance:none)){.df5861c8fb684609__root input[type=date]:not([data-filled]):not(:focus),.df5861c8fb684609__root input[type=datetime-local]:not([data-filled]):not(:focus),.df5861c8fb684609__root input[type=time]:not([data-filled]):not(:focus){--_gcd-input-color:transparent;--_gcd-input-color-disabled:transparent;color:transparent;&:disabled::-webkit-datetime-edit-text{color:transparent}}}}}");
 }
-var style_default16 = { "parent": "_9f5fd4053ee0af14__parent" };
-function buildTermsTree(flatTerms) {
-  const flatTermsWithParentAndChildren = flatTerms.map((term) => {
-    return {
-      children: [],
-      ...term
-    };
-  });
-  if (flatTermsWithParentAndChildren.some(
-    ({ parent }) => parent === null || parent === void 0
-  )) {
-    return flatTermsWithParentAndChildren;
+var style_default16 = { "root": "df5861c8fb684609__root" };
+var InputControl = (0, import_element41.forwardRef)(
+  function UnforwardedInputControl({
+    className,
+    label,
+    description,
+    details,
+    hideLabelFromVision,
+    ...restProps
+  }, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime66.jsxs)(field_exports.Root, { className: clsx_default(style_default16.root, className), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(Input3, { ref, ...restProps }),
+      description && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(field_exports.Description, { children: description }),
+      details && /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(field_exports.Details, { children: details })
+    ] });
   }
-  const termsByParent = flatTermsWithParentAndChildren.reduce(
-    (acc, term) => {
-      const { parent } = term;
-      if (!acc[parent]) {
-        acc[parent] = [];
-      }
-      acc[parent].push(term);
-      return acc;
-    },
-    {}
-  );
-  const fillWithChildren = (terms) => {
-    return terms.map((term) => {
-      const children = termsByParent[term.id];
-      return {
-        ...term,
-        children: children && children.length ? fillWithChildren(children) : []
-      };
-    });
-  };
-  return fillWithChildren(termsByParent["0"] || []);
-}
-var getItemPriority = (name, searchValue) => {
-  const normalizedName = (0, import_remove_accents.default)(name || "").toLowerCase();
-  const normalizedSearch = (0, import_remove_accents.default)(searchValue || "").toLowerCase();
-  if (normalizedName === normalizedSearch) {
-    return 0;
-  }
-  if (normalizedName.startsWith(normalizedSearch)) {
-    return normalizedName.length;
-  }
-  return Infinity;
-};
-function PageAttributesParent({
-  data,
-  onChangeControl
-}) {
-  const [fieldValue, setFieldValue] = (0, import_element43.useState)("");
-  const pageId = data.parent;
-  const postId = data.id;
-  const postTypeSlug = data.type;
-  const { parentPostTitle, pageItems, isHierarchical } = (0, import_data4.useSelect)(
-    (select) => {
-      const { getEntityRecord, getEntityRecords, getPostType } = select(import_core_data4.store);
-      const postTypeInfo = getPostType(postTypeSlug);
-      const postIsHierarchical = postTypeInfo?.hierarchical && postTypeInfo.viewable;
-      const parentPost = pageId ? getEntityRecord(
-        "postType",
-        postTypeSlug,
-        pageId
-      ) : null;
-      const query = {
-        per_page: 100,
-        exclude: postId,
-        parent_exclude: postId,
-        orderby: "menu_order",
-        order: "asc",
-        _fields: "id,title,parent",
-        ...!!fieldValue && {
-          // Perform a search by relevance when the field is changed.
-          search: fieldValue,
-          orderby: "relevance",
-          search_columns: ["post_title"]
-        }
-      };
-      return {
-        isHierarchical: postIsHierarchical,
-        parentPostTitle: parentPost ? getTitleWithFallbackName(parentPost) : "",
-        pageItems: postIsHierarchical ? getEntityRecords(
-          "postType",
-          postTypeSlug,
-          query
-        ) : null
-      };
-    },
-    [fieldValue, pageId, postId, postTypeSlug]
-  );
-  const parentOptions = (0, import_element43.useMemo)(() => {
-    const getOptionsFromTree = (tree2, level = 0) => {
-      const mappedNodes = tree2.map((treeNode) => [
-        {
-          value: treeNode.id,
-          label: "— ".repeat(level) + (0, import_html_entities3.decodeEntities)(treeNode.name),
-          rawName: treeNode.name
-        },
-        ...getOptionsFromTree(treeNode.children || [], level + 1)
-      ]);
-      const sortedNodes = mappedNodes.sort(([a], [b]) => {
-        const priorityA = getItemPriority(a.rawName, fieldValue);
-        const priorityB = getItemPriority(b.rawName, fieldValue);
-        return priorityA >= priorityB ? 1 : -1;
-      });
-      return sortedNodes.flat();
-    };
-    if (!pageItems) {
-      return [];
-    }
-    let tree = pageItems.map((item) => ({
-      id: item.id,
-      parent: item.parent ?? null,
-      name: getTitleWithFallbackName(item)
-    }));
-    if (!fieldValue) {
-      tree = buildTermsTree(tree);
-    }
-    const opts = getOptionsFromTree(tree);
-    const optsHasParent = opts.find((item) => item.value === pageId);
-    if (pageId && parentPostTitle && !optsHasParent) {
-      opts.unshift({
-        value: pageId,
-        label: parentPostTitle,
-        rawName: ""
-      });
-    }
-    return opts.map((option) => ({
-      ...option,
-      value: option.value.toString()
-    }));
-  }, [pageItems, fieldValue, parentPostTitle, pageId]);
-  if (!isHierarchical) {
-    return null;
-  }
-  const handleKeydown = (inputValue) => {
-    setFieldValue(inputValue);
-  };
-  const handleChange = (selectedPostId) => {
-    if (selectedPostId) {
-      return onChangeControl(parseInt(selectedPostId, 10) ?? 0);
-    }
-    onChangeControl(0);
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-    import_components2.ComboboxControl,
-    {
-      label: (0, import_i18n11.__)("Parent"),
-      help: (0, import_i18n11.__)("Choose a parent page."),
-      value: pageId?.toString(),
-      options: parentOptions,
-      onFilterValueChange: (0, import_compose.debounce)(
-        (value) => handleKeydown(value),
-        300
-      ),
-      onChange: handleChange,
-      hideLabelFromVision: true
-    }
-  );
-}
-var ParentEdit = ({
-  data,
-  field,
-  onChange
-}) => {
-  const { id } = field;
-  const homeUrl = (0, import_data4.useSelect)((select) => {
-    return select(import_core_data4.store).getEntityRecord("root", "__unstableBase")?.home;
-  }, []);
-  const onChangeControl = (0, import_element43.useCallback)(
-    (newValue) => onChange({
-      [id]: newValue
-    }),
-    [id, onChange]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("fieldset", { className: style_default16.parent, children: /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)("div", { children: [
-    (0, import_element43.createInterpolateElement)(
-      (0, import_i18n11.sprintf)(
-        /* translators: %1$s The home URL of the WordPress installation without the scheme. */
-        (0, import_i18n11.__)(
-          'Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %1$s<wbr />/services<wbr />/pricing.'
-        ),
-        (0, import_url.filterURLForDisplay)(homeUrl).replace(
-          /([/.])/g,
-          "<wbr />$1"
-        )
-      ),
-      {
-        wbr: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("wbr", {})
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("p", { children: (0, import_element43.createInterpolateElement)(
-      (0, import_i18n11.__)(
-        "They also show up as sub-items in the default navigation menu. <a>Learn more.</a>"
-      ),
-      {
-        a: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-          Link,
-          {
-            href: (0, import_i18n11.__)(
-              "https://wordpress.org/documentation/article/page-post-settings-sidebar/#page-attributes"
-            ),
-            openInNewTab: true
-          }
-        )
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
-      PageAttributesParent,
-      {
-        data,
-        onChangeControl
-      }
-    )
-  ] }) });
-};
+);
 
-// packages/core-fields/build-module/post_type_supports/parent/view.mjs
-var import_data5 = __toESM(require_data(), 1);
-var import_core_data5 = __toESM(require_core_data(), 1);
-var import_i18n12 = __toESM(require_i18n(), 1);
-var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
-var ParentView = ({ item }) => {
-  const parent = (0, import_data5.useSelect)(
-    (select) => {
-      const { getEntityRecord } = select(import_core_data5.store);
-      return item?.parent ? getEntityRecord(
-        "postType",
-        item.type,
-        item.parent
-      ) : null;
-    },
-    [item.parent, item.type]
-  );
-  if (parent) {
-    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_jsx_runtime73.Fragment, { children: getTitleWithFallbackName(parent) });
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(import_jsx_runtime73.Fragment, { children: (0, import_i18n12.__)("None") });
-};
-
-// packages/core-fields/build-module/post_type_supports/parent/field.mjs
-var fieldExtensions7 = {
-  Edit: ParentEdit,
-  render: ParentView
-};
-
-// packages/core-fields/build-module/post_type_supports/password/edit.mjs
+// packages/ui/build-module/form/select-control/select-control.mjs
 var import_element44 = __toESM(require_element(), 1);
-var import_i18n13 = __toESM(require_i18n(), 1);
-var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+
+// packages/ui/build-module/form/select-control/dev-warnings.mjs
+var import_warning = __toESM(require_warning(), 1);
+function warnSelectControlProps(items, itemToStringValue) {
+  if (!itemToStringValue && items?.some((item) => item.value === "")) {
+    (0, import_warning.default)(
+      "SelectControl: empty string item values are treated as empty selections by default. Use a non-empty item value or return a non-empty string from `itemToStringValue`. Use `null` for an option that clears the selection."
+    );
+  }
+}
+
+// packages/ui/build-module/form/select-control/item.mjs
+var import_element42 = __toESM(require_element(), 1);
+var import_jsx_runtime67 = __toESM(require_jsx_runtime(), 1);
+var Item3 = (0, import_element42.forwardRef)(
+  function UnforwardedItem3(props, ref) {
+    return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(select_exports.Item, { ref, ...props });
+  }
+);
+
+// packages/ui/build-module/form/select-control/trigger.mjs
+var import_element43 = __toESM(require_element(), 1);
+var import_jsx_runtime68 = __toESM(require_jsx_runtime(), 1);
+var Trigger2 = (0, import_element43.forwardRef)(function UnforwardedTrigger2(props, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(select_exports.Trigger, { ref, ...props });
+});
+
+// packages/ui/build-module/form/select-control/select-control.mjs
+var import_jsx_runtime69 = __toESM(require_jsx_runtime(), 1);
+var DEFAULT_TRIGGER = /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(Trigger2, {});
+var SelectControl = (0, import_element44.forwardRef)(function UnforwardedSelectControl({
+  className,
+  children,
+  items,
+  label,
+  description,
+  details,
+  hideLabelFromVision,
+  placeholder,
+  popupWidth = "content",
+  size: size4 = "default",
+  trigger,
+  ...restProps
+}, ref) {
+  if (true) {
+    warnSelectControlProps(items, restProps.itemToStringValue);
+  }
+  const triggerElement = useRender({
+    render: trigger ?? DEFAULT_TRIGGER,
+    ref,
+    props: { placeholder, size: size4 }
+  });
+  return /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(field_exports.Root, { className, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(field_exports.Label, { hideFromVision: hideLabelFromVision, children: label }),
+    /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(select_exports.Root, { items, ...restProps, children: [
+      triggerElement,
+      /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(select_exports.Popup, { width: popupWidth, children: children !== void 0 ? children : items?.map((item) => /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)(
+        Item3,
+        {
+          value: item,
+          label: item.label,
+          disabled: item.disabled,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(select_exports.ItemLabel, { children: item.label }),
+            item.description ? /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(select_exports.ItemDescription, { children: item.description }) : null
+          ]
+        },
+        item.value ?? "null"
+      )) })
+    ] }),
+    description && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(field_exports.Description, { children: description }),
+    details && /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(field_exports.Details, { children: details })
+  ] });
+});
+
+// packages/ui/build-module/form/select-control/index.mjs
+Trigger2.displayName = "SelectControl.Trigger";
+Group.displayName = "SelectControl.Group";
+GroupLabel.displayName = "SelectControl.GroupLabel";
+Item3.displayName = "SelectControl.Item";
+ItemLabel.displayName = "SelectControl.ItemLabel";
+ItemDescription.displayName = "SelectControl.ItemDescription";
+var SelectControl2 = Object.assign(SelectControl, {
+  /**
+   * The trigger button, passed through the `trigger` prop to customize
+   * its props while retaining the control's label and selected content.
+   */
+  Trigger: Trigger2,
+  /**
+   * Groups related items together with an associated label rendered by
+   * `SelectControl.GroupLabel`.
+   */
+  Group,
+  /**
+   * Renders a label for a `SelectControl.Group`.
+   */
+  GroupLabel,
+  /**
+   * An item rendered inside a `SelectControl` popup.
+   */
+  Item: Item3,
+  /**
+   * The primary label of a select item.
+   */
+  ItemLabel,
+  /**
+   * Supplementary content that describes a select item via
+   * `aria-describedby`.
+   */
+  ItemDescription,
+  /**
+   * Renders a visual separator between items or groups.
+   */
+  Separator
+});
+
+// packages/core-fields/build-module/post_type_supports/author/view.mjs
+var import_data = __toESM(require_data(), 1);
+var import_core_data = __toESM(require_core_data(), 1);
+var import_jsx_runtime70 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE31 = "data-wp-hash";
 function getRuntime31() {
   const globalScope = globalThis;
@@ -17193,98 +16784,132 @@ function registerStyle31(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle31("c8c90f7a0c", ":where(.b3be8e46f9a2e766__password){border:0;margin:0;padding:0}");
+  registerStyle31("9c246501a5", "._66de93a96eb5a44f__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}._66de93a96eb5a44f__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){._66de93a96eb5a44f__avatar img{transition:opacity .1s linear}}._66de93a96eb5a44f__avatar.fe521286e51cb220__is-loaded img{opacity:1}.dbd5d0f448658ef9__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.dbd5d0f448658ef9__icon svg{fill:currentColor;margin-inline-start:-4px}._5026ec0f3be21164__name{overflow:hidden;text-overflow:ellipsis}");
 }
-var style_default17 = { "password": "b3be8e46f9a2e766__password" };
-function PasswordEdit({
-  data,
-  onChange,
-  field
-}) {
-  const [showPassword, setShowPassword] = (0, import_element44.useState)(
-    !!field.getValue({ item: data })
+var style_default17 = { "avatar": "_66de93a96eb5a44f__avatar", "is-loaded": "fe521286e51cb220__is-loaded", "icon": "dbd5d0f448658ef9__icon", "name": "_5026ec0f3be21164__name" };
+function AuthorView({ item }) {
+  const authorId = item?.author;
+  const embeddedAuthorId = item?._embedded?.author?.[0]?.id;
+  const shouldFetch = Boolean(
+    authorId && (!embeddedAuthorId || authorId !== embeddedAuthorId)
   );
-  const handleTogglePassword = (value) => {
-    setShowPassword(value);
-    if (!value) {
-      onChange({ password: "" });
-    }
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)(
-    Stack,
-    {
-      render: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("fieldset", {}),
-      direction: "column",
-      gap: "lg",
-      className: clsx_default("fields-controls__password", style_default17.password),
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-          CheckboxControl,
+  const { author, hasResolved } = (0, import_data.useSelect)(
+    (select) => {
+      if (!shouldFetch) {
+        return { author: null, hasResolved: true };
+      }
+      const { getEntityRecords, hasFinishedResolution } = select(import_core_data.store);
+      const query = {
+        include: [authorId],
+        who: "authors",
+        context: "view"
+      };
+      return {
+        author: getEntityRecords("root", "user", query)?.[0] ?? null,
+        hasResolved: hasFinishedResolution("getEntityRecords", [
+          "root",
+          "user",
+          query
+        ])
+      };
+    },
+    [authorId, shouldFetch]
+  );
+  const text = author?.name || item?._embedded?.author?.[0]?.name;
+  const imageUrl = author?.avatar_urls?.[48] || item?._embedded?.author?.[0]?.avatar_urls?.[48];
+  const [isImageLoaded, setIsImageLoaded] = (0, import_element45.useState)(false);
+  if (!authorId || !text && hasResolved) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(Stack, { direction: "row", align: "flex-start", children: [
+    !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+      "div",
+      {
+        className: clsx_default(style_default17.avatar, {
+          [style_default17["is-loaded"]]: isImageLoaded
+        }),
+        children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
+          "img",
           {
-            label: (0, import_i18n13.__)("Password protected"),
-            description: (0, import_i18n13.__)(
-              "Only visible to those who know the password"
-            ),
-            checked: showPassword,
-            onCheckedChange: handleTogglePassword
-          }
-        ),
-        showPassword && /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
-          InputControl,
-          {
-            label: (0, import_i18n13.__)("Password"),
-            onValueChange: (value) => onChange({
-              password: value
-            }),
-            value: field.getValue({ item: data }) || "",
-            placeholder: (0, import_i18n13.__)("Use a secure password"),
-            type: "text",
-            maxLength: 255
+            onLoad: () => setIsImageLoaded(true),
+            alt: (0, import_i18n6.__)("Author avatar"),
+            src: imageUrl
           }
         )
-      ]
-    }
+      }
+    ),
+    !imageUrl && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", { className: style_default17.icon, children: /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(Icon, { icon: comment_author_avatar_default }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { className: style_default17.name, children: text })
+  ] });
+}
+
+// packages/core-fields/build-module/post_type_supports/author/field.mjs
+var fieldExtensions = {
+  getElements: async () => {
+    const authors = await (0, import_data2.resolveSelect)(import_core_data2.store).getEntityRecords(
+      "root",
+      "user",
+      {
+        per_page: -1,
+        who: "authors",
+        _fields: "id,name",
+        context: "view"
+      }
+    ) ?? [];
+    return authors.map(({ id, name }) => ({
+      value: id,
+      label: name
+    }));
+  },
+  setValue: ({ value }) => ({ author: Number(value) }),
+  render: AuthorView,
+  // A record without `_links` (a bulk edit form has no record) is
+  // treated as allowed, so only an explicit absence of the action hides
+  // the control.
+  isVisible: (item) => !item._links || !!item._links["wp:action-assign-author"]
+};
+
+// packages/core-fields/build-module/shared/has-action-link.mjs
+function hasActionLink(item, action) {
+  if (!item._links) {
+    return true;
+  }
+  return !!item._links[action];
+}
+
+// packages/core-fields/build-module/post_type_supports/date/edit.mjs
+var import_components = __toESM(require_components(), 1);
+var import_core_data3 = __toESM(require_core_data(), 1);
+var import_data3 = __toESM(require_data(), 1);
+var import_date3 = __toESM(require_date(), 1);
+var import_element46 = __toESM(require_element(), 1);
+var import_i18n7 = __toESM(require_i18n(), 1);
+import { speak } from "@wordpress/a11y";
+
+// packages/core-fields/build-module/post_type_supports/date/is-date-floating.mjs
+function isDateFloating(item) {
+  if (!["draft", "auto-draft", "pending"].includes(item.status ?? "")) {
+    return false;
+  }
+  return item.date === null || item.date === item.modified;
+}
+
+// packages/core-fields/build-module/post_type_supports/date/is-12-hour-time.mjs
+var import_date = __toESM(require_date(), 1);
+function is12HourTime() {
+  return /a(?!\\)/i.test(
+    (0, import_date.getSettings)().formats.time.toLowerCase().replace(/\\\\/g, "").split("").reverse().join("")
   );
 }
 
-// packages/core-fields/build-module/post_type_supports/password/field.mjs
-var fieldExtensions8 = {
-  Edit: PasswordEdit,
-  // Private posts cannot have a password, and only the users who can
-  // publish the post see the control.
-  isVisible: (item) => item.status !== "private" && hasActionLink(item, "wp:action-publish")
-};
+// packages/core-fields/build-module/post_type_supports/date/is-published-on-save.mjs
+var import_date2 = __toESM(require_date(), 1);
+function isPublishedOnSave(date) {
+  return !(0, import_date2.isInTheFuture)(new Date(Number((0, import_date2.getDate)(date)) - 60 * 1e3));
+}
 
-// packages/core-fields/build-module/post_type_supports/ping_status/field.mjs
-var import_i18n14 = __toESM(require_i18n(), 1);
-var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
-var fieldExtensions9 = {
-  description: /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
-    Link,
-    {
-      href: (0, import_i18n14.__)(
-        "https://wordpress.org/documentation/article/trackbacks-and-pingbacks/"
-      ),
-      openInNewTab: true,
-      children: (0, import_i18n14.__)("Learn more about pingbacks & trackbacks")
-    }
-  ),
-  // The REST API stores the setting as `open` / `closed`; the field
-  // exposes it as a boolean so the built-in checkbox control can edit
-  // it.
-  getValue: ({ item }) => (item.ping_status ?? "open") === "open",
-  setValue: ({ value }) => ({
-    ping_status: value ? "open" : "closed"
-  }),
-  render: ({ item, field }) => field.getValue({ item }) ? (0, import_i18n14.__)("Allow") : (0, import_i18n14.__)("Don't allow")
-};
-
-// packages/core-fields/build-module/post_type_supports/post_content_info/view.mjs
-var import_i18n15 = __toESM(require_i18n(), 1);
-var import_wordcount = __toESM(require_wordcount(), 1);
-var import_date3 = __toESM(require_date(), 1);
-var import_element45 = __toESM(require_element(), 1);
-var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+// packages/core-fields/build-module/post_type_supports/date/edit.mjs
+var import_jsx_runtime71 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE32 = "data-wp-hash";
 function getRuntime32() {
   const globalScope = globalThis;
@@ -17366,112 +16991,234 @@ function registerStyle32(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle32("10a6398b74", "._4420b4e87ce18b2a__text{color:var(--wpds-color-foreground-content-neutral-weak,#707070);line-height:1.4}");
+  registerStyle32("f06b653b62", "._5b5942a89f5cb8ec__reset{justify-content:center;width:100%}");
 }
-var style_default18 = { "text": "_4420b4e87ce18b2a__text" };
-var AVERAGE_READING_RATE = 189;
-function PostContentInfoView({
-  item
+var style_default18 = { "reset": "_5b5942a89f5cb8ec__reset" };
+function getMonthBounds(date) {
+  return {
+    after: new Date(date.getFullYear(), date.getMonth(), 1).toISOString(),
+    before: new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      0,
+      23,
+      59,
+      59
+    ).toISOString()
+  };
+}
+function DateEdit({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  operator
 }) {
-  let content = "";
-  if (typeof item.content === "string") {
-    content = item.content;
-  } else if (typeof item.content === "function") {
-    content = item.content(item);
-  }
-  const wordCountType = (0, import_i18n15._x)(
-    "words",
-    "Word count type. Do not translate!"
+  const value = field.getValue({ item: data }) ?? void 0;
+  const [previewedMonth, setPreviewedMonth] = (0, import_element46.useState)(
+    () => value ? new Date(value) : /* @__PURE__ */ new Date()
   );
-  const wordsCounted = (0, import_element45.useMemo)(
-    () => content ? (0, import_wordcount.count)(content, wordCountType) : 0,
-    [content, wordCountType]
+  const otherPosts = (0, import_data3.useSelect)(
+    (select) => data.type ? select(import_core_data3.store).getEntityRecords(
+      "postType",
+      data.type,
+      {
+        status: "publish,future",
+        ...getMonthBounds(previewedMonth),
+        exclude: data.id ? [data.id] : [],
+        per_page: 100,
+        _fields: "id,date"
+      }
+    ) : null,
+    [data.type, data.id, previewedMonth]
   );
-  const modified = item.modified;
-  if (!wordsCounted && !modified) {
-    return null;
-  }
-  let contentInfoText;
-  if (wordsCounted) {
-    const readingTime = Math.round(wordsCounted / AVERAGE_READING_RATE);
-    const wordsCountText = (0, import_i18n15.sprintf)(
-      // translators: %s: the number of words in the post.
-      (0, import_i18n15._n)("%s word", "%s words", wordsCounted),
-      wordsCounted.toLocaleString()
-    );
-    const minutesText = readingTime <= 1 ? (0, import_i18n15.__)("1 minute") : (0, import_i18n15.sprintf)(
-      /* translators: %s: the number of minutes to read the post. */
-      (0, import_i18n15._n)("%s minute", "%s minutes", readingTime),
-      readingTime.toLocaleString()
-    );
-    contentInfoText = (0, import_i18n15.sprintf)(
-      /* translators: 1: How many words a post has. 2: the number of minutes to read the post (e.g. 130 words, 2 minutes read time.) */
-      (0, import_i18n15.__)("%1$s, %2$s read time."),
-      wordsCountText,
-      minutesText
-    );
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(Stack, { direction: "column", gap: "xs", children: [
-    contentInfoText && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(Text, { className: style_default18.text, children: contentInfoText }),
-    modified && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(Text, { className: style_default18.text, children: (0, import_i18n15.sprintf)(
-      // translators: %s: Human-readable time difference, e.g. "2 days ago".
-      (0, import_i18n15.__)("Last edited %s."),
-      (0, import_date3.humanTimeDiff)(modified)
-    ) })
+  const events = (0, import_element46.useMemo)(
+    () => (otherPosts ?? []).map((post) => ({
+      date: new Date(post.date)
+    })),
+    [otherPosts]
+  );
+  const savedStatus = (0, import_data3.useSelect)(
+    (select) => {
+      if (!data.type || !data.id) {
+        return void 0;
+      }
+      const saved = select(
+        import_core_data3.store
+      ).getEntityRecord("postType", data.type, data.id);
+      return saved?.status;
+    },
+    [data.type, data.id]
+  );
+  const isReset = !value;
+  const isFloating = isDateFloating({
+    ...data,
+    status: savedStatus ?? data.status
+  });
+  const isFilter = !!operator;
+  const note = !isFilter && data.status === "future" && (!value || isFloating || isPublishedOnSave(value)) ? (0, import_i18n7.__)("Publishes immediately.") : void 0;
+  const noteId = (0, import_element46.useId)();
+  const onPick = (newValue) => {
+    onChange(field.setValue({ item: data, value: newValue }));
+    if (!isFilter && newValue) {
+      speak(
+        (0, import_i18n7.sprintf)(
+          // translators: %s: The new publish date and time, e.g. "June 3, 2025 12:00 pm".
+          (0, import_i18n7.__)("Publish date set to %s."),
+          (0, import_date3.dateI18n)(
+            (0, import_date3.getSettings)().formats.datetime,
+            (0, import_date3.getDate)(newValue)
+          )
+        ),
+        "assertive"
+      );
+    }
+  };
+  const onReset = () => {
+    onChange(field.setValue({ item: data, value: null }));
+    speak((0, import_i18n7.__)("Publish date set to now."), "assertive");
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(Stack, { render: /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(fieldset_exports.Root, {}), direction: "column", gap: "lg", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(fieldset_exports.Legend, { hideFromVision: hideLabelFromVision, children: field.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+      import_components.DateTimePicker,
+      {
+        currentDate: value,
+        onChange: onPick,
+        is12Hour: is12HourTime(),
+        dateOrder: (
+          /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
+          (0, import_i18n7._x)("dmy", "date order")
+        ),
+        startOfWeek: (0, import_date3.getSettings)().l10n.startOfWeek,
+        events,
+        onMonthPreviewed: (date) => setPreviewedMonth(new Date(date))
+      }
+    ),
+    !isFilter && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(
+      import_components.Button,
+      {
+        className: style_default18.reset,
+        variant: "secondary",
+        __next40pxDefaultSize: true,
+        accessibleWhenDisabled: true,
+        disabled: isReset,
+        onClick: onReset,
+        "aria-describedby": note ? noteId : void 0,
+        children: (0, import_i18n7.__)("Reset")
+      }
+    ),
+    note && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)(fieldset_exports.Description, { id: noteId, children: note })
   ] });
 }
 
-// packages/core-fields/build-module/post_type_supports/post_content_info/field.mjs
-var fieldExtensions10 = {
-  render: PostContentInfoView
-};
-
-// packages/core-fields/build-module/post_type_supports/scheduled_date/field.mjs
-var fieldExtensions11 = {
-  // The scheduled date is the date of the post, shown for scheduled posts
-  // only.
-  getValue: ({ item }) => item.date,
-  setValue: ({ value }) => ({ date: value }),
-  isVisible: (item) => item.status === "future"
-};
-
-// packages/core-fields/build-module/post_type_supports/slug/edit.mjs
-var import_components3 = __toESM(require_components(), 1);
-var import_compose2 = __toESM(require_compose(), 1);
-var import_data6 = __toESM(require_data(), 1);
-var import_element46 = __toESM(require_element(), 1);
-var import_notices = __toESM(require_notices(), 1);
-var import_url3 = __toESM(require_url(), 1);
-var import_i18n17 = __toESM(require_i18n(), 1);
-
-// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
-var import_url2 = __toESM(require_url(), 1);
-
-// packages/core-fields/build-module/shared/title/get-item-title.mjs
-var import_html_entities4 = __toESM(require_html_entities(), 1);
-var import_i18n16 = __toESM(require_i18n(), 1);
-function getItemTitle(item, fallback = (0, import_i18n16.__)("(no title)")) {
-  let title = "";
-  if (typeof item.title === "string") {
-    title = (0, import_html_entities4.decodeEntities)(item.title);
-  } else if (item.title && "rendered" in item.title) {
-    title = (0, import_html_entities4.decodeEntities)(item.title.rendered ?? "");
-  } else if (item.title && "raw" in item.title) {
-    title = (0, import_html_entities4.decodeEntities)(item.title.raw ?? "");
+// packages/core-fields/build-module/post_type_supports/date/view.mjs
+var import_i18n8 = __toESM(require_i18n(), 1);
+var import_element47 = __toESM(require_element(), 1);
+var import_date4 = __toESM(require_date(), 1);
+var import_jsx_runtime72 = __toESM(require_jsx_runtime(), 1);
+var getFormattedDate = (dateToDisplay) => (0, import_date4.dateI18n)(
+  (0, import_date4.getSettings)().formats.datetimeAbbreviated,
+  (0, import_date4.getDate)(dateToDisplay)
+);
+var DateView = ({ item }) => {
+  const isDraftOrPrivate = ["draft", "private"].includes(
+    item.status ?? ""
+  );
+  if (isDraftOrPrivate) {
+    return (0, import_element47.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
+        /* translators: %s: page creation or modification date. */
+        (0, import_i18n8.__)("<span>Modified: <time>%s</time></span>"),
+        getFormattedDate(item.date ?? null)
+      ),
+      {
+        span: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", {}),
+        time: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("time", {})
+      }
+    );
   }
-  return title || fallback;
-}
-
-// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
-var getSlug = (item) => {
-  if (typeof item !== "object") {
-    return "";
+  const isScheduled = item.status === "future";
+  if (isScheduled) {
+    return (0, import_element47.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
+        /* translators: %s: page creation date */
+        (0, import_i18n8.__)("<span>Scheduled: <time>%s</time></span>"),
+        getFormattedDate(item.date ?? null)
+      ),
+      {
+        span: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", {}),
+        time: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("time", {})
+      }
+    );
   }
-  return item.slug || (0, import_url2.cleanForSlug)(getItemTitle(item, ""));
+  const isPublished = item.status === "publish";
+  if (isPublished) {
+    return (0, import_element47.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
+        /* translators: %s: page creation time */
+        (0, import_i18n8.__)("<span>Published: <time>%s</time></span>"),
+        getFormattedDate(item.date ?? null)
+      ),
+      {
+        span: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", {}),
+        time: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("time", {})
+      }
+    );
+  }
+  const dateToDisplay = (0, import_date4.getDate)(item.modified ?? null) > (0, import_date4.getDate)(item.date ?? null) ? item.modified : item.date;
+  const isPending = item.status === "pending";
+  if (isPending) {
+    return (0, import_element47.createInterpolateElement)(
+      (0, import_i18n8.sprintf)(
+        /* translators: %s: page creation or modification date. */
+        (0, import_i18n8.__)("<span>Modified: <time>%s</time></span>"),
+        getFormattedDate(dateToDisplay ?? null)
+      ),
+      {
+        span: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", {}),
+        time: /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("time", {})
+      }
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("time", { children: getFormattedDate(item.date ?? null) });
+};
+var view_default = DateView;
+
+// packages/core-fields/build-module/post_type_supports/date/field.mjs
+var fieldExtensions2 = {
+  // Only the users who can publish the post see the control.
+  isVisible: (item) => hasActionLink(item, "wp:action-publish"),
+  render: view_default,
+  Edit: DateEdit,
+  // A cleared control gives `undefined`, which a save drops, so send `null`:
+  // the REST API resets the date on `null`.
+  setValue: ({ value }) => ({ date: value ?? null })
 };
 
-// packages/core-fields/build-module/post_type_supports/slug/edit.mjs
-var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
+// packages/core-fields/build-module/post_type_supports/discussion/field.mjs
+var import_i18n9 = __toESM(require_i18n(), 1);
+var fieldExtensions3 = {
+  render: ({ item }) => {
+    const commentsOpen = item.comment_status === "open";
+    const pingsOpen = item.ping_status === "open";
+    if (commentsOpen && pingsOpen) {
+      return (0, import_i18n9.__)("Open");
+    }
+    if (commentsOpen && !pingsOpen) {
+      return (0, import_i18n9.__)("Comments only");
+    }
+    if (!commentsOpen && pingsOpen) {
+      return (0, import_i18n9.__)("Pings only");
+    }
+    return (0, import_i18n9.__)("Closed");
+  }
+};
+
+// packages/core-fields/build-module/post_type_supports/excerpt/field.mjs
+var import_html_entities = __toESM(require_html_entities(), 1);
+var import_i18n10 = __toESM(require_i18n(), 1);
+var import_jsx_runtime73 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE33 = "data-wp-hash";
 function getRuntime33() {
   const globalScope = globalThis;
@@ -17553,125 +17300,116 @@ function registerStyle33(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle33("a371ac3abc", "._2a1faa654b533463__slug{border:0;margin:0;padding:0}._2a1faa654b533463__slug input[type=text]{padding-inline-start:0}._7689f6779a3a91ab__help-link{overflow-wrap:anywhere;word-break:normal}._6766b8e7e1a55c53__help{display:flex;flex-direction:column}._951097fb4055794e__help-slug{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+  registerStyle33("a762a4ff63", "._6cbb3f8b4541adef__excerpt{-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;display:-webkit-box;overflow:hidden;text-align:start}");
 }
-var style_default19 = { "slug": "_2a1faa654b533463__slug", "help-link": "_7689f6779a3a91ab__help-link", "help": "_6766b8e7e1a55c53__help", "help-slug": "_951097fb4055794e__help-slug" };
-var PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
-var SlugEdit = ({
-  field,
-  onChange,
-  data
-}) => {
-  const { id } = field;
-  const slug = field.getValue({ item: data }) || getSlug(data);
-  const permalinkTemplate = data.permalink_template || "";
-  const [permalinkPrefix, permalinkSuffix] = permalinkTemplate.split(
-    PERMALINK_POSTNAME_REGEX
-  );
-  const isEditable = PERMALINK_POSTNAME_REGEX.test(permalinkTemplate) && hasActionLink(data, "wp:action-publish");
-  const permalink = isEditable && slug ? `${permalinkPrefix}${slug}${permalinkSuffix}` : (0, import_url3.safeDecodeURIComponent)(data.link || "");
-  const onChangeControl = (0, import_element46.useCallback)(
-    (newValue) => onChange({
-      [id]: newValue
-    }),
-    [id, onChange]
-  );
-  const { createNotice } = (0, import_data6.useDispatch)(import_notices.store);
-  const copyButtonRef = (0, import_compose2.useCopyToClipboard)(permalink, () => {
-    createNotice("info", (0, import_i18n17.__)("Copied Permalink to clipboard."), {
-      isDismissible: true,
-      type: "snackbar"
-    });
-  });
-  const postUrlSlugDescriptionId = "editor-post-url__slug-description-" + (0, import_compose2.useInstanceId)(SlugEdit);
-  return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)("fieldset", { className: style_default19.slug, children: [
-    isEditable && /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", gap: "sm", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(Stack, { direction: "column", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { id: postUrlSlugDescriptionId, children: (0, import_i18n17.__)(
-          "Customize the last part of the Permalink."
-        ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-          Link,
-          {
-            href: "https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink",
-            openInNewTab: true,
-            children: (0, import_i18n17.__)("Learn more")
-          }
-        )
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-        InputControl,
-        {
-          prefix: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(InputLayout2.Slot, { children: "/" }),
-          suffix: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-            import_components3.Button,
-            {
-              size: "small",
-              icon: copy_small_default,
-              ref: copyButtonRef,
-              label: (0, import_i18n17.__)("Copy")
-            }
-          ) }),
-          label: (0, import_i18n17.__)("Link"),
-          hideLabelFromVision: true,
-          value: slug,
-          autoComplete: "off",
-          spellCheck: "false",
-          type: "text",
-          onValueChange: (newValue) => {
-            onChangeControl(newValue);
-          },
-          "aria-describedby": postUrlSlugDescriptionId
-        }
+var style_default19 = { "excerpt": "_6cbb3f8b4541adef__excerpt" };
+var fieldExtensions4 = {
+  description: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(
+    Link,
+    {
+      href: (0, import_i18n10.__)(
+        "https://wordpress.org/documentation/article/page-post-settings-sidebar/#excerpt"
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)("div", { className: style_default19.help, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { children: (0, import_i18n17.__)("Permalink:") }),
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-          Link,
-          {
-            className: style_default19["help-link"],
-            href: permalink,
-            openInNewTab: true,
-            children: slug ? /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)(import_jsx_runtime77.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { children: permalinkPrefix }),
-              /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { className: style_default19["help-slug"], children: slug }),
-              /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { children: permalinkSuffix })
-            ] }) : permalink
-          }
-        )
-      ] })
-    ] }),
-    !isEditable && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
-      Link,
+      openInNewTab: true,
+      children: (0, import_i18n10.__)("Learn more about manual excerpts")
+    }
+  ),
+  // Shows the first three lines of the excerpt, as plain text that takes the
+  // typography of where it renders, like the values of other fields.
+  render: ({ item }) => {
+    const excerpt = typeof item.excerpt === "string" ? item.excerpt : item.excerpt?.raw;
+    return excerpt ? /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("span", { className: style_default19.excerpt, children: (0, import_html_entities.decodeEntities)(excerpt) }) : null;
+  }
+};
+
+// packages/core-fields/build-module/post_type_supports/featured_media/edit.mjs
+var import_components2 = __toESM(require_components(), 1);
+var import_core_data4 = __toESM(require_core_data(), 1);
+var import_data4 = __toESM(require_data(), 1);
+var import_element48 = __toESM(require_element(), 1);
+var import_media_utils = __toESM(require_media_utils(), 1);
+
+// packages/core-fields/build-module/lock-unlock.mjs
+var import_private_apis = __toESM(require_private_apis(), 1);
+var { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)(
+  "I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+  "@wordpress/core-fields"
+);
+
+// packages/core-fields/build-module/post_type_supports/featured_media/edit.mjs
+var import_jsx_runtime74 = __toESM(require_jsx_runtime(), 1);
+var { MediaEditControl } = unlock(import_media_utils.privateApis);
+var FilteredMediaEdit = (0, import_components2.withFilters)("editor.PostFeaturedImage")(
+  function PostFeaturedImage(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+      MediaEditControl,
       {
-        className: style_default19["help-link"],
-        href: permalink,
-        openInNewTab: true,
-        children: permalink
+        ...props,
+        isExpanded: true,
+        isPickerFiltered: true,
+        featuredImageFlow: true,
+        pickerTitle: props.postType?.labels?.featured_image || props.field.label
       }
-    )
-  ] });
-};
-var edit_default = SlugEdit;
+    );
+  }
+);
+function FilteredFeaturedImageEdit(props) {
+  const { data, field, onChange } = props;
+  const featuredImageId = field.getValue({ item: data }) ?? 0;
+  const { media, postType } = (0, import_data4.useSelect)(
+    (select) => {
+      const { getEntityRecords, getPostType } = select(import_core_data4.store);
+      return {
+        // The same query the media control runs, so this adds no request.
+        media: featuredImageId ? getEntityRecords("postType", "attachment", {
+          include: [featuredImageId]
+        })?.[0] ?? null : null,
+        postType: getPostType(data.type)
+      };
+    },
+    [featuredImageId, data.type]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+    FilteredMediaEdit,
+    {
+      ...props,
+      currentPostId: data.id,
+      featuredImageId,
+      media,
+      postType,
+      onRemoveImage: () => onChange(field.setValue({ item: data, value: void 0 }))
+    }
+  );
+}
+function FeaturedImageEdit(props) {
+  const { data } = props;
+  const labels = (0, import_data4.useSelect)(
+    (select) => select(import_core_data4.store).getPostType(data.type)?.labels,
+    [data.type]
+  );
+  const setFeaturedImageLabel = labels?.set_featured_image;
+  const field = (0, import_element48.useMemo)(
+    () => setFeaturedImageLabel ? { ...props.field, placeholder: setFeaturedImageLabel } : props.field,
+    [props.field, setFeaturedImageLabel]
+  );
+  const contextId = (0, import_core_data4.useEntityId)("postType", data.type);
+  if (contextId === void 0 || String(contextId) !== String(data.id)) {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
+      MediaEditControl,
+      {
+        ...props,
+        field,
+        isExpanded: true,
+        featuredImageFlow: true,
+        pickerTitle: labels?.featured_image || field.label
+      }
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(FilteredFeaturedImageEdit, { ...props, field });
+}
 
-// packages/core-fields/build-module/post_type_supports/slug/view.mjs
-var import_i18n18 = __toESM(require_i18n(), 1);
-var SlugView = ({ item }) => {
-  return getSlug(item) || (0, import_i18n18.__)("None");
-};
-var view_default2 = SlugView;
-
-// packages/core-fields/build-module/post_type_supports/slug/field.mjs
-var fieldExtensions12 = {
-  Edit: edit_default,
-  render: view_default2,
-  // The REST API only exposes `permalink_template` for viewable public
-  // post types, so posts without a permalink hide the field.
-  isVisible: (item) => !!item.link && !!item.permalink_template
-};
-
-// packages/core-fields/build-module/post_type_supports/status/view.mjs
-var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+// packages/core-fields/build-module/post_type_supports/featured_media/view.mjs
+var import_jsx_runtime75 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
 function getRuntime34() {
   const globalScope = globalThis;
@@ -17753,318 +17491,98 @@ function registerStyle34(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle34("2d5dd29368", "._31460caf49297db0__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}._31460caf49297db0__icon svg{fill:currentColor;margin-inline-start:-4px}");
+  registerStyle34("1d3386c051", "._6c38af90102e4699__image,._8a1ece60abf4242c__placeholder{border-radius:var(--wpds-border-radius-md,4px);display:block;height:100%;width:100%}._8a1ece60abf4242c__placeholder{background:#f0f0f0;box-shadow:none}");
 }
-var style_default20 = { "icon": "_31460caf49297db0__icon" };
-var ICONS = {
-  draft: drafts_default,
-  future: scheduled_default,
-  pending: pending_default,
-  private: not_allowed_default,
-  publish: published_default,
-  trash: trash_default
-};
-function StatusView({
+var style_default20 = { "image": "_6c38af90102e4699__image", "placeholder": "_8a1ece60abf4242c__placeholder" };
+function FeaturedImageView({
   item,
-  field
+  config
 }) {
-  const currentStatus = field.getValue({ item });
-  const status = field.elements?.find(
-    ({ value }) => value === currentStatus
-  );
-  const label = status?.label || currentStatus;
-  const icon = ICONS[currentStatus];
-  return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)(Stack, { direction: "row", align: "flex-start", justify: "flex-start", children: [
-    icon && /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { className: style_default20.icon, children: /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Icon, { icon }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("span", { children: label })
-  ] });
-}
-
-// packages/core-fields/build-module/post_type_supports/status/field.mjs
-var fieldExtensions13 = {
-  // An auto-draft is a draft that hasn't been saved yet, so treat it as
-  // one for display, selection, and filtering.
-  getValue: ({ item }) => item.status === "auto-draft" ? "draft" : item.status,
-  render: StatusView,
-  // A user who can't publish can't change the status either.
-  isDisabled: ({ item }) => !hasActionLink(item, "wp:action-publish")
-};
-
-// packages/core-fields/build-module/post_type_supports/sticky/field.mjs
-var fieldExtensions14 = {
-  // Only the users who can make the post sticky see the control.
-  isVisible: (item) => hasActionLink(item, "wp:action-sticky")
-};
-
-// packages/core-fields/build-module/post_type_supports/template/edit.mjs
-var import_core_data7 = __toESM(require_core_data(), 1);
-var import_data8 = __toESM(require_data(), 1);
-var import_element47 = __toESM(require_element(), 1);
-var import_i18n19 = __toESM(require_i18n(), 1);
-
-// packages/core-fields/build-module/post_type_supports/template/hooks.mjs
-var import_core_data6 = __toESM(require_core_data(), 1);
-var import_data7 = __toESM(require_data(), 1);
-function useTemplateFieldMode(record) {
-  const { type: postType, id: postId } = record;
-  const hasAvailableTemplates = Object.keys(record?.available_templates ?? {}).length > 0;
-  return (0, import_data7.useSelect)(
-    (select) => {
-      if (!select(import_core_data6.store).getPostType(postType)?.viewable) {
-        return null;
-      }
-      if (!select(import_core_data6.store).getCurrentTheme()?.is_block_theme) {
-        return hasAvailableTemplates ? "classic" : null;
-      }
-      const templateId = postId ? unlock(select(import_core_data6.store)).getTemplateId(
-        postType,
-        postId
-      ) : void 0;
-      return templateId ? "block-theme" : null;
-    },
-    [postType, postId, hasAvailableTemplates]
-  );
-}
-function getTemplateSlugToCheck(postType, slug) {
-  if (slug) {
-    return postType === "page" ? `${postType}-${slug}` : `single-${postType}-${slug}`;
-  }
-  return postType === "page" ? "page" : `single-${postType}`;
-}
-var NAME_NOT_FOUND = "";
-function useDefaultTemplateLabel(postType, postId, slug) {
-  return (0, import_data7.useSelect)(
-    (select) => {
-      if (!postType || !postId) {
-        return NAME_NOT_FOUND;
-      }
-      const postIdStr = String(postId);
-      const homePage = unlock(select(import_core_data6.store)).getHomePage();
-      if (postType === "page" && homePage?.postType === "page" && homePage?.postId === postIdStr) {
-        const templates = select(
-          import_core_data6.store
-        ).getEntityRecords("postType", "wp_template", {
-          per_page: -1
-        });
-        const frontPage = templates?.find(
-          (t) => t.slug === "front-page"
-        );
-        if (frontPage) {
-          return getItemTitle(frontPage);
-        }
-      }
-      const postsPageId = unlock(select(import_core_data6.store)).getPostsPageId();
-      if (postType === "page" && postsPageId === postIdStr) {
-        const templateId2 = select(import_core_data6.store).getDefaultTemplateId({
-          slug: "home"
-        });
-        if (!templateId2) {
-          return NAME_NOT_FOUND;
-        }
-        const template2 = select(
-          import_core_data6.store
-        ).getEntityRecord(
-          "postType",
-          "wp_template",
-          templateId2
-        );
-        return template2 ? getItemTitle(template2) : NAME_NOT_FOUND;
-      }
-      const slugToCheck = getTemplateSlugToCheck(postType, slug);
-      const templateId = select(import_core_data6.store).getDefaultTemplateId({
-        slug: slugToCheck
-      });
-      if (!templateId) {
-        return NAME_NOT_FOUND;
-      }
-      const template = select(import_core_data6.store).getEntityRecord(
-        "postType",
-        "wp_template",
-        templateId
-      );
-      return template ? getItemTitle(template) : NAME_NOT_FOUND;
-    },
-    [postType, postId, slug]
-  );
-}
-
-// packages/core-fields/build-module/post_type_supports/template/edit.mjs
-var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
-var EMPTY_ARRAY2 = [];
-var DEFAULT_TEMPLATE_VALUE = "//default";
-function toItemValue(template) {
-  return template || DEFAULT_TEMPLATE_VALUE;
-}
-function fromItemValue(itemValue) {
-  return !itemValue || itemValue === DEFAULT_TEMPLATE_VALUE ? "" : itemValue;
-}
-function useCanSwitchTemplate(postType, postId) {
-  return (0, import_data8.useSelect)(
-    (select) => {
-      const { getHomePage, getPostsPageId } = unlock(
-        select(import_core_data7.store)
-      );
-      const singlePostId = String(postId);
-      const isPostsPage = getPostsPageId() === singlePostId;
-      const isFrontPage = postType === "page" && getHomePage()?.postId === singlePostId;
-      return !isPostsPage && !isFrontPage;
-    },
-    [postId, postType]
-  );
-}
-function ClassicTemplateEdit({
-  data,
-  field,
-  onChange
-}) {
-  const value = field.getValue({ item: data });
-  const items = (0, import_element47.useMemo)(
-    () => Object.entries(data?.available_templates ?? {}).map(
-      ([templateSlug, title]) => ({
-        label: title,
-        value: toItemValue(templateSlug)
-      })
-    ),
-    [data]
-  );
-  const canSwitchTemplate = useCanSwitchTemplate(data.type, data.id);
-  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-    SelectControl2,
-    {
-      label: (0, import_i18n19.__)("Template"),
-      hideLabelFromVision: true,
-      value: items.find((item) => item.value === toItemValue(value)) ?? items[0] ?? null,
-      items,
-      onValueChange: (item) => onChange(fromItemValue(item?.value)),
-      disabled: !canSwitchTemplate
-    }
-  );
-}
-function BlockThemeTemplateEdit({
-  data,
-  field,
-  onChange
-}) {
-  const postType = data.type;
-  const postId = data.id;
-  const slug = data.slug;
-  const templates = (0, import_data8.useSelect)(
-    (select) => select(import_core_data7.store).getEntityRecords(
-      "postType",
-      "wp_template",
+  const media = item?._embedded?.["wp:featuredmedia"]?.[0];
+  const url = media?.source_url;
+  if (!url) {
+    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+      "span",
       {
-        per_page: -1,
-        post_type: postType
+        className: clsx_default(
+          "fields-controls__featured-image-placeholder",
+          style_default20.placeholder
+        )
       }
-    ) ?? EMPTY_ARRAY2,
-    [postType]
-  );
-  const canSwitchTemplate = useCanSwitchTemplate(postType, postId);
-  const defaultTemplateLabel = useDefaultTemplateLabel(
-    postType,
-    postId,
-    slug
-  );
-  const value = field.getValue({ item: data });
-  const items = (0, import_element47.useMemo)(
-    () => [
-      { label: defaultTemplateLabel, value: DEFAULT_TEMPLATE_VALUE },
-      ...templates.map((template) => ({
-        label: getItemTitle(template),
-        value: template.slug
-      }))
-    ],
-    [templates, defaultTemplateLabel]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
-    SelectControl2,
+    );
+  }
+  const sizes = media?.media_details?.sizes;
+  return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(
+    "img",
     {
-      label: (0, import_i18n19.__)("Template"),
-      hideLabelFromVision: true,
-      value: items.find((item) => item.value === toItemValue(value)) ?? items[0] ?? null,
-      items,
-      onValueChange: (item) => onChange(fromItemValue(item?.value)),
-      disabled: !canSwitchTemplate
+      className: clsx_default(
+        "fields-controls__featured-image-image",
+        style_default20.image
+      ),
+      src: url,
+      alt: "",
+      srcSet: sizes ? Object.values(sizes).map(
+        (size4) => `${size4.source_url} ${size4.width}w`
+      ).join(", ") : void 0,
+      sizes: config?.sizes || "100vw"
     }
   );
 }
-function TemplateEdit({
-  data,
-  field,
-  onChange
-}) {
-  const onChangeControl = (0, import_element47.useCallback)(
-    (newValue) => onChange({
-      [field.id]: newValue
-    }),
-    [field.id, onChange]
-  );
-  const mode = useTemplateFieldMode(data);
-  if (!mode) {
-    return null;
-  }
-  const Edit = mode === "classic" ? ClassicTemplateEdit : BlockThemeTemplateEdit;
-  return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(Edit, { data, field, onChange: onChangeControl });
-}
 
-// packages/core-fields/build-module/post_type_supports/template/view.mjs
-var import_core_data8 = __toESM(require_core_data(), 1);
-var import_data9 = __toESM(require_data(), 1);
-var import_i18n20 = __toESM(require_i18n(), 1);
-var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
-function ClassicTemplateView({ item, field }) {
-  const templateSlug = field.getValue({ item });
-  const availableTemplates = item?.available_templates ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_jsx_runtime80.Fragment, { children: templateSlug && availableTemplates[templateSlug] ? availableTemplates[templateSlug] : (0, import_i18n20.__)("Default template") });
-}
-function BlockThemeTemplateView({ item, field }) {
-  const postType = item.type;
-  const slug = item.slug;
-  const postId = item.id;
-  const templateSlug = field.getValue({ item });
-  const defaultTemplateLabel = useDefaultTemplateLabel(
-    postType,
-    postId,
-    slug
-  );
-  const templateLabel = (0, import_data9.useSelect)(
-    (select) => {
-      if (!templateSlug) {
-        return;
-      }
-      const allTemplates = select(
-        import_core_data8.store
-      ).getEntityRecords("postType", "wp_template", {
-        per_page: -1,
-        post_type: postType
-      });
-      const match = allTemplates?.find(
-        (t) => t.slug === templateSlug
-      );
-      return match ? getItemTitle(match) : void 0;
-    },
-    [postType, templateSlug]
-  );
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(import_jsx_runtime80.Fragment, { children: templateLabel ?? defaultTemplateLabel });
-}
-function TemplateView({ item, field }) {
-  const mode = useTemplateFieldMode(item);
-  if (!mode) {
-    return null;
-  }
-  const View = mode === "classic" ? ClassicTemplateView : BlockThemeTemplateView;
-  return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(View, { item, field });
-}
-
-// packages/core-fields/build-module/post_type_supports/template/field.mjs
-var fieldExtensions15 = {
-  Edit: TemplateEdit,
-  render: TemplateView
+// packages/core-fields/build-module/post_type_supports/featured_media/field.mjs
+var fieldExtensions5 = {
+  Edit: FeaturedImageEdit,
+  render: FeaturedImageView,
+  // A post without a featured image stores `0`, not an empty value.
+  setValue: ({ value }) => ({
+    featured_media: value ?? 0
+  })
 };
 
-// packages/core-fields/build-module/shared/title/view.mjs
-var import_i18n21 = __toESM(require_i18n(), 1);
-var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+// packages/core-fields/build-module/post_type_supports/last_edited_date/view.mjs
+var import_i18n11 = __toESM(require_i18n(), 1);
+var import_date5 = __toESM(require_date(), 1);
+var import_jsx_runtime76 = __toESM(require_jsx_runtime(), 1);
+function LastEditedDateView({
+  item
+}) {
+  if (!item.modified) {
+    return null;
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(Text, { children: (0, import_i18n11.sprintf)(
+    // translators: %s: Human-readable time difference, e.g. "2 days ago".
+    (0, import_i18n11.__)("Last edited %s."),
+    (0, import_date5.humanTimeDiff)(item.modified)
+  ) });
+}
+
+// packages/core-fields/build-module/post_type_supports/last_edited_date/field.mjs
+var fieldExtensions6 = {
+  getValue: ({ item }) => item.modified,
+  isVisible: (item) => !!item.modified,
+  render: LastEditedDateView
+};
+
+// packages/core-fields/build-module/post_type_supports/parent/edit.mjs
+var import_remove_accents = __toESM(require_remove_accents(), 1);
+var import_components3 = __toESM(require_components(), 1);
+var import_data5 = __toESM(require_data(), 1);
+var import_element49 = __toESM(require_element(), 1);
+var import_core_data5 = __toESM(require_core_data(), 1);
+var import_compose = __toESM(require_compose(), 1);
+var import_html_entities3 = __toESM(require_html_entities(), 1);
+var import_i18n13 = __toESM(require_i18n(), 1);
+var import_url = __toESM(require_url(), 1);
+
+// packages/core-fields/build-module/post_type_supports/parent/utils.mjs
+var import_html_entities2 = __toESM(require_html_entities(), 1);
+var import_i18n12 = __toESM(require_i18n(), 1);
+function getTitleWithFallbackName(post) {
+  return typeof post.title === "object" && "rendered" in post.title && post.title.rendered ? (0, import_html_entities2.decodeEntities)(post.title.rendered) : `#${post?.id} (${(0, import_i18n12.__)("no title")})`;
+}
+
+// packages/core-fields/build-module/post_type_supports/parent/edit.mjs
+var import_jsx_runtime77 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
 function getRuntime35() {
   const globalScope = globalThis;
@@ -18146,32 +17664,1384 @@ function registerStyle35(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle35("a4585ee5f7", "._6f88745c59f7b1df__title>span:first-child{display:block;flex-grow:0;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}.bfcb43aba334e5f0__pattern-title>span:first-child{flex:1}");
+  registerStyle35("b954f68ff1", "._9f5fd4053ee0af14__parent{border:0;margin:0;padding:0}");
 }
-var style_default21 = { "title": "_6f88745c59f7b1df__title", "pattern-title": "bfcb43aba334e5f0__pattern-title" };
+var style_default21 = { "parent": "_9f5fd4053ee0af14__parent" };
+function buildTermsTree(flatTerms) {
+  const flatTermsWithParentAndChildren = flatTerms.map((term) => {
+    return {
+      children: [],
+      ...term
+    };
+  });
+  if (flatTermsWithParentAndChildren.some(
+    ({ parent }) => parent === null || parent === void 0
+  )) {
+    return flatTermsWithParentAndChildren;
+  }
+  const termsByParent = flatTermsWithParentAndChildren.reduce(
+    (acc, term) => {
+      const { parent } = term;
+      if (!acc[parent]) {
+        acc[parent] = [];
+      }
+      acc[parent].push(term);
+      return acc;
+    },
+    {}
+  );
+  const fillWithChildren = (terms) => {
+    return terms.map((term) => {
+      const children = termsByParent[term.id];
+      return {
+        ...term,
+        children: children && children.length ? fillWithChildren(children) : []
+      };
+    });
+  };
+  return fillWithChildren(termsByParent["0"] || []);
+}
+var getItemPriority = (name, searchValue) => {
+  const normalizedName = (0, import_remove_accents.default)(name || "").toLowerCase();
+  const normalizedSearch = (0, import_remove_accents.default)(searchValue || "").toLowerCase();
+  if (normalizedName === normalizedSearch) {
+    return 0;
+  }
+  if (normalizedName.startsWith(normalizedSearch)) {
+    return normalizedName.length;
+  }
+  return Infinity;
+};
+function PageAttributesParent({
+  data,
+  onChangeControl
+}) {
+  const [fieldValue, setFieldValue] = (0, import_element49.useState)("");
+  const pageId = data.parent;
+  const postId = data.id;
+  const postTypeSlug = data.type;
+  const { parentPostTitle, pageItems, isHierarchical } = (0, import_data5.useSelect)(
+    (select) => {
+      const { getEntityRecord, getEntityRecords, getPostType } = select(import_core_data5.store);
+      const postTypeInfo = getPostType(postTypeSlug);
+      const postIsHierarchical = postTypeInfo?.hierarchical && postTypeInfo.viewable;
+      const parentPost = pageId ? getEntityRecord(
+        "postType",
+        postTypeSlug,
+        pageId
+      ) : null;
+      const query = {
+        per_page: 100,
+        exclude: postId,
+        parent_exclude: postId,
+        orderby: "menu_order",
+        order: "asc",
+        _fields: "id,title,parent",
+        ...!!fieldValue && {
+          // Perform a search by relevance when the field is changed.
+          search: fieldValue,
+          orderby: "relevance",
+          search_columns: ["post_title"]
+        }
+      };
+      return {
+        isHierarchical: postIsHierarchical,
+        parentPostTitle: parentPost ? getTitleWithFallbackName(parentPost) : "",
+        pageItems: postIsHierarchical ? getEntityRecords(
+          "postType",
+          postTypeSlug,
+          query
+        ) : null
+      };
+    },
+    [fieldValue, pageId, postId, postTypeSlug]
+  );
+  const parentOptions = (0, import_element49.useMemo)(() => {
+    const getOptionsFromTree = (tree2, level = 0) => {
+      const mappedNodes = tree2.map((treeNode) => [
+        {
+          value: treeNode.id,
+          label: "— ".repeat(level) + (0, import_html_entities3.decodeEntities)(treeNode.name),
+          rawName: treeNode.name
+        },
+        ...getOptionsFromTree(treeNode.children || [], level + 1)
+      ]);
+      const sortedNodes = mappedNodes.sort(([a], [b]) => {
+        const priorityA = getItemPriority(a.rawName, fieldValue);
+        const priorityB = getItemPriority(b.rawName, fieldValue);
+        return priorityA >= priorityB ? 1 : -1;
+      });
+      return sortedNodes.flat();
+    };
+    if (!pageItems) {
+      return [];
+    }
+    let tree = pageItems.map((item) => ({
+      id: item.id,
+      parent: item.parent ?? null,
+      name: getTitleWithFallbackName(item)
+    }));
+    if (!fieldValue) {
+      tree = buildTermsTree(tree);
+    }
+    const opts = getOptionsFromTree(tree);
+    const optsHasParent = opts.find((item) => item.value === pageId);
+    if (pageId && parentPostTitle && !optsHasParent) {
+      opts.unshift({
+        value: pageId,
+        label: parentPostTitle,
+        rawName: ""
+      });
+    }
+    return opts.map((option) => ({
+      ...option,
+      value: option.value.toString()
+    }));
+  }, [pageItems, fieldValue, parentPostTitle, pageId]);
+  if (!isHierarchical) {
+    return null;
+  }
+  const handleKeydown = (inputValue) => {
+    setFieldValue(inputValue);
+  };
+  const handleChange = (selectedPostId) => {
+    if (selectedPostId) {
+      return onChangeControl(parseInt(selectedPostId, 10) ?? 0);
+    }
+    onChangeControl(0);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+    import_components3.ComboboxControl,
+    {
+      label: (0, import_i18n13.__)("Parent"),
+      help: (0, import_i18n13.__)("Choose a parent page."),
+      value: pageId?.toString(),
+      options: parentOptions,
+      onFilterValueChange: (0, import_compose.debounce)(
+        (value) => handleKeydown(value),
+        300
+      ),
+      onChange: handleChange,
+      hideLabelFromVision: true
+    }
+  );
+}
+var ParentEdit = ({
+  data,
+  field,
+  onChange
+}) => {
+  const { id } = field;
+  const homeUrl = (0, import_data5.useSelect)((select) => {
+    return select(import_core_data5.store).getEntityRecord("root", "__unstableBase")?.home;
+  }, []);
+  const onChangeControl = (0, import_element49.useCallback)(
+    (newValue) => onChange({
+      [id]: newValue
+    }),
+    [id, onChange]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("fieldset", { className: style_default21.parent, children: /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)("div", { children: [
+    (0, import_element49.createInterpolateElement)(
+      (0, import_i18n13.sprintf)(
+        /* translators: %1$s The home URL of the WordPress installation without the scheme. */
+        (0, import_i18n13.__)(
+          'Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %1$s<wbr />/services<wbr />/pricing.'
+        ),
+        (0, import_url.filterURLForDisplay)(homeUrl).replace(
+          /([/.])/g,
+          "<wbr />$1"
+        )
+      ),
+      {
+        wbr: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("wbr", {})
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("p", { children: (0, import_element49.createInterpolateElement)(
+      (0, import_i18n13.__)(
+        "They also show up as sub-items in the default navigation menu. <a>Learn more.</a>"
+      ),
+      {
+        a: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+          Link,
+          {
+            href: (0, import_i18n13.__)(
+              "https://wordpress.org/documentation/article/page-post-settings-sidebar/#page-attributes"
+            ),
+            openInNewTab: true
+          }
+        )
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(
+      PageAttributesParent,
+      {
+        data,
+        onChangeControl
+      }
+    )
+  ] }) });
+};
+
+// packages/core-fields/build-module/post_type_supports/parent/view.mjs
+var import_data6 = __toESM(require_data(), 1);
+var import_core_data6 = __toESM(require_core_data(), 1);
+var import_i18n14 = __toESM(require_i18n(), 1);
+var import_jsx_runtime78 = __toESM(require_jsx_runtime(), 1);
+var ParentView = ({ item }) => {
+  const parent = (0, import_data6.useSelect)(
+    (select) => {
+      const { getEntityRecord } = select(import_core_data6.store);
+      return item?.parent ? getEntityRecord(
+        "postType",
+        item.type,
+        item.parent
+      ) : null;
+    },
+    [item.parent, item.type]
+  );
+  if (parent) {
+    return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_jsx_runtime78.Fragment, { children: getTitleWithFallbackName(parent) });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(import_jsx_runtime78.Fragment, { children: (0, import_i18n14.__)("None") });
+};
+
+// packages/core-fields/build-module/post_type_supports/parent/field.mjs
+var fieldExtensions7 = {
+  Edit: ParentEdit,
+  render: ParentView
+};
+
+// packages/core-fields/build-module/post_type_supports/password/edit.mjs
+var import_element50 = __toESM(require_element(), 1);
+var import_i18n15 = __toESM(require_i18n(), 1);
+var import_jsx_runtime79 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE36 = "data-wp-hash";
+function getRuntime36() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument36(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash36(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE36}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE36) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle36(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime36();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash36(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE36, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument36(targetDocument) {
+  const runtime = getRuntime36();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle36(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle36(hash, css) {
+  const runtime = getRuntime36();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle36(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle36("c8c90f7a0c", ":where(.b3be8e46f9a2e766__password){border:0;margin:0;padding:0}");
+}
+var style_default22 = { "password": "b3be8e46f9a2e766__password" };
+function PasswordEdit({
+  data,
+  onChange,
+  field
+}) {
+  const [showPassword, setShowPassword] = (0, import_element50.useState)(
+    !!field.getValue({ item: data })
+  );
+  const handleTogglePassword = (value) => {
+    setShowPassword(value);
+    if (!value) {
+      onChange({ password: "" });
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)(
+    Stack,
+    {
+      render: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("fieldset", {}),
+      direction: "column",
+      gap: "lg",
+      className: clsx_default("fields-controls__password", style_default22.password),
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+          CheckboxControl,
+          {
+            label: (0, import_i18n15.__)("Password protected"),
+            description: (0, import_i18n15.__)(
+              "Only visible to those who know the password"
+            ),
+            checked: showPassword,
+            onCheckedChange: handleTogglePassword
+          }
+        ),
+        showPassword && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(
+          InputControl,
+          {
+            label: (0, import_i18n15.__)("Password"),
+            onValueChange: (value) => onChange({
+              password: value
+            }),
+            value: field.getValue({ item: data }) || "",
+            placeholder: (0, import_i18n15.__)("Use a secure password"),
+            type: "text",
+            maxLength: 255
+          }
+        )
+      ]
+    }
+  );
+}
+
+// packages/core-fields/build-module/post_type_supports/password/field.mjs
+var fieldExtensions8 = {
+  Edit: PasswordEdit,
+  // Private posts cannot have a password, and only the users who can
+  // publish the post see the control.
+  isVisible: (item) => item.status !== "private" && hasActionLink(item, "wp:action-publish")
+};
+
+// packages/core-fields/build-module/post_type_supports/ping_status/field.mjs
+var import_i18n16 = __toESM(require_i18n(), 1);
+var import_jsx_runtime80 = __toESM(require_jsx_runtime(), 1);
+var fieldExtensions9 = {
+  description: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(
+    Link,
+    {
+      href: (0, import_i18n16.__)(
+        "https://wordpress.org/documentation/article/trackbacks-and-pingbacks/"
+      ),
+      openInNewTab: true,
+      children: (0, import_i18n16.__)("Learn more about pingbacks & trackbacks")
+    }
+  ),
+  // The REST API stores the setting as `open` / `closed`; the field
+  // exposes it as a boolean so the built-in checkbox control can edit
+  // it.
+  getValue: ({ item }) => (item.ping_status ?? "open") === "open",
+  setValue: ({ value }) => ({
+    ping_status: value ? "open" : "closed"
+  }),
+  render: ({ item, field }) => field.getValue({ item }) ? (0, import_i18n16.__)("Allow") : (0, import_i18n16.__)("Don't allow")
+};
+
+// packages/core-fields/build-module/post_type_supports/post_content_info/view.mjs
+var import_i18n17 = __toESM(require_i18n(), 1);
+var import_wordcount = __toESM(require_wordcount(), 1);
+var import_date6 = __toESM(require_date(), 1);
+var import_element51 = __toESM(require_element(), 1);
+var import_jsx_runtime81 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE37 = "data-wp-hash";
+function getRuntime37() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument37(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash37(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE37}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE37) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle37(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime37();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash37(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE37, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument37(targetDocument) {
+  const runtime = getRuntime37();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle37(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle37(hash, css) {
+  const runtime = getRuntime37();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle37(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle37("10a6398b74", "._4420b4e87ce18b2a__text{color:var(--wpds-color-foreground-content-neutral-weak,#707070);line-height:1.4}");
+}
+var style_default23 = { "text": "_4420b4e87ce18b2a__text" };
+var AVERAGE_READING_RATE = 189;
+function PostContentInfoView({
+  item
+}) {
+  let content = "";
+  if (typeof item.content === "string") {
+    content = item.content;
+  } else if (typeof item.content === "function") {
+    content = item.content(item);
+  }
+  const wordCountType = (0, import_i18n17._x)(
+    "words",
+    "Word count type. Do not translate!"
+  );
+  const wordsCounted = (0, import_element51.useMemo)(
+    () => content ? (0, import_wordcount.count)(content, wordCountType) : 0,
+    [content, wordCountType]
+  );
+  const modified = item.modified;
+  if (!wordsCounted && !modified) {
+    return null;
+  }
+  let contentInfoText;
+  if (wordsCounted) {
+    const readingTime = Math.round(wordsCounted / AVERAGE_READING_RATE);
+    const wordsCountText = (0, import_i18n17.sprintf)(
+      // translators: %s: the number of words in the post.
+      (0, import_i18n17._n)("%s word", "%s words", wordsCounted),
+      wordsCounted.toLocaleString()
+    );
+    const minutesText = readingTime <= 1 ? (0, import_i18n17.__)("1 minute") : (0, import_i18n17.sprintf)(
+      /* translators: %s: the number of minutes to read the post. */
+      (0, import_i18n17._n)("%s minute", "%s minutes", readingTime),
+      readingTime.toLocaleString()
+    );
+    contentInfoText = (0, import_i18n17.sprintf)(
+      /* translators: 1: How many words a post has. 2: the number of minutes to read the post (e.g. 130 words, 2 minutes read time.) */
+      (0, import_i18n17.__)("%1$s, %2$s read time."),
+      wordsCountText,
+      minutesText
+    );
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(Stack, { direction: "column", gap: "xs", children: [
+    contentInfoText && /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(Text, { className: style_default23.text, children: contentInfoText }),
+    modified && /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(Text, { className: style_default23.text, children: (0, import_i18n17.sprintf)(
+      // translators: %s: Human-readable time difference, e.g. "2 days ago".
+      (0, import_i18n17.__)("Last edited %s."),
+      (0, import_date6.humanTimeDiff)(modified)
+    ) })
+  ] });
+}
+
+// packages/core-fields/build-module/post_type_supports/post_content_info/field.mjs
+var fieldExtensions10 = {
+  render: PostContentInfoView
+};
+
+// packages/core-fields/build-module/post_type_supports/scheduled_date/edit.mjs
+var import_components4 = __toESM(require_components(), 1);
+var import_core_data7 = __toESM(require_core_data(), 1);
+var import_data7 = __toESM(require_data(), 1);
+var import_i18n18 = __toESM(require_i18n(), 1);
+var import_jsx_runtime82 = __toESM(require_jsx_runtime(), 1);
+function ScheduledDateEdit({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const value = field.getValue({ item: data }) ?? void 0;
+  const savedStatus = (0, import_data7.useSelect)(
+    (select) => {
+      if (!data.type || !data.id) {
+        return void 0;
+      }
+      const saved = select(
+        import_core_data7.store
+      ).getEntityRecord("postType", data.type, data.id);
+      return saved?.status;
+    },
+    [data.type, data.id]
+  );
+  const isFloating = isDateFloating({
+    ...data,
+    status: savedStatus ?? data.status
+  });
+  const isImmediate = !value || isFloating || isPublishedOnSave(value);
+  return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)(Stack, { render: /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(fieldset_exports.Root, {}), direction: "column", gap: "lg", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(fieldset_exports.Legend, { hideFromVision: hideLabelFromVision, children: field.label }),
+    /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
+      import_components4.TimePicker,
+      {
+        currentTime: value,
+        onChange: (newValue) => onChange(
+          field.setValue({ item: data, value: newValue })
+        ),
+        is12Hour: is12HourTime(),
+        dateOrder: (
+          /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
+          (0, import_i18n18._x)("dmy", "date order")
+        )
+      }
+    ),
+    isImmediate && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(fieldset_exports.Description, { children: (0, import_i18n18.__)("Publishes immediately.") })
+  ] });
+}
+
+// packages/core-fields/build-module/post_type_supports/scheduled_date/field.mjs
+var fieldExtensions11 = {
+  // The scheduled date is the date of the post, shown for scheduled posts
+  // only.
+  getValue: ({ item }) => item.date,
+  // A cleared control gives `undefined`, which a save drops, so send `null`:
+  // the REST API resets the date on `null`.
+  setValue: ({ value }) => ({ date: value ?? null }),
+  isVisible: (item) => item.status === "future",
+  Edit: ScheduledDateEdit
+};
+
+// packages/core-fields/build-module/post_type_supports/slug/edit.mjs
+var import_components5 = __toESM(require_components(), 1);
+var import_compose2 = __toESM(require_compose(), 1);
+var import_data8 = __toESM(require_data(), 1);
+var import_element52 = __toESM(require_element(), 1);
+var import_notices = __toESM(require_notices(), 1);
+var import_url3 = __toESM(require_url(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
+
+// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
+var import_url2 = __toESM(require_url(), 1);
+
+// packages/core-fields/build-module/shared/title/get-item-title.mjs
+var import_html_entities4 = __toESM(require_html_entities(), 1);
+var import_i18n19 = __toESM(require_i18n(), 1);
+function getItemTitle(item, fallback = (0, import_i18n19.__)("(no title)")) {
+  let title = "";
+  if (typeof item.title === "string") {
+    title = (0, import_html_entities4.decodeEntities)(item.title);
+  } else if (item.title && "rendered" in item.title) {
+    title = (0, import_html_entities4.decodeEntities)(item.title.rendered ?? "");
+  } else if (item.title && "raw" in item.title) {
+    title = (0, import_html_entities4.decodeEntities)(item.title.raw ?? "");
+  }
+  return title || fallback;
+}
+
+// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
+var getSlug = (item) => {
+  if (typeof item !== "object") {
+    return "";
+  }
+  return item.slug || (0, import_url2.cleanForSlug)(getItemTitle(item, ""));
+};
+
+// packages/core-fields/build-module/post_type_supports/slug/edit.mjs
+var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
+function getRuntime38() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument38(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash38(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE38}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE38) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle38(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime38();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash38(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE38, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument38(targetDocument) {
+  const runtime = getRuntime38();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle38(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle38(hash, css) {
+  const runtime = getRuntime38();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle38(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle38("a371ac3abc", "._2a1faa654b533463__slug{border:0;margin:0;padding:0}._2a1faa654b533463__slug input[type=text]{padding-inline-start:0}._7689f6779a3a91ab__help-link{overflow-wrap:anywhere;word-break:normal}._6766b8e7e1a55c53__help{display:flex;flex-direction:column}._951097fb4055794e__help-slug{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+}
+var style_default24 = { "slug": "_2a1faa654b533463__slug", "help-link": "_7689f6779a3a91ab__help-link", "help": "_6766b8e7e1a55c53__help", "help-slug": "_951097fb4055794e__help-slug" };
+var PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
+var SlugEdit = ({
+  field,
+  onChange,
+  data
+}) => {
+  const { id } = field;
+  const slug = field.getValue({ item: data }) || getSlug(data);
+  const permalinkTemplate = data.permalink_template || "";
+  const [permalinkPrefix, permalinkSuffix] = permalinkTemplate.split(
+    PERMALINK_POSTNAME_REGEX
+  );
+  const isEditable = PERMALINK_POSTNAME_REGEX.test(permalinkTemplate) && hasActionLink(data, "wp:action-publish");
+  const permalink = isEditable && slug ? `${permalinkPrefix}${slug}${permalinkSuffix}` : (0, import_url3.safeDecodeURIComponent)(data.link || "");
+  const onChangeControl = (0, import_element52.useCallback)(
+    (newValue) => onChange({
+      [id]: newValue
+    }),
+    [id, onChange]
+  );
+  const { createNotice } = (0, import_data8.useDispatch)(import_notices.store);
+  const copyButtonRef = (0, import_compose2.useCopyToClipboard)(permalink, () => {
+    createNotice("info", (0, import_i18n20.__)("Copied Permalink to clipboard."), {
+      isDismissible: true,
+      type: "snackbar"
+    });
+  });
+  const postUrlSlugDescriptionId = "editor-post-url__slug-description-" + (0, import_compose2.useInstanceId)(SlugEdit);
+  return /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)("fieldset", { className: style_default24.slug, children: [
+    isEditable && /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(Stack, { direction: "column", gap: "sm", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(Stack, { direction: "column", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { id: postUrlSlugDescriptionId, children: (0, import_i18n20.__)(
+          "Customize the last part of the Permalink."
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+          Link,
+          {
+            href: "https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink",
+            openInNewTab: true,
+            children: (0, import_i18n20.__)("Learn more")
+          }
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+        InputControl,
+        {
+          prefix: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(InputLayout2.Slot, { children: "/" }),
+          suffix: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(InputLayout2.Slot, { padding: "minimal", children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+            import_components5.Button,
+            {
+              size: "small",
+              icon: copy_small_default,
+              ref: copyButtonRef,
+              label: (0, import_i18n20.__)("Copy")
+            }
+          ) }),
+          label: (0, import_i18n20.__)("Link"),
+          hideLabelFromVision: true,
+          value: slug,
+          autoComplete: "off",
+          spellCheck: "false",
+          type: "text",
+          onValueChange: (newValue) => {
+            onChangeControl(newValue);
+          },
+          "aria-describedby": postUrlSlugDescriptionId
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)("div", { className: style_default24.help, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { children: (0, import_i18n20.__)("Permalink:") }),
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+          Link,
+          {
+            className: style_default24["help-link"],
+            href: permalink,
+            openInNewTab: true,
+            children: slug ? /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(import_jsx_runtime83.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { children: permalinkPrefix }),
+              /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { className: style_default24["help-slug"], children: slug }),
+              /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { children: permalinkSuffix })
+            ] }) : permalink
+          }
+        )
+      ] })
+    ] }),
+    !isEditable && /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
+      Link,
+      {
+        className: style_default24["help-link"],
+        href: permalink,
+        openInNewTab: true,
+        children: permalink
+      }
+    )
+  ] });
+};
+var edit_default = SlugEdit;
+
+// packages/core-fields/build-module/post_type_supports/slug/view.mjs
+var import_i18n21 = __toESM(require_i18n(), 1);
+var SlugView = ({ item }) => {
+  return getSlug(item) || (0, import_i18n21.__)("None");
+};
+var view_default2 = SlugView;
+
+// packages/core-fields/build-module/post_type_supports/slug/field.mjs
+var fieldExtensions12 = {
+  Edit: edit_default,
+  render: view_default2,
+  // The REST API only exposes `permalink_template` for viewable public
+  // post types, so posts without a permalink hide the field.
+  isVisible: (item) => !!item.link && !!item.permalink_template
+};
+
+// packages/core-fields/build-module/post_type_supports/status/field.mjs
+var import_date7 = __toESM(require_date(), 1);
+
+// packages/core-fields/build-module/post_type_supports/status/view.mjs
+var import_jsx_runtime84 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE39 = "data-wp-hash";
+function getRuntime39() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument39(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash39(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE39}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE39) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle39(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime39();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash39(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE39, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument39(targetDocument) {
+  const runtime = getRuntime39();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle39(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle39(hash, css) {
+  const runtime = getRuntime39();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle39(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle39("2d5dd29368", "._31460caf49297db0__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}._31460caf49297db0__icon svg{fill:currentColor;margin-inline-start:-4px}");
+}
+var style_default25 = { "icon": "_31460caf49297db0__icon" };
+var ICONS = {
+  draft: drafts_default,
+  future: scheduled_default,
+  pending: pending_default,
+  private: not_allowed_default,
+  publish: published_default,
+  trash: trash_default
+};
+function StatusView({
+  item,
+  field
+}) {
+  const currentStatus = field.getValue({ item });
+  const status = field.elements?.find(
+    ({ value }) => value === currentStatus
+  );
+  const label = status?.label || currentStatus;
+  const icon = ICONS[currentStatus];
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(Stack, { direction: "row", align: "flex-start", justify: "flex-start", children: [
+    icon && /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("div", { className: style_default25.icon, children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(Icon, { icon }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("span", { children: label })
+  ] });
+}
+
+// packages/core-fields/build-module/post_type_supports/status/field.mjs
+var fieldExtensions13 = {
+  // An auto-draft is a draft that hasn't been saved yet, so treat it as
+  // one for display, selection, and filtering.
+  getValue: ({ item }) => item.status === "auto-draft" ? "draft" : item.status,
+  setValue: ({ item, value }) => {
+    const edits = { status: value };
+    if (item.status === "future" && value !== "future" && item.date && (0, import_date7.isInTheFuture)(item.date)) {
+      edits.date = null;
+    }
+    if (value === "private" && item.password) {
+      edits.password = "";
+    }
+    return edits;
+  },
+  render: StatusView,
+  // A user who can't publish can't change the status either.
+  isDisabled: ({ item }) => !hasActionLink(item, "wp:action-publish")
+};
+
+// packages/core-fields/build-module/post_type_supports/sticky/field.mjs
+var fieldExtensions14 = {
+  // Only the users who can make the post sticky see the control.
+  isVisible: (item) => hasActionLink(item, "wp:action-sticky")
+};
+
+// packages/core-fields/build-module/post_type_supports/template/edit.mjs
+var import_core_data9 = __toESM(require_core_data(), 1);
+var import_data10 = __toESM(require_data(), 1);
+var import_element53 = __toESM(require_element(), 1);
+var import_i18n22 = __toESM(require_i18n(), 1);
+
+// packages/core-fields/build-module/post_type_supports/template/hooks.mjs
+var import_core_data8 = __toESM(require_core_data(), 1);
+var import_data9 = __toESM(require_data(), 1);
+function useTemplateFieldMode(record) {
+  const { type: postType, id: postId } = record;
+  const hasAvailableTemplates = Object.keys(record?.available_templates ?? {}).length > 0;
+  return (0, import_data9.useSelect)(
+    (select) => {
+      if (!select(import_core_data8.store).getPostType(postType)?.viewable) {
+        return null;
+      }
+      if (!select(import_core_data8.store).getCurrentTheme()?.is_block_theme) {
+        return hasAvailableTemplates ? "classic" : null;
+      }
+      const templateId = postId ? unlock(select(import_core_data8.store)).getTemplateId(
+        postType,
+        postId
+      ) : void 0;
+      return templateId ? "block-theme" : null;
+    },
+    [postType, postId, hasAvailableTemplates]
+  );
+}
+function getTemplateSlugToCheck(postType, slug) {
+  if (slug) {
+    return postType === "page" ? `${postType}-${slug}` : `single-${postType}-${slug}`;
+  }
+  return postType === "page" ? "page" : `single-${postType}`;
+}
+var NAME_NOT_FOUND = "";
+function useDefaultTemplateLabel(postType, postId, slug) {
+  return (0, import_data9.useSelect)(
+    (select) => {
+      if (!postType || !postId) {
+        return NAME_NOT_FOUND;
+      }
+      const postIdStr = String(postId);
+      const homePage = unlock(select(import_core_data8.store)).getHomePage();
+      if (postType === "page" && homePage?.postType === "page" && homePage?.postId === postIdStr) {
+        const templates = select(
+          import_core_data8.store
+        ).getEntityRecords("postType", "wp_template", {
+          per_page: -1
+        });
+        const frontPage = templates?.find(
+          (t) => t.slug === "front-page"
+        );
+        if (frontPage) {
+          return getItemTitle(frontPage);
+        }
+      }
+      const postsPageId = unlock(select(import_core_data8.store)).getPostsPageId();
+      if (postType === "page" && postsPageId === postIdStr) {
+        const templateId2 = select(import_core_data8.store).getDefaultTemplateId({
+          slug: "home"
+        });
+        if (!templateId2) {
+          return NAME_NOT_FOUND;
+        }
+        const template2 = select(
+          import_core_data8.store
+        ).getEntityRecord(
+          "postType",
+          "wp_template",
+          templateId2
+        );
+        return template2 ? getItemTitle(template2) : NAME_NOT_FOUND;
+      }
+      const slugToCheck = getTemplateSlugToCheck(postType, slug);
+      const templateId = select(import_core_data8.store).getDefaultTemplateId({
+        slug: slugToCheck
+      });
+      if (!templateId) {
+        return NAME_NOT_FOUND;
+      }
+      const template = select(import_core_data8.store).getEntityRecord(
+        "postType",
+        "wp_template",
+        templateId
+      );
+      return template ? getItemTitle(template) : NAME_NOT_FOUND;
+    },
+    [postType, postId, slug]
+  );
+}
+
+// packages/core-fields/build-module/post_type_supports/template/edit.mjs
+var import_jsx_runtime85 = __toESM(require_jsx_runtime(), 1);
+var EMPTY_ARRAY2 = [];
+var DEFAULT_TEMPLATE_VALUE = "//default";
+function toItemValue(template) {
+  return template || DEFAULT_TEMPLATE_VALUE;
+}
+function fromItemValue(itemValue) {
+  return !itemValue || itemValue === DEFAULT_TEMPLATE_VALUE ? "" : itemValue;
+}
+function useCanSwitchTemplate(postType, postId) {
+  return (0, import_data10.useSelect)(
+    (select) => {
+      const { getHomePage, getPostsPageId } = unlock(
+        select(import_core_data9.store)
+      );
+      const singlePostId = String(postId);
+      const isPostsPage = getPostsPageId() === singlePostId;
+      const isFrontPage = postType === "page" && getHomePage()?.postId === singlePostId;
+      return !isPostsPage && !isFrontPage;
+    },
+    [postId, postType]
+  );
+}
+function ClassicTemplateEdit({
+  data,
+  field,
+  onChange
+}) {
+  const value = field.getValue({ item: data });
+  const items = (0, import_element53.useMemo)(
+    () => Object.entries(data?.available_templates ?? {}).map(
+      ([templateSlug, title]) => ({
+        label: title,
+        value: toItemValue(templateSlug)
+      })
+    ),
+    [data]
+  );
+  const canSwitchTemplate = useCanSwitchTemplate(data.type, data.id);
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+    SelectControl2,
+    {
+      label: (0, import_i18n22.__)("Template"),
+      hideLabelFromVision: true,
+      value: items.find((item) => item.value === toItemValue(value)) ?? items[0] ?? null,
+      items,
+      onValueChange: (item) => onChange(fromItemValue(item?.value)),
+      disabled: !canSwitchTemplate
+    }
+  );
+}
+function BlockThemeTemplateEdit({
+  data,
+  field,
+  onChange
+}) {
+  const postType = data.type;
+  const postId = data.id;
+  const slug = data.slug;
+  const templates = (0, import_data10.useSelect)(
+    (select) => select(import_core_data9.store).getEntityRecords(
+      "postType",
+      "wp_template",
+      {
+        per_page: -1,
+        post_type: postType
+      }
+    ) ?? EMPTY_ARRAY2,
+    [postType]
+  );
+  const canSwitchTemplate = useCanSwitchTemplate(postType, postId);
+  const defaultTemplateLabel = useDefaultTemplateLabel(
+    postType,
+    postId,
+    slug
+  );
+  const value = field.getValue({ item: data });
+  const items = (0, import_element53.useMemo)(
+    () => [
+      { label: defaultTemplateLabel, value: DEFAULT_TEMPLATE_VALUE },
+      ...templates.map((template) => ({
+        label: getItemTitle(template),
+        value: template.slug
+      }))
+    ],
+    [templates, defaultTemplateLabel]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
+    SelectControl2,
+    {
+      label: (0, import_i18n22.__)("Template"),
+      hideLabelFromVision: true,
+      value: items.find((item) => item.value === toItemValue(value)) ?? items[0] ?? null,
+      items,
+      onValueChange: (item) => onChange(fromItemValue(item?.value)),
+      disabled: !canSwitchTemplate
+    }
+  );
+}
+function TemplateEdit({
+  data,
+  field,
+  onChange
+}) {
+  const onChangeControl = (0, import_element53.useCallback)(
+    (newValue) => onChange({
+      [field.id]: newValue
+    }),
+    [field.id, onChange]
+  );
+  const mode = useTemplateFieldMode(data);
+  if (!mode) {
+    return null;
+  }
+  const Edit = mode === "classic" ? ClassicTemplateEdit : BlockThemeTemplateEdit;
+  return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(Edit, { data, field, onChange: onChangeControl });
+}
+
+// packages/core-fields/build-module/post_type_supports/template/view.mjs
+var import_core_data10 = __toESM(require_core_data(), 1);
+var import_data11 = __toESM(require_data(), 1);
+var import_i18n23 = __toESM(require_i18n(), 1);
+var import_jsx_runtime86 = __toESM(require_jsx_runtime(), 1);
+function ClassicTemplateView({ item, field }) {
+  const templateSlug = field.getValue({ item });
+  const availableTemplates = item?.available_templates ?? {};
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_jsx_runtime86.Fragment, { children: templateSlug && availableTemplates[templateSlug] ? availableTemplates[templateSlug] : (0, import_i18n23.__)("Default template") });
+}
+function BlockThemeTemplateView({ item, field }) {
+  const postType = item.type;
+  const slug = item.slug;
+  const postId = item.id;
+  const templateSlug = field.getValue({ item });
+  const defaultTemplateLabel = useDefaultTemplateLabel(
+    postType,
+    postId,
+    slug
+  );
+  const templateLabel = (0, import_data11.useSelect)(
+    (select) => {
+      if (!templateSlug) {
+        return;
+      }
+      const allTemplates = select(
+        import_core_data10.store
+      ).getEntityRecords("postType", "wp_template", {
+        per_page: -1,
+        post_type: postType
+      });
+      const match = allTemplates?.find(
+        (t) => t.slug === templateSlug
+      );
+      return match ? getItemTitle(match) : void 0;
+    },
+    [postType, templateSlug]
+  );
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(import_jsx_runtime86.Fragment, { children: templateLabel ?? defaultTemplateLabel });
+}
+function TemplateView({ item, field }) {
+  const mode = useTemplateFieldMode(item);
+  if (!mode) {
+    return null;
+  }
+  const View = mode === "classic" ? ClassicTemplateView : BlockThemeTemplateView;
+  return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(View, { item, field });
+}
+
+// packages/core-fields/build-module/post_type_supports/template/field.mjs
+var fieldExtensions15 = {
+  Edit: TemplateEdit,
+  render: TemplateView
+};
+
+// packages/core-fields/build-module/shared/title/view.mjs
+var import_i18n24 = __toESM(require_i18n(), 1);
+var import_jsx_runtime87 = __toESM(require_jsx_runtime(), 1);
+var STYLE_HASH_ATTRIBUTE40 = "data-wp-hash";
+function getRuntime40() {
+  const globalScope = globalThis;
+  if (globalScope.__wpStyleRuntime) {
+    return globalScope.__wpStyleRuntime;
+  }
+  globalScope.__wpStyleRuntime = {
+    documents: /* @__PURE__ */ new Map(),
+    styles: /* @__PURE__ */ new Map(),
+    injectedStyles: /* @__PURE__ */ new WeakMap()
+  };
+  if (typeof document !== "undefined") {
+    registerDocument40(document);
+  }
+  return globalScope.__wpStyleRuntime;
+}
+function documentContainsStyleHash40(targetDocument, hash) {
+  if (!targetDocument.head) {
+    return false;
+  }
+  for (const style of targetDocument.head.querySelectorAll(
+    `style[${STYLE_HASH_ATTRIBUTE40}]`
+  )) {
+    if (style.getAttribute(STYLE_HASH_ATTRIBUTE40) === hash) {
+      return true;
+    }
+  }
+  return false;
+}
+function injectStyle40(targetDocument, hash, css) {
+  if (!targetDocument.head) {
+    return;
+  }
+  const runtime = getRuntime40();
+  let injectedStyles = runtime.injectedStyles.get(targetDocument);
+  if (!injectedStyles) {
+    injectedStyles = /* @__PURE__ */ new Set();
+    runtime.injectedStyles.set(targetDocument, injectedStyles);
+  }
+  if (injectedStyles.has(hash)) {
+    return;
+  }
+  if (documentContainsStyleHash40(targetDocument, hash)) {
+    injectedStyles.add(hash);
+    return;
+  }
+  const style = targetDocument.createElement("style");
+  style.setAttribute(STYLE_HASH_ATTRIBUTE40, hash);
+  style.appendChild(targetDocument.createTextNode(css));
+  targetDocument.head.appendChild(style);
+  injectedStyles.add(hash);
+}
+function registerDocument40(targetDocument) {
+  const runtime = getRuntime40();
+  runtime.documents.set(
+    targetDocument,
+    (runtime.documents.get(targetDocument) ?? 0) + 1
+  );
+  for (const [hash, css] of runtime.styles) {
+    injectStyle40(targetDocument, hash, css);
+  }
+  return () => {
+    const count = runtime.documents.get(targetDocument);
+    if (count === void 0) {
+      return;
+    }
+    if (count <= 1) {
+      runtime.documents.delete(targetDocument);
+      return;
+    }
+    runtime.documents.set(targetDocument, count - 1);
+  };
+}
+function registerStyle40(hash, css) {
+  const runtime = getRuntime40();
+  runtime.styles.set(hash, css);
+  for (const targetDocument of runtime.documents.keys()) {
+    injectStyle40(targetDocument, hash, css);
+  }
+}
+if (typeof process === "undefined" || true) {
+  registerStyle40("a4585ee5f7", "._6f88745c59f7b1df__title>span:first-child{display:block;flex-grow:0;overflow:hidden;text-decoration:none;text-overflow:ellipsis;white-space:nowrap}.bfcb43aba334e5f0__pattern-title>span:first-child{flex:1}");
+}
+var style_default26 = { "title": "_6f88745c59f7b1df__title", "pattern-title": "bfcb43aba334e5f0__pattern-title" };
 function BaseTitleView({
   item,
   className,
   children
 }) {
   const renderedTitle = getItemTitle(item);
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsxs)(
     Stack,
     {
       direction: "row",
       align: "center",
       justify: "flex-start",
       gap: "sm",
-      className: clsx_default("fields-field__title", style_default21.title, className),
+      className: clsx_default("fields-field__title", style_default26.title, className),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("span", { children: renderedTitle || (0, import_i18n21.__)("(no title)") }),
+        /* @__PURE__ */ (0, import_jsx_runtime87.jsx)("span", { children: renderedTitle || (0, import_i18n24.__)("(no title)") }),
         children
       ]
     }
   );
 }
 function TitleView({ item }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(BaseTitleView, { item });
+  return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(BaseTitleView, { item });
 }
 
 // packages/core-fields/build-module/post_type_supports/title/field.mjs
