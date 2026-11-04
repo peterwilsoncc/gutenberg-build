@@ -50131,7 +50131,7 @@ If there's a particular need for this, please submit a feature request at https:
 			registerBatch
 		]);
 		const paginationInfo = (0, _wordpress_element.useMemo)(() => ({
-			totalItems,
+			totalItems: totalItems ?? 0,
 			totalPages
 		}), [totalItems, totalPages]);
 		const acceptTypes = (0, _wordpress_element.useMemo)(() => {
