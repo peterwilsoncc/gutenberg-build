@@ -706,6 +706,7 @@ var {
   initialVdomPromise,
   toVdom,
   parseDirectiveValue,
+  getInteractiveNamespace,
   render,
   parseServerData,
   populateServerData,
@@ -722,7 +723,7 @@ var {
 );
 var regionAttr = `data-wp-router-region`;
 var interactiveAttr = `data-wp-interactive`;
-var regionsSelector = `[${interactiveAttr}][${regionAttr}], [${interactiveAttr}] [${interactiveAttr}][${regionAttr}]`;
+var regionsSelector = `[${interactiveAttr}][${regionAttr}], [${interactiveAttr}] [${regionAttr}]`;
 var discoverRegions = (dom) => Array.from(dom.querySelectorAll(regionsSelector)).filter(
   (region) => !closestHtmlDirectiveElement(region.parentElement)
 );
@@ -750,6 +751,17 @@ var parseRegionId = (value) => {
   const { value: parsedValue } = parseDirectiveValue(value);
   const id = typeof parsedValue === "string" ? parsedValue : parsedValue.id;
   return typeof id === "string" && id ? id : null;
+};
+var regionToVdom = (region) => {
+  const ancestor = region.parentElement?.closest(`[${interactiveAttr}]`);
+  return ancestor ? toVdom(
+    region,
+    getInteractiveNamespace(
+      parseDirectiveValue(
+        ancestor.getAttribute(interactiveAttr) ?? ""
+      ).value
+    )
+  ) : toVdom(region);
 };
 var cloneRouterRegionContent = (vdom) => {
   if (!vdom) {
@@ -813,7 +825,7 @@ var preparePage = async (url, dom, { vdom } = {}) => {
     if (region.parentElement.closest(`[${regionAttr}]`)) {
       regions[id] = void 0;
     } else {
-      regions[id] = vdom?.has(region) ? vdom.get(region) : toVdom(region);
+      regions[id] = vdom?.has(region) ? vdom.get(region) : regionToVdom(region);
     }
     if (attachTo && !initialRegionsToAttach.has(id)) {
       regionsToAttach[id] = attachTo;

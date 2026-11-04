@@ -2114,7 +2114,25 @@ function parseDirectiveValue(rawValue) {
 }
 var directiveMaps = /* @__PURE__ */ new WeakSet();
 var isDirectiveMap = (value) => typeof value === "object" && value !== null && directiveMaps.has(value);
-function toVdom(root) {
+var getInteractiveNamespace = (value) => {
+  const namespace = (
+    // eslint-disable-next-line no-nested-ternary
+    typeof value === "string" ? value : typeof value?.namespace === "string" ? value.namespace : null
+  );
+  return isReservedKey(namespace) ? null : namespace;
+};
+function toVdom(root, namespace) {
+  if (namespace === void 0) {
+    return convertToVdom(root);
+  }
+  namespaces.push(namespace);
+  try {
+    return convertToVdom(root);
+  } finally {
+    namespaces.pop();
+  }
+}
+function convertToVdom(root) {
   const nodesToRemove = /* @__PURE__ */ new Set();
   const nodesToReplace = /* @__PURE__ */ new Set();
   const treeWalker = document.createTreeWalker(
@@ -2156,13 +2174,7 @@ function toVdom(root) {
         const { namespace, value } = parseDirectiveValue(attributeValue);
         if (attributeName === "data-wp-interactive") {
           island = true;
-          const islandNamespace = (
-            // eslint-disable-next-line no-nested-ternary
-            typeof value === "string" ? value : typeof value?.namespace === "string" ? value.namespace : null
-          );
-          namespaces.push(
-            isReservedKey(islandNamespace) ? null : islandNamespace
-          );
+          namespaces.push(getInteractiveNamespace(value));
         } else if (isReservedKey(namespace)) {
           if (true) {
             warn(
@@ -3531,6 +3543,9 @@ var privateApis = (lock) => {
       parseDirectiveName,
       // Shares the directive-value interpretation with internal consumers.
       parseDirectiveValue,
+      // Shares the rules that turn a `data-wp-interactive` value into a
+      // namespace with internal consumers.
+      getInteractiveNamespace,
       directive,
       getNamespace,
       h: k,
