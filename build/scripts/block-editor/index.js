@@ -7032,7 +7032,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		});
 		return elementStylesByName;
 	}
-	const getNodesWithStyles = (tree, blockSelectors) => {
+	const getNodesWithStyles = (tree, blockSelectors, textClipBaseBlocks) => {
 		const nodes = [];
 		if (!tree?.styles) return nodes;
 		const responsiveMediaQueries = getResponsiveMediaQueries$5(tree);
@@ -7065,7 +7065,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 					const blockSelector = blockSelectors[blockName];
 					variationStyleNodesToAdd.push({
 						styles: variationStyles,
-						baseStyles: [typedNode],
+						baseStyles: [typedNode, ...textClipBaseBlocks?.[blockName] ? [textClipBaseBlocks[blockName]] : []],
 						selector: variationSelector,
 						featureSelectors: blockSelector?.featureSelectors,
 						fallbackGapValue: blockSelector?.fallbackGapValue,
@@ -7096,6 +7096,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 						selector: variationBlockSelector,
 						name: variationBlockName,
 						isStyleVariation: true,
+						...textClipBaseBlocks?.[variationBlockName] && { baseStyles: [textClipBaseBlocks[variationBlockName]] },
 						duotoneSelector: variationDuotoneSelector,
 						featureSelectors: variationFeatureSelectors,
 						fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
@@ -7238,7 +7239,23 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		if (mediaQuery && ruleset) return `${mediaQuery}{${ruleset}}`;
 		return ruleset;
 	}
-	const transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => {
+	/**
+	* Like `transformToStyles`, but also takes the block type styles that block
+	* style variations layer over. They are read only to escape a text clip set
+	* there, and are never output. Mirror of the PHP `text_clip_base_blocks`
+	* stylesheet option.
+	*
+	* @param tree                  Global styles config.
+	* @param blockSelectors        Block selectors.
+	* @param hasBlockGapSupport    Whether block gap is supported.
+	* @param hasFallbackGapSupport Whether fallback gap is supported.
+	* @param disableLayoutStyles   Whether to disable layout styles.
+	* @param disableRootPadding    Whether to disable root padding.
+	* @param styleOptions          Sets of styles to opt in or out of.
+	* @param textClipBaseBlocks    Block type styles, keyed by block name.
+	* @return The stylesheet.
+	*/
+	function transformToStylesWithTextClipBase$1(tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}, textClipBaseBlocks) {
 		const options = {
 			blockGap: true,
 			blockStyles: true,
@@ -7249,7 +7266,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			variationStyles: false,
 			...styleOptions
 		};
-		const nodesWithStyles = getNodesWithStyles(tree, blockSelectors);
+		const nodesWithStyles = getNodesWithStyles(tree, blockSelectors, textClipBaseBlocks);
 		const nodesWithSettings = getNodesWithSettings(tree, blockSelectors);
 		const useRootPaddingAlign = tree?.settings?.useRootPaddingAwareAlignments;
 		const { contentSize, wideSize } = tree?.settings?.layout || {};
@@ -7310,7 +7327,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			if (classes.length > 0) ruleset += classes;
 		});
 		return ruleset;
-	};
+	}
 	const getSelectorsConfig = (blockType, rootSelector) => {
 		if (blockType?.selectors && Object.keys(blockType.selectors).length > 0) return blockType.selectors;
 		const config = { root: rootSelector };
@@ -7696,7 +7713,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		getDuotoneStylesheet: getDuotoneStylesheet$1,
 		getDuotoneUnsetStylesheet: getDuotoneUnsetStylesheet$1,
 		resolveStyle: resolveStyle$2,
-		getVariationStyle: getVariationStyle$2
+		getVariationStyle: getVariationStyle$2,
+		transformToStylesWithTextClipBase: transformToStylesWithTextClipBase$1
 	});
 
 // packages/block-editor/build-module/components/block-visibility/constants.mjs
@@ -107901,7 +107919,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/block-style-variation.mjs
-	const { getVariationStyle } = unlock$2(privateApis$29);
+	const { getVariationStyle, transformToStylesWithTextClipBase } = unlock$2(privateApis$29);
 	const VARIATION_PREFIX$1 = "is-style-";
 	function getVariationMatches(className) {
 		if (!className) return [];
@@ -107957,7 +107975,7 @@ If there's a particular need for this, please submit a feature request at https:
 						styles: { blocks: { [blockName]: { variations: { [`${override.variation}-${override.clientId}`]: configStyles } } } }
 					};
 					const blockSelectors = getBlockSelectors((0, _wordpress_blocks.getBlockTypes)(), override.clientId);
-					const variationStyles = transformToStyles(variationConfig, blockSelectors, false, true, true, true, {
+					const variationStyles = transformToStylesWithTextClipBase(variationConfig, blockSelectors, false, true, true, true, {
 						blockGap: false,
 						blockStyles: true,
 						layoutStyles: false,
@@ -107965,7 +107983,7 @@ If there's a particular need for this, please submit a feature request at https:
 						presets: false,
 						rootPadding: false,
 						variationStyles: true
-					});
+					}, config?.styles?.blocks);
 					newOverrides.push({
 						id: `${override.variation}-${override.clientId}`,
 						css: variationStyles,
@@ -108000,6 +108018,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}, name, variation);
 			return {
 				settings: globalSettings,
+				textClipBaseBlocks: globalStyles?.blocks,
 				styles: { blocks: { [name]: { variations: { [`${variation}-${clientId}`]: variationStyles } } } }
 			};
 		}, [
@@ -108014,7 +108033,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const { getBlockStyles } = (0, _wordpress_data.useSelect)(_wordpress_blocks.store);
 		const variation = getVariationNameFromClass(className, getBlockStyles(name));
 		const variationClass = `${VARIATION_PREFIX$1}${variation}-${clientId}`;
-		const { settings, styles } = useBlockStyleVariation(name, variation, clientId);
+		const { settings, styles, textClipBaseBlocks } = useBlockStyleVariation(name, variation, clientId);
 		const variationStyles = (0, _wordpress_element.useMemo)(() => {
 			if (!variation) return;
 			const variationConfig = {
@@ -108022,7 +108041,7 @@ If there's a particular need for this, please submit a feature request at https:
 				styles
 			};
 			const blockSelectors = getBlockSelectors((0, _wordpress_blocks.getBlockTypes)(), clientId);
-			return transformToStyles(variationConfig, blockSelectors, false, true, true, true, {
+			return transformToStylesWithTextClipBase(variationConfig, blockSelectors, false, true, true, true, {
 				blockGap: false,
 				blockStyles: true,
 				layoutStyles: false,
@@ -108030,11 +108049,12 @@ If there's a particular need for this, please submit a feature request at https:
 				presets: false,
 				rootPadding: false,
 				variationStyles: true
-			});
+			}, textClipBaseBlocks);
 		}, [
 			variation,
 			settings,
 			styles,
+			textClipBaseBlocks,
 			clientId
 		]);
 		usePrivateStyleOverride({

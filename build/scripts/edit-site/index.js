@@ -43734,7 +43734,7 @@ Icon: ButtonIcon });
 		});
 		return elementStylesByName;
 	}
-	const getNodesWithStyles = (tree, blockSelectors) => {
+	const getNodesWithStyles = (tree, blockSelectors, textClipBaseBlocks) => {
 		const nodes = [];
 		if (!tree?.styles) return nodes;
 		const responsiveMediaQueries = getResponsiveMediaQueries(tree);
@@ -43767,7 +43767,7 @@ Icon: ButtonIcon });
 					const blockSelector = blockSelectors[blockName];
 					variationStyleNodesToAdd.push({
 						styles: variationStyles,
-						baseStyles: [typedNode],
+						baseStyles: [typedNode, ...textClipBaseBlocks?.[blockName] ? [textClipBaseBlocks[blockName]] : []],
 						selector: variationSelector,
 						featureSelectors: blockSelector?.featureSelectors,
 						fallbackGapValue: blockSelector?.fallbackGapValue,
@@ -43798,6 +43798,7 @@ Icon: ButtonIcon });
 						selector: variationBlockSelector,
 						name: variationBlockName,
 						isStyleVariation: true,
+						...textClipBaseBlocks?.[variationBlockName] && { baseStyles: [textClipBaseBlocks[variationBlockName]] },
 						duotoneSelector: variationDuotoneSelector,
 						featureSelectors: variationFeatureSelectors,
 						fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
@@ -44004,7 +44005,24 @@ Icon: ButtonIcon });
 		if (mediaQuery && ruleset) return `${mediaQuery}{${ruleset}}`;
 		return ruleset;
 	}
-	const transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => {
+	const transformToStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}) => transformToStylesWithTextClipBase(tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles, disableRootPadding, styleOptions);
+	/**
+	* Like `transformToStyles`, but also takes the block type styles that block
+	* style variations layer over. They are read only to escape a text clip set
+	* there, and are never output. Mirror of the PHP `text_clip_base_blocks`
+	* stylesheet option.
+	*
+	* @param tree                  Global styles config.
+	* @param blockSelectors        Block selectors.
+	* @param hasBlockGapSupport    Whether block gap is supported.
+	* @param hasFallbackGapSupport Whether fallback gap is supported.
+	* @param disableLayoutStyles   Whether to disable layout styles.
+	* @param disableRootPadding    Whether to disable root padding.
+	* @param styleOptions          Sets of styles to opt in or out of.
+	* @param textClipBaseBlocks    Block type styles, keyed by block name.
+	* @return The stylesheet.
+	*/
+	function transformToStylesWithTextClipBase(tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}, textClipBaseBlocks) {
 		const options = {
 			blockGap: true,
 			blockStyles: true,
@@ -44015,7 +44033,7 @@ Icon: ButtonIcon });
 			variationStyles: false,
 			...styleOptions
 		};
-		const nodesWithStyles = getNodesWithStyles(tree, blockSelectors);
+		const nodesWithStyles = getNodesWithStyles(tree, blockSelectors, textClipBaseBlocks);
 		const nodesWithSettings = getNodesWithSettings(tree, blockSelectors);
 		const useRootPaddingAlign = tree?.settings?.useRootPaddingAwareAlignments;
 		const { contentSize, wideSize } = tree?.settings?.layout || {};
@@ -44076,7 +44094,7 @@ Icon: ButtonIcon });
 			if (classes.length > 0) ruleset += classes;
 		});
 		return ruleset;
-	};
+	}
 	function generateSvgFilters(tree, blockSelectors) {
 		return getNodesWithSettings(tree, blockSelectors).flatMap(({ presets }) => {
 			return getPresetsSvgFilters(presets);
@@ -44535,7 +44553,8 @@ Icon: ButtonIcon });
 		getDuotoneStylesheet,
 		getDuotoneUnsetStylesheet,
 		resolveStyle: resolveStyle$1,
-		getVariationStyle
+		getVariationStyle,
+		transformToStylesWithTextClipBase
 	});
 
 // packages/edit-site/build-module/components/block-editor/viewport.mjs

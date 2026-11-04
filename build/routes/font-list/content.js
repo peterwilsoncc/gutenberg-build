@@ -18142,6 +18142,26 @@ function getTypographyFontSizeValue(preset, settings) {
 
 // packages/global-styles-engine/build-module/utils/common.mjs
 var import_style_engine = require_style_engine();
+const ROOT_BLOCK_SELECTOR = "body";
+const ROOT_CSS_PROPERTIES_SELECTOR = ":root";
+function splitSelectorList(selector) {
+	if (!selector.includes(",")) return [selector];
+	const selectors = [];
+	let currentSelector = "";
+	let parenthesesDepth = 0;
+	for (const char of selector) {
+		if (char === "(") parenthesesDepth++;
+		else if (char === ")" && parenthesesDepth > 0) parenthesesDepth--;
+		else if (char === "," && parenthesesDepth === 0) {
+			selectors.push(currentSelector);
+			currentSelector = "";
+			continue;
+		}
+		currentSelector += char;
+	}
+	selectors.push(currentSelector);
+	return selectors;
+}
 const PRESET_METADATA = [
 	{
 		path: ["color", "palette"],
@@ -18232,6 +18252,132 @@ const PRESET_METADATA = [
 		classes: []
 	}
 ];
+/**
+* Function that scopes a selector with another one. This works a bit like
+* SCSS nesting except the `&` operator isn't supported.
+*
+* @example
+* ```js
+* const scope = '.a, .b .c';
+* const selector = '> .x, .y';
+* const merged = scopeSelector( scope, selector );
+* // merged is '.a > .x, .a .y, .b .c > .x, .b .c .y'
+* ```
+*
+* @param scope    Selector to scope to.
+* @param selector Original selector.
+*
+* @return Scoped selector.
+*/
+function scopeSelector(scope, selector) {
+	if (!scope || !selector) return selector;
+	const scopes = splitSelectorList(scope);
+	const selectors = splitSelectorList(selector);
+	const selectorsScoped = [];
+	scopes.forEach((outer) => {
+		selectors.forEach((inner) => {
+			selectorsScoped.push(`${outer.trim()} ${inner.trim()}`);
+		});
+	});
+	return selectorsScoped.join(", ");
+}
+/**
+* Scopes a collection of selectors for features and subfeatures.
+*
+* @example
+* ```js
+* const scope = '.custom-scope';
+* const selectors = {
+*     color: '.wp-my-block p',
+*     typography: { fontSize: '.wp-my-block caption' },
+* };
+* const result = scopeFeatureSelector( scope, selectors );
+* // result is {
+* //     color: '.custom-scope .wp-my-block p',
+* //     typography: { fonSize: '.custom-scope .wp-my-block caption' },
+* // }
+* ```
+*
+* @param scope     Selector to scope collection of selectors with.
+* @param selectors Collection of feature selectors e.g.
+*
+* @return Scoped collection of feature selectors.
+*/
+function scopeFeatureSelectors(scope, selectors) {
+	if (!scope || !selectors) return;
+	const featureSelectors = {};
+	Object.entries(selectors).forEach(([feature, selector]) => {
+		if (typeof selector === "string") featureSelectors[feature] = scopeSelector(scope, selector);
+		if (typeof selector === "object") {
+			featureSelectors[feature] = {};
+			Object.entries(selector).forEach(([subfeature, subfeatureSelector]) => {
+				featureSelectors[feature][subfeature] = scopeSelector(scope, subfeatureSelector);
+			});
+		}
+	});
+	return featureSelectors;
+}
+/**
+* Appends a sub-selector to an existing one.
+*
+* Given the compounded `selector` "h1, h2, h3"
+* and the `toAppend` selector ".some-class" the result will be
+* "h1.some-class, h2.some-class, h3.some-class".
+*
+* @param selector Original selector.
+* @param toAppend Selector to append.
+*
+* @return The new selector.
+*/
+function appendToSelector(selector, toAppend) {
+	if (!selector.includes(",")) return selector + toAppend;
+	return splitSelectorList(selector).map((sel) => sel + toAppend).join(",");
+}
+/**
+* Generates the selector for a block style variation by creating the
+* appropriate CSS class and adding it to the ancestor portion of the block's
+* selector.
+*
+* For example, take the Button block which has a compound selector:
+* `.wp-block-button .wp-block-button__link`. With a variation named 'custom',
+* the class `.is-style-custom` should be added to the `.wp-block-button`
+* ancestor only.
+*
+* This function will take into account comma separated and complex selectors.
+*
+* @param variation     Name for the variation.
+* @param blockSelector CSS selector for the block.
+*
+* @return CSS selector for the block style variation.
+*/
+function getBlockStyleVariationSelector(variation, blockSelector) {
+	const variationClass = `.is-style-${variation}`;
+	if (!blockSelector) return variationClass;
+	const ancestorRegex = /[^\s:]+/;
+	const addVariationClass = (match) => match + variationClass;
+	return splitSelectorList(blockSelector).map((part) => part.replace(ancestorRegex, addVariationClass)).join(",");
+}
+/**
+* Generates the selector for a block style variation feature selector.
+*
+* Feature selectors can target a different element than the block root
+* selector. Apply the variation class directly to the selector that receives
+* the declarations instead of deriving it from the block root selector.
+*
+* @param variation       Name for the variation.
+* @param featureSelector CSS selector for the feature.
+*
+* @return CSS selector for the block style variation feature.
+*/
+function getBlockStyleVariationFeatureSelector(variation, featureSelector) {
+	const variationClass = `.is-style-${variation}`;
+	return getBlockStyleVariationSelector(variation, splitSelectorList(featureSelector).map((selector) => {
+		const trimmedSelector = selector.trim();
+		const prefix = `${variationClass} `;
+		if (trimmedSelector.startsWith(prefix)) return trimmedSelector.slice(prefix.length);
+		return trimmedSelector;
+	}).join(","));
+}
 /**
 * Resolves ref values in theme JSON.
 *
@@ -18948,6 +19094,226 @@ function getDuotoneFilter(id, colors) {
 </svg>`;
 }
 
+// packages/global-styles-engine/build-module/utils/string.mjs
+/**
+* Converts a string to kebab-case.
+* Matches WordPress kebabCase behavior.
+*
+* @param str The string to convert
+* @return The kebab-cased string
+*/
+function kebabCase$1(str) {
+	return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/([0-9])([a-zA-Z])/g, "$1-$2").replace(/([a-zA-Z])([0-9])/g, "$1-$2").replace(/[\s_]+/g, "-").toLowerCase();
+}
+
+// packages/global-styles-engine/build-module/utils/spacing.mjs
+function getSpacingPresetCssVar(value) {
+	if (!value) return;
+	const slug = value.match(/var:preset\|spacing\|(.+)/);
+	if (!slug) return value;
+	return `var(--wp--preset--spacing--${slug[1]})`;
+}
+
+// packages/global-styles-engine/build-module/utils/gap.mjs
+/**
+* Returns a BoxControl object value from a given blockGap style value.
+* The string check is for backwards compatibility before Gutenberg supported
+* split gap values (row and column) and the value was a string n + unit.
+*
+* @param blockGapValue A block gap string or axial object value, e.g., '10px' or { top: '10px', left: '10px'}.
+* @return A value to pass to the BoxControl component.
+*/
+function getGapBoxControlValueFromStyle(blockGapValue) {
+	if (!blockGapValue) return null;
+	const isValueString = typeof blockGapValue === "string";
+	return {
+		top: isValueString ? blockGapValue : blockGapValue?.top,
+		left: isValueString ? blockGapValue : blockGapValue?.left
+	};
+}
+/**
+* Returns a CSS value for the `gap` property from a given blockGap style.
+*
+* @param blockGapValue A block gap string or axial object value, e.g., '10px' or { top: '10px', left: '10px'}.
+* @param defaultValue  A default gap value.
+* @return The concatenated gap value (row and column).
+*/
+function getGapCSSValue(blockGapValue, defaultValue = "0") {
+	const blockGapBoxControlValue = getGapBoxControlValueFromStyle(blockGapValue);
+	if (!blockGapBoxControlValue) return null;
+	const row = getSpacingPresetCssVar(blockGapBoxControlValue?.top) || defaultValue;
+	const column = getSpacingPresetCssVar(blockGapBoxControlValue?.left) || defaultValue;
+	return row === column ? row : `${row} ${column}`;
+}
+
+// packages/global-styles-engine/build-module/utils/background.mjs
+const BACKGROUND_BLOCK_DEFAULT_VALUES = {
+	backgroundSize: "cover",
+	backgroundPosition: "50% 50%"
+};
+/**
+* Whether a background image resolves to a URL, as opposed to a reference or an
+* unresolved value.
+*
+* @param backgroundImage The background image value.
+*
+* @return Whether the value carries a URL.
+*/
+function hasImageUrl(backgroundImage) {
+	return typeof backgroundImage === "object" && backgroundImage !== null && "url" in backgroundImage && !!backgroundImage.url;
+}
+function setBackgroundStyleDefaults(backgroundStyle) {
+	if (!backgroundStyle || !hasImageUrl(backgroundStyle.backgroundImage)) return;
+	let backgroundStylesWithDefaults;
+	if (!backgroundStyle?.backgroundSize) backgroundStylesWithDefaults = { backgroundSize: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundSize };
+	if ("contain" === backgroundStyle?.backgroundSize && !backgroundStyle?.backgroundPosition) backgroundStylesWithDefaults = { backgroundPosition: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundPosition };
+	return backgroundStylesWithDefaults;
+}
+
+// packages/global-styles-engine/build-module/utils/layout.mjs
+const LAYOUT_DEFINITIONS = {
+	default: {
+		name: "default",
+		slug: "flow",
+		className: "is-layout-flow",
+		baseStyles: [
+			{
+				selector: " > .alignleft",
+				rules: {
+					float: "left",
+					"margin-left": "0",
+					"margin-right": "2em"
+				}
+			},
+			{
+				selector: " > .alignright",
+				rules: {
+					float: "right",
+					"margin-left": "2em",
+					"margin-right": "0"
+				}
+			},
+			{
+				selector: " > .aligncenter",
+				rules: {
+					"margin-left": "auto !important",
+					"margin-right": "auto !important"
+				}
+			}
+		],
+		spacingStyles: [
+			{
+				selector: " > :first-child",
+				rules: { "margin-block-start": "0" }
+			},
+			{
+				selector: " > :last-child",
+				rules: { "margin-block-end": "0" }
+			},
+			{
+				selector: " > *",
+				rules: {
+					"margin-block-start": null,
+					"margin-block-end": "0"
+				}
+			}
+		]
+	},
+	constrained: {
+		name: "constrained",
+		slug: "constrained",
+		className: "is-layout-constrained",
+		baseStyles: [
+			{
+				selector: " > .alignleft",
+				rules: {
+					float: "left",
+					"margin-left": "0",
+					"margin-right": "2em"
+				}
+			},
+			{
+				selector: " > .alignright",
+				rules: {
+					float: "right",
+					"margin-left": "2em",
+					"margin-right": "0"
+				}
+			},
+			{
+				selector: " > .aligncenter",
+				rules: {
+					"margin-left": "auto !important",
+					"margin-right": "auto !important"
+				}
+			},
+			{
+				selector: " > :where(:not(.alignleft):not(.alignright):not(.alignfull))",
+				rules: {
+					"max-width": "var(--wp--style--global--content-size)",
+					"margin-left": "auto !important",
+					"margin-right": "auto !important"
+				}
+			},
+			{
+				selector: " > .alignwide",
+				rules: { "max-width": "var(--wp--style--global--wide-size)" }
+			}
+		],
+		spacingStyles: [
+			{
+				selector: " > :first-child",
+				rules: { "margin-block-start": "0" }
+			},
+			{
+				selector: " > :last-child",
+				rules: { "margin-block-end": "0" }
+			},
+			{
+				selector: " > *",
+				rules: {
+					"margin-block-start": null,
+					"margin-block-end": "0"
+				}
+			}
+		]
+	},
+	flex: {
+		name: "flex",
+		slug: "flex",
+		className: "is-layout-flex",
+		displayMode: "flex",
+		baseStyles: [{
+			selector: "",
+			rules: {
+				"flex-wrap": "wrap",
+				"align-items": "center"
+			}
+		}, {
+			selector: " > :is(*, div)",
+			rules: { margin: "0" }
+		}],
+		spacingStyles: [{
+			selector: "",
+			rules: { gap: null }
+		}]
+	},
+	grid: {
+		name: "grid",
+		slug: "grid",
+		className: "is-layout-grid",
+		displayMode: "grid",
+		baseStyles: [{
+			selector: " > :is(*, div)",
+			rules: { margin: "0" }
+		}],
+		spacingStyles: [{
+			selector: "",
+			rules: { gap: null }
+		}]
+	}
+};
+
 // packages/global-styles-engine/build-module/utils/viewport.mjs
 const DEFAULT_VIEWPORT_BREAKPOINTS = {
 	mobile: "480px",
@@ -19032,6 +19398,769 @@ function getResponsiveMediaQueries(configOrSettings) {
 	if (breakpoints.mobile) mediaQueries["@mobile"] = `@media (width <= ${breakpoints.mobile})`;
 	if (breakpoints.tablet) mediaQueries["@tablet"] = breakpoints.mobile ? `@media (${breakpoints.mobile} < width <= ${breakpoints.tablet})` : `@media (width <= ${breakpoints.tablet})`;
 	return mediaQueries;
+}
+
+// packages/global-styles-engine/build-module/core/render.mjs
+var import_blocks = require_blocks();
+var import_data = require_data();
+const ELEMENT_CLASS_NAMES = {
+	button: "wp-element-button",
+	caption: "wp-element-caption"
+};
+const VALID_BLOCK_PSEUDO_SELECTORS = {
+	"core/button": [
+		":hover",
+		":focus",
+		":focus-visible",
+		":active"
+	],
+	"core/navigation-link": [
+		":hover",
+		":focus",
+		":focus-visible",
+		":active"
+	]
+};
+const VALID_ELEMENT_PSEUDO_SELECTORS = {
+	link: [
+		":link",
+		":any-link",
+		":visited",
+		":hover",
+		":focus",
+		":focus-visible",
+		":active"
+	],
+	button: [
+		":link",
+		":any-link",
+		":visited",
+		":hover",
+		":focus",
+		":focus-visible",
+		":active"
+	],
+	textInput: [
+		":required",
+		":user-valid",
+		":user-invalid",
+		":focus",
+		":focus-visible",
+		"::placeholder"
+	],
+	select: [
+		":hover",
+		":focus",
+		":focus-visible",
+		":active"
+	]
+};
+/**
+* Transform given preset tree into a set of preset class declarations.
+*
+* @param blockSelector Block selector string
+* @param blockPresets  Block presets object
+* @return CSS declarations for the preset classes
+*/
+function getPresetsClasses(blockSelector = "*", blockPresets = {}) {
+	return PRESET_METADATA.reduce((declarations, { path, cssVarInfix, classes }) => {
+		if (!classes) return declarations;
+		const presetByOrigin = getValueFromObjectPath(blockPresets, path, []);
+		[
+			"default",
+			"theme",
+			"custom"
+		].forEach((origin) => {
+			if (presetByOrigin[origin]) presetByOrigin[origin].forEach(({ slug }) => {
+				classes.forEach(({ classSuffix, propertyName }) => {
+					const classSelectorToUse = `.has-${kebabCase$1(slug)}-${classSuffix}`;
+					const selectorToUse = blockSelector ? `:where(${blockSelector})${classSelectorToUse}` : classSelectorToUse;
+					const value = `var(--wp--preset--${cssVarInfix}--${kebabCase$1(slug)})`;
+					declarations += `${selectorToUse}{${propertyName}: ${value} !important;}`;
+				});
+			});
+		});
+		return declarations;
+	}, "");
+}
+/**
+* Updates the text indent selector for paragraph blocks based on the textIndent setting.
+*
+* The textIndent setting can be 'subsequent' (default), 'all', or false.
+* When set to 'all', the selector should be '.wp-block-paragraph' instead of
+* '.wp-block-paragraph + .wp-block-paragraph' to apply indent to all paragraphs.
+*
+* @param featureDeclarations The feature declarations keyed by selector
+* @param settings            Theme.json settings
+* @param blockName           The name of the block being processed
+* @return Updated feature declarations
+*/
+const updateParagraphTextIndentSelector = (featureDeclarations, settings, blockName) => {
+	if (blockName !== "core/paragraph") return featureDeclarations;
+	if (((settings?.blocks?.["core/paragraph"])?.typography?.textIndent ?? settings?.typography?.textIndent ?? "subsequent") !== "all") return featureDeclarations;
+	const oldSelector = ".wp-block-paragraph + .wp-block-paragraph";
+	const newSelector = ".wp-block-paragraph";
+	if (oldSelector in featureDeclarations) {
+		const declarations = featureDeclarations[oldSelector];
+		const updated = { ...featureDeclarations };
+		delete updated[oldSelector];
+		updated[newSelector] = declarations;
+		return updated;
+	}
+	return featureDeclarations;
+};
+/**
+* Updates button width declarations to use a calc() formula for percentage values.
+*
+* When a percentage width is set on the Button block via Global Styles, the
+* resulting CSS needs to account for block gap spacing so that buttons tile
+* correctly on a row (e.g. 4 buttons at 25% width all fit on one row).
+*
+* This mirrors the dynamic calc() formula applied at the block instance level
+* in the button block's stylesheet (style.scss).
+*
+* @param featureDeclarations Feature declarations keyed by selector.
+* @param settings            The theme.json settings.
+* @return Updated feature declarations.
+*/
+const updateButtonWidthDeclarations = (featureDeclarations, settings) => {
+	const buttonSelector = ".wp-block-button";
+	if (!(buttonSelector in featureDeclarations)) return featureDeclarations;
+	const updated = { ...featureDeclarations };
+	updated[buttonSelector] = updated[buttonSelector].map((declaration) => {
+		const match = declaration.match(/^width:\s*(.+)$/);
+		if (!match) return declaration;
+		const value = match[1];
+		let percentage = null;
+		if (value.endsWith("%")) percentage = parseFloat(value);
+		if (percentage === null && value.startsWith("var(--wp--preset--dimension--") && value.endsWith(")")) {
+			const slug = value.slice(29, -1);
+			const dimensionSizes = {
+				...settings?.dimensions?.dimensionSizes ?? {},
+				...settings?.blocks?.["core/button"]?.dimensions?.dimensionSizes ?? {}
+			};
+			for (const origin of Object.values(dimensionSizes)) {
+				if (!Array.isArray(origin)) continue;
+				for (const preset of origin) if (preset.slug === slug && typeof preset.size === "string" && preset.size.endsWith("%")) {
+					percentage = parseFloat(preset.size);
+					break;
+				}
+				if (percentage !== null) break;
+			}
+		}
+		if (percentage === null || isNaN(percentage)) return declaration;
+		return `width: calc(${percentage} * 1% - (var(--wp--style--block-gap, 0.5em) * (1 - ${percentage} / 100)))`;
+	});
+	return updated;
+};
+/**
+* Generate style declarations for a block's custom feature and subfeature
+* selectors.
+*
+* NOTE: The passed `styles` object will be mutated by this function.
+*
+* @param selectors Custom selectors object for a block
+* @param styles    A block's styles object
+* @return Style declarations
+*/
+const getFeatureDeclarations = (selectors, styles) => {
+	const declarations = {};
+	Object.entries(selectors).forEach(([feature, selector]) => {
+		if (feature === "root" || feature === "css" || !styles?.[feature]) return;
+		const isShorthand = typeof selector === "string";
+		if (!isShorthand && typeof selector === "object" && selector !== null) Object.entries(selector).forEach(([subfeature, subfeatureSelector]) => {
+			if (subfeature === "root" || !styles?.[feature][subfeature]) return;
+			const newDeclarations = getStylesDeclarations({ [feature]: { [subfeature]: styles[feature][subfeature] } });
+			declarations[subfeatureSelector] = [...declarations[subfeatureSelector] || [], ...newDeclarations];
+			delete styles[feature][subfeature];
+		});
+		if (isShorthand || typeof selector === "object" && selector !== null && "root" in selector) {
+			const featureSelector = isShorthand ? selector : selector.root;
+			const newDeclarations = getStylesDeclarations({ [feature]: styles[feature] });
+			declarations[featureSelector] = [...declarations[featureSelector] || [], ...newDeclarations];
+			delete styles[feature];
+		}
+	});
+	return declarations;
+};
+/**
+* Adds the declarations a state needs to escape a text clip set below it.
+*
+* Mirror of `getStateTextClipEscapeCSS` and `getStateTextFillResetCSS` in
+* packages/block-editor/src/hooks/style.jsx.
+*
+* @param declarations Declarations generated for the state.
+* @param stateStyles  State style object.
+* @param baseStyles   Styles the state layers over, nearest first.
+* @return Declarations with the escapes applied where needed.
+*/
+function getStateDeclarationsWithTextClipEscapes(declarations, stateStyles, baseStyles) {
+	if ("text" !== baseStyles?.find((baseStyle) => baseStyle?.background?.backgroundClip)?.background?.backgroundClip) return declarations;
+	const stateClip = stateStyles?.background?.backgroundClip;
+	const paintsItsOwnBackground = !!stateStyles?.background?.gradient || !!stateStyles?.background?.backgroundImage || !!stateStyles?.color?.gradient;
+	if (stateClip && "text" !== stateClip) return paintsItsOwnBackground ? declarations : [...declarations, "background-image: unset"];
+	if (!stateClip && !paintsItsOwnBackground && !!stateStyles?.color?.text) return [...declarations, "-webkit-text-fill-color: currentColor"];
+	return declarations;
+}
+/**
+* Transform given style tree into a set of style declarations.
+*
+* @param blockStyles         Block styles
+* @param selector            The selector these declarations should attach to
+* @param useRootPaddingAlign Whether to use CSS custom properties in root selector
+* @param tree                A theme.json tree containing layout definitions
+* @param disableRootPadding  Whether to force disable the root padding styles
+* @return An array of style declarations
+*/
+function getStylesDeclarations(blockStyles = {}, selector = "", useRootPaddingAlign, tree = {}, disableRootPadding = false) {
+	const isRoot = ROOT_BLOCK_SELECTOR === selector;
+	const output = Object.entries(import_blocks.__EXPERIMENTAL_STYLE_PROPERTY).reduce((declarations, [key, { value, properties, useEngine, rootOnly }]) => {
+		if (rootOnly && !isRoot) return declarations;
+		const pathToValue = value;
+		if (pathToValue[0] === "elements" || useEngine) return declarations;
+		const styleValue = getValueFromObjectPath(blockStyles, pathToValue);
+		if (key === "--wp--style--root--padding" && (typeof styleValue === "string" || !useRootPaddingAlign)) return declarations;
+		if (properties && typeof styleValue !== "string") Object.entries(properties).forEach((entry) => {
+			const [name, prop] = entry;
+			if (!getValueFromObjectPath(styleValue, [prop], false)) return;
+			const cssProperty = name.startsWith("--") ? name : kebabCase$1(name);
+			declarations.push(`${cssProperty}: ${(0, import_style_engine.getCSSValueFromRawStyle)(getValueFromObjectPath(styleValue, [prop]))}`);
+		});
+		else if (getValueFromObjectPath(blockStyles, pathToValue, false)) {
+			const cssProperty = key.startsWith("--") ? key : kebabCase$1(key);
+			declarations.push(`${cssProperty}: ${(0, import_style_engine.getCSSValueFromRawStyle)(getValueFromObjectPath(blockStyles, pathToValue))}`);
+		}
+		return declarations;
+	}, []);
+	if (!!blockStyles.background) {
+		if (blockStyles.background?.backgroundImage) blockStyles.background.backgroundImage = getResolvedValue(blockStyles.background.backgroundImage, tree);
+		if (!isRoot && !!blockStyles.background?.backgroundImage?.id) blockStyles = {
+			...blockStyles,
+			background: {
+				...blockStyles.background,
+				...setBackgroundStyleDefaults(blockStyles.background)
+			}
+		};
+	}
+	(0, import_style_engine.getCSSRules)(blockStyles).forEach((rule) => {
+		if (isRoot && (useRootPaddingAlign || disableRootPadding) && rule.key.startsWith("padding")) return;
+		const cssProperty = rule.key.startsWith("-") ? rule.key : kebabCase$1(rule.key);
+		let ruleValue = getResolvedValue(rule.value, tree);
+		if (cssProperty === "font-size") ruleValue = getTypographyFontSizeValue({
+			name: "",
+			slug: "",
+			size: ruleValue
+		}, tree?.settings);
+		if (cssProperty === "aspect-ratio") output.push("min-height: unset");
+		output.push(`${cssProperty}: ${ruleValue}`);
+	});
+	return output;
+}
+/**
+* Get generated CSS for layout styles by looking up layout definitions provided
+* in theme.json, and outputting common layout styles, and specific blockGap values.
+*
+* @param props                       Layout styles configuration
+* @param props.layoutDefinitions     Layout definitions from theme.json
+* @param props.style                 Style object for the block
+* @param props.selector              Selector to apply the styles to
+* @param props.hasBlockGapSupport    Whether the block supports block gap styles
+* @param props.hasFallbackGapSupport Whether the block supports fallback gap styles
+* @param props.fallbackGapValue      Fallback gap value to use if block gap support is
+*
+* @return Generated CSS rules for the layout styles
+*/
+function getLayoutStyles({ layoutDefinitions = LAYOUT_DEFINITIONS, style, selector, hasBlockGapSupport, hasFallbackGapSupport, fallbackGapValue }) {
+	let ruleset = "";
+	const blockGapValue = style?.spacing?.blockGap;
+	let gapValue = hasBlockGapSupport ? getGapCSSValue(blockGapValue) : "";
+	if (hasFallbackGapSupport) {
+		if (selector === "body") gapValue = !gapValue ? "0.5em" : gapValue;
+		else if (!hasBlockGapSupport && fallbackGapValue) gapValue = fallbackGapValue;
+	}
+	const rowGapValue = hasBlockGapSupport && blockGapValue && typeof blockGapValue !== "string" ? getGapCSSValue(blockGapValue.top) : gapValue;
+	if (gapValue && layoutDefinitions) {
+		Object.values(layoutDefinitions).forEach(({ className, name, spacingStyles }) => {
+			if (!hasBlockGapSupport && "flex" !== name && "grid" !== name) return;
+			const layoutGapValue = ["default", "constrained"].includes(name) ? rowGapValue : gapValue;
+			if (spacingStyles?.length) spacingStyles.forEach((spacingStyle) => {
+				const declarations = [];
+				if (spacingStyle.rules) Object.entries(spacingStyle.rules).forEach(([cssProperty, cssValue]) => {
+					declarations.push(`${cssProperty}: ${cssValue ? cssValue : layoutGapValue}`);
+				});
+				if (declarations.length) {
+					let combinedSelector = "";
+					if (!hasBlockGapSupport) combinedSelector = selector === "body" ? `:where(.${className}${spacingStyle?.selector || ""})` : `:where(${selector}.${className}${spacingStyle?.selector || ""})`;
+					else combinedSelector = selector === "body" ? `:root :where(.${className})${spacingStyle?.selector || ""}` : `:root :where(${selector}-${className})${spacingStyle?.selector || ""}`;
+					ruleset += `${combinedSelector} { ${declarations.join("; ")}; }`;
+				}
+			});
+		});
+		if (selector === "body" && hasBlockGapSupport) ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} { --wp--style--block-gap: ${gapValue}; }`;
+	}
+	if (selector === "body" && layoutDefinitions) {
+		const validDisplayModes = [
+			"block",
+			"flex",
+			"grid"
+		];
+		Object.values(layoutDefinitions).forEach(({ className, displayMode, baseStyles }) => {
+			if (displayMode && validDisplayModes.includes(displayMode)) ruleset += `${selector} .${className} { display:${displayMode}; }`;
+			if (baseStyles?.length) baseStyles.forEach((baseStyle) => {
+				const declarations = [];
+				if (baseStyle.rules) Object.entries(baseStyle.rules).forEach(([cssProperty, cssValue]) => {
+					declarations.push(`${cssProperty}: ${cssValue}`);
+				});
+				if (declarations.length) {
+					const combinedSelector = `.${className}${baseStyle?.selector || ""}`;
+					ruleset += `${combinedSelector} { ${declarations.join("; ")}; }`;
+				}
+			});
+		});
+	}
+	return ruleset;
+}
+const STYLE_KEYS = [
+	"border",
+	"color",
+	"dimensions",
+	"spacing",
+	"typography",
+	"filter",
+	"outline",
+	"shadow",
+	"background"
+];
+function pickStyleKeys(treeToPickFrom, responsiveMediaQueries) {
+	return pickStyleAndPseudoKeys(treeToPickFrom, void 0, responsiveMediaQueries);
+}
+function pickStyleAndPseudoKeys(treeToPickFrom, blockName, responsiveMediaQueries) {
+	if (!treeToPickFrom) return {};
+	const entries = Object.entries(treeToPickFrom);
+	const allowedPseudoSelectors = blockName ? VALID_BLOCK_PSEUDO_SELECTORS[blockName] ?? [] : [];
+	const clonedEntries = entries.filter(([key]) => STYLE_KEYS.includes(key) || allowedPseudoSelectors.includes(key) || responsiveMediaQueries[key]).map(([key, style]) => [key, JSON.parse(JSON.stringify(style))]);
+	return Object.fromEntries(clonedEntries);
+}
+/**
+* Creates style nodes for configured block and element pseudo selectors.
+*
+* Only pseudo selectors listed in the matching block or element allow-list are
+* considered. This mirrors the PHP renderer and avoids treating arbitrary
+* colon-prefixed keys as pseudo selectors.
+*
+* @param node Style node that may contain configured pseudo styles.
+* @return Style nodes for the configured pseudo states.
+*/
+function getPseudoStyleNodes(node) {
+	const { styles, baseStyles, selector, featureSelectors, name, elementName, mediaQuery, variationName } = node;
+	const pseudoSelectors = name ? VALID_BLOCK_PSEUDO_SELECTORS[name] ?? [] : VALID_ELEMENT_PSEUDO_SELECTORS[elementName ?? ""] ?? [];
+	if (!pseudoSelectors.length) return [];
+	return pseudoSelectors.flatMap((pseudoSelector) => {
+		const pseudoStyles = styles?.[pseudoSelector];
+		if (!pseudoStyles || typeof pseudoStyles !== "object") return [];
+		return [{
+			styles: JSON.parse(JSON.stringify(pseudoStyles)),
+			baseStyles: [styles, ...baseStyles ?? []],
+			selector,
+			selectorSuffix: pseudoSelector,
+			mediaQuery,
+			featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
+			name,
+			elementName,
+			variationName
+		}];
+	});
+}
+function isPseudoElementSelector(selectorSuffix) {
+	return selectorSuffix?.startsWith("::") ?? false;
+}
+/**
+* Builds the specificity-capped selector for a pseudo selector rule.
+*
+* Pseudo-classes are appended to each part of the base selector inside the
+* `:root :where()` wrapper, e.g. `:root :where(a:hover)`. Pseudo-elements are
+* not valid inside `:where()`, so they are appended after the wrapper instead,
+* e.g. `:root :where(textarea, input)::placeholder`, which keeps the same
+* specificity regardless of where the element styles are defined.
+*
+* @param baseSelector   Selector without the pseudo selector.
+* @param pseudoSelector Pseudo selector to apply, e.g. ':hover' or '::placeholder'.
+* @return The selector to use for the rule.
+*/
+function getPseudoRuleSelector(baseSelector, pseudoSelector) {
+	if (isPseudoElementSelector(pseudoSelector)) return `:root :where(${baseSelector})${pseudoSelector}`;
+	return `:root :where(${appendToSelector(baseSelector, pseudoSelector)})`;
+}
+/**
+* Creates style nodes for configured responsive breakpoint states.
+*
+* Breakpoint nodes render feature-level, base, and pseudo declarations through
+* the normal node renderer.
+*
+* @param node                   Style node that may contain configured responsive state styles.
+* @param responsiveMediaQueries Media queries keyed by responsive state name.
+* @return Responsive style nodes in configured breakpoint order.
+*/
+function getResponsiveStyleNodes(node, responsiveMediaQueries) {
+	const { styles, baseStyles, selector, fallbackGapValue, featureSelectors, hasLayoutSupport, layoutHasBlockGapSupport, layoutSelector, name, elementName, isStyleVariation, variationName } = node;
+	if (!name && !elementName) return [];
+	return Object.entries(responsiveMediaQueries).flatMap(([breakpointKey, mediaQuery]) => {
+		const breakpointStyles = styles?.[breakpointKey];
+		if (!breakpointStyles || typeof breakpointStyles !== "object") return [];
+		return [{
+			styles: JSON.parse(JSON.stringify(breakpointStyles)),
+			baseStyles: [styles, ...baseStyles ?? []],
+			selector,
+			mediaQuery,
+			featureSelectors: featureSelectors && typeof featureSelectors !== "string" ? featureSelectors : void 0,
+			fallbackGapValue,
+			hasLayoutSupport,
+			name,
+			elementName,
+			isStyleVariation,
+			variationName,
+			layoutSelector,
+			layoutHasBlockGapSupport
+		}];
+	});
+}
+/**
+* Collects element styles from the default and responsive branches of a style
+* node. Responsive styles are copied onto the element node so they can be
+* expanded by `getResponsiveStyleNodes`.
+*
+* @param styleNode              Style node that may contain element styles.
+* @param responsiveMediaQueries Media queries keyed by responsive state name.
+* @return Element styles keyed by element name.
+*/
+function getElementStylesByName(styleNode, responsiveMediaQueries) {
+	const elementStylesByName = { ...styleNode?.elements ?? {} };
+	Object.keys(responsiveMediaQueries).forEach((breakpointKey) => {
+		Object.entries(styleNode?.[breakpointKey]?.elements ?? {}).forEach(([elementName, styles]) => {
+			elementStylesByName[elementName] = {
+				...elementStylesByName[elementName] ?? {},
+				[breakpointKey]: styles
+			};
+		});
+	});
+	return elementStylesByName;
+}
+const getNodesWithStyles = (tree, blockSelectors, textClipBaseBlocks) => {
+	const nodes = [];
+	if (!tree?.styles) return nodes;
+	const responsiveMediaQueries = getResponsiveMediaQueries(tree);
+	const styles = pickStyleKeys(tree.styles, responsiveMediaQueries);
+	if (styles) nodes.push({
+		styles,
+		selector: ROOT_BLOCK_SELECTOR,
+		skipSelectorWrapper: true
+	});
+	Object.entries(import_blocks.__EXPERIMENTAL_ELEMENTS).forEach(([name, selector]) => {
+		if (tree.styles?.elements?.[name]) nodes.push({
+			styles: tree.styles?.elements?.[name] ?? {},
+			selector,
+			elementName: name,
+			skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name]
+		});
+	});
+	Object.entries(tree.styles?.blocks ?? {}).forEach(([blockName, node]) => {
+		const blockStyles = pickStyleAndPseudoKeys(node, blockName, responsiveMediaQueries);
+		const typedNode = node;
+		if (typedNode?.css) blockStyles.css = typedNode.css;
+		const variationNodesToAdd = [];
+		const variationStyleNodesToAdd = [];
+		if (typedNode?.variations) Object.entries(typedNode.variations).forEach(([variationName, variation]) => {
+			const typedVariation = variation;
+			const variationStyles = pickStyleAndPseudoKeys(typedVariation, blockName, responsiveMediaQueries);
+			if (typedVariation?.css) variationStyles.css = typedVariation.css;
+			const variationSelector = typeof blockSelectors !== "string" ? blockSelectors[blockName]?.styleVariationSelectors?.[variationName] : void 0;
+			if (variationSelector && typeof blockSelectors !== "string") {
+				const blockSelector = blockSelectors[blockName];
+				variationStyleNodesToAdd.push({
+					styles: variationStyles,
+					baseStyles: [typedNode, ...textClipBaseBlocks?.[blockName] ? [textClipBaseBlocks[blockName]] : []],
+					selector: variationSelector,
+					featureSelectors: blockSelector?.featureSelectors,
+					fallbackGapValue: blockSelector?.fallbackGapValue,
+					hasLayoutSupport: blockSelector?.hasLayoutSupport,
+					isStyleVariation: true,
+					variationName,
+					layoutSelector: variationSelector + blockSelector.selector,
+					layoutHasBlockGapSupport: true,
+					name: blockName
+				});
+			}
+			Object.entries(getElementStylesByName(typedVariation, responsiveMediaQueries)).forEach(([element, elementStyles]) => {
+				if (elementStyles && import_blocks.__EXPERIMENTAL_ELEMENTS[element]) variationNodesToAdd.push({
+					styles: elementStyles,
+					selector: scopeSelector(variationSelector, import_blocks.__EXPERIMENTAL_ELEMENTS[element]),
+					elementName: element,
+					isStyleVariation: true
+				});
+			});
+			Object.entries(typedVariation?.blocks ?? {}).forEach(([variationBlockName, variationBlockStyles]) => {
+				const variationBlockSelector = typeof blockSelectors !== "string" ? scopeSelector(variationSelector, blockSelectors[variationBlockName]?.selector) : void 0;
+				const variationDuotoneSelector = typeof blockSelectors !== "string" ? scopeSelector(variationSelector, blockSelectors[variationBlockName]?.duotoneSelector) : void 0;
+				const variationFeatureSelectors = typeof blockSelectors !== "string" ? scopeFeatureSelectors(variationSelector, blockSelectors[variationBlockName]?.featureSelectors ?? {}) : void 0;
+				const variationBlockStyleNodes = pickStyleAndPseudoKeys(variationBlockStyles, variationBlockName, responsiveMediaQueries);
+				if (variationBlockStyles?.css) variationBlockStyleNodes.css = variationBlockStyles.css;
+				if (!variationBlockSelector || typeof blockSelectors === "string") return;
+				variationNodesToAdd.push({
+					selector: variationBlockSelector,
+					name: variationBlockName,
+					isStyleVariation: true,
+					...textClipBaseBlocks?.[variationBlockName] && { baseStyles: [textClipBaseBlocks[variationBlockName]] },
+					duotoneSelector: variationDuotoneSelector,
+					featureSelectors: variationFeatureSelectors,
+					fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
+					hasLayoutSupport: blockSelectors[variationBlockName]?.hasLayoutSupport,
+					styles: variationBlockStyleNodes
+				});
+				Object.entries(getElementStylesByName(variationBlockStyles, responsiveMediaQueries)).forEach(([variationBlockElement, variationBlockElementStyles]) => {
+					if (variationBlockElementStyles && import_blocks.__EXPERIMENTAL_ELEMENTS[variationBlockElement]) variationNodesToAdd.push({
+						styles: variationBlockElementStyles,
+						selector: scopeSelector(variationBlockSelector, import_blocks.__EXPERIMENTAL_ELEMENTS[variationBlockElement]),
+						elementName: variationBlockElement,
+						isStyleVariation: true
+					});
+				});
+			});
+		});
+		if (typeof blockSelectors !== "string" && blockSelectors?.[blockName]?.selector) nodes.push({
+			duotoneSelector: blockSelectors[blockName].duotoneSelector,
+			fallbackGapValue: blockSelectors[blockName].fallbackGapValue,
+			hasLayoutSupport: blockSelectors[blockName].hasLayoutSupport,
+			selector: blockSelectors[blockName].selector,
+			styles: blockStyles,
+			featureSelectors: blockSelectors[blockName].featureSelectors,
+			name: blockName
+		});
+		nodes.push(...variationStyleNodesToAdd);
+		Object.entries(getElementStylesByName(typedNode, responsiveMediaQueries)).forEach(([elementName, value]) => {
+			if (typeof blockSelectors !== "string" && value && blockSelectors?.[blockName] && import_blocks.__EXPERIMENTAL_ELEMENTS[elementName]) nodes.push({
+				styles: value,
+				selector: blockSelectors[blockName]?.selector.split(",").map((sel) => {
+					return import_blocks.__EXPERIMENTAL_ELEMENTS[elementName].split(",").map((elementSelector) => sel + " " + elementSelector);
+				}).join(","),
+				elementName
+			});
+		});
+		nodes.push(...variationNodesToAdd);
+	});
+	return nodes;
+};
+const getNodesWithSettings = (tree, blockSelectors) => {
+	const nodes = [];
+	if (!tree?.settings) return nodes;
+	const pickPresets = (treeToPickFrom) => {
+		let presets = {};
+		PRESET_METADATA.forEach(({ path }) => {
+			const value = getValueFromObjectPath(treeToPickFrom, path, false);
+			if (value !== false) presets = setImmutably$1(presets, path, value);
+		});
+		return presets;
+	};
+	const presets = pickPresets(tree.settings);
+	const custom = tree.settings?.custom;
+	if (Object.keys(presets).length > 0 || custom) nodes.push({
+		presets,
+		custom,
+		selector: ROOT_CSS_PROPERTIES_SELECTOR
+	});
+	Object.entries(tree.settings?.blocks ?? {}).forEach(([blockName, node]) => {
+		const blockCustom = node.custom;
+		if (typeof blockSelectors === "string" || !blockSelectors[blockName]) return;
+		const blockPresets = pickPresets(node);
+		if (Object.keys(blockPresets).length > 0 || blockCustom) nodes.push({
+			presets: blockPresets,
+			custom: blockCustom,
+			selector: blockSelectors[blockName]?.selector,
+			featureSelectors: blockSelectors[blockName]?.featureSelectors
+		});
+	});
+	return nodes;
+};
+/**
+* Renders CSS rules for a single style node.
+*
+* The node renderer handles feature-level selectors, duotone declarations,
+* layout styles, base declarations, and custom CSS. State nodes are expanded
+* before rendering so ordering matches the PHP renderer.
+*
+* @param node                          Style node metadata and styles.
+* @param context                       Render context and feature flags.
+* @param context.tree                  Global styles tree.
+* @param context.useRootPaddingAlign   Whether root padding alignment is enabled.
+* @param context.disableLayoutStyles   Whether layout styles are disabled.
+* @param context.hasBlockGapSupport    Whether block gap support is enabled.
+* @param context.hasFallbackGapSupport Whether fallback gap support is enabled.
+* @param context.disableRootPadding    Whether root padding declarations are disabled.
+* @return Rendered CSS rules for the node.
+*/
+function renderStylesNode(node, { tree, useRootPaddingAlign, disableLayoutStyles, hasBlockGapSupport, hasFallbackGapSupport, disableRootPadding }) {
+	const { selector, selectorSuffix, mediaQuery, duotoneSelector, styles, baseStyles, fallbackGapValue, hasLayoutSupport, featureSelectors, layoutSelector, layoutHasBlockGapSupport, skipSelectorWrapper, name, variationName } = node;
+	let ruleset = "";
+	const effectiveSelector = selectorSuffix ? appendToSelector(selector, selectorSuffix) : selector;
+	if (featureSelectors && typeof featureSelectors !== "string") {
+		let featureDeclarations = getFeatureDeclarations(featureSelectors, styles);
+		featureDeclarations = updateParagraphTextIndentSelector(featureDeclarations, tree.settings, name);
+		featureDeclarations = updateButtonWidthDeclarations(featureDeclarations, tree.settings);
+		Object.entries(featureDeclarations).forEach(([featureSelector, declarations]) => {
+			if (declarations.length) {
+				const selectorForRule = variationName ? getBlockStyleVariationFeatureSelector(variationName, featureSelector) : featureSelector;
+				const featureRuleSelector = selectorSuffix ? getPseudoRuleSelector(selectorForRule, selectorSuffix) : `:root :where(${selectorForRule})`;
+				const rules = declarations.join(";");
+				ruleset += `${featureRuleSelector}{${rules};}`;
+			}
+		});
+	}
+	if (duotoneSelector) {
+		const duotoneStyles = {};
+		if (styles?.filter) {
+			duotoneStyles.filter = styles.filter;
+			delete styles.filter;
+		}
+		const duotoneDeclarations = getStylesDeclarations(duotoneStyles);
+		if (duotoneDeclarations.length) ruleset += `${duotoneSelector}{${duotoneDeclarations.join(";")};}`;
+	}
+	const selectorForLayout = layoutSelector ?? effectiveSelector;
+	const hasBlockGapSupportForLayout = layoutHasBlockGapSupport ?? hasBlockGapSupport;
+	if (!disableLayoutStyles && ("body" === selectorForLayout || hasLayoutSupport)) ruleset += getLayoutStyles({
+		style: styles,
+		selector: selectorForLayout,
+		hasBlockGapSupport: hasBlockGapSupportForLayout,
+		hasFallbackGapSupport,
+		fallbackGapValue
+	});
+	const styleDeclarations = getStateDeclarationsWithTextClipEscapes(getStylesDeclarations(styles, effectiveSelector, useRootPaddingAlign, tree, disableRootPadding), styles, baseStyles);
+	if (styleDeclarations?.length) {
+		let generalSelector = `:root :where(${effectiveSelector})`;
+		if (skipSelectorWrapper) generalSelector = effectiveSelector;
+		else if (selectorSuffix) generalSelector = getPseudoRuleSelector(selector, selectorSuffix);
+		ruleset += `${generalSelector}{${styleDeclarations.join(";")};}`;
+	}
+	if (styles?.css) {
+		const cssFeatureSelector = featureSelectors && typeof featureSelectors === "object" ? featureSelectors.css : void 0;
+		let resolvedCssSelector;
+		if (typeof cssFeatureSelector === "string") resolvedCssSelector = cssFeatureSelector;
+		else if (cssFeatureSelector && typeof cssFeatureSelector === "object" && "root" in cssFeatureSelector && typeof cssFeatureSelector.root === "string") resolvedCssSelector = cssFeatureSelector.root;
+		if (resolvedCssSelector && variationName) resolvedCssSelector = getBlockStyleVariationFeatureSelector(variationName, resolvedCssSelector);
+		const cssBaseSelector = resolvedCssSelector ?? selector;
+		const cssSelector = selectorSuffix ? appendToSelector(cssBaseSelector, selectorSuffix) : cssBaseSelector;
+		ruleset += processCSSNesting(styles.css, cssSelector);
+	}
+	if (mediaQuery && ruleset) return `${mediaQuery}{${ruleset}}`;
+	return ruleset;
+}
+/**
+* Like `transformToStyles`, but also takes the block type styles that block
+* style variations layer over. They are read only to escape a text clip set
+* there, and are never output. Mirror of the PHP `text_clip_base_blocks`
+* stylesheet option.
+*
+* @param tree                  Global styles config.
+* @param blockSelectors        Block selectors.
+* @param hasBlockGapSupport    Whether block gap is supported.
+* @param hasFallbackGapSupport Whether fallback gap is supported.
+* @param disableLayoutStyles   Whether to disable layout styles.
+* @param disableRootPadding    Whether to disable root padding.
+* @param styleOptions          Sets of styles to opt in or out of.
+* @param textClipBaseBlocks    Block type styles, keyed by block name.
+* @return The stylesheet.
+*/
+function transformToStylesWithTextClipBase(tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles = false, disableRootPadding = false, styleOptions = {}, textClipBaseBlocks) {
+	const options = {
+		blockGap: true,
+		blockStyles: true,
+		layoutStyles: true,
+		marginReset: true,
+		presets: true,
+		rootPadding: true,
+		variationStyles: false,
+		...styleOptions
+	};
+	const nodesWithStyles = getNodesWithStyles(tree, blockSelectors, textClipBaseBlocks);
+	const nodesWithSettings = getNodesWithSettings(tree, blockSelectors);
+	const useRootPaddingAlign = tree?.settings?.useRootPaddingAwareAlignments;
+	const { contentSize, wideSize } = tree?.settings?.layout || {};
+	const hasBodyStyles = options.marginReset || options.rootPadding || options.layoutStyles;
+	let ruleset = "";
+	if (options.presets && (contentSize || wideSize)) {
+		ruleset += `${ROOT_CSS_PROPERTIES_SELECTOR} {`;
+		ruleset = contentSize ? ruleset + ` --wp--style--global--content-size: ${contentSize};` : ruleset;
+		ruleset = wideSize ? ruleset + ` --wp--style--global--wide-size: ${wideSize};` : ruleset;
+		ruleset += "}";
+	}
+	if (hasBodyStyles) {
+		ruleset += ":where(body) {margin: 0;";
+		if (options.rootPadding && useRootPaddingAlign) ruleset += `padding-right: 0; padding-left: 0; padding-top: var(--wp--style--root--padding-top); padding-bottom: var(--wp--style--root--padding-bottom) }
+				.has-global-padding { padding-right: var(--wp--style--root--padding-right); padding-left: var(--wp--style--root--padding-left); }
+				.has-global-padding > .alignfull { margin-right: calc(var(--wp--style--root--padding-right) * -1); margin-left: calc(var(--wp--style--root--padding-left) * -1); }
+				.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) { padding-right: 0; padding-left: 0; }
+				.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) > .alignfull { margin-left: 0; margin-right: 0;
+				`;
+		ruleset += "}";
+	}
+	if (options.blockStyles) {
+		const responsiveMediaQueries = getResponsiveMediaQueries(tree);
+		nodesWithStyles.forEach((node) => {
+			if (node.isStyleVariation && !options.variationStyles) return;
+			const responsiveNodes = getResponsiveStyleNodes(node, responsiveMediaQueries);
+			[
+				node,
+				...responsiveNodes,
+				...getPseudoStyleNodes(node),
+				...responsiveNodes.flatMap(getPseudoStyleNodes)
+			].forEach((expandedNode) => {
+				ruleset += renderStylesNode(expandedNode, {
+					tree,
+					useRootPaddingAlign,
+					disableLayoutStyles,
+					hasBlockGapSupport,
+					hasFallbackGapSupport,
+					disableRootPadding
+				});
+			});
+		});
+	}
+	if (options.layoutStyles) {
+		ruleset = ruleset + ".wp-site-blocks > .alignleft { float: left; margin-right: 2em; }";
+		ruleset = ruleset + ".wp-site-blocks > .alignright { float: right; margin-left: 2em; }";
+		ruleset = ruleset + ".wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }";
+	}
+	if (options.blockGap && hasBlockGapSupport) {
+		const gapValue = getGapCSSValue(tree?.styles?.spacing?.blockGap) || "0.5em";
+		ruleset = ruleset + `:root :where(.wp-site-blocks) > * { margin-block-start: ${gapValue}; margin-block-end: 0; }`;
+		ruleset = ruleset + ":root :where(.wp-site-blocks) > :first-child { margin-block-start: 0; }";
+		ruleset = ruleset + ":root :where(.wp-site-blocks) > :last-child { margin-block-end: 0; }";
+	}
+	if (options.presets) nodesWithSettings.forEach(({ selector, presets }) => {
+		if ("body" === selector || ":root" === selector) selector = "";
+		const classes = getPresetsClasses(selector, presets);
+		if (classes.length > 0) ruleset += classes;
+	});
+	return ruleset;
+}
+function processCSSNesting(css, blockSelector) {
+	let processedCSS = "";
+	if (!css || css.trim() === "") return processedCSS;
+	css.split("&").forEach((part) => {
+		if (!part || part.trim() === "") return;
+		if (!part.includes("{")) processedCSS += `:root :where(${blockSelector}){${part.trim()}}`;
+		else {
+			const splitPart = part.replace("}", "").split("{");
+			if (splitPart.length !== 2) return;
+			const [nestedSelector, cssValue] = splitPart;
+			const matches = nestedSelector.match(/([>+~\s]*::[a-zA-Z-]+)/);
+			const pseudoPart = matches ? matches[1] : "";
+			const withoutPseudoElement = matches ? nestedSelector.replace(pseudoPart, "").trim() : nestedSelector.trim();
+			let combinedSelector;
+			if (withoutPseudoElement === "") combinedSelector = blockSelector;
+			else combinedSelector = nestedSelector.startsWith(" ") ? scopeSelector(blockSelector, withoutPseudoElement) : appendToSelector(blockSelector, withoutPseudoElement);
+			processedCSS += `:root :where(${combinedSelector})${pseudoPart}{${cssValue.trim()}}`;
+		}
+	});
+	return processedCSS;
 }
 
 // packages/global-styles-engine/build-module/variation.mjs
@@ -19351,14 +20480,13 @@ lock$1(privateApis$11, {
 	getDuotoneStylesheet,
 	getDuotoneUnsetStylesheet,
 	resolveStyle: resolveStyle$1,
-	getVariationStyle
+	getVariationStyle,
+	transformToStylesWithTextClipBase
 });
 
 // packages/global-styles-ui/build-module/context.mjs
 var import_editor = require_editor();
 var import_core_data = require_core_data();
-var import_data = require_data();
-var import_blocks = require_blocks();
 var import_block_editor = require_block_editor();
 const GlobalStylesContext = (0, import_element.createContext)({
 	user: {
