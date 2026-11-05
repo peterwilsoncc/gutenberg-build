@@ -106646,6 +106646,23 @@ If there's a particular need for this, please submit a feature request at https:
 		return null;
 	}
 	/**
+	* Blocks that hold a note at block level: those without its marker while
+	* none of the blocks has one, else only those without a text field for one.
+	* A split can leave a text block with the note's id but none of its text,
+	* which shouldn't turn an inline note into a block-level one, but an image
+	* between the text a note spans is part of it.
+	*
+	* @param {number|string}                 noteId             Note id.
+	* @param {string[]}                      clientIds          The note's blocks.
+	* @param {(clientId: string) => ?Object} getBlockAttributes Block-editor selector.
+	* @param {(clientId: string) => boolean} isTextBlock        Whether the block's only content is one rich text field, see `getSoleRichTextAttributeKey`.
+	* @return {string[]} Client IDs of the blocks that hold the note at block level.
+	*/
+	function getBlockLevelClientIds(noteId, clientIds, getBlockAttributes, isTextBlock) {
+		const withoutMarker = clientIds.filter((clientId) => !findNoteInBlock(getBlockAttributes(clientId), noteId));
+		return withoutMarker.length === clientIds.length ? withoutMarker : withoutMarker.filter((clientId) => !isTextBlock(clientId));
+	}
+	/**
 	* Build the CSS selector matching a note's in-content `core/note` marker in
 	* the editor canvas. The format serializes as `<mark class="wp-note">` with
 	* the note id in `data-id`.
@@ -106760,25 +106777,48 @@ If there's a particular need for this, please submit a feature request at https:
 	* @property {number} [offset]       Offset within the attribute.
 	*/
 	/**
-	* Read an inline selection from block-editor selection state, returning
-	* normalized anchor data when a non-collapsed selection sits inside a single
-	* rich-text attribute. Returns null for block-level or collapsed selections.
+	* Key of the block's rich text attribute when that is all the content the
+	* block has: exactly one attribute sourced from the markup, and it is rich
+	* text. Formats applied across blocks reach only such blocks.
 	*
-	* @param {() => WPSelectionPoint} getSelectionStart Block-editor selector.
-	* @param {() => WPSelectionPoint} getSelectionEnd   Block-editor selector.
-	* @return {?{clientId: string, attributeKey: string, start: number, end: number}} Normalized selection or null.
+	* A copy of `getSoleRichTextAttributeKey` in the block editor's
+	* `multi-block-format-edit.tsx`, which isn't exported.
+	*
+	* @param {?string} blockName Block name.
+	* @return {string|undefined} Attribute key.
 	*/
-	function readInlineSelection(getSelectionStart, getSelectionEnd) {
-		const start = getSelectionStart();
-		const end = getSelectionEnd();
-		if (!start?.clientId || start.clientId !== end.clientId || !start.attributeKey || start.offset === void 0 || end.offset === void 0 || start.offset === end.offset) return null;
-		const [startOffset, endOffset] = start.offset < end.offset ? [start.offset, end.offset] : [end.offset, start.offset];
-		return {
-			clientId: start.clientId,
-			attributeKey: start.attributeKey,
-			start: startOffset,
-			end: endOffset
-		};
+	function getSoleRichTextAttributeKey(blockName) {
+		const sourced = Object.entries((0, _wordpress_blocks.getBlockType)(blockName ?? "")?.attributes ?? {}).filter(([, { source }]) => source);
+		return sourced.length === 1 && sourced[0][1].source === "rich-text" ? sourced[0][0] : void 0;
+	}
+	/**
+	* Text a new note wraps in each selected block, as a format applied across
+	* blocks does: the first block from the caret, the blocks between in full,
+	* the last block up to the caret. Only for a selection with text in it.
+	*
+	* @param {Object}                                                                props
+	* @param {Array<{clientId: string, attributes: ?Object, attributeKey: ?string}>} props.blocks         Selected blocks in order, each with its attributes and sole rich text attribute, see `getSoleRichTextAttributeKey`.
+	* @param {WPSelectionPoint}                                                      props.selectionStart Block-editor selection start.
+	* @param {WPSelectionPoint}                                                      props.selectionEnd   Block-editor selection end.
+	* @return {Map<string, {attributeKey: string, start: number, end: number}>} Range by client ID for the blocks that have one; empty for a block the selection gives no text.
+	*/
+	function getNoteRanges({ blocks, selectionStart, selectionEnd }) {
+		const clientIds = blocks.map((block) => block.clientId);
+		const [first, last] = (selectionStart.clientId === selectionEnd.clientId ? selectionStart.offset > selectionEnd.offset : clientIds.indexOf(selectionStart.clientId) > clientIds.indexOf(selectionEnd.clientId)) ? [selectionEnd, selectionStart] : [selectionStart, selectionEnd];
+		const ranges = /* @__PURE__ */ new Map();
+		for (const block of blocks) {
+			const isFirst = block.clientId === first.clientId;
+			const isLast = block.clientId === last.clientId;
+			let attributeKey = block.attributeKey;
+			if (isFirst) attributeKey = first.attributeKey;
+			else if (isLast) attributeKey = last.attributeKey;
+			if (attributeKey) ranges.set(block.clientId, {
+				attributeKey,
+				start: isFirst ? first.offset : 0,
+				end: isLast ? last.offset : block.attributes?.[attributeKey]?.text.length ?? 0
+			});
+		}
+		return ranges;
 	}
 	/**
 	* Wrap a rich-text range with a core/note marker. Returns a new
@@ -106890,7 +106930,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const attributeKey = selectionStart?.attributeKey;
 		const start = selectionStart?.offset;
 		const end = selectionEnd?.offset;
-		if (!attributeKey || start === void 0 || end === void 0 || selectionEnd?.attributeKey !== attributeKey) return null;
+		if (!attributeKey || start === void 0 || end === void 0 || selectionEnd?.clientId !== selectionStart?.clientId || selectionEnd?.attributeKey !== attributeKey) return null;
 		const formats = getFormats(attributes?.[attributeKey]);
 		if (!formats) return;
 		const id = (0, _wordpress_rich_text.getActiveFormat)(start <= end ? {
@@ -106974,15 +107014,16 @@ If there's a particular need for this, please submit a feature request at https:
 		return !!element?.contains(element.ownerDocument.activeElement);
 	}
 	/**
-	* Block a thread shows at: the selected block when the note belongs to it,
-	* else the note's first block.
+	* Whether one block is selected and has unsent note text. Only such a draft
+	* keeps its marker when its form is left and comes back with the block; a
+	* draft across blocks comes back on its first block, without the others.
 	*
-	* @param {Object}  thread           Note thread.
-	* @param {?string} selectedClientId Selected block client ID.
-	* @return {?string} Block client ID.
+	* @param {Map}      drafts    Unsent note drafts, keyed by block client ID.
+	* @param {string[]} clientIds Selected blocks.
+	* @return {boolean} Whether the blocks have a draft.
 	*/
-	function getAnchorClientId(thread, selectedClientId) {
-		return thread.blockClientIds?.includes(selectedClientId) ? selectedClientId : thread.blockClientId;
+	function hasBlockDraft(drafts, clientIds) {
+		return clientIds.length === 1 && drafts.has(clientIds[0]);
 	}
 	/**
 	* Picks the most relevant thread from a list: first unresolved, else first.
@@ -112736,7 +112777,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const { createNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const { saveEntityRecord, deleteEntityRecord } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
 		const { getCurrentPostId } = (0, _wordpress_data.useSelect)(store);
-		const { getBlockAttributes, getBlockName, getSelectedBlockClientId, getSelectionStart, getSelectionEnd } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
+		const { getBlockAttributes, getBlockCount, getBlockName, getSelectedBlockClientIds, getSelectionStart, getSelectionEnd, __unstableIsFullySelected: isFullySelected, __unstableIsSelectionCollapsed: isSelectionCollapsed } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent, __unstableMarkLastChangeAsPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const getNoteAttributes = (clientId) => {
 			const attributes = getBlockAttributes(clientId);
@@ -112771,17 +112812,47 @@ If there's a particular need for this, please submit a feature request at https:
 			const removed = removeInlineNote(attributes, noteId);
 			return removed && { [removed.attributeKey]: removed.value };
 		});
-		const onDiscard = (clientId) => removeNoteMarker([clientId], "new");
-		const onStart = (clientId) => {
-			const selection = readInlineSelection(getSelectionStart, getSelectionEnd);
-			if (selection?.clientId !== clientId) return;
-			onDiscard(clientId);
-			const wrapped = wrapInlineNote(getNoteAttributes(clientId)?.[selection.attributeKey], "new", selection.start, selection.end);
-			if (wrapped) updateNoteAnchor(clientId, { [selection.attributeKey]: wrapped });
+		const getSelectedNoteRanges = (clientIds) => isFullySelected() || isSelectionCollapsed() ? /* @__PURE__ */ new Map() : getNoteRanges({
+			blocks: clientIds.map((clientId) => ({
+				clientId,
+				attributes: getNoteAttributes(clientId),
+				attributeKey: getBlockCount(clientId) ? void 0 : getSoleRichTextAttributeKey(getBlockName(clientId))
+			})),
+			selectionStart: getSelectionStart(),
+			selectionEnd: getSelectionEnd()
+		});
+		const getNoteClientIds = () => {
+			const clientIds = getSelectedBlockClientIds();
+			const ranges = getSelectedNoteRanges(clientIds);
+			const textClientIds = clientIds.filter((clientId) => {
+				const range = ranges.get(clientId);
+				return !range || range.start < range.end;
+			});
+			return textClientIds.length ? textClientIds : clientIds;
+		};
+		const onDiscard = (clientIds) => removeNoteMarker(clientIds, "new");
+		const onStart = (clientIds) => {
+			const selectedClientIds = getSelectedBlockClientIds();
+			if (clientIds[0] !== selectedClientIds[0] || clientIds.length !== selectedClientIds.length) return;
+			const ranges = getSelectedNoteRanges(clientIds);
+			if (!ranges.size && clientIds.length === 1) return;
+			updateNoteAnchors(clientIds, (attributes, clientId) => {
+				const newAttributes = {};
+				const removed = removeInlineNote(attributes, "new");
+				if (removed) newAttributes[removed.attributeKey] = removed.value;
+				const range = ranges.get(clientId);
+				if (range) {
+					const { attributeKey, start, end } = range;
+					const value = newAttributes[attributeKey] ?? attributes[attributeKey];
+					const wrapped = start < end && wrapInlineNote(value, "new", start, end);
+					if (wrapped) newAttributes[attributeKey] = wrapped;
+				}
+				return newAttributes;
+			});
 		};
 		const onCreate = async ({ content, parent }) => {
 			try {
-				const clientId = !parent ? getSelectedBlockClientId() : null;
+				const clientIds = !parent ? getNoteClientIds() : [];
 				const savedRecord = await saveEntityRecord("root", "comment", {
 					post: getCurrentPostId(),
 					content,
@@ -112789,15 +112860,12 @@ If there's a particular need for this, please submit a feature request at https:
 					type: "note",
 					parent: parent || 0
 				}, { throwOnError: true });
-				if (!parent && savedRecord?.id && clientId) {
-					const attributes = getNoteAttributes(clientId);
-					const metadata = attributes?.metadata;
-					const updatedMetadata = addNoteIdToMetadata(metadata, savedRecord.id);
-					const newAttributes = { metadata: cleanEmptyObject(updatedMetadata) };
+				if (!parent && savedRecord?.id) updateNoteAnchors(clientIds, (attributes) => {
+					const newAttributes = { metadata: cleanEmptyObject(addNoteIdToMetadata(attributes.metadata, savedRecord.id)) };
 					const draft = removeInlineNote(attributes, "new");
 					if (draft) newAttributes[draft.attributeKey] = wrapInlineNote(draft.value, savedRecord.id, draft.start, draft.end);
-					updateNoteAnchor(clientId, newAttributes);
-				}
+					return newAttributes;
+				});
 				createNotice("snackbar", parent ? (0, _wordpress_i18n.__)("Reply added.") : (0, _wordpress_i18n.__)("Note added."), {
 					type: "snackbar",
 					isDismissible: true
@@ -112931,35 +112999,39 @@ If there's a particular need for this, please submit a feature request at https:
 			hasDraft
 		};
 	}
+	const isSamePoint = (a, b) => a.clientId === b.clientId && a.attributeKey === b.attributeKey && a.offset === b.offset;
 	/**
 	* Calls back when the caret moves. Skips typing: a selection change batched
 	* with a content change moves the caret with the text, never across a marker.
 	* A store subscription, not `useSelect`: nothing renders from it.
 	*
-	* @param {(caret: Object) => void} onChange Receives `{ clientId, previousClientId, isBlockChange, attributes, noteAtCaret }`.
+	* @param {(caret: Object) => void} onChange Receives `{ clientIds, previousClientIds, isBlockChange, attributes, noteAtCaret }`; `attributes` only while one block is selected.
 	*/
 	function useCaretChange(onChange) {
 		const registry = (0, _wordpress_data.useRegistry)();
 		const handleChange = (0, _wordpress_compose.useEvent)(onChange);
 		(0, _wordpress_element.useEffect)(() => {
-			const { getBlockAttributes, getSelectedBlockClientId, getSelectionStart, getSelectionEnd } = registry.select(_wordpress_block_editor.store);
-			let clientId = getSelectedBlockClientId();
-			let attributes = getBlockAttributes(clientId);
+			const { getBlockAttributes, getSelectedBlockClientIds, getSelectionStart, getSelectionEnd } = registry.select(_wordpress_block_editor.store);
+			const getCaretAttributes = (ids) => ids.length === 1 ? getBlockAttributes(ids[0]) : void 0;
+			let clientIds = getSelectedBlockClientIds();
+			let attributes = getCaretAttributes(clientIds);
 			let selectionStart = getSelectionStart();
 			let selectionEnd = getSelectionEnd();
 			return registry.subscribe(() => {
-				const previousClientId = clientId;
+				const previousClientIds = clientIds;
 				const previousAttributes = attributes;
-				clientId = getSelectedBlockClientId();
-				attributes = getBlockAttributes(clientId);
+				clientIds = getSelectedBlockClientIds();
+				attributes = getCaretAttributes(clientIds);
 				if (getSelectionStart() === selectionStart && getSelectionEnd() === selectionEnd) return;
+				const isSameSelection = isSamePoint(getSelectionStart(), selectionStart) && isSamePoint(getSelectionEnd(), selectionEnd);
 				selectionStart = getSelectionStart();
 				selectionEnd = getSelectionEnd();
-				if (clientId === previousClientId && attributes !== previousAttributes) return;
+				const isBlockChange = clientIds.length > 1 && !isSameSelection || clientIds.length !== previousClientIds.length || clientIds.some((clientId, index) => clientId !== previousClientIds[index]);
+				if (!isBlockChange && attributes !== previousAttributes) return;
 				handleChange({
-					clientId,
-					previousClientId,
-					isBlockChange: clientId !== previousClientId,
+					clientIds,
+					previousClientIds,
+					isBlockChange,
 					attributes,
 					noteAtCaret: getNoteAtCaret(attributes, selectionStart, selectionEnd)
 				});
@@ -112969,24 +113041,27 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* Syncs the selected note with the caret; see "Note selection" in the README.
 	*
-	* @param {Object}                     props
-	* @param {Array}                      props.notes     Threads shown in the sidebar.
-	* @param {Map}                        props.drafts    Unsent note drafts, see `NoteDraftsContext`.
-	* @param {(clientId: string) => void} props.onDiscard Drops a block's draft marker.
+	* @param {Object}                        props
+	* @param {Array}                         props.notes     Threads shown in the sidebar.
+	* @param {Map}                           props.drafts    Unsent note drafts, see `NoteDraftsContext`.
+	* @param {(clientIds: string[]) => void} props.onDiscard Drops the draft marker of a form's blocks.
 	*/
 	function useNoteSelection({ notes, drafts, onDiscard }) {
+		const { getBlockAttributes, getBlockCount, getBlockName } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const { getSelectedNote } = unlock$5((0, _wordpress_data.useSelect)(store));
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		useCaretChange((caret) => {
 			const selectedNoteId = getSelectedNote();
+			const [clientId] = caret.clientIds;
 			const blockNoteIds = getNoteIdsFromMetadata(caret.attributes?.metadata);
+			const isTextBlock = (id) => !getBlockCount(id) && !!getSoleRichTextAttributeKey(getBlockName(id));
 			const noteId = pickNoteForCaret({
 				...caret,
-				blockThreads: notes.filter((thread) => blockNoteIds.includes(thread.id)),
-				hasDraft: drafts.has(caret.clientId),
+				blockThreads: notes.filter((thread) => blockNoteIds.includes(thread.id) && getBlockLevelClientIds(thread.id, [...thread.blockClientIds, clientId], getBlockAttributes, isTextBlock).includes(clientId)),
+				hasDraft: hasBlockDraft(drafts, caret.clientIds),
 				selectedNoteId
 			});
-			if (selectedNoteId === "new" && (caret.isBlockChange || noteId !== "new") && !drafts.has(caret.previousClientId)) onDiscard(caret.previousClientId);
+			if (selectedNoteId === "new" && (caret.isBlockChange || noteId !== "new") && !hasBlockDraft(drafts, caret.previousClientIds)) onDiscard(caret.previousClientIds);
 			if (noteId !== selectedNoteId) selectNote(noteId);
 		});
 	}
@@ -112994,24 +113069,24 @@ If there's a particular need for this, please submit a feature request at https:
 	* Selects a note from an explicit action. Selects its block first, so the
 	* caret events for the block change run before the note is set.
 	*
-	* @param {Object}                     props
-	* @param {Map}                        props.drafts    Unsent note drafts, see `NoteDraftsContext`.
-	* @param {(clientId: string) => void} props.onDiscard Drops a block's draft marker.
+	* @param {Object}                        props
+	* @param {Map}                           props.drafts    Unsent note drafts, see `NoteDraftsContext`.
+	* @param {(clientIds: string[]) => void} props.onDiscard Drops the draft marker of a form's blocks.
 	*
 	* @return {(noteId: number|string, clientId: ?string, options?: Object) => void} Picks a note, see `selectNote` for the options.
 	*/
 	function usePickNote({ drafts, onDiscard }) {
-		const { getSelectedBlockClientId } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
+		const { getSelectedBlockClientIds } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const { getSelectedNote } = unlock$5((0, _wordpress_data.useSelect)(store));
 		const { selectBlock, toggleBlockHighlight } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		return (noteId, clientId, options) => {
+			const formClientIds = getSelectedBlockClientIds();
 			if (clientId) {
-				selectBlock(clientId, null);
+				if (noteId !== "new" || !formClientIds.includes(clientId)) selectBlock(clientId, null);
 				toggleBlockHighlight(clientId, true);
 			}
-			const formClientId = getSelectedBlockClientId();
-			if (getSelectedNote() === "new" && noteId !== "new" && !drafts.has(formClientId)) onDiscard(formClientId);
+			if (getSelectedNote() === "new" && noteId !== "new" && !hasBlockDraft(drafts, formClientIds)) onDiscard(formClientIds);
 			selectNote(noteId, options);
 		};
 	}
@@ -113218,7 +113293,8 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/editor/build-module/components/collab-sidebar/add-note.mjs
 	const { useBlockElement: useBlockElement$2 } = unlock$5(_wordpress_block_editor.privateApis);
-	function AddNote({ clientId, floating }) {
+	function AddNote({ clientIds, floating }) {
+		const [clientId] = clientIds;
 		const blockElement = useBlockElement$2(clientId);
 		const { toggleBlockHighlight } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
@@ -113231,14 +113307,14 @@ If there's a particular need for this, please submit a feature request at https:
 			if (isSubmittingRef.current) return;
 			if (hasFocusWithin(blockElement)) return;
 			if (getSelectedNote() === "new" && !hasDraft()) {
-				onDiscard(clientId);
+				onDiscard(clientIds);
 				toggleBlockHighlight(clientId, false);
 				selectNote(void 0);
 			}
 		});
 		const unselectNote = () => {
 			setDraft("");
-			onDiscard(clientId);
+			onDiscard(clientIds);
 			selectNote(void 0);
 			blockElement?.focus();
 			toggleBlockHighlight(clientId, false);
@@ -113743,10 +113819,10 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		});
 	}
-	function NoteThread({ note, anchorClientId, focusThreadOrAdjacent, isSelected, expandReplies = false, sidebarRef, floating, onKeyDown }) {
+	function NoteThread({ note, focusThreadOrAdjacent, isSelected, expandReplies = false, sidebarRef, floating, onKeyDown }) {
 		const isFloating = !!floating;
 		const { onCreate, onEdit, onDiscard, onDelete } = useNoteActions();
-		const { toggleBlockHighlight } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
+		const { selectBlock, toggleBlockHighlight } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const drafts = (0, _wordpress_element.useContext)(NoteDraftsContext);
 		const pickNote = usePickNote({
 			drafts,
@@ -113754,14 +113830,8 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const { selectNote } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		const { getSelectedNote } = unlock$5((0, _wordpress_data.useSelect)(store));
-		const relatedBlockElement = useBlockElement$1(anchorClientId);
-		const setBlockHighlight = (0, _wordpress_compose.useEvent)((isHighlighted) => {
-			if (isHighlighted) {
-				toggleBlockHighlight(anchorClientId, true);
-				return;
-			}
-			for (const clientId of note.blockClientIds) toggleBlockHighlight(clientId, false);
-		});
+		const relatedBlockElement = useBlockElement$1(note.blockClientId);
+		const setBlockHighlight = (0, _wordpress_compose.useEvent)((isHighlighted) => toggleBlockHighlight(note.blockClientId, isHighlighted));
 		const debouncedSetBlockHighlight = (0, _wordpress_compose.useDebounce)(setBlockHighlight, 50);
 		const floatingRef = (0, _wordpress_element.useRef)(null);
 		const isKeyboardTabbingRef = (0, _wordpress_element.useRef)(false);
@@ -113815,7 +113885,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 		function onSelectNote() {
 			if (isSelected) return;
-			pickNote(note.id, anchorClientId);
+			pickNote(note.id, note.blockClientId);
 			focusNoteThread(note.id, sidebarRef.current);
 		}
 		function onDeselectNote() {
@@ -113848,12 +113918,12 @@ If there's a particular need for this, please submit a feature request at https:
 		const noteExcerpt = getNoteExcerpt((0, _wordpress_dom.__unstableStripHTML)(note.content?.rendered), 10);
 		const ariaLabel = !!note.blockClientId ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Note: %s"), noteExcerpt) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Original block deleted. Note: %s"), noteExcerpt);
 		if (isFloating && note.id === "new") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNote, {
-			clientId: anchorClientId,
+			clientIds: note.blockClientIds,
 			floating: {
 				y: floating.y,
 				ref: floatingRef
 			}
-		}, anchorClientId);
+		}, note.blockClientId);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(FloatingContainer, {
 			floating: isFloating ? {
 				y: floating.y,
@@ -113952,6 +114022,7 @@ If there's a particular need for this, please submit a feature request at https:
 					onClick: (event) => {
 						event.stopPropagation();
 						relatedBlockElement?.focus();
+						selectBlock(note.blockClientId, true);
 					},
 					children: (0, _wordpress_i18n.__)("Back to block")
 				})
@@ -114035,19 +114106,21 @@ If there's a particular need for this, please submit a feature request at https:
 			drafts,
 			onDiscard
 		});
-		const { selectedBlockClientId, orderedBlockIds } = (0, _wordpress_data.useSelect)((select) => {
-			const { getSelectedBlockClientId, getClientIdsWithDescendants } = select(_wordpress_block_editor.store);
+		const { selectedBlockClientIds, orderedBlockIds } = (0, _wordpress_data.useSelect)((select) => {
+			const { getSelectedBlockClientIds, getClientIdsWithDescendants } = select(_wordpress_block_editor.store);
 			return {
-				selectedBlockClientId: getSelectedBlockClientId(),
+				selectedBlockClientIds: getSelectedBlockClientIds(),
 				orderedBlockIds: getClientIdsWithDescendants()
 			};
 		}, []);
+		const [selectedBlockClientId] = selectedBlockClientIds;
 		const selectedNote = (0, _wordpress_data.useSelect)((select) => unlock$5(select(store)).getSelectedNote(), []);
 		const relatedBlockElement = useBlockElement(selectedBlockClientId);
 		const threads = (0, _wordpress_element.useMemo)(() => {
 			if (!isFloating || selectedNote !== "new") return filterNotes(notes, filters, selectedNote);
 			const newNoteThread = {
 				id: "new",
+				blockClientIds: selectedBlockClientIds,
 				blockClientId: selectedBlockClientId,
 				content: { rendered: "" }
 			};
@@ -114063,6 +114136,7 @@ If there's a particular need for this, please submit a feature request at https:
 			filters,
 			isFloating,
 			selectedNote,
+			selectedBlockClientIds,
 			selectedBlockClientId,
 			orderedBlockIds
 		]);
@@ -114098,22 +114172,21 @@ If there's a particular need for this, please submit a feature request at https:
 			const adjacentThread = threads[currentIndex + 1] ?? threads[currentIndex - 1];
 			if (!adjacentThread) {
 				selectNote(void 0);
-				toggleBlockHighlight(getAnchorClientId(thread, selectedBlockClientId), false);
+				toggleBlockHighlight(thread.blockClientId, false);
 				relatedBlockElement?.focus();
 				return;
 			}
-			if (getSelectedNote() === thread.id) pickNote(adjacentThread.id, getAnchorClientId(adjacentThread, selectedBlockClientId));
+			if (getSelectedNote() === thread.id) pickNote(adjacentThread.id, adjacentThread.blockClientId);
 			focusNoteThread(adjacentThread.id, sidebarRef.current);
 		}
 		const navigate = (event, thread, isSelected) => {
 			if (event.defaultPrevented) return;
 			const currentIndex = threads.findIndex((t) => t.id === thread.id);
 			const isSelfTarget = event.currentTarget === event.target;
-			const anchorClientId = getAnchorClientId(thread, selectedBlockClientId);
-			if ((event.key === "Enter" || event.key === "ArrowRight") && isSelfTarget && !isSelected) pickNote(thread.id, anchorClientId);
+			if ((event.key === "Enter" || event.key === "ArrowRight") && isSelfTarget && !isSelected) pickNote(thread.id, thread.blockClientId);
 			else if ((event.key === "Enter" || event.key === "ArrowLeft") && isSelfTarget && isSelected || event.key === "Escape") {
 				selectNote(void 0);
-				if (anchorClientId) toggleBlockHighlight(anchorClientId, false);
+				if (thread.blockClientId) toggleBlockHighlight(thread.blockClientId, false);
 				focusThreadOrAdjacent(thread, thread);
 			} else if (isSelfTarget) {
 				const targetIndex = {
@@ -114146,7 +114219,7 @@ If there's a particular need for this, please submit a feature request at https:
 				if (node) sidebarRef.current = node;
 			},
 			"aria-label": isFloating ? (0, _wordpress_i18n.__)("Unresolved notes") : (0, _wordpress_i18n.__)("All notes"),
-			children: [isAddingNote && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNote, { clientId: selectedBlockClientId }, selectedBlockClientId), threads.map((thread, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_element.Fragment, { children: [index === firstResolvedIndex && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
+			children: [isAddingNote && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNote, { clientIds: selectedBlockClientIds }, selectedBlockClientId), threads.map((thread, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_element.Fragment, { children: [index === firstResolvedIndex && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
 				direction: "row",
 				align: "center",
 				justify: "center",
@@ -114159,7 +114232,6 @@ If there's a particular need for this, please submit a feature request at https:
 				})
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteThread, {
 				note: thread,
-				anchorClientId: getAnchorClientId(thread, selectedBlockClientId),
 				focusThreadOrAdjacent,
 				isSelected: selectedNote === thread.id,
 				expandReplies,
@@ -114295,20 +114367,20 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/editor/build-module/components/collab-sidebar/add-note-menu-item.mjs
 	const { NoteIconSlotFill } = unlock$5(_wordpress_block_editor.privateApis);
-	function NoteMenuItem({ clientId, onClick, isDistractionFree }) {
-		const { blockName, isValid, shortcut } = (0, _wordpress_data.useSelect)((select) => {
+	function NoteMenuItem({ clientIds, onClick, isDistractionFree }) {
+		const { isValid, isClassicBlock, shortcut } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockName, isBlockValid } = select(_wordpress_block_editor.store);
 			return {
-				blockName: getBlockName(clientId),
-				isValid: isBlockValid(clientId),
+				isValid: clientIds.every((clientId) => isBlockValid(clientId) && getBlockName(clientId) !== (0, _wordpress_blocks.getUnregisteredTypeHandlerName)()),
+				isClassicBlock: clientIds.some((clientId) => getBlockName(clientId) === "core/freeform"),
 				shortcut: select(_wordpress_keyboard_shortcuts.store).getShortcutRepresentation("core/editor/new-note")
 			};
-		}, [clientId]);
-		if (!isValid || blockName === (0, _wordpress_blocks.getUnregisteredTypeHandlerName)()) return null;
-		const isDisabled = isDistractionFree || blockName === "core/freeform";
+		}, [clientIds]);
+		if (!isValid) return null;
+		const isDisabled = isDistractionFree || isClassicBlock;
 		let infoText;
 		if (isDistractionFree) infoText = (0, _wordpress_i18n.__)("Notes are disabled in distraction free mode.");
-		else if (blockName === "core/freeform") infoText = (0, _wordpress_i18n.__)("Convert to blocks to add notes.");
+		else if (isClassicBlock) infoText = (0, _wordpress_i18n.__)("Convert to blocks to add notes.");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
 			onClick,
 			disabled: isDisabled,
@@ -114318,11 +114390,11 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 	function AddNoteMenuItem({ onClick, isDistractionFree }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteIconSlotFill.Fill, { children: ({ clientId, onClose }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteMenuItem, {
-			clientId,
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteIconSlotFill.Fill, { children: ({ clientIds, onClose }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteMenuItem, {
+			clientIds,
 			isDistractionFree,
 			onClick: () => {
-				onClick(clientId);
+				onClick(clientIds);
 				onClose();
 			}
 		}) });
@@ -114330,15 +114402,17 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/editor/build-module/components/collab-sidebar/add-note-toolbar-button.mjs
 	const { NoteIconToolbarSlotFill } = unlock$5(_wordpress_block_editor.privateApis);
-	function NoteToolbarButton({ clientId, count, onClick }) {
+	function NoteToolbarButton({ clientIds, count, onClick }) {
 		const { canAddNote, shortcut } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockName, isBlockValid } = select(_wordpress_block_editor.store);
-			const blockName = getBlockName(clientId);
 			return {
-				canAddNote: isBlockValid(clientId) && blockName !== "core/freeform" && blockName !== (0, _wordpress_blocks.getUnregisteredTypeHandlerName)(),
+				canAddNote: clientIds.every((clientId) => {
+					const blockName = getBlockName(clientId);
+					return isBlockValid(clientId) && blockName !== "core/freeform" && blockName !== (0, _wordpress_blocks.getUnregisteredTypeHandlerName)();
+				}),
 				shortcut: select(_wordpress_keyboard_shortcuts.store).getShortcutRepresentation("core/editor/new-note")
 			};
-		}, [clientId]);
+		}, [clientIds]);
 		if (!canAddNote) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
 			icon: comment_default,
@@ -114348,10 +114422,10 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 	function AddNoteToolbarButton({ count, onClick }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteIconToolbarSlotFill.Fill, { children: ({ clientIds }) => clientIds.length === 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteToolbarButton, {
-			clientId: clientIds[0],
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteIconToolbarSlotFill.Fill, { children: ({ clientIds }) => clientIds.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteToolbarButton, {
+			clientIds,
 			count,
-			onClick: () => onClick(clientIds[0])
+			onClick: () => onClick(clientIds)
 		}) });
 	}
 
@@ -114394,20 +114468,18 @@ If there's a particular need for this, please submit a feature request at https:
 	* Builds CSS that covers each block with a block-level note in a tinted,
 	* bordered overlay in its author's color.
 	*
-	* A thread is block-level when none of its blocks contains a `core/note`
-	* marker with its id. A split can leave a block with the note's id but none
-	* of its text, which shouldn't turn an inline note into a block-level one.
-	* When a block has several, the first one supplies the color.
+	* Block-level is per block, see `getBlockLevelClientIds`. When a block has
+	* several, the first one supplies the color.
 	*
 	* @param {Array}                         threads            Unresolved note threads (each with `id`, `author` and `blockClientIds`).
 	* @param {(clientId: string) => ?Object} getBlockAttributes Block-editor selector.
+	* @param {(clientId: string) => boolean} isTextBlock        Whether the block's only content is one rich text field, see `getSoleRichTextAttributeKey`.
 	* @return {string} A serialized CSS string targeting the blocks' wrapper elements.
 	*/
-	function buildBlockHighlightCss(threads, getBlockAttributes) {
+	function buildBlockHighlightCss(threads, getBlockAttributes, isTextBlock) {
 		const rules = [];
 		const highlightedBlocks = /* @__PURE__ */ new Set();
-		const isBlockLevel = (thread) => !thread.blockClientIds.some((clientId) => findNoteInBlock(getBlockAttributes(clientId), thread.id));
-		const anchors = (threads ?? []).flatMap((thread) => thread?.id && isBlockLevel(thread) ? thread.blockClientIds.map((clientId) => ({
+		const anchors = (threads ?? []).flatMap((thread) => thread?.id ? getBlockLevelClientIds(thread.id, thread.blockClientIds, getBlockAttributes, isTextBlock).map((clientId) => ({
 			thread,
 			clientId
 		})) : []);
@@ -114434,7 +114506,11 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	function NoteHighlightStyles({ threads, selectedId, isHidden }) {
 		const currentUserId = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).getCurrentUser()?.id, []);
-		const blockCss = (0, _wordpress_data.useSelect)((select) => isHidden ? "" : buildBlockHighlightCss(threads, select(_wordpress_block_editor.store).getBlockAttributes), [threads, isHidden]);
+		const blockCss = (0, _wordpress_data.useSelect)((select) => {
+			if (isHidden) return "";
+			const { getBlockAttributes, getBlockCount, getBlockName } = select(_wordpress_block_editor.store);
+			return buildBlockHighlightCss(threads, getBlockAttributes, (clientId) => !getBlockCount(clientId) && !!getSoleRichTextAttributeKey(getBlockName(clientId)));
+		}, [threads, isHidden]);
 		const markerCss = buildHighlightCss([...threads, {
 			id: "new",
 			author: currentUserId
@@ -114451,12 +114527,12 @@ If there's a particular need for this, please submit a feature request at https:
 		const sidebarRef = (0, _wordpress_element.useRef)(null);
 		const isLargeViewport = (0, _wordpress_compose.useViewportMatch)("medium");
 		const { ref: canvasMarginRef } = (0, _wordpress_components.__experimentalUseSlot)(CanvasMargin.name);
-		const { clientId, isClassicBlock } = (0, _wordpress_data.useSelect)((select) => {
-			const { getSelectedBlockClientId, getBlockName } = select(_wordpress_block_editor.store);
-			const _clientId = getSelectedBlockClientId();
+		const { clientIds, isClassicBlock } = (0, _wordpress_data.useSelect)((select) => {
+			const { getSelectedBlockClientIds, getBlockName } = select(_wordpress_block_editor.store);
+			const _clientIds = getSelectedBlockClientIds();
 			return {
-				clientId: _clientId,
-				isClassicBlock: _clientId ? getBlockName(_clientId) === "core/freeform" : false
+				clientIds: _clientIds,
+				isClassicBlock: _clientIds.some((id) => getBlockName(id) === "core/freeform")
 			};
 		}, []);
 		const { notesDisplayMode, selectedNoteId, isAllNotesSidebarOpen } = (0, _wordpress_data.useSelect)((select) => {
@@ -114488,35 +114564,36 @@ If there's a particular need for this, please submit a feature request at https:
 		const canSelectedNoteFloat = selectedNoteId !== void 0 && selectedThread?.status !== "approved";
 		const hasFloatingNotes = isLargeViewport && (unresolvedNotes.length > 0 || canSelectedNoteFloat);
 		const showFloatingNotes = hasFloatingNotes && !areNotesHidden && !isAllNotesSidebarOpen;
-		function focusNote({ targetClientId, noteId: targetNoteId, isApproved }) {
+		function focusNote({ targetClientIds, noteId: targetNoteId, isApproved }) {
+			const [targetClientId] = targetClientIds;
 			if (!targetClientId) return;
 			const hasCanvasMargin = isLargeViewport && !!canvasMarginRef?.current?.checkVisibility();
 			if (isApproved || !hasCanvasMargin) enableComplementaryArea("core", ALL_NOTES_SIDEBAR);
 			else if (areNotesHidden && getActiveComplementaryArea("core") !== "edit-post/collab-history-sidebar") setPreference("core", "notesDisplayMode", "full");
-			if (targetNoteId === "new") onStart(targetClientId);
+			if (targetNoteId === "new") onStart(targetClientIds);
 			pickNote(targetNoteId, targetClientId, { focus: true });
 		}
-		function addNewNoteForBlock(targetClientId) {
+		function addNewNote(targetClientIds) {
 			return focusNote({
-				targetClientId,
+				targetClientIds,
 				noteId: "new",
 				isApproved: false
 			});
 		}
 		(0, _wordpress_keyboard_shortcuts.useShortcut)("core/editor/new-note", (event) => {
 			event.preventDefault();
-			addNewNoteForBlock(clientId);
-		}, { isDisabled: isClassicBlock || !clientId });
+			addNewNote(clientIds);
+		}, { isDisabled: isClassicBlock || !clientIds.length });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteHighlightStyles, {
 				threads: unresolvedNotes,
 				selectedId: selectedNoteId,
 				isHidden: areNotesHidden && !isAllNotesSidebarOpen
 			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNoteMenuItem, { onClick: (menuClientId) => addNewNoteForBlock(menuClientId) }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNoteMenuItem, { onClick: addNewNote }),
 			notes.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddNoteToolbarButton, {
-				count: notes.filter((thread) => thread.blockClientIds.includes(clientId)).length,
-				onClick: addNewNoteForBlock
+				count: notes.filter((thread) => clientIds.some((id) => thread.blockClientIds.includes(id))).length,
+				onClick: addNewNote
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(NotesDisplayModeMenu, {
 				hasFloatingNotes,

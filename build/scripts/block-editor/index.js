@@ -94321,8 +94321,8 @@ If there's a particular need for this, please submit a feature request at https:
 								shortcut: shortcuts.insertAfter,
 								children: (0, _wordpress_i18n.__)("Add after")
 							})] }),
-							canEdit && count === 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteIconSlotFill.Slot, { fillProps: {
-								clientId: firstBlockClientId,
+							canEdit && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NoteIconSlotFill.Slot, { fillProps: {
+								clientIds,
 								onClose
 							} })
 						] }),
