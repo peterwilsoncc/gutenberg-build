@@ -106944,6 +106944,30 @@ If there's a particular need for this, please submit a feature request at https:
 		}, NOTE_FORMAT_NAME)?.attributes?.["data-id"];
 		return id ? toNoteId(id) : void 0;
 	}
+	const isSamePoint = (a, b) => a.clientId === b.clientId && a.attributeKey === b.attributeKey && a.offset === b.offset;
+	/**
+	* @typedef {Object} WPCaretSnapshot
+	* @property {string[]}         clientIds      Selected blocks.
+	* @property {?Object}          attributes     Block attributes while one block is selected, else undefined.
+	* @property {WPSelectionPoint} selectionStart Block-editor selection start.
+	* @property {WPSelectionPoint} selectionEnd   Block-editor selection end.
+	*/
+	/**
+	* Whether a store change is a caret move. Skips typing: a selection change
+	* batched with a content change moves the caret with the text, never across
+	* a marker.
+	*
+	* @param {WPCaretSnapshot} previous Snapshot before the store change.
+	* @param {WPCaretSnapshot} next     Snapshot after it.
+	* @return {?{isBlockChange: boolean}} The caret move, or null when there is none.
+	*/
+	function getCaretChange(previous, next) {
+		if (next.selectionStart === previous.selectionStart && next.selectionEnd === previous.selectionEnd) return null;
+		const isSameSelection = isSamePoint(next.selectionStart, previous.selectionStart) && isSamePoint(next.selectionEnd, previous.selectionEnd);
+		const isBlockChange = next.clientIds.length > 1 && !isSameSelection || next.clientIds.length !== previous.clientIds.length || next.clientIds.some((clientId, index) => clientId !== previous.clientIds[index]);
+		if (!isBlockChange && next.attributes !== previous.attributes) return null;
+		return { isBlockChange };
+	}
 	/**
 	* Ids of the notes with a marker in the block, the draft marker's `'new'`
 	* included.
@@ -112999,11 +113023,9 @@ If there's a particular need for this, please submit a feature request at https:
 			hasDraft
 		};
 	}
-	const isSamePoint = (a, b) => a.clientId === b.clientId && a.attributeKey === b.attributeKey && a.offset === b.offset;
 	/**
-	* Calls back when the caret moves. Skips typing: a selection change batched
-	* with a content change moves the caret with the text, never across a marker.
-	* A store subscription, not `useSelect`: nothing renders from it.
+	* Calls back when the caret moves, see `getCaretChange`. A store
+	* subscription, not `useSelect`: nothing renders from it.
 	*
 	* @param {(caret: Object) => void} onChange Receives `{ clientIds, previousClientIds, isBlockChange, attributes, noteAtCaret }`; `attributes` only while one block is selected.
 	*/
@@ -113012,26 +113034,26 @@ If there's a particular need for this, please submit a feature request at https:
 		const handleChange = (0, _wordpress_compose.useEvent)(onChange);
 		(0, _wordpress_element.useEffect)(() => {
 			const { getBlockAttributes, getSelectedBlockClientIds, getSelectionStart, getSelectionEnd } = registry.select(_wordpress_block_editor.store);
-			const getCaretAttributes = (ids) => ids.length === 1 ? getBlockAttributes(ids[0]) : void 0;
-			let clientIds = getSelectedBlockClientIds();
-			let attributes = getCaretAttributes(clientIds);
-			let selectionStart = getSelectionStart();
-			let selectionEnd = getSelectionEnd();
+			const getSnapshot = () => {
+				const clientIds = getSelectedBlockClientIds();
+				return {
+					clientIds,
+					attributes: clientIds.length === 1 ? getBlockAttributes(clientIds[0]) : void 0,
+					selectionStart: getSelectionStart(),
+					selectionEnd: getSelectionEnd()
+				};
+			};
+			let snapshot = getSnapshot();
 			return registry.subscribe(() => {
-				const previousClientIds = clientIds;
-				const previousAttributes = attributes;
-				clientIds = getSelectedBlockClientIds();
-				attributes = getCaretAttributes(clientIds);
-				if (getSelectionStart() === selectionStart && getSelectionEnd() === selectionEnd) return;
-				const isSameSelection = isSamePoint(getSelectionStart(), selectionStart) && isSamePoint(getSelectionEnd(), selectionEnd);
-				selectionStart = getSelectionStart();
-				selectionEnd = getSelectionEnd();
-				const isBlockChange = clientIds.length > 1 && !isSameSelection || clientIds.length !== previousClientIds.length || clientIds.some((clientId, index) => clientId !== previousClientIds[index]);
-				if (!isBlockChange && attributes !== previousAttributes) return;
+				const previous = snapshot;
+				snapshot = getSnapshot();
+				const change = getCaretChange(previous, snapshot);
+				if (!change) return;
+				const { clientIds, attributes, selectionStart, selectionEnd } = snapshot;
 				handleChange({
 					clientIds,
-					previousClientIds,
-					isBlockChange,
+					previousClientIds: previous.clientIds,
+					isBlockChange: change.isBlockChange,
 					attributes,
 					noteAtCaret: getNoteAtCaret(attributes, selectionStart, selectionEnd)
 				});
