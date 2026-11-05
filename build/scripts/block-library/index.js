@@ -50827,23 +50827,80 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/group/transforms.mjs
-	const transforms$29 = { from: [{
-		type: "block",
-		isMultiBlock: true,
-		blocks: ["*"],
-		__experimentalConvert(blocks) {
-			const alignments = ["wide", "full"];
-			const widestAlignment = blocks.reduce((accumulator, block) => {
-				const { align } = block.attributes;
-				return alignments.indexOf(align) > alignments.indexOf(accumulator) ? align : accumulator;
-			}, void 0);
-			const groupInnerBlocks = blocks.map((block) => (0, _wordpress_blocks.cloneSanitizedBlock)(block));
-			return (0, _wordpress_blocks.createBlock)("core/group", {
-				align: widestAlignment,
-				layout: { type: "constrained" }
-			}, groupInnerBlocks);
-		}
-	}] };
+	function getLayout(attributes) {
+		const { layout } = attributes;
+		return layout && typeof layout === "object" && !Array.isArray(layout) ? layout : {};
+	}
+	function getColumnCount(layout) {
+		return Number.isInteger(layout.columnCount) && layout.columnCount > 0 ? layout.columnCount : void 0;
+	}
+	function getMinimumColumnWidth(layout) {
+		return typeof layout.minimumColumnWidth === "string" && layout.minimumColumnWidth ? layout.minimumColumnWidth : void 0;
+	}
+	const transforms$29 = {
+		from: [{
+			type: "block",
+			isMultiBlock: true,
+			blocks: ["*"],
+			__experimentalConvert(blocks) {
+				const alignments = ["wide", "full"];
+				const widestAlignment = blocks.reduce((accumulator, block) => {
+					const { align } = block.attributes;
+					return alignments.indexOf(align) > alignments.indexOf(accumulator) ? align : accumulator;
+				}, void 0);
+				const groupInnerBlocks = blocks.map((block) => (0, _wordpress_blocks.cloneSanitizedBlock)(block));
+				return (0, _wordpress_blocks.createBlock)("core/group", {
+					align: widestAlignment,
+					layout: { type: "constrained" }
+				}, groupInnerBlocks);
+			}
+		}],
+		to: [{
+			type: "block",
+			blocks: ["core/group"],
+			variationName: "group-canvas",
+			isMatch: (attributes) => {
+				const layout = getLayout(attributes);
+				return !!window.__experimentalEnableGridInteractivity && layout.type === "grid" && !layout.isManualPlacement;
+			},
+			transform: (attributes, innerBlocks) => {
+				const layout = getLayout(attributes);
+				const columnCount = getColumnCount(layout) ?? 3;
+				const minimumColumnWidth = getMinimumColumnWidth(layout);
+				return (0, _wordpress_blocks.createBlock)("core/group", {
+					...attributes,
+					layout: {
+						type: "grid",
+						isManualPlacement: true,
+						columnCount,
+						rowCount: 3,
+						...minimumColumnWidth && { minimumColumnWidth }
+					}
+				}, innerBlocks);
+			}
+		}, {
+			type: "block",
+			blocks: ["core/group"],
+			variationName: "group-grid",
+			isMatch: (attributes) => {
+				const layout = getLayout(attributes);
+				return !!window.__experimentalEnableGridInteractivity && layout.type === "grid" && !!layout.isManualPlacement;
+			},
+			transform: (attributes, innerBlocks) => {
+				const layout = getLayout(attributes);
+				const columnCount = getColumnCount(layout);
+				const minimumColumnWidth = getMinimumColumnWidth(layout);
+				return (0, _wordpress_blocks.createBlock)("core/group", {
+					...attributes,
+					layout: {
+						type: "grid",
+						...columnCount && { columnCount },
+						...minimumColumnWidth && { minimumColumnWidth }
+					}
+				}, innerBlocks);
+			}
+		}]
+	};
 
 // packages/block-library/build-module/group/variations.mjs
 	const example$16 = { innerBlocks: [
@@ -50941,7 +50998,9 @@ Icon: ButtonIcon });
 		description: (0, _wordpress_i18n.__)("Place blocks freely on a grid."),
 		attributes: { layout: {
 			type: "grid",
-			isManualPlacement: true
+			isManualPlacement: true,
+			columnCount: 3,
+			rowCount: 3
 		} },
 		scope: [
 			"block",

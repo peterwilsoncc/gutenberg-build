@@ -95096,6 +95096,7 @@ If there's a particular need for this, please submit a feature request at https:
 			clientIds,
 			blocks
 		});
+		const filteredBlockTransformations = possibleBlockTransformations.filter(({ name, variationName }) => name !== blocks[0]?.name || !variationName || !blockVariationTransformations?.some((variation) => variation.name === variationName));
 		function selectForMultipleBlocks(insertedBlocks) {
 			if (insertedBlocks.length > 1) multiSelect(insertedBlocks[0].clientId, insertedBlocks[insertedBlocks.length - 1].clientId);
 		}
@@ -95105,6 +95106,12 @@ If there's a particular need for this, please submit a feature request at https:
 			selectForMultipleBlocks(newBlocks);
 		}
 		function onBlockVariationTransform(name) {
+			const newBlocks = (0, _wordpress_blocks.switchToBlockType)(blocks[0], blocks[0].name, name);
+			if (newBlocks) {
+				replaceBlocks(clientIds, newBlocks);
+				selectForMultipleBlocks(newBlocks);
+				return;
+			}
 			updateBlockAttributes(blocks[0].clientId, { ...blockVariationTransformations.find(({ name: variationName }) => variationName === name).attributes });
 		}
 		function onPatternTransform(transformedBlocks) {
@@ -95118,7 +95125,7 @@ If there's a particular need for this, please submit a feature request at https:
 		*/
 		const isSingleBlock = blocks.length === 1;
 		const isSynced = isSingleBlock && ((0, _wordpress_blocks.isTemplatePart)(blocks[0]) || (0, _wordpress_blocks.isReusableBlock)(blocks[0]));
-		const hasPossibleBlockTransformations = !!possibleBlockTransformations?.length && canRemove && !isSynced;
+		const hasPossibleBlockTransformations = !!filteredBlockTransformations.length && canRemove && !isSynced;
 		const hasPossibleBlockVariationTransformations = !!blockVariationTransformations?.length;
 		const hasPatternTransformation = !!patterns?.length && canRemove;
 		const hasBlockOrBlockVariationTransforms = hasPossibleBlockTransformations || hasPossibleBlockVariationTransformations;
@@ -95140,7 +95147,7 @@ If there's a particular need for this, please submit a feature request at https:
 				}),
 				hasBlockOrBlockVariationTransforms && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockTransformationsMenu, {
 					className: "block-editor-block-switcher__transforms__menugroup",
-					possibleBlockTransformations,
+					possibleBlockTransformations: filteredBlockTransformations,
 					possibleBlockVariationTransformations: blockVariationTransformations,
 					blocks,
 					onSelect: (name, variationName) => {
@@ -98679,7 +98686,8 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 	function BlockVariationTransforms({ blockClientId }) {
-		const { updateBlockAttributes } = (0, _wordpress_data.useDispatch)(store);
+		const registry = (0, _wordpress_data.useRegistry)();
+		const { replaceBlocks, updateBlockAttributes } = (0, _wordpress_data.useDispatch)(store);
 		const { activeBlockVariation, variations, canEdit, isContentOnly, isSection } = (0, _wordpress_data.useSelect)((select) => {
 			const { getActiveBlockVariation, getBlockVariations } = select(_wordpress_blocks.store);
 			const { getBlockName, getBlockAttributes, getBlockEditingMode, isSectionBlock } = unlock$2(select(store));
@@ -98705,6 +98713,12 @@ If there's a particular need for this, please submit a feature request at https:
 			return variationIcons.size === variations.length;
 		}, [variations]);
 		const onSelectVariation = (variationName) => {
+			const block = registry.select(store).getBlock(blockClientId);
+			const transformedBlocks = block && (0, _wordpress_blocks.switchToBlockType)(block, block.name, variationName);
+			if (transformedBlocks) {
+				replaceBlocks(blockClientId, transformedBlocks);
+				return;
+			}
 			updateBlockAttributes(blockClientId, { ...variations.find(({ name }) => name === variationName).attributes });
 		};
 		if (!variations?.length || !canEdit || isContentOnly || isSection) return null;
