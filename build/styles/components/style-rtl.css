@@ -1243,6 +1243,25 @@ input.components-combobox-control__input[type=text]:focus {
   background: #1e1e1e;
   box-shadow: 0 0 0 1px #1e1e1e;
   border-radius: 1px;
+  transition: none;
+}
+.components-dropdown-menu__menu .components-dropdown-menu__menu-item.is-active:is(:focus, [aria-selected=true]):not(:disabled, [aria-disabled=true]) svg,
+.components-dropdown-menu__menu .components-dropdown-menu__menu-item.is-active:is(:focus, [aria-selected=true]):not(:disabled, [aria-disabled=true]) .dashicon,
+.components-dropdown-menu__menu .components-menu-item.is-active:is(:focus, [aria-selected=true]):not(:disabled, [aria-disabled=true]) svg,
+.components-dropdown-menu__menu .components-menu-item.is-active:is(:focus, [aria-selected=true]):not(:disabled, [aria-disabled=true]) .dashicon {
+  color: var(--wpds-color-background-interactive-brand-strong-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 93%, black));
+  background: var(--wpds-color-foreground-interactive-brand-strong-active, #fff);
+  box-shadow: 0 0 0 1px var(--wpds-color-foreground-interactive-brand-strong-active, #fff);
+}
+@media (forced-colors: active) {
+  .components-dropdown-menu__menu .components-dropdown-menu__menu-item.is-active:is(:focus, [aria-selected=true]):not(:disabled, [aria-disabled=true]) svg,
+  .components-dropdown-menu__menu .components-dropdown-menu__menu-item.is-active:is(:focus, [aria-selected=true]):not(:disabled, [aria-disabled=true]) .dashicon,
+  .components-dropdown-menu__menu .components-menu-item.is-active:is(:focus, [aria-selected=true]):not(:disabled, [aria-disabled=true]) svg,
+  .components-dropdown-menu__menu .components-menu-item.is-active:is(:focus, [aria-selected=true]):not(:disabled, [aria-disabled=true]) .dashicon {
+    color: Highlight;
+    background: HighlightText;
+    box-shadow: 0 0 0 1px HighlightText;
+  }
 }
 .components-dropdown-menu__menu .components-dropdown-menu__menu-item.is-icon-only,
 .components-dropdown-menu__menu .components-menu-item.is-icon-only {
