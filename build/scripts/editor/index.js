@@ -98802,11 +98802,92 @@ If there's a particular need for this, please submit a feature request at https:
 		return computeInscribedRect(state.aspectRatio, viewShape);
 	}
 	/**
+	* How far a crop's shape may be from the locked ratio, relative to it, and
+	* still count as matching. It leaves room for rounding in a handle drag.
+	*/
+	const LOCKED_RATIO_TOLERANCE = .001;
+	/**
+	* Make the crop match the locked ratio, so a locked ratio always means a
+	* crop of that ratio. A crop that matches is returned as it is. Otherwise
+	* the crop keeps its centre and width and takes the height the ratio
+	* needs; if that is taller than the view, it takes the full height and
+	* the width the ratio needs. A full frame becomes the largest box of the
+	* ratio.
+	*
+	* @param state The editor state.
+	* @return The same state when the crop matches, or a state with a crop
+	*         that does.
+	*/
+	function fitCropToLockedRatio(state) {
+		const { aspectRatio, cropRect } = state;
+		const viewShape = getViewShape(state);
+		if (!viewShape || !aspectRatio || aspectRatio <= 0 || cropRect.width <= 0 || cropRect.height <= 0) return state;
+		const lockedShape = aspectRatio * viewShape.height / viewShape.width;
+		const shape = cropRect.width / cropRect.height;
+		if (Math.abs(shape / lockedShape - 1) <= LOCKED_RATIO_TOLERANCE) return state;
+		let width = Math.min(cropRect.width, 1);
+		let height = width / lockedShape;
+		if (height > 1) {
+			height = 1;
+			width = lockedShape;
+		}
+		const centreX = cropRect.x + cropRect.width / 2;
+		const centreY = cropRect.y + cropRect.height / 2;
+		return {
+			...state,
+			cropRect: {
+				x: Math.min(Math.max(centreX - width / 2, 0), 1 - width),
+				y: Math.min(Math.max(centreY - height / 2, 0), 1 - height),
+				width,
+				height
+			}
+		};
+	}
+	/**
+	* The crop a quarter turn should leave behind.
+	*
+	* Without a locked ratio the crop follows the image round, which is the
+	* swapped rect the caller passes. A locked crop at the largest size for
+	* its view stays at the largest size after the turn. A smaller crop keeps
+	* its pixel size, measured as a different fraction of the turned view.
+	*
+	* When those pixels no longer fit the transposed view, the crop becomes
+	* the largest box of the ratio instead.
+	*
+	* @param state   The state before the turn.
+	* @param swapped The crop with its sides swapped, which is what a turn
+	*                does without a lock.
+	* @return The crop to use.
+	*/
+	function keepCropThroughQuarterTurn(state, swapped) {
+		const view = getViewShape(state);
+		const { aspectRatio, cropRect } = state;
+		if (!view || !aspectRatio || aspectRatio <= 0) return swapped;
+		const maximum = computeInscribedRect(aspectRatio, view);
+		if (nearlyEqual(cropRect.x, maximum.x) && nearlyEqual(cropRect.y, maximum.y) && nearlyEqual(cropRect.width, maximum.width) && nearlyEqual(cropRect.height, maximum.height)) return computeInscribedRect(aspectRatio, {
+			width: view.height,
+			height: view.width
+		});
+		const width = cropRect.width * view.width / view.height;
+		const height = cropRect.height * view.height / view.width;
+		if (width > 1 || height > 1) return computeInscribedRect(aspectRatio, {
+			width: view.height,
+			height: view.width
+		});
+		const centreX = swapped.x + swapped.width / 2;
+		const centreY = swapped.y + swapped.height / 2;
+		return {
+			x: Math.min(Math.max(centreX - width / 2, 0), 1 - width),
+			y: Math.min(Math.max(centreY - height / 2, 0), 1 - height),
+			width,
+			height
+		};
+	}
+	/**
 	* Value-equality check for two editor states.
 	*
-	* Used by history machinery to dedup snapshots and detect no-op
-	* transitions. Compares every field that participates in the rendered
-	* output; ignores reference identity.
+	* Compares the public edit fields to dedup snapshots and detect no-op
+	* transitions. The editor's internal base pose is not part of the edit.
 	*
 	* @param a First editor state.
 	* @param b Second editor state.
@@ -98820,6 +98901,31 @@ If there's a particular need for this, please submit a feature request at https:
 	function clampRequestedZoom(state, zoom) {
 		if (state.image) return Math.min(10, Math.max(ABSOLUTE_MIN_ZOOM, zoom));
 		return Math.min(10, Math.max(1, zoom));
+	}
+	/**
+	* Rotate the last committed pan without containment. A quarter turn may
+	* temporarily clamp this position, but a later turn can use it again.
+	*
+	* @param state    The editor state.
+	* @param rotation The angle to rotate the base pan to.
+	* @return The pan before containment at that angle.
+	*/
+	function getUnclampedPanAtRotation(state, rotation) {
+		if (rotation === state.baseRotation) return state.basePan;
+		const singleFlip = state.flip.horizontal !== state.flip.vertical;
+		const deltaRad = degreesToRadians(rotation - state.baseRotation);
+		const cos = Math.cos(deltaRad);
+		const sin = Math.sin(deltaRad) * (singleFlip ? -1 : 1);
+		const cropCx = state.cropRect.x + state.cropRect.width / 2;
+		const cropCy = state.cropRect.y + state.cropRect.height / 2;
+		const ox = cropCx - .5;
+		const oy = cropCy - .5;
+		const dx = state.basePan.x - ox;
+		const dy = state.basePan.y - oy;
+		return {
+			x: ox + cos * dx - sin * dy,
+			y: oy + sin * dx + cos * dy
+		};
 	}
 	/**
 	* Translate a pipeline transform operation into the equivalent
@@ -98895,14 +99001,12 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 	/**
-	* Snapshot the current `crop`, `zoom`, and `rotation` into the
-	* corresponding `basePan`, `baseZoom`, `baseRotation` fields. Called
-	* by every committing action so that the next SET_ROTATION derives
-	* its transient pan from a fresh base (not from a drifted one).
+	* Snapshot the current pan, zoom, and rotation into the base pose.
+	* Called by committing actions other than SNAP_ROTATE_90, which keeps
+	* its unclamped pan so later turns can restore it.
 	*
-	* SET_ROTATION is the only action that does NOT commit base — it
-	* reads the base, computes a transient pan, and leaves the base
-	* alone. This is what eliminates rotation drift near edges.
+	* SET_ROTATION reads the base without changing it, which prevents
+	* accumulated rotation drift near image edges.
 	*
 	* @param next The post-containment state to commit.
 	* @return The state with base fields synced to current.
@@ -98926,11 +99030,10 @@ If there's a particular need for this, please submit a feature request at https:
 	* (crop, zoom, rotation, cropRect, flip) is followed by enforceContainment
 	* to ensure the image always covers the crop area.
 	*
-	* Committing actions (everything except SET_ROTATION) also call
-	* `commitBase` to snapshot the post-containment state as the new
-	* base pose. SET_ROTATION derives from that base without mutating
-	* it, which prevents accumulated-clamp drift during continuous fine
-	* rotation.
+	* Committing actions update the base pose. SNAP_ROTATE_90 retains its
+	* unclamped pan in the base so later turns can restore it; SET_ROTATION
+	* derives from the base without mutating it, preventing accumulated
+	* clamp drift during continuous fine rotation.
 	*
 	* @param state  The current editor state.
 	* @param action The action to process.
@@ -98938,14 +99041,17 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	function imageEditorReducer(state, action) {
 		switch (action.type) {
-			case "SET_IMAGE": return commitBase(enforceContainment({
+			case "SET_IMAGE": return commitBase(enforceContainment(fitCropToLockedRatio({
 				...state,
 				image: action.payload
-			}));
-			case "SET_PAN": return commitBase(enforceContainment({
-				...state,
-				pan: action.payload
-			}));
+			})));
+			case "SET_PAN": {
+				const next = enforceContainment({
+					...state,
+					pan: action.payload
+				});
+				return areImageEditorStatesEqual(state, next) ? state : commitBase(next);
+			}
 			case "SET_ZOOM": {
 				const z = clampRequestedZoom(state, action.payload);
 				return commitBase(enforceContainment({
@@ -98963,25 +99069,12 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 			case "SET_ROTATION": {
 				const newRotation = normalizeRotation(action.payload);
-				const singleFlip = state.flip.horizontal !== state.flip.vertical;
-				const deltaRad = degreesToRadians(newRotation - state.baseRotation);
-				const cos = Math.cos(deltaRad);
-				const sin = Math.sin(deltaRad) * (singleFlip ? -1 : 1);
-				const cropCx = state.cropRect.x + state.cropRect.width / 2;
-				const cropCy = state.cropRect.y + state.cropRect.height / 2;
-				const ox = cropCx - .5;
-				const oy = cropCy - .5;
-				const dx = state.basePan.x - ox;
-				const dy = state.basePan.y - oy;
-				return enforceContainment({
+				return enforceContainment(fitCropToLockedRatio({
 					...state,
 					rotation: newRotation,
 					zoom: state.baseZoom,
-					pan: {
-						x: ox + cos * dx - sin * dy,
-						y: oy + sin * dx + cos * dy
-					}
-				});
+					pan: getUnclampedPanAtRotation(state, newRotation)
+				}));
 			}
 			case "SNAP_ROTATE_90": {
 				const rawDir = action.payload.direction;
@@ -98990,9 +99083,16 @@ If there's a particular need for this, please submit a feature request at https:
 				const rect = state.cropRect;
 				const cx = rect.x + rect.width / 2;
 				const cy = rect.y + rect.height / 2;
-				const newPanX = rawDir === 1 ? -state.pan.y : state.pan.y;
-				const newPanY = rawDir === 1 ? state.pan.x : -state.pan.x;
-				return commitBase(enforceContainment({
+				const panBeforeTurn = getUnclampedPanAtRotation(state, state.rotation);
+				const newPanX = rawDir === 1 ? -panBeforeTurn.y : panBeforeTurn.y;
+				const newPanY = rawDir === 1 ? panBeforeTurn.x : -panBeforeTurn.x;
+				const turned = keepCropThroughQuarterTurn(state, {
+					x: cx - rect.height / 2,
+					y: cy - rect.width / 2,
+					width: rect.height,
+					height: rect.width
+				});
+				const next = enforceContainment({
 					...state,
 					rotation: rot90,
 					zoom: state.baseZoom,
@@ -99000,13 +99100,17 @@ If there's a particular need for this, please submit a feature request at https:
 						x: newPanX,
 						y: newPanY
 					},
-					cropRect: {
-						x: cx - rect.height / 2,
-						y: cy - rect.width / 2,
-						width: rect.height,
-						height: rect.width
-					}
-				}));
+					cropRect: turned
+				});
+				return {
+					...next,
+					basePan: {
+						x: newPanX,
+						y: newPanY
+					},
+					baseZoom: next.zoom,
+					baseRotation: next.rotation
+				};
 			}
 			case "SET_FLIP": {
 				const oldFlip = state.flip;
@@ -99029,10 +99133,10 @@ If there's a particular need for this, please submit a feature request at https:
 					}
 				}));
 			}
-			case "SET_CROP_RECT": return commitBase(enforceContainment({
+			case "SET_CROP_RECT": return commitBase(enforceContainment(fitCropToLockedRatio({
 				...state,
 				cropRect: action.payload
-			}));
+			})));
 			case "SET_ASPECT_RATIO": {
 				const aspectRatio = action.payload !== void 0 && action.payload > 0 ? action.payload : void 0;
 				const next = {
@@ -99072,11 +99176,11 @@ If there's a particular need for this, please submit a feature request at https:
 				}));
 			}
 			case "APPLY_OPERATION": return imageEditorReducer(state, operationToAction(state, action.payload));
-			case "RESET": return commitBase(enforceContainment({
+			case "RESET": return commitBase(enforceContainment(fitCropToLockedRatio({
 				...DEFAULT_STATE,
 				image: state.image,
 				...action.payload
-			}));
+			})));
 		}
 	}
 	/**
@@ -99218,16 +99322,11 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	function createImageEditorState(options = {}) {
 		const { image = null, aspectRatio } = options;
-		const start = {
+		return enforceContainment(fitCropToLockedRatio({
 			...DEFAULT_STATE,
 			image,
 			aspectRatio: aspectRatio && aspectRatio > 0 ? aspectRatio : void 0
-		};
-		const cropRect = getLockedCropRect(start);
-		return enforceContainment(cropRect ? {
-			...start,
-			cropRect
-		} : start);
+		}));
 	}
 	/**
 	* Controller for the image editor: the state, the named setters and the
@@ -99245,7 +99344,11 @@ If there's a particular need for this, please submit a feature request at https:
 			...DEFAULT_STATE,
 			...initialState
 		}));
-		const state = isControlled ? withBaseValues(controlledState) : ownState;
+		const suppliedState = isControlled ? withBaseValues(controlledState) : ownState;
+		const state = isControlled && fitCropToLockedRatio(suppliedState) !== suppliedState ? imageEditorReducer(suppliedState, {
+			type: "SET_CROP_RECT",
+			payload: suppliedState.cropRect
+		}) : suppliedState;
 		const [baseline, setBaseline] = (0, _wordpress_element.useState)(() => state);
 		const hasEditedRef = (0, _wordpress_element.useRef)(false);
 		const latestRef = (0, _wordpress_element.useRef)(state);
@@ -99256,6 +99359,15 @@ If there's a particular need for this, please submit a feature request at https:
 		(0, _wordpress_element.useLayoutEffect)(() => {
 			onChangeRef.current = onChange;
 		}, [onChange]);
+		(0, _wordpress_element.useLayoutEffect)(() => {
+			if (!isControlled || state === suppliedState) return;
+			if (!hasEditedRef.current) setBaseline((current) => areImageEditorStatesEqual(current, state) ? current : state);
+			onChangeRef.current?.(state, { isEdit: false });
+		}, [
+			isControlled,
+			state,
+			suppliedState
+		]);
 		const apply = (0, _wordpress_element.useCallback)((action, isEdit = true) => {
 			const next = imageEditorReducer(latestRef.current, action);
 			if (next === latestRef.current) return next;
@@ -99268,7 +99380,13 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [isControlled]);
 		const setImage = (0, _wordpress_element.useCallback)((image) => {
 			const current = latestRef.current;
-			if (areImagesEqual$1(current.image, image)) return;
+			if (areImagesEqual$1(current.image, image)) {
+				if (fitCropToLockedRatio(current) !== current) apply({
+					type: "SET_CROP_RECT",
+					payload: current.cropRect
+				}, false);
+				return;
+			}
 			hasEditedRef.current = false;
 			if (current.image) {
 				apply({
