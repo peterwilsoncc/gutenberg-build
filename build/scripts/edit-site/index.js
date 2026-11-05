@@ -45114,7 +45114,7 @@ Icon: ButtonIcon });
 		}
 		throw "Unknown post type";
 	}
-	function getNavigationPath(location, postType) {
+	function getNavigationPath(location, postType, showStylebook) {
 		const { path, name } = location;
 		if ([
 			"pattern-item",
@@ -45126,7 +45126,8 @@ Icon: ButtonIcon });
 		].includes(name)) return getListPathForPostType(postType);
 		return (0, _wordpress_url.addQueryArgs)(path, {
 			canvas: void 0,
-			revision: void 0
+			revision: void 0,
+			preview: name === "styles" && showStylebook ? "stylebook" : void 0
 		});
 	}
 	function EditSiteEditor({ isHomeRoute = false, renderingMode }) {
@@ -45152,6 +45153,7 @@ Icon: ButtonIcon });
 		const editorSettings = useSpecificEditorSettings();
 		const { resetZoomLevel } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
 		const { setCurrentRevisionId, resetStylesNavigation } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
+		const { getShowStylebook } = unlock$5((0, _wordpress_data.useSelect)(_wordpress_editor.store));
 		const isStylesEditing = isEditMode && location.name === "styles";
 		(0, _wordpress_element.useEffect)(() => {
 			if (!isStylesEditing) resetStylesNavigation();
@@ -45211,7 +45213,7 @@ Icon: ButtonIcon });
 					onClick: () => {
 						resetZoomLevel();
 						setCurrentRevisionId(null);
-						history.navigate(getNavigationPath(location, postWithTemplate ? context.postType : postType), { transition: "canvas-mode-view-transition" });
+						history.navigate(getNavigationPath(location, postWithTemplate ? context.postType : postType, getShowStylebook()), { transition: "canvas-mode-view-transition" });
 					},
 					icon: (0, _wordpress_i18n.isRTL)() ? chevron_right_default : chevron_left_default
 				}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MoreMenu, {})]
@@ -73206,13 +73208,13 @@ If there's a particular need for this, please submit a feature request at https:
 	const { useLocation: useLocation$11, useHistory: useHistory$12 } = unlock$5(_wordpress_router.privateApis);
 	function SidebarNavigationScreenGlobalStyles() {
 		const history = useHistory$12();
-		const { path } = useLocation$11();
+		const { path, query } = useLocation$11();
 		const { revisions, isLoading: isLoadingRevisions, revisionsCount } = useGlobalStylesRevisions();
 		const { openGeneralSidebar } = (0, _wordpress_data.useDispatch)(store);
-		const { setStylesPath } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
+		const { setStylesPath, setShowStylebook } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
 		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const openGlobalStyles = (0, _wordpress_element.useCallback)(async () => {
-			history.navigate((0, _wordpress_url.addQueryArgs)(path, { canvas: "edit" }), { transition: "canvas-mode-edit-transition" });
+			history.navigate((0, _wordpress_url.addQueryArgs)((0, _wordpress_url.removeQueryArgs)(path, "preview"), { canvas: "edit" }), { transition: "canvas-mode-edit-transition" });
 			return Promise.all([setPreference("core", "distractionFree", false), openGeneralSidebar("edit-site/global-styles")]);
 		}, [
 			path,
@@ -73222,8 +73224,14 @@ If there's a particular need for this, please submit a feature request at https:
 		]);
 		const openRevisions = (0, _wordpress_element.useCallback)(async () => {
 			setStylesPath("/revisions");
+			if (query.preview === "stylebook") setShowStylebook(true);
 			await openGlobalStyles();
-		}, [openGlobalStyles, setStylesPath]);
+		}, [
+			openGlobalStyles,
+			setStylesPath,
+			setShowStylebook,
+			query.preview
+		]);
 		const shouldShowGlobalStylesFooter = !!revisionsCount && !isLoadingRevisions;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SidebarNavigationScreen, {
 			title: (0, _wordpress_i18n.__)("Design"),
