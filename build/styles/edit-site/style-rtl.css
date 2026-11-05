@@ -2952,9 +2952,9 @@ div.dataviews-view-list {
   padding-block: calc((var(--wpds-dimension-size-sm, 24px) - 1lh) / 2);
   display: flex;
   align-items: center;
-  overflow: clip;
-  padding-inline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
-  margin-inline: calc(-1 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
+  overflow-x: clip;
+  padding-inline: calc(2 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
+  margin-inline: calc(-2 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
   word-break: normal;
   overflow-wrap: anywhere;
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
