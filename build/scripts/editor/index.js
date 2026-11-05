@@ -95135,54 +95135,6 @@ If there's a particular need for this, please submit a feature request at https:
 	});
 	(0, _wordpress_data.register)(store$104);
 
-// packages/media-editor/build-module/image-editor/core/constants.mjs
-/**
-	* Safety floor for coverage-aware zoom. Degenerate crops can have a geometric
-	* coverage minimum of 0, but camera and inverse-matrix math need a stable,
-	* positive scale.
-	*/
-	const ABSOLUTE_MIN_ZOOM = .1;
-	/**
-	* Fraction of the constraining canvas axis the settled crop should occupy on
-	* screen. When a crop is shown smaller than this (e.g. a square crop in a tall
-	* image, capped by the contain-fit footprint's narrow axis), the view magnifies
-	* to fill the canvas. `1` = always fill the canvas; lower = rescue only the
-	* under-filled cases. See `getViewScale`.
-	*/
-	const SETTLE_TARGET_CANVAS_FILL = .8;
-	/**
-	* Wheel zoom sensitivity. A deltaY of 100 changes zoom by 0.25.
-	* This could be made configurable as a prop to the Cropper component.
-	*/
-	const DEFAULT_WHEEL_ZOOM_SPEED = .0025;
-	/** Fine step for keyboard-driven cropper movement, in normalized coordinates. */
-	const DEFAULT_KEYBOARD_STEP = .01;
-	const DEFAULT_CROP_RECT = {
-		x: 0,
-		y: 0,
-		width: 1,
-		height: 1
-	};
-	const DEFAULT_FLIP = {
-		horizontal: false,
-		vertical: false
-	};
-	const DEFAULT_PAN = {
-		x: 0,
-		y: 0
-	};
-	const DEFAULT_STATE = {
-		image: null,
-		pan: { ...DEFAULT_PAN },
-		zoom: 1,
-		rotation: 0,
-		basePan: { ...DEFAULT_PAN },
-		baseZoom: 1,
-		baseRotation: 0,
-		flip: { ...DEFAULT_FLIP },
-		cropRect: { ...DEFAULT_CROP_RECT }
-	};
-
 // node_modules/.store/gl-matrix@3.4.4-1XVyx70pzRCYPPp9mdmgdA/node_modules/gl-matrix/esm/common.js
 	var ARRAY_TYPE = typeof Float32Array !== "undefined" ? Float32Array : Array;
 
@@ -95378,7 +95330,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}();
 
-// packages/media-editor/build-module/image-editor/core/math/rotation.mjs
+// packages/image-editor/build-module/core/math/rotation.mjs
 /**
 	* Normalizes a rotation value to the range [0, 360).
 	*
@@ -95402,9 +95354,9 @@ If there's a particular need for this, please submit a feature request at https:
 		return degrees * Math.PI / 180;
 	}
 
-// packages/media-editor/build-module/image-editor/core/math/sanitize.mjs
+// packages/image-editor/build-module/core/math/sanitize.mjs
 /**
-	* Magnitude beyond which any cropper-math input is treated as corrupt.
+	* Magnitude beyond which any editor-math input is treated as corrupt.
 	* Picks a value well above any realistic image/rotation/zoom/pan but far
 	* below `Number.MAX_VALUE`, so multiplications inside trig and matrix code
 	* can't overflow to `Infinity`.
@@ -95418,7 +95370,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*
 	* Note: sub-normal denormals (e.g. `Number.MIN_VALUE`) are accepted by this
 	* function — they don't overflow on their own. Protection against divisions
-	* by sub-normal values lives in `sanitizeCropperState`'s zoom guard.
+	* by sub-normal values lives in `sanitizeImageEditorState`'s zoom guard.
 	*
 	* @param value    The candidate value.
 	* @param fallback The replacement to return when `value` is unsafe.
@@ -95477,7 +95429,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 	/**
-	* Returns a copy of `state` with the cropper-math numeric fields replaced
+	* Returns a copy of `state` with the editor-math numeric fields replaced
 	* by safe defaults. Covers `pan`, `zoom`, `rotation`, the matching base
 	* pose, and `cropRect`. The `state.image` numeric fields (naturalWidth /
 	* naturalHeight) are intentionally NOT sanitized — image dimensions reach
@@ -95491,10 +95443,10 @@ If there's a particular need for this, please submit a feature request at https:
 	* (`pan`, `basePan`, `cropRect`) are also preserved when their fields
 	* are individually clean.
 	*
-	* @param state The cropper state to sanitize.
-	* @return A cropper state with the math-relevant numeric fields finite.
+	* @param state The editor state to sanitize.
+	* @return A editor state with the math-relevant numeric fields finite.
 	*/
-	function sanitizeCropperState(state) {
+	function sanitizeImageEditorState(state) {
 		const panX = safeBoundedNumber(state.pan.x, 0);
 		const panY = safeBoundedNumber(state.pan.y, 0);
 		const basePanX = safeBoundedNumber(state.basePan.x, 0);
@@ -95527,7 +95479,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// packages/media-editor/build-module/image-editor/core/camera.mjs
+// packages/image-editor/build-module/core/camera.mjs
 	const _scratchMat$1 = create$2();
 	const _scratchVec$1 = create$1();
 	/**
@@ -95556,7 +95508,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* (rotated) bounding box dimensions for a given container, image, and rotation.
 	*
 	* This is the same "contain" fit logic used by createCamera, extracted so
-	* cropper.tsx can size the <img> element and position overlays without
+	* image-editor-canvas.tsx can size the <img> element and position overlays without
 	* duplicating the math.
 	*
 	* @param containerSize The container dimensions in pixels.
@@ -95632,7 +95584,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return Math.min(maxScale, Math.max(1, Math.min(kW, kH)));
 	}
 	/**
-	* Compose a camera matrix from cropper state, container, and image dimensions.
+	* Compose a camera matrix from editor state, container, and image dimensions.
 	*
 	* The matrix maps normalized world coordinates [0,1] x [0,1] to screen pixels.
 	* Input (0,0) = image top-left, (1,1) = image bottom-right.
@@ -95644,7 +95596,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* are viewport-relative: the image mirrors across the viewport's vertical /
 	* horizontal axis regardless of current rotation.
 	*
-	* @param state         The current cropper state (zoom, rotation, flip, crop).
+	* @param state         The current editor state (zoom, rotation, flip, crop).
 	* @param containerSize The size of the container in pixels.
 	* @param imageSize     The natural size of the image in pixels.
 	* @return The composed camera matrix.
@@ -95652,7 +95604,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function createCamera(state, containerSize, imageSize) {
 		const m = create$2();
 		if (!isValidSize(containerSize) || !isValidSize(imageSize)) return m;
-		const safeState = sanitizeCropperState(state);
+		const safeState = sanitizeImageEditorState(state);
 		const snapRotation = Math.round(safeState.rotation / 90) * 90;
 		const naturalBBox = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
 		if (naturalBBox.width === 0 || naturalBBox.height === 0) return m;
@@ -95726,7 +95678,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* The transform chain mirrors the `renderToCanvas` function in canvas-renderer.ts:
 	*   translate(visualCenter - cropOffset + outCenter) → flip → rotate → zoom → translate(-imgCenter)
 	*
-	* @param state      The current cropper state.
+	* @param state      The current editor state.
 	* @param imageSize  The natural size of the source image in pixels.
 	* @param outputSize The desired output canvas size in pixels.
 	* @return The composed export camera matrix.
@@ -95734,7 +95686,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function createExportCamera(state, imageSize, outputSize) {
 		const m = create$2();
 		if (!isValidSize(imageSize) || !isValidSize(outputSize)) return m;
-		const { rotation, flip, cropRect, zoom, pan } = sanitizeCropperState(state);
+		const { rotation, flip, cropRect, zoom, pan } = sanitizeImageEditorState(state);
 		const snapRotation = Math.round(rotation / 90) * 90;
 		const { width: rotW, height: rotH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
 		const naturalCropW = cropRect.width * rotW;
@@ -95754,101 +95706,55 @@ If there's a particular need for this, please submit a feature request at https:
 		return m;
 	}
 
-// packages/media-editor/build-module/image-editor/core/export/canvas-renderer.mjs
-/** Default export quality for lossy formats (JPEG, WebP). */
-	const DEFAULT_QUALITY = .92;
-	/**
-	* Load an image from a URL with CORS support.
-	*
-	* @param src - The image URL to load.
-	* @return A promise that resolves to the loaded HTMLImageElement.
+// packages/image-editor/build-module/core/constants.mjs
+/**
+	* Safety floor for coverage-aware zoom. Degenerate crops can have a geometric
+	* coverage minimum of 0, but camera and inverse-matrix math need a stable,
+	* positive scale.
 	*/
-	function loadImage(src) {
-		return new Promise((resolve, reject) => {
-			const image = new Image();
-			image.addEventListener("load", () => resolve(image));
-			image.addEventListener("error", (error) => reject(error));
-			image.crossOrigin = "anonymous";
-			image.src = src;
-		});
-	}
+	const ABSOLUTE_MIN_ZOOM = .1;
 	/**
-	* Apply rectangular crop, rotation, and flip transforms to produce a canvas.
-	*
-	* Uses createExportCamera to compose the full transform matrix, then applies
-	* it in a single ctx.setTransform call before drawing the image.
-	*
-	* @param image - The source image element.
-	* @param state - The full cropper state containing crop, rotation, and flip settings.
-	* @return A canvas element containing the transformed and cropped image.
+	* Fraction of the constraining canvas axis the settled crop should occupy on
+	* screen. When a crop is shown smaller than this (e.g. a square crop in a tall
+	* image, capped by the contain-fit footprint's narrow axis), the view magnifies
+	* to fill the canvas. `1` = always fill the canvas; lower = rescue only the
+	* under-filled cases. See `getViewScale`.
 	*/
-	function renderToCanvas(image, state) {
-		const { naturalWidth, naturalHeight } = image;
-		const { rotation, cropRect } = state;
-		const imageSize = {
-			width: naturalWidth,
-			height: naturalHeight
-		};
-		const snapRotation = Math.round(rotation / 90) * 90;
-		const rotBBox = getRotatedBBox(naturalWidth, naturalHeight, snapRotation);
-		const outW = Math.round(cropRect.width * rotBBox.width);
-		const outH = Math.round(cropRect.height * rotBBox.height);
-		const canvas = document.createElement("canvas");
-		canvas.width = outW;
-		canvas.height = outH;
-		const ctx = canvas.getContext("2d");
-		if (!ctx) throw new Error("Could not obtain a 2D context for the export canvas.");
-		const camera = createExportCamera(state, imageSize, {
-			width: outW,
-			height: outH
-		});
-		ctx.setTransform(camera[0], camera[1], camera[2], camera[3], camera[4], camera[5]);
-		ctx.drawImage(image, 0, 0);
-		return canvas;
-	}
+	const SETTLE_TARGET_CANVAS_FILL = .8;
 	/**
-	* Convert a canvas to a Blob with configurable MIME type and quality.
-	*
-	* @param canvas   - The canvas to export.
-	* @param mimeType - The output MIME type. Defaults to 'image/png'.
-	* @param quality  - The quality parameter for lossy formats (0-1). Defaults to DEFAULT_QUALITY.
-	* @return A promise that resolves to the canvas content as a Blob.
+	* Wheel zoom sensitivity. A deltaY of 100 changes zoom by 0.25.
+	* This could be made configurable as a prop to the ImageEditorCanvas component.
 	*/
-	function canvasToBlob(canvas, mimeType = "image/png", quality = DEFAULT_QUALITY) {
-		return new Promise((resolve, reject) => {
-			canvas.toBlob((blob) => {
-				if (blob) resolve(blob);
-				else reject(/* @__PURE__ */ new Error("Canvas toBlob returned null."));
-			}, mimeType, quality);
-		});
-	}
-	/**
-	* Load an image, render with transforms, and export as a Blob.
-	*
-	* Throws on failure so callers can distinguish error cases:
-	* - Image load failures (network errors, 404s) throw the native
-	*   load error from the Image element.
-	* - Cross-origin failures manifest as tainted-canvas errors from
-	*   `canvas.toBlob()` — the browser rejects reading pixel data
-	*   from a canvas that drew an image without valid CORS headers.
-	*   Ensure the source server sets `Access-Control-Allow-Origin`.
-	* - Canvas context creation failures throw a descriptive Error.
-	*
-	* Only works in browser environments (needs DOM / HTMLCanvasElement).
-	*
-	* @param src      - The image URL to load.
-	* @param state    - The cropper state with all transform settings.
-	* @param mimeType - The output MIME type. Defaults to 'image/png'.
-	* @param quality  - The quality parameter for lossy formats (0-1). Defaults to DEFAULT_QUALITY.
-	* @return A promise that resolves to the exported Blob.
-	* @throws If the image fails to load, canvas creation fails, or
-	*         the resulting canvas is tainted by CORS restrictions.
-	*/
-	async function exportCroppedImage(src, state, mimeType = "image/png", quality = DEFAULT_QUALITY) {
-		return canvasToBlob(renderToCanvas(await loadImage(src), state), mimeType, quality);
-	}
+	const DEFAULT_WHEEL_ZOOM_SPEED = .0025;
+	/** Fine step for keyboard-driven editor movement, in normalized coordinates. */
+	const DEFAULT_KEYBOARD_STEP = .01;
+	const DEFAULT_CROP_RECT = {
+		x: 0,
+		y: 0,
+		width: 1,
+		height: 1
+	};
+	const DEFAULT_FLIP = {
+		horizontal: false,
+		vertical: false
+	};
+	const DEFAULT_PAN = {
+		x: 0,
+		y: 0
+	};
+	const DEFAULT_STATE = {
+		image: null,
+		pan: { ...DEFAULT_PAN },
+		zoom: 1,
+		rotation: 0,
+		basePan: { ...DEFAULT_PAN },
+		baseZoom: 1,
+		baseRotation: 0,
+		flip: { ...DEFAULT_FLIP },
+		cropRect: { ...DEFAULT_CROP_RECT }
+	};
 
-// packages/media-editor/build-module/image-editor/core/containment.mjs
+// packages/image-editor/build-module/core/containment.mjs
 /**
 	* Compute the visual (rotated) bounding-box dimensions in pixel-proportional
 	* units where the unrotated image is `a × 1` (renderedW = a, renderedH = 1).
@@ -95899,10 +95805,10 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* Resolves the effective minimum zoom for the current state — the coverage-
 	* aware floor when an image is loaded, falling back to `MIN_ZOOM` otherwise.
-	* Used by both the cropper's interaction layer and the zoom slider so the
+	* Used by both the canvas's interaction layer and the zoom slider so the
 	* floor stays consistent across surfaces.
 	*
-	* @param state The current cropper state.
+	* @param state The current editor state.
 	* @return The minimum zoom factor.
 	*/
 	function getMinZoom(state) {
@@ -95912,7 +95818,7 @@ If there's a particular need for this, please submit a feature request at https:
 			height: state.image.naturalHeight
 		};
 		if (!isValidSize(imageSize)) return 1;
-		const safeState = sanitizeCropperState(state);
+		const safeState = sanitizeImageEditorState(state);
 		const aspectRatio = imageSize.width / imageSize.height;
 		return Math.max(ABSOLUTE_MIN_ZOOM, getMinZoomForCover(safeState.rotation, aspectRatio, safeState.cropRect));
 	}
@@ -95922,7 +95828,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* current pan/zoom/rotation.
 	*
 	* Returns the full image AABB without intersecting with the container
-	* viewport. The viewport pan mechanism in the Cropper component allows
+	* viewport. The viewport pan mechanism in the ImageEditorCanvas component allows
 	* the canvas to scroll so handles can reach the image edge even when it
 	* lies outside the visible canvas area.
 	*
@@ -95930,7 +95836,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* current pan position — if the user pans right, the left bound tightens
 	* because the image's left edge has moved right.
 	*
-	* @param state       The current cropper state (crop, zoom, rotation, flip).
+	* @param state       The current editor state (crop, zoom, rotation, flip).
 	* @param elementSize The fitted (unrotated) image element dimensions in pixels.
 	* @param visualSize  The visual (rotated) image bounding box in pixels.
 	* @return The min/max x and y that a crop rect edge can reach in normalized space.
@@ -95942,7 +95848,7 @@ If there's a particular need for this, please submit a feature request at https:
 			maxX: 1,
 			maxY: 1
 		};
-		const safeState = sanitizeCropperState(state);
+		const safeState = sanitizeImageEditorState(state);
 		const tx = safeState.pan.x * visualSize.width;
 		const ty = safeState.pan.y * visualSize.height;
 		const rad = degreesToRadians(safeState.rotation);
@@ -96053,13 +95959,13 @@ If there's a particular need for this, please submit a feature request at https:
 	* space via the inverse camera, and checks that all world points lie within
 	* [0,1]×[0,1]. If any point is outside, computes the minimal pan correction.
 	*
-	* @param state     The current cropper state.
+	* @param state     The current editor state.
 	* @param imageSize The natural size of the image in pixels.
 	* @param cropRect  The crop rectangle in normalized coordinates.
 	* @return The restricted crop pan and zoom values.
 	*/
 	function restrictPanZoom(state, imageSize, cropRect) {
-		const safeState = sanitizeCropperState(state);
+		const safeState = sanitizeImageEditorState(state);
 		const safeCropRect = sanitizeRect(cropRect);
 		const aspectRatio = isValidSize(imageSize) ? imageSize.width / imageSize.height : 1;
 		const minZoom = Math.max(ABSOLUTE_MIN_ZOOM, getMinZoomForCover(safeState.rotation, aspectRatio, safeCropRect));
@@ -96122,403 +96028,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// packages/media-editor/build-module/image-editor/core/state.mjs
-/** Small tolerance for cropper floating-point comparisons. */
-	const STATE_EPSILON = 1e-6;
-	function nearlyEqual(a, b) {
-		return Math.abs(a - b) < STATE_EPSILON;
-	}
-	/**
-	* Value-equality check for two cropper states.
-	*
-	* Used by history machinery to dedup snapshots and detect no-op
-	* transitions. Compares every field that participates in the rendered
-	* output; ignores reference identity.
-	*
-	* @param a First cropper state.
-	* @param b Second cropper state.
-	* @return Whether the two states are value-equal across all tracked fields.
-	*/
-	function areCropperStatesEqual(a, b) {
-		const aImage = a.image;
-		const bImage = b.image;
-		return aImage?.src === bImage?.src && aImage?.naturalWidth === bImage?.naturalWidth && aImage?.naturalHeight === bImage?.naturalHeight && nearlyEqual(a.pan.x, b.pan.x) && nearlyEqual(a.pan.y, b.pan.y) && nearlyEqual(a.zoom, b.zoom) && nearlyEqual(a.rotation, b.rotation) && a.flip.horizontal === b.flip.horizontal && a.flip.vertical === b.flip.vertical && nearlyEqual(a.cropRect.x, b.cropRect.x) && nearlyEqual(a.cropRect.y, b.cropRect.y) && nearlyEqual(a.cropRect.width, b.cropRect.width) && nearlyEqual(a.cropRect.height, b.cropRect.height);
-	}
-	function clampRequestedZoom(state, zoom) {
-		if (state.image) return Math.min(10, Math.max(ABSOLUTE_MIN_ZOOM, zoom));
-		return Math.min(10, Math.max(1, zoom));
-	}
-	/**
-	* Translate a pipeline transform operation into the equivalent
-	* reducer action. Pipeline ops aren't 1:1 with reducer actions —
-	* `rotate` is a delta here, whereas SET_ROTATION takes an absolute
-	* angle — so deltas are resolved against the current state.
-	*
-	* Used by APPLY_OPERATION (and by the pipeline module's
-	* `applyOperationToState`, which is now a thin wrapper around the
-	* reducer) so that pipeline replay produces identical bounded
-	* state to UI interaction or direct setters.
-	*
-	* @param state The current cropper state.
-	* @param op    The pipeline operation.
-	* @return The equivalent reducer action.
-	*/
-	function operationToAction(state, op) {
-		switch (op.type) {
-			case "crop": return {
-				type: "SET_CROP_RECT",
-				payload: { ...op.rect }
-			};
-			case "rotate": {
-				const fieldDelta = state.flip.horizontal !== state.flip.vertical ? -op.degrees : op.degrees;
-				return {
-					type: "SET_ROTATION",
-					payload: normalizeRotation(state.rotation + fieldDelta)
-				};
-			}
-			case "flip": return {
-				type: "SET_FLIP",
-				payload: {
-					...state.flip,
-					[op.direction]: !state.flip[op.direction]
-				}
-			};
-			case "zoom": return {
-				type: "SET_ZOOM",
-				payload: op.factor
-			};
-		}
-	}
-	/**
-	* Enforces containment: restricts the crop rect to fit within the
-	* rotated image, computes minimum zoom, clamps zoom, and restricts
-	* the pan position so the image always covers the crop area.
-	* Called after every relevant state transition.
-	*
-	* @param state The state to enforce containment on.
-	* @return The state with cropRect, zoom, and position restricted.
-	*/
-	function enforceContainment(state) {
-		if (!state.image) return state;
-		const imageSize = {
-			width: state.image.naturalWidth,
-			height: state.image.naturalHeight
-		};
-		const imageAspectRatio = imageSize.width / imageSize.height;
-		const { pan: panAfterZoom, zoom } = restrictPanZoom(state, imageSize, state.cropRect);
-		const cropRect = restrictCropRect(state.cropRect, zoom, state.rotation, imageAspectRatio);
-		let pan = panAfterZoom;
-		if (cropRect !== state.cropRect) ({pan} = restrictPanZoom({
-			...state,
-			zoom,
-			cropRect
-		}, imageSize, cropRect));
-		if (pan.x === state.pan.x && pan.y === state.pan.y && zoom === state.zoom && cropRect === state.cropRect) return state;
-		return {
-			...state,
-			pan,
-			zoom,
-			cropRect
-		};
-	}
-	/**
-	* Snapshot the current `crop`, `zoom`, and `rotation` into the
-	* corresponding `basePan`, `baseZoom`, `baseRotation` fields. Called
-	* by every committing action so that the next SET_ROTATION derives
-	* its transient pan from a fresh base (not from a drifted one).
-	*
-	* SET_ROTATION is the only action that does NOT commit base — it
-	* reads the base, computes a transient pan, and leaves the base
-	* alone. This is what eliminates rotation drift near edges.
-	*
-	* @param next The post-containment state to commit.
-	* @return The state with base fields synced to current.
-	*/
-	function commitBase(next) {
-		if (next.basePan.x === next.pan.x && next.basePan.y === next.pan.y && next.baseZoom === next.zoom && next.baseRotation === next.rotation) return next;
-		return {
-			...next,
-			basePan: {
-				x: next.pan.x,
-				y: next.pan.y
-			},
-			baseZoom: next.zoom,
-			baseRotation: next.rotation
-		};
-	}
-	/**
-	* Reducer function for cropper state management.
-	*
-	* Every state transition that could invalidate the containment invariant
-	* (crop, zoom, rotation, cropRect, flip) is followed by enforceContainment
-	* to ensure the image always covers the crop area.
-	*
-	* Committing actions (everything except SET_ROTATION) also call
-	* `commitBase` to snapshot the post-containment state as the new
-	* base pose. SET_ROTATION derives from that base without mutating
-	* it, which prevents accumulated-clamp drift during continuous fine
-	* rotation.
-	*
-	* @param state  The current cropper state.
-	* @param action The action to process.
-	* @return The new cropper state.
-	*/
-	function cropperReducer(state, action) {
-		switch (action.type) {
-			case "SET_IMAGE": return commitBase(enforceContainment({
-				...state,
-				image: action.payload
-			}));
-			case "SET_PAN": return commitBase(enforceContainment({
-				...state,
-				pan: action.payload
-			}));
-			case "SET_ZOOM": {
-				const z = clampRequestedZoom(state, action.payload);
-				return commitBase(enforceContainment({
-					...state,
-					zoom: z
-				}));
-			}
-			case "SET_ZOOM_AT_POINT": {
-				const z = clampRequestedZoom(state, action.payload.zoom);
-				return commitBase(enforceContainment({
-					...state,
-					zoom: z,
-					pan: action.payload.pan
-				}));
-			}
-			case "SET_ROTATION": {
-				const newRotation = normalizeRotation(action.payload);
-				const singleFlip = state.flip.horizontal !== state.flip.vertical;
-				const deltaRad = degreesToRadians(newRotation - state.baseRotation);
-				const cos = Math.cos(deltaRad);
-				const sin = Math.sin(deltaRad) * (singleFlip ? -1 : 1);
-				const cropCx = state.cropRect.x + state.cropRect.width / 2;
-				const cropCy = state.cropRect.y + state.cropRect.height / 2;
-				const ox = cropCx - .5;
-				const oy = cropCy - .5;
-				const dx = state.basePan.x - ox;
-				const dy = state.basePan.y - oy;
-				return enforceContainment({
-					...state,
-					rotation: newRotation,
-					zoom: state.baseZoom,
-					pan: {
-						x: ox + cos * dx - sin * dy,
-						y: oy + sin * dx + cos * dy
-					}
-				});
-			}
-			case "SNAP_ROTATE_90": {
-				const rawDir = action.payload.direction;
-				const fieldDir = state.flip.horizontal !== state.flip.vertical ? -rawDir : rawDir;
-				const rot90 = normalizeRotation(state.rotation + fieldDir * 90);
-				const rect = state.cropRect;
-				const cx = rect.x + rect.width / 2;
-				const cy = rect.y + rect.height / 2;
-				const newPanX = rawDir === 1 ? -state.pan.y : state.pan.y;
-				const newPanY = rawDir === 1 ? state.pan.x : -state.pan.x;
-				return commitBase(enforceContainment({
-					...state,
-					rotation: rot90,
-					zoom: state.baseZoom,
-					pan: {
-						x: newPanX,
-						y: newPanY
-					},
-					cropRect: {
-						x: cx - rect.height / 2,
-						y: cy - rect.width / 2,
-						width: rect.height,
-						height: rect.width
-					}
-				}));
-			}
-			case "SET_FLIP": {
-				const oldFlip = state.flip;
-				const newFlip = action.payload;
-				const flippedH = oldFlip.horizontal !== newFlip.horizontal;
-				const flippedV = oldFlip.vertical !== newFlip.vertical;
-				const rect = state.cropRect;
-				return commitBase(enforceContainment({
-					...state,
-					flip: newFlip,
-					pan: {
-						x: flippedH ? -state.pan.x : state.pan.x,
-						y: flippedV ? -state.pan.y : state.pan.y
-					},
-					cropRect: {
-						x: flippedH ? 1 - rect.x - rect.width : rect.x,
-						y: flippedV ? 1 - rect.y - rect.height : rect.y,
-						width: rect.width,
-						height: rect.height
-					}
-				}));
-			}
-			case "SET_CROP_RECT": return commitBase(enforceContainment({
-				...state,
-				cropRect: action.payload
-			}));
-			case "SETTLE_CROP": {
-				const rect = state.cropRect;
-				if (rect.width === 0 || rect.height === 0 || !state.image) return state;
-				const fitScale = 1 / Math.max(rect.width, rect.height);
-				const zoomCap = state.zoom > 0 ? 10 / state.zoom : fitScale;
-				const s = Math.min(fitScale, zoomCap);
-				const newW = rect.width * s;
-				const newH = rect.height * s;
-				const oldCx = rect.x + rect.width / 2;
-				const oldCy = rect.y + rect.height / 2;
-				return commitBase(enforceContainment({
-					...state,
-					zoom: state.zoom * s,
-					pan: {
-						x: (state.pan.x - oldCx + .5) * s,
-						y: (state.pan.y - oldCy + .5) * s
-					},
-					cropRect: {
-						x: (1 - newW) / 2,
-						y: (1 - newH) / 2,
-						width: newW,
-						height: newH
-					}
-				}));
-			}
-			case "APPLY_OPERATION": return cropperReducer(state, operationToAction(state, action.payload));
-			case "RESET": return commitBase(enforceContainment({
-				...DEFAULT_STATE,
-				image: state.image,
-				...action.payload
-			}));
-		}
-	}
-
-// packages/media-editor/build-module/image-editor/core/setter-helpers.mjs
-/**
-	* Build the reducer action that produces a "cursorless" zoom — zoom
-	* anchored at the current crop-rect center, with pan clamped to keep
-	* the image covering the crop.
-	*
-	* The slider, the `+`/`-` keys, and the toolbar buttons have no
-	* natural focal point (unlike wheel/pinch zoom), so they default to
-	* the crop center. Returns `null` when the clamped zoom matches the
-	* current zoom (no-op).
-	*
-	* Extracted so multiple hooks (the pure `useCropperController` and the
-	* composite `useMediaEditorState`) can share the math without
-	* duplicating it.
-	*
-	* @param state         The current cropper state.
-	* @param requestedZoom The zoom value the caller asked for.
-	* @return A `SET_ZOOM_AT_POINT` action, or `null` if no change is required.
-	*/
-	function buildFocalPointZoomAction(state, requestedZoom) {
-		const clampedZoom = Math.min(10, Math.max(getMinZoom(state), requestedZoom));
-		if (clampedZoom === state.zoom) return null;
-		const { cropRect } = state;
-		const focalNormX = cropRect.x + cropRect.width / 2 - .5;
-		const focalNormY = cropRect.y + cropRect.height / 2 - .5;
-		const zoomRatio = 1 - clampedZoom / state.zoom;
-		const newPanX = state.pan.x + (focalNormX - state.pan.x) * zoomRatio;
-		const newPanY = state.pan.y + (focalNormY - state.pan.y) * zoomRatio;
-		const imageSize = state.image ? {
-			width: state.image.naturalWidth,
-			height: state.image.naturalHeight
-		} : {
-			width: 1,
-			height: 1
-		};
-		const { pan: clampedPan } = restrictPanZoom({
-			...state,
-			zoom: clampedZoom,
-			pan: {
-				x: newPanX,
-				y: newPanY
-			}
-		}, imageSize, state.cropRect);
-		return {
-			type: "SET_ZOOM_AT_POINT",
-			payload: {
-				zoom: clampedZoom,
-				pan: clampedPan
-			}
-		};
-	}
-
-// packages/media-editor/build-module/image-editor/react/hooks/build-cropper-setters.mjs
-/**
-	* Build the named cropper setters from a dispatch function and a
-	* state getter. The two consuming hooks differ in how they dispatch:
-	*
-	* - `useCropperController` dispatches directly into its `useReducer`.
-	* - `useMediaEditorState` wraps cropper actions in a composite
-	*   `CROPPER` envelope so the history machinery can record them.
-	*
-	* Both pass their own dispatch function and a getter that returns
-	* the current `CropperState`. The factory shape keeps the two hooks
-	* in lockstep — add a setter here once, both hooks get it.
-	*
-	* @param dispatchCropperAction Apply a `CropperAction` to the
-	*                              underlying reducer.
-	* @param getCropperState       Return the current `CropperState`.
-	*                              Used by setters that need to read
-	*                              the latest state to compute their
-	*                              payload (focal-point zoom, flip toggle).
-	* @return The named cropper setters.
-	*/
-	function buildCropperSetters(dispatchCropperAction, getCropperState) {
-		return {
-			setPan: (pan) => dispatchCropperAction({
-				type: "SET_PAN",
-				payload: pan
-			}),
-			setZoom: (zoom) => {
-				const action = buildFocalPointZoomAction(getCropperState(), zoom);
-				if (action) dispatchCropperAction(action);
-			},
-			setZoomAtPoint: (zoom, pan) => dispatchCropperAction({
-				type: "SET_ZOOM_AT_POINT",
-				payload: {
-					zoom,
-					pan
-				}
-			}),
-			setRotation: (rotation) => dispatchCropperAction({
-				type: "SET_ROTATION",
-				payload: rotation
-			}),
-			setFlip: (flip) => dispatchCropperAction({
-				type: "SET_FLIP",
-				payload: flip
-			}),
-			toggleFlip: (direction) => {
-				const { flip } = getCropperState();
-				dispatchCropperAction({
-					type: "SET_FLIP",
-					payload: {
-						...flip,
-						[direction]: !flip[direction]
-					}
-				});
-			},
-			snapRotate90: (direction) => dispatchCropperAction({
-				type: "SNAP_ROTATE_90",
-				payload: { direction }
-			}),
-			setCropRect: (rect) => dispatchCropperAction({
-				type: "SET_CROP_RECT",
-				payload: rect
-			}),
-			settleCrop: () => dispatchCropperAction({ type: "SETTLE_CROP" }),
-			applyOperation: (op) => dispatchCropperAction({
-				type: "APPLY_OPERATION",
-				payload: op
-			})
-		};
-	}
-
-// packages/media-editor/build-module/image-editor/core/crop-rect.mjs
+// packages/image-editor/build-module/core/crop-rect.mjs
 /**
 	* Largest rect of the given pixel aspect ratio that fits inside the
 	* visual bounds, centered in [0,1] × [0,1] normalized space. Returns
@@ -96548,7 +96058,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// packages/media-editor/build-module/image-editor/core/stencil-math.mjs
+// packages/image-editor/build-module/core/stencil-math.mjs
 /**
 	* Resolve the minimum crop dimension, in source-image pixels, for the current
 	* display scale.
@@ -96739,7 +96249,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// packages/media-editor/build-module/image-editor/core/interaction-controller.mjs
+// packages/image-editor/build-module/core/interaction-controller.mjs
 /** Time window for detecting a double-tap gesture (ms). */
 	const DOUBLE_TAP_TIME = 300;
 	/** Max distance between taps to count as a double-tap (px). */
@@ -96747,9 +96257,9 @@ If there's a particular need for this, please submit a feature request at https:
 	/** Duration of the zoom animation state (ms). */
 	const ZOOM_ANIMATION_DURATION = 200;
 	/**
-	* Get the natural image dimensions from cropper state, falling back to 1x1.
+	* Get the natural image dimensions from editor state, falling back to 1x1.
 	*
-	* @param state The current cropper state.
+	* @param state The current editor state.
 	* @return The image dimensions.
 	*/
 	function getImageSizeFromState(state) {
@@ -96774,7 +96284,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 	/**
-	* Framework-agnostic imperative controller for image cropper interactions.
+	* Framework-agnostic imperative controller for image editor interactions.
 	*
 	* Handles mouse, touch, and keyboard event processing for pan, zoom,
 	* and crop manipulation. Uses requestAnimationFrame for drag/pinch
@@ -97321,7 +96831,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 	};
 
-// packages/media-editor/build-module/image-editor/react/hooks/use-interaction.mjs
+// packages/image-editor/build-module/react/hooks/use-interaction.mjs
 /** How long keyboard placement stays active after the latest handled key. */
 	const KEYBOARD_INTERACTION_IDLE_MS = 300;
 	function isHandledKeyboardPan(event) {
@@ -97350,8 +96860,8 @@ If there's a particular need for this, please submit a feature request at https:
 	* Uses requestAnimationFrame for drag/pinch updates to avoid
 	* layout thrashing.
 	*
-	* @param state         The current cropper state.
-	* @param actions       Named state updates for cropper interactions.
+	* @param state         The current editor state.
+	* @param actions       Named state updates for editor interactions.
 	* @param containerSize The container dimensions in pixels.
 	* @param imageSize     The rendered image dimensions in pixels.
 	* @param options       Optional configuration for zoom and keyboard behavior.
@@ -97499,11 +97009,11 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// packages/media-editor/build-module/image-editor/core/transform-style.mjs
+// packages/image-editor/build-module/core/transform-style.mjs
 /** Identity CSS transform — applied when inputs aren't safe to compose. */
 	const IDENTITY_MATRIX_STYLE = "matrix(1, 0, 0, 1, 0, 0)";
 	/**
-	* Computes a CSS matrix() transform string from the cropper state.
+	* Computes a CSS matrix() transform string from the editor state.
 	*
 	* The combined transform is: translate(tx, ty) * scale(sx, sy) * rotate(r) * scale(z)
 	* expressed as a 2D CSS matrix(a, b, c, d, tx, ty).
@@ -97515,13 +97025,13 @@ If there's a particular need for this, please submit a feature request at https:
 	* This is a pure function with no framework dependencies. The React hook
 	* `useTransformStyle` wraps this in `useMemo` for memoization.
 	*
-	* @param state     The current cropper state.
+	* @param state     The current editor state.
 	* @param imageSize The rendered image dimensions in pixels.
 	* @return A CSS transform string.
 	*/
 	function computeTransformStyle(state, imageSize) {
 		if (!isValidSize(imageSize)) return IDENTITY_MATRIX_STYLE;
-		const safeState = sanitizeCropperState(state);
+		const safeState = sanitizeImageEditorState(state);
 		const translateX = safeState.pan.x * imageSize.width;
 		const translateY = safeState.pan.y * imageSize.height;
 		const rad = degreesToRadians(safeState.rotation);
@@ -97533,14 +97043,14 @@ If there's a particular need for this, please submit a feature request at https:
 		return `matrix(${sx * cos * z}, ${sy * sin * z}, ${-sx * sin * z}, ${sy * cos * z}, ${translateX}, ${translateY})`;
 	}
 
-// packages/media-editor/build-module/image-editor/react/hooks/use-transform-style.mjs
+// packages/image-editor/build-module/react/hooks/use-transform-style.mjs
 /**
 	* React hook that computes a memoized CSS matrix() transform string
-	* from the cropper state.
+	* from the editor state.
 	*
 	* Delegates to the pure `computeTransformStyle` function in core.
 	*
-	* @param state     The current cropper state.
+	* @param state     The current editor state.
 	* @param imageSize The rendered image dimensions in pixels.
 	* @return A CSS transform string.
 	*/
@@ -97548,13 +97058,13 @@ If there's a particular need for this, please submit a feature request at https:
 		return (0, _wordpress_element.useMemo)(() => computeTransformStyle(state, imageSize), [state, imageSize]);
 	}
 
-// packages/media-editor/build-module/image-editor/core/source-region.mjs
+// packages/image-editor/build-module/core/source-region.mjs
 /**
 	* Get the selected image region in source-pixel coordinates.
 	*
 	* Converts the current crop state (normalized visual space) to the actual
 	* region of the original image that's selected. This is the bridge between
-	* the cropper's internal coordinate system and external tools (image
+	* the editor's internal coordinate system and external tools (image
 	* processing libraries, AI APIs, server-side processing) that work in
 	* source-pixel coordinates.
 	*
@@ -97563,12 +97073,12 @@ If there's a particular need for this, please submit a feature request at https:
 	* and flip are included as separate fields since they represent transforms,
 	* not a region.
 	*
-	* @param state     The current cropper state.
+	* @param state     The current editor state.
 	* @param imageSize The natural dimensions of the source image.
 	* @return The selected region in source pixels plus rotation/flip metadata.
 	*/
 	function getSourceRegion(state, imageSize) {
-		const safeState = sanitizeCropperState(state);
+		const safeState = sanitizeImageEditorState(state);
 		if (!isValidSize(imageSize)) return {
 			x: 0,
 			y: 0,
@@ -97614,20 +97124,20 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 	/**
-	* Convert a source-pixel region back to the cropper's normalized crop rect.
+	* Convert a source-pixel region back to the editor's normalized crop rect.
 	*
 	* The math intentionally mirrors `getSourceRegion`: map the requested source
 	* center through the current camera, then express that screen point inside the
 	* same base visible bounds used to position crop overlays.
 	*
-	* @param state     The current cropper state.
+	* @param state     The current editor state.
 	* @param imageSize The natural dimensions of the source image.
 	* @param region    The source-pixel region to represent as a crop rect.
 	* @return The normalized crop rect, or null when inputs cannot be mapped.
 	*/
 	function getCropRectFromSourceRegion(state, imageSize, region) {
 		if (!isValidSize(imageSize) || region.width <= 0 || region.height <= 0) return null;
-		const safeState = sanitizeCropperState(state);
+		const safeState = sanitizeImageEditorState(state);
 		const syntheticContainer = {
 			width: 1e3,
 			height: 1e3
@@ -97678,14 +97188,14 @@ If there's a particular need for this, please submit a feature request at https:
 	* This is a display-time affordance for visible pixel grids; it does not alter
 	* pan/zoom/rotation. Callers decide when snapping is appropriate.
 	*
-	* @param state     The current cropper state.
+	* @param state     The current editor state.
 	* @param imageSize The natural dimensions of the source image.
 	* @param cropRect  The candidate crop rect from resize math.
 	* @param handle    The active resize handle. Only edges moved by the handle snap.
 	* @return A crop rect whose selected source-region edges are whole pixels.
 	*/
 	function snapCropRectToSourcePixels(state, imageSize, cropRect, handle) {
-		const safeState = sanitizeCropperState(state);
+		const safeState = sanitizeImageEditorState(state);
 		if (!isCardinalRotation(safeState.rotation)) return cropRect;
 		return snapCropRectEdgesToSourcePixels(safeState, imageSize, cropRect, {
 			left: handle.includes("w"),
@@ -97697,7 +97207,7 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* Snap all source-region edges for a crop rect to the nearest whole pixels.
 	*
-	* @param state     The current cropper state.
+	* @param state     The current editor state.
 	* @param imageSize The natural dimensions of the source image.
 	* @param cropRect  The crop rect to align to the source-pixel grid.
 	* @return A crop rect whose source-region edges are whole pixels.
@@ -97712,7 +97222,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	function snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, edges) {
 		if (!isValidSize(imageSize)) return cropRect;
-		const stateWithCrop = sanitizeCropperState({
+		const stateWithCrop = sanitizeImageEditorState({
 			...state,
 			cropRect
 		});
@@ -97740,7 +97250,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// packages/media-editor/build-module/image-editor/react/hooks/use-aria-announcer.mjs
+// packages/image-editor/build-module/react/hooks/use-aria-announcer.mjs
 /** Debounce delay for ARIA live announcements (ms). */
 	const ARIA_DEBOUNCE_MS = 300;
 	function getFlipAnnouncement(state, previousState) {
@@ -97792,14 +97302,14 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	/**
 	* Debounce and dedupe ARIA-live announcements for screen readers as the
-	* cropper state changes. Calls `speak()` from `@wordpress/a11y` to use the
+	* editor state changes. Calls `speak()` from `@wordpress/a11y` to use the
 	* centralized, persistent live region instead of a local one that may be
 	* dynamically mounted.
 	*
 	* Debouncing avoids flooding announcements during drag/pointermove bursts;
 	* deduping avoids re-announcing the same state.
 	*
-	* @param state The current cropper state to announce.
+	* @param state The current editor state to announce.
 	*/
 	function useAriaAnnouncer(state) {
 		const timerRef = (0, _wordpress_element.useRef)(void 0);
@@ -97833,7 +97343,7 @@ If there's a particular need for this, please submit a feature request at https:
 		]);
 	}
 
-// packages/media-editor/build-module/image-editor/react/visually-hidden-style.mjs
+// packages/image-editor/build-module/react/visually-hidden-style.mjs
 /**
 	* CSS style object that visually hides an element while keeping it accessible
 	* to screen readers.
@@ -97850,7 +97360,7 @@ If there's a particular need for this, please submit a feature request at https:
 		border: 0
 	};
 
-// packages/media-editor/build-module/image-editor/react/components/stencils/rectangle-stencil.mjs
+// packages/image-editor/build-module/react/components/stencils/rectangle-stencil.mjs
 /**
 	* Corner handle positions only — used when aspect ratio is locked.
 	* Ordered clockwise from top-left for logical tab order.
@@ -98164,8 +97674,8 @@ If there's a particular need for this, please submit a feature request at https:
 		if (containerSize.width === 0 || containerSize.height === 0) return null;
 		const handles = hasLockedRatio ? CORNER_POSITIONS : ALL_POSITIONS;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: "wp-media-editor-image-editor__stencil",
-			"data-testid": "cropper-stencil",
+			className: "wp-image-editor__stencil",
+			"data-testid": "image-editor-stencil",
 			style: {
 				left,
 				top,
@@ -98180,7 +97690,7 @@ If there's a particular need for this, please submit a feature request at https:
 					children: (0, _wordpress_i18n.__)("Use arrow keys to resize the crop area. Hold Shift for larger steps.")
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "wp-media-editor-image-editor__stencil-rect",
+					className: "wp-image-editor__stencil-rect",
 					style: {
 						width: "100%",
 						height: "100%",
@@ -98190,7 +97700,7 @@ If there's a particular need for this, please submit a feature request at https:
 				}),
 				freeformCrop && handles.map((pos) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
 					type: "button",
-					className: `wp-media-editor-image-editor__handle wp-media-editor-image-editor__handle--${pos}`,
+					className: `wp-image-editor__handle wp-image-editor__handle--${pos}`,
 					onPointerDown: (event) => handlePointerDown(pos, event),
 					onTouchStart: (event) => {
 						if (event.touches.length < 2) event.stopPropagation();
@@ -98204,7 +97714,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// packages/media-editor/build-module/image-editor/react/components/overlays/dimming-overlay.mjs
+// packages/image-editor/build-module/react/components/overlays/dimming-overlay.mjs
 	function DimmingOverlay({ cropRect, containerSize, imageSize, transition }) {
 		if (containerSize.width === 0 || containerSize.height === 0) return null;
 		const offsetX = (containerSize.width - imageSize.width) / 2;
@@ -98215,8 +97725,8 @@ If there's a particular need for this, please submit a feature request at https:
 		const height = cropRect.height * imageSize.height;
 		const composedTransition = transition ? `${transition}, box-shadow 0.15s ease` : void 0;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			className: "wp-media-editor-image-editor__dimming",
-			"data-testid": "cropper-dimming",
+			className: "wp-image-editor__dimming",
+			"data-testid": "image-editor-dimming",
 			style: {
 				left,
 				top,
@@ -98227,7 +97737,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// packages/media-editor/build-module/image-editor/react/components/overlays/grid-overlay.mjs
+// packages/image-editor/build-module/react/components/overlays/grid-overlay.mjs
 /**
 	* Renders a rule-of-thirds grid inside the crop rectangle.
 	*
@@ -98251,8 +97761,8 @@ If there's a particular need for this, please submit a feature request at https:
 		const thirdW = width / 3;
 		const thirdH = height / 3;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: "wp-media-editor-image-editor__grid",
-			"data-testid": "cropper-grid",
+			className: "wp-image-editor__grid",
+			"data-testid": "image-editor-grid",
 			style: {
 				left,
 				top,
@@ -98261,26 +97771,26 @@ If there's a particular need for this, please submit a feature request at https:
 			},
 			children: [
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
+					className: "wp-image-editor__grid-line wp-image-editor__grid-line--horizontal",
 					style: { top: thirdH }
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--horizontal",
+					className: "wp-image-editor__grid-line wp-image-editor__grid-line--horizontal",
 					style: { top: thirdH * 2 }
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
+					className: "wp-image-editor__grid-line wp-image-editor__grid-line--vertical",
 					style: { left: thirdW }
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "wp-media-editor-image-editor__grid-line wp-media-editor-image-editor__grid-line--vertical",
+					className: "wp-image-editor__grid-line wp-image-editor__grid-line--vertical",
 					style: { left: thirdW * 2 }
 				})
 			]
 		});
 	}
 
-// packages/media-editor/build-module/image-editor/react/components/overlays/dimensions-overlay.mjs
+// packages/image-editor/build-module/react/components/overlays/dimensions-overlay.mjs
 	const HANDLE_GAP_PX = 12;
 	const TRANSLATE_PERCENT = {
 		before: "-100%",
@@ -98406,8 +97916,8 @@ If there's a particular need for this, please submit a feature request at https:
 		} : preferred;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			ref: tooltipRef,
-			className: "wp-media-editor-image-editor__dimensions-tooltip",
-			"data-testid": "cropper-dimensions-tooltip",
+			className: "wp-image-editor__dimensions-tooltip",
+			"data-testid": "image-editor-dimensions-tooltip",
 			style: {
 				left: handleX + GAP_DIRECTION[anchor.x] * HANDLE_GAP_PX,
 				top: handleY + GAP_DIRECTION[anchor.y] * HANDLE_GAP_PX,
@@ -98418,7 +97928,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// packages/media-editor/build-module/image-editor/core/viewport-state.mjs
+// packages/image-editor/build-module/core/viewport-state.mjs
 	const DEFAULT_VIEWPORT_STATE = {
 		zoom: 1,
 		pan: {
@@ -98446,7 +97956,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 	}
 
-// packages/media-editor/build-module/image-editor/react/hooks/use-viewport-state.mjs
+// packages/image-editor/build-module/react/hooks/use-viewport-state.mjs
 	function useViewportState() {
 		const [viewport, dispatch] = (0, _wordpress_element.useReducer)(viewportReducer, DEFAULT_VIEWPORT_STATE);
 		const setViewportZoom = (0, _wordpress_element.useCallback)((zoom) => {
@@ -98477,7 +97987,7 @@ If there's a particular need for this, please submit a feature request at https:
 		]);
 	}
 
-// packages/media-editor/build-module/image-editor/react/components/viewport-provider.mjs
+// packages/image-editor/build-module/react/components/viewport-provider.mjs
 	const ViewportContext = (0, _wordpress_element.createContext)(null);
 	function ViewportProvider({ children }) {
 		const viewportState = useViewportState();
@@ -98492,7 +98002,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return context;
 	}
 
-// packages/media-editor/build-module/image-editor/react/components/cropper.mjs
+// packages/image-editor/build-module/react/components/image-editor-canvas.mjs
 /** Threshold for comparing normalized crop rect values. */
 	const CROP_RECT_EPSILON = 1e-6;
 	/** Threshold for deciding whether rotation is at a 90-degree stop. */
@@ -98508,7 +98018,7 @@ If there's a particular need for this, please submit a feature request at https:
 		`height ${SETTLE_TRANSITION_DURATION_MS}ms ease-out`
 	].join(", ");
 	/**
-	* The main image cropper component.
+	* The main image editor component.
 	*
 	* Renders an image within a container with interactive crop overlays.
 	* Creates the camera once per render via getImageFit, then passes
@@ -98517,29 +98027,26 @@ If there's a particular need for this, please submit a feature request at https:
 	* The component fills its parent container (100% width and height).
 	* Wrap it in a sized container to control its dimensions.
 	*
-	* @param root0                   Component props implementing CropperProps.
-	* @param root0.src               Image source URL.
-	* @param root0.controller        The cropper controller from `useCropperController` or a composite store.
-	* @param root0.stencil           Custom stencil component.
-	* @param root0.showGrid          Grid overlay mode: false | true | 'interactive'.
-	* @param root0.isPlacementActive Keep grid visible during external placement activity.
-	* @param root0.showDimming       Show dimming overlay outside crop.
-	* @param root0.showDimensions    Show live dimensions tooltip during resize.
-	* @param root0.minZoom           Minimum zoom level override.
-	* @param root0.maxZoom           Maximum zoom level.
-	* @param root0.aspectRatio       Fixed aspect ratio (width/height).
-	* @param root0.freeformCrop      Enable resize handles.
-	* @param root0.focusOnMount      Focus the crop area on mount.
-	* @param root0.disabled          Ignore all crop interaction.
-	* @param root0.onImageLoaded     Image load callback.
-	* @param root0.onImageError      Image error callback.
-	* @param root0.onGestureStart    Gesture boundary start.
-	* @param root0.onGestureEnd      Gesture boundary end.
-	* @param root0.className         Additional CSS class.
-	* @param ref                     Forwarded ref for the container div.
+	* @param root0                Component props implementing ImageEditorCanvasProps.
+	* @param root0.src            Image source URL.
+	* @param root0.controller     The controller from `useImageEditor`.
+	* @param root0.showGrid       Grid overlay mode: false | true | 'interactive'.
+	* @param root0.showDimming    Show dimming overlay outside crop.
+	* @param root0.showDimensions Show live dimensions tooltip during resize.
+	* @param root0.freeformCrop   Enable resize handles.
+	* @param root0.focusOnMount   Focus the crop area on mount.
+	* @param root0.disabled       Ignore all crop interaction.
+	* @param root0.onImageLoaded  Image load callback.
+	* @param root0.onImageError   Image error callback.
+	* @param root0.onGestureStart Gesture boundary start.
+	* @param root0.onGestureEnd   Gesture boundary end.
+	* @param root0.className      Additional CSS class.
+	* @param ref                  Forwarded ref for the container div.
 	*/
-	function CropperInner({ src, controller, stencil: StencilComponent = RectangleStencil, showGrid = false, isPlacementActive = false, showDimming = true, showDimensions = true, minZoom, maxZoom, aspectRatio, freeformCrop = false, focusOnMount = false, disabled = false, onImageLoaded, onImageError, onGestureStart, onGestureEnd, className }, ref) {
-		const { state, setImage, setCropRect, settleCrop, setVisualSize, adjustCropRectForViewport } = controller;
+	function ImageEditorCanvasInner({ src, controller: publicController, showGrid = false, showDimming = true, showDimensions = true, freeformCrop = true, focusOnMount = false, disabled = false, onImageLoaded, onImageError, onGestureStart, onGestureEnd, className }, ref) {
+		const controller = publicController;
+		const { state, setImage, setCropRect, settleCrop, adjustCropRectForViewport } = controller;
+		const { aspectRatio } = state;
 		const { viewport: viewportState, setViewportPan, resetViewport } = useViewport();
 		const canvasRef = (0, _wordpress_element.useRef)(null);
 		const cropAreaDescriptionId = (0, _wordpress_element.useId)();
@@ -98596,9 +98103,6 @@ If there's a particular need for this, please submit a feature request at https:
 			state.rotation
 		]);
 		(0, _wordpress_element.useEffect)(() => {
-			setVisualSize(visualSize);
-		}, [visualSize, setVisualSize]);
-		(0, _wordpress_element.useEffect)(() => {
 			if (freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) return;
 			const rect = computeInscribedRect(aspectRatio, visualSize);
 			const current = state.cropRect;
@@ -98611,22 +98115,6 @@ If there's a particular need for this, please submit a feature request at https:
 			adjustCropRectForViewport,
 			state.cropRect
 		]);
-		const prevAspectRatioRef = (0, _wordpress_element.useRef)(aspectRatio);
-		(0, _wordpress_element.useEffect)(() => {
-			if (prevAspectRatioRef.current === aspectRatio) return;
-			prevAspectRatioRef.current = aspectRatio;
-			if (!freeformCrop || visualSize.width === 0 || visualSize.height === 0 || !aspectRatio || aspectRatio <= 0) return;
-			const rect = computeInscribedRect(aspectRatio, visualSize);
-			const current = state.cropRect;
-			if (Math.abs(current.x - rect.x) < CROP_RECT_EPSILON && Math.abs(current.y - rect.y) < CROP_RECT_EPSILON && Math.abs(current.width - rect.width) < CROP_RECT_EPSILON && Math.abs(current.height - rect.height) < CROP_RECT_EPSILON) return;
-			adjustCropRectForViewport(rect);
-		}, [
-			aspectRatio,
-			freeformCrop,
-			visualSize,
-			adjustCropRectForViewport,
-			state.cropRect
-		]);
 		const cropBounds = (0, _wordpress_element.useMemo)(() => {
 			if (!state.image || elementSize.width === 0) return;
 			return getImageCropBounds(state, elementSize, visualSize);
@@ -98635,7 +98123,6 @@ If there's a particular need for this, please submit a feature request at https:
 			elementSize,
 			visualSize
 		]);
-		const effectiveMinZoom = minZoom !== void 0 ? minZoom : getMinZoom(state);
 		const [isResizing, setIsResizing] = (0, _wordpress_element.useState)(false);
 		const isResizingRef = (0, _wordpress_element.useRef)(false);
 		const isSettlingRef = (0, _wordpress_element.useRef)(false);
@@ -98731,8 +98218,8 @@ If there's a particular need for this, please submit a feature request at https:
 			state
 		]);
 		const { handlers, onWheelNative, isDragging, isZooming, isPlacementActive: isInteractionPlacementActive } = useInteraction(state, controller, canvasSize, scaledVisualSize, {
-			minZoom: effectiveMinZoom,
-			maxZoom,
+			minZoom: controller.minZoom,
+			maxZoom: controller.maxZoom,
 			onGestureStart,
 			onGestureEnd,
 			disabled
@@ -98841,7 +98328,7 @@ If there's a particular need for this, please submit a feature request at https:
 			};
 		}, []);
 		const isInteractiveGrid = showGrid === "interactive";
-		const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing || isPlacementActive);
+		const showInteractiveGrid = isInteractiveGrid && (isInteractionPlacementActive || isResizing);
 		const outputSize = (0, _wordpress_element.useMemo)(() => {
 			if (!showDimensions || !activeHandle || !state.image) return null;
 			const region = getSourceRegion(state, {
@@ -98961,10 +98448,10 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			ref,
-			className: clsx("wp-media-editor-image-editor", isDragging && "wp-media-editor-image-editor--dragging", className),
+			className: clsx("wp-image-editor", isDragging && "wp-image-editor--dragging", className),
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				ref: canvasRef,
-				className: clsx("wp-media-editor-image-editor__canvas", isInteractiveGrid && "wp-media-editor-image-editor__canvas--grid-interactive", showInteractiveGrid && "wp-media-editor-image-editor__canvas--show-grid", settling && "wp-media-editor-image-editor__canvas--settling", isFocusVisible && "wp-media-editor-image-editor__canvas--focus-visible"),
+				className: clsx("wp-image-editor__canvas", isInteractiveGrid && "wp-image-editor__canvas--grid-interactive", showInteractiveGrid && "wp-image-editor__canvas--show-grid", settling && "wp-image-editor__canvas--settling", isFocusVisible && "wp-image-editor__canvas--focus-visible"),
 				tabIndex: 0,
 				role: "group",
 				"aria-label": (0, _wordpress_i18n.__)("Crop area"),
@@ -98977,14 +98464,14 @@ If there's a particular need for this, please submit a feature request at https:
 					style: VISUALLY_HIDDEN_STYLE,
 					children: (0, _wordpress_i18n.__)("When this area is focused, use arrow keys to move the image and plus or minus to zoom. Tab to resize handles and controls.")
 				}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-					className: "wp-media-editor-image-editor__stage",
-					"data-testid": "cropper-stage",
+					className: "wp-image-editor__stage",
+					"data-testid": "image-editor-stage",
 					style: stageStyle,
 					onTransitionEnd: handleSettleTransitionEnd,
 					children: [
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
-							className: "wp-media-editor-image-editor__image",
-							"data-testid": "cropper-image",
+							className: "wp-image-editor__image",
+							"data-testid": "image-editor-image",
 							src,
 							alt: "",
 							onLoad: handleImageLoad,
@@ -98998,7 +98485,7 @@ If there's a particular need for this, please submit a feature request at https:
 							imageSize: scaledVisualSize,
 							transition: settleStencilTransition
 						}),
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(StencilComponent, {
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(RectangleStencil, {
 							cropRect: state.cropRect,
 							containerSize: canvasSize,
 							imageSize: scaledVisualSize,
@@ -99033,424 +98520,813 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		});
 	}
-	const CropperInnerWithRef = (0, _wordpress_element.forwardRef)(CropperInner);
-	const Cropper = (0, _wordpress_element.forwardRef)((props, ref) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CropperInnerWithRef, {
+	const ImageEditorCanvasInnerWithRef = (0, _wordpress_element.forwardRef)(ImageEditorCanvasInner);
+	const ImageEditorCanvas = (0, _wordpress_element.forwardRef)((props, ref) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ViewportProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ImageEditorCanvasInnerWithRef, {
 		...props,
 		ref
 	}) }));
 
-// packages/media-editor/build-module/state/types.mjs
-/**
-	* Default values for the crop-options slice. Mirrors the initial state
-	* used by the sidebar before the user has touched anything.
+// packages/image-editor/build-module/core/export/canvas-renderer.mjs
+/** Default export quality for lossy formats (JPEG, WebP). */
+	const DEFAULT_QUALITY = .92;
+	/**
+	* Load an image from a URL with CORS support.
+	*
+	* @param src - The image URL to load.
+	* @return A promise that resolves to the loaded HTMLImageElement.
 	*/
-	const DEFAULT_CROP_OPTIONS = { aspectRatioValue: "0" };
+	function loadImage(src) {
+		return new Promise((resolve, reject) => {
+			const image = new Image();
+			image.addEventListener("load", () => resolve(image));
+			image.addEventListener("error", (error) => reject(error));
+			image.crossOrigin = "anonymous";
+			image.src = src;
+		});
+	}
+	/**
+	* Apply rectangular crop, rotation, and flip transforms to produce a canvas.
+	*
+	* Uses createExportCamera to compose the full transform matrix, then applies
+	* it in a single ctx.setTransform call before drawing the image.
+	*
+	* @param image - The source image element.
+	* @param state - The full editor state containing crop, rotation, and flip settings.
+	* @return A canvas element containing the transformed and cropped image.
+	*/
+	function renderToCanvas(image, state) {
+		const { naturalWidth, naturalHeight } = image;
+		const { rotation, cropRect } = state;
+		const imageSize = {
+			width: naturalWidth,
+			height: naturalHeight
+		};
+		const snapRotation = Math.round(rotation / 90) * 90;
+		const rotBBox = getRotatedBBox(naturalWidth, naturalHeight, snapRotation);
+		const outW = Math.round(cropRect.width * rotBBox.width);
+		const outH = Math.round(cropRect.height * rotBBox.height);
+		const canvas = document.createElement("canvas");
+		canvas.width = outW;
+		canvas.height = outH;
+		const ctx = canvas.getContext("2d");
+		if (!ctx) throw new Error("Could not obtain a 2D context for the export canvas.");
+		const camera = createExportCamera(state, imageSize, {
+			width: outW,
+			height: outH
+		});
+		ctx.setTransform(camera[0], camera[1], camera[2], camera[3], camera[4], camera[5]);
+		ctx.drawImage(image, 0, 0);
+		return canvas;
+	}
+	/**
+	* Convert a canvas to a Blob with configurable MIME type and quality.
+	*
+	* @param canvas   - The canvas to export.
+	* @param mimeType - The output MIME type. Defaults to 'image/png'.
+	* @param quality  - The quality parameter for lossy formats (0-1). Defaults to DEFAULT_QUALITY.
+	* @return A promise that resolves to the canvas content as a Blob.
+	*/
+	function canvasToBlob(canvas, mimeType = "image/png", quality = DEFAULT_QUALITY) {
+		return new Promise((resolve, reject) => {
+			canvas.toBlob((blob) => {
+				if (blob) resolve(blob);
+				else reject(/* @__PURE__ */ new Error("Canvas toBlob returned null."));
+			}, mimeType, quality);
+		});
+	}
+	/**
+	* Load an image, render with transforms, and export as a Blob.
+	*
+	* Throws on failure so callers can distinguish error cases:
+	* - Image load failures (network errors, 404s) throw the native
+	*   load error from the Image element.
+	* - Cross-origin failures manifest as tainted-canvas errors from
+	*   `canvas.toBlob()` — the browser rejects reading pixel data
+	*   from a canvas that drew an image without valid CORS headers.
+	*   Ensure the source server sets `Access-Control-Allow-Origin`.
+	* - Canvas context creation failures throw a descriptive Error.
+	*
+	* Only works in browser environments (needs DOM / HTMLCanvasElement).
+	*
+	* @param src      - The image URL to load.
+	* @param state    - The editor state with all transform settings.
+	* @param mimeType - The output MIME type. Defaults to 'image/png'.
+	* @param quality  - The quality parameter for lossy formats (0-1). Defaults to DEFAULT_QUALITY.
+	* @return A promise that resolves to the exported Blob.
+	* @throws If the image fails to load, canvas creation fails, or
+	*         the resulting canvas is tainted by CORS restrictions.
+	*/
+	async function exportCroppedImage(src, state, mimeType = "image/png", quality = DEFAULT_QUALITY) {
+		return canvasToBlob(renderToCanvas(await loadImage(src), state), mimeType, quality);
+	}
 
-// packages/media-editor/build-module/state/composite-reducer.mjs
-/**
-	* Pure composite reducer for the media editor.
+// packages/image-editor/build-module/core/state.mjs
+/** Small tolerance for editor floating-point comparisons. */
+	const STATE_EPSILON = 1e-6;
+	function nearlyEqual(a, b) {
+		return Math.abs(a - b) < STATE_EPSILON;
+	}
+	/**
+	* Fill in the values the editor keeps for itself when a state does not
+	* carry them. A state the editor handed out always has them, so the same
+	* object comes back; one built by hand does not, and the reducer reads
+	* them on the first change. The base pose starts where the state is.
 	*
-	* Delegates `CROPPER`-tagged actions to the framework-agnostic
-	* `cropperReducer` and owns first-class transitions for the sidebar
-	* `cropOptions` slice. `RESTORE_SNAPSHOT` replaces the whole composite
-	* in one transaction (used by undo/redo).
-	*
-	* Note: this reducer carries NO history of its own. Snapshots and
-	* stacks live in the `useMediaEditorState` hook that wraps it.
-	*
-	* @param state  Current composite state.
-	* @param action Action to apply.
-	* @return Next composite state.
+	* @param state A state from the editor, or one built by hand.
+	* @return The state, with the editor's own values present.
 	*/
-	function mediaEditorReducer(state, action) {
-		switch (action.type) {
-			case "CROPPER": {
-				const nextCropper = cropperReducer(state.cropper, action.action);
-				if (nextCropper === state.cropper) return state;
+	function withBaseValues(state) {
+		const full = state;
+		if (full.basePan && typeof full.baseZoom === "number" && typeof full.baseRotation === "number") return full;
+		return {
+			...full,
+			basePan: full.basePan ?? { ...state.pan },
+			baseZoom: full.baseZoom ?? state.zoom,
+			baseRotation: full.baseRotation ?? state.rotation
+		};
+	}
+	/**
+	* The shape of the view the crop rect is measured against: the image,
+	* turned by its rotation snapped to a quarter turn. It is the shape the
+	* canvas lays out, so the reducer can keep a locked ratio without the
+	* canvas. `undefined` when no image is loaded.
+	*
+	* @param state The editor state.
+	* @return The view's width and height, or `undefined`.
+	*/
+	function getViewShape(state) {
+		const { image, rotation } = state;
+		if (!image) return;
+		const viewShape = getRotatedBBox(image.naturalWidth, image.naturalHeight, Math.round(rotation / 90) * 90);
+		return viewShape.width > 0 && viewShape.height > 0 ? viewShape : void 0;
+	}
+	/**
+	* The crop rect for the locked ratio: the largest centred box of that
+	* ratio. `undefined` when no ratio is locked or no image is loaded.
+	*
+	* @param state The editor state.
+	* @return The crop rect for the locked ratio, or `undefined`.
+	*/
+	function getLockedCropRect(state) {
+		const viewShape = getViewShape(state);
+		if (!viewShape || !state.aspectRatio || state.aspectRatio <= 0) return;
+		return computeInscribedRect(state.aspectRatio, viewShape);
+	}
+	/**
+	* Value-equality check for two editor states.
+	*
+	* Used by history machinery to dedup snapshots and detect no-op
+	* transitions. Compares every field that participates in the rendered
+	* output; ignores reference identity.
+	*
+	* @param a First editor state.
+	* @param b Second editor state.
+	* @return Whether the two states are value-equal across all tracked fields.
+	*/
+	function areImageEditorStatesEqual(a, b) {
+		const aImage = a.image;
+		const bImage = b.image;
+		return aImage?.src === bImage?.src && aImage?.naturalWidth === bImage?.naturalWidth && aImage?.naturalHeight === bImage?.naturalHeight && nearlyEqual(a.pan.x, b.pan.x) && nearlyEqual(a.pan.y, b.pan.y) && nearlyEqual(a.zoom, b.zoom) && nearlyEqual(a.rotation, b.rotation) && a.flip.horizontal === b.flip.horizontal && a.flip.vertical === b.flip.vertical && nearlyEqual(a.cropRect.x, b.cropRect.x) && nearlyEqual(a.cropRect.y, b.cropRect.y) && nearlyEqual(a.cropRect.width, b.cropRect.width) && nearlyEqual(a.cropRect.height, b.cropRect.height) && a.aspectRatio === b.aspectRatio;
+	}
+	function clampRequestedZoom(state, zoom) {
+		if (state.image) return Math.min(10, Math.max(ABSOLUTE_MIN_ZOOM, zoom));
+		return Math.min(10, Math.max(1, zoom));
+	}
+	/**
+	* Translate a pipeline transform operation into the equivalent
+	* reducer action. Pipeline ops aren't 1:1 with reducer actions —
+	* `rotate` is a delta here, whereas SET_ROTATION takes an absolute
+	* angle — so deltas are resolved against the current state.
+	*
+	* Used by APPLY_OPERATION (and by the pipeline module's
+	* `applyOperationToState`, which is now a thin wrapper around the
+	* reducer) so that pipeline replay produces identical bounded
+	* state to UI interaction or direct setters.
+	*
+	* @param state The current editor state.
+	* @param op    The pipeline operation.
+	* @return The equivalent reducer action.
+	*/
+	function operationToAction(state, op) {
+		switch (op.type) {
+			case "crop": return {
+				type: "SET_CROP_RECT",
+				payload: { ...op.rect }
+			};
+			case "rotate": {
+				const fieldDelta = state.flip.horizontal !== state.flip.vertical ? -op.degrees : op.degrees;
 				return {
-					...state,
-					cropper: nextCropper
+					type: "SET_ROTATION",
+					payload: normalizeRotation(state.rotation + fieldDelta)
 				};
 			}
-			case "SET_ASPECT_RATIO_VALUE": {
-				const { presetKey, resolved, visualSize } = action.payload;
-				const shouldReshape = resolved !== void 0 && resolved > 0 && visualSize.width > 0 && visualSize.height > 0;
-				const nextCropOptions = {
-					...state.cropOptions,
-					aspectRatioValue: presetKey
-				};
-				if (!shouldReshape) {
-					if (state.cropOptions.aspectRatioValue === presetKey) return state;
-					return {
-						...state,
-						cropOptions: nextCropOptions
-					};
+			case "flip": return {
+				type: "SET_FLIP",
+				payload: {
+					...state.flip,
+					[op.direction]: !state.flip[op.direction]
 				}
-				const newCropRect = computeInscribedRect(resolved, visualSize);
-				const nextCropper = cropperReducer(state.cropper, {
-					type: "SET_CROP_RECT",
-					payload: newCropRect
-				});
-				return {
-					...state,
-					cropper: nextCropper,
-					cropOptions: nextCropOptions
-				};
-			}
-			case "RESET": {
-				const next = buildInitialMediaEditorState(cropperReducer(state.cropper, { type: "RESET" }));
-				return areMediaEditorStatesEqual(state, next) ? state : next;
-			}
-			case "SET_EDIT": {
-				const { name, value } = action.payload;
-				if (value === void 0) {
-					if (!Object.hasOwn(state.edits, name)) return state;
-					const edits = { ...state.edits };
-					delete edits[name];
-					return {
-						...state,
-						edits
-					};
-				}
-				if ((0, import_es6.default)(state.edits[name], value)) return state;
-				return {
-					...state,
-					edits: {
-						...state.edits,
-						[name]: value
-					}
-				};
-			}
-			case "RESTORE_SNAPSHOT": return action.payload;
-			case "VIEWPORT_ADJUST_CROP_RECT": {
-				const nextCropper = cropperReducer(state.cropper, {
-					type: "SET_CROP_RECT",
-					payload: action.payload
-				});
-				if (nextCropper === state.cropper) return state;
-				return {
-					...state,
-					cropper: nextCropper
-				};
-			}
+			};
+			case "zoom": return {
+				type: "SET_ZOOM",
+				payload: op.level
+			};
 		}
 	}
 	/**
-	* Value-equality check for two composite states. Used by the history
-	* machinery to dedup snapshots when an action turned out to be a no-op.
+	* Enforces containment: restricts the crop rect to fit within the
+	* rotated image, computes minimum zoom, clamps zoom, and restricts
+	* the pan position so the image always covers the crop area.
+	* Called after every relevant state transition.
 	*
-	* @param a First composite state.
-	* @param b Second composite state.
-	* @return Whether `a` and `b` are value-equal across all slices.
+	* @param state The state to enforce containment on.
+	* @return The state with cropRect, zoom, and position restricted.
 	*/
-	function areMediaEditorStatesEqual(a, b) {
-		if (a === b) return true;
-		return areCropperStatesEqual(a.cropper, b.cropper) && a.cropOptions.aspectRatioValue === b.cropOptions.aspectRatioValue && (0, import_es6.default)(a.edits, b.edits);
+	function enforceContainment(state) {
+		if (!state.image) return state;
+		const imageSize = {
+			width: state.image.naturalWidth,
+			height: state.image.naturalHeight
+		};
+		const imageAspectRatio = imageSize.width / imageSize.height;
+		const { pan: panAfterZoom, zoom } = restrictPanZoom(state, imageSize, state.cropRect);
+		const cropRect = restrictCropRect(state.cropRect, zoom, state.rotation, imageAspectRatio);
+		let pan = panAfterZoom;
+		if (cropRect !== state.cropRect) ({pan} = restrictPanZoom({
+			...state,
+			zoom,
+			cropRect
+		}, imageSize, cropRect));
+		if (pan.x === state.pan.x && pan.y === state.pan.y && zoom === state.zoom && cropRect === state.cropRect) return state;
+		return {
+			...state,
+			pan,
+			zoom,
+			cropRect
+		};
 	}
 	/**
-	* Build the composite state a session starts from: the given cropper
-	* slice, default crop options, and no edits.
+	* Snapshot the current `crop`, `zoom`, and `rotation` into the
+	* corresponding `basePan`, `baseZoom`, `baseRotation` fields. Called
+	* by every committing action so that the next SET_ROTATION derives
+	* its transient pan from a fresh base (not from a drifted one).
 	*
-	* @param cropper The cropper slice.
-	* @return Composite initial state.
+	* SET_ROTATION is the only action that does NOT commit base — it
+	* reads the base, computes a transient pan, and leaves the base
+	* alone. This is what eliminates rotation drift near edges.
+	*
+	* @param next The post-containment state to commit.
+	* @return The state with base fields synced to current.
 	*/
-	function buildInitialMediaEditorState(cropper) {
+	function commitBase(next) {
+		if (next.basePan.x === next.pan.x && next.basePan.y === next.pan.y && next.baseZoom === next.zoom && next.baseRotation === next.rotation) return next;
 		return {
-			cropper,
-			cropOptions: { ...DEFAULT_CROP_OPTIONS },
-			edits: {}
+			...next,
+			basePan: {
+				x: next.pan.x,
+				y: next.pan.y
+			},
+			baseZoom: next.zoom,
+			baseRotation: next.rotation
+		};
+	}
+	/**
+	* Reducer function for editor state management.
+	*
+	* Every state transition that could invalidate the containment invariant
+	* (crop, zoom, rotation, cropRect, flip) is followed by enforceContainment
+	* to ensure the image always covers the crop area.
+	*
+	* Committing actions (everything except SET_ROTATION) also call
+	* `commitBase` to snapshot the post-containment state as the new
+	* base pose. SET_ROTATION derives from that base without mutating
+	* it, which prevents accumulated-clamp drift during continuous fine
+	* rotation.
+	*
+	* @param state  The current editor state.
+	* @param action The action to process.
+	* @return The new editor state.
+	*/
+	function imageEditorReducer(state, action) {
+		switch (action.type) {
+			case "SET_IMAGE": return commitBase(enforceContainment({
+				...state,
+				image: action.payload
+			}));
+			case "SET_PAN": return commitBase(enforceContainment({
+				...state,
+				pan: action.payload
+			}));
+			case "SET_ZOOM": {
+				const z = clampRequestedZoom(state, action.payload);
+				return commitBase(enforceContainment({
+					...state,
+					zoom: z
+				}));
+			}
+			case "SET_ZOOM_AT_POINT": {
+				const z = clampRequestedZoom(state, action.payload.zoom);
+				return commitBase(enforceContainment({
+					...state,
+					zoom: z,
+					pan: action.payload.pan
+				}));
+			}
+			case "SET_ROTATION": {
+				const newRotation = normalizeRotation(action.payload);
+				const singleFlip = state.flip.horizontal !== state.flip.vertical;
+				const deltaRad = degreesToRadians(newRotation - state.baseRotation);
+				const cos = Math.cos(deltaRad);
+				const sin = Math.sin(deltaRad) * (singleFlip ? -1 : 1);
+				const cropCx = state.cropRect.x + state.cropRect.width / 2;
+				const cropCy = state.cropRect.y + state.cropRect.height / 2;
+				const ox = cropCx - .5;
+				const oy = cropCy - .5;
+				const dx = state.basePan.x - ox;
+				const dy = state.basePan.y - oy;
+				return enforceContainment({
+					...state,
+					rotation: newRotation,
+					zoom: state.baseZoom,
+					pan: {
+						x: ox + cos * dx - sin * dy,
+						y: oy + sin * dx + cos * dy
+					}
+				});
+			}
+			case "SNAP_ROTATE_90": {
+				const rawDir = action.payload.direction;
+				const fieldDir = state.flip.horizontal !== state.flip.vertical ? -rawDir : rawDir;
+				const rot90 = normalizeRotation(state.rotation + fieldDir * 90);
+				const rect = state.cropRect;
+				const cx = rect.x + rect.width / 2;
+				const cy = rect.y + rect.height / 2;
+				const newPanX = rawDir === 1 ? -state.pan.y : state.pan.y;
+				const newPanY = rawDir === 1 ? state.pan.x : -state.pan.x;
+				return commitBase(enforceContainment({
+					...state,
+					rotation: rot90,
+					zoom: state.baseZoom,
+					pan: {
+						x: newPanX,
+						y: newPanY
+					},
+					cropRect: {
+						x: cx - rect.height / 2,
+						y: cy - rect.width / 2,
+						width: rect.height,
+						height: rect.width
+					}
+				}));
+			}
+			case "SET_FLIP": {
+				const oldFlip = state.flip;
+				const newFlip = action.payload;
+				const flippedH = oldFlip.horizontal !== newFlip.horizontal;
+				const flippedV = oldFlip.vertical !== newFlip.vertical;
+				const rect = state.cropRect;
+				return commitBase(enforceContainment({
+					...state,
+					flip: newFlip,
+					pan: {
+						x: flippedH ? -state.pan.x : state.pan.x,
+						y: flippedV ? -state.pan.y : state.pan.y
+					},
+					cropRect: {
+						x: flippedH ? 1 - rect.x - rect.width : rect.x,
+						y: flippedV ? 1 - rect.y - rect.height : rect.y,
+						width: rect.width,
+						height: rect.height
+					}
+				}));
+			}
+			case "SET_CROP_RECT": return commitBase(enforceContainment({
+				...state,
+				cropRect: action.payload
+			}));
+			case "SET_ASPECT_RATIO": {
+				const aspectRatio = action.payload !== void 0 && action.payload > 0 ? action.payload : void 0;
+				const next = {
+					...state,
+					aspectRatio
+				};
+				const cropRect = getLockedCropRect(next);
+				if (!cropRect) return state.aspectRatio === aspectRatio ? state : next;
+				return commitBase(enforceContainment({
+					...next,
+					cropRect
+				}));
+			}
+			case "SETTLE_CROP": {
+				const rect = state.cropRect;
+				if (rect.width === 0 || rect.height === 0 || !state.image) return state;
+				const fitScale = 1 / Math.max(rect.width, rect.height);
+				const zoomCap = state.zoom > 0 ? 10 / state.zoom : fitScale;
+				const s = Math.min(fitScale, zoomCap);
+				const newW = rect.width * s;
+				const newH = rect.height * s;
+				const oldCx = rect.x + rect.width / 2;
+				const oldCy = rect.y + rect.height / 2;
+				return commitBase(enforceContainment({
+					...state,
+					zoom: state.zoom * s,
+					pan: {
+						x: (state.pan.x - oldCx + .5) * s,
+						y: (state.pan.y - oldCy + .5) * s
+					},
+					cropRect: {
+						x: (1 - newW) / 2,
+						y: (1 - newH) / 2,
+						width: newW,
+						height: newH
+					}
+				}));
+			}
+			case "APPLY_OPERATION": return imageEditorReducer(state, operationToAction(state, action.payload));
+			case "RESET": return commitBase(enforceContainment({
+				...DEFAULT_STATE,
+				image: state.image,
+				...action.payload
+			}));
+		}
+	}
+	/**
+	* Shallow comparison of key editor state fields to determine if
+	* the state has been modified from an initial snapshot.
+	*
+	* @param current The current editor state.
+	* @param initial The initial editor state snapshot.
+	* @return True if any tracked field differs.
+	*/
+	function isStateDirty(current, initial) {
+		return !nearlyEqual(current.pan.x, initial.pan.x) || !nearlyEqual(current.pan.y, initial.pan.y) || !nearlyEqual(current.zoom, initial.zoom) || !nearlyEqual(current.rotation, initial.rotation) || current.flip.horizontal !== initial.flip.horizontal || current.flip.vertical !== initial.flip.vertical || !nearlyEqual(current.cropRect.x, initial.cropRect.x) || !nearlyEqual(current.cropRect.y, initial.cropRect.y) || !nearlyEqual(current.cropRect.width, initial.cropRect.width) || !nearlyEqual(current.cropRect.height, initial.cropRect.height);
+	}
+
+// packages/image-editor/build-module/core/setter-helpers.mjs
+/**
+	* Build the reducer action that produces a "cursorless" zoom — zoom
+	* anchored at the current crop-rect center, with pan clamped to keep
+	* the image covering the crop.
+	*
+	* The slider, the `+`/`-` keys, and the toolbar buttons have no
+	* natural focal point (unlike wheel/pinch zoom), so they default to
+	* the crop center. Returns `null` when the clamped zoom matches the
+	* current zoom (no-op).
+	*
+	* Kept apart from the setters so the zoom math lives in one place.
+	*
+	* @param state         The current editor state.
+	* @param requestedZoom The zoom value the caller asked for.
+	* @return A `SET_ZOOM_AT_POINT` action, or `null` if no change is required.
+	*/
+	function buildFocalPointZoomAction(state, requestedZoom) {
+		const clampedZoom = Math.min(10, Math.max(getMinZoom(state), requestedZoom));
+		if (clampedZoom === state.zoom) return null;
+		const { cropRect } = state;
+		const focalNormX = cropRect.x + cropRect.width / 2 - .5;
+		const focalNormY = cropRect.y + cropRect.height / 2 - .5;
+		const zoomRatio = 1 - clampedZoom / state.zoom;
+		const newPanX = state.pan.x + (focalNormX - state.pan.x) * zoomRatio;
+		const newPanY = state.pan.y + (focalNormY - state.pan.y) * zoomRatio;
+		const imageSize = state.image ? {
+			width: state.image.naturalWidth,
+			height: state.image.naturalHeight
+		} : {
+			width: 1,
+			height: 1
+		};
+		const { pan: clampedPan } = restrictPanZoom({
+			...state,
+			zoom: clampedZoom,
+			pan: {
+				x: newPanX,
+				y: newPanY
+			}
+		}, imageSize, state.cropRect);
+		return {
+			type: "SET_ZOOM_AT_POINT",
+			payload: {
+				zoom: clampedZoom,
+				pan: clampedPan
+			}
 		};
 	}
 
-// packages/media-editor/build-module/state/use-media-editor-state.mjs
+// packages/image-editor/build-module/react/hooks/build-image-editor-setters.mjs
 /**
-	* Resolve an aspect-ratio preset value (the string the dropdown
-	* round-trips) into a numeric width/height ratio for the cropper.
+	* Build the named editor setters from a dispatch function and a getter
+	* for the latest state.
 	*
-	* - `'0'` → `undefined` (Free; no lock)
-	* - `'-1'` (Original) → image's natural width / height, or `undefined`
-	*   if no image is loaded.
-	* - Any positive decimal → the parsed number.
-	*
-	* Centralizing here means the dropdown, the action dispatcher, and
-	* the test harness all resolve the same way.
-	*
-	* @param presetKey    Preset value from the dropdown.
-	* @param cropperImage The cropper's loaded image, or `null`.
-	* @return The resolved ratio, or `undefined` for Free / unresolvable.
+	* @param dispatchAction Apply a `ImageEditorAction` to the
+	*                       underlying reducer.
+	* @param getState       Return the current `InternalImageEditorState`.
+	*                       Used by setters that need to read
+	*                       the latest state to compute their
+	*                       payload (focal-point zoom, flip toggle).
+	* @return The named editor setters.
 	*/
-	function resolveAspectRatio(presetKey, cropperImage) {
-		const num = parseFloat(presetKey);
-		if (num === 0 || Number.isNaN(num)) return;
-		if (num === -1) {
-			if (cropperImage && cropperImage.naturalWidth > 0 && cropperImage.naturalHeight > 0) return cropperImage.naturalWidth / cropperImage.naturalHeight;
-			return;
-		}
-		if (num > 0) return num;
+	function buildImageEditorSetters(dispatchAction, getState) {
+		return {
+			setPan: (pan) => dispatchAction({
+				type: "SET_PAN",
+				payload: pan
+			}),
+			setZoom: (zoom) => {
+				const action = buildFocalPointZoomAction(getState(), zoom);
+				if (action) dispatchAction(action);
+			},
+			setZoomAtPoint: (zoom, pan) => dispatchAction({
+				type: "SET_ZOOM_AT_POINT",
+				payload: {
+					zoom,
+					pan
+				}
+			}),
+			setRotation: (rotation) => dispatchAction({
+				type: "SET_ROTATION",
+				payload: rotation
+			}),
+			setFlip: (flip) => dispatchAction({
+				type: "SET_FLIP",
+				payload: flip
+			}),
+			toggleFlip: (direction) => {
+				const { flip } = getState();
+				dispatchAction({
+					type: "SET_FLIP",
+					payload: {
+						...flip,
+						[direction]: !flip[direction]
+					}
+				});
+			},
+			snapRotate90: (direction) => dispatchAction({
+				type: "SNAP_ROTATE_90",
+				payload: { direction }
+			}),
+			setCropRect: (rect) => dispatchAction({
+				type: "SET_CROP_RECT",
+				payload: rect
+			}),
+			setAspectRatio: (aspectRatio) => dispatchAction({
+				type: "SET_ASPECT_RATIO",
+				payload: aspectRatio
+			}),
+			settleCrop: () => dispatchAction({ type: "SETTLE_CROP" })
+		};
 	}
-	function areCropperImagesEqual(a, b) {
+
+// packages/image-editor/build-module/react/hooks/use-image-editor.mjs
+	function areImagesEqual$1(a, b) {
 		return a?.src === b?.src && a?.naturalWidth === b?.naturalWidth && a?.naturalHeight === b?.naturalHeight;
 	}
 	/**
-	* The media editor session.
+	* Build the state an editor starts from: default pan, zoom, rotation,
+	* flip and crop, and no locked ratio unless you ask for one.
 	*
-	* Owns the only undo/redo history for the editor. Cropper geometry
-	* actions, sidebar cropOptions actions and named edits flow through
-	* the same reducer and the same history stack.
-	*
-	* History semantics:
-	* - Each action's pre-state is pushed to the undo stack before the
-	*   action commits, unless a gesture is open or the action is a
-	*   no-op (post-state value-equal to pre-state).
-	* - During a gesture (`beginGesture` → `endGesture`) all mutations
-	*   coalesce: only the pre-gesture snapshot is pushed, at gesture
-	*   end. Any pending gesture is flushed on undo/redo.
-	* - Viewport-driven cropRect reshapes (window resize) use a
-	*   dedicated non-recording dispatch path so they never produce
-	*   undo entries.
-	*
-	* `isDirty` tracks the full editor session, including undoable UI
-	* state. Use `hasOutputEdits` when deciding whether the image output
-	* needs saving.
-	*
-	* The session starts empty. Call `setSourceImage` to load an image.
-	*
-	* @return The media editor session.
+	* @param options The image and the locked ratio to start with.
+	* @return The starting state.
 	*/
-	function useMediaEditorState() {
-		const [state, dispatch] = (0, _wordpress_element.useReducer)(mediaEditorReducer, null, () => buildInitialMediaEditorState({ ...DEFAULT_STATE }));
-		const [initialBaseline, setInitialBaseline] = (0, _wordpress_element.useState)(() => state);
-		const stateRef = (0, _wordpress_element.useRef)(state);
-		const visualSizeRef = (0, _wordpress_element.useRef)({
-			width: 0,
-			height: 0
-		});
-		const historyRef = (0, _wordpress_element.useRef)([]);
-		const redoStackRef = (0, _wordpress_element.useRef)([]);
-		const [hasUndo, setHasUndo] = (0, _wordpress_element.useState)(false);
-		const [hasRedo, setHasRedo] = (0, _wordpress_element.useState)(false);
-		const isGestureOpenRef = (0, _wordpress_element.useRef)(false);
-		const gestureSnapshotRef = (0, _wordpress_element.useRef)(null);
-		const pushSnapshot = (0, _wordpress_element.useCallback)((snapshot) => {
-			const last = historyRef.current[historyRef.current.length - 1];
-			if (last && areMediaEditorStatesEqual(last, snapshot)) return;
-			historyRef.current = [...historyRef.current, snapshot];
-			redoStackRef.current = [];
-			setHasUndo(true);
-			setHasRedo(false);
-		}, []);
-		const dispatchWithHistory = (0, _wordpress_element.useCallback)((action, recordHistory = true) => {
-			const preState = stateRef.current;
-			const postState = mediaEditorReducer(preState, action);
-			if (recordHistory) {
-				if (!areMediaEditorStatesEqual(preState, postState)) {
-					if (isGestureOpenRef.current) {
-						if (gestureSnapshotRef.current === null) gestureSnapshotRef.current = preState;
-					} else pushSnapshot(preState);
-				}
-			}
-			stateRef.current = postState;
-			dispatch(action);
-		}, [pushSnapshot]);
-		const beginGesture = (0, _wordpress_element.useCallback)(() => {
-			if (isGestureOpenRef.current) return;
-			isGestureOpenRef.current = true;
-			gestureSnapshotRef.current = null;
-		}, []);
-		const endGesture = (0, _wordpress_element.useCallback)(() => {
-			const snapshot = gestureSnapshotRef.current;
-			if (snapshot && !areMediaEditorStatesEqual(snapshot, stateRef.current)) pushSnapshot(snapshot);
-			gestureSnapshotRef.current = null;
-			isGestureOpenRef.current = false;
-		}, [pushSnapshot]);
-		const dispatchCropperAction = (0, _wordpress_element.useCallback)((action) => {
-			dispatchWithHistory({
-				type: "CROPPER",
-				action
-			});
-		}, [dispatchWithHistory]);
-		const cropperSetters = (0, _wordpress_element.useMemo)(() => buildCropperSetters(dispatchCropperAction, () => stateRef.current.cropper), [dispatchCropperAction]);
-		const setSourceImage = (0, _wordpress_element.useCallback)((image) => {
-			if (areCropperImagesEqual(stateRef.current.cropper.image, image)) return;
-			const next = buildInitialMediaEditorState(enforceContainment({
-				...DEFAULT_STATE,
-				image
-			}));
-			stateRef.current = next;
-			dispatch({
-				type: "RESTORE_SNAPSHOT",
-				payload: next
-			});
-			setInitialBaseline(next);
-			isGestureOpenRef.current = false;
-			gestureSnapshotRef.current = null;
-			historyRef.current = [];
-			redoStackRef.current = [];
-			setHasUndo(false);
-			setHasRedo(false);
-		}, []);
-		const resetCropper = (0, _wordpress_element.useCallback)((resetState) => {
-			dispatchWithHistory({
-				type: "CROPPER",
-				action: {
+	function createImageEditorState(options = {}) {
+		const { image = null, aspectRatio } = options;
+		const start = {
+			...DEFAULT_STATE,
+			image,
+			aspectRatio: aspectRatio && aspectRatio > 0 ? aspectRatio : void 0
+		};
+		const cropRect = getLockedCropRect(start);
+		return enforceContainment(cropRect ? {
+			...start,
+			cropRect
+		} : start);
+	}
+	/**
+	* Controller for the image editor: the state, the named setters and the
+	* export helpers. It keeps no undo history; keep the state yourself
+	* (`state` and `onChange`) to add one.
+	*
+	* @param options Starting state, or the state and change handler when
+	*                you keep the state yourself.
+	* @return The editor controller: state, setters and helpers.
+	*/
+	function useInternalImageEditor(options = {}) {
+		const { initialState, state: controlledState, onChange } = options;
+		const isControlled = controlledState !== void 0;
+		const [ownState, setOwnState] = (0, _wordpress_element.useState)(() => enforceContainment({
+			...DEFAULT_STATE,
+			...initialState
+		}));
+		const state = isControlled ? withBaseValues(controlledState) : ownState;
+		const [baseline, setBaseline] = (0, _wordpress_element.useState)(() => state);
+		const hasEditedRef = (0, _wordpress_element.useRef)(false);
+		const latestRef = (0, _wordpress_element.useRef)(state);
+		(0, _wordpress_element.useLayoutEffect)(() => {
+			latestRef.current = state;
+		}, [state]);
+		const onChangeRef = (0, _wordpress_element.useRef)(onChange);
+		(0, _wordpress_element.useLayoutEffect)(() => {
+			onChangeRef.current = onChange;
+		}, [onChange]);
+		const apply = (0, _wordpress_element.useCallback)((action, isEdit = true) => {
+			const next = imageEditorReducer(latestRef.current, action);
+			if (next === latestRef.current) return next;
+			latestRef.current = next;
+			if (isEdit) hasEditedRef.current = true;
+			else if (!hasEditedRef.current) setBaseline(next);
+			if (isControlled) onChangeRef.current?.(next, { isEdit });
+			else setOwnState(next);
+			return next;
+		}, [isControlled]);
+		const setImage = (0, _wordpress_element.useCallback)((image) => {
+			const current = latestRef.current;
+			if (areImagesEqual$1(current.image, image)) return;
+			hasEditedRef.current = false;
+			if (current.image) {
+				apply({
 					type: "RESET",
-					payload: resetState
-				}
-			});
-		}, [dispatchWithHistory]);
-		const setAspectRatioValue = (0, _wordpress_element.useCallback)((presetKey) => {
-			const resolved = resolveAspectRatio(presetKey, stateRef.current.cropper.image);
-			dispatchWithHistory({
-				type: "SET_ASPECT_RATIO_VALUE",
+					payload: {
+						image,
+						aspectRatio: current.aspectRatio
+					}
+				}, false);
+				return;
+			}
+			apply({
+				type: "SET_IMAGE",
+				payload: image
+			}, false);
+		}, [apply]);
+		const reset = (0, _wordpress_element.useCallback)((resetState) => {
+			const next = apply({
+				type: "RESET",
 				payload: {
-					presetKey,
-					resolved,
-					visualSize: visualSizeRef.current
+					...baseline,
+					image: latestRef.current.image,
+					...resetState
 				}
 			});
-		}, [dispatchWithHistory]);
-		const reset = (0, _wordpress_element.useCallback)(() => {
-			dispatchWithHistory({ type: "RESET" });
-		}, [dispatchWithHistory]);
-		const setEdit = (0, _wordpress_element.useCallback)((name, value) => {
-			dispatchWithHistory({
-				type: "SET_EDIT",
-				payload: {
-					name,
-					value
-				}
-			});
-		}, [dispatchWithHistory]);
-		const undo = (0, _wordpress_element.useCallback)(() => {
-			endGesture();
-			const prev = historyRef.current[historyRef.current.length - 1];
-			if (!prev) return;
-			redoStackRef.current = [stateRef.current, ...redoStackRef.current];
-			historyRef.current = historyRef.current.slice(0, -1);
-			setHasUndo(historyRef.current.length > 0);
-			setHasRedo(true);
-			stateRef.current = prev;
-			dispatch({
-				type: "RESTORE_SNAPSHOT",
-				payload: prev
-			});
-		}, [endGesture]);
-		const redo = (0, _wordpress_element.useCallback)(() => {
-			endGesture();
-			const next = redoStackRef.current[0];
-			if (!next) return;
-			historyRef.current = [...historyRef.current, stateRef.current];
-			redoStackRef.current = redoStackRef.current.slice(1);
-			setHasUndo(true);
-			setHasRedo(redoStackRef.current.length > 0);
-			stateRef.current = next;
-			dispatch({
-				type: "RESTORE_SNAPSHOT",
-				payload: next
-			});
-		}, [endGesture]);
-		const setVisualSize = (0, _wordpress_element.useCallback)((size) => {
-			visualSizeRef.current = size;
-		}, []);
+			hasEditedRef.current = false;
+			setBaseline(next);
+		}, [apply, baseline]);
+		const setters = (0, _wordpress_element.useMemo)(() => buildImageEditorSetters((action) => {
+			apply(action);
+		}, () => latestRef.current), [apply]);
+		const isDirty = isStateDirty(state, baseline);
+		const getCroppedImage = (0, _wordpress_element.useCallback)((mimeType, quality) => {
+			if (!state.image) return Promise.reject(/* @__PURE__ */ new Error("No image loaded — call setImage first."));
+			return exportCroppedImage(state.image.src, state, mimeType, quality);
+		}, [state]);
 		const adjustCropRectForViewport = (0, _wordpress_element.useCallback)((rect) => {
-			dispatchWithHistory({
-				type: "VIEWPORT_ADJUST_CROP_RECT",
+			apply({
+				type: "SET_CROP_RECT",
 				payload: rect
 			}, false);
-		}, [dispatchWithHistory]);
-		const isDirty = !areMediaEditorStatesEqual(state, initialBaseline);
-		const isCropperDirty = !areCropperStatesEqual(state.cropper, initialBaseline.cropper);
-		const getCroppedImage = (0, _wordpress_element.useCallback)((mimeType, quality) => {
-			if (!state.cropper.image) return Promise.reject(/* @__PURE__ */ new Error("No image loaded — call setSourceImage first."));
-			return exportCroppedImage(state.cropper.image.src, state.cropper, mimeType, quality);
-		}, [state.cropper]);
-		const cropper = (0, _wordpress_element.useMemo)(() => ({
-			...cropperSetters,
-			state: state.cropper,
-			setImage: setSourceImage,
-			reset: resetCropper,
-			isDirty: isCropperDirty,
-			getCroppedImage,
-			setVisualSize,
-			adjustCropRectForViewport
-		}), [
-			cropperSetters,
-			state.cropper,
-			setSourceImage,
-			resetCropper,
-			isCropperDirty,
-			getCroppedImage,
-			setVisualSize,
-			adjustCropRectForViewport
-		]);
+		}, [apply]);
+		const minZoom = getMinZoom(state);
 		return (0, _wordpress_element.useMemo)(() => ({
-			cropper,
-			cropOptions: state.cropOptions,
-			setAspectRatioValue,
-			edits: state.edits,
-			setEdit,
-			setSourceImage,
+			...setters,
+			state,
+			setImage,
 			reset,
 			isDirty,
-			hasOutputEdits: isCropperDirty,
-			hasUndo,
-			hasRedo,
-			undo,
-			redo,
-			beginGesture,
-			endGesture
+			minZoom,
+			maxZoom: 10,
+			maxRotationOffset: 45,
+			getCroppedImage,
+			adjustCropRectForViewport
 		}), [
-			cropper,
-			state.cropOptions,
-			setAspectRatioValue,
-			state.edits,
-			setEdit,
-			setSourceImage,
+			setters,
+			state,
+			setImage,
 			reset,
 			isDirty,
-			isCropperDirty,
-			hasUndo,
-			hasRedo,
-			undo,
-			redo,
-			beginGesture,
-			endGesture
+			minZoom,
+			getCroppedImage,
+			adjustCropRectForViewport
 		]);
+	}
+	/**
+	* React hook for an image editor. The consumer keeps the state and gets
+	* each change through `onChange`.
+	*
+	* @param options The state, and a function that stores the next one.
+	* @return The controller: the state, the changes a person can make, and
+	*         the limits for building controls.
+	*/
+	function useImageEditor(options) {
+		return useInternalImageEditor(options);
 	}
 
-// packages/media-editor/build-module/state/media-editor-state-provider.mjs
-	const MediaEditorStateContext = (0, _wordpress_element.createContext)(null);
-	/**
-	* Provider that vends the media editor session via context. Wrap
-	* the media editor in this so every consumer (canvas, toolbar,
-	* sidebar) reads from the same store.
-	*
-	* @param props
-	* @param props.children
+// packages/image-editor/build-module/map-edit-to-original.mjs
+/**
+	* Tolerance (a fraction of the image) used to decide whether a crop rect
+	* is effectively full-frame. Sub-pixel / float-ulp deltas below this
+	* value are treated as no crop. Matches the historical threshold used by
+	* the legacy `use-save-image.js` (which compared against `99.9` percent).
 	*/
-	function MediaEditorStateProvider({ children }) {
-		const controller = useMediaEditorState();
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorStateContext.Provider, {
-			value: controller,
-			children
+	const CROP_TOLERANCE = .001;
+	/**
+	* Map the person's edit onto the full-size image loaded in `state.image`.
+	*
+	* The editor's state describes what the canvas shows: where the image sits
+	* under the crop, how far it is zoomed, and a crop area measured against
+	* the view. An image processor needs operations on the loaded image
+	* instead. This returns flip, rotate and crop edits in application order.
+	* The loaded image may itself be a previously edited file; "original"
+	* refers to that image for this call.
+	*
+	* Emits `[flip, rotate, crop]` in that order. Identity operations are
+	* pruned — an absent flip, a rotation that normalizes to 0°, and a crop
+	* rect that covers (within tolerance) the full post-rotate AABB each
+	* produce no edit. An empty array means no image has loaded or there is
+	* no flip, rotation or crop to apply. A locked ratio can produce a crop
+	* edit even before the person edits anything.
+	*
+	* Frames and math:
+	*
+	* The editor's `cropRect` is stored as fractions of the **snap-rotation**
+	* bounding box (the stencil-reference frame — see `createCamera` /
+	* `createExportCamera`). Pan is in that frame; zoom scales the image
+	* beneath a fixed stencil. Two conversions are needed to reach the frame
+	* the crop edit applies against:
+	*
+	*   1. Express the stencil rect in snap-AABB **pixels**:
+	*      Image screen-normalized top-left with zoom/pan is
+	*      `(0.5 + pan - zoom/2)`; the stencil's pixel footprint is the
+	*      inverse of that transform applied to `cropRect`.
+	*
+	*   2. Translate from snap-AABB coords to full-AABB coords. Both AABBs
+	*      share the source-image center, so the conversion is a pure
+	*      translation by `(fullCenter - snapCenter)`. Finally, express the
+	*      translated rect as fractions of the full AABB.
+	*
+	* Rotation sign: the editor composes `flip · R(θ)` on the source (see
+	* `createExportCamera` — rotate then flip). The edits' `[flip, rotate]`
+	* order is the opposite: `R(θ') · flip`. For both to land on the
+	* same pixels we invert the rotation sign when exactly one flip axis
+	* is set (`flip_h · R(θ) = R(-θ) · flip_h`). Both-or-neither flips
+	* leave the sign alone because `flip_h · flip_v = -I` commutes with
+	* rotation.
+	*
+	* @param state The editor state. The edit and the loaded image's natural
+	*              size are both read from it.
+	* @return Ordered edits; empty when nothing changes the original or no
+	*         image has loaded.
+	*/
+	function mapEditToOriginal(state) {
+		const edits = [];
+		const { image } = state;
+		if (!image || image.naturalWidth === 0 || image.naturalHeight === 0) return edits;
+		const imageSize = {
+			width: image.naturalWidth,
+			height: image.naturalHeight
+		};
+		const { cropRect, pan, zoom, flip } = state;
+		const hasFlipH = flip.horizontal;
+		const hasFlipV = flip.vertical;
+		if (hasFlipH || hasFlipV) edits.push({
+			type: "flip",
+			horizontal: hasFlipH,
+			vertical: hasFlipV
 		});
-	}
-	/**
-	* Consume the media editor session. Throws if used
-	* outside a `<MediaEditorStateProvider>`.
-	*
-	* @return The media editor session.
-	*/
-	function useMediaEditor() {
-		const context = (0, _wordpress_element.useContext)(MediaEditorStateContext);
-		if (!context) throw new Error("useMediaEditor must be used within a MediaEditorStateProvider.");
-		return context;
+		const rawAngle = (state.rotation % 360 + 360) % 360;
+		const signedAngle = hasFlipH !== hasFlipV ? (360 - rawAngle) % 360 : rawAngle;
+		if (signedAngle !== 0) edits.push({
+			type: "rotate",
+			angle: signedAngle
+		});
+		const snapRotation = Math.round(state.rotation / 90) * 90;
+		const { width: snapW, height: snapH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
+		const { width: fullW, height: fullH } = getRotatedBBox(imageSize.width, imageSize.height, state.rotation);
+		const imgLeft = .5 + pan.x - zoom / 2;
+		const imgTop = .5 + pan.y - zoom / 2;
+		const snapX = (cropRect.x - imgLeft) / zoom * snapW;
+		const snapY = (cropRect.y - imgTop) / zoom * snapH;
+		const widthPx = cropRect.width / zoom * snapW;
+		const heightPx = cropRect.height / zoom * snapH;
+		const offsetX = (fullW - snapW) / 2;
+		const offsetY = (fullH - snapH) / 2;
+		const fullX = snapX + offsetX;
+		const fullY = snapY + offsetY;
+		const x = fullX / fullW;
+		const y = fullY / fullH;
+		const width = widthPx / fullW;
+		const height = heightPx / fullH;
+		if (!(x <= CROP_TOLERANCE && y <= CROP_TOLERANCE && width >= .999 && height >= .999)) edits.push({
+			type: "crop",
+			x,
+			y,
+			width,
+			height
+		});
+		return edits;
 	}
 
 // packages/media-editor/build-module/state/aspect-ratio-presets.mjs
 /**
-	* The presets the editor offers by default. The labels live here rather
-	* than in the cropper core, which has no user-facing strings.
+	* The presets the editor offers by default. They live here rather than
+	* in the image editor package, because which ratios to offer, and what
+	* to call them, is a product choice. The package takes a plain number.
 	*/
 	const DEFAULT_ASPECT_RATIOS = [
 		{
@@ -99491,10 +99367,348 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 	];
 
+// packages/media-editor/build-module/state/types.mjs
+/**
+	* The crop options a session starts from.
+	*/
+	const DEFAULT_CROP_OPTIONS = { aspectRatioValue: "0" };
+
+// packages/media-editor/build-module/state/composite-reducer.mjs
+/**
+	* Pure reducer for the media editor.
+	*
+	* The image editor works out its own next state (through the controller from
+	* `@wordpress/image-editor`) and this reducer stores it. The reducer
+	* also owns the sidebar crop options and the named edits.
+	*
+	* This reducer keeps no history; `useMediaEditorState` does.
+	*
+	* @param state  Current state.
+	* @param action Action to apply.
+	* @return Next state.
+	*/
+	function mediaEditorReducer(state, action) {
+		switch (action.type) {
+			case "SET_IMAGE_EDITOR": return action.payload === state.imageEditor ? state : {
+				...state,
+				imageEditor: action.payload
+			};
+			case "SET_ASPECT_RATIO_VALUE": return state.cropOptions.aspectRatioValue === action.payload ? state : {
+				...state,
+				cropOptions: {
+					...state.cropOptions,
+					aspectRatioValue: action.payload
+				}
+			};
+			case "SET_EDIT": {
+				const { name, value } = action.payload;
+				if (value === void 0) {
+					if (!Object.hasOwn(state.edits, name)) return state;
+					const edits = { ...state.edits };
+					delete edits[name];
+					return {
+						...state,
+						edits
+					};
+				}
+				if ((0, import_es6.default)(state.edits[name], value)) return state;
+				return {
+					...state,
+					edits: {
+						...state.edits,
+						[name]: value
+					}
+				};
+			}
+			case "RESET": {
+				const next = buildInitialMediaEditorState(createImageEditorState({ image: state.imageEditor.image }));
+				return areMediaEditorStatesEqual(state, next) ? state : next;
+			}
+			case "RESTORE_SNAPSHOT": return action.payload;
+		}
+	}
+	/**
+	* Value-equality check for two media editor states. The history uses it
+	* to skip snapshots when an action turned out to be a no-op.
+	*
+	* @param a First state.
+	* @param b Second state.
+	* @return Whether `a` and `b` are value-equal across all slices.
+	*/
+	function areMediaEditorStatesEqual(a, b) {
+		if (a === b) return true;
+		return areImageEditorStatesEqual(a.imageEditor, b.imageEditor) && a.cropOptions.aspectRatioValue === b.cropOptions.aspectRatioValue && (0, import_es6.default)(a.edits, b.edits);
+	}
+	/**
+	* Build the state a session starts from: the given image editor state,
+	* default crop options, and no edits.
+	*
+	* @param imageEditor The image editor state.
+	* @return Initial state.
+	*/
+	function buildInitialMediaEditorState(imageEditor) {
+		return {
+			imageEditor,
+			cropOptions: { ...DEFAULT_CROP_OPTIONS },
+			edits: {}
+		};
+	}
+
+// packages/media-editor/build-module/state/use-media-editor-state.mjs
+/**
+	* Resolve an aspect-ratio preset value (the string the dropdown
+	* round-trips) into a numeric width/height ratio for the image editor.
+	*
+	* - `'0'` → `undefined` (Free; no lock)
+	* - `'-1'` (Original) → image's natural width / height, or `undefined`
+	*   if no image is loaded.
+	* - Any positive decimal → the parsed number.
+	*
+	* @param presetKey Preset value from the dropdown.
+	* @param image     The image editor's loaded image, or `null`.
+	* @return The resolved ratio, or `undefined` for Free / unresolvable.
+	*/
+	function resolveAspectRatio(presetKey, image) {
+		const num = parseFloat(presetKey);
+		if (num === 0 || Number.isNaN(num)) return;
+		if (num === -1) {
+			if (image && image.naturalWidth > 0 && image.naturalHeight > 0) return image.naturalWidth / image.naturalHeight;
+			return;
+		}
+		if (num > 0) return num;
+	}
+	function areImagesEqual(a, b) {
+		return a?.src === b?.src && a?.naturalWidth === b?.naturalWidth && a?.naturalHeight === b?.naturalHeight;
+	}
+	/**
+	* The media editor session.
+	*
+	* Owns the only undo/redo history for the editor. The image editor's state,
+	* the sidebar crop options and named edits are slices of one state, so
+	* one history stack covers them all. The image editor works out its own
+	* changes and reports each next state through `onChange`.
+	*
+	* History semantics:
+	* - Each change pushes its pre-state to the undo stack, unless a
+	*   gesture is open or the change is a no-op (post-state value-equal
+	*   to pre-state).
+	* - During a gesture (`beginGesture` → `endGesture`) changes coalesce:
+	*   only the pre-gesture snapshot is pushed, at gesture end. Undo and
+	*   redo close an open gesture first.
+	* - Changes the image editor marks as not edits (an image loading, a refit
+	*   after a window resize) are never recorded.
+	*
+	* `isDirty` tracks the full session, including undoable UI state. Use
+	* `hasOutputEdits` when deciding whether the image output needs saving.
+	*
+	* The session starts empty. Call `setSourceImage` to load an image.
+	*
+	* @return The media editor session.
+	*/
+	function useMediaEditorState() {
+		const [state, dispatch] = (0, _wordpress_element.useReducer)(mediaEditorReducer, null, () => buildInitialMediaEditorState(createImageEditorState()));
+		const [initialBaseline, setInitialBaseline] = (0, _wordpress_element.useState)(() => state);
+		const stateRef = (0, _wordpress_element.useRef)(state);
+		const historyRef = (0, _wordpress_element.useRef)([]);
+		const redoStackRef = (0, _wordpress_element.useRef)([]);
+		const [hasUndo, setHasUndo] = (0, _wordpress_element.useState)(false);
+		const [hasRedo, setHasRedo] = (0, _wordpress_element.useState)(false);
+		const isGestureOpenRef = (0, _wordpress_element.useRef)(false);
+		const gestureSnapshotRef = (0, _wordpress_element.useRef)(null);
+		const pushSnapshot = (0, _wordpress_element.useCallback)((snapshot) => {
+			const last = historyRef.current[historyRef.current.length - 1];
+			if (last && areMediaEditorStatesEqual(last, snapshot)) return;
+			historyRef.current = [...historyRef.current, snapshot];
+			redoStackRef.current = [];
+			setHasUndo(true);
+			setHasRedo(false);
+		}, []);
+		const dispatchWithHistory = (0, _wordpress_element.useCallback)((action, recordHistory = true) => {
+			const preState = stateRef.current;
+			const postState = mediaEditorReducer(preState, action);
+			if (recordHistory && !areMediaEditorStatesEqual(preState, postState)) {
+				if (isGestureOpenRef.current) {
+					if (gestureSnapshotRef.current === null) gestureSnapshotRef.current = preState;
+				} else pushSnapshot(preState);
+			}
+			stateRef.current = postState;
+			dispatch(action);
+		}, [pushSnapshot]);
+		const beginGesture = (0, _wordpress_element.useCallback)(() => {
+			if (isGestureOpenRef.current) return;
+			isGestureOpenRef.current = true;
+			gestureSnapshotRef.current = null;
+		}, []);
+		const endGesture = (0, _wordpress_element.useCallback)(() => {
+			const snapshot = gestureSnapshotRef.current;
+			if (snapshot && !areMediaEditorStatesEqual(snapshot, stateRef.current)) pushSnapshot(snapshot);
+			gestureSnapshotRef.current = null;
+			isGestureOpenRef.current = false;
+		}, [pushSnapshot]);
+		const asOneUndoEntry = (0, _wordpress_element.useCallback)((run) => {
+			if (isGestureOpenRef.current) {
+				run();
+				return;
+			}
+			beginGesture();
+			run();
+			endGesture();
+		}, [beginGesture, endGesture]);
+		const setSourceImage = (0, _wordpress_element.useCallback)((image) => {
+			if (areImagesEqual(stateRef.current.imageEditor.image, image)) return;
+			const next = buildInitialMediaEditorState(createImageEditorState({ image }));
+			stateRef.current = next;
+			dispatch({
+				type: "RESTORE_SNAPSHOT",
+				payload: next
+			});
+			setInitialBaseline(next);
+			isGestureOpenRef.current = false;
+			gestureSnapshotRef.current = null;
+			historyRef.current = [];
+			redoStackRef.current = [];
+			setHasUndo(false);
+			setHasRedo(false);
+		}, []);
+		const handleImageEditorChange = (0, _wordpress_element.useCallback)((nextState, { isEdit }) => {
+			if (!areImagesEqual(stateRef.current.imageEditor.image, nextState.image)) {
+				setSourceImage(nextState.image);
+				return;
+			}
+			dispatchWithHistory({
+				type: "SET_IMAGE_EDITOR",
+				payload: nextState
+			}, isEdit);
+		}, [dispatchWithHistory, setSourceImage]);
+		const imageEditorController = useImageEditor({
+			state: state.imageEditor,
+			onChange: handleImageEditorChange
+		});
+		const setAspectRatioValue = (0, _wordpress_element.useCallback)((presetKey) => {
+			asOneUndoEntry(() => {
+				dispatchWithHistory({
+					type: "SET_ASPECT_RATIO_VALUE",
+					payload: presetKey
+				});
+				imageEditorController.setAspectRatio(resolveAspectRatio(presetKey, stateRef.current.imageEditor.image));
+			});
+		}, [
+			asOneUndoEntry,
+			dispatchWithHistory,
+			imageEditorController
+		]);
+		const reset = (0, _wordpress_element.useCallback)(() => {
+			dispatchWithHistory({ type: "RESET" });
+		}, [dispatchWithHistory]);
+		const setEdit = (0, _wordpress_element.useCallback)((name, value) => {
+			dispatchWithHistory({
+				type: "SET_EDIT",
+				payload: {
+					name,
+					value
+				}
+			});
+		}, [dispatchWithHistory]);
+		const undo = (0, _wordpress_element.useCallback)(() => {
+			endGesture();
+			const prev = historyRef.current[historyRef.current.length - 1];
+			if (!prev) return;
+			redoStackRef.current = [stateRef.current, ...redoStackRef.current];
+			historyRef.current = historyRef.current.slice(0, -1);
+			setHasUndo(historyRef.current.length > 0);
+			setHasRedo(true);
+			stateRef.current = prev;
+			dispatch({
+				type: "RESTORE_SNAPSHOT",
+				payload: prev
+			});
+		}, [endGesture]);
+		const redo = (0, _wordpress_element.useCallback)(() => {
+			endGesture();
+			const next = redoStackRef.current[0];
+			if (!next) return;
+			historyRef.current = [...historyRef.current, stateRef.current];
+			redoStackRef.current = redoStackRef.current.slice(1);
+			setHasUndo(true);
+			setHasRedo(redoStackRef.current.length > 0);
+			stateRef.current = next;
+			dispatch({
+				type: "RESTORE_SNAPSHOT",
+				payload: next
+			});
+		}, [endGesture]);
+		const imageEditor = (0, _wordpress_element.useMemo)(() => ({
+			...imageEditorController,
+			setImage: setSourceImage
+		}), [imageEditorController, setSourceImage]);
+		const isDirty = !areMediaEditorStatesEqual(state, initialBaseline);
+		return (0, _wordpress_element.useMemo)(() => ({
+			imageEditor,
+			cropOptions: state.cropOptions,
+			setAspectRatioValue,
+			edits: state.edits,
+			setEdit,
+			setSourceImage,
+			reset,
+			isDirty,
+			hasOutputEdits: imageEditor.isDirty,
+			hasUndo,
+			hasRedo,
+			undo,
+			redo,
+			beginGesture,
+			endGesture
+		}), [
+			imageEditor,
+			state.cropOptions,
+			setAspectRatioValue,
+			state.edits,
+			setEdit,
+			setSourceImage,
+			reset,
+			isDirty,
+			hasUndo,
+			hasRedo,
+			undo,
+			redo,
+			beginGesture,
+			endGesture
+		]);
+	}
+
+// packages/media-editor/build-module/state/media-editor-state-provider.mjs
+	const MediaEditorStateContext = (0, _wordpress_element.createContext)(null);
+	/**
+	* Provider that vends the media editor session via context. Wrap
+	* the media editor in this so every consumer (canvas, toolbar,
+	* sidebar) reads from the same store.
+	*
+	* @param props
+	* @param props.children
+	*/
+	function MediaEditorStateProvider({ children }) {
+		const controller = useMediaEditorState();
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorStateContext.Provider, {
+			value: controller,
+			children
+		});
+	}
+	/**
+	* Consume the media editor session. Throws if used
+	* outside a `<MediaEditorStateProvider>`.
+	*
+	* @return The media editor session.
+	*/
+	function useMediaEditor() {
+		const context = (0, _wordpress_element.useContext)(MediaEditorStateContext);
+		if (!context) throw new Error("useMediaEditor must be used within a MediaEditorStateProvider.");
+		return context;
+	}
+
 // packages/media-editor/build-module/components/media-editor-canvas/index.mjs
 /**
 	* Editing surface for image media in the media editor modal. Pulls
-	* its cropper controller from the surrounding `<MediaEditorStateProvider>`
+	* its image editor controller from the surrounding `<MediaEditorStateProvider>`
 	* so the bottom bar and Crop sidebar tab share the same state.
 	*
 	* Returns `null` for missing or non-image media so the modal's outer
@@ -99509,11 +99723,8 @@ If there's a particular need for this, please submit a feature request at https:
 	function MediaEditorCanvas({ isPlacementActive = false, onGestureStart, onGestureEnd, disabled = false }) {
 		const { media } = useMediaEditorContext();
 		const session = useMediaEditor();
-		const { aspectRatioValue } = session.cropOptions;
-		const cropperImage = session.cropper.state.image;
 		const { beginGesture, endGesture, setSourceImage } = session;
 		const [settled, setSettled] = (0, _wordpress_element.useState)();
-		const aspectRatio = (0, _wordpress_element.useMemo)(() => resolveAspectRatio(aspectRatioValue, cropperImage), [aspectRatioValue, cropperImage]);
 		const handleGestureStart = (0, _wordpress_element.useCallback)(() => {
 			beginGesture();
 			onGestureStart?.();
@@ -99568,14 +99779,12 @@ If there's a particular need for this, please submit a feature request at https:
 				className: "media-editor-canvas__spinner",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				className: clsx("media-editor-canvas__cropper", { "is-loaded": status === "loaded" }),
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Cropper, {
+				className: clsx("media-editor-canvas__image-editor", { "is-loaded": status === "loaded" }),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ImageEditorCanvas, {
 					src: mediaUrl,
-					controller: session.cropper,
-					aspectRatio,
+					controller: session.imageEditor,
 					freeformCrop: true,
-					showGrid: "interactive",
-					isPlacementActive,
+					showGrid: isPlacementActive ? true : "interactive",
 					onGestureStart: handleGestureStart,
 					onGestureEnd: handleGestureEnd,
 					onImageLoaded: handleImageLoaded,
@@ -99969,14 +100178,14 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param props.disabled
 	*/
 	function MediaEditorFineRotation({ onPlacementControlInteraction, disabled = false }) {
-		const { state, setRotation } = useMediaEditor().cropper;
+		const { state, setRotation, maxRotationOffset } = useMediaEditor().imageEditor;
 		const rotationGestureHandlers = useCropGestureHandlers({ commitOnKeyUp: false });
 		const baseAngle = Math.round(state.rotation / 90) * 90;
 		const visualDir = state.flip.horizontal !== state.flip.vertical ? -1 : 1;
 		const fineOffset = (state.rotation - baseAngle) * visualDir;
 		const handleRotationSlider = (value) => {
 			const EPS = .01;
-			const clamped = Math.max(-45 + EPS, Math.min(45 - EPS, value));
+			const clamped = Math.max(-maxRotationOffset + EPS, Math.min(maxRotationOffset - EPS, value));
 			onPlacementControlInteraction?.();
 			setRotation(baseAngle + clamped * visualDir);
 		};
@@ -99986,8 +100195,8 @@ If there's a particular need for this, please submit a feature request at https:
 			...rotationGestureHandlers,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RotationRuler, {
 				label: (0, _wordpress_i18n.__)("Fine rotation"),
-				min: -45,
-				max: 45,
+				min: -maxRotationOffset,
+				max: maxRotationOffset,
 				value: fineOffset,
 				onChange: handleRotationSlider,
 				disabled
@@ -100010,8 +100219,7 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* Thin selector over the composite media-editor store for the Crop
 	* sidebar tab. Reads the cropOptions slice (preset key) and exposes
-	* the corresponding setters plus a render-time `resolvedAspectRatio`
-	* derivation.
+	* the corresponding setters plus the ratio the image editor has locked.
 	*
 	* No local React state, no refs, no synchronization effects — the
 	* composite store is the single source of truth.
@@ -100022,9 +100230,8 @@ If there's a particular need for this, please submit a feature request at https:
 	function useCropOptions({ aspectRatioPresets } = {}) {
 		const controller = useMediaEditor();
 		const { aspectRatioValue } = controller.cropOptions;
-		const cropperImage = controller.cropper.state.image;
 		const aspectRatioOptions = (0, _wordpress_element.useMemo)(() => getAspectRatioOptions(aspectRatioPresets), [aspectRatioPresets]);
-		const resolvedAspectRatio = (0, _wordpress_element.useMemo)(() => resolveAspectRatio(aspectRatioValue, cropperImage), [aspectRatioValue, cropperImage]);
+		const resolvedAspectRatio = controller.imageEditor.state.aspectRatio;
 		return {
 			aspectRatioValue,
 			setAspectRatioValue: controller.setAspectRatioValue,
@@ -100056,12 +100263,11 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param props.disabled
 	*/
 	function MediaEditorImageControls({ withLabels = false, showAspectRatioControl = false, aspectRatioPresets, zoomFactor = DEFAULT_ZOOM_FACTOR, disabled = false }) {
-		const { state, setFlip, snapRotate90, setZoom } = useMediaEditor().cropper;
+		const { state, setFlip, snapRotate90, setZoom, minZoom, maxZoom } = useMediaEditor().imageEditor;
 		const { aspectRatioValue, setAspectRatioValue, aspectRatioOptions } = useCropOptions({ aspectRatioPresets });
 		const hasAspectRatioControl = !withLabels && showAspectRatioControl;
-		const minZoom = getMinZoom(state);
 		const zoomByFactor = (factor) => {
-			setZoom(Math.min(10, Math.max(minZoom, state.zoom * factor)));
+			setZoom(Math.min(maxZoom, Math.max(minZoom, state.zoom * factor)));
 		};
 		const rotateButtons = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 			size: "compact",
@@ -100110,7 +100316,7 @@ If there's a particular need for this, please submit a feature request at https:
 			icon: plus_default,
 			label: (0, _wordpress_i18n.__)("Zoom in"),
 			showTooltip: true,
-			disabled: disabled || state.zoom >= 10,
+			disabled: disabled || state.zoom >= maxZoom,
 			accessibleWhenDisabled: true,
 			onClick: () => zoomByFactor(zoomFactor)
 		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
@@ -100356,108 +100562,6 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// packages/media-editor/build-module/components/media-editor-modal/build-modifiers.mjs
-/**
-	* Tolerance (percent) used to decide whether a crop rect is effectively
-	* full-frame. Sub-pixel / float-ulp deltas below this value are treated
-	* as no crop. Matches the historical threshold used by the legacy
-	* `use-save-image.js` (which compared against `99.9`).
-	*/
-	const CROP_TOLERANCE = .1;
-	/**
-	* Build a Core-compatible modifiers array from the cropper state.
-	*
-	* Emits `[flip, rotate, crop]` in that order. Identity operations are
-	* pruned — an absent flip, a rotation that normalizes to 0°, and a crop
-	* rect that covers (within tolerance) the full post-rotate AABB each
-	* produce no modifier. An identity state (fresh image, no edits) returns
-	* an empty array; callers can use that to skip the `/edit` call.
-	*
-	* Frames and math:
-	*
-	* The cropper's `cropRect` is stored as fractions of the **snap-rotation**
-	* bounding box (the stencil-reference frame — see `createCamera` /
-	* `createExportCamera`). Pan is in that frame; zoom scales the image
-	* beneath a fixed stencil. Two conversions are needed to reach the frame
-	* Core's crop modifier applies against:
-	*
-	*   1. Express the stencil rect in snap-AABB **pixels**:
-	*      Image screen-normalized top-left with zoom/pan is
-	*      `(0.5 + pan - zoom/2)`; the stencil's pixel footprint is the
-	*      inverse of that transform applied to `cropRect`.
-	*
-	*   2. Translate from snap-AABB coords to full-AABB coords. Both AABBs
-	*      share the source-image center, so the conversion is a pure
-	*      translation by `(fullCenter - snapCenter)`. Finally, express the
-	*      translated rect as percentages of the full AABB.
-	*
-	* Rotation sign: the cropper composes `flip · R(θ)` on the source (see
-	* `createExportCamera` — rotate then flip). Core's `[flip, rotate]`
-	* applies the opposite order: `R(θ') · flip`. For both to land on the
-	* same pixels we invert the rotation sign when exactly one flip axis
-	* is set (`flip_h · R(θ) = R(-θ) · flip_h`). Both-or-neither flips
-	* leave the sign alone because `flip_h · flip_v = -I` commutes with
-	* rotation.
-	*
-	* @param cropper The cropper controller. The current edit and the loaded
-	*                image's natural size are both read from its state.
-	* @return Ordered modifier array; empty when nothing is server-relevant or
-	*         no image has loaded.
-	*/
-	function buildModifiers(cropper) {
-		const modifiers = [];
-		const { state } = cropper;
-		const { image } = state;
-		if (!image || image.naturalWidth === 0 || image.naturalHeight === 0) return modifiers;
-		const imageSize = {
-			width: image.naturalWidth,
-			height: image.naturalHeight
-		};
-		const { cropRect, pan, zoom, flip } = state;
-		const hasFlipH = flip.horizontal;
-		const hasFlipV = flip.vertical;
-		if (hasFlipH || hasFlipV) modifiers.push({
-			type: "flip",
-			args: { flip: {
-				horizontal: hasFlipH,
-				vertical: hasFlipV
-			} }
-		});
-		const rawAngle = (state.rotation % 360 + 360) % 360;
-		const signedAngle = hasFlipH !== hasFlipV ? (360 - rawAngle) % 360 : rawAngle;
-		if (signedAngle !== 0) modifiers.push({
-			type: "rotate",
-			args: { angle: signedAngle }
-		});
-		const snapRotation = Math.round(state.rotation / 90) * 90;
-		const { width: snapW, height: snapH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
-		const { width: fullW, height: fullH } = getRotatedBBox(imageSize.width, imageSize.height, state.rotation);
-		const imgLeft = .5 + pan.x - zoom / 2;
-		const imgTop = .5 + pan.y - zoom / 2;
-		const snapX = (cropRect.x - imgLeft) / zoom * snapW;
-		const snapY = (cropRect.y - imgTop) / zoom * snapH;
-		const widthPx = cropRect.width / zoom * snapW;
-		const heightPx = cropRect.height / zoom * snapH;
-		const offsetX = (fullW - snapW) / 2;
-		const offsetY = (fullH - snapH) / 2;
-		const fullX = snapX + offsetX;
-		const fullY = snapY + offsetY;
-		const leftPct = fullX / fullW * 100;
-		const topPct = fullY / fullH * 100;
-		const widthPct = widthPx / fullW * 100;
-		const heightPct = heightPx / fullH * 100;
-		if (!(leftPct <= CROP_TOLERANCE && topPct <= CROP_TOLERANCE && widthPct >= 99.9 && heightPct >= 99.9)) modifiers.push({
-			type: "crop",
-			args: {
-				left: leftPct,
-				top: topPct,
-				width: widthPct,
-				height: heightPct
-			}
-		});
-		return modifiers;
-	}
-
 // packages/media-editor/build-module/components/media-editor/use-save-media-editor.mjs
 	const METADATA_EDIT_KEYS = [
 		"title",
@@ -100469,7 +100573,28 @@ If there's a particular need for this, please submit a feature request at https:
 	const MEDIA_EDITOR_NOTICES_CONTEXT = "media-editor";
 	function getCropModifiers(session) {
 		if (!session.hasOutputEdits) return [];
-		return buildModifiers(session.cropper);
+		return mapEditToOriginal(session.imageEditor.state).map((edit) => {
+			if (edit.type === "flip") return {
+				type: "flip",
+				args: { flip: {
+					horizontal: edit.horizontal,
+					vertical: edit.vertical
+				} }
+			};
+			if (edit.type === "rotate") return {
+				type: "rotate",
+				args: { angle: edit.angle }
+			};
+			return {
+				type: "crop",
+				args: {
+					left: edit.x * 100,
+					top: edit.y * 100,
+					width: edit.width * 100,
+					height: edit.height * 100
+				}
+			};
+		});
 	}
 	function getMetadataEdits(pendingEdits, media) {
 		const metadataEdits = {};
@@ -100514,7 +100639,7 @@ If there's a particular need for this, please submit a feature request at https:
 					const next = saved ?? targetMedia;
 					if (next && next.id !== targetId) clearEntityRecordEdits("postType", "attachment", targetId);
 					if (next && next.id) {
-						if (next.id === id) session.cropper.reset();
+						if (next.id === id) session.reset();
 						onSaved?.({
 							id: next.id,
 							url: next.source_url,
