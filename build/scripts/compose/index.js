@@ -2759,6 +2759,7 @@ var import_mousetrap = /* @__PURE__ */ __toESM(require_mousetrap(), 1);
 			}
 			function maybeDragEnd(event) {
 				if (!isDragging) return;
+				if (event.type === "mousemove" && event.buttons !== 0) return;
 				isDragging = false;
 				ownerDocument.removeEventListener("dragend", maybeDragEnd);
 				ownerDocument.removeEventListener("mousemove", maybeDragEnd);
@@ -2770,6 +2771,7 @@ var import_mousetrap = /* @__PURE__ */ __toESM(require_mousetrap(), 1);
 			element.addEventListener("dragover", onDragOver);
 			element.addEventListener("dragleave", onDragLeave);
 			ownerDocument.addEventListener("dragenter", maybeDragStart);
+			ownerDocument.addEventListener("dragover", maybeDragStart, true);
 			return () => {
 				element.removeAttribute("data-is-drop-zone");
 				element.removeEventListener("drop", onDrop);
@@ -2779,6 +2781,7 @@ var import_mousetrap = /* @__PURE__ */ __toESM(require_mousetrap(), 1);
 				ownerDocument.removeEventListener("dragend", maybeDragEnd);
 				ownerDocument.removeEventListener("mousemove", maybeDragEnd);
 				ownerDocument.removeEventListener("dragenter", maybeDragStart);
+				ownerDocument.removeEventListener("dragover", maybeDragStart, true);
 			};
 		}, [isDisabled, dropZoneElement]);
 	}
