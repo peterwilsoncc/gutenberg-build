@@ -50263,7 +50263,7 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* Prepares the Featured Image toolbars and frames.
 	*
-	* @return {window.wp.media.view.MediaFrame.Select} The default media workflow.
+	* @return The default media workflow.
 	*/
 	const getFeaturedImageMediaFrame = () => {
 		const { wp } = window;
@@ -50271,8 +50271,7 @@ If there's a particular need for this, please submit a feature request at https:
 			/**
 			* Enables the Set Featured Image Button.
 			*
-			* @param {Object} toolbar toolbar for featured image state
-			* @return {void}
+			* @param toolbar - Toolbar for featured image state.
 			*/
 			featuredImageToolbar(toolbar) {
 				this.createSelectToolbar(toolbar, {
@@ -50282,8 +50281,6 @@ If there's a particular need for this, please submit a feature request at https:
 			},
 			/**
 			* Handle the edit state requirements of selected media item.
-			*
-			* @return {void}
 			*/
 			editState() {
 				const selection = this.state("featured-image").get("selection");
@@ -50296,8 +50293,6 @@ If there's a particular need for this, please submit a feature request at https:
 			},
 			/**
 			* Create the default states.
-			*
-			* @return {void}
 			*/
 			createStates: function createStates() {
 				this.on("toolbar:create:featured-image", this.featuredImageToolbar, this);
@@ -50309,7 +50304,7 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* Prepares the default frame for selecting a single media item.
 	*
-	* @return {window.wp.media.view.MediaFrame.Select} The default media workflow.
+	* @return The default media workflow.
 	*/
 	const getSingleMediaFrame = () => {
 		const { wp } = window;
@@ -50332,22 +50327,18 @@ createStates() {
 	/**
 	* Prepares the Gallery toolbars and frames.
 	*
-	* @return {window.wp.media.view.MediaFrame.Post} The default media workflow.
+	* @return The default media workflow.
 	*/
 	const getGalleryDetailsMediaFrame = () => {
 		const { wp } = window;
 		/**
 		* Custom gallery details frame.
 		*
-		* @see https://github.com/xwp/wp-core-media-widgets/blob/905edbccfc2a623b73a93dac803c5335519d7837/wp-admin/js/widgets/media-gallery-widget.js
-		* @class GalleryDetailsMediaFrame
-		* @class
+		* @see {@link https://github.com/xwp/wp-core-media-widgets/blob/905edbccfc2a623b73a93dac803c5335519d7837/wp-admin/js/widgets/media-gallery-widget.js}
 		*/
 		return wp.media.view.MediaFrame.Post.extend({
 			/**
 			* Set up gallery toolbar.
-			*
-			* @return {void}
 			*/
 			galleryToolbar() {
 				const editing = this.state().get("editing");
@@ -50359,7 +50350,7 @@ createStates() {
 						priority: 80,
 						requires: { library: true },
 						/**
-						* @fires wp.media.controller.State#update
+						* Fires the `wp.media.controller.State#update` event.
 						*/
 						click() {
 							const controller = this.controller, state = controller.state();
@@ -50373,8 +50364,6 @@ createStates() {
 			},
 			/**
 			* Handle the edit state requirements of selected media item.
-			*
-			* @return {void}
 			*/
 			editState() {
 				const selection = this.state("gallery").get("selection");
@@ -50387,8 +50376,6 @@ createStates() {
 			},
 			/**
 			* Create the default states.
-			*
-			* @return {void}
 			*/
 			createStates: function createStates() {
 				this.on("toolbar:create:main-gallery", this.galleryToolbar, this);
@@ -50448,8 +50435,8 @@ createStates() {
 		});
 	};
 	var MediaUpload = class extends _wordpress_element.Component {
-		constructor() {
-			super(...arguments);
+		constructor(...args) {
+			super(...args);
 			this.openModal = this.openModal.bind(this);
 			this.onOpen = this.onOpen.bind(this);
 			this.onSelect = this.onSelect.bind(this);
@@ -50471,8 +50458,6 @@ createStates() {
 		}
 		/**
 		* Sets the Gallery frame and initializes listeners.
-		*
-		* @return {void}
 		*/
 		buildAndSetGalleryFrame() {
 			const { addToGallery = false, allowedTypes, multiple = false, value = DEFAULT_EMPTY_GALLERY } = this.props;
@@ -50503,8 +50488,6 @@ createStates() {
 		}
 		/**
 		* Initializes the Media Library requirements for the featured image flow.
-		*
-		* @return {void}
 		*/
 		buildAndSetFeatureImageFrame() {
 			const { wp } = window;
@@ -50527,8 +50510,6 @@ createStates() {
 		}
 		/**
 		* Initializes the Media Library requirements for the single image flow.
-		*
-		* @return {void}
 		*/
 		buildAndSetSingleMediaFrame() {
 			const { wp } = window;
