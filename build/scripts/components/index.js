@@ -29023,7 +29023,7 @@ Icon: Object.assign(AlignmentMatrixControlIcon, { displayName: "AlignmentMatrixC
 	*/
 	function useBaseControlProps(props) {
 		const { help, id: preferredId, ...restProps } = props;
-		const uniqueId = (0, _wordpress_compose.useInstanceId)(BaseControl, "wp-components-base-control", preferredId);
+		const uniqueId = (0, _wordpress_compose.useInstanceId)(useBaseControlProps, "wp-components-base-control", preferredId);
 		return {
 			baseControlProps: {
 				id: uniqueId,
