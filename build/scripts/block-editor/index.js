@@ -114993,6 +114993,9 @@ If there's a particular need for this, please submit a feature request at https:
 	const STROKE_WIDTH = 1.5;
 	const MIN_RATIO = 1 / 3;
 	const MAX_RATIO = 3;
+	function snapToPixels(size) {
+		return Math.ceil(size) - .5;
+	}
 	/**
 	* Renders a rounded rectangle with the shape of an aspect ratio, so that a
 	* ratio can be recognized without reading its label.
@@ -115008,8 +115011,8 @@ If there's a particular need for this, please submit a feature request at https:
 			size: BOX_SIZE
 		});
 		const clampedRatio = Math.min(MAX_RATIO, Math.max(MIN_RATIO, parsedRatio));
-		const width = clampedRatio >= 1 ? MAX_SIDE : MAX_SIDE * clampedRatio;
-		const height = clampedRatio >= 1 ? MAX_SIDE / clampedRatio : MAX_SIDE;
+		const width = snapToPixels(MAX_SIDE * Math.min(1, clampedRatio));
+		const height = snapToPixels(MAX_SIDE / Math.max(1, clampedRatio));
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
 			xmlns: "http://www.w3.org/2000/svg",
 			viewBox: `0 0 ${BOX_SIZE} ${BOX_SIZE}`,
@@ -115025,7 +115028,7 @@ If there's a particular need for this, please submit a feature request at https:
 				y: (BOX_SIZE - height) / 2,
 				width,
 				height,
-				rx: "1.5"
+				rx: "1.25"
 			})
 		});
 	}
