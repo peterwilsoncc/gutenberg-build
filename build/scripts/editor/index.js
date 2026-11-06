@@ -86548,15 +86548,1160 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	var style_book_default = (0, _wordpress_element.forwardRef)(StylesCanvasStyleBook);
 
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/base.js
+	var Diff = class {
+		diff(oldStr, newStr, options = {}) {
+			let callback;
+			if (typeof options === "function") {
+				callback = options;
+				options = {};
+			} else if ("callback" in options) callback = options.callback;
+			const oldString = this.castInput(oldStr, options);
+			const newString = this.castInput(newStr, options);
+			const oldTokens = this.removeEmpty(this.tokenize(oldString, options));
+			const newTokens = this.removeEmpty(this.tokenize(newString, options));
+			return this.diffWithOptionsObj(oldTokens, newTokens, options, callback);
+		}
+		diffWithOptionsObj(oldTokens, newTokens, options, callback) {
+			var _a;
+			const done = (value) => {
+				value = this.postProcess(value, options);
+				if (callback) {
+					setTimeout(function() {
+						callback(value);
+					}, 0);
+					return;
+				} else return value;
+			};
+			const newLen = newTokens.length, oldLen = oldTokens.length;
+			let editLength = 1;
+			let maxEditLength = newLen + oldLen;
+			if (options.maxEditLength != null) maxEditLength = Math.min(maxEditLength, options.maxEditLength);
+			const maxExecutionTime = (_a = options.timeout) !== null && _a !== void 0 ? _a : Infinity;
+			const abortAfterTimestamp = Date.now() + maxExecutionTime;
+			const bestPath = [{
+				oldPos: -1,
+				lastComponent: void 0
+			}];
+			let newPos = this.extractCommon(bestPath[0], newTokens, oldTokens, 0, options);
+			if (bestPath[0].oldPos + 1 >= oldLen && newPos + 1 >= newLen) return done(this.buildValues(bestPath[0].lastComponent, newTokens, oldTokens));
+			let minDiagonalToConsider = -Infinity, maxDiagonalToConsider = Infinity;
+			const execEditLength = () => {
+				for (let diagonalPath = Math.max(minDiagonalToConsider, -editLength); diagonalPath <= Math.min(maxDiagonalToConsider, editLength); diagonalPath += 2) {
+					let basePath;
+					const removePath = bestPath[diagonalPath - 1], addPath = bestPath[diagonalPath + 1];
+					if (removePath) bestPath[diagonalPath - 1] = void 0;
+					let canAdd = false;
+					if (addPath) {
+						const addPathNewPos = addPath.oldPos - diagonalPath;
+						canAdd = addPath && 0 <= addPathNewPos && addPathNewPos < newLen;
+					}
+					const canRemove = removePath && removePath.oldPos + 1 < oldLen;
+					if (!canAdd && !canRemove) {
+						bestPath[diagonalPath] = void 0;
+						continue;
+					}
+					if (!canRemove || canAdd && removePath.oldPos < addPath.oldPos) basePath = this.addToPath(addPath, true, false, 0, options);
+					else basePath = this.addToPath(removePath, false, true, 1, options);
+					newPos = this.extractCommon(basePath, newTokens, oldTokens, diagonalPath, options);
+					if (basePath.oldPos + 1 >= oldLen && newPos + 1 >= newLen) return done(this.buildValues(basePath.lastComponent, newTokens, oldTokens)) || true;
+					else {
+						bestPath[diagonalPath] = basePath;
+						if (basePath.oldPos + 1 >= oldLen) maxDiagonalToConsider = Math.min(maxDiagonalToConsider, diagonalPath - 1);
+						if (newPos + 1 >= newLen) minDiagonalToConsider = Math.max(minDiagonalToConsider, diagonalPath + 1);
+					}
+				}
+				editLength++;
+			};
+			if (callback) (function exec() {
+				setTimeout(function() {
+					if (editLength > maxEditLength || Date.now() > abortAfterTimestamp) return callback(void 0);
+					if (!execEditLength()) exec();
+				}, 0);
+			})();
+			else while (editLength <= maxEditLength && Date.now() <= abortAfterTimestamp) {
+				const ret = execEditLength();
+				if (ret) return ret;
+			}
+		}
+		addToPath(path, added, removed, oldPosInc, options) {
+			const last = path.lastComponent;
+			if (last && !options.oneChangePerToken && last.added === added && last.removed === removed) return {
+				oldPos: path.oldPos + oldPosInc,
+				lastComponent: {
+					count: last.count + 1,
+					added,
+					removed,
+					previousComponent: last.previousComponent
+				}
+			};
+			else return {
+				oldPos: path.oldPos + oldPosInc,
+				lastComponent: {
+					count: 1,
+					added,
+					removed,
+					previousComponent: last
+				}
+			};
+		}
+		extractCommon(basePath, newTokens, oldTokens, diagonalPath, options) {
+			const newLen = newTokens.length, oldLen = oldTokens.length;
+			let oldPos = basePath.oldPos, newPos = oldPos - diagonalPath, commonCount = 0;
+			while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(oldTokens[oldPos + 1], newTokens[newPos + 1], options)) {
+				newPos++;
+				oldPos++;
+				commonCount++;
+				if (options.oneChangePerToken) basePath.lastComponent = {
+					count: 1,
+					previousComponent: basePath.lastComponent,
+					added: false,
+					removed: false
+				};
+			}
+			if (commonCount && !options.oneChangePerToken) basePath.lastComponent = {
+				count: commonCount,
+				previousComponent: basePath.lastComponent,
+				added: false,
+				removed: false
+			};
+			basePath.oldPos = oldPos;
+			return newPos;
+		}
+		equals(left, right, options) {
+			if (options.comparator) return options.comparator(left, right);
+			else return left === right || !!options.ignoreCase && left.toLowerCase() === right.toLowerCase();
+		}
+		removeEmpty(array) {
+			const ret = [];
+			for (let i = 0; i < array.length; i++) if (array[i]) ret.push(array[i]);
+			return ret;
+		}
+		castInput(value, options) {
+			return value;
+		}
+		tokenize(value, options) {
+			return Array.from(value);
+		}
+		join(chars) {
+			return chars.join("");
+		}
+		postProcess(changeObjects, options) {
+			return changeObjects;
+		}
+		get useLongestToken() {
+			return false;
+		}
+		buildValues(lastComponent, newTokens, oldTokens) {
+			const components = [];
+			let nextComponent;
+			while (lastComponent) {
+				components.push(lastComponent);
+				nextComponent = lastComponent.previousComponent;
+				delete lastComponent.previousComponent;
+				lastComponent = nextComponent;
+			}
+			components.reverse();
+			const componentLen = components.length;
+			let componentPos = 0, newPos = 0, oldPos = 0;
+			for (; componentPos < componentLen; componentPos++) {
+				const component = components[componentPos];
+				if (!component.removed) {
+					if (!component.added && this.useLongestToken) {
+						let value = newTokens.slice(newPos, newPos + component.count);
+						value = value.map(function(value, i) {
+							const oldValue = oldTokens[oldPos + i];
+							return oldValue.length > value.length ? oldValue : value;
+						});
+						component.value = this.join(value);
+					} else component.value = this.join(newTokens.slice(newPos, newPos + component.count));
+					newPos += component.count;
+					if (!component.added) oldPos += component.count;
+				} else {
+					component.value = this.join(oldTokens.slice(oldPos, oldPos + component.count));
+					oldPos += component.count;
+				}
+			}
+			return components;
+		}
+	};
+
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/character.js
+	var CharacterDiff = class extends Diff {};
+	const characterDiff = new CharacterDiff();
+	function diffChars(oldStr, newStr, options) {
+		return characterDiff.diff(oldStr, newStr, options);
+	}
+
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/util/string.js
+	function longestCommonPrefix(str1, str2) {
+		let i = 0;
+		for (; i < str1.length && i < str2.length; i++) if (str1[i] != str2[i]) return str1.slice(0, i);
+		return str1.slice(0, i);
+	}
+	function longestCommonSuffix(str1, str2) {
+		let i;
+		if (!str1 || !str2 || str1[str1.length - 1] != str2[str2.length - 1]) return "";
+		for (i = 0; i < str1.length && i < str2.length; i++) if (str1[str1.length - (i + 1)] != str2[str2.length - (i + 1)]) return str1.slice(-i);
+		return str1.slice(-i);
+	}
+	function replacePrefix(string, oldPrefix, newPrefix) {
+		if (string.slice(0, oldPrefix.length) != oldPrefix) throw Error(`string ${JSON.stringify(string)} doesn't start with prefix ${JSON.stringify(oldPrefix)}; this is a bug`);
+		return newPrefix + string.slice(oldPrefix.length);
+	}
+	function replaceSuffix(string, oldSuffix, newSuffix) {
+		if (!oldSuffix) return string + newSuffix;
+		if (string.slice(-oldSuffix.length) != oldSuffix) throw Error(`string ${JSON.stringify(string)} doesn't end with suffix ${JSON.stringify(oldSuffix)}; this is a bug`);
+		return string.slice(0, -oldSuffix.length) + newSuffix;
+	}
+	function removePrefix(string, oldPrefix) {
+		return replacePrefix(string, oldPrefix, "");
+	}
+	function removeSuffix(string, oldSuffix) {
+		return replaceSuffix(string, oldSuffix, "");
+	}
+	function maximumOverlap(string1, string2) {
+		return string2.slice(0, overlapCount(string1, string2));
+	}
+	function overlapCount(a, b) {
+		let startA = 0;
+		if (a.length > b.length) startA = a.length - b.length;
+		let endB = b.length;
+		if (a.length < b.length) endB = a.length;
+		const map = Array(endB);
+		let k = 0;
+		map[0] = 0;
+		for (let j = 1; j < endB; j++) {
+			if (b[j] == b[k]) map[j] = map[k];
+			else map[j] = k;
+			while (k > 0 && b[j] != b[k]) k = map[k];
+			if (b[j] == b[k]) k++;
+		}
+		k = 0;
+		for (let i = startA; i < a.length; i++) {
+			while (k > 0 && a[i] != b[k]) k = map[k];
+			if (a[i] == b[k]) k++;
+		}
+		return k;
+	}
+	/**
+	* Split a string into segments using a word segmenter, merging consecutive
+	* segments if they are both whitespace segments. Whitespace segments can
+	* appear adjacent to one another for two reasons:
+	* - newlines always get their own segment
+	* - where a diacritic is attached to a whitespace character in the text, the
+	*   segment ends after the diacritic, so e.g. " \u0300 " becomes two segments.
+	* This function therefore runs the segmenter's .segment() method and then
+	* merges consecutive segments of whitespace into a single part.
+	*/
+	function segment(string, segmenter) {
+		const parts = [];
+		for (const segmentObj of Array.from(segmenter.segment(string))) {
+			const segment = segmentObj.segment;
+			if (parts.length && /\s/.test(parts[parts.length - 1]) && /\s/.test(segment)) parts[parts.length - 1] += segment;
+			else parts.push(segment);
+		}
+		return parts;
+	}
+	function trailingWs(string, segmenter) {
+		if (segmenter) return leadingAndTrailingWs(string, segmenter)[1];
+		let i;
+		for (i = string.length - 1; i >= 0; i--) if (!string[i].match(/\s/)) break;
+		return string.substring(i + 1);
+	}
+	function leadingWs(string, segmenter) {
+		if (segmenter) return leadingAndTrailingWs(string, segmenter)[0];
+		const match = string.match(/^\s*/);
+		return match ? match[0] : "";
+	}
+	function leadingAndTrailingWs(string, segmenter) {
+		if (!segmenter) return [leadingWs(string), trailingWs(string)];
+		if (segmenter.resolvedOptions().granularity != "word") throw new Error("The segmenter passed must have a granularity of \"word\"");
+		const segments = segment(string, segmenter);
+		const firstSeg = segments[0];
+		const lastSeg = segments[segments.length - 1];
+		return [/\s/.test(firstSeg) ? firstSeg : "", /\s/.test(lastSeg) ? lastSeg : ""];
+	}
+
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/word.js
+	const extendedWordChars = "a-zA-Z0-9_\\u{AD}\\u{C0}-\\u{D6}\\u{D8}-\\u{F6}\\u{F8}-\\u{2C6}\\u{2C8}-\\u{2D7}\\u{2DE}-\\u{2FF}\\u{1E00}-\\u{1EFF}";
+	const tokenizeIncludingWhitespace = new RegExp(`[${extendedWordChars}]+|\\s+|[^${extendedWordChars}]`, "ug");
+	var WordDiff = class extends Diff {
+		equals(left, right, options) {
+			if (options.ignoreCase) {
+				left = left.toLowerCase();
+				right = right.toLowerCase();
+			}
+			return left.trim() === right.trim();
+		}
+		tokenize(value, options = {}) {
+			let parts;
+			if (options.intlSegmenter) {
+				const segmenter = options.intlSegmenter;
+				if (segmenter.resolvedOptions().granularity != "word") throw new Error("The segmenter passed must have a granularity of \"word\"");
+				parts = segment(value, segmenter);
+			} else parts = value.match(tokenizeIncludingWhitespace) || [];
+			const tokens = [];
+			let prevPart = null;
+			parts.forEach((part) => {
+				if (/\s/.test(part)) {
+					if (prevPart == null) tokens.push(part);
+					else tokens.push(tokens.pop() + part);
+				} else if (prevPart != null && /\s/.test(prevPart)) {
+					if (tokens[tokens.length - 1] == prevPart) tokens.push(tokens.pop() + part);
+					else tokens.push(prevPart + part);
+				} else tokens.push(part);
+				prevPart = part;
+			});
+			return tokens;
+		}
+		join(tokens) {
+			return tokens.map((token, i) => {
+				if (i == 0) return token;
+				else return token.replace(/^\s+/, "");
+			}).join("");
+		}
+		postProcess(changes, options) {
+			if (!changes || options.oneChangePerToken) return changes;
+			let lastKeep = null;
+			let insertion = null;
+			let deletion = null;
+			changes.forEach((change) => {
+				if (change.added) insertion = change;
+				else if (change.removed) deletion = change;
+				else {
+					if (insertion || deletion) dedupeWhitespaceInChangeObjects(lastKeep, deletion, insertion, change, options.intlSegmenter);
+					lastKeep = change;
+					insertion = null;
+					deletion = null;
+				}
+			});
+			if (insertion || deletion) dedupeWhitespaceInChangeObjects(lastKeep, deletion, insertion, null, options.intlSegmenter);
+			return changes;
+		}
+	};
+	const wordDiff = new WordDiff();
+	function dedupeWhitespaceInChangeObjects(startKeep, deletion, insertion, endKeep, segmenter) {
+		if (deletion && insertion) {
+			const [oldWsPrefix, oldWsSuffix] = leadingAndTrailingWs(deletion.value, segmenter);
+			const [newWsPrefix, newWsSuffix] = leadingAndTrailingWs(insertion.value, segmenter);
+			if (startKeep) {
+				const commonWsPrefix = longestCommonPrefix(oldWsPrefix, newWsPrefix);
+				startKeep.value = replaceSuffix(startKeep.value, newWsPrefix, commonWsPrefix);
+				deletion.value = removePrefix(deletion.value, commonWsPrefix);
+				insertion.value = removePrefix(insertion.value, commonWsPrefix);
+			}
+			if (endKeep) {
+				const commonWsSuffix = longestCommonSuffix(oldWsSuffix, newWsSuffix);
+				endKeep.value = replacePrefix(endKeep.value, newWsSuffix, commonWsSuffix);
+				deletion.value = removeSuffix(deletion.value, commonWsSuffix);
+				insertion.value = removeSuffix(insertion.value, commonWsSuffix);
+			}
+		} else if (insertion) {
+			if (startKeep) {
+				const ws = leadingWs(insertion.value, segmenter);
+				insertion.value = insertion.value.substring(ws.length);
+			}
+			if (endKeep) {
+				const ws = leadingWs(endKeep.value, segmenter);
+				endKeep.value = endKeep.value.substring(ws.length);
+			}
+		} else if (startKeep && endKeep) {
+			const newWsFull = leadingWs(endKeep.value, segmenter), [delWsStart, delWsEnd] = leadingAndTrailingWs(deletion.value, segmenter);
+			const newWsStart = longestCommonPrefix(newWsFull, delWsStart);
+			deletion.value = removePrefix(deletion.value, newWsStart);
+			const newWsEnd = longestCommonSuffix(removePrefix(newWsFull, newWsStart), delWsEnd);
+			deletion.value = removeSuffix(deletion.value, newWsEnd);
+			endKeep.value = replacePrefix(endKeep.value, newWsFull, newWsEnd);
+			startKeep.value = replaceSuffix(startKeep.value, newWsFull, newWsFull.slice(0, newWsFull.length - newWsEnd.length));
+		} else if (endKeep) {
+			const endKeepWsPrefix = leadingWs(endKeep.value, segmenter);
+			const deletionWsSuffix = trailingWs(deletion.value, segmenter);
+			const overlap = maximumOverlap(deletionWsSuffix, endKeepWsPrefix);
+			deletion.value = removeSuffix(deletion.value, overlap);
+		} else if (startKeep) {
+			const startKeepWsSuffix = trailingWs(startKeep.value, segmenter);
+			const deletionWsPrefix = leadingWs(deletion.value, segmenter);
+			const overlap = maximumOverlap(startKeepWsSuffix, deletionWsPrefix);
+			deletion.value = removePrefix(deletion.value, overlap);
+		}
+	}
+	var WordsWithSpaceDiff = class extends Diff {
+		tokenize(value) {
+			const regex = new RegExp(`(\\r?\\n)|[${extendedWordChars}]+|[^\\S\\n\\r]+|[^${extendedWordChars}]`, "ug");
+			return value.match(regex) || [];
+		}
+	};
+	const wordsWithSpaceDiff = new WordsWithSpaceDiff();
+	function diffWordsWithSpace(oldStr, newStr, options) {
+		return wordsWithSpaceDiff.diff(oldStr, newStr, options);
+	}
+
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/line.js
+	var LineDiff = class extends Diff {
+		constructor() {
+			super(...arguments);
+			this.tokenize = tokenize;
+		}
+		equals(left, right, options) {
+			if (options.ignoreWhitespace) {
+				if (!options.newlineIsToken || !left.includes("\n")) left = left.trim();
+				if (!options.newlineIsToken || !right.includes("\n")) right = right.trim();
+			} else if (options.ignoreNewlineAtEof && !options.newlineIsToken) {
+				if (left.endsWith("\n")) left = left.slice(0, -1);
+				if (right.endsWith("\n")) right = right.slice(0, -1);
+			}
+			return super.equals(left, right, options);
+		}
+	};
+	const lineDiff = new LineDiff();
+	function diffLines(oldStr, newStr, options) {
+		return lineDiff.diff(oldStr, newStr, options);
+	}
+	function tokenize(value, options) {
+		if (options.stripTrailingCr) value = value.replace(/\r\n/g, "\n");
+		const retLines = [], linesAndNewlines = value.split(/(\n|\r\n)/);
+		if (!linesAndNewlines[linesAndNewlines.length - 1]) linesAndNewlines.pop();
+		for (let i = 0; i < linesAndNewlines.length; i++) {
+			const line = linesAndNewlines[i];
+			if (i % 2 && !options.newlineIsToken) retLines[retLines.length - 1] += line;
+			else retLines.push(line);
+		}
+		return retLines;
+	}
+
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/sentence.js
+	function isSentenceEndPunct(char) {
+		return char == "." || char == "!" || char == "?";
+	}
+	var SentenceDiff = class extends Diff {
+		tokenize(value) {
+			var _a;
+			const result = [];
+			let tokenStartI = 0;
+			for (let i = 0; i < value.length; i++) {
+				if (i == value.length - 1) {
+					result.push(value.slice(tokenStartI));
+					break;
+				}
+				if (isSentenceEndPunct(value[i]) && value[i + 1].match(/\s/)) {
+					result.push(value.slice(tokenStartI, i + 1));
+					i = tokenStartI = i + 1;
+					while ((_a = value[i + 1]) === null || _a === void 0 ? void 0 : _a.match(/\s/)) i++;
+					result.push(value.slice(tokenStartI, i + 1));
+					tokenStartI = i + 1;
+				}
+			}
+			return result;
+		}
+	};
+	const sentenceDiff = new SentenceDiff();
+
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/css.js
+	var CssDiff = class extends Diff {
+		tokenize(value) {
+			return value.split(/([{}:;,]|\s+)/);
+		}
+	};
+	const cssDiff = new CssDiff();
+
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/json.js
+	var JsonDiff = class extends Diff {
+		constructor() {
+			super(...arguments);
+			this.tokenize = tokenize;
+		}
+		get useLongestToken() {
+			return true;
+		}
+		castInput(value, options) {
+			const { undefinedReplacement, stringifyReplacer = (k, v) => typeof v === "undefined" ? undefinedReplacement : v } = options;
+			return typeof value === "string" ? value : JSON.stringify(canonicalize(value, null, null, stringifyReplacer), null, "  ");
+		}
+		equals(left, right, options) {
+			return super.equals(left.replace(/,([\r\n])/g, "$1"), right.replace(/,([\r\n])/g, "$1"), options);
+		}
+	};
+	const jsonDiff = new JsonDiff();
+	function canonicalize(obj, stack, replacementStack, replacer, key) {
+		stack = stack || [];
+		replacementStack = replacementStack || [];
+		if (replacer) obj = replacer(key === void 0 ? "" : key, obj);
+		let i = 0;
+		for (; i < stack.length; i += 1) if (stack[i] === obj) return replacementStack[i];
+		let canonicalizedObj;
+		if ("[object Array]" === Object.prototype.toString.call(obj)) {
+			stack.push(obj);
+			canonicalizedObj = new Array(obj.length);
+			replacementStack.push(canonicalizedObj);
+			for (i = 0; i < obj.length; i += 1) canonicalizedObj[i] = canonicalize(obj[i], stack, replacementStack, replacer, String(i));
+			stack.pop();
+			replacementStack.pop();
+			return canonicalizedObj;
+		}
+		if (obj && obj.toJSON) obj = obj.toJSON();
+		if (typeof obj === "object" && obj !== null) {
+			stack.push(obj);
+			canonicalizedObj = {};
+			replacementStack.push(canonicalizedObj);
+			const sortedKeys = [];
+			let key;
+			for (key in obj)
+ /* istanbul ignore else */
+			if (Object.prototype.hasOwnProperty.call(obj, key)) sortedKeys.push(key);
+			sortedKeys.sort();
+			for (i = 0; i < sortedKeys.length; i += 1) {
+				key = sortedKeys[i];
+				canonicalizedObj[key] = canonicalize(obj[key], stack, replacementStack, replacer, key);
+			}
+			stack.pop();
+			replacementStack.pop();
+		} else canonicalizedObj = obj;
+		return canonicalizedObj;
+	}
+
+// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/array.js
+	var ArrayDiff = class extends Diff {
+		tokenize(value) {
+			return value.slice();
+		}
+		join(value) {
+			return value;
+		}
+		removeEmpty(value) {
+			return value;
+		}
+	};
+	const arrayDiff = new ArrayDiff();
+	function diffArrays(oldArr, newArr, options) {
+		return arrayDiff.diff(oldArr, newArr, options);
+	}
+
+// packages/editor/build-module/components/post-revisions-preview/revisions-code-diff.mjs
+	const MAX_DIFF_EDIT_LENGTH = 1e3;
+	const DIFF_TIMEOUT = 100;
+	/**
+	* Diff parts often end in a newline. Remove the trailing empty item so it is
+	* not rendered as another source line.
+	*
+	* @param {string} value Diff part value.
+	* @return {string[]} Lines in the diff part.
+	*/
+	function splitLines(value) {
+		const lines = value.split("\n");
+		if (lines[lines.length - 1] === "") lines.pop();
+		return lines;
+	}
+	/**
+	* Diffs two contents line by line.
+	*
+	* @param {string} previousContent Previous content.
+	* @param {string} currentContent  Current content.
+	* @return {Array<Object>} Diff parts, each marked as added, removed or neither.
+	*/
+	function getDiffParts(previousContent, currentContent) {
+		const parts = diffLines(previousContent, currentContent, {
+			maxEditLength: MAX_DIFF_EDIT_LENGTH,
+			timeout: DIFF_TIMEOUT
+		});
+		if (!parts) return [{
+			value: previousContent,
+			removed: true
+		}, {
+			value: currentContent,
+			added: true
+		}];
+		return parts;
+	}
+	/**
+	* Creates the rows shown in the code diff and adds line numbers for both
+	* revisions.
+	*
+	* @param {string}  previousContent Previous revision content.
+	* @param {string}  currentContent  Selected revision content.
+	* @param {boolean} showDiff        Whether changes should be highlighted.
+	* @return {Array<Object>} Code-diff rows.
+	*/
+	function getCodeDiffRows(previousContent, currentContent, showDiff) {
+		const parts = showDiff ? getDiffParts(previousContent, currentContent) : [{ value: currentContent }];
+		let previousLineNumber = 1;
+		let currentLineNumber = 1;
+		return parts.flatMap((part) => {
+			let status = "unchanged";
+			if (part.added) status = "added";
+			else if (part.removed) status = "removed";
+			return splitLines(part.value).map((value) => {
+				const row = {
+					value,
+					status,
+					previousLineNumber: null,
+					currentLineNumber: null
+				};
+				if (status !== "added" && showDiff) row.previousLineNumber = previousLineNumber++;
+				if (status !== "removed") row.currentLineNumber = currentLineNumber++;
+				return row;
+			});
+		});
+	}
+	/**
+	* Creates the rows of a side-by-side code diff. Each row holds a line of the
+	* previous content and a line of the current content. Unchanged lines show on
+	* both sides; a run of changes pairs its removed and added lines up in order,
+	* leaving a side empty where the other has more lines.
+	*
+	* @param {string} previousContent Previous content.
+	* @param {string} currentContent  Current content.
+	* @return {Array<{previous: Object|null, current: Object|null}>} Rows.
+	*/
+	function getSplitCodeDiffRows(previousContent, currentContent) {
+		const parts = getDiffParts(previousContent, currentContent);
+		const rows = [];
+		let previousLineNumber = 1;
+		let currentLineNumber = 1;
+		let removedLines = [];
+		let addedLines = [];
+		const flushChanges = () => {
+			const length = Math.max(removedLines.length, addedLines.length);
+			for (let index = 0; index < length; index++) rows.push({
+				previous: index < removedLines.length ? {
+					value: removedLines[index],
+					status: "removed",
+					lineNumber: previousLineNumber++
+				} : null,
+				current: index < addedLines.length ? {
+					value: addedLines[index],
+					status: "added",
+					lineNumber: currentLineNumber++
+				} : null
+			});
+			removedLines = [];
+			addedLines = [];
+		};
+		for (const part of parts) if (part.removed) removedLines.push(...splitLines(part.value));
+		else if (part.added) addedLines.push(...splitLines(part.value));
+		else {
+			flushChanges();
+			for (const value of splitLines(part.value)) rows.push({
+				previous: {
+					value,
+					status: "unchanged",
+					lineNumber: previousLineNumber++
+				},
+				current: {
+					value,
+					status: "unchanged",
+					lineNumber: currentLineNumber++
+				}
+			});
+		}
+		flushChanges();
+		return rows;
+	}
+	/**
+	* Determines whether the code diff should wait for an older revision or fall
+	* back to showing the selected revision without a diff.
+	*
+	* @param {Object}      options                             Display options.
+	* @param {Object|null} options.previousRevision            Previous revision.
+	* @param {boolean}     options.showDiff                    Whether changes should be highlighted.
+	* @param {boolean}     options.hasOlderRevisionPage        Whether another revisions page exists.
+	* @param {boolean}     options.hasFinishedPreviousRevision Whether the previous revision request finished.
+	* @return {Object} Code-diff display state.
+	*/
+	function getCodeDiffDisplayState({ previousRevision, showDiff, hasOlderRevisionPage, hasFinishedPreviousRevision }) {
+		const needsPreviousRevision = showDiff && previousRevision === null && hasOlderRevisionPage;
+		return {
+			showDiff: showDiff && !(needsPreviousRevision && hasFinishedPreviousRevision),
+			isPreviousRevisionLoading: needsPreviousRevision && !hasFinishedPreviousRevision
+		};
+	}
+	function ConnectedRevisionsCodeDiff() {
+		const revisionDiff = (0, _wordpress_data.useSelect)((select) => {
+			const editorSelectors = select(store);
+			const coreSelectors = select(_wordpress_core_data.store);
+			const { getShownVersion, getComparedVersion, getRevisionPage, getRevisionsPerPage, isShowingRevisionDiff } = unlock$5(editorSelectors);
+			const _previousRevision = getComparedVersion();
+			const _showDiff = isShowingRevisionDiff();
+			const revisionPage = getRevisionPage();
+			const hasOlderRevisionPage = revisionPage < (Math.ceil(editorSelectors.getCurrentPostRevisionsCount() / getRevisionsPerPage()) || 1);
+			let hasFinishedPreviousRevision = true;
+			if (_showDiff && _previousRevision === null && hasOlderRevisionPage) {
+				const postType = editorSelectors.getCurrentPostType();
+				const postId = editorSelectors.getCurrentPostId();
+				const revisionKey = coreSelectors.getEntityConfig("postType", postType)?.revisionKey || "id";
+				hasFinishedPreviousRevision = coreSelectors.hasFinishedResolution("getRevisions", [
+					"postType",
+					postType,
+					postId,
+					buildRevisionsPageQuery(revisionKey, revisionPage + 1)
+				]);
+			}
+			return {
+				revision: getShownVersion(),
+				previousRevision: _previousRevision,
+				...getCodeDiffDisplayState({
+					previousRevision: _previousRevision,
+					showDiff: _showDiff,
+					hasOlderRevisionPage,
+					hasFinishedPreviousRevision
+				})
+			};
+		}, []);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RevisionsCodeDiff, { ...revisionDiff });
+	}
+	/**
+	* Shows the selected revision's raw block markup as a read-only diff.
+	*
+	* @param {Object}      props                           Component props.
+	* @param {Object}      props.revision                  Selected revision.
+	* @param {Object|null} props.previousRevision          Previous revision.
+	* @param {boolean}     props.showDiff                  Whether to show changes.
+	* @param {boolean}     props.isPreviousRevisionLoading Whether the previous revision is loading.
+	* @return {React.JSX.Element} The revision code diff.
+	*/
+	function RevisionsCodeDiff({ revision, previousRevision, showDiff, isPreviousRevisionLoading }) {
+		const rows = (0, _wordpress_element.useMemo)(() => {
+			if (!revision || isPreviousRevisionLoading) return [];
+			return getCodeDiffRows(previousRevision?.content?.raw ?? "", revision.content?.raw ?? "", showDiff);
+		}, [
+			revision,
+			previousRevision,
+			showDiff,
+			isPreviousRevisionLoading
+		]);
+		if (!revision || isPreviousRevisionLoading) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			className: "editor-revisions-canvas__loading",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
+		});
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CodeDiffTable, {
+			rows,
+			showDiff,
+			label: showDiff ? (0, _wordpress_i18n.__)("Code changes") : (0, _wordpress_i18n.__)("Revision code"),
+			emptyMessage: (0, _wordpress_i18n.__)("This revision is empty.")
+		});
+	}
+	/**
+	* The scrollable, focusable region both code-diff tables render in, with the
+	* message shown instead of a table when there is nothing to list.
+	*
+	* @param {Object}          props              Component props.
+	* @param {string}          [props.className]  Extra class for the region.
+	* @param {string}          props.label        Accessible name of the region.
+	* @param {boolean}         props.isEmpty      Whether to show the message instead of the table.
+	* @param {string}          props.emptyMessage Message shown when there is nothing to list.
+	* @param {React.ReactNode} props.children     The table.
+	* @return {React.JSX.Element} The code-diff region.
+	*/
+	function CodeDiffRegion({ className, label, isEmpty, emptyMessage, children }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			className: clsx("editor-revisions-code-diff", className),
+			role: "region",
+			"aria-label": label,
+			tabIndex: 0,
+			children: isEmpty ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+				className: "editor-revisions-code-diff__empty",
+				children: emptyMessage
+			}) : children
+		});
+	}
+	/**
+	* Renders code-diff rows as a scrollable, read-only table, with both line
+	* numbers in one column of code. `SplitCodeDiffTable` shows them side by side.
+	*
+	* @param {Object}        props              Component props.
+	* @param {Array<Object>} props.rows         Rows from `getCodeDiffRows`.
+	* @param {boolean}       props.showDiff     Whether rows carry change markers.
+	* @param {string}        props.label        Accessible name of the region.
+	* @param {string}        props.emptyMessage Message shown when there are no rows.
+	* @return {React.JSX.Element} The code-diff table.
+	*/
+	function CodeDiffTable({ rows, showDiff, label, emptyMessage }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CodeDiffRegion, {
+			label,
+			isEmpty: !rows.length,
+			emptyMessage,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("table", {
+				className: "editor-revisions-code-diff__table",
+				children: [
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("caption", {}),
+						children: label
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("thead", {}),
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", { children: [
+							showDiff && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n.__)("Previous line") }),
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n.__)("Current line") }),
+							showDiff && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n._x)("Change", "noun") }),
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n.__)("Code") })
+						] })
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("tbody", { children: rows.map((row, index) => {
+						let marker = "";
+						let statusLabel = (0, _wordpress_i18n.__)("Unchanged");
+						if (row.status === "added") {
+							marker = "+";
+							statusLabel = (0, _wordpress_i18n.__)("Added");
+						} else if (row.status === "removed") {
+							marker = "−";
+							statusLabel = (0, _wordpress_i18n.__)("Removed");
+						}
+						return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", {
+							className: `editor-revisions-code-diff__line is-${row.status}`,
+							children: [
+								showDiff && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
+									className: "editor-revisions-code-diff__line-number is-previous",
+									children: row.previousLineNumber
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
+									className: "editor-revisions-code-diff__line-number is-current",
+									children: row.currentLineNumber
+								}),
+								showDiff && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("td", {
+									className: "editor-revisions-code-diff__marker",
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { children: statusLabel }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+										"aria-hidden": "true",
+										children: marker
+									})]
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
+									className: "editor-revisions-code-diff__code",
+									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("code", { children: row.value })
+								})
+							]
+						}, index);
+					}) })
+				]
+			})
+		});
+	}
+	/**
+	* Renders one side of a side-by-side code-diff row: its line number, change
+	* marker and code, or empty cells when the side has no line.
+	*
+	* @param {Object}      props      Component props.
+	* @param {Object|null} props.line The side's line, from `getSplitCodeDiffRows`.
+	* @return {React.JSX.Element} The side's cells.
+	*/
+	function SplitCodeDiffSide({ line }) {
+		if (!line) return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", { className: "editor-revisions-code-diff__line-number is-empty" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", { className: "editor-revisions-code-diff__marker is-empty" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", { className: "editor-revisions-code-diff__code is-empty" })
+		] });
+		let marker = "";
+		let statusLabel = (0, _wordpress_i18n.__)("Unchanged");
+		if (line.status === "added") {
+			marker = "+";
+			statusLabel = (0, _wordpress_i18n.__)("Added");
+		} else if (line.status === "removed") {
+			marker = "−";
+			statusLabel = (0, _wordpress_i18n.__)("Removed");
+		}
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
+				className: `editor-revisions-code-diff__line-number is-${line.status}`,
+				children: line.lineNumber
+			}),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("td", {
+				className: `editor-revisions-code-diff__marker is-${line.status}`,
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { children: statusLabel }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					"aria-hidden": "true",
+					children: marker
+				})]
+			}),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
+				className: `editor-revisions-code-diff__code is-${line.status}`,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("code", { children: line.value })
+			})
+		] });
+	}
+	/**
+	* Renders side-by-side code-diff rows as a read-only table, the previous
+	* content on the start side and the current content on the end side.
+	*
+	* @param {Object}        props               Component props.
+	* @param {Array<Object>} props.rows          Rows from `getSplitCodeDiffRows`.
+	* @param {string}        props.label         Accessible name of the region.
+	* @param {string}        props.previousLabel Name of the previous content.
+	* @param {string}        props.currentLabel  Name of the current content.
+	* @param {string}        props.emptyMessage  Message shown when there are no rows.
+	* @return {React.JSX.Element} The side-by-side code diff.
+	*/
+	function SplitCodeDiffTable({ rows, label, previousLabel, currentLabel, emptyMessage }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CodeDiffRegion, {
+			className: "is-split",
+			label,
+			isEmpty: !rows.length,
+			emptyMessage,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("table", {
+				className: "editor-revisions-code-diff__table",
+				children: [
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("caption", {}),
+						children: label
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("colgroup", { children: [
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "editor-revisions-code-diff__line-number-column" }),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "editor-revisions-code-diff__marker-column" }),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", {}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "editor-revisions-code-diff__line-number-column" }),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "editor-revisions-code-diff__marker-column" }),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", {})
+					] }),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("thead", {}),
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", { children: [
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n.__)("Line") }),
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n._x)("Change", "noun") }),
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: previousLabel }),
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n.__)("Line") }),
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n._x)("Change", "noun") }),
+							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: currentLabel })
+						] })
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("tbody", { children: rows.map((row, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", {
+						className: "editor-revisions-code-diff__line",
+						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SplitCodeDiffSide, { line: row.previous }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SplitCodeDiffSide, { line: row.current })]
+					}, index)) })
+				]
+			})
+		});
+	}
+
+// packages/editor/build-module/components/styles-canvas/revisions-code-diff.mjs
+/**
+	* Returns the value with the keys of every nested object sorted, so that two
+	* configs with the same content serialize the same. Arrays keep their order,
+	* as the order of entries such as palette colors is meaningful.
+	*
+	* @param value Value to sort.
+	* @return The value with sorted object keys.
+	*/
+	function sortObjectKeys(value) {
+		if (Array.isArray(value)) return value.map(sortObjectKeys);
+		if (value !== null && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((key) => [key, sortObjectKeys(value[key])]));
+		return value;
+	}
+	/**
+	* Serializes the styles and settings of a global styles config for a code diff.
+	* Revision metadata such as the id, author and date is left out, and keys are
+	* sorted, as the REST endpoints and the editor need not order them the same.
+	*
+	* @param config Global styles config or revision.
+	* @return The config's styles and settings as formatted JSON.
+	*/
+	function getStylesRevisionCode(config) {
+		return JSON.stringify(sortObjectKeys({
+			settings: config?.settings ?? {},
+			styles: config?.styles ?? {}
+		}), null, 2);
+	}
+	/**
+	* Shows how the current global styles differ from a revision, as a read-only
+	* side-by-side diff of their styles and settings: the revision on the start
+	* side and the current styles on the end side, as in the canvas header.
+	*
+	* @param props               Component props.
+	* @param props.revision      The revision to compare.
+	* @param props.currentConfig The styles the editor currently shows.
+	* @return The code diff.
+	*/
+	function StylesRevisionsCodeDiff({ revision, currentConfig }) {
+		const hasChanges = (0, _wordpress_element.useMemo)(() => !!revision && !areGlobalStylesEqual(revision, currentConfig ?? {}), [revision, currentConfig]);
+		const currentCode = (0, _wordpress_element.useMemo)(() => hasChanges ? getStylesRevisionCode(currentConfig) : null, [currentConfig, hasChanges]);
+		const rows = (0, _wordpress_element.useMemo)(() => {
+			if (!revision || currentCode === null) return [];
+			return getSplitCodeDiffRows(getStylesRevisionCode(revision), currentCode);
+		}, [revision, currentCode]);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SplitCodeDiffTable, {
+			rows,
+			label: (0, _wordpress_i18n.__)("Changes since this revision"),
+			previousLabel: (0, _wordpress_i18n.__)("Selected revision"),
+			currentLabel: (0, _wordpress_i18n.__)("Current version"),
+			emptyMessage: revision ? (0, _wordpress_i18n.__)("This revision matches the current styles.") : (0, _wordpress_i18n.__)("Select a revision to compare it with the current styles.")
+		});
+	}
+
+// packages/editor/build-module/components/styles-canvas/revision-details.mjs
+/**
+	* Returns the label for when a revision was made: its date, or what the entry
+	* stands for when it isn't a saved revision.
+	*
+	* @param revision The revision.
+	* @return The label.
+	*/
+	function getRevisionDateLabel(revision) {
+		if ("parent" === revision.id) return (0, _wordpress_i18n.__)("Default styles");
+		if ("unsaved" === revision.id) return (0, _wordpress_i18n.__)("Unsaved changes");
+		if (!revision.modified) return "";
+		const modified = revision.modified instanceof Date ? revision.modified.toISOString() : revision.modified;
+		return (0, _wordpress_date.dateI18n)((0, _wordpress_date.getSettings)().formats.datetime, (0, _wordpress_date.getDate)(modified));
+	}
+	/**
+	* Describes a global styles revision: when it was made and by whom.
+	*
+	* @param props           Component props.
+	* @param props.revision  The revision to describe.
+	* @param props.isCurrent Whether the revision holds the styles the editor shows.
+	* @return The revision details.
+	*/
+	function RevisionDetails({ revision, isCurrent = false }) {
+		const hasAuthor = "parent" !== revision.id;
+		const avatarUrl = revision.author?.avatar_urls?.["48"];
+		const dateLabel = getRevisionDateLabel(revision);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("p", {
+			className: "editor-styles-canvas-revision-details",
+			children: [
+				isCurrent && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: "editor-styles-canvas-revision-details__current",
+					children: (0, _wordpress_i18n.__)("Current version")
+				}),
+				dateLabel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: dateLabel }),
+				hasAuthor && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+					className: "editor-styles-canvas-revision-details__author",
+					children: [avatarUrl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
+						alt: "",
+						src: avatarUrl
+					}), revision.author?.name || (0, _wordpress_i18n.__)("User")]
+				})
+			]
+		});
+	}
+
+// packages/editor/build-module/components/styles-canvas/use-synced-scroll.mjs
+	const isNear = (a, b) => Math.abs(a - b) < 1;
+	function getScroller({ frame }) {
+		return frame.contentDocument?.scrollingElement ?? null;
+	}
+	function getScrollRange(scroller) {
+		return scroller.scrollHeight - scroller.clientHeight;
+	}
+	/**
+	* Scrolls `target` to the same relative position as `source`.
+	*
+	* @param source The side that was scrolled.
+	* @param target The side to follow it.
+	*/
+	function follow(source, target) {
+		const from = getScroller(source);
+		const to = getScroller(target);
+		if (!from || !to) return;
+		const top = from.scrollTop;
+		const isEcho = isNear(top, source.echo);
+		source.echo = -1;
+		if (isEcho) return;
+		const fromRange = getScrollRange(from);
+		const next = fromRange > 0 ? top / fromRange * getScrollRange(to) : 0;
+		if (isNear(to.scrollTop, next)) return;
+		to.scrollTo({
+			top: next,
+			behavior: "instant"
+		});
+		target.echo = to.scrollTop;
+	}
+	/**
+	* Listens for scrolling in one side's document and has the other follow.
+	*
+	* @param side  The side to listen to.
+	* @param other The side to follow it.
+	* @return A function that stops listening.
+	*/
+	function listen(side, other) {
+		const onScroll = (event) => {
+			if (event.target === side.frame.contentDocument) follow(side, other);
+		};
+		let view = null;
+		const attach = () => {
+			view?.removeEventListener("scroll", onScroll);
+			view = side.frame.contentWindow;
+			view?.addEventListener("scroll", onScroll, { passive: true });
+		};
+		attach();
+		side.frame.addEventListener("load", attach);
+		return () => {
+			side.frame.removeEventListener("load", attach);
+			view?.removeEventListener("scroll", onScroll);
+		};
+	}
+	/**
+	* Keeps two iframes scrolled to the same relative position, so their
+	* documents can be compared as either is scrolled.
+	*
+	* @param first  The first iframe, or null to not sync.
+	* @param second The second iframe, or null to not sync.
+	*/
+	function useSyncedScroll(first, second) {
+		(0, _wordpress_element.useEffect)(() => {
+			if (!first || !second) return;
+			const firstSide = {
+				frame: first,
+				echo: -1
+			};
+			const secondSide = {
+				frame: second,
+				echo: -1
+			};
+			const stopFirst = listen(firstSide, secondSide);
+			const stopSecond = listen(secondSide, firstSide);
+			return () => {
+				stopFirst();
+				stopSecond();
+			};
+		}, [first, second]);
+	}
+
 // packages/editor/build-module/components/styles-canvas/revisions.mjs
 	const { ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider$1, BlockStyleVariationOverridesWithConfig } = unlock$5(_wordpress_block_editor.privateApis);
 	function isObjectEmpty(object) {
 		return !object || Object.keys(object).length === 0;
 	}
 	/**
+	* Previews the editor's blocks with a global styles config.
+	*
+	* @param {Object}                       props            Component props.
+	* @param {Object}                       props.config     The global styles config to preview.
+	* @param {Object}                       props.baseConfig The theme's base global styles.
+	* @param {Array<Object>}                props.blocks     The blocks to preview.
+	* @param {Object}                       props.settings   Block editor settings.
+	* @param {string}                       props.name       The iframe name.
+	* @param {string}                       [props.title]    The iframe's accessible name.
+	* @param {React.Ref<HTMLIFrameElement>} [props.frameRef] Receives the iframe element.
+	* @return {React.JSX.Element} The preview.
+	*/
+	function RevisionPreview({ config, baseConfig, blocks, settings, name, title, frameRef }) {
+		const mergedConfig = (0, _wordpress_element.useMemo)(() => {
+			if (!isObjectEmpty(config) && !isObjectEmpty(baseConfig)) return mergeGlobalStyles(baseConfig, config);
+			return {};
+		}, [baseConfig, config]);
+		const [globalStyles] = useGlobalStylesOutputWithConfig(mergedConfig);
+		const editorStyles = !isObjectEmpty(globalStyles) && !isObjectEmpty(config) ? globalStyles : settings.styles;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_block_editor.__unstableIframe, {
+			ref: frameRef,
+			className: "editor-revisions__iframe",
+			name,
+			title,
+			tabIndex: 0,
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("style", { children: `.is-root-container { display: flow-root; }` }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Disabled, {
+				className: "editor-revisions__example-preview__content",
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ExperimentalBlockEditorProvider$1, {
+					value: blocks,
+					settings,
+					children: [
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockList, { renderAppender: false }),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.__unstableEditorStyles, { styles: editorStyles }),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockStyleVariationOverridesWithConfig, { config: mergedConfig })
+					]
+				})
+			})]
+		});
+	}
+	/**
 	* Revisions content component for global styles.
 	* Coordinates with ScreenRevisions through the path parameter to display
-	* the currently selected revision.
+	* the currently selected revision. When that isn't the current version, the
+	* visual view shows the two side by side, and the code view shows what
+	* changed between them.
 	*
 	* @param {Object}             props      Component props.
 	* @param {string}             props.path Current path in global styles.
@@ -86573,40 +87718,95 @@ If there's a particular need for this, please submit a feature request at https:
 			const match = path?.match(/^\/revisions\/(.+)$/);
 			return match ? match[1] : null;
 		}, [path]);
-		const displayConfig = (0, _wordpress_element.useMemo)(() => {
+		const selectedRevision = (0, _wordpress_element.useMemo)(() => {
 			if (!revisionId || !revisions.length) return null;
 			return revisions.find((rev) => String(rev.id) === String(revisionId));
-		}, [revisionId, revisions]) || userConfig;
-		const mergedConfig = (0, _wordpress_element.useMemo)(() => {
-			if (!isObjectEmpty(displayConfig) && !isObjectEmpty(baseConfig)) return mergeGlobalStyles(baseConfig, displayConfig);
-			return {};
-		}, [baseConfig, displayConfig]);
+		}, [revisionId, revisions]);
 		const renderedBlocksArray = (0, _wordpress_element.useMemo)(() => Array.isArray(blocks) ? blocks : [blocks], [blocks]);
 		const originalSettings = (0, _wordpress_data.useSelect)((select) => select(_wordpress_block_editor.store).getSettings(), []);
 		const settings = (0, _wordpress_element.useMemo)(() => ({
 			...originalSettings,
 			isPreviewMode: true
 		}), [originalSettings]);
-		const [globalStyles] = useGlobalStylesOutputWithConfig(mergedConfig);
-		const editorStyles = !isObjectEmpty(globalStyles) && !isObjectEmpty(displayConfig) ? globalStyles : settings.styles;
+		const [view, setView] = (0, _wordpress_element.useState)("visual");
+		const [selectedFrame, setSelectedFrame] = (0, _wordpress_element.useState)(null);
+		const [currentFrame, setCurrentFrame] = (0, _wordpress_element.useState)(null);
+		useSyncedScroll(selectedFrame, currentFrame);
 		if (isLoading) return null;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_block_editor.__unstableIframe, {
+		const currentRevision = revisions[0];
+		const isComparingRevision = !!selectedRevision && selectedRevision.id !== currentRevision?.id;
+		let codeRevision = userConfig;
+		if (isComparingRevision) codeRevision = selectedRevision;
+		else if (revisionId && !selectedRevision) codeRevision = null;
+		const previewProps = {
+			baseConfig,
+			blocks: renderedBlocksArray,
+			settings
+		};
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			ref,
-			className: "editor-revisions__iframe",
-			name: "revisions",
-			tabIndex: 0,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("style", { children: `.is-root-container { display: flow-root; }` }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Disabled, {
-				className: "editor-revisions__example-preview__content",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ExperimentalBlockEditorProvider$1, {
-					value: renderedBlocksArray,
-					settings,
-					children: [
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockList, { renderAppender: false }),
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.__unstableEditorStyles, { styles: editorStyles }),
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockStyleVariationOverridesWithConfig, { config: mergedConfig })
-					]
-				})
-			})]
+			className: clsx("editor-styles-canvas-revisions", {
+				"is-comparing": isComparingRevision,
+				"is-visual": view === "visual"
+			}),
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+				className: "editor-styles-canvas-revisions__layout",
+				children: [
+					isComparingRevision && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "editor-styles-canvas-revisions__pane-header is-selected",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RevisionDetails, { revision: selectedRevision })
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+						className: "editor-styles-canvas-revisions__pane-header is-current",
+						children: [currentRevision && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RevisionDetails, {
+							revision: currentRevision,
+							isCurrent: true
+						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+							className: "editor-styles-canvas-revisions__view-toggle",
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToggleGroupControl, {
+								label: (0, _wordpress_i18n.__)("Revision view"),
+								hideLabelFromVision: true,
+								value: view,
+								onChange: setView,
+								children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
+									value: "visual",
+									label: (0, _wordpress_i18n._x)("Visual", "style revisions view")
+								}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
+									value: "code",
+									label: (0, _wordpress_i18n._x)("Code", "style revisions view")
+								})]
+							})
+						})]
+					}),
+					view === "code" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "editor-styles-canvas-revisions__code",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesRevisionsCodeDiff, {
+							revision: codeRevision,
+							currentConfig: userConfig
+						})
+					}),
+					view === "visual" && isComparingRevision && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "editor-styles-canvas-revisions__pane is-selected",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RevisionPreview, {
+							...previewProps,
+							config: selectedRevision,
+							frameRef: setSelectedFrame,
+							name: "revisions",
+							title: (0, _wordpress_i18n.__)("Selected revision")
+						})
+					}),
+					view === "visual" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "editor-styles-canvas-revisions__pane is-current",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RevisionPreview, {
+							...previewProps,
+							config: userConfig,
+							frameRef: setCurrentFrame,
+							name: isComparingRevision ? "revisions-current" : "revisions",
+							title: isComparingRevision ? (0, _wordpress_i18n.__)("Current version") : (0, _wordpress_i18n.__)("Revision preview")
+						})
+					})
+				]
+			})
 		});
 	}
 	var revisions_default = (0, _wordpress_element.forwardRef)(StylesCanvasRevisions);
@@ -92700,224 +93900,6 @@ If there's a particular need for this, please submit a feature request at https:
 		} }) });
 	}
 
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/base.js
-	var Diff = class {
-		diff(oldStr, newStr, options = {}) {
-			let callback;
-			if (typeof options === "function") {
-				callback = options;
-				options = {};
-			} else if ("callback" in options) callback = options.callback;
-			const oldString = this.castInput(oldStr, options);
-			const newString = this.castInput(newStr, options);
-			const oldTokens = this.removeEmpty(this.tokenize(oldString, options));
-			const newTokens = this.removeEmpty(this.tokenize(newString, options));
-			return this.diffWithOptionsObj(oldTokens, newTokens, options, callback);
-		}
-		diffWithOptionsObj(oldTokens, newTokens, options, callback) {
-			var _a;
-			const done = (value) => {
-				value = this.postProcess(value, options);
-				if (callback) {
-					setTimeout(function() {
-						callback(value);
-					}, 0);
-					return;
-				} else return value;
-			};
-			const newLen = newTokens.length, oldLen = oldTokens.length;
-			let editLength = 1;
-			let maxEditLength = newLen + oldLen;
-			if (options.maxEditLength != null) maxEditLength = Math.min(maxEditLength, options.maxEditLength);
-			const maxExecutionTime = (_a = options.timeout) !== null && _a !== void 0 ? _a : Infinity;
-			const abortAfterTimestamp = Date.now() + maxExecutionTime;
-			const bestPath = [{
-				oldPos: -1,
-				lastComponent: void 0
-			}];
-			let newPos = this.extractCommon(bestPath[0], newTokens, oldTokens, 0, options);
-			if (bestPath[0].oldPos + 1 >= oldLen && newPos + 1 >= newLen) return done(this.buildValues(bestPath[0].lastComponent, newTokens, oldTokens));
-			let minDiagonalToConsider = -Infinity, maxDiagonalToConsider = Infinity;
-			const execEditLength = () => {
-				for (let diagonalPath = Math.max(minDiagonalToConsider, -editLength); diagonalPath <= Math.min(maxDiagonalToConsider, editLength); diagonalPath += 2) {
-					let basePath;
-					const removePath = bestPath[diagonalPath - 1], addPath = bestPath[diagonalPath + 1];
-					if (removePath) bestPath[diagonalPath - 1] = void 0;
-					let canAdd = false;
-					if (addPath) {
-						const addPathNewPos = addPath.oldPos - diagonalPath;
-						canAdd = addPath && 0 <= addPathNewPos && addPathNewPos < newLen;
-					}
-					const canRemove = removePath && removePath.oldPos + 1 < oldLen;
-					if (!canAdd && !canRemove) {
-						bestPath[diagonalPath] = void 0;
-						continue;
-					}
-					if (!canRemove || canAdd && removePath.oldPos < addPath.oldPos) basePath = this.addToPath(addPath, true, false, 0, options);
-					else basePath = this.addToPath(removePath, false, true, 1, options);
-					newPos = this.extractCommon(basePath, newTokens, oldTokens, diagonalPath, options);
-					if (basePath.oldPos + 1 >= oldLen && newPos + 1 >= newLen) return done(this.buildValues(basePath.lastComponent, newTokens, oldTokens)) || true;
-					else {
-						bestPath[diagonalPath] = basePath;
-						if (basePath.oldPos + 1 >= oldLen) maxDiagonalToConsider = Math.min(maxDiagonalToConsider, diagonalPath - 1);
-						if (newPos + 1 >= newLen) minDiagonalToConsider = Math.max(minDiagonalToConsider, diagonalPath + 1);
-					}
-				}
-				editLength++;
-			};
-			if (callback) (function exec() {
-				setTimeout(function() {
-					if (editLength > maxEditLength || Date.now() > abortAfterTimestamp) return callback(void 0);
-					if (!execEditLength()) exec();
-				}, 0);
-			})();
-			else while (editLength <= maxEditLength && Date.now() <= abortAfterTimestamp) {
-				const ret = execEditLength();
-				if (ret) return ret;
-			}
-		}
-		addToPath(path, added, removed, oldPosInc, options) {
-			const last = path.lastComponent;
-			if (last && !options.oneChangePerToken && last.added === added && last.removed === removed) return {
-				oldPos: path.oldPos + oldPosInc,
-				lastComponent: {
-					count: last.count + 1,
-					added,
-					removed,
-					previousComponent: last.previousComponent
-				}
-			};
-			else return {
-				oldPos: path.oldPos + oldPosInc,
-				lastComponent: {
-					count: 1,
-					added,
-					removed,
-					previousComponent: last
-				}
-			};
-		}
-		extractCommon(basePath, newTokens, oldTokens, diagonalPath, options) {
-			const newLen = newTokens.length, oldLen = oldTokens.length;
-			let oldPos = basePath.oldPos, newPos = oldPos - diagonalPath, commonCount = 0;
-			while (newPos + 1 < newLen && oldPos + 1 < oldLen && this.equals(oldTokens[oldPos + 1], newTokens[newPos + 1], options)) {
-				newPos++;
-				oldPos++;
-				commonCount++;
-				if (options.oneChangePerToken) basePath.lastComponent = {
-					count: 1,
-					previousComponent: basePath.lastComponent,
-					added: false,
-					removed: false
-				};
-			}
-			if (commonCount && !options.oneChangePerToken) basePath.lastComponent = {
-				count: commonCount,
-				previousComponent: basePath.lastComponent,
-				added: false,
-				removed: false
-			};
-			basePath.oldPos = oldPos;
-			return newPos;
-		}
-		equals(left, right, options) {
-			if (options.comparator) return options.comparator(left, right);
-			else return left === right || !!options.ignoreCase && left.toLowerCase() === right.toLowerCase();
-		}
-		removeEmpty(array) {
-			const ret = [];
-			for (let i = 0; i < array.length; i++) if (array[i]) ret.push(array[i]);
-			return ret;
-		}
-		castInput(value, options) {
-			return value;
-		}
-		tokenize(value, options) {
-			return Array.from(value);
-		}
-		join(chars) {
-			return chars.join("");
-		}
-		postProcess(changeObjects, options) {
-			return changeObjects;
-		}
-		get useLongestToken() {
-			return false;
-		}
-		buildValues(lastComponent, newTokens, oldTokens) {
-			const components = [];
-			let nextComponent;
-			while (lastComponent) {
-				components.push(lastComponent);
-				nextComponent = lastComponent.previousComponent;
-				delete lastComponent.previousComponent;
-				lastComponent = nextComponent;
-			}
-			components.reverse();
-			const componentLen = components.length;
-			let componentPos = 0, newPos = 0, oldPos = 0;
-			for (; componentPos < componentLen; componentPos++) {
-				const component = components[componentPos];
-				if (!component.removed) {
-					if (!component.added && this.useLongestToken) {
-						let value = newTokens.slice(newPos, newPos + component.count);
-						value = value.map(function(value, i) {
-							const oldValue = oldTokens[oldPos + i];
-							return oldValue.length > value.length ? oldValue : value;
-						});
-						component.value = this.join(value);
-					} else component.value = this.join(newTokens.slice(newPos, newPos + component.count));
-					newPos += component.count;
-					if (!component.added) oldPos += component.count;
-				} else {
-					component.value = this.join(oldTokens.slice(oldPos, oldPos + component.count));
-					oldPos += component.count;
-				}
-			}
-			return components;
-		}
-	};
-
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/character.js
-	var CharacterDiff = class extends Diff {};
-	const characterDiff = new CharacterDiff();
-	function diffChars(oldStr, newStr, options) {
-		return characterDiff.diff(oldStr, newStr, options);
-	}
-
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/line.js
-	var LineDiff = class extends Diff {
-		constructor() {
-			super(...arguments);
-			this.tokenize = tokenize;
-		}
-		equals(left, right, options) {
-			if (options.ignoreWhitespace) {
-				if (!options.newlineIsToken || !left.includes("\n")) left = left.trim();
-				if (!options.newlineIsToken || !right.includes("\n")) right = right.trim();
-			} else if (options.ignoreNewlineAtEof && !options.newlineIsToken) {
-				if (left.endsWith("\n")) left = left.slice(0, -1);
-				if (right.endsWith("\n")) right = right.slice(0, -1);
-			}
-			return super.equals(left, right, options);
-		}
-	};
-	const lineDiff = new LineDiff();
-	function diffLines(oldStr, newStr, options) {
-		return lineDiff.diff(oldStr, newStr, options);
-	}
-	function tokenize(value, options) {
-		if (options.stripTrailingCr) value = value.replace(/\r\n/g, "\n");
-		const retLines = [], linesAndNewlines = value.split(/(\n|\r\n)/);
-		if (!linesAndNewlines[linesAndNewlines.length - 1]) linesAndNewlines.pop();
-		for (let i = 0; i < linesAndNewlines.length; i++) {
-			const line = linesAndNewlines[i];
-			if (i % 2 && !options.newlineIsToken) retLines[retLines.length - 1] += line;
-			else retLines.push(line);
-		}
-		return retLines;
-	}
-
 // packages/editor/build-module/components/post-text-editor/utils.mjs
 	const STRING_TOO_LARGE_THRESHOLD = 1e3;
 	/**
@@ -93111,317 +94093,6 @@ If there's a particular need for this, please submit a feature request at https:
 			if (isCleanNewPost && (!activeElement || body === activeElement)) ref.current.focus();
 		}, [isCleanNewPost]);
 		return { ref };
-	}
-
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/util/string.js
-	function longestCommonPrefix(str1, str2) {
-		let i = 0;
-		for (; i < str1.length && i < str2.length; i++) if (str1[i] != str2[i]) return str1.slice(0, i);
-		return str1.slice(0, i);
-	}
-	function longestCommonSuffix(str1, str2) {
-		let i;
-		if (!str1 || !str2 || str1[str1.length - 1] != str2[str2.length - 1]) return "";
-		for (i = 0; i < str1.length && i < str2.length; i++) if (str1[str1.length - (i + 1)] != str2[str2.length - (i + 1)]) return str1.slice(-i);
-		return str1.slice(-i);
-	}
-	function replacePrefix(string, oldPrefix, newPrefix) {
-		if (string.slice(0, oldPrefix.length) != oldPrefix) throw Error(`string ${JSON.stringify(string)} doesn't start with prefix ${JSON.stringify(oldPrefix)}; this is a bug`);
-		return newPrefix + string.slice(oldPrefix.length);
-	}
-	function replaceSuffix(string, oldSuffix, newSuffix) {
-		if (!oldSuffix) return string + newSuffix;
-		if (string.slice(-oldSuffix.length) != oldSuffix) throw Error(`string ${JSON.stringify(string)} doesn't end with suffix ${JSON.stringify(oldSuffix)}; this is a bug`);
-		return string.slice(0, -oldSuffix.length) + newSuffix;
-	}
-	function removePrefix(string, oldPrefix) {
-		return replacePrefix(string, oldPrefix, "");
-	}
-	function removeSuffix(string, oldSuffix) {
-		return replaceSuffix(string, oldSuffix, "");
-	}
-	function maximumOverlap(string1, string2) {
-		return string2.slice(0, overlapCount(string1, string2));
-	}
-	function overlapCount(a, b) {
-		let startA = 0;
-		if (a.length > b.length) startA = a.length - b.length;
-		let endB = b.length;
-		if (a.length < b.length) endB = a.length;
-		const map = Array(endB);
-		let k = 0;
-		map[0] = 0;
-		for (let j = 1; j < endB; j++) {
-			if (b[j] == b[k]) map[j] = map[k];
-			else map[j] = k;
-			while (k > 0 && b[j] != b[k]) k = map[k];
-			if (b[j] == b[k]) k++;
-		}
-		k = 0;
-		for (let i = startA; i < a.length; i++) {
-			while (k > 0 && a[i] != b[k]) k = map[k];
-			if (a[i] == b[k]) k++;
-		}
-		return k;
-	}
-	/**
-	* Split a string into segments using a word segmenter, merging consecutive
-	* segments if they are both whitespace segments. Whitespace segments can
-	* appear adjacent to one another for two reasons:
-	* - newlines always get their own segment
-	* - where a diacritic is attached to a whitespace character in the text, the
-	*   segment ends after the diacritic, so e.g. " \u0300 " becomes two segments.
-	* This function therefore runs the segmenter's .segment() method and then
-	* merges consecutive segments of whitespace into a single part.
-	*/
-	function segment(string, segmenter) {
-		const parts = [];
-		for (const segmentObj of Array.from(segmenter.segment(string))) {
-			const segment = segmentObj.segment;
-			if (parts.length && /\s/.test(parts[parts.length - 1]) && /\s/.test(segment)) parts[parts.length - 1] += segment;
-			else parts.push(segment);
-		}
-		return parts;
-	}
-	function trailingWs(string, segmenter) {
-		if (segmenter) return leadingAndTrailingWs(string, segmenter)[1];
-		let i;
-		for (i = string.length - 1; i >= 0; i--) if (!string[i].match(/\s/)) break;
-		return string.substring(i + 1);
-	}
-	function leadingWs(string, segmenter) {
-		if (segmenter) return leadingAndTrailingWs(string, segmenter)[0];
-		const match = string.match(/^\s*/);
-		return match ? match[0] : "";
-	}
-	function leadingAndTrailingWs(string, segmenter) {
-		if (!segmenter) return [leadingWs(string), trailingWs(string)];
-		if (segmenter.resolvedOptions().granularity != "word") throw new Error("The segmenter passed must have a granularity of \"word\"");
-		const segments = segment(string, segmenter);
-		const firstSeg = segments[0];
-		const lastSeg = segments[segments.length - 1];
-		return [/\s/.test(firstSeg) ? firstSeg : "", /\s/.test(lastSeg) ? lastSeg : ""];
-	}
-
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/word.js
-	const extendedWordChars = "a-zA-Z0-9_\\u{AD}\\u{C0}-\\u{D6}\\u{D8}-\\u{F6}\\u{F8}-\\u{2C6}\\u{2C8}-\\u{2D7}\\u{2DE}-\\u{2FF}\\u{1E00}-\\u{1EFF}";
-	const tokenizeIncludingWhitespace = new RegExp(`[${extendedWordChars}]+|\\s+|[^${extendedWordChars}]`, "ug");
-	var WordDiff = class extends Diff {
-		equals(left, right, options) {
-			if (options.ignoreCase) {
-				left = left.toLowerCase();
-				right = right.toLowerCase();
-			}
-			return left.trim() === right.trim();
-		}
-		tokenize(value, options = {}) {
-			let parts;
-			if (options.intlSegmenter) {
-				const segmenter = options.intlSegmenter;
-				if (segmenter.resolvedOptions().granularity != "word") throw new Error("The segmenter passed must have a granularity of \"word\"");
-				parts = segment(value, segmenter);
-			} else parts = value.match(tokenizeIncludingWhitespace) || [];
-			const tokens = [];
-			let prevPart = null;
-			parts.forEach((part) => {
-				if (/\s/.test(part)) {
-					if (prevPart == null) tokens.push(part);
-					else tokens.push(tokens.pop() + part);
-				} else if (prevPart != null && /\s/.test(prevPart)) {
-					if (tokens[tokens.length - 1] == prevPart) tokens.push(tokens.pop() + part);
-					else tokens.push(prevPart + part);
-				} else tokens.push(part);
-				prevPart = part;
-			});
-			return tokens;
-		}
-		join(tokens) {
-			return tokens.map((token, i) => {
-				if (i == 0) return token;
-				else return token.replace(/^\s+/, "");
-			}).join("");
-		}
-		postProcess(changes, options) {
-			if (!changes || options.oneChangePerToken) return changes;
-			let lastKeep = null;
-			let insertion = null;
-			let deletion = null;
-			changes.forEach((change) => {
-				if (change.added) insertion = change;
-				else if (change.removed) deletion = change;
-				else {
-					if (insertion || deletion) dedupeWhitespaceInChangeObjects(lastKeep, deletion, insertion, change, options.intlSegmenter);
-					lastKeep = change;
-					insertion = null;
-					deletion = null;
-				}
-			});
-			if (insertion || deletion) dedupeWhitespaceInChangeObjects(lastKeep, deletion, insertion, null, options.intlSegmenter);
-			return changes;
-		}
-	};
-	const wordDiff = new WordDiff();
-	function dedupeWhitespaceInChangeObjects(startKeep, deletion, insertion, endKeep, segmenter) {
-		if (deletion && insertion) {
-			const [oldWsPrefix, oldWsSuffix] = leadingAndTrailingWs(deletion.value, segmenter);
-			const [newWsPrefix, newWsSuffix] = leadingAndTrailingWs(insertion.value, segmenter);
-			if (startKeep) {
-				const commonWsPrefix = longestCommonPrefix(oldWsPrefix, newWsPrefix);
-				startKeep.value = replaceSuffix(startKeep.value, newWsPrefix, commonWsPrefix);
-				deletion.value = removePrefix(deletion.value, commonWsPrefix);
-				insertion.value = removePrefix(insertion.value, commonWsPrefix);
-			}
-			if (endKeep) {
-				const commonWsSuffix = longestCommonSuffix(oldWsSuffix, newWsSuffix);
-				endKeep.value = replacePrefix(endKeep.value, newWsSuffix, commonWsSuffix);
-				deletion.value = removeSuffix(deletion.value, commonWsSuffix);
-				insertion.value = removeSuffix(insertion.value, commonWsSuffix);
-			}
-		} else if (insertion) {
-			if (startKeep) {
-				const ws = leadingWs(insertion.value, segmenter);
-				insertion.value = insertion.value.substring(ws.length);
-			}
-			if (endKeep) {
-				const ws = leadingWs(endKeep.value, segmenter);
-				endKeep.value = endKeep.value.substring(ws.length);
-			}
-		} else if (startKeep && endKeep) {
-			const newWsFull = leadingWs(endKeep.value, segmenter), [delWsStart, delWsEnd] = leadingAndTrailingWs(deletion.value, segmenter);
-			const newWsStart = longestCommonPrefix(newWsFull, delWsStart);
-			deletion.value = removePrefix(deletion.value, newWsStart);
-			const newWsEnd = longestCommonSuffix(removePrefix(newWsFull, newWsStart), delWsEnd);
-			deletion.value = removeSuffix(deletion.value, newWsEnd);
-			endKeep.value = replacePrefix(endKeep.value, newWsFull, newWsEnd);
-			startKeep.value = replaceSuffix(startKeep.value, newWsFull, newWsFull.slice(0, newWsFull.length - newWsEnd.length));
-		} else if (endKeep) {
-			const endKeepWsPrefix = leadingWs(endKeep.value, segmenter);
-			const deletionWsSuffix = trailingWs(deletion.value, segmenter);
-			const overlap = maximumOverlap(deletionWsSuffix, endKeepWsPrefix);
-			deletion.value = removeSuffix(deletion.value, overlap);
-		} else if (startKeep) {
-			const startKeepWsSuffix = trailingWs(startKeep.value, segmenter);
-			const deletionWsPrefix = leadingWs(deletion.value, segmenter);
-			const overlap = maximumOverlap(startKeepWsSuffix, deletionWsPrefix);
-			deletion.value = removePrefix(deletion.value, overlap);
-		}
-	}
-	var WordsWithSpaceDiff = class extends Diff {
-		tokenize(value) {
-			const regex = new RegExp(`(\\r?\\n)|[${extendedWordChars}]+|[^\\S\\n\\r]+|[^${extendedWordChars}]`, "ug");
-			return value.match(regex) || [];
-		}
-	};
-	const wordsWithSpaceDiff = new WordsWithSpaceDiff();
-	function diffWordsWithSpace(oldStr, newStr, options) {
-		return wordsWithSpaceDiff.diff(oldStr, newStr, options);
-	}
-
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/sentence.js
-	function isSentenceEndPunct(char) {
-		return char == "." || char == "!" || char == "?";
-	}
-	var SentenceDiff = class extends Diff {
-		tokenize(value) {
-			var _a;
-			const result = [];
-			let tokenStartI = 0;
-			for (let i = 0; i < value.length; i++) {
-				if (i == value.length - 1) {
-					result.push(value.slice(tokenStartI));
-					break;
-				}
-				if (isSentenceEndPunct(value[i]) && value[i + 1].match(/\s/)) {
-					result.push(value.slice(tokenStartI, i + 1));
-					i = tokenStartI = i + 1;
-					while ((_a = value[i + 1]) === null || _a === void 0 ? void 0 : _a.match(/\s/)) i++;
-					result.push(value.slice(tokenStartI, i + 1));
-					tokenStartI = i + 1;
-				}
-			}
-			return result;
-		}
-	};
-	const sentenceDiff = new SentenceDiff();
-
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/css.js
-	var CssDiff = class extends Diff {
-		tokenize(value) {
-			return value.split(/([{}:;,]|\s+)/);
-		}
-	};
-	const cssDiff = new CssDiff();
-
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/json.js
-	var JsonDiff = class extends Diff {
-		constructor() {
-			super(...arguments);
-			this.tokenize = tokenize;
-		}
-		get useLongestToken() {
-			return true;
-		}
-		castInput(value, options) {
-			const { undefinedReplacement, stringifyReplacer = (k, v) => typeof v === "undefined" ? undefinedReplacement : v } = options;
-			return typeof value === "string" ? value : JSON.stringify(canonicalize(value, null, null, stringifyReplacer), null, "  ");
-		}
-		equals(left, right, options) {
-			return super.equals(left.replace(/,([\r\n])/g, "$1"), right.replace(/,([\r\n])/g, "$1"), options);
-		}
-	};
-	const jsonDiff = new JsonDiff();
-	function canonicalize(obj, stack, replacementStack, replacer, key) {
-		stack = stack || [];
-		replacementStack = replacementStack || [];
-		if (replacer) obj = replacer(key === void 0 ? "" : key, obj);
-		let i = 0;
-		for (; i < stack.length; i += 1) if (stack[i] === obj) return replacementStack[i];
-		let canonicalizedObj;
-		if ("[object Array]" === Object.prototype.toString.call(obj)) {
-			stack.push(obj);
-			canonicalizedObj = new Array(obj.length);
-			replacementStack.push(canonicalizedObj);
-			for (i = 0; i < obj.length; i += 1) canonicalizedObj[i] = canonicalize(obj[i], stack, replacementStack, replacer, String(i));
-			stack.pop();
-			replacementStack.pop();
-			return canonicalizedObj;
-		}
-		if (obj && obj.toJSON) obj = obj.toJSON();
-		if (typeof obj === "object" && obj !== null) {
-			stack.push(obj);
-			canonicalizedObj = {};
-			replacementStack.push(canonicalizedObj);
-			const sortedKeys = [];
-			let key;
-			for (key in obj)
- /* istanbul ignore else */
-			if (Object.prototype.hasOwnProperty.call(obj, key)) sortedKeys.push(key);
-			sortedKeys.sort();
-			for (i = 0; i < sortedKeys.length; i += 1) {
-				key = sortedKeys[i];
-				canonicalizedObj[key] = canonicalize(obj[key], stack, replacementStack, replacer, key);
-			}
-			stack.pop();
-			replacementStack.pop();
-		} else canonicalizedObj = obj;
-		return canonicalizedObj;
-	}
-
-// node_modules/.store/diff@8.0.4-eS1ZVYhaFC9fHfWvV2-kIQ/node_modules/diff/libesm/diff/array.js
-	var ArrayDiff = class extends Diff {
-		tokenize(value) {
-			return value.slice();
-		}
-		join(value) {
-			return value;
-		}
-		removeEmpty(value) {
-			return value;
-		}
-	};
-	const arrayDiff = new ArrayDiff();
-	function diffArrays(oldArr, newArr, options) {
-		return arrayDiff.diff(oldArr, newArr, options);
 	}
 
 // packages/editor/build-module/components/post-revisions-preview/diff-format-types.mjs
@@ -95055,12 +95726,12 @@ If there's a particular need for this, please submit a feature request at https:
 	const STORE_NAME = "core/media-editor";
 
 // packages/media-editor/build-module/store/index.mjs
-	const store$104 = (0, _wordpress_data.createReduxStore)(STORE_NAME, {
+	const store$103 = (0, _wordpress_data.createReduxStore)(STORE_NAME, {
 		reducer,
 		actions: actions_exports,
 		selectors: selectors_exports
 	});
-	(0, _wordpress_data.register)(store$104);
+	(0, _wordpress_data.register)(store$103);
 
 // node_modules/.store/gl-matrix@3.4.4-1XVyx70pzRCYPPp9mdmgdA/node_modules/gl-matrix/esm/common.js
 	var ARRAY_TYPE = typeof Float32Array !== "undefined" ? Float32Array : Array;
@@ -101264,7 +101935,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	function MediaEditorModal$1({ fields = [], form, aspectRatioPresets }) {
 		const { isModalOpen, id, onUpdate, onUndo, onClose } = (0, _wordpress_data.useSelect)((select) => {
-			const { isOpen, getId, getOnUpdate, getOnUndo, getOnClose } = select(store$104);
+			const { isOpen, getId, getOnUpdate, getOnUndo, getOnClose } = select(store$103);
 			return {
 				isModalOpen: isOpen(),
 				id: getId(),
@@ -101273,7 +101944,7 @@ If there's a particular need for this, please submit a feature request at https:
 				onClose: getOnClose()
 			};
 		}, []);
-		const { closeMediaEditorModal } = (0, _wordpress_data.useDispatch)(store$104);
+		const { closeMediaEditorModal } = (0, _wordpress_data.useDispatch)(store$103);
 		const { createSuccessNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		if (!isModalOpen || !id) return null;
 		const portalElement = typeof document === "undefined" ? null : document.body;
@@ -101337,7 +102008,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/media-editor/build-module/private-apis.mjs
 	const privateApis$45 = {};
 	lock$1(privateApis$45, {
-		store: store$104,
+		store: store$103,
 		MediaEditor,
 		MediaEditorModal: MediaEditorModal$1
 	});
@@ -109383,205 +110054,6 @@ If there's a particular need for this, please submit a feature request at https:
 		})] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "editor-revisions-canvas__loading",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
-		});
-	}
-
-// packages/editor/build-module/components/post-revisions-preview/revisions-code-diff.mjs
-	const MAX_DIFF_EDIT_LENGTH = 1e3;
-	const DIFF_TIMEOUT = 100;
-	/**
-	* Diff parts often end in a newline. Remove the trailing empty item so it is
-	* not rendered as another source line.
-	*
-	* @param {string} value Diff part value.
-	* @return {string[]} Lines in the diff part.
-	*/
-	function splitLines(value) {
-		const lines = value.split("\n");
-		if (lines[lines.length - 1] === "") lines.pop();
-		return lines;
-	}
-	/**
-	* Creates the rows shown in the code diff and adds line numbers for both
-	* revisions.
-	*
-	* @param {string}  previousContent Previous revision content.
-	* @param {string}  currentContent  Selected revision content.
-	* @param {boolean} showDiff        Whether changes should be highlighted.
-	* @return {Array<Object>} Code-diff rows.
-	*/
-	function getCodeDiffRows(previousContent, currentContent, showDiff) {
-		let parts = [{ value: currentContent }];
-		if (showDiff) {
-			parts = diffLines(previousContent, currentContent, {
-				maxEditLength: MAX_DIFF_EDIT_LENGTH,
-				timeout: DIFF_TIMEOUT
-			});
-			if (!parts) parts = [{
-				value: previousContent,
-				removed: true
-			}, {
-				value: currentContent,
-				added: true
-			}];
-		}
-		let previousLineNumber = 1;
-		let currentLineNumber = 1;
-		return parts.flatMap((part) => {
-			let status = "unchanged";
-			if (part.added) status = "added";
-			else if (part.removed) status = "removed";
-			return splitLines(part.value).map((value) => {
-				const row = {
-					value,
-					status,
-					previousLineNumber: null,
-					currentLineNumber: null
-				};
-				if (status !== "added" && showDiff) row.previousLineNumber = previousLineNumber++;
-				if (status !== "removed") row.currentLineNumber = currentLineNumber++;
-				return row;
-			});
-		});
-	}
-	/**
-	* Determines whether the code diff should wait for an older revision or fall
-	* back to showing the selected revision without a diff.
-	*
-	* @param {Object}      options                             Display options.
-	* @param {Object|null} options.previousRevision            Previous revision.
-	* @param {boolean}     options.showDiff                    Whether changes should be highlighted.
-	* @param {boolean}     options.hasOlderRevisionPage        Whether another revisions page exists.
-	* @param {boolean}     options.hasFinishedPreviousRevision Whether the previous revision request finished.
-	* @return {Object} Code-diff display state.
-	*/
-	function getCodeDiffDisplayState({ previousRevision, showDiff, hasOlderRevisionPage, hasFinishedPreviousRevision }) {
-		const needsPreviousRevision = showDiff && previousRevision === null && hasOlderRevisionPage;
-		return {
-			showDiff: showDiff && !(needsPreviousRevision && hasFinishedPreviousRevision),
-			isPreviousRevisionLoading: needsPreviousRevision && !hasFinishedPreviousRevision
-		};
-	}
-	function ConnectedRevisionsCodeDiff() {
-		const revisionDiff = (0, _wordpress_data.useSelect)((select) => {
-			const editorSelectors = select(store);
-			const coreSelectors = select(_wordpress_core_data.store);
-			const { getShownVersion, getComparedVersion, getRevisionPage, getRevisionsPerPage, isShowingRevisionDiff } = unlock$5(editorSelectors);
-			const _previousRevision = getComparedVersion();
-			const _showDiff = isShowingRevisionDiff();
-			const revisionPage = getRevisionPage();
-			const hasOlderRevisionPage = revisionPage < (Math.ceil(editorSelectors.getCurrentPostRevisionsCount() / getRevisionsPerPage()) || 1);
-			let hasFinishedPreviousRevision = true;
-			if (_showDiff && _previousRevision === null && hasOlderRevisionPage) {
-				const postType = editorSelectors.getCurrentPostType();
-				const postId = editorSelectors.getCurrentPostId();
-				const revisionKey = coreSelectors.getEntityConfig("postType", postType)?.revisionKey || "id";
-				hasFinishedPreviousRevision = coreSelectors.hasFinishedResolution("getRevisions", [
-					"postType",
-					postType,
-					postId,
-					buildRevisionsPageQuery(revisionKey, revisionPage + 1)
-				]);
-			}
-			return {
-				revision: getShownVersion(),
-				previousRevision: _previousRevision,
-				...getCodeDiffDisplayState({
-					previousRevision: _previousRevision,
-					showDiff: _showDiff,
-					hasOlderRevisionPage,
-					hasFinishedPreviousRevision
-				})
-			};
-		}, []);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RevisionsCodeDiff, { ...revisionDiff });
-	}
-	/**
-	* Shows the selected revision's raw block markup as a read-only diff.
-	*
-	* @param {Object}      props                           Component props.
-	* @param {Object}      props.revision                  Selected revision.
-	* @param {Object|null} props.previousRevision          Previous revision.
-	* @param {boolean}     props.showDiff                  Whether to show changes.
-	* @param {boolean}     props.isPreviousRevisionLoading Whether the previous revision is loading.
-	* @return {React.JSX.Element} The revision code diff.
-	*/
-	function RevisionsCodeDiff({ revision, previousRevision, showDiff, isPreviousRevisionLoading }) {
-		const rows = (0, _wordpress_element.useMemo)(() => {
-			if (!revision || isPreviousRevisionLoading) return [];
-			return getCodeDiffRows(previousRevision?.content?.raw ?? "", revision.content?.raw ?? "", showDiff);
-		}, [
-			revision,
-			previousRevision,
-			showDiff,
-			isPreviousRevisionLoading
-		]);
-		if (!revision || isPreviousRevisionLoading) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			className: "editor-revisions-canvas__loading",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
-		});
-		const label = showDiff ? (0, _wordpress_i18n.__)("Code changes") : (0, _wordpress_i18n.__)("Revision code");
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			className: "editor-revisions-code-diff",
-			role: "region",
-			"aria-label": label,
-			tabIndex: 0,
-			children: rows.length ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("table", {
-				className: "editor-revisions-code-diff__table",
-				children: [
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("caption", {}),
-						children: label
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("thead", {}),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", { children: [
-							showDiff && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n.__)("Previous line") }),
-							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n.__)("Current line") }),
-							showDiff && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n._x)("Change", "noun") }),
-							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", { children: (0, _wordpress_i18n.__)("Code") })
-						] })
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("tbody", { children: rows.map((row, index) => {
-						let marker = "";
-						let statusLabel = (0, _wordpress_i18n.__)("Unchanged");
-						if (row.status === "added") {
-							marker = "+";
-							statusLabel = (0, _wordpress_i18n.__)("Added");
-						} else if (row.status === "removed") {
-							marker = "−";
-							statusLabel = (0, _wordpress_i18n.__)("Removed");
-						}
-						return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", {
-							className: `editor-revisions-code-diff__line is-${row.status}`,
-							children: [
-								showDiff && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
-									className: "editor-revisions-code-diff__line-number is-previous",
-									children: row.previousLineNumber
-								}),
-								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
-									className: "editor-revisions-code-diff__line-number is-current",
-									children: row.currentLineNumber
-								}),
-								showDiff && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("td", {
-									className: "editor-revisions-code-diff__marker",
-									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { children: statusLabel }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-										"aria-hidden": "true",
-										children: marker
-									})]
-								}),
-								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
-									className: "editor-revisions-code-diff__code",
-									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("code", { children: row.value })
-								})
-							]
-						}, index);
-					}) })
-				]
-			}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
-				className: "editor-revisions-code-diff__empty",
-				children: (0, _wordpress_i18n.__)("This revision is empty.")
-			})
 		});
 	}
 
