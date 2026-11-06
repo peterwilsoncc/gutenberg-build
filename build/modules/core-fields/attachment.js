@@ -9779,9 +9779,9 @@ function registerStyle8(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle8("e069e4bb2c", "._84dbb86623263398__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}._84dbb86623263398__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:1}@media not (prefers-reduced-motion){._083b7cb18cdc7423__is-loaded img,.e0b40933d4bec16d__is-loading img{transition:opacity .1s linear}}.e0b40933d4bec16d__is-loading img{opacity:0}._083b7cb18cdc7423__is-loaded img{opacity:1}.c422488b9ef245f2__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.c422488b9ef245f2__icon svg{fill:currentColor;margin-inline-start:-4px}._02fc2c638a522239__name{overflow:hidden;text-overflow:ellipsis}");
+  registerStyle8("ca0a64f0b4", "._0fddcad38a96020c__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px);justify-content:start;overflow:hidden}._0fddcad38a96020c__avatar img{block-size:var(--wpds-dimension-size-2xs,16px);border-radius:100%;inline-size:var(--wpds-dimension-size-2xs,16px);object-fit:cover;opacity:1}@media not (prefers-reduced-motion){._6de25c679fc0b3d1__is-loading img,.c6874f27c0c6a2ca__is-loaded img{transition:opacity .1s linear}}._6de25c679fc0b3d1__is-loading img{opacity:0}.c6874f27c0c6a2ca__is-loaded img{opacity:1}.b8888c69522fb4db__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}.b8888c69522fb4db__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}.ce5929029ef9af38__name{overflow:hidden;text-overflow:ellipsis}");
 }
-var style_default7 = { "avatar": "_84dbb86623263398__avatar", "is-loading": "e0b40933d4bec16d__is-loading", "is-loaded": "_083b7cb18cdc7423__is-loaded", "icon": "c422488b9ef245f2__icon", "name": "_02fc2c638a522239__name" };
+var style_default7 = { "avatar": "_0fddcad38a96020c__avatar", "is-loading": "_6de25c679fc0b3d1__is-loading", "is-loaded": "c6874f27c0c6a2ca__is-loaded", "icon": "b8888c69522fb4db__icon", "name": "ce5929029ef9af38__name" };
 function AuthorView({ item }) {
   const author = item?._embedded?.author?.[0];
   const text = author?.name;
@@ -9803,7 +9803,7 @@ function AuthorView({ item }) {
   if (!text) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Stack, { direction: "row", align: "flex-start", justify: "flex-start", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(Stack, { direction: "row", gap: "xs", align: "flex-start", justify: "flex-start", children: [
     !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
       "div",
       {

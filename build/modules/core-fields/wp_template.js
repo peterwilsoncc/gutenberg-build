@@ -817,9 +817,9 @@ function registerStyle2(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle2("9c246501a5", "._66de93a96eb5a44f__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}._66de93a96eb5a44f__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){._66de93a96eb5a44f__avatar img{transition:opacity .1s linear}}._66de93a96eb5a44f__avatar.fe521286e51cb220__is-loaded img{opacity:1}.dbd5d0f448658ef9__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.dbd5d0f448658ef9__icon svg{fill:currentColor;margin-inline-start:-4px}._5026ec0f3be21164__name{overflow:hidden;text-overflow:ellipsis}");
+  registerStyle2("8376283491", "._5d635edea6487865__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px);justify-content:start;overflow:hidden}._5d635edea6487865__avatar img{block-size:var(--wpds-dimension-size-2xs,16px);border-radius:100%;inline-size:var(--wpds-dimension-size-2xs,16px);object-fit:cover;opacity:0}@media not (prefers-reduced-motion){._5d635edea6487865__avatar img{transition:opacity .1s linear}}._5d635edea6487865__avatar.dacbf37b426c6c52__is-loaded img{opacity:1}.f89ecb51351932c2__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}.f89ecb51351932c2__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}._8f6681d25a61c109__name{overflow:hidden;text-overflow:ellipsis}");
 }
-var style_default2 = { "avatar": "_66de93a96eb5a44f__avatar", "is-loaded": "fe521286e51cb220__is-loaded", "icon": "dbd5d0f448658ef9__icon", "name": "_5026ec0f3be21164__name" };
+var style_default2 = { "avatar": "_5d635edea6487865__avatar", "is-loaded": "dacbf37b426c6c52__is-loaded", "icon": "f89ecb51351932c2__icon", "name": "_8f6681d25a61c109__name" };
 function getIconForSource(originalSource) {
   switch (originalSource) {
     case "theme":
@@ -855,7 +855,7 @@ function TemplateAuthorView({ item }) {
     },
     [originalSource, authorId]
   );
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(Stack, { direction: "row", align: "flex-start", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(Stack, { direction: "row", gap: "xs", align: "flex-start", children: [
     imageUrl && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       "div",
       {

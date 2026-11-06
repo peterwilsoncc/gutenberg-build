@@ -16784,9 +16784,9 @@ function registerStyle31(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle31("9c246501a5", "._66de93a96eb5a44f__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px;justify-content:start;overflow:hidden}._66de93a96eb5a44f__avatar img{block-size:16px;border-radius:100%;inline-size:16px;object-fit:cover;opacity:0}@media not (prefers-reduced-motion){._66de93a96eb5a44f__avatar img{transition:opacity .1s linear}}._66de93a96eb5a44f__avatar.fe521286e51cb220__is-loaded img{opacity:1}.dbd5d0f448658ef9__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}.dbd5d0f448658ef9__icon svg{fill:currentColor;margin-inline-start:-4px}._5026ec0f3be21164__name{overflow:hidden;text-overflow:ellipsis}");
+  registerStyle31("8376283491", "._5d635edea6487865__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px);justify-content:start;overflow:hidden}._5d635edea6487865__avatar img{block-size:var(--wpds-dimension-size-2xs,16px);border-radius:100%;inline-size:var(--wpds-dimension-size-2xs,16px);object-fit:cover;opacity:0}@media not (prefers-reduced-motion){._5d635edea6487865__avatar img{transition:opacity .1s linear}}._5d635edea6487865__avatar.dacbf37b426c6c52__is-loaded img{opacity:1}.f89ecb51351932c2__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}.f89ecb51351932c2__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}._8f6681d25a61c109__name{overflow:hidden;text-overflow:ellipsis}");
 }
-var style_default17 = { "avatar": "_66de93a96eb5a44f__avatar", "is-loaded": "fe521286e51cb220__is-loaded", "icon": "dbd5d0f448658ef9__icon", "name": "_5026ec0f3be21164__name" };
+var style_default17 = { "avatar": "_5d635edea6487865__avatar", "is-loaded": "dacbf37b426c6c52__is-loaded", "icon": "f89ecb51351932c2__icon", "name": "_8f6681d25a61c109__name" };
 function AuthorView({ item }) {
   const authorId = item?.author;
   const embeddedAuthorId = item?._embedded?.author?.[0]?.id;
@@ -16821,7 +16821,7 @@ function AuthorView({ item }) {
   if (!authorId || !text && hasResolved) {
     return null;
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(Stack, { direction: "row", align: "flex-start", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)(Stack, { direction: "row", gap: "xs", align: "flex-start", children: [
     !!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(
       "div",
       {
@@ -18635,9 +18635,9 @@ function registerStyle39(hash, css) {
   }
 }
 if (typeof process === "undefined" || true) {
-  registerStyle39("2d5dd29368", "._31460caf49297db0__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:24px}._31460caf49297db0__icon svg{fill:currentColor;margin-inline-start:-4px}");
+  registerStyle39("ea6758c967", ".fa2f4cccf57c112c__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}.fa2f4cccf57c112c__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}");
 }
-var style_default25 = { "icon": "_31460caf49297db0__icon" };
+var style_default25 = { "icon": "fa2f4cccf57c112c__icon" };
 var ICONS = {
   draft: drafts_default,
   future: scheduled_default,
@@ -18656,7 +18656,7 @@ function StatusView({
   );
   const label = status?.label || currentStatus;
   const icon = ICONS[currentStatus];
-  return /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(Stack, { direction: "row", align: "flex-start", justify: "flex-start", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)(Stack, { direction: "row", gap: "xs", align: "flex-start", justify: "flex-start", children: [
     icon && /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("div", { className: style_default25.icon, children: /* @__PURE__ */ (0, import_jsx_runtime84.jsx)(Icon, { icon }) }),
     /* @__PURE__ */ (0, import_jsx_runtime84.jsx)("span", { children: label })
   ] });
