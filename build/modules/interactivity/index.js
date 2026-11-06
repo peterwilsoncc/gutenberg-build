@@ -2031,6 +2031,8 @@ var populateServerData = (data) => {
 // packages/interactivity/build-module/vdom.mjs
 init_preact_module();
 var htmlFallbacks = /* @__PURE__ */ new WeakMap();
+var htmlServerContents = /* @__PURE__ */ new WeakSet();
+var templateContentDepth = 0;
 var directivePrefix = `data-wp-`;
 var namespaces = [];
 var currentNamespace = () => namespaces[namespaces.length - 1] ?? null;
@@ -2098,6 +2100,10 @@ function getTemplateContentsOwnerDocument() {
 function getHtmlFallback(element) {
   const htmlProps = element.props.dangerouslySetInnerHTML;
   return htmlProps && htmlFallbacks.get(htmlProps);
+}
+function getHtmlServerContent(element) {
+  const htmlProps = element.props.dangerouslySetInnerHTML;
+  return htmlProps && htmlServerContents.has(htmlProps) ? htmlFallbacks.get(htmlProps) : void 0;
 }
 function parseDirectiveValue(rawValue) {
   const regexResult = nsPathRegExp.exec(rawValue);
@@ -2261,11 +2267,19 @@ function convertToVdom(root) {
         const snapshot = getTemplateContentsOwnerDocument().createDocumentFragment();
         copyFallbackChildren(elementNode, snapshot);
         htmlFallbacks.set(htmlProps, snapshot);
+        if (!templateContentDepth) {
+          htmlServerContents.add(htmlProps);
+        }
       }
     } else if (localName === "template") {
-      props.content = [
-        ...elementNode.content.childNodes
-      ].map((childNode) => toVdom(childNode));
+      templateContentDepth++;
+      try {
+        props.content = [
+          ...elementNode.content.childNodes
+        ].map((childNode) => toVdom(childNode));
+      } finally {
+        templateContentDepth--;
+      }
     } else {
       let child = treeWalker.firstChild();
       if (child) {
@@ -2952,6 +2966,18 @@ function getDangerousHTML(token) {
 
 // packages/interactivity/build-module/directives/html.mjs
 var isServerHTMLRepresentation = (value) => isPlainObject(value) && value.wpServerHtml === true;
+var getTemplates = (content) => Array.from(content.querySelectorAll("template")).filter(
+  (template) => template.namespaceURI === "http://www.w3.org/1999/xhtml"
+);
+var isSameServerContent = (content, other) => {
+  if (!content.isEqualNode(other)) {
+    return false;
+  }
+  const otherTemplates = getTemplates(other);
+  return getTemplates(content).every(
+    (template, index) => isSameServerContent(template.content, otherTemplates[index].content)
+  );
+};
 directive(
   "html",
   ({ directives: { html: htmlEntries }, element, evaluate }) => {
@@ -2959,6 +2985,15 @@ directive(
     const lastAppliedKey = A2(void 0);
     const previousHost = A2(null);
     const previousInputs = A2(null);
+    const previousServerContent = A2(
+      void 0
+    );
+    const owedServerContent = A2(
+      void 0
+    );
+    const shownServerContent = A2(
+      void 0
+    );
     const preactHtml = A2();
     let result;
     if (!entry) {
@@ -2987,6 +3022,7 @@ directive(
     const trusted = isDangerousHTML(result);
     const resolvedValue = trusted ? getDangerousHTML(result) : emptyHTML;
     const fallback = getHtmlFallback(element);
+    const serverContent = getHtmlServerContent(element);
     useLayoutEffect(() => {
       const node = element.ref.current;
       const hostChanged = previousHost.current !== node;
@@ -3006,13 +3042,37 @@ directive(
       if (hostChanged) {
         previousHost.current = node;
         lastAppliedKey.current = void 0;
+        owedServerContent.current = void 0;
+        shownServerContent.current = preserveContent ? serverContent : void 0;
         if (active && preserveContent && !node.hasChildNodes() && fallback?.hasChildNodes()) {
           node.append(
             node.ownerDocument.importNode(fallback, true)
           );
         }
+      } else if (serverContent !== previousServerContent.current) {
+        owedServerContent.current = serverContent;
+        queueMicrotask(() => {
+          afterNextFrame(() => {
+            if (owedServerContent.current === serverContent) {
+              owedServerContent.current = void 0;
+            }
+          });
+        });
       }
+      previousServerContent.current = serverContent;
       if (!active) {
+        return;
+      }
+      const owed = owedServerContent.current;
+      if (preserveContent && owed) {
+        owedServerContent.current = void 0;
+        if (!shownServerContent.current || !isSameServerContent(shownServerContent.current, owed)) {
+          node.replaceChildren(
+            node.ownerDocument.importNode(owed, true)
+          );
+        }
+        shownServerContent.current = owed;
+        lastAppliedKey.current = void 0;
         return;
       }
       if (!hostChanged && !inputsChanged) {
@@ -3024,6 +3084,7 @@ directive(
         }
         return;
       }
+      shownServerContent.current = void 0;
       if (!trusted && result !== null && result !== void 0) {
         warn(
           "data-wp-html: the value is not trusted HTML. Use asDangerousHTML() to explicitly trust the markup."
@@ -3056,6 +3117,7 @@ directive(
       trusted,
       resolvedValue,
       fallback,
+      serverContent,
       element.ref,
       element
     ]);
