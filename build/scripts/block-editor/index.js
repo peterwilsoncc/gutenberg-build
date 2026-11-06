@@ -70853,7 +70853,7 @@ Icon: ButtonIcon });
 
 // packages/block-editor/build-module/components/inserter/preview-panel.mjs
 	function InserterPreviewPanel({ item }) {
-		const { name, title, icon, description, initialAttributes, example } = item;
+		const { name, title, icon, description, initialAttributes, example, isDisabled } = item;
 		const isReusable = (0, _wordpress_blocks.isReusableBlock)(item);
 		const blocks = (0, _wordpress_element.useMemo)(() => {
 			if (!example) return (0, _wordpress_blocks.createBlock)(name, initialAttributes);
@@ -70877,16 +70877,17 @@ Icon: ButtonIcon });
 		const minHeight = scale !== 0 && scale < 1 && previewHeight ? previewHeight / scale : previewHeight;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "block-editor-inserter__preview-container",
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				className: "block-editor-inserter__preview",
-				children: isReusable || example ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "block-editor-inserter__preview-content",
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MemoizedBlockPreview, {
-						blocks,
-						viewportWidth,
-						minHeight: previewHeight,
-						additionalStyles: [{ css: `
-										body { 
+			children: [
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: "block-editor-inserter__preview",
+					children: isReusable || example ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "block-editor-inserter__preview-content",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MemoizedBlockPreview, {
+							blocks,
+							viewportWidth,
+							minHeight: previewHeight,
+							additionalStyles: [{ css: `
+										body {
 											padding: 24px;
 											min-height:${Math.round(minHeight)}px;
 											display:flex;
@@ -70894,16 +70895,23 @@ Icon: ButtonIcon });
 										}
 										.is-root-container { width: 100%; }
 									` }]
+						})
+					}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "block-editor-inserter__preview-content-missing",
+						children: (0, _wordpress_i18n.__)("No preview available.")
 					})
-				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "block-editor-inserter__preview-content-missing",
-					children: (0, _wordpress_i18n.__)("No preview available.")
+				}),
+				!isReusable && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockCard, {
+					title,
+					icon,
+					description
+				}),
+				isDisabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text$1, {
+					render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {}),
+					className: "block-editor-inserter__preview-disabled-note",
+					children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.__)("<strong>Note:</strong> This block can only be used once, and is already in use."), { strong: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("strong", {}) })
 				})
-			}), !isReusable && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockCard, {
-				title,
-				icon,
-				description
-			})]
+			]
 		});
 	}
 

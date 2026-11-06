@@ -4271,6 +4271,11 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   padding-bottom: 4px;
 }
 
+.block-editor-inserter__preview-disabled-note {
+  padding-top: 4px;
+  color: #1e1e1e;
+}
+
 .block-editor-inserter__insertable-blocks-at-selection:not(:empty) + .block-editor-inserter__all-blocks:not(:empty) {
   border-top: 1px solid #e0e0e0;
 }
