@@ -92284,6 +92284,46 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/editor/build-module/components/post-schedule/index.mjs
 	const { PrivatePublishDateTimePicker } = unlock$5(_wordpress_block_editor.privateApis);
 	/**
+	* Today's month in the site's timezone: the month the date picker shows when
+	* there is no date. The browser's month can differ near a month boundary.
+	*
+	* @return {Date} The first day of the month.
+	*/
+	function getSiteMonth() {
+		const now = /* @__PURE__ */ new Date();
+		return new Date(Number((0, _wordpress_date.date)("Y", now)), Number((0, _wordpress_date.date)("n", now)) - 1, 1);
+	}
+	/**
+	* Formats the day of a date with a time, without a timezone.
+	*
+	* @param {Date}   date The date.
+	* @param {string} time The time, as `H:i:s`.
+	*
+	* @return {string} The date, e.g. `2026-10-31T23:59:59`.
+	*/
+	function toTimezonelessDate(date, time) {
+		const pad = (number) => String(number).padStart(2, "0");
+		return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${time}`;
+	}
+	/**
+	* The bounds of the posts query for the month of a date. The server reads a
+	* date without a timezone in the site's timezone, as `post_date` is, so the
+	* bounds carry none. Both are exclusive: they are the last second of the
+	* previous month and the first second of the next one.
+	*
+	* @param {Date} date A date in the month.
+	*
+	* @return {{after: string, before: string}} The bounds.
+	*/
+	function getMonthBounds(date) {
+		const year = date.getFullYear();
+		const month = date.getMonth();
+		return {
+			after: toTimezonelessDate(new Date(year, month, 0), "23:59:59"),
+			before: toTimezonelessDate(new Date(year, month + 1, 1), "00:00:00")
+		};
+	}
+	/**
 	* Renders the PostSchedule component. It allows the user to schedule a post.
 	*
 	* @param {Object}   props         Props.
@@ -92309,11 +92349,15 @@ If there's a particular need for this, please submit a feature request at https:
 			editPost({ date });
 			(0, _wordpress_a11y.speak)(date ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Publish date set to %s."), getFullPostScheduleLabel(date)) : (0, _wordpress_i18n.__)("Publish date set to now."), "assertive");
 		};
-		const [previewedMonth, setPreviewedMonth] = (0, _wordpress_element.useState)(startOfMonth(new Date(postDate)));
+		const [previewedMonth, setPreviewedMonth] = (0, _wordpress_element.useState)(() => postDate ? new Date(postDate) : getSiteMonth());
+		const [prevPostDate, setPrevPostDate] = (0, _wordpress_element.useState)(postDate);
+		if (postDate !== prevPostDate) {
+			setPrevPostDate(postDate);
+			setPreviewedMonth(postDate ? new Date(postDate) : getSiteMonth());
+		}
 		const eventsByPostType = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).getEntityRecords("postType", postType, {
 			status: "publish,future",
-			after: startOfMonth(previewedMonth).toISOString(),
-			before: endOfMonth(previewedMonth).toISOString(),
+			...getMonthBounds(previewedMonth),
 			exclude: [select(store).getCurrentPostId()],
 			per_page: 100,
 			_fields: "id,date"

@@ -14934,15 +14934,30 @@ function registerStyle$8(hash, css) {
 }
 registerStyle$8("f06b653b62", "._5b5942a89f5cb8ec__reset{justify-content:center;width:100%}");
 var style_module_default$8 = { "reset": "_5b5942a89f5cb8ec__reset" };
+function toTimezonelessDate(date, time) {
+	const pad = (number) => String(number).padStart(2, "0");
+	return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${time}`;
+}
 function getMonthBounds(date) {
+	const year = date.getFullYear();
+	const month = date.getMonth();
 	return {
-		after: new Date(date.getFullYear(), date.getMonth(), 1).toISOString(),
-		before: new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59).toISOString()
+		after: toTimezonelessDate(new Date(year, month, 0), "23:59:59"),
+		before: toTimezonelessDate(new Date(year, month + 1, 1), "00:00:00")
 	};
+}
+function getSiteMonth() {
+	const now = /* @__PURE__ */ new Date();
+	return new Date(Number((0, import_date.date)("Y", now)), Number((0, import_date.date)("n", now)) - 1, 1);
 }
 function DateEdit({ data, field, onChange, hideLabelFromVision, operator }) {
 	const value = field.getValue({ item: data }) ?? void 0;
-	const [previewedMonth, setPreviewedMonth] = (0, import_element.useState)(() => value ? new Date(value) : /* @__PURE__ */ new Date());
+	const [previewedMonth, setPreviewedMonth] = (0, import_element.useState)(() => value ? new Date(value) : getSiteMonth());
+	const [prevValue, setPrevValue] = (0, import_element.useState)(value);
+	if (value !== prevValue) {
+		setPrevValue(value);
+		setPreviewedMonth(value ? new Date(value) : getSiteMonth());
+	}
 	const otherPosts = (0, import_data.useSelect)((select) => data.type ? select(import_core_data.store).getEntityRecords("postType", data.type, {
 		status: "publish,future",
 		...getMonthBounds(previewedMonth),
