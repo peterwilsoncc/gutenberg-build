@@ -78604,10 +78604,7 @@ The screen with id ${screen.id} will not be added.`);
 		const mergedRefs = (0, _wordpress_compose.useMergeRefs)([editableRef, forwardedRef]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(BaseControl, {
 			...baseControlProps,
-			children: [hideLabelFromVision ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-				id: labelId,
-				children: label
-			}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
+			children: [!hideLabelFromVision && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
 				id: labelId,
 				onClick: () => editableRef.current?.focus(),
 				children: label
@@ -78615,7 +78612,8 @@ The screen with id ${screen.id} will not be added.`);
 				className: style_module_default.editable,
 				role: "textbox",
 				"aria-multiline": true,
-				"aria-labelledby": labelId,
+				"aria-label": hideLabelFromVision ? label : void 0,
+				"aria-labelledby": hideLabelFromVision ? void 0 : labelId,
 				"aria-placeholder": placeholder || void 0,
 				"aria-disabled": disabled || void 0,
 				"aria-required": required || void 0,
