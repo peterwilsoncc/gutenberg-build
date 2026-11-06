@@ -183,7 +183,7 @@ react_dom = __toESM(react_dom, 1);
 		const [tokenType, name, startOffset, tokenLength] = nextToken();
 		const stackDepth = stack.length;
 		const leadingTextStart = startOffset > offset ? offset : null;
-		if (name && !conversionMap[name]) {
+		if (name && !Object.keys(conversionMap).includes(name)) {
 			addText();
 			return false;
 		}
