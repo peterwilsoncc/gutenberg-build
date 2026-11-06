@@ -83795,7 +83795,7 @@ Icon: ButtonIcon });
 	*/
 	function useTabActions(tabsClientId) {
 		const registry = (0, _wordpress_data.useRegistry)();
-		const { insertBlock, removeBlock, moveBlocksToPosition, updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
+		const { insertBlock, removeBlock, moveBlocksToPosition, updateBlockAttributes } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const getTabsState = () => {
 			const { getBlocks, getBlockAttributes } = registry.select(_wordpress_block_editor.store);
 			const tabsAttributes = tabsClientId ? getBlockAttributes(tabsClientId) : void 0;
@@ -83803,38 +83803,65 @@ Icon: ButtonIcon });
 			return {
 				tabPanelsClientId: tabPanels?.clientId ?? null,
 				tabPanelBlocks: tabPanels?.innerBlocks ?? [],
-				activeIndex: tabsAttributes?.editorActiveTabIndex ?? tabsAttributes?.activeTabIndex ?? 0
+				activeIndex: tabsAttributes?.editorActiveTabIndex ?? tabsAttributes?.activeTabIndex ?? 0,
+				defaultIndex: tabsAttributes?.activeTabIndex ?? 0
 			};
 		};
 		const insertTab = (atIndex) => {
-			const { tabPanelsClientId, tabPanelBlocks } = getTabsState();
+			const { tabPanelsClientId, tabPanelBlocks, defaultIndex } = getTabsState();
 			if (!tabPanelsClientId) return;
+			const { canInsertBlockType } = registry.select(_wordpress_block_editor.store);
+			if (!canInsertBlockType("core/tab-panel", tabPanelsClientId)) return;
 			const newIndex = atIndex ?? tabPanelBlocks.length;
-			insertBlock((0, _wordpress_blocks.createBlock)("core/tab-panel"), newIndex, tabPanelsClientId, false);
-			__unstableMarkNextChangeAsNotPersistent();
-			updateBlockAttributes(tabsClientId, { editorActiveTabIndex: newIndex });
+			let newDefaultIndex = 0;
+			if (tabPanelBlocks[defaultIndex]) newDefaultIndex = newIndex <= defaultIndex ? defaultIndex + 1 : defaultIndex;
+			registry.batch(() => {
+				updateBlockAttributes(tabsClientId, {
+					editorActiveTabIndex: newIndex,
+					activeTabIndex: newDefaultIndex
+				});
+				insertBlock((0, _wordpress_blocks.createBlock)("core/tab-panel"), newIndex, tabPanelsClientId, false);
+			});
 		};
 		const removeTab = (atIndex) => {
-			const { tabPanelBlocks, activeIndex } = getTabsState();
+			const { tabPanelBlocks, activeIndex, defaultIndex } = getTabsState();
 			const tabCount = tabPanelBlocks.length;
 			if (tabCount <= 1) return;
 			const removeIndex = atIndex ?? activeIndex;
 			const target = tabPanelBlocks[removeIndex];
 			if (!target) return;
 			const newActiveIndex = removeIndex >= tabCount - 1 ? tabCount - 2 : removeIndex;
-			__unstableMarkNextChangeAsNotPersistent();
-			updateBlockAttributes(tabsClientId, { editorActiveTabIndex: newActiveIndex });
-			removeBlock(target.clientId, false);
+			let newDefaultIndex = defaultIndex;
+			if (removeIndex === defaultIndex) newDefaultIndex = 0;
+			else if (removeIndex < defaultIndex) newDefaultIndex = defaultIndex - 1;
+			registry.batch(() => {
+				removeBlock(target.clientId, false);
+				const { getBlock } = registry.select(_wordpress_block_editor.store);
+				if (getBlock(target.clientId)) return;
+				updateBlockAttributes(tabsClientId, {
+					editorActiveTabIndex: newActiveIndex,
+					activeTabIndex: newDefaultIndex
+				});
+			});
 		};
 		const moveTab = (direction) => {
-			const { tabPanelsClientId, tabPanelBlocks, activeIndex } = getTabsState();
+			const { tabPanelsClientId, tabPanelBlocks, activeIndex, defaultIndex } = getTabsState();
 			if (!tabPanelsClientId) return;
 			const toIndex = activeIndex + direction;
 			const target = tabPanelBlocks[activeIndex];
 			if (!target || toIndex < 0 || toIndex >= tabPanelBlocks.length) return;
-			__unstableMarkNextChangeAsNotPersistent();
-			updateBlockAttributes(tabsClientId, { editorActiveTabIndex: toIndex });
-			moveBlocksToPosition([target.clientId], tabPanelsClientId, tabPanelsClientId, toIndex);
+			const { canMoveBlock } = registry.select(_wordpress_block_editor.store);
+			if (!canMoveBlock(target.clientId)) return;
+			let newDefaultIndex = defaultIndex;
+			if (defaultIndex === activeIndex) newDefaultIndex = toIndex;
+			else if (defaultIndex === toIndex) newDefaultIndex = activeIndex;
+			registry.batch(() => {
+				updateBlockAttributes(tabsClientId, {
+					editorActiveTabIndex: toIndex,
+					activeTabIndex: newDefaultIndex
+				});
+				moveBlocksToPosition([target.clientId], tabPanelsClientId, tabPanelsClientId, toIndex);
+			});
 		};
 		return {
 			insertTab,
@@ -83904,9 +83931,10 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/tab-panel/edit.mjs
 	function Edit$3({ clientId, isSelected }) {
-		const { activeTabIndex, editorActiveTabIndex, blockIndex, hasInnerBlocksSelected, tabsClientId } = (0, _wordpress_data.useSelect)((select) => {
-			const { getBlockRootClientId, getBlockIndex, hasSelectedInnerBlock, getBlockAttributes } = select(_wordpress_block_editor.store);
-			const _tabsClientId = getBlockRootClientId(getBlockRootClientId(clientId));
+		const { activeTabIndex, editorActiveTabIndex, blockIndex, hasInnerBlocksSelected, tabsClientId, tabCount } = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlockRootClientId, getBlockIndex, hasSelectedInnerBlock, getBlockAttributes, getBlockCount } = select(_wordpress_block_editor.store);
+			const tabPanelsClientId = getBlockRootClientId(clientId);
+			const _tabsClientId = getBlockRootClientId(tabPanelsClientId);
 			const tabsAttributes = getBlockAttributes(_tabsClientId) ?? {};
 			const _blockIndex = getBlockIndex(clientId);
 			const _hasInnerBlocksSelected = hasSelectedInnerBlock(clientId, true);
@@ -83915,10 +83943,12 @@ Icon: ButtonIcon });
 				editorActiveTabIndex: tabsAttributes.editorActiveTabIndex,
 				blockIndex: _blockIndex,
 				hasInnerBlocksSelected: _hasInnerBlocksSelected,
-				tabsClientId: _tabsClientId
+				tabsClientId: _tabsClientId,
+				tabCount: getBlockCount(tabPanelsClientId)
 			};
 		}, [clientId]);
-		const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
+		const activeIndex = editorActiveTabIndex ?? activeTabIndex;
+		const effectiveActiveIndex = activeIndex < tabCount ? activeIndex : 0;
 		const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		(0, _wordpress_element.useEffect)(() => {
 			if ((isSelected || hasInnerBlocksSelected) && tabsClientId && effectiveActiveIndex !== blockIndex) {
@@ -86454,7 +86484,8 @@ Icon: ButtonIcon });
 		const { isBlockSelected, hasSelectedInnerBlock } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const { updateBlockAttributes, selectBlock, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { insertTab, removeTab } = useTabActions(tabsClientId);
-		const effectiveActiveIndex = editorActiveTabIndex ?? activeTabIndex;
+		const activeIndex = editorActiveTabIndex ?? activeTabIndex;
+		const effectiveActiveIndex = activeIndex < tabPanels.length ? activeIndex : 0;
 		const tabsList = (0, _wordpress_element.useMemo)(() => tabPanels.map((tab) => ({
 			label: tab.attributes.label || "",
 			clientId: tab.clientId
