@@ -3796,8 +3796,8 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	const { lock: lock$4, unlock: unlock$4 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$75 = {};
-	lock$4(privateApis$75, {
+	const privateApis$76 = {};
+	lock$4(privateApis$76, {
 		getResponsiveMediaQueries,
 		getViewportBreakpoints: getViewportBreakpoints$4,
 		getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels$2,
@@ -4965,7 +4965,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	});
 
 // packages/editor/build-module/utils/device-type.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels$1 } = unlock$5(privateApis$75);
+	const { getViewportBreakpoints: getViewportBreakpoints$3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels$1 } = unlock$5(privateApis$76);
 	const VIEWPORT_KEY_BY_DEVICE_TYPE = {
 		Tablet: "tablet",
 		Mobile: "mobile"
@@ -53807,7 +53807,7 @@ Icon: ButtonIcon });
 	const { lock: lock$2, unlock: unlock$2 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-ui");
 
 // packages/global-styles-ui/build-module/utils.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$2, resolveStyle: resolveStyle$1 } = unlock$2(privateApis$75);
+	const { getViewportBreakpoints: getViewportBreakpoints$2, resolveStyle: resolveStyle$1 } = unlock$2(privateApis$76);
 	/**
 	* Valid states for elements with their labels.
 	* This mirrors the PHP constant in lib/class-wp-theme-json-gutenberg.php
@@ -54990,7 +54990,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/global-styles-ui/build-module/block-preview-panel.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$1, getViewportBreakpointValueInPixels } = unlock$2(privateApis$75);
+	const { getViewportBreakpoints: getViewportBreakpoints$1, getViewportBreakpointValueInPixels } = unlock$2(privateApis$76);
 	const DEFAULT_PREVIEW_WIDTH_BY_VIEWPORT = {
 		default: 783,
 		"@tablet": 600,
@@ -72613,7 +72613,7 @@ Icon: ButtonIcon });
 	* @example
 	* hasFocusWithin(document.getElementById("id"));
 	*/
-	function hasFocusWithin$1(element) {
+	function hasFocusWithin(element) {
 		const activeElement = getActiveElement(element);
 		if (!activeElement) return false;
 		if (contains(element, activeElement)) return true;
@@ -76509,7 +76509,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if (event.defaultPrevented) return;
 			if (!isMouseMoving()) return;
 			if (!focusOnHoverProp(event)) return;
-			if (!hasFocusWithin$1(event.currentTarget)) {
+			if (!hasFocusWithin(event.currentTarget)) {
 				const compositeElement = store?.getState().compositeElement;
 				if (compositeElement && !hasFocus(compositeElement)) compositeElement.focus({ preventScroll: true });
 			}
@@ -102006,8 +102006,8 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/media-editor/build-module/private-apis.mjs
-	const privateApis$45 = {};
-	lock$1(privateApis$45, {
+	const privateApis$46 = {};
+	lock$1(privateApis$46, {
 		store: store$103,
 		MediaEditor,
 		MediaEditorModal: MediaEditorModal$1
@@ -102643,7 +102643,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/components/provider/use-block-editor-settings.mjs
-	const { store: mediaEditorStore$1 } = unlock$5(privateApis$45);
+	const { store: mediaEditorStore$1 } = unlock$5(privateApis$46);
 	const EMPTY_OBJECT = {};
 	/**
 	* The synced patterns the inserter offers: every pattern the user can read.
@@ -104435,7 +104435,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/components/media/media-editor-modal.mjs
-	const { MediaEditorModal, store: mediaEditorStore } = unlock$5(privateApis$45);
+	const { MediaEditorModal, store: mediaEditorStore } = unlock$5(privateApis$46);
 	const VIEW_CONFIG = {
 		kind: "postType",
 		name: "attachment",
@@ -105621,7 +105621,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/hooks/push-changes-to-global-styles/use-review-rows.mjs
-	const { resolveStyle } = unlock$5(privateApis$75);
+	const { resolveStyle } = unlock$5(privateApis$76);
 	/**
 	* Turns a raw style value into readable text, using the row's `format` hint so
 	* borders and spacing show as a single CSS value instead of a raw object.
@@ -106792,7 +106792,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/editor/build-module/components/preview-dropdown/index.mjs
-	const { getViewportBreakpoints } = unlock$5(privateApis$75);
+	const { getViewportBreakpoints } = unlock$5(privateApis$76);
 	function PreviewMenu({ forceIsAutosaveable, disabled }) {
 		const menuActionsRef = (0, _wordpress_element.useRef)(null);
 		(0, _wordpress_element.useEffect)(() => {
@@ -112380,7 +112380,8 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/components/collab-sidebar/utils/dom.mjs
-/**
+	const { ownsSelection } = unlock$5(_wordpress_rich_text.privateApis);
+	/**
 	* Build the CSS selector matching a note's in-content `core/note` marker in
 	* the editor canvas. The format serializes as `<mark class="wp-note">` with
 	* the note id in `data-id`.
@@ -112417,13 +112418,20 @@ If there's a particular need for this, please submit a feature request at https:
 		return anchor.getBoundingClientRect();
 	}
 	/**
-	* Whether focus is inside an element, in whichever document it lives.
+	* Whether one of the blocks holds focus. When the selected block supports
+	* `editableRoot`, the canvas is the editing host and holds focus itself, so
+	* the block of the editable owning the selection holds it.
 	*
-	* @param element Element to check.
-	* @return True when the element contains the active element.
+	* @param ownerDocument The blocks' document.
+	* @param clientIds     Block client IDs.
+	* @return Whether one of the blocks holds focus.
 	*/
-	function hasFocusWithin(element) {
-		return !!element?.contains(element.ownerDocument.activeElement);
+	function isFocusInBlocks(ownerDocument, clientIds) {
+		if (!ownerDocument?.hasFocus()) return false;
+		const anchorNode = ownerDocument.defaultView?.getSelection()?.anchorNode;
+		const editable = (anchorNode?.nodeType === Node.ELEMENT_NODE ? anchorNode : anchorNode?.parentElement)?.closest("[contenteditable=\"true\"]");
+		const block = (editable && ownsSelection(editable) ? editable : ownerDocument.activeElement)?.closest("[data-block]")?.dataset.block;
+		return !!block && clientIds.includes(block);
 	}
 	/**
 	* Resolve the DOM element for a note thread once it's mounted,
@@ -113838,7 +113846,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const focusOutside = (0, _wordpress_compose.__experimentalUseFocusOutside)((event) => {
 			if (event.relatedTarget?.closest(".editor-collab-sidebar-panel__add-note")) return;
 			if (isSubmittingRef.current) return;
-			if (hasFocusWithin(blockElement)) return;
+			if (isFocusInBlocks(blockElement?.ownerDocument, clientIds)) return;
 			if (getSelectedNote() === "new" && !hasDraft()) {
 				onDiscard(clientIds);
 				toggleBlockHighlight(clientId, false);
@@ -114401,7 +114409,7 @@ If there's a particular need for this, please submit a feature request at https:
 				debouncedSetBlockHighlight.cancel();
 				setBlockHighlight(false);
 			}
-			if (hasFocusWithin(relatedBlockElement)) return;
+			if (isFocusInBlocks(relatedBlockElement?.ownerDocument, note.blockClientIds)) return;
 			if (getSelectedNote() === note.id) onDeselectNote();
 		});
 		function onMouseEnter() {
