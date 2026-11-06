@@ -106179,6 +106179,124 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/editor/build-module/hooks/note-format.mjs
 	(0, _wordpress_rich_text.registerFormatType)(NOTE_FORMAT_NAME, noteFormat);
 
+// packages/editor/build-module/components/collab-sidebar/utils/metadata.mjs
+/**
+	* Normalizes noteId metadata to always return an array of unique numeric ids,
+	* preserving insertion order. Handles both scalar (legacy, possibly
+	* string-typed) and array (new) values.
+	*
+	* @param metadata Block metadata object
+	* @return Array of note IDs (may be empty)
+	*/
+	function getNoteIdsFromMetadata(metadata) {
+		const noteId = metadata?.noteId;
+		const raw = Array.isArray(noteId) ? noteId : [noteId];
+		const ids = /* @__PURE__ */ new Set();
+		for (const value of raw) {
+			const id = Number(value);
+			if (Number.isFinite(id) && id > 0) ids.add(id);
+		}
+		return [...ids];
+	}
+	/**
+	* Adds a note ID to the metadata.
+	* Converts scalar to array if needed, otherwise appends.
+	*
+	* @param metadata Existing block metadata
+	* @param noteId   Note ID to add
+	* @return Updated metadata object
+	*/
+	function addNoteIdToMetadata(metadata, noteId) {
+		const ids = new Set(getNoteIdsFromMetadata(metadata));
+		const id = Number(noteId);
+		if (metadata && ids.has(id)) return metadata;
+		ids.add(id);
+		return {
+			...metadata,
+			noteId: [...ids]
+		};
+	}
+	/**
+	* Removes a note ID from the metadata.
+	*
+	* @param metadata Existing block metadata
+	* @param noteId   Note ID to remove
+	* @return Updated metadata object
+	*/
+	function removeNoteIdFromMetadata(metadata, noteId) {
+		const ids = new Set(getNoteIdsFromMetadata(metadata));
+		ids.delete(Number(noteId));
+		return {
+			...metadata,
+			noteId: ids.size > 0 ? [...ids] : void 0
+		};
+	}
+
+// packages/editor/build-module/hooks/note-merge.mjs
+/**
+	* Adds the note IDs of one metadata object to another.
+	*
+	* @param metadata        Metadata to add the note IDs to.
+	* @param metadataToMerge Metadata whose note IDs are added.
+	* @return Merged metadata, or `undefined` when no note IDs are added.
+	*/
+	function mergeNoteIds(metadata, metadataToMerge) {
+		const current = metadata;
+		const noteIds = getNoteIdsFromMetadata(current);
+		const mergedIds = /* @__PURE__ */ new Set([...noteIds, ...getNoteIdsFromMetadata(metadataToMerge)]);
+		if (mergedIds.size === noteIds.length) return;
+		return {
+			...current,
+			noteId: [...mergedIds]
+		};
+	}
+	/**
+	* Wraps a block type's `merge` callback so that the notes of the merged block
+	* are kept.
+	*
+	* @param settings Block type settings.
+	* @return Filtered block type settings.
+	*/
+	function addMergeCallback(settings) {
+		const { merge } = settings;
+		if (!merge) return settings;
+		return {
+			...settings,
+			merge(attributes, attributesToMerge) {
+				const result = merge(attributes, attributesToMerge);
+				const metadata = mergeNoteIds(result.metadata ?? attributes.metadata, attributesToMerge.metadata);
+				return metadata ? {
+					...result,
+					metadata
+				} : result;
+			}
+		};
+	}
+	/**
+	* Keeps the notes of the source blocks when blocks are switched to another
+	* block type.
+	*
+	* @param result  Transformed block.
+	* @param source  Source block or blocks.
+	* @param index   Index of the transformed block.
+	* @param results All blocks that resulted from the transformation.
+	* @return Transformed block with the source block's notes.
+	*/
+	function addTransforms(result, source, index, results) {
+		const sources = Array.isArray(source) ? source : [source];
+		if (results.length === 1 && result.innerBlocks.length === sources.length || results.length !== sources.length) return result;
+		const metadata = mergeNoteIds(result.attributes.metadata, sources[index].attributes.metadata);
+		return metadata ? {
+			...result,
+			attributes: {
+				...result.attributes,
+				metadata
+			}
+		} : result;
+	}
+	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/notes/addTransforms", addTransforms);
+	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/notes/addMergeCallback", addMergeCallback);
+
 // packages/editor/build-module/components/header/back-button.mjs
 	const slotName = "__experimentalMainDashboardButton";
 	const useHasBackButton = () => {
@@ -112637,59 +112755,6 @@ If there's a particular need for this, please submit a feature request at https:
 				syncRoot();
 				requestMeasure();
 			}
-		};
-	}
-
-// packages/editor/build-module/components/collab-sidebar/utils/metadata.mjs
-/**
-	* Normalizes noteId metadata to always return an array of unique numeric ids,
-	* preserving insertion order. Handles both scalar (legacy, possibly
-	* string-typed) and array (new) values.
-	*
-	* @param metadata Block metadata object
-	* @return Array of note IDs (may be empty)
-	*/
-	function getNoteIdsFromMetadata(metadata) {
-		const noteId = metadata?.noteId;
-		const raw = Array.isArray(noteId) ? noteId : [noteId];
-		const ids = /* @__PURE__ */ new Set();
-		for (const value of raw) {
-			const id = Number(value);
-			if (Number.isFinite(id) && id > 0) ids.add(id);
-		}
-		return [...ids];
-	}
-	/**
-	* Adds a note ID to the metadata.
-	* Converts scalar to array if needed, otherwise appends.
-	*
-	* @param metadata Existing block metadata
-	* @param noteId   Note ID to add
-	* @return Updated metadata object
-	*/
-	function addNoteIdToMetadata(metadata, noteId) {
-		const ids = new Set(getNoteIdsFromMetadata(metadata));
-		const id = Number(noteId);
-		if (metadata && ids.has(id)) return metadata;
-		ids.add(id);
-		return {
-			...metadata,
-			noteId: [...ids]
-		};
-	}
-	/**
-	* Removes a note ID from the metadata.
-	*
-	* @param metadata Existing block metadata
-	* @param noteId   Note ID to remove
-	* @return Updated metadata object
-	*/
-	function removeNoteIdFromMetadata(metadata, noteId) {
-		const ids = new Set(getNoteIdsFromMetadata(metadata));
-		ids.delete(Number(noteId));
-		return {
-			...metadata,
-			noteId: ids.size > 0 ? [...ids] : void 0
 		};
 	}
 

@@ -119533,7 +119533,6 @@ If there's a particular need for this, please submit a feature request at https:
 		const sourceMetadata = source[index]?.attributes?.metadata;
 		if (!sourceMetadata) return result;
 		const preservedMetadata = {};
-		if (sourceMetadata.noteId && !result.attributes?.metadata?.noteId) preservedMetadata.noteId = sourceMetadata.noteId;
 		if (sourceMetadata.name && !result.attributes?.metadata?.name && (0, _wordpress_blocks.hasBlockSupport)(result.name, "renaming", true)) preservedMetadata.name = sourceMetadata.name;
 		if (sourceMetadata.blockVisibility !== void 0 && !result.attributes?.metadata?.blockVisibility && (0, _wordpress_blocks.hasBlockSupport)(result.name, "visibility", true)) preservedMetadata.blockVisibility = sourceMetadata.blockVisibility;
 		if (Object.keys(preservedMetadata).length > 0) return {
