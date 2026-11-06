@@ -5945,7 +5945,7 @@ const getElementRects = async function(data) {
 		}
 	};
 };
-function isRTL$1(element) {
+function isRTL$2(element) {
 	return getComputedStyle$1(element).direction === "rtl";
 }
 const platform = {
@@ -5958,7 +5958,7 @@ const platform = {
 	getDimensions,
 	getScale: getScale$1,
 	isElement,
-	isRTL: isRTL$1
+	isRTL: isRTL$2
 };
 function rectsAreEqual(a, b) {
 	return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
@@ -14740,7 +14740,7 @@ function AuthorView({ item }) {
 /**
 * The JavaScript parts of the author field; its data is in `field.php`.
 */
-const fieldExtensions$15 = {
+const fieldExtensions$16 = {
 	getElements: async () => {
 		return (await (0, import_data.resolveSelect)(import_core_data.store).getEntityRecords("root", "user", {
 			per_page: -1,
@@ -15044,7 +15044,7 @@ const DateView = ({ item }) => {
 /**
 * The JavaScript parts of the date field; its data is in `field.php`.
 */
-const fieldExtensions$14 = {
+const fieldExtensions$15 = {
 	isVisible: (item) => hasActionLink(item, "wp:action-publish"),
 	render: DateView,
 	Edit: DateEdit,
@@ -15055,7 +15055,7 @@ const fieldExtensions$14 = {
 /**
 * The JavaScript parts of the discussion field; its data is in `field.php`.
 */
-const fieldExtensions$13 = { render: ({ item }) => {
+const fieldExtensions$14 = { render: ({ item }) => {
 	const commentsOpen = item.comment_status === "open";
 	const pingsOpen = item.ping_status === "open";
 	if (commentsOpen && pingsOpen) return (0, import_i18n.__)("Open");
@@ -15177,7 +15177,7 @@ var style_module_default$7 = { "excerpt": "_6cbb3f8b4541adef__excerpt" };
 /**
 * The JavaScript parts of the excerpt field; its data is in `field.php`.
 */
-const fieldExtensions$12 = {
+const fieldExtensions$13 = {
 	description: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 		href: (0, import_i18n.__)("https://wordpress.org/documentation/article/page-post-settings-sidebar/#excerpt"),
 		openInNewTab: true,
@@ -15406,7 +15406,7 @@ function FeaturedImageView({ item, config }) {
 * The JavaScript parts of the featured image field; its data is in
 * `field.php`.
 */
-const fieldExtensions$11 = {
+const fieldExtensions$12 = {
 	Edit: FeaturedImageEdit,
 	render: FeaturedImageView,
 	setValue: ({ value }) => ({ featured_media: value ?? 0 })
@@ -15423,7 +15423,7 @@ function LastEditedDateView({ item }) {
 * The JavaScript parts of the last edited date field; its data is in
 * `field.php`.
 */
-const fieldExtensions$10 = {
+const fieldExtensions$11 = {
 	getValue: ({ item }) => item.modified,
 	isVisible: (item) => !!item.modified,
 	render: LastEditedDateView
@@ -16199,7 +16199,7 @@ const ParentView = ({ item }) => {
 /**
 * The JavaScript parts of the parent field; its data is in `field.php`.
 */
-const fieldExtensions$9 = {
+const fieldExtensions$10 = {
 	Edit: ParentEdit,
 	render: ParentView
 };
@@ -16339,7 +16339,7 @@ function PasswordEdit({ data, onChange, field }) {
 /**
 * The JavaScript parts of the password field; its data is in `field.php`.
 */
-const fieldExtensions$8 = {
+const fieldExtensions$9 = {
 	Edit: PasswordEdit,
 	isVisible: (item) => item.status !== "private" && hasActionLink(item, "wp:action-publish")
 };
@@ -16349,7 +16349,7 @@ const fieldExtensions$8 = {
 * The JavaScript parts of the pingbacks and trackbacks field; its data is in
 * `field.php`.
 */
-const fieldExtensions$7 = {
+const fieldExtensions$8 = {
 	description: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 		href: (0, import_i18n.__)("https://wordpress.org/documentation/article/trackbacks-and-pingbacks/"),
 		openInNewTab: true,
@@ -16504,7 +16504,85 @@ function PostContentInfoView({ item }) {
 * The JavaScript parts of the content information field; its data is in
 * `field.php`.
 */
-const fieldExtensions$6 = { render: PostContentInfoView };
+const fieldExtensions$7 = { render: PostContentInfoView };
+
+// packages/core-fields/build-module/post_type_supports/publish_date/get-publish-date-label.mjs
+/**
+* The full publish date with the site's timezone, e.g. "November 5, 2026
+* 9:24 am UTC+0".
+*
+* @param dateAttribute The post date.
+* @return The full label.
+*/
+function getFullPublishDateLabel(dateAttribute) {
+	const date = (0, import_date.getDate)(dateAttribute);
+	const timezoneAbbreviation = getTimezoneAbbreviation();
+	const formattedDate = (0, import_date.dateI18n)((0, import_i18n._x)("F j, Y g:i\xA0a", "post schedule full date format"), date);
+	return (0, import_i18n.isRTL)() ? `${timezoneAbbreviation} ${formattedDate}` : `${formattedDate} ${timezoneAbbreviation}`;
+}
+/**
+* The publish date in words, the first that applies:
+*
+* 1. "Immediately", for a reset or floating date;
+* 2. the full date with the site's timezone, when the user's timezone differs
+*    from the site's, as "today" or "tomorrow" would be ambiguous;
+* 3. "Today at 9:24 am";
+* 4. "Tomorrow at 9:24 am";
+* 5. "November 12 9:24 am", within the current year;
+* 6. "November 12, 2027 9:24 am", otherwise.
+*
+* @param dateAttribute      The post date.
+* @param options            Options.
+* @param options.isFloating Whether the date floats, see isDateFloating().
+* @param options.now        The current date, for tests.
+* @return The label.
+*/
+function getPublishDateLabel(dateAttribute, { isFloating = false, now = /* @__PURE__ */ new Date() } = {}) {
+	if (!dateAttribute || isFloating) return (0, import_i18n.__)("Immediately");
+	if (!isTimezoneSameAsSiteTimezone(now)) return getFullPublishDateLabel(dateAttribute);
+	const date = (0, import_date.getDate)(dateAttribute);
+	if (isSameDay(date, now)) return (0, import_i18n.sprintf)((0, import_i18n.__)("Today at %s"), (0, import_date.dateI18n)((0, import_i18n._x)("g:i\xA0a", "post schedule time format"), date));
+	const tomorrow = new Date(now);
+	tomorrow.setDate(tomorrow.getDate() + 1);
+	if (isSameDay(date, tomorrow)) return (0, import_i18n.sprintf)((0, import_i18n.__)("Tomorrow at %s"), (0, import_date.dateI18n)((0, import_i18n._x)("g:i\xA0a", "post schedule time format"), date));
+	if (date.getFullYear() === now.getFullYear()) return (0, import_date.dateI18n)((0, import_i18n._x)("F j g:i\xA0a", "post schedule date format without year"), date);
+	return (0, import_date.dateI18n)((0, import_i18n._x)("F j, Y g:i\xA0a", "post schedule full date format"), date);
+}
+function getTimezoneAbbreviation() {
+	const { timezone } = (0, import_date.getSettings)();
+	if (timezone.abbr && isNaN(Number(timezone.abbr))) return timezone.abbr;
+	return `UTC${Number(timezone.offset) < 0 ? "" : "+"}${timezone.offsetFormatted}`;
+}
+function isTimezoneSameAsSiteTimezone(date) {
+	const { timezone } = (0, import_date.getSettings)();
+	return Number(timezone.offset) === -1 * (date.getTimezoneOffset() / 60);
+}
+function isSameDay(left, right) {
+	return left.getDate() === right.getDate() && left.getMonth() === right.getMonth() && left.getFullYear() === right.getFullYear();
+}
+
+// packages/core-fields/build-module/post_type_supports/publish_date/view.mjs
+function PublishDateView({ item }) {
+	const savedStatus = (0, import_data.useSelect)((select) => {
+		if (!item.type || !item.id) return;
+		return select(import_core_data.store).getEntityRecord("postType", item.type, item.id)?.status;
+	}, [item.type, item.id]);
+	if (item.date === void 0) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: getPublishDateLabel(item.date, { isFloating: isDateFloating({
+		...item,
+		status: savedStatus ?? item.status
+	}) }) });
+}
+
+// packages/core-fields/build-module/post_type_supports/publish_date/field.mjs
+/**
+* The JavaScript parts of the publish date field; its data is in
+* `field.php`.
+*/
+const fieldExtensions$6 = {
+	getValue: ({ item }) => item.date,
+	render: PublishDateView
+};
 
 // packages/core-fields/build-module/post_type_supports/scheduled_date/edit.mjs
 function ScheduledDateEdit({ data, field, onChange, hideLabelFromVision }) {
@@ -17291,16 +17369,17 @@ const fieldExtensions = {
 
 // packages/core-fields/build-module/post_type_supports/index.mjs
 const fields = {
-	author: fieldExtensions$15,
-	date: fieldExtensions$14,
-	discussion: fieldExtensions$13,
-	excerpt: fieldExtensions$12,
-	featured_media: fieldExtensions$11,
-	last_edited_date: fieldExtensions$10,
-	parent: fieldExtensions$9,
-	password: fieldExtensions$8,
-	ping_status: fieldExtensions$7,
-	"post-content-info": fieldExtensions$6,
+	author: fieldExtensions$16,
+	date: fieldExtensions$15,
+	discussion: fieldExtensions$14,
+	excerpt: fieldExtensions$13,
+	featured_media: fieldExtensions$12,
+	last_edited_date: fieldExtensions$11,
+	parent: fieldExtensions$10,
+	password: fieldExtensions$9,
+	ping_status: fieldExtensions$8,
+	"post-content-info": fieldExtensions$7,
+	publish_date: fieldExtensions$6,
 	scheduled_date: fieldExtensions$5,
 	slug: fieldExtensions$4,
 	status: fieldExtensions$3,
