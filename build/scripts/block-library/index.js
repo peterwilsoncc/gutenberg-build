@@ -76564,7 +76564,7 @@ ${text}
         currentAuthor = [
           {
             value: 0,
-            label: (0, import_i18n170.__)("(No author)")
+            label: (0, import_i18n170.__)("(no author)")
           }
         ];
       }

@@ -97376,7 +97376,7 @@ ${content}
         postAuthor: select8(import_core_data41.store).getUser(id, BASE_QUERY)
       };
     }, []);
-    const authorName = (0, import_html_entities10.decodeEntities)(postAuthor?.name) || (0, import_i18n155.__)("(No author)");
+    const authorName = (0, import_html_entities10.decodeEntities)(postAuthor?.name) || (0, import_i18n155.__)("(no author)");
     return /* @__PURE__ */ (0, import_jsx_runtime520.jsx)(
       import_components140.Button,
       {
