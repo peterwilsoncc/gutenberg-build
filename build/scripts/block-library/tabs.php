@@ -32,7 +32,8 @@ function gutenberg_block_core_tabs_generate_tabs_list( array $innerblocks = arra
 							? $tabs_id . '-tab-' . $tab_number
 							: 'tab-' . $tab_number );
 
-					$tabs_list[] = esc_attr( $tab_id );
+					// Escaped where it's output, so escaping here would double-escape it.
+					$tabs_list[] = (string) $tab_id;
 					++$tab_number;
 				}
 			}
