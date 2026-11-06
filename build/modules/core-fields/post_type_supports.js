@@ -110,7 +110,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
             "The result of getSnapshot should be cached to avoid an infinite loop"
           ), didWarnUncachedGetSnapshot = true);
         }
-        cachedValue = useState27({
+        cachedValue = useState28({
           inst: { value, getSnapshot }
         });
         var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -148,7 +148,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         return getSnapshot();
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React96 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState27 = React96.useState, useEffect16 = React96.useEffect, useLayoutEffect3 = React96.useLayoutEffect, useDebugValue2 = React96.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+      var React96 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is, useState28 = React96.useState, useEffect16 = React96.useEffect, useLayoutEffect3 = React96.useLayoutEffect, useDebugValue2 = React96.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
       exports.useSyncExternalStore = void 0 !== React96.useSyncExternalStore ? React96.useSyncExternalStore : shim;
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
     })();
@@ -176,9 +176,9 @@ var require_with_selector_development = __commonJS({
         return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
       }
       "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-      var React96 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef37 = React96.useRef, useEffect16 = React96.useEffect, useMemo31 = React96.useMemo, useDebugValue2 = React96.useDebugValue;
+      var React96 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore2 = shim.useSyncExternalStore, useRef38 = React96.useRef, useEffect16 = React96.useEffect, useMemo31 = React96.useMemo, useDebugValue2 = React96.useDebugValue;
       exports.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-        var instRef = useRef37(null);
+        var instRef = useRef38(null);
         if (null === instRef.current) {
           var inst = { hasValue: false, value: null };
           instRef.current = inst;
@@ -18298,36 +18298,8 @@ var import_compose2 = __toESM(require_compose(), 1);
 var import_data8 = __toESM(require_data(), 1);
 var import_element52 = __toESM(require_element(), 1);
 var import_notices = __toESM(require_notices(), 1);
-var import_url3 = __toESM(require_url(), 1);
-var import_i18n20 = __toESM(require_i18n(), 1);
-
-// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
 var import_url2 = __toESM(require_url(), 1);
-
-// packages/core-fields/build-module/shared/title/get-item-title.mjs
-var import_html_entities4 = __toESM(require_html_entities(), 1);
 var import_i18n19 = __toESM(require_i18n(), 1);
-function getItemTitle(item, fallback = (0, import_i18n19.__)("(no title)")) {
-  let title = "";
-  if (typeof item.title === "string") {
-    title = (0, import_html_entities4.decodeEntities)(item.title);
-  } else if (item.title && "rendered" in item.title) {
-    title = (0, import_html_entities4.decodeEntities)(item.title.rendered ?? "");
-  } else if (item.title && "raw" in item.title) {
-    title = (0, import_html_entities4.decodeEntities)(item.title.raw ?? "");
-  }
-  return title || fallback;
-}
-
-// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
-var getSlug = (item) => {
-  if (typeof item !== "object") {
-    return "";
-  }
-  return item.slug || (0, import_url2.cleanForSlug)(getItemTitle(item, ""));
-};
-
-// packages/core-fields/build-module/post_type_supports/slug/edit.mjs
 var import_jsx_runtime83 = __toESM(require_jsx_runtime(), 1);
 var STYLE_HASH_ATTRIBUTE38 = "data-wp-hash";
 function getRuntime38() {
@@ -18420,22 +18392,28 @@ var SlugEdit = ({
   data
 }) => {
   const { id } = field;
-  const slug = field.getValue({ item: data }) || getSlug(data);
+  const value = field.getValue({ item: data }) ?? "";
+  const [forceEmptyField, setForceEmptyField] = (0, import_element52.useState)(false);
+  const slugOnFocusRef = (0, import_element52.useRef)(void 0);
+  const slug = forceEmptyField ? "" : value;
   const permalinkTemplate = data.permalink_template || "";
   const [permalinkPrefix, permalinkSuffix] = permalinkTemplate.split(
     PERMALINK_POSTNAME_REGEX
   );
   const isEditable = PERMALINK_POSTNAME_REGEX.test(permalinkTemplate) && hasActionLink(data, "wp:action-publish");
-  const permalink = isEditable && slug ? `${permalinkPrefix}${slug}${permalinkSuffix}` : (0, import_url3.safeDecodeURIComponent)(data.link || "");
+  const permalink = isEditable && slug ? `${permalinkPrefix}${slug}${permalinkSuffix}` : (0, import_url2.safeDecodeURIComponent)(data.link || "");
   const onChangeControl = (0, import_element52.useCallback)(
-    (newValue) => onChange({
-      [id]: newValue
-    }),
+    (newValue) => {
+      onChange({
+        [id]: newValue
+      });
+      setForceEmptyField(!newValue);
+    },
     [id, onChange]
   );
   const { createNotice } = (0, import_data8.useDispatch)(import_notices.store);
   const copyButtonRef = (0, import_compose2.useCopyToClipboard)(permalink, () => {
-    createNotice("info", (0, import_i18n20.__)("Copied Permalink to clipboard."), {
+    createNotice("info", (0, import_i18n19.__)("Copied Permalink to clipboard."), {
       isDismissible: true,
       type: "snackbar"
     });
@@ -18444,7 +18422,7 @@ var SlugEdit = ({
   return /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)("fieldset", { className: style_default24.slug, children: [
     isEditable && /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(Stack, { direction: "column", gap: "sm", children: [
       /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)(Stack, { direction: "column", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { id: postUrlSlugDescriptionId, children: (0, import_i18n20.__)(
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { id: postUrlSlugDescriptionId, children: (0, import_i18n19.__)(
           "Customize the last part of the Permalink."
         ) }),
         /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
@@ -18452,7 +18430,7 @@ var SlugEdit = ({
           {
             href: "https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink",
             openInNewTab: true,
-            children: (0, import_i18n20.__)("Learn more")
+            children: (0, import_i18n19.__)("Learn more")
           }
         )
       ] }),
@@ -18466,10 +18444,10 @@ var SlugEdit = ({
               size: "small",
               icon: copy_small_default,
               ref: copyButtonRef,
-              label: (0, import_i18n20.__)("Copy")
+              label: (0, import_i18n19.__)("Copy")
             }
           ) }),
-          label: (0, import_i18n20.__)("Link"),
+          label: (0, import_i18n19.__)("Link"),
           hideLabelFromVision: true,
           value: slug,
           autoComplete: "off",
@@ -18478,11 +18456,22 @@ var SlugEdit = ({
           onValueChange: (newValue) => {
             onChangeControl(newValue);
           },
+          onFocus: (event) => {
+            slugOnFocusRef.current = event.target.value;
+          },
+          onBlur: (event) => {
+            if (event.target.value !== slugOnFocusRef.current) {
+              onChange({
+                [id]: (0, import_url2.cleanForSlug)(event.target.value)
+              });
+            }
+            setForceEmptyField(false);
+          },
           "aria-describedby": postUrlSlugDescriptionId
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)("div", { className: style_default24.help, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { children: (0, import_i18n20.__)("Permalink:") }),
+        /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { children: (0, import_i18n19.__)("Permalink:") }),
         /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(
           Link,
           {
@@ -18513,6 +18502,36 @@ var edit_default = SlugEdit;
 
 // packages/core-fields/build-module/post_type_supports/slug/view.mjs
 var import_i18n21 = __toESM(require_i18n(), 1);
+
+// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
+var import_url3 = __toESM(require_url(), 1);
+
+// packages/core-fields/build-module/shared/title/get-item-title.mjs
+var import_html_entities4 = __toESM(require_html_entities(), 1);
+var import_i18n20 = __toESM(require_i18n(), 1);
+function getItemTitle(item, fallback = (0, import_i18n20.__)("(no title)")) {
+  let title = "";
+  if (typeof item.title === "string") {
+    title = (0, import_html_entities4.decodeEntities)(item.title);
+  } else if (item.title && "rendered" in item.title) {
+    title = (0, import_html_entities4.decodeEntities)(item.title.rendered ?? "");
+  } else if (item.title && "raw" in item.title) {
+    title = (0, import_html_entities4.decodeEntities)(item.title.raw ?? "");
+  }
+  return title || fallback;
+}
+
+// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
+var getSlug = (item) => {
+  if (typeof item !== "object") {
+    return "";
+  }
+  return (0, import_url3.safeDecodeURIComponent)(
+    item.slug || (0, import_url3.cleanForSlug)(getItemTitle(item, ""))
+  );
+};
+
+// packages/core-fields/build-module/post_type_supports/slug/view.mjs
 var SlugView = ({ item }) => {
   return getSlug(item) || (0, import_i18n21.__)("None");
 };
@@ -18520,6 +18539,9 @@ var view_default2 = SlugView;
 
 // packages/core-fields/build-module/post_type_supports/slug/field.mjs
 var fieldExtensions12 = {
+  // Decoded, so sorting, searching, and other consumers see the slug as the
+  // user reads it, not percent-encoded.
+  getValue: ({ item }) => getSlug(item),
   Edit: edit_default,
   render: view_default2,
   // The REST API only exposes `permalink_template` for viewable public
