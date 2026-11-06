@@ -2150,6 +2150,10 @@ const populateServerData = (data) => {
 init_preact_module();
 /** Associates opaque HTML props with script-free snapshots owned by the live document's template-contents document. */
 const htmlFallbacks = /* @__PURE__ */ new WeakMap();
+/** Opaque HTML props whose snapshot holds an element's server-rendered content, not `<template>` content. */
+const htmlServerContents = /* @__PURE__ */ new WeakSet();
+/** Number of `<template>` element contents being converted around the current conversion. */
+let templateContentDepth = 0;
 const directivePrefix = `data-wp-`;
 const namespaces = [];
 const currentNamespace = () => namespaces[namespaces.length - 1] ?? null;
@@ -2251,6 +2255,20 @@ function getTemplateContentsOwnerDocument() {
 function getHtmlFallback(element) {
 	const htmlProps = element.props.dangerouslySetInnerHTML;
 	return htmlProps && htmlFallbacks.get(htmlProps);
+}
+/**
+* Reads the script-free snapshot of an element's server-rendered content: the
+* snapshot that {@link getHtmlFallback} returns, when `toVdom()` built the
+* vnode from markup outside every `<template>` element's content. Callers must
+* leave it detached and unmodified; insert a clone.
+*
+* @param element The element vnode passed to a directive callback.
+* @return The detached snapshot, or `undefined` for a vnode built from
+*         `<template>` content or not built by `toVdom()`.
+*/
+function getHtmlServerContent(element) {
+	const htmlProps = element.props.dangerouslySetInnerHTML;
+	return htmlProps && htmlServerContents.has(htmlProps) ? htmlFallbacks.get(htmlProps) : void 0;
 }
 /**
 * Parses the namespace and value from a directive attribute value.
@@ -2422,9 +2440,16 @@ function convertToVdom(root) {
 				const snapshot = getTemplateContentsOwnerDocument().createDocumentFragment();
 				copyFallbackChildren(elementNode, snapshot);
 				htmlFallbacks.set(htmlProps, snapshot);
+				if (!templateContentDepth) htmlServerContents.add(htmlProps);
 			}
-		} else if (localName === "template") props.content = [...elementNode.content.childNodes].map((childNode) => toVdom(childNode));
-		else {
+		} else if (localName === "template") {
+			templateContentDepth++;
+			try {
+				props.content = [...elementNode.content.childNodes].map((childNode) => toVdom(childNode));
+			} finally {
+				templateContentDepth--;
+			}
+		} else {
 			let child = treeWalker.firstChild();
 			if (child) {
 				while (child) {
@@ -3116,11 +3141,39 @@ function getDangerousHTML(token) {
 * @return Whether the value is the server token representation.
 */
 const isServerHTMLRepresentation = (value) => isPlainObject(value) && value.wpServerHtml === true;
+/**
+* Lists the HTML-namespace `<template>` elements of a fragment, in tree order,
+* without those inside template contents.
+*
+* @param content The fragment to search.
+*
+* @return The template elements.
+*/
+const getTemplates = (content) => Array.from(content.querySelectorAll("template")).filter((template) => template.namespaceURI === "http://www.w3.org/1999/xhtml");
+/**
+* Checks whether two server content snapshots hold the same nodes: the same
+* names, attributes and data, in the same order, at every depth. Unlike
+* `isEqualNode()` alone, the contents of `<template>` elements are compared
+* too.
+*
+* @param content A detached snapshot.
+* @param other   Another detached snapshot.
+*
+* @return Whether the snapshots hold the same nodes.
+*/
+const isSameServerContent = (content, other) => {
+	if (!content.isEqualNode(other)) return false;
+	const otherTemplates = getTemplates(other);
+	return getTemplates(content).every((template, index) => isSameServerContent(template.content, otherTemplates[index].content));
+};
 directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => {
 	const entry = htmlEntries.find(isDefaultDirectiveSuffix);
 	const lastAppliedKey = A(void 0);
 	const previousHost = A(null);
 	const previousInputs = A(null);
+	const previousServerContent = A(void 0);
+	const owedServerContent = A(void 0);
+	const shownServerContent = A(void 0);
 	const preactHtml = A();
 	let result;
 	if (!entry) warn("The usage of data-wp-html--suffix is not supported. Please use data-wp-html instead.");
@@ -3137,6 +3190,7 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 	const trusted = isDangerousHTML(result);
 	const resolvedValue = trusted ? getDangerousHTML(result) : emptyHTML;
 	const fallback = getHtmlFallback(element);
+	const serverContent = getHtmlServerContent(element);
 	useLayoutEffect(() => {
 		const node = element.ref.current;
 		const hostChanged = previousHost.current !== node;
@@ -3154,14 +3208,33 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 		if (hostChanged) {
 			previousHost.current = node;
 			lastAppliedKey.current = void 0;
+			owedServerContent.current = void 0;
+			shownServerContent.current = preserveContent ? serverContent : void 0;
 			if (active && preserveContent && !node.hasChildNodes() && fallback?.hasChildNodes()) node.append(node.ownerDocument.importNode(fallback, true));
+		} else if (serverContent !== previousServerContent.current) {
+			owedServerContent.current = serverContent;
+			queueMicrotask(() => {
+				afterNextFrame(() => {
+					if (owedServerContent.current === serverContent) owedServerContent.current = void 0;
+				});
+			});
 		}
+		previousServerContent.current = serverContent;
 		if (!active) return;
+		const owed = owedServerContent.current;
+		if (preserveContent && owed) {
+			owedServerContent.current = void 0;
+			if (!shownServerContent.current || !isSameServerContent(shownServerContent.current, owed)) node.replaceChildren(node.ownerDocument.importNode(owed, true));
+			shownServerContent.current = owed;
+			lastAppliedKey.current = void 0;
+			return;
+		}
 		if (!hostChanged && !inputsChanged) return;
 		if (preserveContent) {
 			if (serverHTMLRepresentation) lastAppliedKey.current = void 0;
 			return;
 		}
+		shownServerContent.current = void 0;
 		if (!trusted && result !== null && result !== void 0) warn("data-wp-html: the value is not trusted HTML. Use asDangerousHTML() to explicitly trust the markup.");
 		const key = String(resolvedValue);
 		if (lastAppliedKey.current === key) return;
@@ -3184,6 +3257,7 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 		trusted,
 		resolvedValue,
 		fallback,
+		serverContent,
 		element.ref,
 		element
 	]);
