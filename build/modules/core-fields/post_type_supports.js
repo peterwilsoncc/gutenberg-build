@@ -16558,43 +16558,8 @@ var require_notices = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.notices;
 }));
 
-// packages/core-fields/build-module/shared/title/get-item-title.mjs
-var import_notices = require_notices();
-/**
-* The decoded title of an entity, whether the REST API returns it as a string or as `rendered` and
-* `raw`.
-*
-* @param item     The entity.
-* @param fallback The title of an entity without one.
-* @return The title.
-*/
-function getItemTitle(item, fallback = (0, import_i18n.__)("(no title)")) {
-	let title = "";
-	if (typeof item.title === "string") title = (0, import_html_entities.decodeEntities)(item.title);
-	else if (item.title && "rendered" in item.title) title = (0, import_html_entities.decodeEntities)(item.title.rendered ?? "");
-	else if (item.title && "raw" in item.title) title = (0, import_html_entities.decodeEntities)(item.title.raw ?? "");
-	return title || fallback;
-}
-
-// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
-/**
-* The slug of a post: the slug if one is set, otherwise the slug derived from
-* the current title, which is what WordPress uses when the post is published.
-* Empty for a post with neither.
-*
-* The server-generated slug isn't used: it comes from the saved title, so it
-* lags behind title edits, and for a new post it comes from the `Auto Draft`
-* placeholder.
-*
-* @param item The post.
-* @return The slug.
-*/
-const getSlug = (item) => {
-	if (typeof item !== "object") return "";
-	return item.slug || (0, import_url.cleanForSlug)(getItemTitle(item, ""));
-};
-
 // packages/core-fields/build-module/post_type_supports/slug/edit.mjs
+var import_notices = require_notices();
 const STYLE_HASH_ATTRIBUTE$2 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -16706,12 +16671,18 @@ var style_module_default$2 = {
 const PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
 const SlugEdit = ({ field, onChange, data }) => {
 	const { id } = field;
-	const slug = field.getValue({ item: data }) || getSlug(data);
+	const value = field.getValue({ item: data }) ?? "";
+	const [forceEmptyField, setForceEmptyField] = (0, import_element.useState)(false);
+	const slugOnFocusRef = (0, import_element.useRef)(void 0);
+	const slug = forceEmptyField ? "" : value;
 	const permalinkTemplate = data.permalink_template || "";
 	const [permalinkPrefix, permalinkSuffix] = permalinkTemplate.split(PERMALINK_POSTNAME_REGEX);
 	const isEditable = PERMALINK_POSTNAME_REGEX.test(permalinkTemplate) && hasActionLink(data, "wp:action-publish");
 	const permalink = isEditable && slug ? `${permalinkPrefix}${slug}${permalinkSuffix}` : (0, import_url.safeDecodeURIComponent)(data.link || "");
-	const onChangeControl = (0, import_element.useCallback)((newValue) => onChange({ [id]: newValue }), [id, onChange]);
+	const onChangeControl = (0, import_element.useCallback)((newValue) => {
+		onChange({ [id]: newValue });
+		setForceEmptyField(!newValue);
+	}, [id, onChange]);
 	const { createNotice } = (0, import_data.useDispatch)(import_notices.store);
 	const copyButtonRef = (0, import_compose.useCopyToClipboard)(permalink, () => {
 		createNotice("info", (0, import_i18n.__)("Copied Permalink to clipboard."), {
@@ -16757,6 +16728,13 @@ const SlugEdit = ({ field, onChange, data }) => {
 					onValueChange: (newValue) => {
 						onChangeControl(newValue);
 					},
+					onFocus: (event) => {
+						slugOnFocusRef.current = event.target.value;
+					},
+					onBlur: (event) => {
+						if (event.target.value !== slugOnFocusRef.current) onChange({ [id]: (0, import_url.cleanForSlug)(event.target.value) });
+						setForceEmptyField(false);
+					},
 					"aria-describedby": postUrlSlugDescriptionId
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -16785,6 +16763,41 @@ const SlugEdit = ({ field, onChange, data }) => {
 	});
 };
 
+// packages/core-fields/build-module/shared/title/get-item-title.mjs
+/**
+* The decoded title of an entity, whether the REST API returns it as a string or as `rendered` and
+* `raw`.
+*
+* @param item     The entity.
+* @param fallback The title of an entity without one.
+* @return The title.
+*/
+function getItemTitle(item, fallback = (0, import_i18n.__)("(no title)")) {
+	let title = "";
+	if (typeof item.title === "string") title = (0, import_html_entities.decodeEntities)(item.title);
+	else if (item.title && "rendered" in item.title) title = (0, import_html_entities.decodeEntities)(item.title.rendered ?? "");
+	else if (item.title && "raw" in item.title) title = (0, import_html_entities.decodeEntities)(item.title.raw ?? "");
+	return title || fallback;
+}
+
+// packages/core-fields/build-module/post_type_supports/slug/utils.mjs
+/**
+* The slug of a post: the slug if one is set, otherwise the slug derived from
+* the current title, which is what WordPress uses when the post is published.
+* Empty for a post with neither.
+*
+* The server-generated slug isn't used: it comes from the saved title, so it
+* lags behind title edits, and for a new post it comes from the `Auto Draft`
+* placeholder.
+*
+* @param item The post.
+* @return The slug.
+*/
+const getSlug = (item) => {
+	if (typeof item !== "object") return "";
+	return (0, import_url.safeDecodeURIComponent)(item.slug || (0, import_url.cleanForSlug)(getItemTitle(item, "")));
+};
+
 // packages/core-fields/build-module/post_type_supports/slug/view.mjs
 const SlugView = ({ item }) => {
 	return getSlug(item) || (0, import_i18n.__)("None");
@@ -16795,6 +16808,7 @@ const SlugView = ({ item }) => {
 * The JavaScript parts of the slug field; its data is in `field.php`.
 */
 const fieldExtensions$4 = {
+	getValue: ({ item }) => getSlug(item),
 	Edit: SlugEdit,
 	render: SlugView,
 	isVisible: (item) => !!item.link && !!item.permalink_template
