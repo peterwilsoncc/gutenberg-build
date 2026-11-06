@@ -90688,7 +90688,7 @@ If there's a particular need for this, please submit a feature request at https:
 			const id = select(store).getEditedPostAttribute("author");
 			return { postAuthor: select(_wordpress_core_data.store).getUser(id, BASE_QUERY) };
 		}, []);
-		const authorName = (0, _wordpress_html_entities.decodeEntities)(postAuthor?.name) || (0, _wordpress_i18n.__)("(No author)");
+		const authorName = (0, _wordpress_html_entities.decodeEntities)(postAuthor?.name) || (0, _wordpress_i18n.__)("(no author)");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 			size: "compact",
 			variant: "tertiary",

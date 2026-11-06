@@ -70035,7 +70035,7 @@ Icon: ButtonIcon });
 			}];
 			else if (foundAuthor < 0 && !value) currentAuthor = [{
 				value: 0,
-				label: (0, _wordpress_i18n.__)("(No author)")
+				label: (0, _wordpress_i18n.__)("(no author)")
 			}];
 			return [...currentAuthor, ...fetchedAuthors];
 		}, [authors, value]);
