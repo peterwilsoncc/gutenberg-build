@@ -1,4 +1,4 @@
-import { getContext, getElement, store, withSyncEvent } from "@wordpress/interactivity";
+import { getConfig, getContext, getElement, store, withSyncEvent } from "@wordpress/interactivity";
 
 // packages/block-library/build-module/tabs/view.mjs
 const { actions, state } = store("core/tabs", {
@@ -72,12 +72,13 @@ const { actions, state } = store("core/tabs", {
 		handleTabKeyDown: withSyncEvent((event) => {
 			const { tabIndex, tabsList } = state;
 			if (tabIndex === null) return;
+			const step = getConfig().isRTL ? -1 : 1;
 			if (event.key === "ArrowRight") {
 				event.preventDefault();
-				actions.moveFocus(tabIndex + 1);
+				actions.moveFocus(tabIndex + step);
 			} else if (event.key === "ArrowLeft") {
 				event.preventDefault();
-				actions.moveFocus(tabIndex - 1);
+				actions.moveFocus(tabIndex - step);
 			} else if (event.key === "Home") {
 				event.preventDefault();
 				actions.moveFocus(0);
