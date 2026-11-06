@@ -2891,11 +2891,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M20.25 18.75V5.25C20.25 4.42157 19.5784 3.75 18.75 3.75H5.25C4.42157 3.75 3.75 4.42157 3.75 5.25V18.75C3.75 19.5784 4.42157 20.25 5.25 20.25H18.75C19.5784 20.25 20.25 19.5784 20.25 18.75Z" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			d: "M11.5 13.4V3.75H16.5V13.4L14 10.3L11.5 13.4Z",
-			fill: "currentColor",
-			stroke: "none"
-		})]
+		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+			d: "M12.25 11.5V4.75H15.75V11.5L14 9.3L12.25 11.5Z",
+			fill: "currentColor"
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M6 19.25H18C18.6904 19.25 19.25 18.6904 19.25 18V6C19.25 5.30964 18.6904 4.75 18 4.75H6C5.30964 4.75 4.75 5.30964 4.75 6V18C4.75 18.6904 5.30964 19.25 6 19.25Z" })]
 	});
 
 // packages/icons/build-module/library/crop.mjs
