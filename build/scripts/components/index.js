@@ -52593,7 +52593,10 @@ VisualLabel });
 		};
 		const handleChange = (next) => {
 			setHsva(next);
-			const nextHsla = {
+			const nextHsla = next.h === hsva.h && next.s === hsva.s && next.v === hsva.v ? {
+				...hsla,
+				a: next.a
+			} : {
 				...A$1(next).toHsl(),
 				a: next.a
 			};
@@ -52791,14 +52794,15 @@ VisualLabel });
 			setInternalHSLA((prev) => mergeHSLA(externalHSLA, prev));
 		}, [safeColordColor]);
 		const handleHSLAChange = (0, _wordpress_element.useCallback)((nextHSLA) => {
-			setInternalHSLA(nextHSLA);
 			const previousHex = lastProducedHexRef.current;
-			const nextHex = A$1(nextHSLA).toHex();
+			const isAlphaOnlyChange = nextHSLA.h === internalHSLA.h && nextHSLA.s === internalHSLA.s && nextHSLA.l === internalHSLA.l;
+			setInternalHSLA(nextHSLA);
+			const nextHex = isAlphaOnlyChange ? A$1(previousHex).alpha(nextHSLA.a).toHex() : A$1(nextHSLA).toHex();
 			if (!A$1(nextHex).isEqual(previousHex)) {
 				lastProducedHexRef.current = nextHex;
 				setColor(nextHex);
 			}
-		}, [setColor]);
+		}, [internalHSLA, setColor]);
 		const handleChange = (0, _wordpress_element.useCallback)((nextValue) => {
 			const nextHSLA = nextValue.toHsl();
 			setInternalHSLA((prev) => mergeHSLA(nextHSLA, prev));
