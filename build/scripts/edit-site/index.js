@@ -39348,7 +39348,7 @@ var wp;
       setStartingWidth(ref.offsetWidth);
       setIsResizing(true);
     };
-    const handleResize = (_event, _direction, _ref, delta) => {
+    const handleResize = (_event, _direction, ref, delta) => {
       const normalizedDelta = delta.width / resizeRatio;
       const deltaAbs = Math.abs(normalizedDelta);
       const maxDoubledDelta = delta.width < 0 ? deltaAbs : (defaultSize.width - startingWidth) / 2;
@@ -39359,6 +39359,7 @@ var wp;
       const updatedWidth = startingWidth + delta.width;
       setIsOversized(updatedWidth > defaultSize.width);
       setFrameSize({
+        width: ref.style.width,
         height: isOversized ? "100%" : calculateNewHeight(updatedWidth, defaultAspectRatio)
       });
     };
