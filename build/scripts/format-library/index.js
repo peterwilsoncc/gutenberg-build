@@ -32,29 +32,6 @@ react = __toESM(react, 1);
 react_dom = __toESM(react_dom, 1);
 _wordpress_warning = __toESM(_wordpress_warning, 1);
 
-// packages/icons/build-module/icon/index.mjs
-/**
-	* Return an SVG icon.
-	*
-	* @param props The component props.
-	*
-	* @return Icon component
-	*/
-	var icon_default = (0, _wordpress_element.forwardRef)(({ icon, size = 24, style, ...props }, ref) => {
-		const intrinsicStyle = icon.props.style;
-		const mergedStyle = intrinsicStyle || style ? {
-			...intrinsicStyle,
-			...style
-		} : void 0;
-		return (0, _wordpress_element.cloneElement)(icon, {
-			width: size,
-			height: size,
-			...props,
-			...mergedStyle ? { style: mergedStyle } : {},
-			ref
-		});
-	});
-
 // packages/icons/build-module/library/button.mjs
 	var button_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -942,11 +919,11 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 /**
 	* Present when the component begins animating in.
 	*/
-	const startingStyle$1 = "data-starting-style";
+	const startingStyle = "data-starting-style";
 	/**
 	* Present when the component is animating out.
 	*/
-	const endingStyle$1 = "data-ending-style";
+	const endingStyle = "data-ending-style";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useAnimationsFinished.mjs
 	let pendingCallbacks = null;
@@ -1013,7 +990,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				});
 			}
 			if (waitForStartingStyleRemoved) {
-				const startingStyleAttribute = startingStyle$1;
+				const startingStyleAttribute = startingStyle;
 				if (!resolvedElement.hasAttribute(startingStyleAttribute)) {
 					frame.request(exec);
 					return;
@@ -1059,8 +1036,8 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/stateAttributesMapping.mjs
-	const STARTING_HOOK = { [startingStyle$1]: "" };
-	const ENDING_HOOK = { [endingStyle$1]: "" };
+	const STARTING_HOOK = { [startingStyle]: "" };
+	const ENDING_HOOK = { [endingStyle]: "" };
 	const transitionStatusMapping = { transitionStatus(value) {
 		if (value === "starting") return STARTING_HOOK;
 		if (value === "ending") return ENDING_HOOK;
@@ -1557,9 +1534,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	const escapeKey = "escape-key";
 	const listNavigation = "list-navigation";
 	const cancelOpen = "cancel-open";
-	const disabled = "disabled";
-	const missing = "missing";
-	const initial = "initial";
 	const imperativeAction = "imperative-action";
 	const windowResize = "window-resize";
 
@@ -5732,7 +5706,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	};
 
 // node_modules/.store/@floating-ui/dom@1.8.0-vHXcr4FgWneV0cgwFw-d7A/node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs
-	function getCssDimensions$1(element) {
+	function getCssDimensions(element) {
 		const css = getComputedStyle$1(element);
 		let width = parseFloat(css.width) || 0;
 		let height = parseFloat(css.height) || 0;
@@ -5757,7 +5731,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		const domElement = unwrapElement(element);
 		if (!isHTMLElement(domElement)) return createCoords(1);
 		const rect = domElement.getBoundingClientRect();
-		const { width, height, $ } = getCssDimensions$1(domElement);
+		const { width, height, $ } = getCssDimensions(domElement);
 		let x = ($ ? round(rect.width) : rect.width) / width;
 		let y = ($ ? round(rect.height) : rect.height) / height;
 		if (!x || !Number.isFinite(x)) x = 1;
@@ -5996,7 +5970,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		};
 	}
 	function getDimensions(element) {
-		const { width, height } = getCssDimensions$1(element);
+		const { width, height } = getCssDimensions(element);
 		return {
 			width,
 			height
@@ -6254,7 +6228,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	};
 
 // node_modules/.store/@floating-ui/react-dom@2.1.9-AxWcAwqlMfOrAFOinFKSVg/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
-	var index$1 = typeof document !== "undefined" ? react.useLayoutEffect : function noop() {};
+	var index = typeof document !== "undefined" ? react.useLayoutEffect : function noop() {};
 	function deepEqual(a, b) {
 		if (a === b) return true;
 		if (typeof a !== typeof b) return false;
@@ -6292,7 +6266,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	}
 	function useLatestRef(value) {
 		const ref = react.useRef(value);
-		index$1(() => {
+		index(() => {
 			ref.current = value;
 		});
 		return ref;
@@ -6364,7 +6338,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			platformRef,
 			openRef
 		]);
-		index$1(() => {
+		index(() => {
 			if (open === false && dataRef.current.isPositioned) {
 				dataRef.current.isPositioned = false;
 				setData((data) => ({
@@ -6374,13 +6348,13 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			}
 		}, [open]);
 		const isMountedRef = react.useRef(false);
-		index$1(() => {
+		index(() => {
 			isMountedRef.current = true;
 			return () => {
 				isMountedRef.current = false;
 			};
 		}, []);
-		index$1(() => {
+		index(() => {
 			if (referenceEl) referenceRef.current = referenceEl;
 			if (floatingEl) floatingRef.current = floatingEl;
 			if (referenceEl && floatingEl) {
@@ -6525,76 +6499,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		HOME,
 		"End"
 	]);
-	const SHIFT = "Shift";
-	const MODIFIER_KEYS = [
-		SHIFT,
-		"Control",
-		"Alt",
-		"Meta"
-	];
-	function isInputElement(element) {
-		return isHTMLElement(element) && element.tagName === "INPUT";
-	}
-	function isNativeInput(element) {
-		if (isInputElement(element) && element.selectionStart != null) return true;
-		if (isHTMLElement(element) && element.tagName === "TEXTAREA") return true;
-		return false;
-	}
-	function scrollIntoViewIfNeeded(scrollContainer, element, direction, orientation) {
-		if (!scrollContainer || !element || !element.scrollTo) return;
-		let targetX = scrollContainer.scrollLeft;
-		let targetY = scrollContainer.scrollTop;
-		const isOverflowingX = scrollContainer.clientWidth < scrollContainer.scrollWidth;
-		const isOverflowingY = scrollContainer.clientHeight < scrollContainer.scrollHeight;
-		if (isOverflowingX && orientation !== "vertical") {
-			const elementOffsetLeft = getOffset(scrollContainer, element, "left");
-			const containerStyles = getStyles(scrollContainer);
-			const elementStyles = getStyles(element);
-			if (direction === "ltr") {
-				if (elementOffsetLeft + element.offsetWidth + elementStyles.scrollMarginRight > scrollContainer.scrollLeft + scrollContainer.clientWidth - containerStyles.scrollPaddingRight) targetX = elementOffsetLeft + element.offsetWidth + elementStyles.scrollMarginRight - scrollContainer.clientWidth + containerStyles.scrollPaddingRight;
-				else if (elementOffsetLeft - elementStyles.scrollMarginLeft < scrollContainer.scrollLeft + containerStyles.scrollPaddingLeft) targetX = elementOffsetLeft - elementStyles.scrollMarginLeft - containerStyles.scrollPaddingLeft;
-			}
-			if (direction === "rtl") {
-				if (elementOffsetLeft - elementStyles.scrollMarginLeft < scrollContainer.scrollLeft + containerStyles.scrollPaddingLeft) targetX = elementOffsetLeft - elementStyles.scrollMarginLeft - containerStyles.scrollPaddingLeft;
-				else if (elementOffsetLeft + element.offsetWidth + elementStyles.scrollMarginRight > scrollContainer.scrollLeft + scrollContainer.clientWidth - containerStyles.scrollPaddingRight) targetX = elementOffsetLeft + element.offsetWidth + elementStyles.scrollMarginRight - scrollContainer.clientWidth + containerStyles.scrollPaddingRight;
-			}
-		}
-		if (isOverflowingY && orientation !== "horizontal") {
-			const elementOffsetTop = getOffset(scrollContainer, element, "top");
-			const containerStyles = getStyles(scrollContainer);
-			const elementStyles = getStyles(element);
-			if (elementOffsetTop - elementStyles.scrollMarginTop < scrollContainer.scrollTop + containerStyles.scrollPaddingTop) targetY = elementOffsetTop - elementStyles.scrollMarginTop - containerStyles.scrollPaddingTop;
-			else if (elementOffsetTop + element.offsetHeight + elementStyles.scrollMarginBottom > scrollContainer.scrollTop + scrollContainer.clientHeight - containerStyles.scrollPaddingBottom) targetY = elementOffsetTop + element.offsetHeight + elementStyles.scrollMarginBottom - scrollContainer.clientHeight + containerStyles.scrollPaddingBottom;
-		}
-		scrollContainer.scrollTo({
-			left: targetX,
-			top: targetY,
-			behavior: "auto"
-		});
-	}
-	function getOffset(ancestor, element, side) {
-		const propName = side === "left" ? "offsetLeft" : "offsetTop";
-		let result = 0;
-		while (element.offsetParent) {
-			result += element[propName];
-			if (element.offsetParent === ancestor) break;
-			element = element.offsetParent;
-		}
-		return result;
-	}
-	function getStyles(element) {
-		const styles = getComputedStyle(element);
-		return {
-			scrollMarginTop: parseFloat(styles.scrollMarginTop) || 0,
-			scrollMarginRight: parseFloat(styles.scrollMarginRight) || 0,
-			scrollMarginBottom: parseFloat(styles.scrollMarginBottom) || 0,
-			scrollMarginLeft: parseFloat(styles.scrollMarginLeft) || 0,
-			scrollPaddingTop: parseFloat(styles.scrollPaddingTop) || 0,
-			scrollPaddingRight: parseFloat(styles.scrollPaddingRight) || 0,
-			scrollPaddingBottom: parseFloat(styles.scrollPaddingBottom) || 0,
-			scrollPaddingLeft: parseFloat(styles.scrollPaddingLeft) || 0
-		};
-	}
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/inertValue.mjs
 	function inertValue(value) {
@@ -8003,31 +7907,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		return context;
 	}
 
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/item/useCompositeItem.mjs
-	function useCompositeItem(params = {}) {
-		const { highlightItemOnHover, highlightedIndex, onHighlightedIndexChange } = useCompositeRootContext();
-		const { ref, index } = useCompositeListItem(params);
-		const isHighlighted = highlightedIndex === index;
-		const itemRef = react.useRef(null);
-		const mergedRef = useMergedRefs(ref, itemRef);
-		return {
-			compositeProps: {
-				tabIndex: isHighlighted ? 0 : -1,
-				onFocus() {
-					onHighlightedIndexChange(index);
-				},
-				onMouseMove() {
-					const item = itemRef.current;
-					if (!highlightItemOnHover || !item) return;
-					const disabled = item.hasAttribute("disabled") || item.ariaDisabled === "true";
-					if (!isHighlighted && !disabled) item.focus();
-				}
-			},
-			compositeRef: mergedRef,
-			index
-		};
-	}
-
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/usePreviousValue.mjs
 /**
 	* Returns a previous value of its argument.
@@ -8044,24 +7923,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			previous: state.current
 		});
 		return state.previous;
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getCssDimensions.mjs
-	function getCssDimensions(element) {
-		const css = getComputedStyle$1(element);
-		let width = parseFloat(css.width) || 0;
-		let height = parseFloat(css.height) || 0;
-		const hasOffset = isHTMLElement(element);
-		const offsetWidth = hasOffset ? element.offsetWidth : width;
-		const offsetHeight = hasOffset ? element.offsetHeight : height;
-		if (round(width) !== offsetWidth || round(height) !== offsetHeight) {
-			width = offsetWidth;
-			height = offsetHeight;
-		}
-		return {
-			width,
-			height
-		};
 	}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs
@@ -8096,41 +7957,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/clamp.mjs
 	function clamp(val, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
 		return Math.max(min, Math.min(val, max));
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/getElementTransform.mjs
-/**
-	* Extracts the 2D translation and scale from the element's computed `transform` matrix.
-	* Note that the `translate`, `rotate`, and `scale` longhands are separate properties and
-	* are not reflected in the computed `transform` value.
-	*
-	* Pass `computedStyle` when the caller has already resolved it to avoid a second lookup.
-	*/
-	function getElementTransform(element, computedStyle) {
-		const transform = (computedStyle ?? getWindow(element).getComputedStyle(element)).transform;
-		let translateX = 0;
-		let translateY = 0;
-		let scale = 1;
-		if (transform && transform !== "none") {
-			const matrix = transform.match(/matrix(?:3d)?\(([^)]+)\)/);
-			if (matrix) {
-				const values = matrix[1].split(", ").map(parseFloat);
-				if (values.length === 6) {
-					translateX = values[4];
-					translateY = values[5];
-					scale = Math.sqrt(values[0] * values[0] + values[1] * values[1]);
-				} else if (values.length === 16) {
-					translateX = values[12];
-					translateY = values[13];
-					scale = values[0];
-				}
-			}
-		}
-		return {
-			x: translateX,
-			y: translateY,
-			scale
-		};
 	}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/fieldset/root/FieldsetRootContext.mjs
@@ -8635,219 +8461,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	});
 	Input$1.displayName = "Input";
 
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/constants.mjs
-	const ACTIVE_COMPOSITE_ITEM = "data-composite-item-active";
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
-	function useCompositeRoot(params) {
-		const { loopFocus = true, orientation = "both", grid, onLoop, direction, highlightedIndex: externalHighlightedIndex, onHighlightedIndexChange: externalSetHighlightedIndex, rootRef: externalRef, enableHomeAndEndKeys = false, stopEventPropagation, disabledIndices, modifierKeys = EMPTY_ARRAY$1 } = params;
-		const [internalHighlightedIndex, internalSetHighlightedIndex] = react.useState(0);
-		const isGrid = grid != null;
-		const rootRef = react.useRef(null);
-		const mergedRef = useMergedRefs(rootRef, externalRef);
-		const elementsRef = react.useRef([]);
-		const hasSetDefaultIndexRef = react.useRef(false);
-		const highlightedElementRef = react.useRef(null);
-		const highlightedIndex = externalHighlightedIndex ?? internalHighlightedIndex;
-		const onHighlightedIndexChange = useStableCallback((index, shouldScrollIntoView = false) => {
-			highlightedElementRef.current = elementsRef.current[index] ?? null;
-			(externalSetHighlightedIndex ?? internalSetHighlightedIndex)(index);
-			if (shouldScrollIntoView) {
-				const newActiveItem = elementsRef.current[index];
-				scrollIntoViewIfNeeded(rootRef.current, newActiveItem, direction, orientation);
-			}
-		});
-		const onMapChange = useStableCallback((map) => {
-			if (map.size === 0) return;
-			if (hasSetDefaultIndexRef.current) {
-				const elements = elementsRef.current;
-				const nextIndex = elements.indexOf(highlightedElementRef.current);
-				if (nextIndex === -1) {
-					const replacement = elements[highlightedIndex];
-					if (!replacement || isListIndexDisabled(elements, highlightedIndex, disabledIndices)) onHighlightedIndexChange(getFallbackIndex(elements, disabledIndices));
-					else highlightedElementRef.current = replacement;
-				} else if (nextIndex !== highlightedIndex) onHighlightedIndexChange(nextIndex);
-				return;
-			}
-			hasSetDefaultIndexRef.current = true;
-			const sortedElements = Array.from(map.keys());
-			const activeItem = sortedElements.find((compositeElement) => compositeElement?.hasAttribute("data-composite-item-active")) ?? null;
-			const activeIndex = activeItem ? map.get(activeItem)?.index ?? -1 : -1;
-			if (activeIndex !== -1) onHighlightedIndexChange(activeIndex);
-			else if (isListIndexDisabled(sortedElements, highlightedIndex, disabledIndices)) {
-				const firstEnabledIndex = findNonDisabledListIndex(sortedElements, { disabledIndices });
-				if (!isIndexOutOfListBounds(sortedElements, firstEnabledIndex)) onHighlightedIndexChange(firstEnabledIndex);
-			}
-			scrollIntoViewIfNeeded(rootRef.current, activeItem, direction, orientation);
-		});
-		useIsoLayoutEffect(() => {
-			if (disabledIndices == null || externalHighlightedIndex != null || !hasSetDefaultIndexRef.current) return;
-			const elements = elementsRef.current;
-			if (isListIndexDisabled(elements, highlightedIndex, disabledIndices)) {
-				const firstEnabledIndex = findNonDisabledListIndex(elements, { disabledIndices });
-				if (!isIndexOutOfListBounds(elements, firstEnabledIndex)) onHighlightedIndexChange(firstEnabledIndex);
-			}
-		}, [
-			disabledIndices,
-			externalHighlightedIndex,
-			highlightedIndex,
-			elementsRef,
-			onHighlightedIndexChange
-		]);
-		const wrappedOnLoop = useStableCallback((event, prevIndex, nextIndex) => {
-			if (!onLoop) return nextIndex;
-			return onLoop(event, prevIndex, nextIndex, elementsRef);
-		});
-		const onKeyDown = useStableCallback((event) => {
-			const isHomeOrEnd = event.key === "Home" || event.key === "End";
-			if (!COMPOSITE_KEYS.has(event.key) || !enableHomeAndEndKeys && isHomeOrEnd) return;
-			if (isModifierKeySet(event, modifierKeys)) return;
-			if (!rootRef.current) return;
-			const isRtl = direction === "rtl";
-			const horizontalForwardKey = isRtl ? ARROW_LEFT : ARROW_RIGHT;
-			const horizontalBackwardKey = isRtl ? ARROW_RIGHT : ARROW_LEFT;
-			const forwardKey = orientation === "vertical" ? ARROW_DOWN : horizontalForwardKey;
-			const backwardKey = orientation === "vertical" ? ARROW_UP : horizontalBackwardKey;
-			const target = getTarget(event.nativeEvent);
-			if (target != null && isNativeInput(target) && !isElementDisabled(target)) {
-				const selectionStart = target.selectionStart;
-				const selectionEnd = target.selectionEnd;
-				const textContent = target.value;
-				if (selectionStart == null || event.shiftKey || selectionStart !== selectionEnd) return;
-				if (event.key !== backwardKey && selectionStart < textContent.length) return;
-				if (event.key !== forwardKey && selectionStart > 0) return;
-			}
-			let nextIndex = highlightedIndex;
-			const minIndex = getMinListIndex(elementsRef, disabledIndices);
-			const maxIndex = getMaxListIndex(elementsRef, disabledIndices);
-			if (grid != null) nextIndex = grid({
-				disabledIndices,
-				elementsRef,
-				event,
-				highlightedIndex,
-				loopFocus,
-				maxIndex,
-				minIndex,
-				onLoop: wrappedOnLoop,
-				orientation,
-				rtl: isRtl
-			});
-			const isForwardKey = orientation !== "vertical" && event.key === horizontalForwardKey || orientation !== "horizontal" && event.key === "ArrowDown";
-			const isBackwardKey = orientation !== "vertical" && event.key === horizontalBackwardKey || orientation !== "horizontal" && event.key === "ArrowUp";
-			if (enableHomeAndEndKeys) {
-				if (event.key === "Home") nextIndex = minIndex;
-				else if (event.key === "End") nextIndex = maxIndex;
-			}
-			if (nextIndex === highlightedIndex && (isForwardKey || isBackwardKey)) {
-				if (loopFocus && nextIndex === maxIndex && isForwardKey) {
-					nextIndex = minIndex;
-					if (onLoop) nextIndex = onLoop(event, highlightedIndex, nextIndex, elementsRef);
-				} else if (loopFocus && nextIndex === minIndex && isBackwardKey) {
-					nextIndex = maxIndex;
-					if (onLoop) nextIndex = onLoop(event, highlightedIndex, nextIndex, elementsRef);
-				} else nextIndex = findNonDisabledListIndex(elementsRef.current, {
-					startingIndex: nextIndex,
-					decrement: isBackwardKey,
-					disabledIndices
-				});
-			}
-			if (nextIndex !== highlightedIndex && !isIndexOutOfListBounds(elementsRef.current, nextIndex)) {
-				if (stopEventPropagation) event.stopPropagation();
-				if (isGrid || isHomeOrEnd || isForwardKey || isBackwardKey) event.preventDefault();
-				onHighlightedIndexChange(nextIndex, true);
-				queueMicrotask(() => {
-					elementsRef.current[nextIndex]?.focus();
-				});
-			}
-		});
-		return {
-			props: {
-				ref: mergedRef,
-				onFocus(event) {
-					const element = rootRef.current;
-					const target = getTarget(event.nativeEvent);
-					if (!element || target == null || !isNativeInput(target)) return;
-					target.setSelectionRange(0, target.value.length);
-				},
-				onKeyDown
-			},
-			highlightedIndex,
-			onHighlightedIndexChange,
-			elementsRef,
-			onMapChange,
-			relayKeyboardEvent: onKeyDown
-		};
-	}
-	function getFallbackIndex(elements, disabledIndices) {
-		let fallbackIndex = -1;
-		for (let index = 0; index < elements.length; index += 1) {
-			const element = elements[index];
-			if (!element || isListIndexDisabled(elements, index, disabledIndices)) continue;
-			if (element.hasAttribute("data-composite-item-active")) return index;
-			if (fallbackIndex === -1) fallbackIndex = index;
-		}
-		return Math.max(fallbackIndex, 0);
-	}
-	function isModifierKeySet(event, ignoredModifierKeys) {
-		for (const key of MODIFIER_KEYS) {
-			if (ignoredModifierKeys.includes(key)) continue;
-			if (event.getModifierState(key)) return true;
-		}
-		return false;
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/root/CompositeRoot.mjs
-	function CompositeRoot(componentProps) {
-		const { render, className, style, refs = EMPTY_ARRAY$1, props = EMPTY_ARRAY$1, state = EMPTY_OBJECT, stateAttributesMapping, highlightedIndex: highlightedIndexProp, onHighlightedIndexChange: onHighlightedIndexChangeProp, orientation, grid, loopFocus, onLoop, enableHomeAndEndKeys, onMapChange: onMapChangeProp, stopEventPropagation = true, rootRef, disabledIndices, modifierKeys, highlightItemOnHover = false, tag = "div", ...elementProps } = componentProps;
-		const direction = useDirection();
-		const { props: defaultProps, highlightedIndex, onHighlightedIndexChange, elementsRef, onMapChange: onMapChangeUnwrapped, relayKeyboardEvent } = useCompositeRoot({
-			grid,
-			loopFocus,
-			onLoop,
-			orientation,
-			highlightedIndex: highlightedIndexProp,
-			onHighlightedIndexChange: onHighlightedIndexChangeProp,
-			rootRef,
-			stopEventPropagation,
-			enableHomeAndEndKeys,
-			direction,
-			disabledIndices,
-			modifierKeys
-		});
-		const element = useRenderElement(tag, componentProps, {
-			state,
-			ref: refs,
-			props: [
-				defaultProps,
-				...props,
-				elementProps
-			],
-			stateAttributesMapping
-		});
-		const contextValue = react.useMemo(() => ({
-			highlightedIndex,
-			onHighlightedIndexChange,
-			highlightItemOnHover,
-			relayKeyboardEvent
-		}), [
-			highlightedIndex,
-			onHighlightedIndexChange,
-			highlightItemOnHover,
-			relayKeyboardEvent
-		]);
-		return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(CompositeRootContext.Provider, {
-			value: contextValue,
-			children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(CompositeList, {
-				elementsRef,
-				onMapChange: (newMap) => {
-					onMapChangeProp?.(newMap);
-					onMapChangeUnwrapped(newMap);
-				},
-				children: element
-			})
-		});
-	}
-
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/styles.mjs
 	const DISABLE_SCROLLBAR_CLASS_NAME = "base-ui-disable-scrollbar";
 	const styleDisableScrollbar = {
@@ -9337,7 +8950,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/trigger/SelectTrigger.mjs
 	const SELECTED_DELAY = 400;
-	const stateAttributesMapping$4 = {
+	const stateAttributesMapping$2 = {
 		...pressableTriggerOpenStateMapping,
 		...fieldValidityMapping,
 		popupSide: (side) => side ? { [popupSide]: side } : null,
@@ -9462,14 +9075,14 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				setTriggerElement
 			],
 			state,
-			stateAttributesMapping: stateAttributesMapping$4,
+			stateAttributesMapping: stateAttributesMapping$2,
 			props
 		});
 	});
 	SelectTrigger.displayName = "SelectTrigger";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/value/SelectValue.mjs
-	const stateAttributesMapping$3 = { value: () => null };
+	const stateAttributesMapping$1 = { value: () => null };
 	/**
 	* A text label of the currently selected item.
 	* Renders a `<span>` element.
@@ -9499,7 +9112,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			state,
 			ref: [forwardedRef, store.context.valueRef],
 			props: [{ children }, elementProps],
-			stateAttributesMapping: stateAttributesMapping$3
+			stateAttributesMapping: stateAttributesMapping$1
 		});
 	});
 	SelectValue.displayName = "SelectValue";
@@ -9682,7 +9295,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	const transformOrigin = "--transform-origin";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/select/popup/SelectPopup.mjs
-	const stateAttributesMapping$2 = {
+	const stateAttributesMapping = {
 		...popupStateMapping,
 		...transitionStatusMapping
 	};
@@ -9933,7 +9546,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		const element = useRenderElement("div", componentProps, {
 			ref: [forwardedRef, store.context.popupRef],
 			state,
-			stateAttributesMapping: stateAttributesMapping$2,
+			stateAttributesMapping,
 			props: [
 				popupProps,
 				defaultProps,
@@ -10303,781 +9916,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	*/
 	const SelectSeparator = ListboxSeparator;
 
-// node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/hydration.mjs
-	const emptySubscribe = () => () => {};
-	const getTrue = () => true;
-	const getFalse = () => false;
-	function useIsHydratedModern() {
-		return (0, import_shim.useSyncExternalStore)(emptySubscribe, getTrue, getFalse);
-	}
-	/**
-	* React 17 path. The shim only forwards to React's own implementation when
-	* there is one; its fallback takes `(subscribe, getSnapshot)` and drops
-	* `getServerSnapshot`, so a shim-based hook would report `true` on the server —
-	* the opposite of what this exists for.
-	*
-	* `useState` cannot tell hydration from a client-only mount, so both report
-	* "not hydrated" for one render before settling.
-	*/
-	function useIsHydratedLegacy() {
-		const [hydrated, setHydrated] = react.useState(false);
-		react.useEffect(() => {
-			setHydrated(true);
-		}, []);
-		return hydrated;
-	}
-	/** Returns `true` once React has taken over on the client. */
-	const useIsHydrated = isReactVersionAtLeast(18) ? useIsHydratedModern : useIsHydratedLegacy;
-	/**
-	* Returns `true` while React is hydrating server-rendered markup and `false`
-	* for fresh client-only mounts — the exact inverse of {@link useIsHydrated}.
-	*/
-	function useIsHydrating() {
-		return !useIsHydrated();
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/PrehydrationScript.mjs
-/**
-	* Renders an inline script that runs before React hydrates, used by components that need
-	* to position server-rendered content ahead of hydration (e.g. `Tabs.Indicator`,
-	* `Slider.Thumb`).
-	*
-	* The `script` source is imported by the caller through the package's `#prehydration/*`
-	* subpath import, whose `browser` condition resolves to a stub module exporting an empty
-	* string — so the script body is excluded from client bundles. It only ever executes from
-	* server-rendered HTML.
-	*
-	* Render this only when the script should be emitted (i.e. gate `renderBeforeHydration`
-	* and any structural conditions at the call site). The element is still rendered (with
-	* empty content) on the client during the hydration pass so the React tree matches the
-	* server markup; `suppressHydrationWarning` bridges the content difference and React keeps
-	* the already-executed server script. Once `isHydrating` flips to `false` the element
-	* unmounts.
-	*
-	* The component must stay in client bundles: returning `null` on the client (e.g. by
-	* stubbing the whole component) would drop an element the server emitted and trigger a
-	* recoverable hydration error (React #418) in consumers' apps. Only the script body is
-	* excluded from client bundles, via the `#prehydration/*` `browser` condition.
-	*
-	* When adding a new consumer, register a matching `#prehydration/*` entry (with `browser`
-	* and `default` conditions) in `packages/react/package.json` `imports`; the `browser`
-	* condition reuses the shared `internals/prehydrationScript.stub.ts`.
-	*/
-	function PrehydrationScript(props) {
-		const { script } = props;
-		const { nonce } = useCSPContext();
-		if (!useIsHydrating()) return null;
-		return /*#__PURE__*/ (0, react_jsx_runtime.jsx)("script", {
-			nonce,
-			dangerouslySetInnerHTML: { __html: script },
-			suppressHydrationWarning: true
-		});
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/root/TabsRootContext.mjs
-/**
-	* @internal
-	*/
-	const TabsRootContext = /*#__PURE__*/ react.createContext(void 0);
-	TabsRootContext.displayName = "TabsRootContext";
-	function useTabsRootContext() {
-		const context = react.useContext(TabsRootContext);
-		if (context === void 0) throw new Error("Base UI: TabsRootContext is missing. Tabs parts must be placed within <Tabs.Root>.");
-		return context;
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/root/TabsRootDataAttributes.mjs
-/**
-	* Indicates the direction of the activation (based on the previous active tab).
-	* @type {'left' | 'right' | 'up' | 'down' | 'none'}
-	*/
-	const activationDirection = "data-activation-direction";
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/root/stateAttributesMapping.mjs
-	const tabsStateAttributesMapping = { tabActivationDirection: (dir) => ({ [activationDirection]: dir }) };
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/root/TabsRoot.mjs
-/**
-	* Groups the tabs and the corresponding panels.
-	* Renders a `<div>` element.
-	*
-	* Documentation: [Base UI Tabs](https://base-ui.com/react/components/tabs)
-	*/
-	const TabsRoot = /*#__PURE__*/ react.forwardRef(function TabsRoot(componentProps, forwardedRef) {
-		const { className, defaultValue: defaultValueProp = 0, onValueChange: onValueChangeProp, orientation = "horizontal", render, value: valueProp, style, ...elementProps } = componentProps;
-		const hasExplicitDefaultValueProp = componentProps.defaultValue !== void 0;
-		const tabPanelRefs = react.useRef([]);
-		const [mountedTabPanels, setMountedTabPanels] = react.useState(() => /* @__PURE__ */ new Map());
-		const [value, setValue] = useControlled({
-			controlled: valueProp,
-			default: defaultValueProp,
-			name: "Tabs",
-			state: "value"
-		});
-		const isControlled = valueProp !== void 0;
-		const [tabMap, setTabMap] = react.useState(() => /* @__PURE__ */ new Map());
-		const lastKnownTabElementRef = react.useRef(void 0);
-		const getTabElementBySelectedValue = react.useCallback((selectedValue) => findTabElement(tabMap, selectedValue), [tabMap]);
-		const [activationDirectionState, setActivationDirectionState] = react.useState(() => ({
-			previousValue: value,
-			tabActivationDirection: "none"
-		}));
-		const { previousValue, tabActivationDirection: committedTabActivationDirection } = activationDirectionState;
-		let tabActivationDirection = committedTabActivationDirection;
-		let directionComputationIncomplete = false;
-		if (previousValue !== value) {
-			tabActivationDirection = computeActivationDirection(previousValue, value, orientation, tabMap);
-			directionComputationIncomplete = previousValue != null && value != null && getTabElementBySelectedValue(value) == null;
-		}
-		const nextPreviousValue = directionComputationIncomplete ? previousValue : value;
-		const shouldSyncActivationDirectionState = previousValue !== nextPreviousValue || committedTabActivationDirection !== tabActivationDirection;
-		useIsoLayoutEffect(() => {
-			if (!shouldSyncActivationDirectionState) return;
-			setActivationDirectionState({
-				previousValue: nextPreviousValue,
-				tabActivationDirection
-			});
-		}, [
-			nextPreviousValue,
-			shouldSyncActivationDirectionState,
-			tabActivationDirection
-		]);
-		const onValueChange = useStableCallback((newValue, eventDetails) => {
-			eventDetails.activationDirection = computeActivationDirection(value, newValue, orientation, tabMap);
-			onValueChangeProp?.(newValue, eventDetails);
-			if (eventDetails.isCanceled) return;
-			setValue(() => newValue);
-		});
-		const notifyAutomaticValueChange = useStableCallback((nextValue, reason) => {
-			onValueChangeProp?.(nextValue, createChangeEventDetails(reason, void 0, void 0, { activationDirection: "none" }));
-		});
-		const registerMountedTabPanel = useStableCallback((panelValue, panelId) => {
-			setMountedTabPanels((prev) => {
-				const next = new Map(prev);
-				next.set(panelValue, panelId);
-				return next;
-			});
-			return () => {
-				setMountedTabPanels((prev) => {
-					if (prev.get(panelValue) !== panelId) return prev;
-					const next = new Map(prev);
-					next.delete(panelValue);
-					return next;
-				});
-			};
-		});
-		const getTabPanelIdByValue = react.useCallback((tabValue) => {
-			return mountedTabPanels.get(tabValue);
-		}, [mountedTabPanels]);
-		const getTabIdByPanelValue = react.useCallback((tabPanelValue) => {
-			for (const tabMetadata of tabMap.values()) if (tabPanelValue === tabMetadata.value) return tabMetadata.id;
-		}, [tabMap]);
-		const tabsContextValue = react.useMemo(() => ({
-			getTabElementBySelectedValue,
-			getTabIdByPanelValue,
-			getTabPanelIdByValue,
-			onValueChange,
-			orientation,
-			registerMountedTabPanel,
-			setTabMap,
-			tabActivationDirection,
-			value
-		}), [
-			getTabElementBySelectedValue,
-			getTabIdByPanelValue,
-			getTabPanelIdByValue,
-			onValueChange,
-			orientation,
-			registerMountedTabPanel,
-			setTabMap,
-			tabActivationDirection,
-			value
-		]);
-		const selectedTabMetadata = react.useMemo(() => {
-			for (const tabMetadata of tabMap.values()) if (tabMetadata.value === value) return tabMetadata;
-		}, [tabMap, value]);
-		const firstEnabledTabValue = react.useMemo(() => {
-			for (const tabMetadata of tabMap.values()) if (!tabMetadata.disabled) return tabMetadata.value;
-		}, [tabMap]);
-		const shouldNotifyInitialValueChangeRef = react.useRef(!hasExplicitDefaultValueProp);
-		const initialDefaultValueRef = react.useRef(defaultValueProp);
-		const shouldHonorDisabledDefaultValueRef = react.useRef(hasExplicitDefaultValueProp);
-		const didRegisterTabsRef = react.useRef(false);
-		useIsoLayoutEffect(() => {
-			if (isControlled) return;
-			function commitAutomaticValueChange(fallbackValue, fallbackReason) {
-				setValue(() => fallbackValue);
-				setActivationDirectionState({
-					previousValue: fallbackValue,
-					tabActivationDirection: "none"
-				});
-				notifyAutomaticValueChange(fallbackValue, fallbackReason);
-				shouldNotifyInitialValueChangeRef.current = false;
-			}
-			if (tabMap.size === 0) {
-				if (didRegisterTabsRef.current && value !== null && !lastKnownTabElementRef.current?.isConnected) commitAutomaticValueChange(null, missing);
-				return;
-			}
-			didRegisterTabsRef.current = true;
-			lastKnownTabElementRef.current = tabMap.keys().next().value;
-			const selectionIsDisabled = selectedTabMetadata?.disabled;
-			const selectionIsMissing = selectedTabMetadata == null && value !== null;
-			if (!selectionIsDisabled && value === initialDefaultValueRef.current) shouldHonorDisabledDefaultValueRef.current = false;
-			if (shouldHonorDisabledDefaultValueRef.current && selectionIsDisabled && value === initialDefaultValueRef.current) return;
-			const shouldNotifyInitialValueChange = shouldNotifyInitialValueChangeRef.current;
-			if (selectionIsDisabled || selectionIsMissing) {
-				const fallbackValue = firstEnabledTabValue ?? null;
-				if (value === fallbackValue) {
-					shouldNotifyInitialValueChangeRef.current = false;
-					return;
-				}
-				let fallbackReason = missing;
-				if (shouldNotifyInitialValueChange) fallbackReason = initial;
-				else if (selectionIsDisabled) fallbackReason = disabled;
-				commitAutomaticValueChange(fallbackValue, fallbackReason);
-				return;
-			}
-			if (shouldNotifyInitialValueChange && selectedTabMetadata != null) {
-				notifyAutomaticValueChange(value, initial);
-				shouldNotifyInitialValueChangeRef.current = false;
-			}
-		}, [
-			firstEnabledTabValue,
-			isControlled,
-			notifyAutomaticValueChange,
-			selectedTabMetadata,
-			setValue,
-			tabMap,
-			value
-		]);
-		const element = useRenderElement("div", componentProps, {
-			state: {
-				orientation,
-				tabActivationDirection
-			},
-			ref: forwardedRef,
-			props: elementProps,
-			stateAttributesMapping: tabsStateAttributesMapping
-		});
-		return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(TabsRootContext.Provider, {
-			value: tabsContextValue,
-			children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(CompositeList, {
-				elementsRef: tabPanelRefs,
-				children: element
-			})
-		});
-	});
-	TabsRoot.displayName = "TabsRoot";
-	function findTabElement(tabMap, value) {
-		for (const [tabElement, tabMetadata] of tabMap.entries()) if (value === tabMetadata.value) return tabElement;
-		return null;
-	}
-	function computeActivationDirection(oldValue, newValue, orientation, tabMap) {
-		if (oldValue == null || newValue == null) return "none";
-		const [positionProp, backward, forward] = orientation === "horizontal" ? [
-			"left",
-			"left",
-			"right"
-		] : [
-			"top",
-			"up",
-			"down"
-		];
-		const oldTab = findTabElement(tabMap, oldValue);
-		const newTab = findTabElement(tabMap, newValue);
-		if (oldTab == null || newTab == null) {
-			if (oldTab !== newTab && (typeof oldValue === "number" || typeof oldValue === "string") && typeof oldValue === typeof newValue) return newValue > oldValue ? forward : backward;
-			return "none";
-		}
-		const oldPosition = oldTab.getBoundingClientRect()[positionProp];
-		const newPosition = newTab.getBoundingClientRect()[positionProp];
-		if (newPosition < oldPosition) return backward;
-		if (newPosition > oldPosition) return forward;
-		return "none";
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/list/TabsListContext.mjs
-	const TabsListContext = /*#__PURE__*/ react.createContext(void 0);
-	TabsListContext.displayName = "TabsListContext";
-	function useTabsListContext() {
-		const context = react.useContext(TabsListContext);
-		if (context === void 0) throw new Error("Base UI: TabsListContext is missing. TabsList parts must be placed within <Tabs.List>.");
-		return context;
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/tab/TabsTab.mjs
-/**
-	* An individual interactive tab button that toggles the corresponding panel.
-	* Renders a `<button>` element.
-	*
-	* Documentation: [Base UI Tabs](https://base-ui.com/react/components/tabs)
-	*/
-	const TabsTab = /*#__PURE__*/ react.forwardRef(function TabsTab(componentProps, forwardedRef) {
-		const { className, disabled = false, render, value, id: idProp, nativeButton = true, style, ...elementProps } = componentProps;
-		const { value: activeTabValue, getTabPanelIdByValue, onValueChange, orientation, tabActivationDirection } = useTabsRootContext();
-		const { activateOnFocus, registerTabResizeObserverElement, tabsListElement } = useTabsListContext();
-		const { highlightedIndex, onHighlightedIndexChange } = useCompositeRootContext();
-		const id = useBaseUiId(idProp);
-		const tabMetadata = react.useMemo(() => ({
-			disabled,
-			id,
-			value
-		}), [
-			disabled,
-			id,
-			value
-		]);
-		const { compositeProps, compositeRef, index } = useCompositeItem({ metadata: tabMetadata });
-		const active = value === activeTabValue;
-		const isNavigatingRef = react.useRef(false);
-		const unobserveTabElementRef = react.useRef(null);
-		const observeTabElement = useStableCallback((element) => {
-			unobserveTabElementRef.current?.();
-			unobserveTabElementRef.current = element ? registerTabResizeObserverElement(element) : null;
-		});
-		useIsoLayoutEffect(() => {
-			if (isNavigatingRef.current) {
-				isNavigatingRef.current = false;
-				return;
-			}
-			if (!(active && index > -1 && highlightedIndex !== index)) return;
-			const listElement = tabsListElement;
-			if (listElement != null) {
-				const activeEl = activeElement(ownerDocument(listElement));
-				if (activeEl && contains(listElement, activeEl)) return;
-			}
-			if (!disabled) onHighlightedIndexChange(index);
-		}, [
-			active,
-			index,
-			highlightedIndex,
-			onHighlightedIndexChange,
-			disabled,
-			tabsListElement
-		]);
-		const { getButtonProps, buttonRef } = useButton({
-			disabled,
-			native: nativeButton,
-			focusableWhenDisabled: true
-		});
-		const tabPanelId = getTabPanelIdByValue(value);
-		const isPressingRef = react.useRef(false);
-		const isMainButtonRef = react.useRef(false);
-		function activate(event) {
-			onValueChange(value, createChangeEventDetails(none, event.nativeEvent, void 0, { activationDirection: "none" }));
-		}
-		function onClick(event) {
-			if (active || disabled) return;
-			activate(event);
-		}
-		function onFocus(event) {
-			if (active || disabled) return;
-			if (activateOnFocus && (!isPressingRef.current || isMainButtonRef.current)) activate(event);
-		}
-		function onPointerDown(event) {
-			if (active || disabled) return;
-			isPressingRef.current = true;
-			isMainButtonRef.current = event.button === 0;
-			const doc = ownerDocument(event.currentTarget);
-			function handlePointerEnd() {
-				isPressingRef.current = false;
-				isMainButtonRef.current = false;
-				doc.removeEventListener("pointerup", handlePointerEnd);
-				doc.removeEventListener("pointercancel", handlePointerEnd);
-			}
-			doc.addEventListener("pointerup", handlePointerEnd);
-			doc.addEventListener("pointercancel", handlePointerEnd);
-		}
-		return useRenderElement("button", componentProps, {
-			state: {
-				disabled,
-				active,
-				orientation,
-				tabActivationDirection
-			},
-			ref: [
-				forwardedRef,
-				buttonRef,
-				compositeRef,
-				observeTabElement
-			],
-			props: [
-				compositeProps,
-				{
-					role: "tab",
-					"aria-controls": tabPanelId,
-					"aria-selected": active,
-					id,
-					onClick,
-					onFocus,
-					onPointerDown,
-					[ACTIVE_COMPOSITE_ITEM]: active ? "" : void 0,
-					onKeyDownCapture() {
-						isNavigatingRef.current = true;
-					}
-				},
-				elementProps,
-				getButtonProps
-			],
-			stateAttributesMapping: tabsStateAttributesMapping
-		});
-	});
-	TabsTab.displayName = "TabsTab";
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/indicator/TabsIndicatorCssVars.mjs
-/**
-	* Indicates the distance on the left side from the parent's container if the tab is active.
-	* @type {number}
-	*/
-	const activeTabLeft = "--active-tab-left";
-	/**
-	* Indicates the distance on the right side from the parent's container if the tab is active.
-	* @type {number}
-	*/
-	const activeTabRight = "--active-tab-right";
-	/**
-	* Indicates the distance on the top side from the parent's container if the tab is active.
-	* @type {number}
-	*/
-	const activeTabTop = "--active-tab-top";
-	/**
-	* Indicates the distance on the bottom side from the parent's container if the tab is active.
-	* @type {number}
-	*/
-	const activeTabBottom = "--active-tab-bottom";
-	/**
-	* Indicates the width of the tab if it is active.
-	* @type {number}
-	*/
-	const activeTabWidth = "--active-tab-width";
-	/**
-	* Indicates the height of the tab if it is active.
-	* @type {number}
-	*/
-	const activeTabHeight = "--active-tab-height";
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/indicator/TabsIndicator.mjs
-	var _PrehydrationScript;
-	const stateAttributesMapping$1 = {
-		...tabsStateAttributesMapping,
-		activeTabPosition: () => null,
-		activeTabSize: () => null
-	};
-	const MAX_LAYOUT_ROUNDING_ERROR = 2;
-	/**
-	* A visual indicator that can be styled to match the position of the currently active tab.
-	* Renders a `<span>` element.
-	*
-	* Documentation: [Base UI Tabs](https://base-ui.com/react/components/tabs)
-	*/
-	const TabsIndicator = /*#__PURE__*/ react.forwardRef(function TabsIndicator(componentProps, forwardedRef) {
-		const { className, render, renderBeforeHydration = false, style: styleProp, ...elementProps } = componentProps;
-		const { getTabElementBySelectedValue, orientation, tabActivationDirection, value } = useTabsRootContext();
-		const { tabsListElement, registerIndicatorUpdateListener } = useTabsListContext();
-		const rerender = useForcedRerendering();
-		react.useEffect(() => {
-			return registerIndicatorUpdateListener(rerender);
-		}, [registerIndicatorUpdateListener, rerender]);
-		let left = 0;
-		let right = 0;
-		let top = 0;
-		let bottom = 0;
-		let width = 0;
-		let height = 0;
-		let isTabSelected = false;
-		if (value != null && tabsListElement != null) {
-			const activeTab = getTabElementBySelectedValue(value);
-			if (activeTab != null) {
-				isTabSelected = true;
-				const { width: computedWidth, height: computedHeight } = getCssDimensions(activeTab);
-				const { width: tabListWidth, height: tabListHeight } = getCssDimensions(tabsListElement);
-				const tabRect = activeTab.getBoundingClientRect();
-				const tabsListRect = tabsListElement.getBoundingClientRect();
-				const scaleX = tabListWidth > 0 ? tabsListRect.width / tabListWidth : 1;
-				const scaleY = tabListHeight > 0 ? tabsListRect.height / tabListHeight : 1;
-				const layoutOffset = getLayoutOffset(activeTab, tabsListElement);
-				left = layoutOffset.left;
-				top = layoutOffset.top;
-				const rectLeft = (tabRect.left - tabsListRect.left) / scaleX + tabsListElement.scrollLeft - tabsListElement.clientLeft;
-				const rectTop = (tabRect.top - tabsListRect.top) / scaleY + tabsListElement.scrollTop - tabsListElement.clientTop;
-				const tabTranslation = getActiveTabTranslation(activeTab);
-				if (Math.abs(rectLeft - tabTranslation.x - left) <= MAX_LAYOUT_ROUNDING_ERROR && Math.abs(rectTop - tabTranslation.y - top) <= MAX_LAYOUT_ROUNDING_ERROR) {
-					left = rectLeft;
-					top = rectTop;
-				}
-				width = computedWidth;
-				height = computedHeight;
-				right = tabsListElement.scrollWidth - left - width;
-				bottom = tabsListElement.scrollHeight - top - height;
-			}
-		}
-		const activeTabPosition = isTabSelected ? {
-			left,
-			right,
-			top,
-			bottom
-		} : null;
-		const activeTabSize = isTabSelected ? {
-			width,
-			height
-		} : null;
-		const style = isTabSelected ? {
-			[activeTabLeft]: `${left}px`,
-			[activeTabRight]: `${right}px`,
-			[activeTabTop]: `${top}px`,
-			[activeTabBottom]: `${bottom}px`,
-			[activeTabWidth]: `${width}px`,
-			[activeTabHeight]: `${height}px`
-		} : void 0;
-		const element = useRenderElement("span", componentProps, {
-			state: {
-				orientation,
-				activeTabPosition,
-				activeTabSize,
-				tabActivationDirection
-			},
-			ref: forwardedRef,
-			props: [
-				{
-					role: "presentation",
-					style,
-					hidden: !(isTabSelected && width > 0 && height > 0)
-				},
-				elementProps,
-				{ suppressHydrationWarning: true }
-			],
-			stateAttributesMapping: stateAttributesMapping$1
-		});
-		if (value == null) return null;
-		return /*#__PURE__*/ (0, react_jsx_runtime.jsxs)(react.Fragment, { children: [element, renderBeforeHydration && (_PrehydrationScript || (_PrehydrationScript = /*#__PURE__*/ (0, react_jsx_runtime.jsx)(PrehydrationScript, { script: "" })))] });
-	});
-	TabsIndicator.displayName = "TabsIndicator";
-	function getLayoutOffset(element, ancestor) {
-		const elementOffset = getCumulativeOffset(element);
-		const ancestorOffset = getCumulativeOffset(ancestor);
-		let left = elementOffset.left - ancestorOffset.left - ancestor.clientLeft;
-		let top = elementOffset.top - ancestorOffset.top - ancestor.clientTop;
-		let node = getParentNode(element);
-		while (isHTMLElement(node) && node !== ancestor && !isLastTraversableNode(node)) {
-			left -= node.scrollLeft;
-			top -= node.scrollTop;
-			node = getParentNode(node);
-		}
-		return {
-			left,
-			top
-		};
-	}
-	function getCumulativeOffset(element) {
-		let left = 0;
-		let top = 0;
-		let currentElement = element;
-		while (currentElement != null) {
-			left += currentElement.offsetLeft;
-			top += currentElement.offsetTop;
-			const offsetParent = currentElement.offsetParent;
-			if (offsetParent != null) {
-				left += offsetParent.clientLeft;
-				top += offsetParent.clientTop;
-			}
-			currentElement = offsetParent;
-		}
-		return {
-			left,
-			top
-		};
-	}
-	function getActiveTabTranslation(element) {
-		const computedStyle = getWindow(element).getComputedStyle(element);
-		const { x, y } = getElementTransform(element, computedStyle);
-		let translateX = x;
-		let translateY = y;
-		const { translate } = computedStyle;
-		if (translate && translate !== "none") {
-			const parts = translate.split(" ");
-			translateX += resolveTranslateLength(parts[0], element.offsetWidth);
-			translateY += resolveTranslateLength(parts[1], element.offsetHeight);
-		}
-		return {
-			x: translateX,
-			y: translateY
-		};
-	}
-	function resolveTranslateLength(value, referenceSize) {
-		if (!value) return 0;
-		const numeric = parseFloat(value);
-		if (!Number.isFinite(numeric)) return 0;
-		return value.endsWith("%") ? numeric / 100 * referenceSize : numeric;
-	}
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/panel/TabsPanelDataAttributes.mjs
-/**
-	* Indicates the index of the tab panel.
-	*/
-	const index = "data-index";
-	/**
-	* Present when the panel begins animating in.
-	*/
-	const startingStyle = startingStyle$1;
-	/**
-	* Present when the panel is animating out.
-	*/
-	const endingStyle = endingStyle$1;
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/panel/TabsPanel.mjs
-	const stateAttributesMapping = {
-		...tabsStateAttributesMapping,
-		...transitionStatusMapping
-	};
-	/**
-	* A panel displayed when the corresponding tab is active.
-	* Renders a `<div>` element.
-	*
-	* Documentation: [Base UI Tabs](https://base-ui.com/react/components/tabs)
-	*/
-	const TabsPanel = /*#__PURE__*/ react.forwardRef(function TabsPanel(componentProps, forwardedRef) {
-		const { className, value, render, keepMounted = false, style, ...elementProps } = componentProps;
-		const { value: selectedValue, getTabIdByPanelValue, orientation, tabActivationDirection, registerMountedTabPanel } = useTabsRootContext();
-		const id = useBaseUiId();
-		const { ref: listItemRef, index: index$2 } = useCompositeListItem();
-		const open = value === selectedValue;
-		const { mounted, transitionStatus, setMounted } = useTransitionStatus(open);
-		const hidden = !mounted;
-		const correspondingTabId = getTabIdByPanelValue(value);
-		const state = {
-			hidden,
-			orientation,
-			tabActivationDirection,
-			transitionStatus
-		};
-		const panelRef = react.useRef(null);
-		const element = useRenderElement("div", componentProps, {
-			state,
-			ref: [
-				forwardedRef,
-				listItemRef,
-				panelRef
-			],
-			props: [{
-				"aria-labelledby": correspondingTabId,
-				hidden,
-				id,
-				role: "tabpanel",
-				tabIndex: open ? 0 : -1,
-				inert: inertValue(!open),
-				[index]: index$2
-			}, elementProps],
-			stateAttributesMapping
-		});
-		useOpenChangeComplete({
-			open,
-			ref: panelRef,
-			onComplete() {
-				if (!open) setMounted(false);
-			}
-		});
-		useIsoLayoutEffect(() => {
-			if (id == null || hidden && !keepMounted) return;
-			return registerMountedTabPanel(value, id);
-		}, [
-			hidden,
-			keepMounted,
-			value,
-			id,
-			registerMountedTabPanel
-		]);
-		if (!(keepMounted || mounted)) return null;
-		return element;
-	});
-	TabsPanel.displayName = "TabsPanel";
-
-// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/tabs/list/TabsList.mjs
-/**
-	* Groups the individual tab buttons.
-	* Renders a `<div>` element.
-	*
-	* Documentation: [Base UI Tabs](https://base-ui.com/react/components/tabs)
-	*/
-	const TabsList = /*#__PURE__*/ react.forwardRef(function TabsList(componentProps, forwardedRef) {
-		const { activateOnFocus = false, className, loopFocus = true, render, style, ...elementProps } = componentProps;
-		const { orientation, setTabMap, tabActivationDirection } = useTabsRootContext();
-		const [highlightedTabIndex, setHighlightedTabIndex] = react.useState(0);
-		const [tabsListElement, setTabsListElement] = react.useState(null);
-		const indicatorUpdateListenersRef = react.useRef(/* @__PURE__ */ new Set());
-		const tabResizeObserverElementsRef = react.useRef(/* @__PURE__ */ new Set());
-		const resizeObserverRef = react.useRef(null);
-		useIsoLayoutEffect(() => {
-			if (typeof ResizeObserver === "undefined") return;
-			const resizeObserver = new ResizeObserver(() => {
-				indicatorUpdateListenersRef.current.forEach((listener) => {
-					listener();
-				});
-			});
-			resizeObserverRef.current = resizeObserver;
-			if (tabsListElement) resizeObserver.observe(tabsListElement);
-			tabResizeObserverElementsRef.current.forEach((element) => {
-				resizeObserver.observe(element);
-			});
-			return () => {
-				resizeObserver.disconnect();
-				resizeObserverRef.current = null;
-			};
-		}, [tabsListElement]);
-		const registerIndicatorUpdateListener = useStableCallback((listener) => {
-			indicatorUpdateListenersRef.current.add(listener);
-			return () => {
-				indicatorUpdateListenersRef.current.delete(listener);
-			};
-		});
-		const registerTabResizeObserverElement = useStableCallback((element) => {
-			tabResizeObserverElementsRef.current.add(element);
-			resizeObserverRef.current?.observe(element);
-			return () => {
-				tabResizeObserverElementsRef.current.delete(element);
-				resizeObserverRef.current?.unobserve(element);
-			};
-		});
-		const state = {
-			orientation,
-			tabActivationDirection
-		};
-		const defaultProps = {
-			"aria-orientation": orientation === "vertical" ? "vertical" : void 0,
-			role: "tablist"
-		};
-		const tabsListContextValue = react.useMemo(() => ({
-			activateOnFocus,
-			registerIndicatorUpdateListener,
-			registerTabResizeObserverElement,
-			tabsListElement
-		}), [
-			activateOnFocus,
-			registerIndicatorUpdateListener,
-			registerTabResizeObserverElement,
-			tabsListElement
-		]);
-		return /*#__PURE__*/ (0, react_jsx_runtime.jsx)(TabsListContext.Provider, {
-			value: tabsListContextValue,
-			children: /*#__PURE__*/ (0, react_jsx_runtime.jsx)(CompositeRoot, {
-				render,
-				className,
-				style,
-				state,
-				refs: [forwardedRef, setTabsListElement],
-				props: [defaultProps, elementProps],
-				stateAttributesMapping: tabsStateAttributesMapping,
-				highlightedIndex: highlightedTabIndex,
-				enableHomeAndEndKeys: true,
-				loopFocus,
-				orientation,
-				onHighlightedIndexChange: setHighlightedTabIndex,
-				onMapChange: setTabMap,
-				disabledIndices: EMPTY_ARRAY$1
-			})
-		});
-	});
-	TabsList.displayName = "TabsList";
-
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/use-render/useRender.mjs
 /**
 	* Renders a Base UI element.
@@ -11089,480 +9927,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	}
 
 // packages/ui/build-module/spinner/spinner.mjs
-	const STYLE_HASH_ATTRIBUTE$27 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$27() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$27(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$27(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$27}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$27) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$27(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$27();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$27(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$27, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$27(targetDocument) {
-		const runtime = getRuntime$27();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$27(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$27(hash, css) {
-		const runtime = getRuntime$27();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$27(targetDocument, hash, css);
-	}
-	registerStyle$27("b081213352", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.da418dc15e63be57__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}._8b83deccaefa3c92__indicator{fill:transparent;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_0da63cf2c7b08803__spinner-spin 1.4s linear infinite both}@keyframes _0da63cf2c7b08803__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
-	var style_module_default$13 = {
-		"spinner": "da418dc15e63be57__spinner",
-		"indicator": "_8b83deccaefa3c92__indicator",
-		"spinner-spin": "_0da63cf2c7b08803__spinner-spin"
-	};
-	/**
-	* A component used to notify users that their action is being processed.
-	*/
-	const Spinner = (0, _wordpress_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
-			className: clsx(style_module_default$13.spinner, className),
-			style: color === void 0 ? style : {
-				...style,
-				color
-			},
-			viewBox: "0 0 24 24",
-			xmlns: "http://www.w3.org/2000/svg",
-			role: "presentation",
-			focusable: "false",
-			...props,
-			ref,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", {
-				className: style_module_default$13.indicator,
-				d: "m 12 0 a 12 12 0 0 1 0 24"
-			})
-		});
-	});
-
-// packages/ui/build-module/visually-hidden/visually-hidden.mjs
-	const STYLE_HASH_ATTRIBUTE$26 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$26() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$26(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$26(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$26}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$26) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$26(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$26();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$26(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$26, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$26(targetDocument) {
-		const runtime = getRuntime$26();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$26(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$26(hash, css) {
-		const runtime = getRuntime$26();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$26(targetDocument, hash, css);
-	}
-	registerStyle$26("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
-	var style_module_default$12 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
-	/**
-	* Visually hides content while keeping it accessible to screen readers.
-	* Useful when providing context that's only meaningful to assistive technology.
-	*
-	* Renders a `<div>` by default. Use the `render` prop to swap the
-	* underlying element while preserving the visually-hidden behavior.
-	*
-	* ## Composing with other components
-	*
-	* When composing with another component that uses the `render` prop
-	* pattern, keep `VisuallyHidden` as the **host** (outer component) and
-	* pass the other component via `render`. This keeps the other
-	* component's HTML element and semantics intact, while `VisuallyHidden`
-	* only adds its hiding styles:
-	*
-	* ```jsx
-	* // OtherComponent keeps its semantic element (e.g. <h2>).
-	* <VisuallyHidden render={ <OtherComponent /> }>
-	*   Accessible text
-	* </VisuallyHidden>
-	* ```
-	*/
-	const VisuallyHidden = (0, _wordpress_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
-		return useRender({
-			render,
-			ref,
-			props: mergeProps({ className: style_module_default$12["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
-		});
-	});
-
-// packages/ui/build-module/utils/item-popup/item-content.mjs
-	function parseItemContent(children, { Label, Description, validationMessage }) {
-		const [label, ...descriptions] = _wordpress_element.Children.toArray(children);
-		const hasLabel = (0, _wordpress_element.isValidElement)(label) && label.type === Label;
-		const descriptionElements = descriptions.filter((description) => (0, _wordpress_element.isValidElement)(description) && description.type === Description);
-		if (!hasLabel || descriptionElements.length !== descriptions.length) throw new Error(validationMessage);
-		return {
-			descriptionIds: descriptionElements.map((description) => description.props.id),
-			hasLabel,
-			labelId: hasLabel ? label.props.id : void 0
-		};
-	}
-	function useItemContent(children, components, { "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy } = {}) {
-		const generatedLabelId = (0, _wordpress_element.useId)();
-		const generatedDescriptionId = (0, _wordpress_element.useId)();
-		const { descriptionIds, hasLabel, labelId } = parseItemContent(children, components);
-		const resolvedLabelId = hasLabel ? labelId ?? generatedLabelId : void 0;
-		const resolvedDescriptionIds = descriptionIds.map((descriptionId, index) => descriptionId ?? `${generatedDescriptionId}-${index}`);
-		const itemDescribedBy = Array.from(/* @__PURE__ */ new Set([...ariaDescribedBy?.split(/\s+/).filter(Boolean) ?? [], ...resolvedDescriptionIds])).join(" ");
-		let descriptionIndex = 0;
-		const { Label, Description, descriptionValidationToken } = components;
-		return {
-			contentChildren: _wordpress_element.Children.map(children, (child) => {
-				if (!(0, _wordpress_element.isValidElement)(child)) return child;
-				if (child.type === Label) return child.props.id === resolvedLabelId ? child : (0, _wordpress_element.cloneElement)(child, { id: resolvedLabelId });
-				if (child.type !== Description) return child;
-				const descriptionId = resolvedDescriptionIds[descriptionIndex++];
-				if (!descriptionValidationToken && child.props.id === descriptionId) return child;
-				return (0, _wordpress_element.cloneElement)(child, {
-					id: descriptionId,
-					...descriptionValidationToken && { validationToken: descriptionValidationToken }
-				});
-			}),
-			resolvedLabelId,
-			itemAriaProps: {
-				"aria-describedby": itemDescribedBy || void 0,
-				"aria-label": ariaLabel,
-				"aria-labelledby": ariaLabelledBy ?? (ariaLabel ? void 0 : resolvedLabelId)
-			}
-		};
-	}
-
-// packages/ui/build-module/text/text.mjs
-	const STYLE_HASH_ATTRIBUTE$25 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$25() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$25(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$25(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$25}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$25) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$25(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$25();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$25(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$25, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$25(targetDocument) {
-		const runtime = getRuntime$25();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$25(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$25(hash, css) {
-		const runtime = getRuntime$25();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$25(targetDocument, hash, css);
-	}
-	registerStyle$25("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-	var style_module_default$11 = {
-		"text": "_9745ffa515d864cf__text",
-		"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
-		"heading-xl": "_664e3e7687c45603__heading-xl",
-		"heading-lg": "dac661a5de0ed2bd__heading-lg",
-		"heading-md": "_59c7f3f740e2f96e__heading-md",
-		"heading-sm": "cf052fbad8d93b7e__heading-sm",
-		"body-xl": "_212b9cfef57a0af4__body-xl",
-		"body-lg": "_07f57bc0aa36b2c6__body-lg",
-		"body-md": "_0c6da4457aec9e62__body-md",
-		"body-sm": "b998f87ff17b7bec__body-sm"
-	};
-	registerStyle$25("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-	var global_css_defense_module_default$7 = {
-		"button": "_78c10a0773e51a91__button",
-		"input": "_5b33aa2d48624b4f__input",
-		"textarea": "_980b3b4776ac8f81__textarea",
-		"div": "_43e478b4279a076c__div",
-		"p": "_698099e25b0fb1a6__p",
-		"heading": "_326aee4184d261fd__heading",
-		"a": "e9576240835601ba__a",
-		"ol": "_3f05789653864a73__ol",
-		"li": "_3c72ff72abe57859__li",
-		"span": "_79d16267c15d9eb2__span"
-	};
-	/**
-	* A text component for rendering content with predefined typographic variants.
-	* Built on design tokens for consistent typography across the UI.
-	*/
-	const Text = (0, _wordpress_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
-		return useRender({
-			render,
-			defaultTagName: "span",
-			ref,
-			props: mergeProps(props, { className: clsx(style_module_default$11.text, global_css_defense_module_default$7.heading, global_css_defense_module_default$7.p, style_module_default$11[variant], className) })
-		});
-	});
-
-// packages/ui/build-module/utils/render-slot-with-children.mjs
-/**
-	* Fills an optional "slot" element prop with content by cloning it and
-	* injecting the given `children`. When `slot` is undefined, the provided
-	* `defaultSlot` is used in its place.
-	*
-	* Shared by overlay `Popup` components for their slot-shaped customization
-	* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
-	* children injection — stays consistent across all of them.
-	*
-	* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
-	* any subtree passed on the slot element is overwritten by `children`.
-	*
-	* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
-	*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
-	*                    is used. Injected `children` replace any subtree the caller
-	*                    may have passed on the slot element.
-	* @param defaultSlot Unpopulated default element used when `slot` is omitted
-	*                    (e.g. `<Tooltip.Portal />`).
-	* @param children    Content to inject as the slot's children (backdrop,
-	*                    positioner, popup subtree, etc.).
-	*/
-	function renderSlotWithChildren(slot, defaultSlot, children) {
-		return (0, _wordpress_element.cloneElement)(slot ?? defaultSlot, { children });
-	}
-
-// packages/ui/build-module/utils/css/item-popup.mjs
 	const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -11664,51 +10028,36 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
 	}
-	registerStyle$24("149d86e146", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.f44105ad1a552523__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-popup-item-text-line-height:var(--wpds-typography-line-height-xs,16px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}.f20f14dd818510c6__is-width-anchor{width:var(--anchor-width)}._398b31dcd487e37f__is-width-content,._481aa05a209e4968__is-width-available,.f20f14dd818510c6__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._398b31dcd487e37f__is-width-content{width:auto}._75f4d59e8cd4fbf1__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}._9b640ab112999a71__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._3bf04b25e9ec1c2c__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}._543f334dbb899cca__fixed-width-presets{&._3bf04b25e9ec1c2c__is-width-lg,&._75f4d59e8cd4fbf1__is-width-sm,&._9b640ab112999a71__is-width-md{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._481aa05a209e4968__is-width-available{width:var(--available-width)}._31995ce6e72ae51c__is-align-item-with-trigger[data-side=none] .f44105ad1a552523__popup{max-height:none}.c61ae8ac6b17caf6__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._41ac90fbb134576c__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._6f78c164f55857d2__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}.d50f53b586266e4c__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._44be0354ea94ae76__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);.d50f53b586266e4c__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}.e46f00c85691b978__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._7c8dd3d445b9e0d1__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}._6590ed1ca0955506__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.c53905a339ee5b93__item-layout{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;line-height:var(--_wp-ui-popup-item-text-line-height);margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);&:has(>._41ac90fbb134576c__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}}.baf88da98aa22472__item{user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&.c1884bb8f08d6b49__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.bacbdc6d2167ebdd__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._41ac90fbb134576c__item-icon{align-items:center;display:flex;height:var(--_wp-ui-popup-item-text-line-height);justify-content:center;pointer-events:none;width:var(--wpds-dimension-size-2xs,16px)}.bacbdc6d2167ebdd__item-indicator-icon{translate:0 1px}._128e9f67dabbe8cd__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._96a7e33bb57975a2__item-text{display:flex;flex-direction:column;min-width:0;row-gap:var(--wpds-dimension-gap-xs,4px)}.bad7b55318907302__item-label{--_gcd-heading-color:currentColor;min-width:0}._2e4ebd9f6d7ce5d4__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.baf88da98aa22472__item[data-disabled] ._2e4ebd9f6d7ce5d4__item-description,.baf88da98aa22472__item[data-highlighted]:not([data-disabled]) ._2e4ebd9f6d7ce5d4__item-description{--_gcd-heading-color:currentColor;color:inherit}._384062150817186f__loading-indicator{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px)}.c4502685591e2f57__status{grid-area:status;&:has(._384062150817186f__loading-indicator){padding-block:var(--wp-ui-popup-padding)}}._46236ecbce83a6f0__empty:not(:empty){grid-area:main}._46236ecbce83a6f0__empty:not(:empty),.c4502685591e2f57__status:not(:empty):not(:has([data-visually-hidden],._384062150817186f__loading-indicator)){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}@layer compositions{._2e4ebd9f6d7ce5d4__item-description,.bad7b55318907302__item-label{--_gcd-p-line-height:var(--_wp-ui-popup-item-text-line-height);line-height:var(--_wp-ui-popup-item-text-line-height)}._9dd46ff6c5337aad__loading-spinner{height:var(--wpds-dimension-size-3xs,12px);width:var(--wpds-dimension-size-3xs,12px)}}}");
-	var item_popup_module_default$8 = {
-		"popup": "f44105ad1a552523__popup _069972d5e326bada__dropdown-motion",
-		"is-width-anchor": "f20f14dd818510c6__is-width-anchor",
-		"is-width-content": "_398b31dcd487e37f__is-width-content",
-		"is-width-available": "_481aa05a209e4968__is-width-available",
-		"is-width-sm": "_75f4d59e8cd4fbf1__is-width-sm",
-		"is-width-md": "_9b640ab112999a71__is-width-md",
-		"is-width-lg": "_3bf04b25e9ec1c2c__is-width-lg",
-		"fixed-width-presets": "_543f334dbb899cca__fixed-width-presets",
-		"is-align-item-with-trigger": "_31995ce6e72ae51c__is-align-item-with-trigger",
-		"list-chrome": "c61ae8ac6b17caf6__list-chrome",
-		"item-icon": "_41ac90fbb134576c__item-icon",
-		"list": "_6f78c164f55857d2__list c61ae8ac6b17caf6__list-chrome",
-		"list-scrollable-container": "d50f53b586266e4c__list-scrollable-container",
-		"list-footer": "_44be0354ea94ae76__list-footer",
-		"group": "e46f00c85691b978__group",
-		"group-label": "_7c8dd3d445b9e0d1__group-label",
-		"separator": "_6590ed1ca0955506__separator",
-		"item-layout": "c53905a339ee5b93__item-layout",
-		"item": "baf88da98aa22472__item c53905a339ee5b93__item-layout",
-		"is-size-small": "c1884bb8f08d6b49__is-size-small",
-		"item-indicator-icon": "bacbdc6d2167ebdd__item-indicator-icon",
-		"item-content": "_128e9f67dabbe8cd__item-content",
-		"item-text": "_96a7e33bb57975a2__item-text",
-		"item-label": "bad7b55318907302__item-label",
-		"item-description": "_2e4ebd9f6d7ce5d4__item-description",
-		"loading-indicator": "_384062150817186f__loading-indicator c53905a339ee5b93__item-layout",
-		"status": "c4502685591e2f57__status",
-		"empty": "_46236ecbce83a6f0__empty",
-		"loading-spinner": "_9dd46ff6c5337aad__loading-spinner"
+	registerStyle$24("b081213352", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.da418dc15e63be57__spinner{background-color:transparent;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-block;height:var(--wpds-dimension-size-2xs,16px);opacity:1;overflow:visible;position:relative;width:var(--wpds-dimension-size-2xs,16px)}._8b83deccaefa3c92__indicator{fill:transparent;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transform-origin:50% 50%;@media (forced-colors:active){stroke:CanvasText}animation:_0da63cf2c7b08803__spinner-spin 1.4s linear infinite both}@keyframes _0da63cf2c7b08803__spinner-spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}}}");
+	var style_module_default$11 = {
+		"spinner": "da418dc15e63be57__spinner",
+		"indicator": "_8b83deccaefa3c92__indicator",
+		"spinner-spin": "_0da63cf2c7b08803__spinner-spin"
 	};
-	function getItemPopupWidthClassName(width = "anchor") {
-		switch (width) {
-			case "available": return item_popup_module_default$8["is-width-available"];
-			case "content": return item_popup_module_default$8["is-width-content"];
-			case "lg": return item_popup_module_default$8["is-width-lg"];
-			case "md": return item_popup_module_default$8["is-width-md"];
-			case "sm": return item_popup_module_default$8["is-width-sm"];
-			case "anchor": return item_popup_module_default$8["is-width-anchor"];
-			default: return false;
-		}
-	}
+	/**
+	* A component used to notify users that their action is being processed.
+	*/
+	const Spinner = (0, _wordpress_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
+			className: clsx(style_module_default$11.spinner, className),
+			style: color === void 0 ? style : {
+				...style,
+				color
+			},
+			viewBox: "0 0 24 24",
+			xmlns: "http://www.w3.org/2000/svg",
+			role: "presentation",
+			focusable: "false",
+			...props,
+			ref,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", {
+				className: style_module_default$11.indicator,
+				d: "m 12 0 a 12 12 0 0 1 0 24"
+			})
+		});
+	});
 
-// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+// packages/ui/build-module/visually-hidden/visually-hidden.mjs
 	const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -11810,94 +10159,81 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
 	}
-	registerStyle$23("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
-	var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
+	registerStyle$23("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+	var style_module_default$10 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
 	/**
-	* Marker attribute on the compat overlay slot element.
-	*/
-	const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-	function resolveOwnerDocument() {
-		return typeof document === "undefined" ? null : document;
-	}
-	function isInWordPressEnvironment() {
-		let topWp;
-		try {
-			topWp = window.top?.wp;
-		} catch {}
-		const wp = topWp ?? window.wp;
-		return typeof wp?.components === "object" && wp.components !== null;
-	}
-	let cachedSlot = null;
-	function ensureSlotIsAccessible(element) {
-		element.setAttribute("aria-hidden", "false");
-		return element;
-	}
-	function createSlot(ownerDocument) {
-		const element = ownerDocument.createElement("div");
-		element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-		if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
-		ownerDocument.body.appendChild(element);
-		return element;
-	}
-	/**
-	* Returns the body-level compat overlay slot when the runtime opts in,
-	* lazily creating it on first call. Returns `undefined` otherwise — so the
-	* return value can be forwarded straight to a `container` prop, leaving the
-	* default portal container in effect.
+	* Visually hides content while keeping it accessible to screen readers.
+	* Useful when providing context that's only meaningful to assistive technology.
 	*
-	* Two opt-in paths:
+	* Renders a `<div>` by default. Use the `render` prop to swap the
+	* underlying element while preserving the visually-hidden behavior.
 	*
-	* - Auto-detected when `window.wp.components` is on the global — the
-	*   typical script-loader setup for WordPress plugins and admin screens.
-	* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
-	*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
-	*   relying on the global.
+	* ## Composing with other components
 	*
-	* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
-	* local document's body. Subsequent calls return the same element; if it's
-	* been removed it's recreated, and a slot created by another
-	* `@wordpress/ui` instance in the same document is adopted rather than
-	* duplicated.
+	* When composing with another component that uses the `render` prop
+	* pattern, keep `VisuallyHidden` as the **host** (outer component) and
+	* pass the other component via `render`. This keeps the other
+	* component's HTML element and semantics intact, while `VisuallyHidden`
+	* only adds its hiding styles:
+	*
+	* ```jsx
+	* // OtherComponent keeps its semantic element (e.g. <h2>).
+	* <VisuallyHidden render={ <OtherComponent /> }>
+	*   Accessible text
+	* </VisuallyHidden>
+	* ```
 	*/
-	function getWpCompatOverlaySlot() {
-		if (typeof window === "undefined") return;
-		if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
-		const ownerDocument = resolveOwnerDocument();
-		if (!ownerDocument || !ownerDocument.body) return;
-		if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
-		const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
-		if (existing instanceof HTMLDivElement) {
-			cachedSlot = ensureSlotIsAccessible(existing);
-			return cachedSlot;
-		}
-		if (cachedSlot?.isConnected) cachedSlot.remove();
-		cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
-		return cachedSlot;
-	}
-
-// packages/ui/build-module/form/primitives/constants.mjs
-/**
-	* Shared positioning defaults for item-list popups, e.g. Select, Combobox,
-	* or Autocomplete.
-	*/
-	const ITEM_POPUP_POSITIONER_PROPS = {
-		align: "start",
-		sideOffset: 8,
-		collisionPadding: 12
-	};
-
-// packages/ui/build-module/utils/direction-provider.mjs
-/**
-	* Provides WordPress's text direction to Base UI components.
-	*/
-	function DirectionProvider({ children }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider$1, {
-			direction: (0, _wordpress_i18n.isRTL)() ? "rtl" : "ltr",
-			children
+	const VisuallyHidden = (0, _wordpress_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
+		return useRender({
+			render,
+			ref,
+			props: mergeProps({ className: style_module_default$10["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
 		});
+	});
+
+// packages/ui/build-module/utils/item-popup/item-content.mjs
+	function parseItemContent(children, { Label, Description, validationMessage }) {
+		const [label, ...descriptions] = _wordpress_element.Children.toArray(children);
+		const hasLabel = (0, _wordpress_element.isValidElement)(label) && label.type === Label;
+		const descriptionElements = descriptions.filter((description) => (0, _wordpress_element.isValidElement)(description) && description.type === Description);
+		if (!hasLabel || descriptionElements.length !== descriptions.length) throw new Error(validationMessage);
+		return {
+			descriptionIds: descriptionElements.map((description) => description.props.id),
+			hasLabel,
+			labelId: hasLabel ? label.props.id : void 0
+		};
+	}
+	function useItemContent(children, components, { "aria-describedby": ariaDescribedBy, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy } = {}) {
+		const generatedLabelId = (0, _wordpress_element.useId)();
+		const generatedDescriptionId = (0, _wordpress_element.useId)();
+		const { descriptionIds, hasLabel, labelId } = parseItemContent(children, components);
+		const resolvedLabelId = hasLabel ? labelId ?? generatedLabelId : void 0;
+		const resolvedDescriptionIds = descriptionIds.map((descriptionId, index) => descriptionId ?? `${generatedDescriptionId}-${index}`);
+		const itemDescribedBy = Array.from(/* @__PURE__ */ new Set([...ariaDescribedBy?.split(/\s+/).filter(Boolean) ?? [], ...resolvedDescriptionIds])).join(" ");
+		let descriptionIndex = 0;
+		const { Label, Description, descriptionValidationToken } = components;
+		return {
+			contentChildren: _wordpress_element.Children.map(children, (child) => {
+				if (!(0, _wordpress_element.isValidElement)(child)) return child;
+				if (child.type === Label) return child.props.id === resolvedLabelId ? child : (0, _wordpress_element.cloneElement)(child, { id: resolvedLabelId });
+				if (child.type !== Description) return child;
+				const descriptionId = resolvedDescriptionIds[descriptionIndex++];
+				if (!descriptionValidationToken && child.props.id === descriptionId) return child;
+				return (0, _wordpress_element.cloneElement)(child, {
+					id: descriptionId,
+					...descriptionValidationToken && { validationToken: descriptionValidationToken }
+				});
+			}),
+			resolvedLabelId,
+			itemAriaProps: {
+				"aria-describedby": itemDescribedBy || void 0,
+				"aria-label": ariaLabel,
+				"aria-labelledby": ariaLabelledBy ?? (ariaLabel ? void 0 : resolvedLabelId)
+			}
+		};
 	}
 
-// packages/ui/build-module/link/link.mjs
+// packages/ui/build-module/text/text.mjs
 	const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -11999,25 +10335,18 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
 	}
-	registerStyle$22("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-	var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-	registerStyle$22("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-	var focus_module_default$3 = {
-		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-	};
-	registerStyle$22("c87d91cdf7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a574f9f242212d58__link{--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);border-radius:var(--wpds-border-radius-sm,2px);text-decoration-thickness:from-font;text-underline-offset:.2em}._2d2f0506e717a46c__link-with-icon{text-decoration-line:none}._92b7b6a03fbb27ac__link-contents{text-decoration:inherit;text-decoration-line:underline}._69f40d9212adc58d__is-brand,._69f40d9212adc58d__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}._69f40d9212adc58d__is-brand:active,._69f40d9212adc58d__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._9a9c54c6e67b4c3c__is-neutral,._9a9c54c6e67b4c3c__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._9a9c54c6e67b4c3c__is-neutral:active,._9a9c54c6e67b4c3c__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._93be0b747897baad__is-unstyled{--_gcd-a-border-radius:0;--_gcd-a-color:inherit;color:inherit;text-decoration:none}._9c39df40fdc09594__link-icon{font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._9c39df40fdc09594__link-icon:after{content:\"\\2060\\2197\"}._9c39df40fdc09594__link-icon:dir(rtl):after{content:\"\\2060\\2196\"}}}");
-	var style_module_default$10 = {
-		"link": "a574f9f242212d58__link",
-		"link-with-icon": "_2d2f0506e717a46c__link-with-icon",
-		"link-contents": "_92b7b6a03fbb27ac__link-contents",
-		"is-brand": "_69f40d9212adc58d__is-brand",
-		"is-neutral": "_9a9c54c6e67b4c3c__is-neutral",
-		"is-unstyled": "_93be0b747897baad__is-unstyled",
-		"link-icon": "_9c39df40fdc09594__link-icon"
+	registerStyle$22("09bae534ff", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9745ffa515d864cf__text{text-wrap:pretty;margin:0}._8882b6a7feb4fd3d__heading-2xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-2xl,32px);--_gcd-p-line-height:var(--wpds-typography-line-height-2xl,40px);font-size:var(--wpds-typography-font-size-2xl,32px);line-height:var(--wpds-typography-line-height-2xl,40px)}._664e3e7687c45603__heading-xl,._8882b6a7feb4fd3d__heading-2xl{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600)}._664e3e7687c45603__heading-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-md,24px)}.dac661a5de0ed2bd__heading-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-lg,15px)}._59c7f3f740e2f96e__heading-md,.dac661a5de0ed2bd__heading-lg{font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-sm,20px)}._59c7f3f740e2f96e__heading-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px)}.cf052fbad8d93b7e__heading-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_gcd-p-font-size:var(--wpds-typography-font-size-xs,11px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._212b9cfef57a0af4__body-xl{--_gcd-heading-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-xl,20px);--_gcd-p-line-height:var(--wpds-typography-line-height-xl,32px);font-size:var(--wpds-typography-font-size-xl,20px);line-height:var(--wpds-typography-line-height-xl,32px)}._07f57bc0aa36b2c6__body-lg,._212b9cfef57a0af4__body-xl{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}._07f57bc0aa36b2c6__body-lg{--_gcd-heading-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-lg,15px);--_gcd-p-line-height:var(--wpds-typography-line-height-md,24px);font-size:var(--wpds-typography-font-size-lg,15px);line-height:var(--wpds-typography-line-height-md,24px)}._0c6da4457aec9e62__body-md{--_gcd-heading-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-md,13px);--_gcd-p-line-height:var(--wpds-typography-line-height-sm,20px);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}._0c6da4457aec9e62__body-md,.b998f87ff17b7bec__body-sm{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-weight:var(--wpds-typography-font-weight-default,400)}.b998f87ff17b7bec__body-sm{--_gcd-heading-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-heading-font-weight:var(--wpds-typography-font-weight-default,400);--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+	var style_module_default$9 = {
+		"text": "_9745ffa515d864cf__text",
+		"heading-2xl": "_8882b6a7feb4fd3d__heading-2xl",
+		"heading-xl": "_664e3e7687c45603__heading-xl",
+		"heading-lg": "dac661a5de0ed2bd__heading-lg",
+		"heading-md": "_59c7f3f740e2f96e__heading-md",
+		"heading-sm": "cf052fbad8d93b7e__heading-sm",
+		"body-xl": "_212b9cfef57a0af4__body-xl",
+		"body-lg": "_07f57bc0aa36b2c6__body-lg",
+		"body-md": "_0c6da4457aec9e62__body-md",
+		"body-sm": "b998f87ff17b7bec__body-sm"
 	};
 	registerStyle$22("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 	var global_css_defense_module_default$6 = {
@@ -12033,34 +10362,45 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		"span": "_79d16267c15d9eb2__span"
 	};
 	/**
-	* A styled anchor element with support for semantic color tones and an
-	* unstyled escape hatch.
-	*
-	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+	* A text component for rendering content with predefined typographic variants.
+	* Built on design tokens for consistent typography across the UI.
 	*/
-	const Link = (0, _wordpress_element.forwardRef)(function UnforwardedLink({ children, variant = "default", tone = "brand", openInNewTab = false, target, render, className, ...props }, ref) {
-		const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+	const Text = (0, _wordpress_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
 		return useRender({
 			render,
-			defaultTagName: "a",
+			defaultTagName: "span",
 			ref,
-			props: mergeProps(props, {
-				className: clsx(global_css_defense_module_default$6.a, resets_module_default$4["box-sizing"], focus_module_default$3["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$10.link, variant !== "unstyled" && shouldShowNewTabIndicator && style_module_default$10["link-with-icon"], variant !== "unstyled" && style_module_default$10[`is-${tone}`], variant === "unstyled" && style_module_default$10["is-unstyled"], className),
-				target: target ?? (openInNewTab ? "_blank" : void 0),
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					className: style_module_default$10["link-contents"],
-					children
-				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					className: style_module_default$10["link-icon"],
-					role: "img",
-					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
-				})] })
-			})
+			props: mergeProps(props, { className: clsx(style_module_default$9.text, global_css_defense_module_default$6.heading, global_css_defense_module_default$6.p, style_module_default$9[variant], className) })
 		});
 	});
 
-// packages/ui/build-module/stack/stack.mjs
+// packages/ui/build-module/utils/render-slot-with-children.mjs
+/**
+	* Fills an optional "slot" element prop with content by cloning it and
+	* injecting the given `children`. When `slot` is undefined, the provided
+	* `defaultSlot` is used in its place.
+	*
+	* Shared by overlay `Popup` components for their slot-shaped customization
+	* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
+	* children injection — stays consistent across all of them.
+	*
+	* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
+	* any subtree passed on the slot element is overwritten by `children`.
+	*
+	* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
+	*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
+	*                    is used. Injected `children` replace any subtree the caller
+	*                    may have passed on the slot element.
+	* @param defaultSlot Unpopulated default element used when `slot` is omitted
+	*                    (e.g. `<Tooltip.Portal />`).
+	* @param children    Content to inject as the slot's children (backdrop,
+	*                    positioner, popup subtree, etc.).
+	*/
+	function renderSlotWithChildren(slot, defaultSlot, children) {
+		return (0, _wordpress_element.cloneElement)(slot ?? defaultSlot, { children });
+	}
+
+// packages/ui/build-module/utils/css/item-popup.mjs
 	const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -12162,74 +10502,51 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$21(targetDocument, hash, css);
 	}
-	registerStyle$21("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
-	var style_module_default$9 = { "stack": "_8e8e79c1a2eec43b__stack" };
-	const gapTokens = {
-		xs: "var(--wpds-dimension-gap-xs, 4px)",
-		sm: "var(--wpds-dimension-gap-sm, 8px)",
-		md: "var(--wpds-dimension-gap-md, 12px)",
-		lg: "var(--wpds-dimension-gap-lg, 16px)",
-		xl: "var(--wpds-dimension-gap-xl, 24px)",
-		"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-		"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+	registerStyle$21("149d86e146", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.f44105ad1a552523__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-popup-item-text-line-height:var(--wpds-typography-line-height-xs,16px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:\"header\" \"status\" \"main\";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--_wp-ui-item-popup-max-width,var(--available-width)));min-width:var(--anchor-width)}.f20f14dd818510c6__is-width-anchor{width:var(--anchor-width)}._398b31dcd487e37f__is-width-content,._481aa05a209e4968__is-width-available,.f20f14dd818510c6__is-width-anchor{--_wp-ui-item-popup-max-width:var(--available-width)}._398b31dcd487e37f__is-width-content{width:auto}._75f4d59e8cd4fbf1__is-width-sm{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-sm,320px)}._9b640ab112999a71__is-width-md{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-md,400px)}._3bf04b25e9ec1c2c__is-width-lg{--_wp-ui-item-popup-max-width:var(--wpds-dimension-surface-width-lg,560px)}._543f334dbb899cca__fixed-width-presets{&._3bf04b25e9ec1c2c__is-width-lg,&._75f4d59e8cd4fbf1__is-width-sm,&._9b640ab112999a71__is-width-md{width:min(var(--available-width),var(--_wp-ui-item-popup-max-width))}}._481aa05a209e4968__is-width-available{width:var(--available-width)}._31995ce6e72ae51c__is-align-item-with-trigger[data-side=none] .f44105ad1a552523__popup{max-height:none}.c61ae8ac6b17caf6__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(._41ac90fbb134576c__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._6f78c164f55857d2__list{display:grid;grid-template-areas:\"scrollable\" \"footer\";grid-template-rows:minmax(0,1fr) auto}.d50f53b586266e4c__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._44be0354ea94ae76__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);.d50f53b586266e4c__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}.e46f00c85691b978__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._7c8dd3d445b9e0d1__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}._6590ed1ca0955506__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.c53905a339ee5b93__item-layout{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;line-height:var(--_wp-ui-popup-item-text-line-height);margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);&:has(>._41ac90fbb134576c__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}}.baf88da98aa22472__item{user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&.c1884bb8f08d6b49__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){.bacbdc6d2167ebdd__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}._41ac90fbb134576c__item-icon{align-items:center;display:flex;height:var(--_wp-ui-popup-item-text-line-height);justify-content:center;pointer-events:none;width:var(--wpds-dimension-size-2xs,16px)}.bacbdc6d2167ebdd__item-indicator-icon{translate:0 1px}._128e9f67dabbe8cd__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._96a7e33bb57975a2__item-text{display:flex;flex-direction:column;min-width:0;row-gap:var(--wpds-dimension-gap-xs,4px)}.bad7b55318907302__item-label{--_gcd-heading-color:currentColor;min-width:0}._2e4ebd9f6d7ce5d4__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.baf88da98aa22472__item[data-disabled] ._2e4ebd9f6d7ce5d4__item-description,.baf88da98aa22472__item[data-highlighted]:not([data-disabled]) ._2e4ebd9f6d7ce5d4__item-description{--_gcd-heading-color:currentColor;color:inherit}._384062150817186f__loading-indicator{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px)}.c4502685591e2f57__status{grid-area:status;&:has(._384062150817186f__loading-indicator){padding-block:var(--wp-ui-popup-padding)}}._46236ecbce83a6f0__empty:not(:empty){grid-area:main}._46236ecbce83a6f0__empty:not(:empty),.c4502685591e2f57__status:not(:empty):not(:has([data-visually-hidden],._384062150817186f__loading-indicator)){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}@layer compositions{._2e4ebd9f6d7ce5d4__item-description,.bad7b55318907302__item-label{--_gcd-p-line-height:var(--_wp-ui-popup-item-text-line-height);line-height:var(--_wp-ui-popup-item-text-line-height)}._9dd46ff6c5337aad__loading-spinner{height:var(--wpds-dimension-size-3xs,12px);width:var(--wpds-dimension-size-3xs,12px)}}}");
+	var item_popup_module_default$8 = {
+		"popup": "f44105ad1a552523__popup _069972d5e326bada__dropdown-motion",
+		"is-width-anchor": "f20f14dd818510c6__is-width-anchor",
+		"is-width-content": "_398b31dcd487e37f__is-width-content",
+		"is-width-available": "_481aa05a209e4968__is-width-available",
+		"is-width-sm": "_75f4d59e8cd4fbf1__is-width-sm",
+		"is-width-md": "_9b640ab112999a71__is-width-md",
+		"is-width-lg": "_3bf04b25e9ec1c2c__is-width-lg",
+		"fixed-width-presets": "_543f334dbb899cca__fixed-width-presets",
+		"is-align-item-with-trigger": "_31995ce6e72ae51c__is-align-item-with-trigger",
+		"list-chrome": "c61ae8ac6b17caf6__list-chrome",
+		"item-icon": "_41ac90fbb134576c__item-icon",
+		"list": "_6f78c164f55857d2__list c61ae8ac6b17caf6__list-chrome",
+		"list-scrollable-container": "d50f53b586266e4c__list-scrollable-container",
+		"list-footer": "_44be0354ea94ae76__list-footer",
+		"group": "e46f00c85691b978__group",
+		"group-label": "_7c8dd3d445b9e0d1__group-label",
+		"separator": "_6590ed1ca0955506__separator",
+		"item-layout": "c53905a339ee5b93__item-layout",
+		"item": "baf88da98aa22472__item c53905a339ee5b93__item-layout",
+		"is-size-small": "c1884bb8f08d6b49__is-size-small",
+		"item-indicator-icon": "bacbdc6d2167ebdd__item-indicator-icon",
+		"item-content": "_128e9f67dabbe8cd__item-content",
+		"item-text": "_96a7e33bb57975a2__item-text",
+		"item-label": "bad7b55318907302__item-label",
+		"item-description": "_2e4ebd9f6d7ce5d4__item-description",
+		"loading-indicator": "_384062150817186f__loading-indicator c53905a339ee5b93__item-layout",
+		"status": "c4502685591e2f57__status",
+		"empty": "_46236ecbce83a6f0__empty",
+		"loading-spinner": "_9dd46ff6c5337aad__loading-spinner"
 	};
-	/**
-	* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
-	* Built on design tokens for predictable spacing values.
-	*/
-	const Stack = (0, _wordpress_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
-		const style = {
-			gap: gap && gapTokens[gap],
-			alignItems: align,
-			justifyContent: justify,
-			flexDirection: direction,
-			flexWrap: wrap
-		};
-		return useRender({
-			render,
-			ref,
-			props: mergeProps(props, {
-				style,
-				className: style_module_default$9.stack
-			})
-		});
-	});
-
-// packages/ui/build-module/utils/use-schedule-validation.mjs
-/**
-	* Dev-only hook that returns a stable `scheduleValidation` function.
-	*
-	* Each call debounces to `setTimeout(…, 0)` so that rapid
-	* register / unregister cycles (e.g. React strict-mode double-mount)
-	* settle before the check runs. The timer is cleaned up on unmount,
-	* and calls after unmount are silently ignored.
-	*
-	* @param validate Callback that performs the actual validation.
-	*                 Wrapped in `useEvent`, so it can be an unstable closure.
-	*/
-	function useScheduleValidation(validate) {
-		const validateEvent = (0, _wordpress_compose.useEvent)(validate);
-		const timerRef = (0, _wordpress_element.useRef)(null);
-		const unmountedRef = (0, _wordpress_element.useRef)(false);
-		const scheduleValidation = (0, _wordpress_element.useCallback)(() => {
-			if (unmountedRef.current) return;
-			if (timerRef.current) clearTimeout(timerRef.current);
-			timerRef.current = setTimeout(() => {
-				validateEvent();
-				timerRef.current = null;
-			}, 0);
-		}, [validateEvent]);
-		(0, _wordpress_element.useEffect)(() => {
-			unmountedRef.current = false;
-			return () => {
-				unmountedRef.current = true;
-				if (timerRef.current) clearTimeout(timerRef.current);
-			};
-		}, []);
-		return scheduleValidation;
+	function getItemPopupWidthClassName(width = "anchor") {
+		switch (width) {
+			case "available": return item_popup_module_default$8["is-width-available"];
+			case "content": return item_popup_module_default$8["is-width-content"];
+			case "lg": return item_popup_module_default$8["is-width-lg"];
+			case "md": return item_popup_module_default$8["is-width-md"];
+			case "sm": return item_popup_module_default$8["is-width-sm"];
+			case "anchor": return item_popup_module_default$8["is-width-anchor"];
+			default: return false;
+		}
 	}
 
-// packages/ui/build-module/tabs/list.mjs
+// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
 	const STYLE_HASH_ATTRIBUTE$20 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -12331,154 +10648,94 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$20(targetDocument, hash, css);
 	}
-	registerStyle$20("3d953ec7ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a0e75f120439a0aa__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.d0a55a85eda75e42__is-scrolling){overflow:visible}&._3458825d62377029__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._3458825d62377029__is-overflowing-first._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._75bc52ead60e02b3__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._8db3ebc0bb0b18de__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;.a0e75f120439a0aa__tablist:has(>.cbf34d4b11b8d6d4__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.cbf34d4b11b8d6d4__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:\"\";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._75bc52ead60e02b3__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._75bc52ead60e02b3__is-minimal-variant.d0a55a85eda75e42__is-scrolling[data-orientation=horizontal] &{&:before{content:\"\";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px);&:after{content:\"\";inset:0;outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}}}._48bd1f7fa091c988__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}}}");
-	var style_module_default$8 = {
-		"tablist": "a0e75f120439a0aa__tablist",
-		"is-scrolling": "d0a55a85eda75e42__is-scrolling",
-		"is-overflowing-first": "_3458825d62377029__is-overflowing-first",
-		"is-overflowing-last": "_485eb1577637fe68__is-overflowing-last",
-		"is-minimal-variant": "_75bc52ead60e02b3__is-minimal-variant",
-		"indicator": "_8db3ebc0bb0b18de__indicator",
-		"tab": "cbf34d4b11b8d6d4__tab",
-		"tab-children": "_48bd1f7fa091c988__tab-children"
-	};
-	const SCROLL_EPSILON = 1;
+	registerStyle$20("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
+	var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
 	/**
-	* Groups the individual tab buttons.
+	* Marker attribute on the compat overlay slot element.
+	*/
+	const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+	function resolveOwnerDocument() {
+		return typeof document === "undefined" ? null : document;
+	}
+	function isInWordPressEnvironment() {
+		let topWp;
+		try {
+			topWp = window.top?.wp;
+		} catch {}
+		const wp = topWp ?? window.wp;
+		return typeof wp?.components === "object" && wp.components !== null;
+	}
+	let cachedSlot = null;
+	function ensureSlotIsAccessible(element) {
+		element.setAttribute("aria-hidden", "false");
+		return element;
+	}
+	function createSlot(ownerDocument) {
+		const element = ownerDocument.createElement("div");
+		element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+		if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
+		ownerDocument.body.appendChild(element);
+		return element;
+	}
+	/**
+	* Returns the body-level compat overlay slot when the runtime opts in,
+	* lazily creating it on first call. Returns `undefined` otherwise — so the
+	* return value can be forwarded straight to a `container` prop, leaving the
+	* default portal container in effect.
 	*
-	* `Tabs` is a collection of React components that combine to render
-	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+	* Two opt-in paths:
+	*
+	* - Auto-detected when `window.wp.components` is on the global — the
+	*   typical script-loader setup for WordPress plugins and admin screens.
+	* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
+	*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
+	*   relying on the global.
+	*
+	* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
+	* local document's body. Subsequent calls return the same element; if it's
+	* been removed it's recreated, and a slot created by another
+	* `@wordpress/ui` instance in the same document is adopted rather than
+	* duplicated.
 	*/
-	const List = (0, _wordpress_element.forwardRef)(function TabList({ children, variant = "default", className, activateOnFocus, ...otherProps }, forwardedRef) {
-		const [listEl, setListEl] = (0, _wordpress_element.useState)(null);
-		const [overflow, setOverflow] = (0, _wordpress_element.useState)({
-			first: false,
-			last: false,
-			isScrolling: false
-		});
-		(0, _wordpress_element.useEffect)(() => {
-			if (!listEl) return;
-			const measureOverflow = () => {
-				const { scrollWidth, clientWidth, scrollLeft } = listEl;
-				const maxScroll = Math.max(scrollWidth - clientWidth, 0);
-				const scrollFromStart = (listEl.dir || (typeof window !== "undefined" ? window.getComputedStyle(listEl).direction : "ltr")) === "rtl" && scrollLeft < 0 ? -scrollLeft : scrollLeft;
-				const next = {
-					first: scrollFromStart > SCROLL_EPSILON,
-					last: scrollFromStart < maxScroll - SCROLL_EPSILON,
-					isScrolling: scrollWidth > clientWidth
-				};
-				setOverflow((prev) => prev.first === next.first && prev.last === next.last && prev.isScrolling === next.isScrolling ? prev : next);
-			};
-			const resizeObserver = new ResizeObserver(measureOverflow);
-			const observeTabs = () => {
-				resizeObserver.disconnect();
-				resizeObserver.observe(listEl);
-				listEl.querySelectorAll("[role=\"tab\"]").forEach((tab) => resizeObserver.observe(tab));
-			};
-			const mutationObserver = new MutationObserver(observeTabs);
-			mutationObserver.observe(listEl, {
-				childList: true,
-				subtree: true
-			});
-			let scrollTick = false;
-			const throttleMeasureOverflowOnScroll = () => {
-				if (!scrollTick) {
-					requestAnimationFrame(() => {
-						measureOverflow();
-						scrollTick = false;
-					});
-					scrollTick = true;
-				}
-			};
-			listEl.addEventListener("scroll", throttleMeasureOverflowOnScroll, { passive: true });
-			observeTabs();
-			measureOverflow();
-			return () => {
-				listEl.removeEventListener("scroll", throttleMeasureOverflowOnScroll);
-				resizeObserver.disconnect();
-				mutationObserver.disconnect();
-			};
-		}, [listEl]);
-		const mergedListRef = (0, _wordpress_compose.useMergeRefs)([forwardedRef, (el) => setListEl(el)]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(TabsList, {
-			ref: mergedListRef,
-			activateOnFocus,
-			"data-select-on-move": activateOnFocus ? "true" : "false",
-			className: clsx(style_module_default$8.tablist, overflow.isScrolling && style_module_default$8["is-scrolling"], overflow.first && style_module_default$8["is-overflowing-first"], overflow.last && style_module_default$8["is-overflowing-last"], style_module_default$8[`is-${variant}-variant`], className),
-			...otherProps,
-			tabIndex: otherProps.tabIndex ?? (overflow.isScrolling ? -1 : void 0),
-			children: [children, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsIndicator, { className: style_module_default$8.indicator })]
-		});
-	});
+	function getWpCompatOverlaySlot() {
+		if (typeof window === "undefined") return;
+		if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
+		const ownerDocument = resolveOwnerDocument();
+		if (!ownerDocument || !ownerDocument.body) return;
+		if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
+		const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
+		if (existing instanceof HTMLDivElement) {
+			cachedSlot = ensureSlotIsAccessible(existing);
+			return cachedSlot;
+		}
+		if (cachedSlot?.isConnected) cachedSlot.remove();
+		cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
+		return cachedSlot;
+	}
 
-// packages/ui/build-module/tabs/context.mjs
-	const TabsValidationContext = (0, _wordpress_element.createContext)(null);
-	function useRegisterTabDev() {
-		const context = (0, _wordpress_element.useContext)(TabsValidationContext);
-		(0, _wordpress_element.useEffect)(() => {
-			if (context) return context.registerTab();
-		}, [context]);
-	}
-	/**
-	* Hook that registers a Tab for count validation in development mode.
+// packages/ui/build-module/form/primitives/constants.mjs
+/**
+	* Shared positioning defaults for item-list popups, e.g. Select, Combobox,
+	* or Autocomplete.
 	*/
-	const useRegisterTab = useRegisterTabDev;
-	function useRegisterPanelDev() {
-		const context = (0, _wordpress_element.useContext)(TabsValidationContext);
-		(0, _wordpress_element.useEffect)(() => {
-			if (context) return context.registerPanel();
-		}, [context]);
-	}
-	/**
-	* Hook that registers a Panel for count validation in development mode.
+	const ITEM_POPUP_POSITIONER_PROPS = {
+		align: "start",
+		sideOffset: 8,
+		collisionPadding: 12
+	};
+
+// packages/ui/build-module/utils/direction-provider.mjs
+/**
+	* Provides WordPress's text direction to Base UI components.
 	*/
-	const useRegisterPanel = useRegisterPanelDev;
-	/**
-	* Development-only provider that tracks the number of registered tabs and
-	* panels, and warns when the counts don't match.
-	*/
-	function TabsValidationProviderDev({ children }) {
-		const tabCountRef = (0, _wordpress_element.useRef)(0);
-		const panelCountRef = (0, _wordpress_element.useRef)(0);
-		const scheduleValidation = useScheduleValidation(() => {
-			const tabCount = tabCountRef.current;
-			const panelCount = panelCountRef.current;
-			if (tabCount !== panelCount) throw new Error(`Tabs: Tab/Panel count mismatch (${tabCount} Tabs, ${panelCount} Panels). Each Tab must be associated with exactly one Panel. Mismatched or missing associations can break screen reader navigation and violate WAI-ARIA Tabs pattern requirements.`);
-		});
-		const registerTab = (0, _wordpress_element.useCallback)(() => {
-			tabCountRef.current += 1;
-			scheduleValidation();
-			return () => {
-				tabCountRef.current -= 1;
-				scheduleValidation();
-			};
-		}, [scheduleValidation]);
-		const registerPanel = (0, _wordpress_element.useCallback)(() => {
-			panelCountRef.current += 1;
-			scheduleValidation();
-			return () => {
-				panelCountRef.current -= 1;
-				scheduleValidation();
-			};
-		}, [scheduleValidation]);
-		const contextValue = (0, _wordpress_element.useMemo)(() => ({
-			registerTab,
-			registerPanel
-		}), [registerTab, registerPanel]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsValidationContext.Provider, {
-			value: contextValue,
+	function DirectionProvider({ children }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider$1, {
+			direction: (0, _wordpress_i18n.isRTL)() ? "rtl" : "ltr",
 			children
 		});
 	}
-	/**
-	* Provider component that validates the number of tabs matches the number
-	* of panels in development mode.
-	*
-	* In production, this component is a no-op and just renders children.
-	*/
-	const TabsValidationProvider = TabsValidationProviderDev;
 
-// packages/ui/build-module/tabs/panel.mjs
+// packages/ui/build-module/link/link.mjs
 	const STYLE_HASH_ATTRIBUTE$19 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -12580,6 +10837,26 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$19(targetDocument, hash, css);
 	}
+	registerStyle$19("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+	var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+	registerStyle$19("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+	var focus_module_default$2 = {
+		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+	};
+	registerStyle$19("c87d91cdf7", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a574f9f242212d58__link{--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);border-radius:var(--wpds-border-radius-sm,2px);text-decoration-thickness:from-font;text-underline-offset:.2em}._2d2f0506e717a46c__link-with-icon{text-decoration-line:none}._92b7b6a03fbb27ac__link-contents{text-decoration:inherit;text-decoration-line:underline}._69f40d9212adc58d__is-brand,._69f40d9212adc58d__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}._69f40d9212adc58d__is-brand:active,._69f40d9212adc58d__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._9a9c54c6e67b4c3c__is-neutral,._9a9c54c6e67b4c3c__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d)}._9a9c54c6e67b4c3c__is-neutral:active,._9a9c54c6e67b4c3c__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._93be0b747897baad__is-unstyled{--_gcd-a-border-radius:0;--_gcd-a-color:inherit;color:inherit;text-decoration:none}._9c39df40fdc09594__link-icon{font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}._9c39df40fdc09594__link-icon:after{content:\"\\2060\\2197\"}._9c39df40fdc09594__link-icon:dir(rtl):after{content:\"\\2060\\2196\"}}}");
+	var style_module_default$8 = {
+		"link": "a574f9f242212d58__link",
+		"link-with-icon": "_2d2f0506e717a46c__link-with-icon",
+		"link-contents": "_92b7b6a03fbb27ac__link-contents",
+		"is-brand": "_69f40d9212adc58d__is-brand",
+		"is-neutral": "_9a9c54c6e67b4c3c__is-neutral",
+		"is-unstyled": "_93be0b747897baad__is-unstyled",
+		"link-icon": "_9c39df40fdc09594__link-icon"
+	};
 	registerStyle$19("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
 	var global_css_defense_module_default$5 = {
 		"button": "_78c10a0773e51a91__button",
@@ -12593,44 +10870,35 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		"li": "_3c72ff72abe57859__li",
 		"span": "_79d16267c15d9eb2__span"
 	};
-	registerStyle$19("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-	var focus_module_default$2 = {
-		"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-		"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-		"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-		"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-		"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-	};
 	/**
-	* A panel displayed when the corresponding tab is active.
+	* A styled anchor element with support for semantic color tones and an
+	* unstyled escape hatch.
 	*
-	* `Tabs` is a collection of React components that combine to render
-	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Panel = (0, _wordpress_element.forwardRef)(function TabPanel({ className, ...otherProps }, forwardedRef) {
-		useRegisterPanel();
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsPanel, {
-			ref: forwardedRef,
-			className: clsx(global_css_defense_module_default$5.div, focus_module_default$2["outset-ring--focus-visible"], className),
-			...otherProps
+	const Link = (0, _wordpress_element.forwardRef)(function UnforwardedLink({ children, variant = "default", tone = "brand", openInNewTab = false, target, render, className, ...props }, ref) {
+		const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+		return useRender({
+			render,
+			defaultTagName: "a",
+			ref,
+			props: mergeProps(props, {
+				className: clsx(global_css_defense_module_default$5.a, resets_module_default$4["box-sizing"], focus_module_default$2["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$8.link, variant !== "unstyled" && shouldShowNewTabIndicator && style_module_default$8["link-with-icon"], variant !== "unstyled" && style_module_default$8[`is-${tone}`], variant === "unstyled" && style_module_default$8["is-unstyled"], className),
+				target: target ?? (openInNewTab ? "_blank" : void 0),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: style_module_default$8["link-contents"],
+					children
+				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: style_module_default$8["link-icon"],
+					role: "img",
+					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+				})] })
+			})
 		});
 	});
 
-// packages/ui/build-module/tabs/root.mjs
-/**
-	* Groups the tabs and the corresponding panels.
-	*
-	* `Tabs` is a collection of React components that combine to render
-	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
-	*/
-	const Root$2 = (0, _wordpress_element.forwardRef)(function TabsRoot$1({ ...otherProps }, forwardedRef) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsRoot, {
-			ref: forwardedRef,
-			...otherProps
-		}) }) });
-	});
-
-// packages/ui/build-module/tabs/tab.mjs
+// packages/ui/build-module/stack/stack.mjs
 	const STYLE_HASH_ATTRIBUTE$18 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -12732,32 +11000,35 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$18(targetDocument, hash, css);
 	}
-	registerStyle$18("3d953ec7ac", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a0e75f120439a0aa__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.d0a55a85eda75e42__is-scrolling){overflow:visible}&._3458825d62377029__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._3458825d62377029__is-overflowing-first._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._75bc52ead60e02b3__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._8db3ebc0bb0b18de__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;.a0e75f120439a0aa__tablist:has(>.cbf34d4b11b8d6d4__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.cbf34d4b11b8d6d4__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:\"\";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._75bc52ead60e02b3__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._75bc52ead60e02b3__is-minimal-variant.d0a55a85eda75e42__is-scrolling[data-orientation=horizontal] &{&:before{content:\"\";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px);&:after{content:\"\";inset:0;outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}}}._48bd1f7fa091c988__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}}}");
-	var style_module_default$7 = {
-		"tablist": "a0e75f120439a0aa__tablist",
-		"is-scrolling": "d0a55a85eda75e42__is-scrolling",
-		"is-overflowing-first": "_3458825d62377029__is-overflowing-first",
-		"is-overflowing-last": "_485eb1577637fe68__is-overflowing-last",
-		"is-minimal-variant": "_75bc52ead60e02b3__is-minimal-variant",
-		"indicator": "_8db3ebc0bb0b18de__indicator",
-		"tab": "cbf34d4b11b8d6d4__tab",
-		"tab-children": "_48bd1f7fa091c988__tab-children"
+	registerStyle$18("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
+	var style_module_default$7 = { "stack": "_8e8e79c1a2eec43b__stack" };
+	const gapTokens = {
+		xs: "var(--wpds-dimension-gap-xs, 4px)",
+		sm: "var(--wpds-dimension-gap-sm, 8px)",
+		md: "var(--wpds-dimension-gap-md, 12px)",
+		lg: "var(--wpds-dimension-gap-lg, 16px)",
+		xl: "var(--wpds-dimension-gap-xl, 24px)",
+		"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+		"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 	};
 	/**
-	* An individual interactive tab button that toggles the corresponding panel.
-	*
-	* `Tabs` is a collection of React components that combine to render
-	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+	* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
+	* Built on design tokens for predictable spacing values.
 	*/
-	const Tab = (0, _wordpress_element.forwardRef)(function UnforwardedTab({ className, children, ...otherProps }, forwardedRef) {
-		useRegisterTab();
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsTab, {
-			ref: forwardedRef,
-			className: clsx(style_module_default$7.tab, className),
-			...otherProps,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-				className: style_module_default$7["tab-children"],
-				children
+	const Stack = (0, _wordpress_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+		const style = {
+			gap: gap && gapTokens[gap],
+			alignItems: align,
+			justifyContent: justify,
+			flexDirection: direction,
+			flexWrap: wrap
+		};
+		return useRender({
+			render,
+			ref,
+			props: mergeProps(props, {
+				style,
+				className: style_module_default$7.stack
 			})
 		});
 	});
@@ -16371,13 +14642,6 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	};
 
 // packages/format-library/build-module/text-color/inline.mjs
-	const TABS = [{
-		name: "color",
-		title: (0, _wordpress_i18n.__)("Text")
-	}, {
-		name: "backgroundColor",
-		title: (0, _wordpress_i18n.__)("Background")
-	}];
 	function parseCSS(css = "") {
 		return css.split(";").reduce((accumulator, rule) => {
 			if (rule) {
@@ -16449,7 +14713,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			__experimentalIsRenderedInSidebar: true
 		});
 	}
-	function InlineColorUI({ name, value, onChange, onClose, contentRef, isActive }) {
+	function InlineColorUI({ name, property, value, onChange, onClose, contentRef, isActive }) {
 		const anchorSettings = {
 			...textColor,
 			isActive
@@ -16462,21 +14726,11 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			onClose,
 			className: "format-library__inline-color-popover",
 			anchor: popoverAnchor,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$2, {
-				defaultValue: TABS[0].name,
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(List, { children: TABS.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tab, {
-					value: tab.name,
-					children: tab.title
-				}, tab.name)) }), TABS.map((tab) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Panel, {
-					value: tab.name,
-					tabIndex: -1,
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColorPicker, {
-						name,
-						property: tab.name,
-						value,
-						onChange
-					})
-				}, tab.name))]
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColorPicker, {
+				name,
+				property,
+				value,
+				onChange
 			})
 		});
 	}
@@ -16500,30 +14754,47 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			backgroundColor: backgroundColor === "rgba(0, 0, 0, 0)" ? getComputedStyleProperty(element, "background-color") : backgroundColor
 		};
 	}
+	const CONTROLS = [{
+		name: "text-color",
+		property: "color",
+		title: (0, _wordpress_i18n.__)("Text color"),
+		icon: text_color_default
+	}, {
+		name: "highlight-color",
+		property: "backgroundColor",
+		title: (0, _wordpress_i18n.__)("Highlight color"),
+		icon: color_default
+	}];
+	function ColorIndicatorIcon({ colorValue }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+			className: "format-library-text-color-indicator",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ColorIndicator, { colorValue })
+		});
+	}
 	function TextColorEdit({ value, onChange, isActive, activeAttributes, contentRef }) {
 		const [allowCustomControl, colors = EMPTY_ARRAY] = (0, _wordpress_block_editor.useSettings)("color.custom", "color.palette");
-		const [isAddingColor, setIsAddingColor] = (0, _wordpress_element.useState)(false);
-		const colorIndicatorStyle = (0, _wordpress_element.useMemo)(() => fillComputedColors(contentRef.current, getActiveColors(value, name$7, colors)), [
-			contentRef,
-			value,
-			colors
-		]);
+		const [editingProperty, setEditingProperty] = (0, _wordpress_element.useState)(null);
+		const activeColors = (0, _wordpress_element.useMemo)(() => getActiveColors(value, name$7, colors), [value, colors]);
+		const colorIndicatorStyle = (0, _wordpress_element.useMemo)(() => fillComputedColors(contentRef.current, activeColors), [contentRef, activeColors]);
 		const hasColorsToChoose = !!colors.length || allowCustomControl;
 		if (!hasColorsToChoose && !isActive) return null;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
-			name: "text-color",
-			className: "format-library-text-color-button",
-			isActive,
-			icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default, {
-				icon: Object.keys(activeAttributes).length ? text_color_default : color_default,
-				style: colorIndicatorStyle
-			}),
-			title: title$7,
-			onClick: hasColorsToChoose ? () => setIsAddingColor(true) : () => onChange((0, _wordpress_rich_text.removeFormat)(value, name$7)),
-			role: "menuitemcheckbox"
-		}), isAddingColor && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InlineColorUI, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [CONTROLS.map(({ name: controlName, property, title: controlTitle, icon }) => {
+			const isPropertyActive = !!activeColors[property] || property === "color" && !!activeAttributes.class;
+			if (!hasColorsToChoose && !isPropertyActive) return null;
+			const indicatorColor = isPropertyActive ? colorIndicatorStyle?.[property] ?? activeColors[property] : void 0;
+			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
+				name: controlName,
+				className: "format-library-text-color-button",
+				isActive: isPropertyActive,
+				icon: indicatorColor ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColorIndicatorIcon, { colorValue: indicatorColor }) : icon,
+				title: controlTitle,
+				onClick: hasColorsToChoose ? () => setEditingProperty(property) : () => onChange(setColors(value, name$7, colors, { [property]: void 0 })),
+				role: "menuitemcheckbox"
+			}, property);
+		}), editingProperty && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InlineColorUI, {
 			name: name$7,
-			onClose: () => setIsAddingColor(false),
+			property: editingProperty,
+			onClose: () => setEditingProperty(null),
 			value,
 			onChange,
 			contentRef,

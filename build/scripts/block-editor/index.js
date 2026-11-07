@@ -65206,6 +65206,7 @@ Icon: ButtonIcon });
 	];
 	const DROPDOWN_FORMATS = [
 		"text-color",
+		"highlight-color",
 		"image",
 		"code",
 		"keyboard",

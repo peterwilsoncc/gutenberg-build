@@ -51,9 +51,18 @@
   padding: 16px;
 }
 
-.format-library__inline-color-popover [role=tabpanel] {
+.format-library__inline-color-popover .components-popover__content {
   padding: 16px;
   width: 260px;
+}
+
+.format-library-text-color-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
 }
 
 .block-editor-format-toolbar__language-popover .components-popover__content {
