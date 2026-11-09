@@ -64421,12 +64421,25 @@ Icon: ButtonIcon });
 	const placesCaretOnTap = typeof window !== "undefined" && !!window.CSS?.supports?.("-webkit-touch-callout", "none");
 	function useClickSelection() {
 		const { selectBlock } = (0, _wordpress_data.useDispatch)(store);
-		const { isSelectionEnabled, getBlockSelectionStart, getSelectionStart, hasMultiSelection, isBlockMultiSelected, isAncestorMultiSelected, __unstableIsFullySelected, canMoveBlocks, getSelectedBlockClientIds } = (0, _wordpress_data.useSelect)(store);
+		const { isSelectionEnabled, getBlockSelectionStart, getSelectionStart, hasMultiSelection, isBlockMultiSelected, isAncestorMultiSelected, __unstableIsFullySelected, canMoveBlocks, getSelectedBlockClientIds, canHostEditableRoot } = unlock$2((0, _wordpress_data.useSelect)(store));
 		return (0, _wordpress_compose.useRefEffect)((node) => {
 			let pointerType;
 			let clickCollapseClientId;
 			function onPointerDown(event) {
 				pointerType = event.pointerType;
+				if (node.contentEditable !== "true") return;
+				const clientId = getBlockClientId(event.target);
+				if (!clientId || canHostEditableRoot(clientId)) return;
+				const field = getSelectionEditableElement(node.ownerDocument.defaultView.getSelection(), node);
+				if (!field) return;
+				setContentEditableWrapper(node, false);
+				field.focus({ preventScroll: true });
+				if (pointerType !== "touch") return;
+				function onPointerCancel() {
+					setContentEditableWrapper(node, true);
+				}
+				node.addEventListener("pointercancel", onPointerCancel, { once: true });
+				node.addEventListener("pointerup", () => node.removeEventListener("pointercancel", onPointerCancel), { once: true });
 			}
 			function onMouseDown(event) {
 				clickCollapseClientId = void 0;
@@ -64495,7 +64508,8 @@ Icon: ButtonIcon });
 			isAncestorMultiSelected,
 			__unstableIsFullySelected,
 			canMoveBlocks,
-			getSelectedBlockClientIds
+			getSelectedBlockClientIds,
+			canHostEditableRoot
 		]);
 	}
 
