@@ -10859,7 +10859,7 @@ Icon: ButtonIcon });
 				}),
 				canCopy && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CopyButton, {
 					text: `${content}\n\n${details}`,
-					label: status === "error" ? (0, _wordpress_i18n.__)("Copy error") : (0, _wordpress_i18n.__)("Copy message")
+					label: status === "error" ? (0, _wordpress_i18n._x)("Copy error", "button label") : (0, _wordpress_i18n.__)("Copy message")
 				})
 			] }),
 			!!details && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Panel, {

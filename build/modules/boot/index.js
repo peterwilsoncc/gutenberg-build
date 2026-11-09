@@ -11589,7 +11589,7 @@ function CopyErrorButton({ error }) {
 		variant: "secondary",
 		ref,
 		icon: RESULT_ICON[feedback.result],
-		children: (0, import_i18n.__)("Copy error")
+		children: (0, import_i18n._x)("Copy error", "button label")
 	});
 }
 /**

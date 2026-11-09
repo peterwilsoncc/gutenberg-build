@@ -4542,7 +4542,7 @@ Icon: ButtonIcon });
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Actions, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CopyButton, {
 							variant: "solid",
 							text: () => getErrorReport(error, componentStack),
-							children: (0, _wordpress_i18n.__)("Copy error")
+							children: (0, _wordpress_i18n._x)("Copy error", "button label")
 						}) })
 					]
 				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ErrorDetails, {
