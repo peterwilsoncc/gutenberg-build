@@ -36452,120 +36452,6 @@ Icon: ButtonIcon });
 		});
 	}
 
-// packages/ui/build-module/utils/use-iframe-dismissal-bridge.mjs
-	function getIframeDocument(iframe) {
-		try {
-			return iframe.contentDocument;
-		} catch {
-			return null;
-		}
-	}
-	function forEachIframe(node, callback) {
-		if (node.nodeType !== Node.ELEMENT_NODE) return;
-		const element = node;
-		if (element.tagName === "IFRAME") callback(element);
-		element.querySelectorAll("iframe").forEach(callback);
-	}
-	function getNodeDocument(node) {
-		return node?.nodeType === Node.DOCUMENT_NODE ? node : node?.ownerDocument ?? null;
-	}
-	function isInsideCurrentPopup(event, trigger) {
-		const popupId = trigger.getAttribute("aria-controls");
-		if (!popupId) return false;
-		let target = event.target;
-		while (target) {
-			const targetDocument = getNodeDocument(target);
-			const targetElement = target.nodeType === Node.ELEMENT_NODE ? target : target.parentElement;
-			const popup = targetDocument?.getElementById(popupId);
-			if (popup && targetElement) {
-				const rootOwnerId = popup.getAttribute("data-rootownerid");
-				if (!rootOwnerId) return popup.contains(targetElement);
-				return targetElement.closest("[data-rootownerid]")?.getAttribute("data-rootownerid") === rootOwnerId;
-			}
-			if (targetDocument === trigger.ownerDocument) break;
-			target = targetDocument?.defaultView?.frameElement ?? null;
-		}
-		return false;
-	}
-	function useCloseOnIframePointerDown({ enabled, onPointerDown, ownerDocument }) {
-		(0, _wordpress_element.useEffect)(() => {
-			if (!enabled || !ownerDocument) return;
-			const observeDocument = (document, listenForPointerDown) => {
-				if (listenForPointerDown) document.addEventListener("pointerdown", onPointerDown, true);
-				const iframeCleanups = /* @__PURE__ */ new Map();
-				const addIframe = (iframe) => {
-					if (iframeCleanups.has(iframe)) return;
-					let iframeDocument = null;
-					let iframeDocumentCleanup;
-					const updateIframeDocument = () => {
-						const nextIframeDocument = getIframeDocument(iframe);
-						if (nextIframeDocument === iframeDocument) return;
-						iframeDocumentCleanup?.();
-						iframeDocument = nextIframeDocument;
-						iframeDocumentCleanup = iframeDocument ? observeDocument(iframeDocument, true) : void 0;
-					};
-					iframe.addEventListener("load", updateIframeDocument);
-					updateIframeDocument();
-					iframeCleanups.set(iframe, () => {
-						iframe.removeEventListener("load", updateIframeDocument);
-						iframeDocumentCleanup?.();
-					});
-				};
-				const removeIframe = (iframe) => {
-					iframeCleanups.get(iframe)?.();
-					iframeCleanups.delete(iframe);
-				};
-				document.querySelectorAll("iframe").forEach(addIframe);
-				const MutationObserverConstructor = document.defaultView?.MutationObserver;
-				const observer = MutationObserverConstructor ? new MutationObserverConstructor((records) => {
-					records.forEach((record) => {
-						record.removedNodes.forEach((node) => forEachIframe(node, removeIframe));
-						record.addedNodes.forEach((node) => forEachIframe(node, addIframe));
-					});
-				}) : null;
-				observer?.observe(document.documentElement, {
-					childList: true,
-					subtree: true
-				});
-				return () => {
-					observer?.disconnect();
-					iframeCleanups.forEach((cleanup) => cleanup());
-					if (listenForPointerDown) document.removeEventListener("pointerdown", onPointerDown, true);
-				};
-			};
-			return observeDocument(ownerDocument, false);
-		}, [
-			enabled,
-			onPointerDown,
-			ownerDocument
-		]);
-	}
-	function useIframeDismissalBridge({ actionsRef, defaultOpen, disabled, modal, onOpenChange, open: openProp }) {
-		const fallbackActionsRef = (0, _wordpress_element.useRef)(null);
-		const resolvedActionsRef = actionsRef ?? fallbackActionsRef;
-		const [uncontrolledOpen, setUncontrolledOpen] = (0, _wordpress_element.useState)(defaultOpen ?? false);
-		const [trigger, setTrigger] = (0, _wordpress_element.useState)(null);
-		const open = openProp ?? uncontrolledOpen;
-		const handleIframePointerDown = (0, _wordpress_element.useCallback)((event) => {
-			if (trigger && !isInsideCurrentPopup(event, trigger)) resolvedActionsRef.current?.close();
-		}, [resolvedActionsRef, trigger]);
-		useCloseOnIframePointerDown({
-			enabled: open && modal === false && !disabled && trigger !== null,
-			onPointerDown: handleIframePointerDown,
-			ownerDocument: trigger?.ownerDocument ?? null
-		});
-		const handleOpenChange = (nextOpen, eventDetails) => {
-			onOpenChange(nextOpen, eventDetails);
-			if (eventDetails.isCanceled) return;
-			setUncontrolledOpen(nextOpen);
-			setTrigger(nextOpen ? eventDetails.trigger ?? null : null);
-		};
-		return {
-			actionsRef: resolvedActionsRef,
-			onOpenChange: handleOpenChange
-		};
-	}
-
 // packages/ui/build-module/menu/root.mjs
 /**
 	* Groups all parts of a menu.
@@ -36598,20 +36484,13 @@ Icon: ButtonIcon });
 			onOpenChange?.(nextOpen, eventDetails);
 			if (!nextOpen && eventDetails.reason === "item-press" && !eventDetails.isCanceled && TriggerElement && trigger instanceof TriggerElement && menuElement?.contains(activeElementBeforeOpenChange ?? null) && trigger.ownerDocument.activeElement === activeElementBeforeOpenChange) trigger.focus();
 		};
-		const iframeDismissalProps = useIframeDismissalBridge({
-			actionsRef: props.actionsRef,
-			defaultOpen: props.defaultOpen,
-			modal: props.modal,
-			onOpenChange: handleOpenChange,
-			open: props.open
-		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuContext.Provider, {
 			value: { isSubmenu: false },
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuGroupContext.Provider, {
 				value: null,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuRoot, {
 					...props,
-					...iframeDismissalProps
+					onOpenChange: handleOpenChange
 				})
 			})
 		}) });
@@ -41647,16 +41526,7 @@ Icon: ButtonIcon });
 	* ```
 	*/
 	function Root$6(props) {
-		const iframeDismissalProps = useIframeDismissalBridge({
-			defaultOpen: props.defaultOpen,
-			modal: props.modal ?? false,
-			onOpenChange: (nextOpen, eventDetails) => props.onOpenChange?.(nextOpen, eventDetails),
-			open: props.open
-		});
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PopoverRoot, {
-			...props,
-			...iframeDismissalProps
-		}) });
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PopoverRoot, { ...props }) });
 	}
 
 // packages/ui/build-module/popover/title.mjs
@@ -66038,26 +65908,219 @@ Icon: ButtonIcon });
 // packages/block-editor/build-module/components/iframe/canvas-window-context.mjs
 	const CanvasWindowContext = (0, _wordpress_element.createContext)(void 0);
 
-// packages/block-editor/build-module/components/iframe/index.mjs
-	function bubbleEvent(event, Constructor, frame) {
+// packages/block-editor/build-module/components/iframe/clone-event.mjs
+	const EVENT_FIELDS = [
+		"bubbles",
+		"cancelable",
+		"composed"
+	];
+	const UI_EVENT_FIELDS = [
+		...EVENT_FIELDS,
+		"detail",
+		"view"
+	];
+	const MOUSE_EVENT_FIELDS = [
+		...UI_EVENT_FIELDS,
+		"screenX",
+		"screenY",
+		"clientX",
+		"clientY",
+		"ctrlKey",
+		"shiftKey",
+		"altKey",
+		"metaKey",
+		"button",
+		"buttons",
+		"relatedTarget",
+		"movementX",
+		"movementY"
+	];
+	const EVENT_FIELDS_BY_INTERFACE = {
+		Event: EVENT_FIELDS,
+		UIEvent: UI_EVENT_FIELDS,
+		MouseEvent: MOUSE_EVENT_FIELDS,
+		DragEvent: [...MOUSE_EVENT_FIELDS, "dataTransfer"],
+		PointerEvent: [
+			...MOUSE_EVENT_FIELDS,
+			"pointerId",
+			"width",
+			"height",
+			"pressure",
+			"tangentialPressure",
+			"tiltX",
+			"tiltY",
+			"twist",
+			"altitudeAngle",
+			"azimuthAngle",
+			"pointerType",
+			"isPrimary"
+		],
+		KeyboardEvent: [
+			...UI_EVENT_FIELDS,
+			"key",
+			"code",
+			"location",
+			"repeat",
+			"isComposing",
+			"ctrlKey",
+			"shiftKey",
+			"altKey",
+			"metaKey",
+			"charCode",
+			"keyCode",
+			"which"
+		]
+	};
+	const MODIFIER_MEMBERS = {
+		modifierAltGraph: "AltGraph",
+		modifierCapsLock: "CapsLock",
+		modifierNumLock: "NumLock",
+		modifierScrollLock: "ScrollLock",
+		modifierFn: "Fn",
+		modifierSymbol: "Symbol"
+	};
+	/**
+	* Resolves the constructor of an event interface in the parent window, so the
+	* redispatched event is created in this realm (not the iframe's).
+	*
+	* @param interfaceName Name of the event interface, such as `PointerEvent`.
+	*/
+	function getEventConstructor(interfaceName) {
+		return window[interfaceName];
+	}
+	/**
+	* Whether an event carries modifier state. Only the keyboard and mouse interfaces have it.
+	*
+	* @param event Event from the iframe document.
+	*/
+	function hasModifierState(event) {
+		return "getModifierState" in event;
+	}
+	/**
+	* Copies an iframe document event into an event of the parent document, ready
+	* to dispatch on the outer `<iframe>` element.
+	*
+	* @param event Event from the iframe document.
+	* @param frame The `<iframe>` element the copy is dispatched on.
+	*/
+	function cloneEvent(event, frame) {
+		const interfaceName = Object.getPrototypeOf(event).constructor.name;
 		const init = {};
-		for (const key in event) init[key] = event[key];
+		for (const field of EVENT_FIELDS_BY_INTERFACE[interfaceName] ?? EVENT_FIELDS) init[field] = event[field];
+		if (hasModifierState(event)) for (const [member, modifier] of Object.entries(MODIFIER_MEMBERS)) init[member] = event.getModifierState(modifier);
 		if (event instanceof frame.contentDocument.defaultView.MouseEvent) {
 			const rect = frame.getBoundingClientRect();
 			init.clientX += rect.left;
 			init.clientY += rect.top;
 		}
-		const newEvent = new Constructor(event.type, init);
-		if (init.defaultPrevented) newEvent.preventDefault();
-		if (!frame.dispatchEvent(newEvent)) event.preventDefault();
+		const clone = new (getEventConstructor(interfaceName))(event.type, init);
+		if (event.defaultPrevented) clone.preventDefault();
+		return clone;
+	}
+
+// packages/block-editor/build-module/components/iframe/index.mjs
+/**
+	* Events redispatched onto the outer `<iframe>` element.
+	*
+	* Native listeners attach inside the iframe document (`useBubbleEvents`).
+	* Matching React portal bubbles are stopped so parents do not also see the
+	* portal delivery.
+	*/
+	const BRIDGED_EVENTS = [
+		{
+			native: "dragover",
+			react: "onDragOver"
+		},
+		{
+			native: "mousemove",
+			react: "onMouseMove"
+		},
+		{
+			native: "pointerdown",
+			react: "onPointerDown"
+		},
+		{
+			native: "mousedown",
+			react: "onMouseDown"
+		},
+		{
+			native: "click",
+			react: "onClick"
+		},
+		{
+			native: "keydown",
+			react: "onKeyDown"
+		}
+	];
+	function bubbleEvent(event, frame) {
+		if (!frame.dispatchEvent(cloneEvent(event, frame))) event.preventDefault();
 	}
 	/**
-	* Bubbles some event types (keydown, keypress, and dragover) to parent document
-	* document to ensure that the keyboard shortcuts and drag and drop work.
+	* Whether a React synthetic event bubbled across the portal boundary from the
+	* iframe document into the parent React tree.
 	*
-	* Ideally, we should remove event bubbling in the future. Keyboard shortcuts
-	* should be context dependent, e.g. actions on blocks like Cmd+A should not
-	* work globally outside the block editor.
+	* @param event React synthetic event that may have crossed documents.
+	*/
+	function hasCrossedPortalBoundary(event) {
+		return event.currentTarget.ownerDocument !== event.target.ownerDocument;
+	}
+	/**
+	* Stops a React synthetic event that bubbled across the portal boundary from
+	* the iframe document into the parent React tree.
+	*
+	* @param event React synthetic event that crossed documents.
+	*/
+	function stopReactPortalPropagation(event) {
+		const { stopPropagation } = event.nativeEvent;
+		event.nativeEvent.stopPropagation = () => {};
+		event.stopPropagation();
+		event.nativeEvent.stopPropagation = stopPropagation;
+	}
+	/**
+	* React props that stop portal bubbles for redispatched events at the outer
+	* `<iframe>`.
+	*
+	* A canvas interaction reaches these handlers twice: once as the portal
+	* bubble, and once as the copy redispatched on the `<iframe>`. The copy is
+	* what everything outside the canvas handles, so the bubble stops here
+	* without reaching the consumer handler, which would otherwise run twice.
+	*
+	* @param props Iframe props that may include event handlers.
+	*/
+	function getPortalBoundaryEventProps(props) {
+		const boundaryProps = {};
+		for (const { react: propName } of BRIDGED_EVENTS) boundaryProps[propName] = (event) => {
+			if (hasCrossedPortalBoundary(event)) {
+				stopReactPortalPropagation(event);
+				return;
+			}
+			props[propName]?.(event);
+		};
+		return boundaryProps;
+	}
+	/**
+	* Bubbles selected native events from the iframe document onto the outer
+	* `<iframe>` element so parent-document listeners can observe them.
+	*
+	* - `dragover` and `mousemove` keep drag-and-drop and pointer tracking working
+	*   across the frame boundary.
+	* - `pointerdown`, `mousedown`, and `click` let parent-document popups treat
+	*   a canvas press as an outside press.
+	* - `keydown` lets parent shortcuts see canvas keystrokes.
+	*
+	* Pair with `getPortalBoundaryEventProps` so React ancestors do not also
+	* receive the portal-bubbled synthetic event for those same interactions.
+	*
+	* The listeners belong on the document rather than on `documentElement`, so
+	* that the canvas is done with an event before the parent sees it. The canvas
+	* root drop zone sits on `documentElement`, and a drop zone ignores an event
+	* that is already default prevented. Redispatching from that same element
+	* would race it, and a `preventDefault` relayed back from the parent would
+	* reach the original event first.
+	*
+	* Ideally, we should remove the `keydown` event bubbling in the future.
+	* Keyboard shortcuts should be context dependent, e.g. actions on blocks
+	* like Cmd+A should not work globally outside the block editor.
 	*
 	* @param iframeDocument Document to attach listeners to.
 	*/
@@ -66066,19 +66129,15 @@ Icon: ButtonIcon });
 			const { defaultView } = iframeDocument;
 			if (!defaultView) return;
 			const { frameElement } = defaultView;
-			const html = iframeDocument.documentElement;
-			const eventTypes = ["dragover", "mousemove"];
 			const handlers = {};
-			for (const name of eventTypes) {
-				handlers[name] = (event) => {
-					const constructorName = Object.getPrototypeOf(event).constructor.name;
-					const Constructor = window[constructorName];
-					bubbleEvent(event, Constructor, frameElement);
+			for (const { native } of BRIDGED_EVENTS) {
+				handlers[native] = (event) => {
+					bubbleEvent(event, frameElement);
 				};
-				html.addEventListener(name, handlers[name]);
+				iframeDocument.addEventListener(native, handlers[native]);
 			}
 			return () => {
-				for (const name of eventTypes) html.removeEventListener(name, handlers[name]);
+				for (const { native } of BRIDGED_EVENTS) iframeDocument.removeEventListener(native, handlers[native]);
 			};
 		});
 	}
@@ -66192,6 +66251,7 @@ Icon: ButtonIcon });
 			shouldRenderFocusCaptureElements && before,
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)("iframe", {
 				...props,
+				...getPortalBoundaryEventProps(props),
 				style: {
 					...props.style,
 					height: props.style?.height,
@@ -66201,16 +66261,6 @@ Icon: ButtonIcon });
 				tabIndex,
 				src,
 				title,
-				onKeyDown: (event) => {
-					if (props.onKeyDown) props.onKeyDown(event);
-					if (event.currentTarget.ownerDocument !== event.target.ownerDocument) {
-						const { stopPropagation } = event.nativeEvent;
-						event.nativeEvent.stopPropagation = () => {};
-						event.stopPropagation();
-						event.nativeEvent.stopPropagation = stopPropagation;
-						bubbleEvent(event, window.KeyboardEvent, event.currentTarget);
-					}
-				},
 				children: iframeDocument && (0, _wordpress_element.createPortal)(/* @__PURE__ */ (0, react_jsx_runtime.jsx)("body", {
 					ref: bodyRef,
 					className: clsx("block-editor-iframe__body", "editor-styles-wrapper", ...bodyClasses),
