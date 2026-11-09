@@ -18262,7 +18262,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* @return Next state.
 	*/
 	const receiveQueries = (0, _wordpress_compose.compose)([
-		ifMatchingAction((action) => "query" in action),
+		ifMatchingAction((action) => "query" in action && Array.isArray(action.items)),
 		replaceAction((action) => {
 			if (action.query) return {
 				...action,
@@ -18274,7 +18274,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		(0, _wordpress_data.keyedReducer)("stableKey")
 	])((state = {}, action) => {
 		if (action.type !== "RECEIVE_ITEMS") return state;
-		if (!Array.isArray(action.items)) return state;
 		const key = action.key ?? "id";
 		return {
 			itemIds: getMergedItemIds(state.itemIds, action.items.map((item) => item?.[key]).filter(Boolean), {
