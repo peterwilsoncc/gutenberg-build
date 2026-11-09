@@ -32240,11 +32240,21 @@ function UploadFonts() {
 	* @return {void}
 	*/
 	const loadFiles = async (files) => {
-		const fontFacesLoaded = await Promise.all(files.map(async (fontFile) => {
-			const fontFaceData = await getFontFaceMetadata(fontFile);
-			await loadFontFaceInBrowser(fontFaceData, fontFaceData.file, "all");
-			return fontFaceData;
-		}));
+		let fontFacesLoaded;
+		try {
+			fontFacesLoaded = await Promise.all(files.map(async (fontFile) => {
+				const fontFaceData = await getFontFaceMetadata(fontFile);
+				await loadFontFaceInBrowser(fontFaceData, fontFaceData.file, "all");
+				return fontFaceData;
+			}));
+		} catch (error) {
+			setNotice({
+				type: "error",
+				message: error.message
+			});
+			setIsUploading(false);
+			return;
+		}
 		handleInstall(fontFacesLoaded);
 	};
 	/**
@@ -32278,7 +32288,8 @@ function UploadFonts() {
 		const font = (await new Promise((resolve) => fontObj.onload = resolve)).detail.font;
 		const { name } = font.opentype.tables;
 		const fontName = name.get(16) || name.get(1);
-		const isItalic = name.get(2).toLowerCase().includes("italic");
+		if (!fontName) throw new Error((0, import_i18n.sprintf)((0, import_i18n.__)("%s cannot be installed because it does not include a font family name. Try a different version of this font, for example one downloaded from the font's official source."), fontFile.name));
+		const isItalic = (name.get(2) || "").toLowerCase().includes("italic");
 		const fontWeight = font.opentype.tables["OS/2"].usWeightClass || "normal";
 		const weightAxis = !!font.opentype.tables.fvar && font.opentype.tables.fvar.axes.find(({ tag }) => tag === "wght");
 		const weightRange = weightAxis ? `${weightAxis.minValue} ${weightAxis.maxValue}` : null;
@@ -32296,8 +32307,8 @@ function UploadFonts() {
 	* @return {void}
 	*/
 	const handleInstall = async (fontFaces) => {
-		const fontFamilies = makeFamiliesFromFaces(fontFaces);
 		try {
+			const fontFamilies = makeFamiliesFromFaces(fontFaces);
 			await installFonts(fontFamilies);
 			setNotice({
 				type: "success",
