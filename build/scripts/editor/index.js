@@ -95369,14 +95369,12 @@ If there's a particular need for this, please submit a feature request at https:
 			/**
 			* Warns the user if there are unsaved changes before leaving the editor.
 			*
-			* @param {Event} event `beforeunload` event.
-			*
-			* @return {string | undefined} Warning prompt message, if unsaved changes exist.
+			* @param {BeforeUnloadEvent} event `beforeunload` event.
 			*/
 			const warnIfUnsavedChanges = (event) => {
 				if (__experimentalGetDirtyEntityRecords().length > 0) {
-					event.returnValue = (0, _wordpress_i18n.__)("You have unsaved changes. If you proceed, they will be lost.");
-					return event.returnValue;
+					event.preventDefault();
+					event.returnValue = true;
 				}
 			};
 			window.addEventListener("beforeunload", warnIfUnsavedChanges);

@@ -7367,14 +7367,12 @@ Icon: ButtonIcon });
 			/**
 			* Warns the user if there are unsaved changes before leaving the editor.
 			*
-			* @param {Event} event `beforeunload` event.
-			*
-			* @return {string | undefined} Warning prompt message, if unsaved changes exist.
+			* @param {BeforeUnloadEvent} event `beforeunload` event.
 			*/
 			const warnIfUnsavedChanges = (event) => {
 				if (isDirty) {
-					event.returnValue = (0, _wordpress_i18n.__)("You have unsaved changes. If you proceed, they will be lost.");
-					return event.returnValue;
+					event.preventDefault();
+					event.returnValue = true;
 				}
 			};
 			window.addEventListener("beforeunload", warnIfUnsavedChanges);
