@@ -116,6 +116,12 @@
 @media (max-width: 781px) {
   .preferences-modal .components-modal__content {
     padding: 0;
+    border: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid transparent;
+  }
+}
+@media (max-width: 781px) and (forced-colors: active) {
+  .preferences-modal .components-modal__content {
+    border-color: Canvas;
   }
 }
 
