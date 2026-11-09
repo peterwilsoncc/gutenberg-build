@@ -93129,7 +93129,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 		return {};
 	}
-	function Image$1({ clientId, alt, url }) {
+	function Image({ clientId, alt, url }) {
 		const { selectBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__unstableMotion.img, {
 			tabIndex: 0,
@@ -93233,7 +93233,7 @@ If there's a particular need for this, please submit a feature request at https:
 						onExitComplete: () => setIsAnimating(false),
 						children: blocksWithExternalMedia.map((block) => {
 							const { url, alt } = getMediaInfo(block);
-							return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Image$1, {
+							return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Image, {
 								clientId: block.clientId,
 								url,
 								alt
@@ -96310,43 +96310,6 @@ If there's a particular need for this, please submit a feature request at https:
 			[0, 1]
 		]);
 	}
-	/**
-	* Compose a camera matrix for exporting to a canvas.
-	*
-	* The resulting matrix maps image-pixel coordinates directly to output-canvas
-	* coordinates. Apply it with `ctx.setTransform( ...camera )` then
-	* `ctx.drawImage( image, 0, 0 )`.
-	*
-	* The transform chain mirrors the `renderToCanvas` function in canvas-renderer.ts:
-	*   translate(visualCenter - cropOffset + outCenter) → flip → rotate → zoom → translate(-imgCenter)
-	*
-	* @param state      The current editor state.
-	* @param imageSize  The natural size of the source image in pixels.
-	* @param outputSize The desired output canvas size in pixels.
-	* @return The composed export camera matrix.
-	*/
-	function createExportCamera(state, imageSize, outputSize) {
-		const m = create$2();
-		if (!isValidSize(imageSize) || !isValidSize(outputSize)) return m;
-		const { rotation, flip, cropRect, zoom, pan } = sanitizeImageEditorState(state);
-		const snapRotation = Math.round(rotation / 90) * 90;
-		const { width: rotW, height: rotH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
-		const naturalCropW = cropRect.width * rotW;
-		const naturalCropH = cropRect.height * rotH;
-		const outputScaleX = naturalCropW > 0 ? outputSize.width / naturalCropW : 1;
-		const outputScaleY = naturalCropH > 0 ? outputSize.height / naturalCropH : 1;
-		const cropOffsetX = cropRect.x * rotW + outputSize.width / 2 / outputScaleX;
-		const cropOffsetY = cropRect.y * rotH + outputSize.height / 2 / outputScaleY;
-		const visualCenterX = rotW / 2 + pan.x * rotW;
-		const visualCenterY = rotH / 2 + pan.y * rotH;
-		scale(m, m, [outputScaleX, outputScaleY]);
-		translate(m, m, [visualCenterX - cropOffsetX + outputSize.width / 2 / outputScaleX, visualCenterY - cropOffsetY + outputSize.height / 2 / outputScaleY]);
-		scale(m, m, [flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1]);
-		rotate(m, m, degreesToRadians(rotation));
-		scale(m, m, [zoom, zoom]);
-		translate(m, m, [-imageSize.width / 2, -imageSize.height / 2]);
-		return m;
-	}
 
 // packages/image-editor/build-module/core/constants.mjs
 /**
@@ -99297,100 +99260,6 @@ If there's a particular need for this, please submit a feature request at https:
 		ref
 	}) }));
 
-// packages/image-editor/build-module/core/export/canvas-renderer.mjs
-/** Default export quality for lossy formats (JPEG, WebP). */
-	const DEFAULT_QUALITY = .92;
-	/**
-	* Load an image from a URL with CORS support.
-	*
-	* @param src - The image URL to load.
-	* @return A promise that resolves to the loaded HTMLImageElement.
-	*/
-	function loadImage(src) {
-		return new Promise((resolve, reject) => {
-			const image = new Image();
-			image.addEventListener("load", () => resolve(image));
-			image.addEventListener("error", (error) => reject(error));
-			image.crossOrigin = "anonymous";
-			image.src = src;
-		});
-	}
-	/**
-	* Apply rectangular crop, rotation, and flip transforms to produce a canvas.
-	*
-	* Uses createExportCamera to compose the full transform matrix, then applies
-	* it in a single ctx.setTransform call before drawing the image.
-	*
-	* @param image - The source image element.
-	* @param state - The full editor state containing crop, rotation, and flip settings.
-	* @return A canvas element containing the transformed and cropped image.
-	*/
-	function renderToCanvas(image, state) {
-		const { naturalWidth, naturalHeight } = image;
-		const { rotation, cropRect } = state;
-		const imageSize = {
-			width: naturalWidth,
-			height: naturalHeight
-		};
-		const snapRotation = Math.round(rotation / 90) * 90;
-		const rotBBox = getRotatedBBox(naturalWidth, naturalHeight, snapRotation);
-		const outW = Math.round(cropRect.width * rotBBox.width);
-		const outH = Math.round(cropRect.height * rotBBox.height);
-		const canvas = document.createElement("canvas");
-		canvas.width = outW;
-		canvas.height = outH;
-		const ctx = canvas.getContext("2d");
-		if (!ctx) throw new Error("Could not obtain a 2D context for the export canvas.");
-		const camera = createExportCamera(state, imageSize, {
-			width: outW,
-			height: outH
-		});
-		ctx.setTransform(camera[0], camera[1], camera[2], camera[3], camera[4], camera[5]);
-		ctx.drawImage(image, 0, 0);
-		return canvas;
-	}
-	/**
-	* Convert a canvas to a Blob with configurable MIME type and quality.
-	*
-	* @param canvas   - The canvas to export.
-	* @param mimeType - The output MIME type. Defaults to 'image/png'.
-	* @param quality  - The quality parameter for lossy formats (0-1). Defaults to DEFAULT_QUALITY.
-	* @return A promise that resolves to the canvas content as a Blob.
-	*/
-	function canvasToBlob(canvas, mimeType = "image/png", quality = DEFAULT_QUALITY) {
-		return new Promise((resolve, reject) => {
-			canvas.toBlob((blob) => {
-				if (blob) resolve(blob);
-				else reject(/* @__PURE__ */ new Error("Canvas toBlob returned null."));
-			}, mimeType, quality);
-		});
-	}
-	/**
-	* Load an image, render with transforms, and export as a Blob.
-	*
-	* Throws on failure so callers can distinguish error cases:
-	* - Image load failures (network errors, 404s) throw the native
-	*   load error from the Image element.
-	* - Cross-origin failures manifest as tainted-canvas errors from
-	*   `canvas.toBlob()` — the browser rejects reading pixel data
-	*   from a canvas that drew an image without valid CORS headers.
-	*   Ensure the source server sets `Access-Control-Allow-Origin`.
-	* - Canvas context creation failures throw a descriptive Error.
-	*
-	* Only works in browser environments (needs DOM / HTMLCanvasElement).
-	*
-	* @param src      - The image URL to load.
-	* @param state    - The editor state with all transform settings.
-	* @param mimeType - The output MIME type. Defaults to 'image/png'.
-	* @param quality  - The quality parameter for lossy formats (0-1). Defaults to DEFAULT_QUALITY.
-	* @return A promise that resolves to the exported Blob.
-	* @throws If the image fails to load, canvas creation fails, or
-	*         the resulting canvas is tainted by CORS restrictions.
-	*/
-	async function exportCroppedImage(src, state, mimeType = "image/png", quality = DEFAULT_QUALITY) {
-		return canvasToBlob(renderToCanvas(await loadImage(src), state), mimeType, quality);
-	}
-
 // packages/image-editor/build-module/core/state.mjs
 /** Small tolerance for editor floating-point comparisons. */
 	const STATE_EPSILON = 1e-6;
@@ -100061,10 +99930,6 @@ If there's a particular need for this, please submit a feature request at https:
 			apply(action);
 		}, () => latestRef.current), [apply]);
 		const isDirty = isStateDirty(state, baseline);
-		const getCroppedImage = (0, _wordpress_element.useCallback)((mimeType, quality) => {
-			if (!state.image) return Promise.reject(/* @__PURE__ */ new Error("No image loaded — call setImage first."));
-			return exportCroppedImage(state.image.src, state, mimeType, quality);
-		}, [state]);
 		const adjustCropRectForViewport = (0, _wordpress_element.useCallback)((rect) => {
 			apply({
 				type: "SET_CROP_RECT",
@@ -100081,7 +99946,6 @@ If there's a particular need for this, please submit a feature request at https:
 			minZoom,
 			maxZoom: 10,
 			maxRotationOffset: 45,
-			getCroppedImage,
 			adjustCropRectForViewport
 		}), [
 			setters,
@@ -100090,7 +99954,6 @@ If there's a particular need for this, please submit a feature request at https:
 			reset,
 			isDirty,
 			minZoom,
-			getCroppedImage,
 			adjustCropRectForViewport
 		]);
 	}
