@@ -76065,12 +76065,7 @@ Icon: ButtonIcon });
 		const isPending = isHierarchical ? !treeHasResolved : !isHierarchical && inputValue !== search || !listHasResolved;
 		const isLimited = !isHierarchical && listTotal > shownTerms.length;
 		let statusContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ListedTermCount, {});
-		if (isPending) statusContent = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
-			direction: "row",
-			gap: "sm",
-			align: "center",
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$32, {}), (0, _wordpress_i18n.__)("Loading…")]
-		});
+		if (isPending) statusContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SearchableChipSelectControl.LoadingIndicator, {});
 		else if (isLimited) statusContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "block-library-query-inspector__taxonomy-control-limited-count",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(LimitedTermCount, {

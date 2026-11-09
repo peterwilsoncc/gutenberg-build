@@ -90563,12 +90563,7 @@ If there's a particular need for this, please submit a feature request at https:
 			inputValue,
 			onInputValueChange,
 			placeholder: (0, _wordpress_i18n.__)("Select author"),
-			statusContent: isSearching ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
-				direction: "row",
-				gap: "sm",
-				align: "center",
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$25, {}), (0, _wordpress_i18n.__)("Searching…")]
-			}) : authors.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found.", "%d results found.", authors.length), authors.length) }),
+			statusContent: isSearching ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SearchableSelect.LoadingIndicator, { children: (0, _wordpress_i18n.__)("Searching…") }) : authors.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found.", "%d results found.", authors.length), authors.length) }),
 			emptyContent: isSearching ? null : (0, _wordpress_i18n.__)("No authors found.")
 		});
 	}
