@@ -63587,10 +63587,12 @@ Icon: ButtonIcon });
 		return (0, _wordpress_compose.useRefEffect)((node) => {
 			if (!enabled) return;
 			const { getSelectedBlockClientId, hasMultiSelection, isMultiSelecting } = registry.select(store);
-			if (!setContentEditableWrapper(node, true, { focus: false })) return;
 			const { activeElement } = node.ownerDocument;
 			const selection = node.ownerDocument.defaultView.getSelection();
-			if (activeElement !== node && activeElement?.isContentEditable && node.contains(activeElement) && getBlockClientId(activeElement) === getSelectedBlockClientId() && selection.anchorNode && activeElement.contains(selection.anchorNode)) node.focus();
+			const isFieldFocused = activeElement !== node && activeElement?.isContentEditable && node.contains(activeElement) && getBlockClientId(activeElement) === getSelectedBlockClientId();
+			if (isFieldFocused && selection.anchorNode && !activeElement.contains(selection.anchorNode)) selection.removeAllRanges();
+			if (!setContentEditableWrapper(node, true, { focus: false })) return;
+			if (isFieldFocused && selection.anchorNode && activeElement.contains(selection.anchorNode)) node.focus();
 			return () => {
 				if (hasMultiSelection() || isMultiSelecting()) return;
 				setContentEditableWrapper(node, false);
@@ -64431,7 +64433,7 @@ Icon: ButtonIcon });
 				if (!isSelectionEnabled() || event.button !== 0) return;
 				const startClientId = getBlockSelectionStart();
 				const clickedClientId = getBlockClientId(event.target);
-				if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && node.ownerDocument.activeElement === node) {
+				if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && node.matches(":focus")) {
 					event.preventDefault();
 					return;
 				}
