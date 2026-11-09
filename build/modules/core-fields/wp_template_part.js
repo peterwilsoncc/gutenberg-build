@@ -25,26 +25,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 	enumerable: true
 }) : target, mod));
 
-// node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
-function r(e) {
-	var t, f, n = "";
-	if ("string" == typeof e || "number" == typeof e) n += e;
-	else if ("object" == typeof e) if (Array.isArray(e)) {
-		var o = e.length;
-		for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-	} else for (f in e) e[f] && (n && (n += " "), n += f);
-	return n;
-}
-function clsx() {
-	for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
-	return n;
-}
-
-// \0wp-global:@wordpress/element
-var require_element = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.element;
-}));
-
 // \0wp-global:@wordpress/data
 var require_data = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.data;
@@ -53,6 +33,11 @@ var require_data = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 // \0wp-global:@wordpress/core-data
 var require_core_data = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.coreData;
+}));
+
+// \0wp-global:@wordpress/element
+var require_element = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.element;
 }));
 
 // packages/icons/build-module/icon/index.mjs
@@ -589,6 +574,46 @@ function renderTag(Tag, props) {
 	return /*#__PURE__*/ import__wp_global_react.createElement(Tag, props);
 }
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/avatar/root/AvatarRootContext.mjs
+const AvatarRootContext = /*#__PURE__*/ import__wp_global_react.createContext(void 0);
+AvatarRootContext.displayName = "AvatarRootContext";
+function useAvatarRootContext() {
+	const context = import__wp_global_react.useContext(AvatarRootContext);
+	if (context === void 0) throw new Error("Base UI: AvatarRootContext is missing. Avatar parts must be placed within <Avatar.Root>.");
+	return context;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/avatar/root/stateAttributesMapping.mjs
+const avatarStateAttributesMapping = { imageLoadingStatus: () => null };
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/avatar/root/AvatarRoot.mjs
+/**
+* Displays a user's profile picture, initials, or fallback icon.
+* Renders a `<span>` element.
+*
+* Documentation: [Base UI Avatar](https://base-ui.com/react/components/avatar)
+*/
+const AvatarRoot = /*#__PURE__*/ import__wp_global_react.forwardRef(function AvatarRoot(componentProps, forwardedRef) {
+	const { className, render, style, ...elementProps } = componentProps;
+	const [imageLoadingStatus, setImageLoadingStatus] = import__wp_global_react.useState("idle");
+	const state = { imageLoadingStatus };
+	const contextValue = import__wp_global_react.useMemo(() => ({
+		imageLoadingStatus,
+		setImageLoadingStatus
+	}), [imageLoadingStatus, setImageLoadingStatus]);
+	const element = useRenderElement("span", componentProps, {
+		state,
+		ref: forwardedRef,
+		props: elementProps,
+		stateAttributesMapping: avatarStateAttributesMapping
+	});
+	return /*#__PURE__*/ (0, import_jsx_runtime.jsx)(AvatarRootContext.Provider, {
+		value: contextValue,
+		children: element
+	});
+});
+AvatarRoot.displayName = "AvatarRoot";
+
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/safeReact.mjs
 /**
 * A clone of the React namespace for reading APIs that may be missing in older
@@ -954,6 +979,143 @@ function useTransitionStatus(open, enableIdleState = false, deferEndingState = f
 	};
 }
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/avatar/image/useImageLoadingStatus.mjs
+function useImageLoadingStatus(src, { referrerPolicy, crossOrigin, sizes, srcSet }, enabled) {
+	const state = import__wp_global_react.useState("idle");
+	const setLoadingStatus = state[1];
+	useIsoLayoutEffect(() => {
+		if (!enabled) return NOOP;
+		if (!src && !srcSet) {
+			setLoadingStatus("error");
+			return NOOP;
+		}
+		let isMounted = true;
+		const image = new window.Image();
+		const updateStatus = (status) => () => {
+			if (!isMounted) return;
+			setLoadingStatus(status);
+		};
+		setLoadingStatus("loading");
+		image.onload = updateStatus("loaded");
+		image.onerror = updateStatus("error");
+		if (referrerPolicy) image.referrerPolicy = referrerPolicy;
+		image.crossOrigin = crossOrigin ?? null;
+		if (sizes) image.sizes = sizes;
+		if (srcSet) image.srcset = srcSet;
+		if (src) image.src = src;
+		if (image.complete) setLoadingStatus(image.naturalWidth > 0 ? "loaded" : "error");
+		return () => {
+			isMounted = false;
+		};
+	}, [
+		enabled,
+		src,
+		srcSet,
+		sizes,
+		crossOrigin,
+		referrerPolicy,
+		setLoadingStatus
+	]);
+	return state;
+}
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/avatar/image/AvatarImage.mjs
+const stateAttributesMapping = {
+	...avatarStateAttributesMapping,
+	...transitionStatusMapping
+};
+/**
+* The image to be displayed in the avatar.
+* Renders an `<img>` element.
+*
+* Documentation: [Base UI Avatar](https://base-ui.com/react/components/avatar)
+*/
+const AvatarImage = /*#__PURE__*/ import__wp_global_react.forwardRef(function AvatarImage(componentProps, forwardedRef) {
+	const { className, render, onLoadingStatusChange: onLoadingStatusChangeProp, keepMounted = false, style, sizes, srcSet, src, ...elementProps } = componentProps;
+	const { setImageLoadingStatus: setRootImageLoadingStatus } = useAvatarRootContext();
+	const [imageLoadingStatus, setImageLoadingStatus] = useImageLoadingStatus(src, componentProps, !keepMounted);
+	const isVisible = imageLoadingStatus === "loaded";
+	const { mounted, transitionStatus, setMounted } = useTransitionStatus(isVisible);
+	const imageRef = import__wp_global_react.useRef(null);
+	const initialCommitRef = import__wp_global_react.useRef(true);
+	useIsoLayoutEffect(() => {
+		if (!keepMounted) return;
+		const isInitialCommit = initialCommitRef.current;
+		initialCommitRef.current = false;
+		const image = imageRef.current;
+		if (!image) return;
+		if (!image.complete) {
+			setImageLoadingStatus("loading");
+			return;
+		}
+		const status = image.naturalWidth > 0 ? "loaded" : "error";
+		setImageLoadingStatus(status);
+		if (status === "loaded" && isInitialCommit) setMounted(true);
+	}, [
+		keepMounted,
+		src,
+		srcSet,
+		sizes,
+		elementProps.crossOrigin,
+		elementProps.referrerPolicy,
+		render,
+		setImageLoadingStatus,
+		setMounted
+	]);
+	const renderedStatusProps = keepMounted ? {
+		"data-loading": imageLoadingStatus === "loading" ? "" : void 0,
+		"data-error": imageLoadingStatus === "error" ? "" : void 0,
+		"aria-hidden": imageLoadingStatus !== "loaded" || void 0,
+		onLoad() {
+			setImageLoadingStatus("loaded");
+		},
+		onError() {
+			setImageLoadingStatus("error");
+		}
+	} : void 0;
+	const handleLoadingStatusChange = useStableCallback((status) => {
+		onLoadingStatusChangeProp?.(status);
+		setRootImageLoadingStatus(status);
+	});
+	useIsoLayoutEffect(() => {
+		if (imageLoadingStatus !== "idle") handleLoadingStatusChange(imageLoadingStatus);
+	}, [imageLoadingStatus, handleLoadingStatusChange]);
+	useIsoLayoutEffect(() => {
+		return () => setRootImageLoadingStatus("idle");
+	}, [setRootImageLoadingStatus]);
+	useOpenChangeComplete({
+		enabled: !isVisible,
+		open: isVisible,
+		ref: imageRef,
+		onComplete() {
+			if (!isVisible) setMounted(false);
+		}
+	});
+	const state = {
+		imageLoadingStatus,
+		transitionStatus: keepMounted && transitionStatus === "ending" ? void 0 : transitionStatus
+	};
+	const shouldRender = keepMounted || mounted;
+	const sourceProps = {};
+	if (sizes !== void 0) sourceProps.sizes = sizes;
+	if (srcSet !== void 0) sourceProps.srcSet = srcSet;
+	if (src !== void 0) sourceProps.src = src;
+	const element = useRenderElement("img", componentProps, {
+		state,
+		ref: [forwardedRef, imageRef],
+		props: [
+			renderedStatusProps,
+			elementProps,
+			sourceProps
+		],
+		stateAttributesMapping,
+		enabled: shouldRender
+	});
+	if (!shouldRender) return null;
+	return element;
+});
+AvatarImage.displayName = "AvatarImage";
+
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useTimeout.mjs
 const EMPTY = 0;
 var Timeout = class Timeout {
@@ -992,6 +1154,332 @@ function useTimeout() {
 	useOnMount(timeout.disposeEffect);
 	return timeout;
 }
+
+// node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
+var import_data = require_data();
+var import_core_data = require_core_data();
+function r(e) {
+	var t, f, n = "";
+	if ("string" == typeof e || "number" == typeof e) n += e;
+	else if ("object" == typeof e) if (Array.isArray(e)) {
+		var o = e.length;
+		for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+	} else for (f in e) e[f] && (n && (n += " "), n += f);
+	return n;
+}
+function clsx() {
+	for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+	return n;
+}
+
+// \0wp-global:@wordpress/warning
+var require_warning = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.warning;
+}));
+
+// packages/ui/build-module/avatar/dev-warnings.mjs
+var import_warning = /* @__PURE__ */ __toESM(require_warning(), 1);
+function warnAvatarColor(color) {
+	if (color === void 0) return;
+	if (color.match(/\/\*[\s\S]*?(?:\*\/|$)|"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|(?:[-\w\u0080-\uFFFF]|\\(?:[\da-fA-F]{1,6}[ \t\r\n\f]?|[^\r\n\f]))+/g)?.some((token) => token.toLowerCase() === "currentcolor")) {
+		(0, import_warning.default)("Avatar.Root: `color` contains `currentColor`, which can produce insufficient contrast in colored fallbacks. Use a color that does not depend on the foreground.");
+		return;
+	}
+	if (typeof CSS === "undefined" || !CSS.supports) return;
+	if (!CSS.supports("color", color)) (0, import_warning.default)("Avatar.Root: The browser does not support the `color` value. Use a valid CSS color supported by this browser.");
+	else if (CSS.supports("color", "rgb(from red r g b / 1)") && !CSS.supports("color", `rgb(from ${color} r g b / 1)`)) (0, import_warning.default)("Avatar.Root: `color` cannot be used as a colored fallback fill. Use an explicit CSS color instead of a CSS-wide keyword such as `inherit`.");
+}
+
+// packages/ui/build-module/avatar/root.mjs
+const STYLE_HASH_ATTRIBUTE$10 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$10() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$10(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$10(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$10}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$10) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$10(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$10();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$10(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$10, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$10(targetDocument) {
+	const runtime = getRuntime$10();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$10(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$10(hash, css) {
+	const runtime = getRuntime$10();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$10(targetDocument, hash, css);
+}
+registerStyle$10("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$10("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default = {
+	"button": "_78c10a0773e51a91__button",
+	"input": "_5b33aa2d48624b4f__input",
+	"textarea": "_980b3b4776ac8f81__textarea",
+	"div": "_43e478b4279a076c__div",
+	"p": "_698099e25b0fb1a6__p",
+	"heading": "_326aee4184d261fd__heading",
+	"a": "e9576240835601ba__a",
+	"ol": "_3f05789653864a73__ol",
+	"li": "_3c72ff72abe57859__li",
+	"span": "_79d16267c15d9eb2__span"
+};
+registerStyle$10("2657a3ab0c", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a9728400af96db77__root{--_wp-ui-avatar-size:var(--wpds-dimension-size-md,32px);--_gcd-span-position:relative;--_gcd-span-display:inline-flex;--_gcd-span-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-span-font-size:var(--_wp-ui-avatar-font-size);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-sm,12px);align-items:center;background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);block-size:var(--_wp-ui-avatar-size);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:50%;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-flex;flex-shrink:0;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--_wp-ui-avatar-font-size);font-weight:var(--wpds-typography-font-weight-emphasis,600);inline-size:var(--_wp-ui-avatar-size);justify-content:center;line-height:1;position:relative;vertical-align:middle}._81a33c129d7cbe31__has-color:after{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--_wp-ui-avatar-color);border-radius:inherit;content:\"\";inset:calc(var(--wpds-border-width-xs, 1px)*-1);pointer-events:none;position:absolute}._32e65dea77285874__is-square{border-radius:var(--wpds-border-radius-sm,2px)}._7d2020337343df5a__is-xs{--_wp-ui-avatar-size:var(--wpds-dimension-size-2xs,16px);--_wp-ui-avatar-font-size:calc(var(--_wp-ui-avatar-size)/2)}._216fb78a075c5ab4__is-sm{--_wp-ui-avatar-size:var(--wpds-dimension-size-sm,24px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xs,11px)}.b552ab04a3b94ae9__is-lg{--_wp-ui-avatar-size:var(--wpds-dimension-size-lg,40px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-md,13px)}.f8a7646462ff80d1__is-xl{--_wp-ui-avatar-size:calc(var(--wpds-dimension-size-md, 32px)*2);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xl,20px)}._411c43ac028fe4be__image,._7883f856336224e2__fallback{block-size:100%;border-radius:inherit;inline-size:100%;inset:0;position:absolute}._411c43ac028fe4be__image{object-fit:cover;@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1));&[data-error],&[data-loading],&[data-starting-style]{opacity:0}}&[data-ending-style],&[data-error],&[data-loading]{visibility:hidden}}._7883f856336224e2__fallback{--_gcd-span-position:absolute;--_gcd-span-display:flex;align-items:center;display:flex;justify-content:center;overflow:hidden;white-space:nowrap;>svg{block-size:100%;flex-shrink:0;inline-size:100%}>.dc9b5131d4746aa6__person-icon{block-size:110%;color:var(--wpds-color-stroke-surface-neutral-strong,#8d8d8d);inline-size:110%;translate:0 15%}}@media not (forced-colors:active){@supports (color:rgb(from green r g b/1)) and (color:color(from green srgb-linear round(up,r) g b/1)){._81a33c129d7cbe31__has-color:has(>._7883f856336224e2__fallback){border:none}._81a33c129d7cbe31__has-color:has(>._7883f856336224e2__fallback):after{content:none}._81a33c129d7cbe31__has-color>._7883f856336224e2__fallback{--_wp-ui-avatar-background:rgb(from var(--_wp-ui-avatar-color) clamp(0,r,255) clamp(0,g,255) clamp(0,b,255)/1);--_wp-ui-avatar-contrast-target:4.55;background-color:var(--_wp-ui-avatar-background)}._81a33c129d7cbe31__has-color>._7883f856336224e2__fallback>.dc9b5131d4746aa6__person-icon{--_wp-ui-avatar-contrast-target:3.05}._81a33c129d7cbe31__has-color>._7883f856336224e2__fallback,._81a33c129d7cbe31__has-color>._7883f856336224e2__fallback>.dc9b5131d4746aa6__person-icon{--_wp-ui-avatar-luminance:calc(0.2126 * r + 0.7152 * g + 0.0722 * b);--_wp-ui-avatar-light-foreground:round(up,clamp(0,calc(0.17913 - var(--_wp-ui-avatar-luminance)),1));--_wp-ui-avatar-dark-tint:clamp(0,calc(((var(--_wp-ui-avatar-luminance) + 0.05)/var(--_wp-ui-avatar-contrast-target) - 0.05)/max(0.000001, var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-light-tint:clamp(0,calc((1.05 - var(--_wp-ui-avatar-contrast-target)*(var(--_wp-ui-avatar-luminance) + 0.05))/max(0.000001, 1 - var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-tint:calc(var(--_wp-ui-avatar-light-foreground)*var(--_wp-ui-avatar-light-tint) + (1 - var(--_wp-ui-avatar-light-foreground))*var(--_wp-ui-avatar-dark-tint));color:color(from var(--_wp-ui-avatar-background) srgb-linear calc(var(--_wp-ui-avatar-light-foreground) + (r - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-foreground) + (g - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-foreground) + (b - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint))/1)}}}}}");
+var style_module_default$9 = {
+	"root": "a9728400af96db77__root",
+	"has-color": "_81a33c129d7cbe31__has-color",
+	"is-square": "_32e65dea77285874__is-square",
+	"is-xs": "_7d2020337343df5a__is-xs",
+	"is-sm": "_216fb78a075c5ab4__is-sm",
+	"is-lg": "b552ab04a3b94ae9__is-lg",
+	"is-xl": "f8a7646462ff80d1__is-xl",
+	"image": "_411c43ac028fe4be__image",
+	"fallback": "_7883f856336224e2__fallback",
+	"person-icon": "dc9b5131d4746aa6__person-icon"
+};
+/**
+* Displays a profile image with a customizable fallback.
+* Compose with `Avatar.Image` and `Avatar.Fallback`.
+*
+* For an avatar that identifies a person, use `role="img"` and `aria-label`
+* on the root, with an empty image `alt`. This keeps the name available while
+* the image loads or the fallback is shown. Use `aria-hidden` on the root
+* when nearby text already identifies the person.
+*
+* ```jsx
+* <Avatar.Root role="img" aria-label="Alex Morgan">
+* 	<Avatar.Fallback delay={300}>AM</Avatar.Fallback>
+* 	<Avatar.Image src="/alex.jpg" alt="" />
+* </Avatar.Root>
+* ```
+*/
+const Root$1 = (0, import_element.forwardRef)(function AvatarRoot$1({ size = "md", shape = "circle", color, className, style, ...props }, ref) {
+	warnAvatarColor(color);
+	const customProperties = color === void 0 ? style : {
+		...style,
+		"--_wp-ui-avatar-color": color
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AvatarRoot, {
+		ref,
+		style: customProperties,
+		className: clsx(resets_module_default$1["box-sizing"], global_css_defense_module_default.span, style_module_default$9.root, style_module_default$9[`is-${size}`], shape === "square" && style_module_default$9["is-square"], color !== void 0 && style_module_default$9["has-color"], className),
+		...props
+	});
+});
+
+// packages/ui/build-module/avatar/image.mjs
+const STYLE_HASH_ATTRIBUTE$9 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$9() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$9(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$9(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$9}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$9) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$9(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$9();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$9(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$9, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$9(targetDocument) {
+	const runtime = getRuntime$9();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$9(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$9(hash, css) {
+	const runtime = getRuntime$9();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$9(targetDocument, hash, css);
+}
+registerStyle$9("2657a3ab0c", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a9728400af96db77__root{--_wp-ui-avatar-size:var(--wpds-dimension-size-md,32px);--_gcd-span-position:relative;--_gcd-span-display:inline-flex;--_gcd-span-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-span-font-size:var(--_wp-ui-avatar-font-size);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-sm,12px);align-items:center;background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);block-size:var(--_wp-ui-avatar-size);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:50%;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:inline-flex;flex-shrink:0;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--_wp-ui-avatar-font-size);font-weight:var(--wpds-typography-font-weight-emphasis,600);inline-size:var(--_wp-ui-avatar-size);justify-content:center;line-height:1;position:relative;vertical-align:middle}._81a33c129d7cbe31__has-color:after{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--_wp-ui-avatar-color);border-radius:inherit;content:\"\";inset:calc(var(--wpds-border-width-xs, 1px)*-1);pointer-events:none;position:absolute}._32e65dea77285874__is-square{border-radius:var(--wpds-border-radius-sm,2px)}._7d2020337343df5a__is-xs{--_wp-ui-avatar-size:var(--wpds-dimension-size-2xs,16px);--_wp-ui-avatar-font-size:calc(var(--_wp-ui-avatar-size)/2)}._216fb78a075c5ab4__is-sm{--_wp-ui-avatar-size:var(--wpds-dimension-size-sm,24px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xs,11px)}.b552ab04a3b94ae9__is-lg{--_wp-ui-avatar-size:var(--wpds-dimension-size-lg,40px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-md,13px)}.f8a7646462ff80d1__is-xl{--_wp-ui-avatar-size:calc(var(--wpds-dimension-size-md, 32px)*2);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xl,20px)}._411c43ac028fe4be__image,._7883f856336224e2__fallback{block-size:100%;border-radius:inherit;inline-size:100%;inset:0;position:absolute}._411c43ac028fe4be__image{object-fit:cover;@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1));&[data-error],&[data-loading],&[data-starting-style]{opacity:0}}&[data-ending-style],&[data-error],&[data-loading]{visibility:hidden}}._7883f856336224e2__fallback{--_gcd-span-position:absolute;--_gcd-span-display:flex;align-items:center;display:flex;justify-content:center;overflow:hidden;white-space:nowrap;>svg{block-size:100%;flex-shrink:0;inline-size:100%}>.dc9b5131d4746aa6__person-icon{block-size:110%;color:var(--wpds-color-stroke-surface-neutral-strong,#8d8d8d);inline-size:110%;translate:0 15%}}@media not (forced-colors:active){@supports (color:rgb(from green r g b/1)) and (color:color(from green srgb-linear round(up,r) g b/1)){._81a33c129d7cbe31__has-color:has(>._7883f856336224e2__fallback){border:none}._81a33c129d7cbe31__has-color:has(>._7883f856336224e2__fallback):after{content:none}._81a33c129d7cbe31__has-color>._7883f856336224e2__fallback{--_wp-ui-avatar-background:rgb(from var(--_wp-ui-avatar-color) clamp(0,r,255) clamp(0,g,255) clamp(0,b,255)/1);--_wp-ui-avatar-contrast-target:4.55;background-color:var(--_wp-ui-avatar-background)}._81a33c129d7cbe31__has-color>._7883f856336224e2__fallback>.dc9b5131d4746aa6__person-icon{--_wp-ui-avatar-contrast-target:3.05}._81a33c129d7cbe31__has-color>._7883f856336224e2__fallback,._81a33c129d7cbe31__has-color>._7883f856336224e2__fallback>.dc9b5131d4746aa6__person-icon{--_wp-ui-avatar-luminance:calc(0.2126 * r + 0.7152 * g + 0.0722 * b);--_wp-ui-avatar-light-foreground:round(up,clamp(0,calc(0.17913 - var(--_wp-ui-avatar-luminance)),1));--_wp-ui-avatar-dark-tint:clamp(0,calc(((var(--_wp-ui-avatar-luminance) + 0.05)/var(--_wp-ui-avatar-contrast-target) - 0.05)/max(0.000001, var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-light-tint:clamp(0,calc((1.05 - var(--_wp-ui-avatar-contrast-target)*(var(--_wp-ui-avatar-luminance) + 0.05))/max(0.000001, 1 - var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-tint:calc(var(--_wp-ui-avatar-light-foreground)*var(--_wp-ui-avatar-light-tint) + (1 - var(--_wp-ui-avatar-light-foreground))*var(--_wp-ui-avatar-dark-tint));color:color(from var(--_wp-ui-avatar-background) srgb-linear calc(var(--_wp-ui-avatar-light-foreground) + (r - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-foreground) + (g - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-foreground) + (b - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint))/1)}}}}}");
+var style_module_default$8 = {
+	"root": "a9728400af96db77__root",
+	"has-color": "_81a33c129d7cbe31__has-color",
+	"is-square": "_32e65dea77285874__is-square",
+	"is-xs": "_7d2020337343df5a__is-xs",
+	"is-sm": "_216fb78a075c5ab4__is-sm",
+	"is-lg": "b552ab04a3b94ae9__is-lg",
+	"is-xl": "f8a7646462ff80d1__is-xl",
+	"image": "_411c43ac028fe4be__image",
+	"fallback": "_7883f856336224e2__fallback",
+	"person-icon": "dc9b5131d4746aa6__person-icon"
+};
+/**
+* The profile image, displayed once it has loaded.
+* Set `keepMounted` to render the image element immediately and let the image
+* load in place. Use it with `loading="lazy"` or an optimized image component
+* passed through `render`.
+* When passing a custom image component through `render`, forward its ref and
+* image props, including `onLoad` and `onError`, to the underlying image element.
+*/
+const Image = (0, import_element.forwardRef)(function AvatarImage$1({ className, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AvatarImage, {
+		ref,
+		className: clsx(style_module_default$8.image, className),
+		...props
+	});
+});
 
 // packages/ui/build-module/icon/icon.mjs
 /**
@@ -7049,6 +7537,166 @@ var require_i18n = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 }));
 
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
+const STYLE_HASH_ATTRIBUTE$8 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$8() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$8(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$8(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$8}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$8) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$8(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$8();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$8(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$8, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$8(targetDocument) {
+	const runtime = getRuntime$8();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$8(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$8(hash, css) {
+	const runtime = getRuntime$8();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$8(targetDocument, hash, css);
+}
+registerStyle$8("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+var style_module_default$7 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
+/**
+* Visually hides content while keeping it accessible to screen readers.
+* Useful when providing context that's only meaningful to assistive technology.
+*
+* Renders a `<div>` by default. Use the `render` prop to swap the
+* underlying element while preserving the visually-hidden behavior.
+*
+* ## Composing with other components
+*
+* When composing with another component that uses the `render` prop
+* pattern, keep `VisuallyHidden` as the **host** (outer component) and
+* pass the other component via `render`. This keeps the other
+* component's HTML element and semantics intact, while `VisuallyHidden`
+* only adds its hiding styles:
+*
+* ```jsx
+* // OtherComponent keeps its semantic element (e.g. <h2>).
+* <VisuallyHidden render={ <OtherComponent /> }>
+*   Accessible text
+* </VisuallyHidden>
+* ```
+*/
+const VisuallyHidden = (0, import_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
+	return useRender({
+		render,
+		ref,
+		props: mergeProps({ className: style_module_default$7["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
+	});
+});
+
+// packages/ui/build-module/utils/render-slot-with-children.mjs
+/**
+* Fills an optional "slot" element prop with content by cloning it and
+* injecting the given `children`. When `slot` is undefined, the provided
+* `defaultSlot` is used in its place.
+*
+* Shared by overlay `Popup` components for their slot-shaped customization
+* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
+* children injection — stays consistent across all of them.
+*
+* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
+* any subtree passed on the slot element is overwritten by `children`.
+*
+* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
+*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
+*                    is used. Injected `children` replace any subtree the caller
+*                    may have passed on the slot element.
+* @param defaultSlot Unpopulated default element used when `slot` is omitted
+*                    (e.g. `<Tooltip.Portal />`).
+* @param children    Content to inject as the slot's children (backdrop,
+*                    positioner, popup subtree, etc.).
+*/
+function renderSlotWithChildren(slot, defaultSlot, children) {
+	return (0, import_element.cloneElement)(slot ?? defaultSlot, { children });
+}
+
+// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
 const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7150,65 +7798,97 @@ function registerStyle$7(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
 }
-registerStyle$7("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
-var style_module_default$6 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
+registerStyle$7("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
+var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
 /**
-* Visually hides content while keeping it accessible to screen readers.
-* Useful when providing context that's only meaningful to assistive technology.
-*
-* Renders a `<div>` by default. Use the `render` prop to swap the
-* underlying element while preserving the visually-hidden behavior.
-*
-* ## Composing with other components
-*
-* When composing with another component that uses the `render` prop
-* pattern, keep `VisuallyHidden` as the **host** (outer component) and
-* pass the other component via `render`. This keeps the other
-* component's HTML element and semantics intact, while `VisuallyHidden`
-* only adds its hiding styles:
-*
-* ```jsx
-* // OtherComponent keeps its semantic element (e.g. <h2>).
-* <VisuallyHidden render={ <OtherComponent /> }>
-*   Accessible text
-* </VisuallyHidden>
-* ```
+* Marker attribute on the compat overlay slot element.
 */
-const VisuallyHidden = (0, import_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
-	return useRender({
-		render,
-		ref,
-		props: mergeProps({ className: style_module_default$6["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
+const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+function resolveOwnerDocument() {
+	return typeof document === "undefined" ? null : document;
+}
+function isInWordPressEnvironment() {
+	let topWp;
+	try {
+		topWp = window.top?.wp;
+	} catch {}
+	const wp = topWp ?? window.wp;
+	return typeof wp?.components === "object" && wp.components !== null;
+}
+let cachedSlot = null;
+function ensureSlotIsAccessible(element) {
+	element.setAttribute("aria-hidden", "false");
+	return element;
+}
+function createSlot(ownerDocument) {
+	const element = ownerDocument.createElement("div");
+	element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+	if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
+	ownerDocument.body.appendChild(element);
+	return element;
+}
+/**
+* Returns the body-level compat overlay slot when the runtime opts in,
+* lazily creating it on first call. Returns `undefined` otherwise — so the
+* return value can be forwarded straight to a `container` prop, leaving the
+* default portal container in effect.
+*
+* Two opt-in paths:
+*
+* - Auto-detected when `window.wp.components` is on the global — the
+*   typical script-loader setup for WordPress plugins and admin screens.
+* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
+*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
+*   relying on the global.
+*
+* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
+* local document's body. Subsequent calls return the same element; if it's
+* been removed it's recreated, and a slot created by another
+* `@wordpress/ui` instance in the same document is adopted rather than
+* duplicated.
+*/
+function getWpCompatOverlaySlot() {
+	if (typeof window === "undefined") return;
+	if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
+	const ownerDocument = resolveOwnerDocument();
+	if (!ownerDocument || !ownerDocument.body) return;
+	if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
+	const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
+	if (existing instanceof HTMLDivElement) {
+		cachedSlot = ensureSlotIsAccessible(existing);
+		return cachedSlot;
+	}
+	if (cachedSlot?.isConnected) cachedSlot.remove();
+	cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
+	return cachedSlot;
+}
+
+// packages/ui/build-module/utils/direction-provider.mjs
+var import_i18n = require_i18n();
+/**
+* Provides WordPress's text direction to Base UI components.
+*/
+function DirectionProvider({ children }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider$1, {
+		direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr",
+		children
+	});
+}
+
+// packages/ui/build-module/tooltip/portal.mjs
+/**
+* Used to apply custom portal behavior to `Tooltip`'s floating content.
+* `container` defaults to the `@wordpress/ui` compat overlay slot.
+*/
+const Portal = (0, import_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPortal, {
+		container: container === void 0 ? getWpCompatOverlaySlot() : container,
+		...restProps,
+		ref
 	});
 });
 
-// packages/ui/build-module/utils/render-slot-with-children.mjs
-/**
-* Fills an optional "slot" element prop with content by cloning it and
-* injecting the given `children`. When `slot` is undefined, the provided
-* `defaultSlot` is used in its place.
-*
-* Shared by overlay `Popup` components for their slot-shaped customization
-* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
-* children injection — stays consistent across all of them.
-*
-* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
-* any subtree passed on the slot element is overwritten by `children`.
-*
-* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
-*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
-*                    is used. Injected `children` replace any subtree the caller
-*                    may have passed on the slot element.
-* @param defaultSlot Unpopulated default element used when `slot` is omitted
-*                    (e.g. `<Tooltip.Portal />`).
-* @param children    Content to inject as the slot's children (backdrop,
-*                    positioner, popup subtree, etc.).
-*/
-function renderSlotWithChildren(slot, defaultSlot, children) {
-	return (0, import_element.cloneElement)(slot ?? defaultSlot, { children });
-}
-
-// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+// packages/ui/build-module/tooltip/positioner.mjs
 const STYLE_HASH_ATTRIBUTE$6 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7310,97 +7990,52 @@ function registerStyle$6(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$6(targetDocument, hash, css);
 }
-registerStyle$6("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
-var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
+registerStyle$6("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$6("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
+var style_module_default$6 = {
+	"positioner": "b9266862d9435660__positioner",
+	"popup": "_7bb3fd8a0810be6d__popup"
+};
 /**
-* Marker attribute on the compat overlay slot element.
+* Used to apply custom positioning to `Tooltip`'s floating content.
 */
-const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-function resolveOwnerDocument() {
-	return typeof document === "undefined" ? null : document;
-}
-function isInWordPressEnvironment() {
-	let topWp;
-	try {
-		topWp = window.top?.wp;
-	} catch {}
-	const wp = topWp ?? window.wp;
-	return typeof wp?.components === "object" && wp.components !== null;
-}
-let cachedSlot = null;
-function ensureSlotIsAccessible(element) {
-	element.setAttribute("aria-hidden", "false");
-	return element;
-}
-function createSlot(ownerDocument) {
-	const element = ownerDocument.createElement("div");
-	element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-	if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
-	ownerDocument.body.appendChild(element);
-	return element;
-}
-/**
-* Returns the body-level compat overlay slot when the runtime opts in,
-* lazily creating it on first call. Returns `undefined` otherwise — so the
-* return value can be forwarded straight to a `container` prop, leaving the
-* default portal container in effect.
-*
-* Two opt-in paths:
-*
-* - Auto-detected when `window.wp.components` is on the global — the
-*   typical script-loader setup for WordPress plugins and admin screens.
-* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
-*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
-*   relying on the global.
-*
-* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
-* local document's body. Subsequent calls return the same element; if it's
-* been removed it's recreated, and a slot created by another
-* `@wordpress/ui` instance in the same document is adopted rather than
-* duplicated.
-*/
-function getWpCompatOverlaySlot() {
-	if (typeof window === "undefined") return;
-	if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
-	const ownerDocument = resolveOwnerDocument();
-	if (!ownerDocument || !ownerDocument.body) return;
-	if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
-	const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
-	if (existing instanceof HTMLDivElement) {
-		cachedSlot = ensureSlotIsAccessible(existing);
-		return cachedSlot;
-	}
-	if (cachedSlot?.isConnected) cachedSlot.remove();
-	cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
-	return cachedSlot;
-}
-
-// packages/ui/build-module/utils/direction-provider.mjs
-var import_i18n = require_i18n();
-/**
-* Provides WordPress's text direction to Base UI components.
-*/
-function DirectionProvider({ children }) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider$1, {
-		direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr",
-		children
-	});
-}
-
-// packages/ui/build-module/tooltip/portal.mjs
-/**
-* Used to apply custom portal behavior to `Tooltip`'s floating content.
-* `container` defaults to the `@wordpress/ui` compat overlay slot.
-*/
-const Portal = (0, import_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPortal, {
-		container: container === void 0 ? getWpCompatOverlaySlot() : container,
-		...restProps,
-		ref
+const Positioner = (0, import_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPositioner, {
+		ref,
+		align,
+		side,
+		sideOffset,
+		...props,
+		className: clsx(resets_module_default["box-sizing"], style_module_default$6.positioner, className)
 	});
 });
 
-// packages/ui/build-module/tooltip/positioner.mjs
+// \0wp-global:@wordpress/theme
+var require_theme = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.theme;
+}));
+
+// \0wp-global:@wordpress/private-apis
+var require_private_apis = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.privateApis;
+}));
+
+// packages/ui/build-module/lock-unlock.mjs
+var import_private_apis = require_private_apis();
+const { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
+
+// packages/ui/build-module/utils/theme-provider.mjs
+var import_theme = /* @__PURE__ */ __toESM(require_theme(), 1);
+function getThemeProvider() {
+	const themePackage = import_theme;
+	if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
+	if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
+	return unlock(themePackage.privateApis).ThemeProvider;
+}
+const ThemeProvider = getThemeProvider();
+
+// packages/ui/build-module/tooltip/popup.mjs
 const STYLE_HASH_ATTRIBUTE$5 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7502,52 +8137,53 @@ function registerStyle$5(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$5(targetDocument, hash, css);
 }
-registerStyle$5("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
 registerStyle$5("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
 var style_module_default$5 = {
 	"positioner": "b9266862d9435660__positioner",
 	"popup": "_7bb3fd8a0810be6d__popup"
 };
-/**
-* Used to apply custom positioning to `Tooltip`'s floating content.
-*/
-const Positioner = (0, import_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPositioner, {
+const POPUP_COLOR = { background: "#1e1e1e" };
+const Popup = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
+	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeProvider, {
+		color: POPUP_COLOR,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPopup, {
+			ref,
+			className: clsx(style_module_default$5.popup, className),
+			...props,
+			children
+		})
+	});
+	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner, {}), popupContent);
+	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {}), positionedPopup);
+});
+
+// packages/ui/build-module/tooltip/trigger.mjs
+const Trigger = (0, import_element.forwardRef)(function TooltipTrigger$1(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipTrigger, {
 		ref,
-		align,
-		side,
-		sideOffset,
-		...props,
-		className: clsx(resets_module_default["box-sizing"], style_module_default$5.positioner, className)
+		...props
 	});
 });
 
-// \0wp-global:@wordpress/theme
-var require_theme = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.theme;
-}));
-
-// \0wp-global:@wordpress/private-apis
-var require_private_apis = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.privateApis;
-}));
-
-// packages/ui/build-module/lock-unlock.mjs
-var import_private_apis = require_private_apis();
-const { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
-
-// packages/ui/build-module/utils/theme-provider.mjs
-var import_theme = /* @__PURE__ */ __toESM(require_theme(), 1);
-function getThemeProvider() {
-	const themePackage = import_theme;
-	if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
-	if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
-	return unlock(themePackage.privateApis).ThemeProvider;
+// packages/ui/build-module/tooltip/root.mjs
+/**
+* `Tooltip` is used to visually show the label of an icon button, or other such
+* interactive controls that don't have a visual text label.
+*
+* Tooltip popups are visual-only and not exposed to assistive technologies.
+* The trigger's accessible name (e.g. `aria-label`) is the source of truth
+* for screen reader users. Tooltips are not available on touch devices,
+* and thus should not be used for infotips, descriptions, or dynamic status
+* messages.
+*
+* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
+* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
+*/
+function Root(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
 }
-const ThemeProvider = getThemeProvider();
 
-// packages/ui/build-module/tooltip/popup.mjs
+// packages/ui/build-module/stack/stack.mjs
 const STYLE_HASH_ATTRIBUTE$4 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7649,53 +8285,40 @@ function registerStyle$4(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$4(targetDocument, hash, css);
 }
-registerStyle$4("aaf79ac691", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}");
-var style_module_default$4 = {
-	"positioner": "b9266862d9435660__positioner",
-	"popup": "_7bb3fd8a0810be6d__popup"
+registerStyle$4("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
+var style_module_default$4 = { "stack": "_8e8e79c1a2eec43b__stack" };
+const gapTokens = {
+	xs: "var(--wpds-dimension-gap-xs, 4px)",
+	sm: "var(--wpds-dimension-gap-sm, 8px)",
+	md: "var(--wpds-dimension-gap-md, 12px)",
+	lg: "var(--wpds-dimension-gap-lg, 16px)",
+	xl: "var(--wpds-dimension-gap-xl, 24px)",
+	"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+	"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 };
-const POPUP_COLOR = { background: "#1e1e1e" };
-const Popup = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
-	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeProvider, {
-		color: POPUP_COLOR,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPopup, {
-			ref,
-			className: clsx(style_module_default$4.popup, className),
-			...props,
-			children
+/**
+* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
+* Built on design tokens for predictable spacing values.
+*/
+const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+	const style = {
+		gap: gap && gapTokens[gap],
+		alignItems: align,
+		justifyContent: justify,
+		flexDirection: direction,
+		flexWrap: wrap
+	};
+	return useRender({
+		render,
+		ref,
+		props: mergeProps(props, {
+			style,
+			className: style_module_default$4.stack
 		})
 	});
-	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner, {}), popupContent);
-	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {}), positionedPopup);
 });
 
-// packages/ui/build-module/tooltip/trigger.mjs
-const Trigger = (0, import_element.forwardRef)(function TooltipTrigger$1(props, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipTrigger, {
-		ref,
-		...props
-	});
-});
-
-// packages/ui/build-module/tooltip/root.mjs
-/**
-* `Tooltip` is used to visually show the label of an icon button, or other such
-* interactive controls that don't have a visual text label.
-*
-* Tooltip popups are visual-only and not exposed to assistive technologies.
-* The trigger's accessible name (e.g. `aria-label`) is the source of truth
-* for screen reader users. Tooltips are not available on touch devices,
-* and thus should not be used for infotips, descriptions, or dynamic status
-* messages.
-*
-* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
-* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
-*/
-function Root(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
-}
-
-// packages/ui/build-module/stack/stack.mjs
+// packages/core-fields/build-module/shared/author/avatar.mjs
 const STYLE_HASH_ATTRIBUTE$3 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7797,42 +8420,28 @@ function registerStyle$3(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
 }
-registerStyle$3("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
-var style_module_default$3 = { "stack": "_8e8e79c1a2eec43b__stack" };
-const gapTokens = {
-	xs: "var(--wpds-dimension-gap-xs, 4px)",
-	sm: "var(--wpds-dimension-gap-sm, 8px)",
-	md: "var(--wpds-dimension-gap-md, 12px)",
-	lg: "var(--wpds-dimension-gap-lg, 16px)",
-	xl: "var(--wpds-dimension-gap-xl, 24px)",
-	"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-	"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+registerStyle$3("efeba968e6", "._4d84143be9dae462__icon,.dd9b5d817b3207dc__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}._4d84143be9dae462__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}.de468aa290326111__name{overflow:hidden;text-overflow:ellipsis}");
+var style_module_default$3 = {
+	"avatar": "dd9b5d817b3207dc__avatar",
+	"icon": "_4d84143be9dae462__icon",
+	"name": "de468aa290326111__name"
 };
-/**
-* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
-* Built on design tokens for predictable spacing values.
-*/
-const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
-	const style = {
-		gap: gap && gapTokens[gap],
-		alignItems: align,
-		justifyContent: justify,
-		flexDirection: direction,
-		flexWrap: wrap
-	};
-	return useRender({
-		render,
-		ref,
-		props: mergeProps(props, {
-			style,
-			className: style_module_default$3.stack
+function AuthorAvatar({ src }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		className: style_module_default$3.avatar,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$1, {
+			size: "xs",
+			"aria-hidden": "true",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
+				src,
+				alt: "",
+				keepMounted: true
+			})
 		})
 	});
-});
+}
 
 // packages/core-fields/build-module/wp_template/author/view.mjs
-var import_data = require_data();
-var import_core_data = require_core_data();
 const STYLE_HASH_ATTRIBUTE$2 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7934,12 +8543,11 @@ function registerStyle$2(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$2(targetDocument, hash, css);
 }
-registerStyle$2("8376283491", "._5d635edea6487865__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px);justify-content:start;overflow:hidden}._5d635edea6487865__avatar img{block-size:var(--wpds-dimension-size-2xs,16px);border-radius:100%;inline-size:var(--wpds-dimension-size-2xs,16px);object-fit:cover;opacity:0}@media not (prefers-reduced-motion){._5d635edea6487865__avatar img{transition:opacity .1s linear}}._5d635edea6487865__avatar.dacbf37b426c6c52__is-loaded img{opacity:1}.f89ecb51351932c2__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}.f89ecb51351932c2__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}._8f6681d25a61c109__name{overflow:hidden;text-overflow:ellipsis}");
+registerStyle$2("efeba968e6", "._4d84143be9dae462__icon,.dd9b5d817b3207dc__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}._4d84143be9dae462__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}.de468aa290326111__name{overflow:hidden;text-overflow:ellipsis}");
 var style_module_default$2 = {
-	"avatar": "_5d635edea6487865__avatar",
-	"is-loaded": "dacbf37b426c6c52__is-loaded",
-	"icon": "f89ecb51351932c2__icon",
-	"name": "_8f6681d25a61c109__name"
+	"avatar": "dd9b5d817b3207dc__avatar",
+	"icon": "_4d84143be9dae462__icon",
+	"name": "de468aa290326111__name"
 };
 function getIconForSource(originalSource) {
 	switch (originalSource) {
@@ -7950,7 +8558,6 @@ function getIconForSource(originalSource) {
 	}
 }
 function TemplateAuthorView({ item }) {
-	const [isImageLoaded, setIsImageLoaded] = (0, import_element.useState)(false);
 	const originalSource = item.original_source;
 	const icon = getIconForSource(originalSource);
 	const text = item.author_text;
@@ -7969,14 +8576,7 @@ function TemplateAuthorView({ item }) {
 		gap: "xs",
 		align: "flex-start",
 		children: [
-			imageUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: clsx(style_module_default$2.avatar, { [style_module_default$2["is-loaded"]]: isImageLoaded }),
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-					onLoad: () => setIsImageLoaded(true),
-					alt: "",
-					src: imageUrl
-				})
-			}),
+			imageUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AuthorAvatar, { src: imageUrl }),
 			!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: style_module_default$2.icon,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { icon })
