@@ -9772,7 +9772,7 @@ const controlWordWhitespaceRegexString = `(${controlWordRegexString})${spaceRege
 const controlSpaceRegexString = "\\\\(\n|[ \r	]+\n?)[ \r	]*";
 const combiningDiacriticalMarkString = "[̀-ͯ]";
 const combiningDiacriticalMarksEndRegex = new RegExp(`${combiningDiacriticalMarkString}+$`);
-const tokenRegexString = `(${spaceRegexString}+)|${controlSpaceRegexString}|([!-\\[\\]-‧‪-퟿豈-￿]${combiningDiacriticalMarkString}*` + "|[\ud800-\udbff][\udc00-\udfff]" + `${combiningDiacriticalMarkString}*|\\\\verb\\*([^]).*?\\4|\\\\verb([^*a-zA-Z]).*?\\5|${controlWordWhitespaceRegexString}|${controlSymbolRegexString})`;
+const tokenRegexString = `(${spaceRegexString}+)|${controlSpaceRegexString}|([!-\\[\\]-‧‪-퟿豈-￿]${combiningDiacriticalMarkString}*|[\ud800-\udbff][\udc00-\udfff]${combiningDiacriticalMarkString}*|\\\\verb\\*([^]).*?\\4|\\\\verb([^*a-zA-Z]).*?\\5|${controlWordWhitespaceRegexString}|${controlSymbolRegexString})`;
 /** Main Lexer class */
 var Lexer = class {
 	constructor(input, settings) {
