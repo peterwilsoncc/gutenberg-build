@@ -713,6 +713,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return useRefEffect((node) => {
 			let isActive = true;
 			const handleClick = async () => {
+				if (node.getAttribute("aria-disabled") === "true") return;
 				if (await copyToClipboard(typeof textRef.current === "function" ? textRef.current() : textRef.current || "", node)) {
 					if (isActive) restoreFocus(node);
 					if (onSuccessRef.current) onSuccessRef.current();
