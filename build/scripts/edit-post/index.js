@@ -10320,6 +10320,7 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 			enableChoosePatternModal: true,
 			isPublishSidebarEnabled: true,
 			showCollaborationCursor: false,
+			showCollaborationBlockHighlight: false,
 			showCollaborationJoinNotifications: true,
 			showCollaborationLeaveNotifications: true,
 			showCollaborationPostSaveNotifications: true

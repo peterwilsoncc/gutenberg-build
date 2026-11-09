@@ -106908,17 +106908,17 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/editor/build-module/components/collaborators-presence/avatar/component.mjs
 	D([r]);
-	const GRAY_900 = "#1e1e1e";
+	const GRAY_900$1 = "#1e1e1e";
 	const WHITE$1 = "#fff";
 	function Avatar({ className, src, name, label, variant, size = "default", borderColor, dimmed = false, statusIndicator, style, ...props }) {
 		const { status: imageStatus, handleLoad, handleError } = useImageLoadingStatus(src);
 		const imageLoaded = imageStatus === "loaded";
 		const showBadge = variant === "badge" && !!name;
 		const initials = name ? name.split(/\s+/).slice(0, 2).map((word) => word[0]).join("").toUpperCase() : void 0;
-		const nameColor = (0, _wordpress_element.useMemo)(() => borderColor && A(borderColor).isReadable(GRAY_900, {
+		const nameColor = (0, _wordpress_element.useMemo)(() => borderColor && A(borderColor).isReadable(GRAY_900$1, {
 			level: "AA",
 			size: "normal"
-		}) ? GRAY_900 : WHITE$1, [borderColor]);
+		}) ? GRAY_900$1 : WHITE$1, [borderColor]);
 		const customProperties = {
 			...style,
 			...borderColor ? {
@@ -107219,6 +107219,8 @@ If there's a particular need for this, please submit a feature request at https:
 	const BUTTON_SIZE_COMPACT = "32px";
 	const BUTTON_SIZE_SMALL = "24px";
 	const WHITE = "#fff";
+	const GRAY_900 = "#1e1e1e";
+	const FONT_SIZE_SMALL = "12px";
 	const FONT_SIZE_X_SMALL = "11px";
 	const FONT_SIZE_MEDIUM = "13px";
 	const FONT_WEIGHT_EMPHASIS = "var(--wpds-typography-font-weight-emphasis, 600)";
@@ -107346,10 +107348,6 @@ If there's a particular need for this, please submit a feature request at https:
 `;
 
 // packages/editor/build-module/components/collaborators-overlay/overlay-iframe-styles.mjs
-/**
-	* CSS for the collaborators overlay — cursor indicators, block highlights,
-	* and positioning of Avatar labels inside the editor canvas iframe.
-	*/
 	const OVERLAY_IFRAME_STYLES = `
 .block-canvas-cover {
 	position: absolute;
@@ -107405,15 +107403,59 @@ If there's a particular need for this, please submit a feature request at https:
 	width: max-content;
 	--label-base-transform: translate(-11px, -100%);
 }
-/* Avatar positioned above a highlighted block as a label. */
-.collaborators-overlay-block-label.editor-avatar {
+/* Avatars stacked above a highlighted block as a label. The anchor sits at
+   the block's top-left corner and lifts the whole stack above the block. */
+.collaborators-overlay-block-label-anchor {
 	position: absolute;
 	z-index: 1;
 	transform: translateY(calc(-100% - ${"8px"}));
 	pointer-events: auto;
+	width: max-content;
+}
+/* The stack mirrors AvatarGroup (collaborators-presence/avatar-group), with
+   each avatar wrapped in an item that carries the scroll-to-cursor ref:
+   later items tuck under earlier ones. Hovering the stack spreads it out
+   and opens every badge, so each name can be read; a badge expanding on
+   its own would slide under its neighbour. */
+.collaborators-overlay-block-label-group {
+	display: flex;
+	align-items: center;
+}
+.collaborators-overlay-block-label-item {
+	position: relative;
+	display: inline-flex;
+}
+.collaborators-overlay-block-label-item + .collaborators-overlay-block-label-item {
+	margin-inline-start: -${"8px"};
+	transition: margin-inline-start 0.3s cubic-bezier(0.15, 0, 0.15, 1);
+}
+.collaborators-overlay-block-label-group:hover .collaborators-overlay-block-label-item + .collaborators-overlay-block-label-item {
+	margin-inline-start: ${"4px"};
+	transition-timing-function: cubic-bezier(0.85, 0, 0.85, 1);
+}
+${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-item:nth-child(${index + 1}) { z-index: ${3 - index}; }`).join("\n")}
+.collaborators-overlay-block-label-group:hover .collaborators-overlay-block-label.editor-avatar.is-badge {
+	grid-template-columns: min-content 1fr;
+	column-gap: ${"4px"};
+	padding-inline-end: ${"8px"};
+	transition-timing-function: cubic-bezier(0.85, 0, 0.85, 1);
+}
+.collaborators-overlay-block-label-group:hover .collaborators-overlay-block-label.editor-avatar.is-badge .editor-avatar__name {
+	opacity: 1;
+	transition-timing-function: cubic-bezier(0.85, 0, 0.85, 1);
+}
+.collaborators-overlay-block-label-group .editor-avatar-group__overflow {
+	margin-inline-start: ${"4px"};
+	margin-inline-end: ${"4px"};
+	font-size: ${FONT_SIZE_SMALL};
+	line-height: ${FONT_LINE_HEIGHT_SMALL};
+	color: ${GRAY_900};
+	white-space: nowrap;
+}
+.collaborators-overlay-block-label.editor-avatar {
 	overflow: visible;
 	width: max-content;
-	--label-base-transform: translateY(calc(-100% - ${"8px"}));
+	--label-base-transform: translate(0, 0);
 }
 
 @keyframes collaborators-overlay-cursor-blink {
@@ -107468,6 +107510,9 @@ If there's a particular need for this, please submit a feature request at https:
 	.collaborators-overlay-user-cursor,
 	.collaborators-overlay-block-label {
 		animation: none;
+	}
+	.collaborators-overlay-block-label-item + .collaborators-overlay-block-label-item {
+		transition: none;
 	}
 }
 `;
@@ -108025,9 +108070,14 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param postId              - The ID of the post.
 	* @param postType            - The type of the post.
 	* @param delayMs             - Milliseconds to wait before recomputing highlight positions.
+	* @param highlightTextBlocks - Whether a caret or text selection outlines every block
+	*                            it touches, and puts the collaborator's avatar above
+	*                            the first of those blocks. When false, text blocks are
+	*                            only outlined when the caret has nowhere visible to
+	*                            draw.
 	* @return Highlight data for rendering and a delayed recompute function.
 	*/
-	function useBlockHighlighting(overlayElement, blockEditorDocument, postId, postType, delayMs) {
+	function useBlockHighlighting(overlayElement, blockEditorDocument, postId, postType, delayMs, highlightTextBlocks) {
 		const highlightedBlockIds = (0, _wordpress_element.useRef)(/* @__PURE__ */ new Set());
 		const userStates = useActiveCollaborators$2(postId ?? null, postType ?? null);
 		const resolveSelection = useResolvedSelection$1(postId ?? null, postType ?? null);
@@ -108040,12 +108090,21 @@ If there's a particular need for this, please submit a feature request at https:
 				return;
 			}
 			const currentHighlightedIds = highlightedBlockIds.current;
-			const seen = /* @__PURE__ */ new Set();
+			const describeCollaborator = (userState) => {
+				const userId = userState.collaboratorInfo.id ?? userState.clientId;
+				return {
+					clientId: userState.clientId,
+					userId,
+					color: getAvatarBorderColor(userId),
+					userName: getCollaboratorDisplayName(userState.collaboratorInfo),
+					avatarUrl: getAvatarUrl(userState.collaboratorInfo.avatar_urls)
+				};
+			};
 			const blocksToHighlight = userStates.filter((userState) => {
 				if (userState.isMe) return false;
 				const selType = userState.editorState?.selection?.type;
 				return selType === SelectionType$1.WholeBlock || selType === SelectionType$1.SelectionInMultipleBlocks || selType === SelectionType$1.Cursor || selType === SelectionType$1.SelectionInOneBlock;
-			}).flatMap((userState) => {
+			}).toSorted((a, b) => a.collaboratorInfo.enteredAt - b.collaboratorInfo.enteredAt || a.clientId - b.clientId).flatMap((userState) => {
 				const selection = userState.editorState?.selection;
 				if (selection.type === SelectionType$1.WholeBlock) {
 					let localClientId;
@@ -108064,11 +108123,7 @@ If there's a particular need for this, please submit a feature request at https:
 					}
 					return [{
 						blockId,
-						clientId: userState.clientId,
-						userId: userState.collaboratorInfo.id ?? userState.clientId,
-						color: getAvatarBorderColor(userState.collaboratorInfo.id ?? userState.clientId),
-						userName: getCollaboratorDisplayName(userState.collaboratorInfo),
-						avatarUrl: getAvatarUrl(userState.collaboratorInfo.avatar_urls),
+						...describeCollaborator(userState),
 						alwaysOutline: true
 					}];
 				}
@@ -108076,16 +108131,13 @@ If there's a particular need for this, please submit a feature request at https:
 					const resolved = resolveStartPosition(selection, resolveSelection);
 					if (!resolved?.localClientId) return [];
 					const targetElement = resolveTargetElement(blockEditorDocument, resolved);
-					if (!targetElement || isElementVisible(targetElement)) return [];
+					if (!targetElement) return [];
+					if (!highlightTextBlocks && isElementVisible(targetElement)) return [];
 					const containerId = getNearestVisibleBlockAncestor(targetElement)?.getAttribute("data-block");
 					if (!containerId) return [];
 					return [{
 						blockId: containerId,
-						clientId: userState.clientId,
-						userId: userState.collaboratorInfo.id ?? userState.clientId,
-						color: getAvatarBorderColor(userState.collaboratorInfo.id ?? userState.clientId),
-						userName: getCollaboratorDisplayName(userState.collaboratorInfo),
-						avatarUrl: getAvatarUrl(userState.collaboratorInfo.avatar_urls),
+						...describeCollaborator(userState),
 						alwaysOutline: true
 					}];
 				}
@@ -108102,35 +108154,22 @@ If there's a particular need for this, please submit a feature request at https:
 				const range = getOrderedBlockRange(startId, endId, blockEditorDocument);
 				if (!range) return [];
 				const { firstId, lastId, middleEls, sameContainer } = range;
-				const color = getAvatarBorderColor(userState.collaboratorInfo.id ?? userState.clientId);
-				const userName = getCollaboratorDisplayName(userState.collaboratorInfo);
-				const avatarUrl = getAvatarUrl(userState.collaboratorInfo.avatar_urls);
 				if (sameContainer) return [{
 					blockId: firstId,
-					clientId: userState.clientId,
-					userId: userState.collaboratorInfo.id ?? userState.clientId,
-					color,
-					userName,
-					avatarUrl,
-					alwaysOutline: false
+					...describeCollaborator(userState),
+					alwaysOutline: highlightTextBlocks
 				}];
+				const intermediateIds = middleEls.map((el) => el.getAttribute("data-block")).filter((id) => Boolean(id));
+				const collaborator = describeCollaborator(userState);
 				return [
 					firstId,
-					...middleEls.map((el) => el.getAttribute("data-block")).filter((id) => Boolean(id)),
+					...intermediateIds,
 					lastId
 				].map((blockId) => ({
 					blockId,
-					clientId: userState.clientId,
-					userId: userState.collaboratorInfo.id ?? userState.clientId,
-					color,
-					userName,
-					avatarUrl,
-					alwaysOutline: false
+					...collaborator,
+					alwaysOutline: highlightTextBlocks
 				}));
-			}).filter((block) => {
-				if (seen.has(block.blockId)) return false;
-				seen.add(block.blockId);
-				return true;
 			});
 			const selectedBlockIds = new Set(blocksToHighlight.map((block) => block.blockId));
 			for (const blockId of currentHighlightedIds) if (!selectedBlockIds.has(blockId)) {
@@ -108141,37 +108180,64 @@ If there's a particular need for this, please submit a feature request at https:
 				}
 				currentHighlightedIds.delete(blockId);
 			}
-			const results = [];
 			const overlayRect = blocksToHighlight.length && overlayElement?.getBoundingClientRect() || null;
+			const visibleBlocks = /* @__PURE__ */ new Map();
+			const skippedBlocks = /* @__PURE__ */ new Set();
 			const usersWithAvatar = /* @__PURE__ */ new Set();
+			const avatarsByBlock = /* @__PURE__ */ new Map();
 			blocksToHighlight.forEach((block) => {
-				const { color, blockId, userName, avatarUrl } = block;
-				const blockElement = getBlockElementById(blockEditorDocument, blockId);
-				if (!blockElement) return;
-				blockElement.classList.remove("is-collaborator-selected");
-				blockElement.style.removeProperty("--collaborator-outline-color");
-				currentHighlightedIds.delete(blockId);
-				if (!isElementVisible(blockElement)) return;
+				const { color, blockId, userName, avatarUrl, clientId } = block;
+				if (skippedBlocks.has(blockId)) return;
+				let blockElement = visibleBlocks.get(blockId);
+				if (!blockElement) {
+					const element = getBlockElementById(blockEditorDocument, blockId);
+					if (!element) {
+						skippedBlocks.add(blockId);
+						return;
+					}
+					element.classList.remove("is-collaborator-selected");
+					element.style.removeProperty("--collaborator-outline-color");
+					currentHighlightedIds.delete(blockId);
+					if (!isElementVisible(element)) {
+						skippedBlocks.add(blockId);
+						return;
+					}
+					visibleBlocks.set(blockId, element);
+					blockElement = element;
+				}
 				const isNonTextBlock = !blockElement.innerText?.trim();
-				if (block.alwaysOutline || isNonTextBlock) {
+				if (!currentHighlightedIds.has(blockId) && (block.alwaysOutline || isNonTextBlock)) {
 					blockElement.classList.add("is-collaborator-selected");
 					blockElement.style.setProperty("--collaborator-outline-color", color);
 					currentHighlightedIds.add(blockId);
 				}
 				if (overlayRect && !usersWithAvatar.has(block.userId)) {
 					usersWithAvatar.add(block.userId);
-					const blockRect = blockElement.getBoundingClientRect();
-					results.push({
-						blockId,
-						clientId: block.clientId,
+					let avatars = avatarsByBlock.get(blockId);
+					if (!avatars) {
+						avatars = [];
+						avatarsByBlock.set(blockId, avatars);
+					}
+					avatars.push({
+						clientId,
 						userName,
 						avatarUrl,
-						color,
-						x: blockRect.left - overlayRect.left,
-						y: blockRect.top - overlayRect.top
+						color
 					});
 				}
 			});
+			const results = [];
+			if (overlayRect) for (const [blockId, collaborators] of avatarsByBlock) {
+				const blockElement = visibleBlocks.get(blockId);
+				if (!blockElement) continue;
+				const blockRect = blockElement.getBoundingClientRect();
+				results.push({
+					blockId,
+					collaborators,
+					x: blockRect.left - overlayRect.left,
+					y: blockRect.top - overlayRect.top
+				});
+			}
 			setHighlights(results);
 			return () => {
 				for (const blockId of currentHighlightedIds) {
@@ -108189,7 +108255,8 @@ If there's a particular need for this, please submit a feature request at https:
 			overlayElement,
 			recomputeToken,
 			resizeToken,
-			resolveSelection
+			resolveSelection,
+			highlightTextBlocks
 		]);
 		return {
 			highlights,
@@ -108381,17 +108448,18 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	function Overlay({ blockEditorDocument, postId, postType, cursorRegistry }) {
 		const [overlayElement, setOverlayElement] = (0, _wordpress_element.useState)(null);
-		const { isTyping, selectedBlockClientId } = (0, _wordpress_data.useSelect)((select) => {
+		const { isTyping, selectedBlockClientId, highlightBlocks } = (0, _wordpress_data.useSelect)((select) => {
 			const { isTyping: _isTyping, getSelectedBlockClientId } = select(_wordpress_block_editor.store);
 			return {
 				isTyping: _isTyping(),
-				selectedBlockClientId: getSelectedBlockClientId()
+				selectedBlockClientId: getSelectedBlockClientId(),
+				highlightBlocks: !!select(_wordpress_preferences.store).get("core", "showCollaborationBlockHighlight")
 			};
 		}, []);
 		const recentlyTyped = useRecentlyTyped(blockEditorDocument ?? null, TYPING_PAUSE_MS);
 		const blockClientIdBeingWritten = isTyping && recentlyTyped ? selectedBlockClientId : null;
 		const { cursors, rerenderCursorsAfterDelay, rerenderCursorsOnResize } = useRenderCursors(overlayElement, blockEditorDocument ?? null, postId ?? null, postType ?? null, RERENDER_DELAY_MS);
-		const { highlights, rerenderHighlightsAfterDelay, rerenderHighlightsOnResize } = useBlockHighlighting(overlayElement, blockEditorDocument ?? null, postId ?? null, postType ?? null, RERENDER_DELAY_MS);
+		const { highlights, rerenderHighlightsAfterDelay, rerenderHighlightsOnResize } = useBlockHighlighting(overlayElement, blockEditorDocument ?? null, postId ?? null, postType ?? null, RERENDER_DELAY_MS, highlightBlocks);
 		const onResize = (0, _wordpress_element.useCallback)(() => {
 			rerenderCursorsOnResize();
 			rerenderHighlightsOnResize();
@@ -108410,11 +108478,13 @@ If there's a particular need for this, please submit a feature request at https:
 			return setDelayedInterval(rerenderCursorsAfterDelay, CURSOR_REDRAW_INTERVAL_MS);
 		}, [cursors.length, rerenderCursorsAfterDelay]);
 		const mergedRef = (0, _wordpress_compose.useMergeRefs)([setOverlayElement, resizeObserverRef]);
+		const clientIdsWithBlockAvatar = (0, _wordpress_element.useMemo)(() => new Set(highlights.flatMap((highlight) => highlight.collaborators.slice(0, 3).map((collaborator) => collaborator.clientId))), [highlights]);
+		const clientIdsWithCaret = (0, _wordpress_element.useMemo)(() => new Set(cursors.filter((cursor) => cursor.x !== void 0).map((cursor) => cursor.clientId)), [cursors]);
 		const cursorRefsMap = (0, _wordpress_element.useRef)(/* @__PURE__ */ new Map());
 		(0, _wordpress_element.useEffect)(() => {
 			if (!cursorRegistry) return;
 			const refs = cursorRefsMap.current;
-			const currentIds = /* @__PURE__ */ new Set([...cursors.map((c) => c.clientId), ...highlights.map((h) => h.clientId)]);
+			const currentIds = /* @__PURE__ */ new Set([...cursors.map((c) => c.clientId), ...highlights.flatMap((h) => h.collaborators.map((c) => c.clientId))]);
 			for (const id of refs.keys()) if (!currentIds.has(id)) {
 				cursorRegistry.unregisterCursor(id);
 				refs.delete(id);
@@ -108430,6 +108500,10 @@ If there's a particular need for this, please submit a feature request at https:
 			if (el) cursorRefsMap.current.set(clientId, el);
 			else cursorRefsMap.current.delete(clientId);
 		}, []);
+		const getBlockAvatarRef = (clientId) => {
+			if (clientIdsWithCaret.has(clientId)) return;
+			return setCursorRef(clientId);
+		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "collaborators-overlay-full",
 			ref: mergedRef,
@@ -108457,7 +108531,7 @@ If there's a particular need for this, please submit a feature request at https:
 							backgroundColor: cursor.color,
 							height: `${cursor.height}px`
 						}
-					}), cursor.blockClientId !== blockClientIdBeingWritten && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Avatar, {
+					}), (cursor.isMe || !highlightBlocks || !clientIdsWithBlockAvatar.has(cursor.clientId)) && cursor.blockClientId !== blockClientIdBeingWritten && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Avatar, {
 						className: "collaborators-overlay-user-label",
 						variant: "badge",
 						size: "small",
@@ -108468,19 +108542,26 @@ If there's a particular need for this, please submit a feature request at https:
 					})]
 				})] }, cursor.clientId)),
 				highlights.map((highlight) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					ref: setCursorRef(highlight.clientId),
+					className: "collaborators-overlay-block-label-anchor",
 					style: {
-						position: "absolute",
 						left: `${highlight.x}px`,
 						top: `${highlight.y}px`
 					},
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Avatar, {
-						className: "collaborators-overlay-block-label",
-						variant: "badge",
-						size: "small",
-						src: highlight.avatarUrl,
-						name: highlight.userName,
-						borderColor: highlight.color
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AvatarGroup, {
+						className: "collaborators-overlay-block-label-group",
+						max: 3,
+						children: highlight.collaborators.map((collaborator) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+							ref: getBlockAvatarRef(collaborator.clientId),
+							className: "collaborators-overlay-block-label-item",
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Avatar, {
+								className: "collaborators-overlay-block-label",
+								variant: "badge",
+								size: "small",
+								src: collaborator.avatarUrl,
+								name: collaborator.userName,
+								borderColor: collaborator.color
+							})
+						}, collaborator.clientId))
 					})
 				}, highlight.blockId))
 			]
@@ -115493,6 +115574,12 @@ If there's a particular need for this, please submit a feature request at https:
 								featureName: "showCollaborationCursor",
 								help: (0, _wordpress_i18n.__)("Show your own avatar inside blocks during collaborative editing sessions."),
 								label: (0, _wordpress_i18n.__)("Show avatar in blocks")
+							}),
+							showCollaborationOptions && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PreferenceToggleControl, {
+								scope: "core",
+								featureName: "showCollaborationBlockHighlight",
+								help: (0, _wordpress_i18n.__)("Outline the blocks collaborators are working in, with their avatars above. Their cursors still show where they are typing."),
+								label: (0, _wordpress_i18n.__)("Outline collaborators' blocks")
 							})
 						]
 					}),

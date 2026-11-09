@@ -76419,6 +76419,7 @@ If there's a particular need for this, please submit a feature request at https:
 			showListViewByDefault: false,
 			enableChoosePatternModal: true,
 			showCollaborationCursor: false,
+			showCollaborationBlockHighlight: false,
 			showCollaborationJoinNotifications: true,
 			showCollaborationLeaveNotifications: true,
 			showCollaborationPostSaveNotifications: true
