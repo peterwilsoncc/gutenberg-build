@@ -6019,6 +6019,17 @@ mark.wp-note {
 .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed {
   background: #1e1e1e;
 }
+@media (forced-colors: active) {
+  .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed,
+  .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed {
+    background: SelectedItem !important;
+  }
+  .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed:disabled, .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed[aria-disabled=true],
+  .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed:disabled,
+  .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed[aria-disabled=true] {
+    background: GrayText !important;
+  }
+}
 .editor-document-tools .editor-document-tools__left > .components-button.has-icon:focus:not(:active),
 .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon:focus:not(:active) {
   outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
