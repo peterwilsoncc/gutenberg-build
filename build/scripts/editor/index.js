@@ -109819,8 +109819,8 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			ref: containerRef,
 			className: clsx("editor-visual-editor", "edit-post-visual-editor", className, {
-				"has-vertical-padding": isFocusedEntity || hasCanvasWidth,
-				"has-horizontal-padding": isFocusedEntity || enableResizing
+				"has-vertical-padding": isFocusedEntity && enableResizing || hasCanvasWidth,
+				"has-horizontal-padding": enableResizing
 			}),
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SyncConnectionErrorModal, {}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ResizableEditor, {
 				className: clsx({ "has-canvas-margin": hasCanvasMargin }),
