@@ -4270,23 +4270,17 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
   display: none;
   width: 280px;
   padding: 16px;
+  color: #1e1e1e;
   max-height: calc(100% - 32px);
   overflow-y: hidden;
 }
 @media (min-width: 782px) {
   .block-editor-inserter__preview-container {
-    display: block;
+    display: flex;
   }
 }
 .block-editor-inserter__preview-container .block-editor-block-card {
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 4px;
-}
-
-.block-editor-inserter__preview-disabled-note {
-  padding-top: 4px;
-  color: #1e1e1e;
+  padding: 0;
 }
 
 .block-editor-inserter__insertable-blocks-at-selection:not(:empty) + .block-editor-inserter__all-blocks:not(:empty) {
@@ -4356,13 +4350,9 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 
 .block-editor-inserter__preview-content {
   background: #f0f0f0;
-  display: grid;
-  flex-grow: 1;
-  align-items: center;
 }
 
 .block-editor-inserter__preview-content-missing {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;

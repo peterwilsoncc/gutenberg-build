@@ -70946,45 +70946,42 @@ Icon: ButtonIcon });
 		const previewHeight = 144;
 		const sidebarWidth = 280;
 		const viewportWidth = example?.viewportWidth ?? 500;
-		const scale = sidebarWidth / viewportWidth;
-		const minHeight = scale !== 0 && scale < 1 && previewHeight ? previewHeight / scale : previewHeight;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+		const minHeight = previewHeight / Math.min(sidebarWidth / viewportWidth, 1);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+			direction: "column",
+			gap: "lg",
 			className: "block-editor-inserter__preview-container",
-			children: [
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "block-editor-inserter__preview",
-					children: isReusable || example ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-						className: "block-editor-inserter__preview-content",
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MemoizedBlockPreview, {
-							blocks,
-							viewportWidth,
-							minHeight: previewHeight,
-							additionalStyles: [{ css: `
-										body {
-											padding: 24px;
-											min-height:${Math.round(minHeight)}px;
-											display:flex;
-											align-items:center;
-										}
-										.is-root-container { width: 100%; }
-									` }]
-						})
-					}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-						className: "block-editor-inserter__preview-content-missing",
-						children: (0, _wordpress_i18n.__)("No preview available.")
-					})
-				}),
-				!isReusable && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockCard, {
+			children: [isReusable || example ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: "block-editor-inserter__preview-content",
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MemoizedBlockPreview, {
+					blocks,
+					viewportWidth,
+					minHeight: previewHeight,
+					additionalStyles: [{ css: `
+								body {
+									padding: 24px;
+									min-height:${Math.round(minHeight)}px;
+									display:flex;
+									align-items:center;
+								}
+								.is-root-container { width: 100%; }
+							` }]
+				})
+			}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: "block-editor-inserter__preview-content-missing",
+				children: (0, _wordpress_i18n.__)("No preview available.")
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+				direction: "column",
+				gap: "sm",
+				children: [!isReusable && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockCard, {
 					title,
 					icon,
 					description
-				}),
-				isDisabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text$1, {
+				}), isDisabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text$1, {
 					render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {}),
-					className: "block-editor-inserter__preview-disabled-note",
 					children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.__)("<strong>Note:</strong> This block can only be used once, and is already in use."), { strong: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("strong", {}) })
-				})
-			]
+				})]
+			})]
 		});
 	}
 
