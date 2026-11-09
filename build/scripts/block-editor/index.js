@@ -51717,90 +51717,6 @@ Icon: ButtonIcon });
 
 // packages/ui/build-module/calendar/utils/components.mjs
 /**
-	* The dash array and offset are calculated by:
-	* - measuring the path length (eg 92,28384)
-	* - establishing how many segments should the path be split into (eg. 24)
-	* - dividing the path length by the number of segments (eg. 92,28384 / 24 = 3,84516)
-	* - playing with the dash offset to make sure the dashes look good on rounded corners
-	*/
-	/**
-	* Dashed rectangle. The dash array and offset are chosen to make sure dashes
-	* look good on rounded corners and have similar metrics to the other dash
-	* preview shapes.
-	*/
-	const PreviewDashStartAndEnd = () => {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
-			viewBox: "0 0 32 32",
-			xmlns: "http://www.w3.org/2000/svg",
-			fill: "none",
-			stroke: "currentColor",
-			strokeDasharray: "3.7677",
-			strokeDashoffset: "3.2",
-			strokeWidth: "1",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M29.5,0.5 h-27 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h27 a2,2 0 0 0 2,-2 v-27 a2,2 0 0 0 -2,-2" })
-		});
-	};
-	/**
-	* Dashed top, left, and bottom sides, with rounded corners. The dash array and
-	* offset are chosen to make sure that multiple days in a row show a seamless
-	* dashed border, and the dashes look good on rounded corners.
-	*/
-	const PreviewDashStart = () => {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
-			viewBox: "0 0 32 32",
-			xmlns: "http://www.w3.org/2000/svg",
-			fill: "none",
-			stroke: "currentColor",
-			strokeDasharray: "3.84516",
-			strokeDashoffset: "1.9226",
-			strokeWidth: "1",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M32,0.5 h-29.5 a2,2 0 0 0 -2,2 v27 a2,2 0 0 0 2,2 h30" })
-		});
-	};
-	/**
-	* Dashed top and bottom sides. The dash array and offset are chosen
-	* to make sure that multiple days in a row show a seamless dashed border.
-	*/
-	const PreviewDashMiddle = () => {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("svg", {
-			viewBox: "0 0 32 32",
-			xmlns: "http://www.w3.org/2000/svg",
-			fill: "none",
-			stroke: "currentColor",
-			strokeDasharray: "3.9 4",
-			strokeDashoffset: "2",
-			strokeWidth: "1",
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("line", {
-				x1: "0",
-				y1: "0.5",
-				x2: "100",
-				y2: "0.5"
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("line", {
-				x1: "0",
-				y1: "31.5",
-				x2: "100",
-				y2: "31.5"
-			})]
-		});
-	};
-	/**
-	* Dashed top, right, and bottom sides, with rounded corners. The dash array and
-	* offset are chosen to make sure that multiple days in a row show a seamless
-	* dashed border, and the dashes look good on rounded corners.
-	*/
-	const PreviewDashEnd = () => {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
-			viewBox: "0 0 32 32",
-			xmlns: "http://www.w3.org/2000/svg",
-			fill: "none",
-			stroke: "currentColor",
-			strokeDasharray: "3.84516",
-			strokeDashoffset: "1.9226",
-			strokeWidth: "1",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M0,0.5 h29.5 a2,2 0 0 1 2,2 v27 a2,2 0 0 1 -2,2 h-29.5" })
-		});
-	};
-	/**
 	* Render a grid cell for a specific day in the calendar.
 	*
 	* Handles interaction and focus for the day.
@@ -51808,14 +51724,18 @@ Icon: ButtonIcon });
 	*/
 	function Day(props) {
 		const { day, modifiers, children, ...tdProps } = props;
-		let PreviewDash;
-		if (modifiers.preview_start && modifiers.preview_end) PreviewDash = PreviewDashStartAndEnd;
-		else if (modifiers.preview_start) PreviewDash = PreviewDashStart;
-		else if (modifiers.preview_end) PreviewDash = PreviewDashEnd;
-		else if (modifiers.preview) PreviewDash = PreviewDashMiddle;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("td", {
 			...tdProps,
-			children: [PreviewDash && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PreviewDash, {}), children]
+			children: [modifiers.preview && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
+				"aria-hidden": "true",
+				fill: "none",
+				stroke: "currentColor",
+				strokeDasharray: "4 4",
+				strokeDashoffset: "2",
+				"data-preview-start": modifiers.preview_start || void 0,
+				"data-preview-end": modifiers.preview_end || void 0,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("rect", {})
+			}), children]
 		});
 	}
 	/**
@@ -51984,40 +51904,41 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$25(targetDocument, hash, css);
 	}
-	registerStyle$25("e870b205d5", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.d67ac5940b3db040__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-block;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);position:relative;z-index:0}._6b8244eeebcb141c__day{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);padding:0;position:relative;&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:has(._2326449c1ec1ccf4__day-button:focus-visible),&:has(._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}}._2326449c1ec1ccf4__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:var(--wp-ui-calendar-cell-size);&:before{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:none;border-radius:var(--wpds-border-radius-sm,2px);z-index:-1}&:after,&:before{content:\"\";inset:0;position:absolute}&:after{pointer-events:none;z-index:1}&:disabled{cursor:revert;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}@media (forced-colors:active){text-decoration:line-through}}&:focus-visible:before,&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._346164a767356104__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}.d67ac5940b3db040__root[dir=rtl] ._88966391f27fd845__nav-button{transform:rotate(180deg);transform-origin:50%}.bac4b28345f14fe6__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}._226a2d5b1606f462__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);justify-content:center;max-width:fit-content;position:relative}.b5cd5413fc4f1e0e__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px)}._3c49e5eebd49ce33__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}.ea5dc5e279591e40__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase;width:var(--wp-ui-calendar-cell-size)}._361d685bc7a465e9__today:after{border:2px solid;border-radius:50%;content:\"\";height:0;inset-block-start:2px;inset-inline-end:2px;position:absolute;width:0;z-index:1}._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle){&:has(._2326449c1ec1ccf4__day-button,._2326449c1ec1ccf4__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(._2326449c1ec1ccf4__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}._485aca6ce0a23a05__outside{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}.cd568589a03e3e05__hidden{visibility:hidden}._8638d195805d7395__range-start:not(._5c9d35f37a7da85e__range-end) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}._5c9d35f37a7da85e__range-end:not(._8638d195805d7395__range-start) ._2326449c1ec1ccf4__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._553023aea73828e1__preview svg{color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);inset:0;pointer-events:none;position:absolute;@media (forced-colors:active){color:inherit}}._553023aea73828e1__preview._45acf39ecc1aad79__selected:not(._79c1a23a25ba4cd1__range-middle) svg{display:none}.d67ac5940b3db040__root[dir=rtl] ._553023aea73828e1__preview svg{transform:scaleX(-1)}._553023aea73828e1__preview._79c1a23a25ba4cd1__range-middle ._2326449c1ec1ccf4__day-button:before{border:none}@keyframes c2faa611ba1488be__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes c4980e1313f9993a__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes _1c1656e86f6f632c__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes c3793bdbceb0750e__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes _22a1a70f5db25e5c__fade-in{0%{opacity:0}to{opacity:1}}@keyframes _25e4fa1d41281b90__fade-out{0%{opacity:1}to{opacity:0}}._1e3b69aa679f8655__caption-before-exit,._4f9d6e3dc0d6f392__caption-after-enter,._6c19d1b31fe17f76__weeks-before-enter,._747d985c3c395f78__caption-before-enter,._75c3ff871d74d8f8__weeks-before-exit,._854319d82ea3790a__weeks-after-enter,.c555a192f01c276c__weeks-after-exit,.ee9bc34717c59541__caption-after-exit{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}._6c19d1b31fe17f76__weeks-before-enter,.d67ac5940b3db040__root[dir=rtl] ._854319d82ea3790a__weeks-after-enter{animation-name:c2faa611ba1488be__slide-in-left}._75c3ff871d74d8f8__weeks-before-exit,.d67ac5940b3db040__root[dir=rtl] .c555a192f01c276c__weeks-after-exit{animation-name:_1c1656e86f6f632c__slide-out-left}._854319d82ea3790a__weeks-after-enter,.d67ac5940b3db040__root[dir=rtl] ._6c19d1b31fe17f76__weeks-before-enter{animation-name:c4980e1313f9993a__slide-in-right}.c555a192f01c276c__weeks-after-exit,.d67ac5940b3db040__root[dir=rtl] ._75c3ff871d74d8f8__weeks-before-exit{animation-name:c3793bdbceb0750e__slide-out-right}._4f9d6e3dc0d6f392__caption-after-enter,._747d985c3c395f78__caption-before-enter{animation-name:_22a1a70f5db25e5c__fade-in}._1e3b69aa679f8655__caption-before-exit,.ee9bc34717c59541__caption-after-exit{animation-name:_25e4fa1d41281b90__fade-out}}}");
+	registerStyle$25("7db56aeeda", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b8b59415f24d19a7__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flow-root;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);min-width:calc(var(--wp-ui-calendar-cell-size)*7);position:relative;width:100%;z-index:0}.f7a481be9f3976ae__day{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);padding:0;position:relative;&:has(.a5ce50129aff31fd__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}&:has(.a5ce50129aff31fd__day-button:focus-visible),&:has(.a5ce50129aff31fd__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}}.a5ce50129aff31fd__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:100%;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:none;border-radius:var(--wpds-border-radius-sm,2px);content:\"\";inset:0;position:absolute;z-index:-1}&:disabled{cursor:revert;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}@media (forced-colors:active){text-decoration:line-through}}&:focus-visible:before,&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}.ea1bee19cd90c0b6__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}.b8b59415f24d19a7__root[dir=rtl] ._14025744e6a8ed23__nav-button{transform:rotate(180deg);transform-origin:50%}._7ba48f97c244f7f5__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}.d33c0db88cd6170b__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);position:relative}._8786d2bc0bb8cb57__month{flex:1 0 calc(var(--wp-ui-calendar-cell-size)*7);width:100%}._5dada436b15bda61__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px);min-width:100%;table-layout:fixed;width:calc(var(--wp-ui-calendar-cell-size)*7)}._369bbdfd9af6cd41__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}._10352cbabab20a78__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase}._03805cf7f67bba19__today:after{border:2px solid;border-radius:50%;content:\"\";height:0;inset-block-start:2px;inset-inline-end:calc(50% - var(--wp-ui-calendar-cell-size)/2 + 2px);position:absolute;width:0;z-index:1}._1086ceb441467e91__selected:not(._16e5771b01d09d80__range-middle){&:has(.a5ce50129aff31fd__day-button,.a5ce50129aff31fd__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(.a5ce50129aff31fd__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8d8d8d)}.a5ce50129aff31fd__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2d2d2d);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e6e6e6)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}.a748965993afb6e5__outside{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}.ef8ffc6086099611__hidden{visibility:hidden}._45e0709dcce0b074__range-start:not(._6484d659a5b625b4__range-end) .a5ce50129aff31fd__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}._16e5771b01d09d80__range-middle .a5ce50129aff31fd__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}._6484d659a5b625b4__range-end:not(._45e0709dcce0b074__range-start) .a5ce50129aff31fd__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._6fac052db28992e8__preview svg{color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);height:100%;inset:0;pointer-events:none;position:absolute;width:100%;@media (forced-colors:active){color:inherit}}._6fac052db28992e8__preview rect{x:-2px;y:.5px;rx:2px;height:calc(100% - 1px);width:calc(100% + 4px)}._6fac052db28992e8__preview [data-preview-start] rect{x:.5px;width:calc(100% + 2px)}._6fac052db28992e8__preview [data-preview-end] rect{width:calc(100% + 1.5px)}._6fac052db28992e8__preview [data-preview-start][data-preview-end] rect{width:calc(100% - 1px)}._6fac052db28992e8__preview._1086ceb441467e91__selected:not(._16e5771b01d09d80__range-middle) svg{display:none}.b8b59415f24d19a7__root[dir=rtl] ._6fac052db28992e8__preview svg{transform:scaleX(-1)}._6fac052db28992e8__preview._16e5771b01d09d80__range-middle .a5ce50129aff31fd__day-button:before{border:none}@keyframes cca02142c1e4161c__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes da5ef7e41b965108__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes e087e8d93f4ee6e3__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes _5e03bc243c730799__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes b1241971d89570a2__fade-in{0%{opacity:0}to{opacity:1}}@keyframes b539d8206ef99f1d__fade-out{0%{opacity:1}to{opacity:0}}._46245bd1097a5925__weeks-after-enter,._670933f75fa6bf25__caption-after-enter,.ab28a21792a949ae__caption-before-exit,.c5360dc5592fc5e0__weeks-after-exit,.dab6a03f3bd49808__caption-before-enter,.df6a207a6152fa87__weeks-before-enter,.eb9eec3e8036daf5__weeks-before-exit,.f35d7e6021a451a5__caption-after-exit{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}.b8b59415f24d19a7__root[dir=rtl] ._46245bd1097a5925__weeks-after-enter,.df6a207a6152fa87__weeks-before-enter{animation-name:cca02142c1e4161c__slide-in-left}.b8b59415f24d19a7__root[dir=rtl] .c5360dc5592fc5e0__weeks-after-exit,.eb9eec3e8036daf5__weeks-before-exit{animation-name:e087e8d93f4ee6e3__slide-out-left}._46245bd1097a5925__weeks-after-enter,.b8b59415f24d19a7__root[dir=rtl] .df6a207a6152fa87__weeks-before-enter{animation-name:da5ef7e41b965108__slide-in-right}.b8b59415f24d19a7__root[dir=rtl] .eb9eec3e8036daf5__weeks-before-exit,.c5360dc5592fc5e0__weeks-after-exit{animation-name:_5e03bc243c730799__slide-out-right}._670933f75fa6bf25__caption-after-enter,.dab6a03f3bd49808__caption-before-enter{animation-name:b1241971d89570a2__fade-in}.ab28a21792a949ae__caption-before-exit,.f35d7e6021a451a5__caption-after-exit{animation-name:b539d8206ef99f1d__fade-out}}}");
 	var style_module_default$14 = {
-		"root": "d67ac5940b3db040__root",
-		"day": "_6b8244eeebcb141c__day",
-		"day-button": "_2326449c1ec1ccf4__day-button",
-		"caption-label": "_346164a767356104__caption-label",
-		"nav-button": "_88966391f27fd845__nav-button",
-		"month-caption": "bac4b28345f14fe6__month-caption",
-		"months": "_226a2d5b1606f462__months",
-		"month-grid": "b5cd5413fc4f1e0e__month-grid",
-		"nav": "_3c49e5eebd49ce33__nav",
-		"weekday": "ea5dc5e279591e40__weekday",
-		"today": "_361d685bc7a465e9__today",
-		"selected": "_45acf39ecc1aad79__selected",
-		"range-middle": "_79c1a23a25ba4cd1__range-middle",
-		"outside": "_485aca6ce0a23a05__outside",
-		"hidden": "cd568589a03e3e05__hidden",
-		"range-start": "_8638d195805d7395__range-start",
-		"range-end": "_5c9d35f37a7da85e__range-end",
-		"preview": "_553023aea73828e1__preview",
-		"weeks-before-enter": "_6c19d1b31fe17f76__weeks-before-enter",
-		"weeks-before-exit": "_75c3ff871d74d8f8__weeks-before-exit",
-		"weeks-after-enter": "_854319d82ea3790a__weeks-after-enter",
-		"weeks-after-exit": "c555a192f01c276c__weeks-after-exit",
-		"caption-after-enter": "_4f9d6e3dc0d6f392__caption-after-enter",
-		"caption-after-exit": "ee9bc34717c59541__caption-after-exit",
-		"caption-before-enter": "_747d985c3c395f78__caption-before-enter",
-		"caption-before-exit": "_1e3b69aa679f8655__caption-before-exit",
-		"slide-in-left": "c2faa611ba1488be__slide-in-left",
-		"slide-out-left": "_1c1656e86f6f632c__slide-out-left",
-		"slide-in-right": "c4980e1313f9993a__slide-in-right",
-		"slide-out-right": "c3793bdbceb0750e__slide-out-right",
-		"fade-in": "_22a1a70f5db25e5c__fade-in",
-		"fade-out": "_25e4fa1d41281b90__fade-out"
+		"root": "b8b59415f24d19a7__root",
+		"day": "f7a481be9f3976ae__day",
+		"day-button": "a5ce50129aff31fd__day-button",
+		"caption-label": "ea1bee19cd90c0b6__caption-label",
+		"nav-button": "_14025744e6a8ed23__nav-button",
+		"month-caption": "_7ba48f97c244f7f5__month-caption",
+		"months": "d33c0db88cd6170b__months",
+		"month": "_8786d2bc0bb8cb57__month",
+		"month-grid": "_5dada436b15bda61__month-grid",
+		"nav": "_369bbdfd9af6cd41__nav",
+		"weekday": "_10352cbabab20a78__weekday",
+		"today": "_03805cf7f67bba19__today",
+		"selected": "_1086ceb441467e91__selected",
+		"range-middle": "_16e5771b01d09d80__range-middle",
+		"outside": "a748965993afb6e5__outside",
+		"hidden": "ef8ffc6086099611__hidden",
+		"range-start": "_45e0709dcce0b074__range-start",
+		"range-end": "_6484d659a5b625b4__range-end",
+		"preview": "_6fac052db28992e8__preview",
+		"weeks-before-enter": "df6a207a6152fa87__weeks-before-enter",
+		"weeks-before-exit": "eb9eec3e8036daf5__weeks-before-exit",
+		"weeks-after-enter": "_46245bd1097a5925__weeks-after-enter",
+		"weeks-after-exit": "c5360dc5592fc5e0__weeks-after-exit",
+		"caption-after-enter": "_670933f75fa6bf25__caption-after-enter",
+		"caption-after-exit": "f35d7e6021a451a5__caption-after-exit",
+		"caption-before-enter": "dab6a03f3bd49808__caption-before-enter",
+		"caption-before-exit": "ab28a21792a949ae__caption-before-exit",
+		"slide-in-left": "cca02142c1e4161c__slide-in-left",
+		"slide-out-left": "e087e8d93f4ee6e3__slide-out-left",
+		"slide-in-right": "da5ef7e41b965108__slide-in-right",
+		"slide-out-right": "_5e03bc243c730799__slide-out-right",
+		"fade-in": "b1241971d89570a2__fade-in",
+		"fade-out": "b539d8206ef99f1d__fade-out"
 	};
 	registerStyle$25("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
 	var resets_module_default$7 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
@@ -52052,6 +51973,7 @@ Icon: ButtonIcon });
 		nav: style_module_default$14.nav,
 		month_caption: style_module_default$14["month-caption"],
 		months: style_module_default$14.months,
+		month: style_module_default$14.month,
 		month_grid: style_module_default$14["month-grid"],
 		weekday: style_module_default$14.weekday,
 		today: style_module_default$14.today,
