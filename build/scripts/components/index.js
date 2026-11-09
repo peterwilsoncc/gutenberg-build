@@ -29432,27 +29432,47 @@ VisualLabel });
 		return isNaN(number) ? 0 : number;
 	}
 	/**
-	* Safely adds 2 values.
+	* Safely adds values together, handling floating-point precision issues.
 	*
 	* @param args Values to add together.
 	*
 	* @return The sum of values.
 	*/
 	function add(...args) {
-		return args.reduce((sum, arg) => sum + getNumber(arg), 0);
+		const precision = args.length ? Math.max(...args.map((arg) => getPrecision(getNumber(arg)))) : 0;
+		const sum = args.reduce((total, arg) => total + getNumber(arg), 0);
+		return precision ? getNumber(sum.toFixed(Math.min(precision, 20))) : sum;
 	}
 	/**
-	* Safely subtracts 2 values.
+	* Safely subtracts values, handling floating-point precision issues.
 	*
 	* @param args Values to subtract together.
 	*
 	* @return The difference of the values.
 	*/
 	function subtract(...args) {
-		return args.reduce((diff, arg, index) => {
+		const precision = args.length ? Math.max(...args.map((arg) => getPrecision(getNumber(arg)))) : 0;
+		const diff = args.reduce((total, arg, index) => {
 			const value = getNumber(arg);
-			return index === 0 ? value : diff - value;
+			return index === 0 ? value : total - value;
 		}, 0);
+		return precision ? getNumber(diff.toFixed(Math.min(precision, 20))) : diff;
+	}
+	/**
+	* Safely multiplies values together, handling floating-point precision issues.
+	*
+	* @param args Values to multiply together.
+	*
+	* @return The product of values.
+	*/
+	function multiply(...args) {
+		if (!args.length) return 0;
+		const precision = args.reduce((total, arg) => total + getPrecision(getNumber(arg)), 0);
+		const product = args.reduce((total, arg, index) => {
+			const value = getNumber(arg);
+			return index === 0 ? value : total * value;
+		}, 1);
+		return precision ? getNumber(product.toFixed(Math.min(precision, 20))) : product;
 	}
 	/**
 	* Determines the decimal position of a number value.
@@ -29462,7 +29482,12 @@ VisualLabel });
 	* @return The number of decimal places.
 	*/
 	function getPrecision(value) {
-		const split = (value + "").split(".");
+		const [base, exponent] = (value + "").split(/[eE]/);
+		if (exponent !== void 0) {
+			const precision = (base.includes(".") ? base.split(".")[1].length : 0) - parseInt(exponent, 10);
+			return precision > 0 ? precision : 0;
+		}
+		const split = base.split(".");
 		return split[1] !== void 0 ? split[1].length : 0;
 	}
 	/**
@@ -29781,7 +29806,7 @@ VisualLabel });
 		const mergedRef = (0, _wordpress_compose.useMergeRefs)([inputRef, forwardedRef]);
 		const isStepAny = step === "any";
 		const baseStep = isStepAny ? 1 : ensureNumber(step);
-		const baseSpin = ensureNumber(spinFactor) * baseStep;
+		const baseSpin = multiply(ensureNumber(spinFactor), baseStep);
 		const constrainValue = (value, stepOverride) => {
 			if (!isStepAny) value = ensureValidStep(value, min, stepOverride ?? baseStep);
 			return `${clamp$2(value, min, max)}`;
@@ -29793,7 +29818,7 @@ VisualLabel });
 		const spinValue = (value, direction, event) => {
 			event?.preventDefault();
 			const shift = event?.shiftKey && isShiftStepEnabled;
-			const delta = shift ? ensureNumber(shiftStep) * baseSpin : baseSpin;
+			const delta = shift ? multiply(ensureNumber(shiftStep), baseSpin) : baseSpin;
 			let nextValue = isValueEmpty(value) ? baseValue : value;
 			if (direction === "up") nextValue = add(nextValue, delta);
 			else if (direction === "down") nextValue = subtract(nextValue, delta);
@@ -29821,7 +29846,7 @@ VisualLabel });
 			if (type === "DRAG" && isDragEnabled) {
 				const [x, y] = payload.delta;
 				const enableShift = payload.shiftKey && isShiftStepEnabled;
-				const modifier = enableShift ? ensureNumber(shiftStep) * baseSpin : baseSpin;
+				const modifier = enableShift ? multiply(ensureNumber(shiftStep), baseSpin) : baseSpin;
 				let directionModifier;
 				let delta;
 				switch (dragDirection) {
@@ -29843,7 +29868,7 @@ VisualLabel });
 				}
 				if (delta !== 0) {
 					delta = Math.ceil(Math.abs(delta)) * Math.sign(delta);
-					const distance = delta * modifier * directionModifier;
+					const distance = multiply(delta, modifier, directionModifier);
 					nextState.value = constrainValue(add(currentValue, distance), enableShift ? modifier : void 0);
 				}
 			}
@@ -54585,7 +54610,12 @@ VisualLabel });
 			onBlur: unitControlProps.onBlur
 		}) : null;
 		let step = props.step;
-		if (!step && units) step = units.find((option) => option.value === unit)?.step ?? 1;
+		let spinFactor = props.spinFactor;
+		if (step === void 0) {
+			const unitStep = (units?.find((option) => option.value === unit))?.step ?? 1;
+			step = "any";
+			spinFactor = multiply(props.spinFactor ?? 1, unitStep);
+		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
 			...props,
 			autoComplete,
@@ -54602,6 +54632,7 @@ VisualLabel });
 			type: isPressEnterToChange ? "text" : "number",
 			value: parsedQuantity ?? "",
 			step,
+			spinFactor,
 			onFocus: onFocusProp,
 			__unstableStateReducer
 		});
@@ -66753,6 +66784,7 @@ VisualLabel });
 			labelPosition: "top",
 			max: TEXTCONTROL_MAX,
 			min: TEXTCONTROL_MIN,
+			step: 1,
 			units: [{
 				value: "%",
 				label: "%"
@@ -67962,7 +67994,8 @@ VisualLabel });
 									else onChange?.(hasUnits ? newValue : parseInt(newValue, 10));
 								},
 								units: hasUnits ? units : [],
-								min: 0
+								min: 0,
+								step: hasUnits ? void 0 : 1
 							})
 						}),
 						withSlider && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FlexItem, {
