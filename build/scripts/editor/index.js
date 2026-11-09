@@ -42705,13 +42705,13 @@ var wp;
     ...enUS,
     labels: {
       labelDayButton: (date, modifiers, options, dateLib) => {
-        let formatDate2;
+        let formatDate3;
         if (dateLib && typeof dateLib.format === "function") {
-          formatDate2 = dateLib.format.bind(dateLib);
+          formatDate3 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
+          formatDate3 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
         }
-        let label = formatDate2(date, "PPPP");
+        let label = formatDate3(date, "PPPP");
         if (modifiers.today)
           label = `Today, ${label}`;
         if (modifiers.selected)
@@ -42724,22 +42724,22 @@ var wp;
       labelWeekNumber: (weekNumber) => `Week ${weekNumber}`,
       labelYearDropdown: "Choose the Year",
       labelGrid: (date, options, dateLib) => {
-        let formatDate2;
+        let formatDate3;
         if (dateLib && typeof dateLib.format === "function") {
-          formatDate2 = dateLib.format.bind(dateLib);
+          formatDate3 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
+          formatDate3 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
         }
-        return formatDate2(date, "LLLL yyyy");
+        return formatDate3(date, "LLLL yyyy");
       },
       labelGridcell: (date, modifiers, options, dateLib) => {
-        let formatDate2;
+        let formatDate3;
         if (dateLib && typeof dateLib.format === "function") {
-          formatDate2 = dateLib.format.bind(dateLib);
+          formatDate3 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
+          formatDate3 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
         }
-        let label = formatDate2(date, "PPPP");
+        let label = formatDate3(date, "PPPP");
         if (modifiers?.today) {
           label = `Today, ${label}`;
         }
@@ -42748,13 +42748,13 @@ var wp;
       labelNav: "Navigation bar",
       labelWeekNumberHeader: "Week Number",
       labelWeekday: (date, options, dateLib) => {
-        let formatDate2;
+        let formatDate3;
         if (dateLib && typeof dateLib.format === "function") {
-          formatDate2 = dateLib.format.bind(dateLib);
+          formatDate3 = dateLib.format.bind(dateLib);
         } else {
-          formatDate2 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
+          formatDate3 = (d, pattern) => format(d, pattern, { locale: enUS, ...options });
         }
-        return formatDate2(date, "cccc");
+        return formatDate3(date, "cccc");
       }
     }
   };
@@ -88192,13 +88192,13 @@ If there's a particular need for this, please submit a feature request at https:
     if (["", void 0, null].includes(value)) {
       return "";
     }
-    let formatDate2;
+    let formatDate3;
     if (field.type !== "date") {
-      formatDate2 = format5;
+      formatDate3 = format5;
     } else {
-      formatDate2 = field.format;
+      formatDate3 = field.format;
     }
-    return (0, import_date12.dateI18n)(formatDate2.date, (0, import_date12.getDate)(value));
+    return (0, import_date12.dateI18n)(formatDate3.date, (0, import_date12.getDate)(value));
   }
   var sort2 = (a, b, direction) => {
     const timeA = new Date(a).getTime();
@@ -99249,6 +99249,31 @@ ${content}
   // packages/editor/build-module/components/post-schedule/index.mjs
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
   var { PrivatePublishDateTimePicker } = unlock(import_block_editor43.privateApis);
+  function getSiteMonth() {
+    const now = /* @__PURE__ */ new Date();
+    return new Date(
+      Number((0, import_date18.date)("Y", now)),
+      Number((0, import_date18.date)("n", now)) - 1,
+      1
+    );
+  }
+  function toTimezonelessDate(date, time) {
+    const pad = (number) => String(number).padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+      date.getDate()
+    )}T${time}`;
+  }
+  function getMonthBounds(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return {
+      after: toTimezonelessDate(new Date(year, month, 0), "23:59:59"),
+      before: toTimezonelessDate(
+        new Date(year, month + 1, 1),
+        "00:00:00"
+      )
+    };
+  }
   function PostSchedule(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime541.jsx)(
       PrivatePostSchedule,
@@ -99286,13 +99311,17 @@ ${content}
       );
     };
     const [previewedMonth, setPreviewedMonth] = (0, import_element312.useState)(
-      startOfMonth(new Date(postDate))
+      () => postDate ? new Date(postDate) : getSiteMonth()
     );
+    const [prevPostDate, setPrevPostDate] = (0, import_element312.useState)(postDate);
+    if (postDate !== prevPostDate) {
+      setPrevPostDate(postDate);
+      setPreviewedMonth(postDate ? new Date(postDate) : getSiteMonth());
+    }
     const eventsByPostType = (0, import_data95.useSelect)(
       (select8) => select8(import_core_data50.store).getEntityRecords("postType", postType2, {
         status: "publish,future",
-        after: startOfMonth(previewedMonth).toISOString(),
-        before: endOfMonth(previewedMonth).toISOString(),
+        ...getMonthBounds(previewedMonth),
         exclude: [select8(store).getCurrentPostId()],
         per_page: 100,
         _fields: "id,date"
