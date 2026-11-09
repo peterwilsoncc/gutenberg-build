@@ -36404,7 +36404,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$3 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	const SelectControl$1 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 		warnSelectControlProps(items, restProps.itemToStringValue);
 		const triggerElement = useRender({
 			render: trigger ?? DEFAULT_TRIGGER,
@@ -36450,7 +36450,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$2 = Object.assign(SelectControl$3, {
+	const SelectControl$2 = Object.assign(SelectControl$1, {
 		/**
 		* The trigger button, passed through the `trigger` prop to customize
 		* its props while retaining the control's label and selected content.

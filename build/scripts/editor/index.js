@@ -52861,7 +52861,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$3 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	const SelectControl$1 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 		warnSelectControlProps(items, restProps.itemToStringValue);
 		const triggerElement = useRender({
 			render: trigger ?? DEFAULT_TRIGGER,
@@ -52907,7 +52907,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$2 = Object.assign(SelectControl$3, {
+	const SelectControl$2 = Object.assign(SelectControl$1, {
 		/**
 		* The trigger button, passed through the `trigger` prop to customize
 		* its props while retaining the control's label and selected content.
@@ -56901,6 +56901,7 @@ Icon: ButtonIcon });
 	const LOCAL_STORAGE_ITEM = "wp-font-library-google-fonts-permission";
 	const MIN_WINDOW_HEIGHT = 500;
 	function FontCollection({ slug }) {
+		useEnableWpCompatOverlaySlot();
 		const requiresPermission = slug === "google-fonts";
 		const getGoogleFontsPermissionFromStorage = () => {
 			return window.localStorage.getItem(LOCAL_STORAGE_ITEM) === "true";
@@ -56934,7 +56935,11 @@ Icon: ButtonIcon });
 		}, [selectedFont]);
 		const collectionFonts = (0, _wordpress_element.useMemo)(() => selectedCollection?.font_families ?? [], [selectedCollection]);
 		const collectionCategories = selectedCollection?.categories ?? [];
-		const categories = [DEFAULT_CATEGORY, ...collectionCategories];
+		const categoryItems = [DEFAULT_CATEGORY, ...collectionCategories].map((category) => ({
+			label: category.name,
+			value: category.slug
+		}));
+		const selectedCategoryItem = categoryItems.find((item) => item.value === filters.category) ?? categoryItems[0];
 		const fonts = (0, _wordpress_element.useMemo)(() => filterFonts(collectionFonts, filters), [collectionFonts, filters]);
 		const windowHeight = Math.max(window.innerHeight, MIN_WINDOW_HEIGHT);
 		const pageSize = Math.floor((windowHeight - 417) / 61);
@@ -57067,14 +57072,15 @@ Icon: ButtonIcon });
 									label: (0, _wordpress_i18n.__)("Search"),
 									onChange: debouncedUpdateSearchInput,
 									hideLabelFromVision: false
-								}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+								}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
+									className: "font-library__category",
 									label: (0, _wordpress_i18n.__)("Category"),
-									value: filters.category,
-									onChange: handleCategoryFilter,
-									children: categories && categories.map((category) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("option", {
-										value: category.slug,
-										children: category.name
-									}, category.slug))
+									items: categoryItems,
+									value: selectedCategoryItem,
+									itemToStringValue: (item) => JSON.stringify(item.value),
+									onValueChange: (item) => {
+										if (item && item.value !== null && item.value !== selectedCategoryItem.value) handleCategoryFilter(item.value);
+									}
 								})]
 							}),
 							/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalSpacer, { margin: 4 }),
