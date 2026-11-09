@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "@wordpress/route";
+import { Link, privateApis, useNavigate, useParams } from "@wordpress/route";
 import { speak } from "@wordpress/a11y";
 
 // \0rolldown/runtime.js
@@ -46013,24 +46013,67 @@ function PanelToggle() {
 		onClick: onTogglePanel
 	});
 }
-function MoreMenu() {
-	const { isImage } = useMediaEditorFrameContext();
+function getActionLabel(action, items) {
+	return typeof action.label === "string" ? action.label : action.label(items);
+}
+function MediaActionModal({ action, items, closeModal }) {
+	const header = typeof action.modalHeader === "function" ? action.modalHeader(items) : action.modalHeader;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Modal, {
+		title: header || getActionLabel(action, items),
+		__experimentalHideHeader: !!action.hideModalHeader,
+		onRequestClose: closeModal,
+		focusOnMount: action.modalFocusOnMount ?? true,
+		size: action.modalSize || "medium",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(action.RenderModal, {
+			items,
+			closeModal
+		})
+	});
+}
+function MoreMenu({ actions = [], item }) {
+	const { isImage, isSaving } = useMediaEditorFrameContext();
+	const registry = (0, import_data.useRegistry)();
 	const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, import_element.useState)(false);
-	if (!isImage) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.DropdownMenu, {
-		icon: more_vertical_default,
-		label: (0, import_i18n.__)("More options"),
-		toggleProps: { size: "compact" },
-		children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
-			icon: keyboard_default,
-			iconPosition: "left",
-			onClick: () => {
-				setIsShortcutsModalOpen(true);
-				closeMenu();
-			},
-			children: (0, import_i18n.__)("Keyboard shortcuts")
-		}) })
-	}), isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditorKeyboardShortcutsModal, { onClose: () => setIsShortcutsModalOpen(false) })] });
+	const [activeModalAction, setActiveModalAction] = (0, import_element.useState)(null);
+	const items = item ? [item] : [];
+	const eligibleActions = (0, import_element.useMemo)(() => item ? actions.filter((action) => !action.isEligible || action.isEligible(item)) : [], [actions, item]);
+	if (!isImage && !eligibleActions.length) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.DropdownMenu, {
+			icon: more_vertical_default,
+			label: (0, import_i18n.__)("More options"),
+			toggleProps: { size: "compact" },
+			children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [isImage && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
+				icon: keyboard_default,
+				iconPosition: "left",
+				onClick: () => {
+					setIsShortcutsModalOpen(true);
+					closeMenu();
+				},
+				children: (0, import_i18n.__)("Keyboard shortcuts")
+			}) }), !!eligibleActions.length && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuGroup, { children: eligibleActions.map((action) => {
+				const label = getActionLabel(action, items);
+				return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
+					disabled: isSaving || action.disabled,
+					onClick: () => {
+						closeMenu();
+						if ("RenderModal" in action) {
+							setActiveModalAction(action);
+							return;
+						}
+						action.callback(items, { registry });
+					},
+					children: "RenderModal" in action ? (0, import_i18n.sprintf)((0, import_i18n._x)("%s…", "menu item requiring further input"), label) : label
+				}, action.id);
+			}) })] })
+		}),
+		isShortcutsModalOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditorKeyboardShortcutsModal, { onClose: () => setIsShortcutsModalOpen(false) }),
+		activeModalAction && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaActionModal, {
+			action: activeModalAction,
+			items,
+			closeModal: () => setActiveModalAction(null)
+		})
+	] });
 }
 function HeaderActions({ showCloseButton = false }) {
 	const { isSaving, onCancel } = useMediaEditorFrameContext();
@@ -46528,8 +46571,8 @@ function MediaEditorModal({ fields = [], form, aspectRatioPresets }) {
 }
 
 // packages/media-editor/build-module/private-apis.mjs
-const privateApis = {};
-lock$2(privateApis, {
+const privateApis$1 = {};
+lock$2(privateApis$1, {
 	store: store$6,
 	MediaEditor: MediaEditor$1,
 	MediaEditorModal
@@ -46579,6 +46622,44 @@ function useViewConfig({ kind, name, fields }) {
 	]);
 }
 
+// routes/media-editor/navigation.ts
+const MEDIA_LIBRARY_ADMIN_PATH = "upload.php";
+/**
+* Whether `referrer` is a page in the same wp-admin as `currentUrl`: same
+* origin, and under the directory of the current admin page (e.g.
+* `/wp-admin/`).
+*
+* @param referrer   The referring URL, usually `document.referrer`.
+* @param currentUrl The URL of the current page.
+*/
+function isAdminReferrer(referrer, currentUrl) {
+	if (!referrer) return false;
+	let from;
+	let current;
+	try {
+		from = new URL(referrer);
+		current = new URL(currentUrl);
+	} catch {
+		return false;
+	}
+	const adminPath = current.pathname.slice(0, current.pathname.lastIndexOf("/") + 1);
+	return from.origin === current.origin && from.pathname.startsWith(adminPath);
+}
+/**
+* The Media Library URL to go to after an attachment is deleted, with the
+* query args the Media Library reads to show its notice. Moving to the trash
+* passes `ids` too, which the notice's Undo link uses.
+*
+* @param actionId     The id of the delete action.
+* @param attachmentId The id of the deleted attachment.
+*/
+function getMediaLibraryUrlAfterDelete(actionId, attachmentId) {
+	return `${MEDIA_LIBRARY_ADMIN_PATH}?${new URLSearchParams(actionId === "move-to-trash" ? {
+		trashed: "1",
+		ids: String(attachmentId)
+	} : { deleted: "1" })}`;
+}
+
 // routes/media-editor/style.scss
 if (typeof document !== "undefined" && !document.head.querySelector("style[data-wp-hash='40057065d1']")) {
 	const style = document.createElement("style");
@@ -46588,8 +46669,9 @@ if (typeof document !== "undefined" && !document.head.querySelector("style[data-
 }
 
 // routes/media-editor/stage.tsx
-const { usePostFields } = unlock$1(import_editor.privateApis);
-const { MediaEditor } = unlock$1(privateApis);
+const { usePostActions, usePostFields } = unlock$1(import_editor.privateApis);
+const { MediaEditor } = unlock$1(privateApis$1);
+const { useCanGoBack } = unlock$1(privateApis);
 /**
 * The stage only renders a form, so it requests the `form` of the entity view
 * configuration alone. Must match the fields the route loader requests, so
@@ -46597,8 +46679,9 @@ const { MediaEditor } = unlock$1(privateApis);
 */
 const VIEW_CONFIG_FIELDS = ["form"];
 const MEDIA_LIST_PATH = "/types/attachment/list/all";
-const MEDIA_LIBRARY_ADMIN_PATH = "upload.php";
 const MEDIA_EDITOR_ADMIN_PAGE = "media-editor-wp-admin";
+const DELETE_ACTION_IDS = ["move-to-trash", "permanently-delete"];
+const EXCLUDED_ACTION_IDS = ["duplicate-post", "rename-post"];
 function isMediaEditorAdminPage() {
 	return typeof window !== "undefined" && new URLSearchParams(window.location.search).get("page") === MEDIA_EDITOR_ADMIN_PAGE;
 }
@@ -46661,29 +46744,68 @@ function MediaEditorRoute() {
 	});
 	const isStandaloneAdminPage = isMediaEditorAdminPage();
 	const media = (0, import_data.useSelect)((select) => select(import_core_data.store).getEditedEntityRecord("postType", "attachment", attachmentId), [attachmentId]);
+	const permissions = (0, import_data.useSelect)((select) => unlock$1(select(import_core_data.store)).getEntityRecordPermissions("postType", "attachment", attachmentId), [attachmentId]);
+	const actionItem = (0, import_element.useMemo)(() => media ? {
+		...media,
+		permissions
+	} : void 0, [media, permissions]);
 	const title = getMediaTitle(media || null);
 	const fileType = getFileExtension(getFieldValue(fields, "filename", media));
 	const fileSize = getFieldValue(fields, "filesize", media);
-	const navigateBack = () => {
-		if (typeof window !== "undefined" && window.history.length > 1) {
+	const canGoBack = useCanGoBack();
+	const navigateBack = (0, import_element.useCallback)(({ replace = false } = {}) => {
+		if (canGoBack) {
 			window.history.back();
 			return;
 		}
 		if (isStandaloneAdminPage) {
+			if (window.history.length > 1 && isAdminReferrer(document.referrer, window.location.href)) {
+				window.history.back();
+				return;
+			}
 			window.location.assign(MEDIA_LIBRARY_ADMIN_PATH);
 			return;
 		}
-		navigate({ to: MEDIA_LIST_PATH });
-	};
+		navigate({
+			to: MEDIA_LIST_PATH,
+			replace
+		});
+	}, [
+		canGoBack,
+		isStandaloneAdminPage,
+		navigate
+	]);
 	const openAttachment = (newId) => navigate({
 		to: `/media-editor/${newId}`,
 		replace: true
 	});
+	const registry = (0, import_data.useRegistry)();
+	const { removeAllNotices } = (0, import_data.useDispatch)(import_notices.store);
+	const onActionPerformed = (0, import_element.useCallback)((actionId) => {
+		if (!DELETE_ACTION_IDS.includes(actionId) || registry.select(import_core_data.store).getLastEntityDeleteError("postType", "attachment", attachmentId)) return;
+		if (isStandaloneAdminPage) {
+			removeAllNotices("snackbar");
+			window.location.assign(getMediaLibraryUrlAfterDelete(actionId, attachmentId));
+			return;
+		}
+		navigateBack({ replace: true });
+	}, [
+		attachmentId,
+		isStandaloneAdminPage,
+		navigateBack,
+		registry,
+		removeAllNotices
+	]);
+	const postActions = usePostActions({
+		postType: "attachment",
+		onActionPerformed
+	});
+	const actions = (0, import_element.useMemo)(() => postActions.filter((action) => !EXCLUDED_ACTION_IDS.includes(action.id)), [postActions]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor, {
 		id: attachmentId,
 		fields,
 		form,
-		onClose: navigateBack,
+		onClose: () => navigateBack(),
 		onSaved: ({ id: savedId }) => {
 			if (savedId !== attachmentId) openAttachment(savedId);
 		},
@@ -46708,7 +46830,10 @@ function MediaEditorRoute() {
 						!isNarrow && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.HistoryActions, {}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.PanelToggle, {}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.SaveActions, { size: "compact" }),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.MoreMenu, {})
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditor.MoreMenu, {
+							actions,
+							item: actionItem
+						})
 					] }),
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: "media-editor-route__content",

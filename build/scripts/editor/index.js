@@ -68323,7 +68323,7 @@ Icon: ButtonIcon });
 
 // packages/dataviews/build-module/utils/get-action-label.mjs
 	const TRAILING_ELLIPSIS = /(?:\s*(?:[…⋯]|[.。．]{3,}(?![.。．])))+\s*$/u;
-	function getActionLabel(action, items, context = "button") {
+	function getActionLabel$1(action, items, context = "button") {
 		const label = typeof action.label === "string" ? action.label : action.label(items);
 		if (context === "button") return label.replace(TRAILING_ELLIPSIS, "");
 		if (!("RenderModal" in action) || TRAILING_ELLIPSIS.test(label)) return label;
@@ -68332,7 +68332,7 @@ Icon: ButtonIcon });
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
 	function ButtonTrigger({ action, onClick, items, variant }) {
-		const label = getActionLabel(action, items);
+		const label = getActionLabel$1(action, items);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 			disabled: !!action.disabled,
 			accessibleWhenDisabled: true,
@@ -68343,7 +68343,7 @@ Icon: ButtonIcon });
 		});
 	}
 	function MenuItemTrigger({ action, onClick, items }) {
-		const label = getActionLabel(action, items, "menu");
+		const label = getActionLabel$1(action, items, "menu");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Item$4, {
 			disabled: action.disabled,
 			onClick,
@@ -68525,7 +68525,7 @@ Icon: ButtonIcon });
 		});
 	}
 	function ActionTrigger({ action, onClick, isBusy, items }) {
-		const label = getActionLabel(action, items);
+		const label = getActionLabel$1(action, items);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$87, {
 			variant: "outline",
 			tone: "neutral",
@@ -68546,7 +68546,7 @@ Icon: ButtonIcon });
 		if (isMenuItem) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Item$4, {
 			onClick,
 			disabled: !!action.disabled || isBusy,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: getActionLabel(action, selectedEligibleItems, "menu") })
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: getActionLabel$1(action, selectedEligibleItems, "menu") })
 		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionTrigger, {
 			action,
@@ -70140,7 +70140,7 @@ Icon: ButtonIcon });
 		const registry = (0, _wordpress_data.useRegistry)();
 		const [isModalOpen, setIsModalOpen] = (0, _wordpress_element.useState)(false);
 		const compositeItemId = generatePrimaryActionCompositeId(idPrefix, primaryAction.id);
-		const label = getActionLabel(primaryAction, [item]);
+		const label = getActionLabel$1(primaryAction, [item]);
 		return "RenderModal" in primaryAction ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			role: "gridcell",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Composite.Item, {
@@ -70862,7 +70862,7 @@ Icon: ButtonIcon });
 				if (!("callback" in action)) return null;
 				const { id, icon, isPrimary, isEligible, callback } = action;
 				const eligibleItems = isEligible ? items.filter((item) => isEligible(item)) : items;
-				const label = getActionLabel(action, items);
+				const label = getActionLabel$1(action, items);
 				const variant = isPrimary ? "primary" : "tertiary";
 				const isInProgress = id === actionInProgress;
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
@@ -101536,24 +101536,67 @@ If there's a particular need for this, please submit a feature request at https:
 			onClick: onTogglePanel
 		});
 	}
-	function MoreMenu$1() {
-		const { isImage } = useMediaEditorFrameContext();
+	function getActionLabel(action, items) {
+		return typeof action.label === "string" ? action.label : action.label(items);
+	}
+	function MediaActionModal({ action, items, closeModal }) {
+		const header = typeof action.modalHeader === "function" ? action.modalHeader(items) : action.modalHeader;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
+			title: header || getActionLabel(action, items),
+			__experimentalHideHeader: !!action.hideModalHeader,
+			onRequestClose: closeModal,
+			focusOnMount: action.modalFocusOnMount ?? true,
+			size: action.modalSize || "medium",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(action.RenderModal, {
+				items,
+				closeModal
+			})
+		});
+	}
+	function MoreMenu$1({ actions = [], item }) {
+		const { isImage, isSaving } = useMediaEditorFrameContext();
+		const registry = (0, _wordpress_data.useRegistry)();
 		const [isShortcutsModalOpen, setIsShortcutsModalOpen] = (0, _wordpress_element.useState)(false);
-		if (!isImage) return null;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
-			icon: more_vertical_default,
-			label: (0, _wordpress_i18n.__)("More options"),
-			toggleProps: { size: "compact" },
-			children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
-				icon: keyboard_default,
-				iconPosition: "left",
-				onClick: () => {
-					setIsShortcutsModalOpen(true);
-					closeMenu();
-				},
-				children: (0, _wordpress_i18n.__)("Keyboard shortcuts")
-			}) })
-		}), isShortcutsModalOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorKeyboardShortcutsModal, { onClose: () => setIsShortcutsModalOpen(false) })] });
+		const [activeModalAction, setActiveModalAction] = (0, _wordpress_element.useState)(null);
+		const items = item ? [item] : [];
+		const eligibleActions = (0, _wordpress_element.useMemo)(() => item ? actions.filter((action) => !action.isEligible || action.isEligible(item)) : [], [actions, item]);
+		if (!isImage && !eligibleActions.length) return null;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
+				icon: more_vertical_default,
+				label: (0, _wordpress_i18n.__)("More options"),
+				toggleProps: { size: "compact" },
+				children: ({ onClose: closeMenu }) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [isImage && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
+					icon: keyboard_default,
+					iconPosition: "left",
+					onClick: () => {
+						setIsShortcutsModalOpen(true);
+						closeMenu();
+					},
+					children: (0, _wordpress_i18n.__)("Keyboard shortcuts")
+				}) }), !!eligibleActions.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuGroup, { children: eligibleActions.map((action) => {
+					const label = getActionLabel(action, items);
+					return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
+						disabled: isSaving || action.disabled,
+						onClick: () => {
+							closeMenu();
+							if ("RenderModal" in action) {
+								setActiveModalAction(action);
+								return;
+							}
+							action.callback(items, { registry });
+						},
+						children: "RenderModal" in action ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s…", "menu item requiring further input"), label) : label
+					}, action.id);
+				}) })] })
+			}),
+			isShortcutsModalOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditorKeyboardShortcutsModal, { onClose: () => setIsShortcutsModalOpen(false) }),
+			activeModalAction && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaActionModal, {
+				action: activeModalAction,
+				items,
+				closeModal: () => setActiveModalAction(null)
+			})
+		] });
 	}
 	function HeaderActions({ showCloseButton = false }) {
 		const { isSaving, onCancel } = useMediaEditorFrameContext();
