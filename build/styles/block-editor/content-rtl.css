@@ -981,7 +981,7 @@ figcaption.block-editor-rich-text__editable [data-rich-text-placeholder]::before
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   width: 100%;
   gap: 12px;
 }

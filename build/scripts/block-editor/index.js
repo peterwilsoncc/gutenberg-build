@@ -25451,7 +25451,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	*
 	* Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 	*/
-	const Button$68 = /*#__PURE__*/ react$1.forwardRef(function Button(componentProps, forwardedRef) {
+	const Button$69 = /*#__PURE__*/ react$1.forwardRef(function Button(componentProps, forwardedRef) {
 		const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 		const { getButtonProps, buttonRef } = useButton({
 			disabled,
@@ -25464,7 +25464,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			props: [elementProps, getButtonProps]
 		});
 	});
-	Button$68.displayName = "Button";
+	Button$69.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -33640,12 +33640,12 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$67 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
+	const Button$68 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
 		const mergedClassName = clsx(global_css_defense_module_default$19.button, resets_module_default$21["box-sizing"], focus_module_default$8["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$58.button, style_module_default$58[`is-${tone}`], style_module_default$58[`is-${variant}`], style_module_default$58[`is-${size}`], loading && style_module_default$58["is-loading"], className);
 		(0, _wordpress_element.useEffect)(() => {
 			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
 		}, [loading, loadingAnnouncement]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$68, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$69, {
 			ref,
 			className: mergedClassName,
 			focusableWhenDisabled,
@@ -33790,7 +33790,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$66 = Object.assign(Button$67, { 
+	const Button$67 = Object.assign(Button$68, { 
 	/**
 	* An icon component specifically designed to work well when rendered inside
 	* a `Button` component.
@@ -37694,7 +37694,7 @@ Icon: ButtonIcon });
 		const [element, setElement] = (0, _wordpress_element.useState)(null);
 		const mergedRef = (0, _wordpress_compose.useMergeRefs)([forwardedRef, setElement]);
 		const isTruncated = useIsTruncated(element, measurementVersion);
-		const button = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$66, {
+		const button = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 			...isMeasurement ? getMeasurementProps(props) : mergeProps$1(props, {
 				onBlur: () => onLinkBlur(itemKey),
 				onFocus: () => onLinkFocus(itemKey)
@@ -38518,7 +38518,7 @@ Icon: ButtonIcon });
 		"overflow-trigger": "_65a6252553ff6053__overflow-trigger"
 	};
 	const OverflowTriggerButton = (0, _wordpress_element.forwardRef)(function UnforwardedOverflowTriggerButton({ children, className, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$66, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 			...props,
 			ref,
 			className: clsx(style_module_default$33["overflow-trigger"], className),
@@ -40653,7 +40653,7 @@ Icon: ButtonIcon });
 			ref,
 			...targetProps,
 			disabled: disabled && !focusableWhenDisabled,
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$66, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 				...restProps,
 				size,
 				"aria-label": label,
@@ -57622,25 +57622,66 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-editor/build-module/components/block-list/block-crash-warning.mjs
-	const warning$6 = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Warning, {
-		className: "block-editor-block-list__block-crash-warning",
-		children: (0, _wordpress_i18n.__)("This block has encountered an error and cannot be previewed.")
-	});
-	function BlockCrashWarning() {
-		return warning$6;
+	const COPY_FEEDBACK_TIMEOUT = 2e3;
+	const RESULT_ICON = {
+		idle: copy_default,
+		copied: check_default,
+		error: error_default
+	};
+	function CopyErrorButton({ error }) {
+		const [feedback, setFeedback] = (0, _wordpress_element.useState)({
+			result: "idle",
+			id: 0
+		});
+		(0, _wordpress_element.useEffect)(() => {
+			if (feedback.result === "idle") return;
+			const timeoutId = setTimeout(() => setFeedback({
+				result: "idle",
+				id: 0
+			}), COPY_FEEDBACK_TIMEOUT);
+			return () => clearTimeout(timeoutId);
+		}, [feedback]);
+		function report(result, message) {
+			setFeedback((current) => ({
+				result,
+				id: current.id + 1
+			}));
+			(0, _wordpress_a11y.speak)(message);
+		}
+		const ref = (0, _wordpress_compose.useCopyToClipboard)(() => error.stack ?? String(error), () => report("copied", (0, _wordpress_i18n.__)("Copied to clipboard")), () => report("error", (0, _wordpress_i18n.__)("Couldn't copy to clipboard.")));
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
+			ref,
+			variant: "secondary",
+			size: "compact",
+			icon: RESULT_ICON[feedback.result],
+			children: (0, _wordpress_i18n._x)("Copy error", "button label")
+		});
+	}
+	function BlockCrashWarning({ error }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Warning, {
+			className: "block-editor-block-list__block-crash-warning",
+			actions: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(CopyErrorButton, { error }, "copy-error")],
+			children: (0, _wordpress_i18n.__)("This block has encountered an error and cannot be previewed.")
+		});
 	}
 
 // packages/block-editor/build-module/components/block-list/block-crash-boundary.mjs
 	var BlockCrashBoundary = class extends _wordpress_element.Component {
 		constructor(props) {
 			super(props);
-			this.state = { hasError: false };
+			this.state = {
+				hasError: false,
+				error: null
+			};
 		}
-		componentDidCatch() {
-			this.setState({ hasError: true });
+		componentDidCatch(error) {
+			this.setState({
+				hasError: true,
+				error: error instanceof Error ? error : new Error(String(error))
+			});
 		}
 		render() {
-			if (this.state.hasError) return this.props.fallback;
+			if (this.state.hasError) return this.props.fallback(this.state.error);
 			return this.props.children;
 		}
 	};
@@ -62055,9 +62096,9 @@ Icon: ButtonIcon });
 				...context
 			},
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockCrashBoundary, {
-				fallback: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Block, {
+				fallback: (error) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Block, {
 					className: "has-warning",
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockCrashWarning, {})
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockCrashWarning, { error })
 				}),
 				children: block
 			})
@@ -72909,7 +72950,7 @@ Icon: ButtonIcon });
 	}
 	function ActionTrigger({ action, onClick, isBusy, items }) {
 		const label = getActionLabel(action, items);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$66, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 			variant: "outline",
 			tone: "neutral",
 			size: "compact",
@@ -72994,12 +73035,12 @@ Icon: ButtonIcon });
 					justify: "start",
 					children: isMobile ? actionsToShow.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$13, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$5, {
 						disabled: !!actionInProgress,
-						render: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$66, {
+						render: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$67, {
 							variant: "outline",
 							tone: "neutral",
 							size: "compact",
 							loading: !!actionInProgress,
-							children: [(0, _wordpress_i18n.__)("Actions"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$66.Icon, { icon: chevron_down_default })]
+							children: [(0, _wordpress_i18n.__)("Actions"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67.Icon, { icon: chevron_down_default })]
 						})
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$3, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Group$1, { children: renderActions(true) }) })] }) : renderActions()
 				}),
@@ -98400,7 +98441,7 @@ If there's a particular need for this, please submit a feature request at https:
 							className: "block-editor-block-styles__row",
 							children: row.map((style) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Composite.Item, {
 								id: getCompositeItemId(instanceId, style),
-								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$66, {
+								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$67, {
 									className: "block-editor-block-styles__item",
 									tone: "neutral",
 									variant: activeStyle.name === style.name ? "solid" : "outline"
