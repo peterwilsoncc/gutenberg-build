@@ -52636,11 +52636,14 @@ Icon: ButtonIcon });
 		"li": "c48c21f7371f7cea__li",
 		"span": "_2348cae4464115af__span"
 	};
-	const wrappedRender = (render, restProps) => {
-		return function textareaRender(props) {
-			return typeof render === "function" ? render(mergeProps$1(props, restProps)) : (0, _wordpress_element.cloneElement)(render, mergeProps$1(props, restProps));
-		};
-	};
+	const TextareaElement = (0, _wordpress_element.forwardRef)(function UnforwardedTextareaElement({ render, ...props }, ref) {
+		return useRender({
+			render,
+			defaultTagName: "textarea",
+			ref,
+			props
+		});
+	});
 	/**
 	* A low-level primitive for a textarea field.
 	*
@@ -52648,13 +52651,14 @@ Icon: ButtonIcon });
 	*/
 	const Textarea$1 = (0, _wordpress_element.forwardRef)(function UnforwardedTextarea({ className, defaultValue, disabled, onValueChange, render, rows = 4, style, value, ...restProps }, ref) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Input$2, {
+			ref,
 			className: clsx(style_module_default$2.wrapper, className),
 			style,
-			render: wrappedRender(render || ((props) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("textarea", { ...props })), {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TextareaElement, {
 				className: clsx(global_css_defense_module_default.textarea, style_module_default$2.textarea),
-				ref,
 				rows,
-				...restProps
+				...restProps,
+				render
 			}),
 			value,
 			defaultValue,

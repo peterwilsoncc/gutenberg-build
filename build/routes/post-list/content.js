@@ -34579,11 +34579,14 @@ var global_css_defense_module_default = {
 	"li": "c48c21f7371f7cea__li",
 	"span": "_2348cae4464115af__span"
 };
-const wrappedRender = (render, restProps) => {
-	return function textareaRender(props) {
-		return typeof render === "function" ? render(mergeProps$1(props, restProps)) : (0, import_element.cloneElement)(render, mergeProps$1(props, restProps));
-	};
-};
+const TextareaElement = (0, import_element.forwardRef)(function UnforwardedTextareaElement({ render, ...props }, ref) {
+	return useRender({
+		render,
+		defaultTagName: "textarea",
+		ref,
+		props
+	});
+});
 /**
 * A low-level primitive for a textarea field.
 *
@@ -34591,13 +34594,14 @@ const wrappedRender = (render, restProps) => {
 */
 const Textarea$1 = (0, import_element.forwardRef)(function UnforwardedTextarea({ className, defaultValue, disabled, onValueChange, render, rows = 4, style, value, ...restProps }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
+		ref,
 		className: clsx(style_module_default$4.wrapper, className),
 		style,
-		render: wrappedRender(render || ((props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { ...props })), {
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TextareaElement, {
 			className: clsx(global_css_defense_module_default.textarea, style_module_default$4.textarea),
-			ref,
 			rows,
-			...restProps
+			...restProps,
+			render
 		}),
 		value,
 		defaultValue,
