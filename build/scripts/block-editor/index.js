@@ -8133,7 +8133,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* Returns true when the writing flow wrapper can host editing for the given
 	* block: it supports `editableRoot`, is edited visually in the default
 	* editing mode, and has sibling blocks for a native selection to extend
-	* into, all of them editable.
+	* into, all of them editable. Never in preview mode, where the content is
+	* read-only and the wrapper taking focus would stop preview mode navigation.
 	*
 	* @param state    Global application state.
 	* @param clientId Block client ID.
@@ -8141,7 +8142,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* @return Whether an editing host can host the block.
 	*/
 	const canHostEditableRoot = (0, _wordpress_data.createSelector)((state, clientId) => {
-		if (!clientId || getBlockEditingMode(state, clientId) !== "default" || getBlockMode(state, clientId) !== "visual" || !(0, _wordpress_blocks.getBlockType)(getBlockName(state, clientId))?.[editableRootKey$1]) return false;
+		if (!clientId || state.settings.isPreviewMode || getBlockEditingMode(state, clientId) !== "default" || getBlockMode(state, clientId) !== "visual" || !(0, _wordpress_blocks.getBlockType)(getBlockName(state, clientId))?.[editableRootKey$1]) return false;
 		const siblings = getBlockOrder(state, getBlockRootClientId(state, clientId));
 		return siblings.length > 1 && siblings.every((siblingClientId) => getBlockEditingMode(state, siblingClientId) === "default");
 	}, (state) => [
@@ -8150,7 +8151,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		state.blocks.byClientId,
 		state.blocks.blockEditingModes,
 		state.derivedBlockEditingModes,
-		state.blocksMode
+		state.blocksMode,
+		state.settings.isPreviewMode
 	]);
 	/**
 	* Returns the block tree displayed by List View.
