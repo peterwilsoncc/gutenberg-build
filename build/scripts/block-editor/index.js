@@ -71247,12 +71247,16 @@ var wp;
           hasMultiSelection: hasMultiSelection2,
           isMultiSelecting: isMultiSelecting3
         } = registry.select(store);
+        const { activeElement: activeElement2 } = node.ownerDocument;
+        const selection2 = node.ownerDocument.defaultView.getSelection();
+        const isFieldFocused = activeElement2 !== node && activeElement2?.isContentEditable && node.contains(activeElement2) && getBlockClientId(activeElement2) === getSelectedBlockClientId2();
+        if (isFieldFocused && selection2.anchorNode && !activeElement2.contains(selection2.anchorNode)) {
+          selection2.removeAllRanges();
+        }
         if (!setContentEditableWrapper(node, true, { focus: false })) {
           return;
         }
-        const { activeElement: activeElement2 } = node.ownerDocument;
-        const selection2 = node.ownerDocument.defaultView.getSelection();
-        if (activeElement2 !== node && activeElement2?.isContentEditable && node.contains(activeElement2) && getBlockClientId(activeElement2) === getSelectedBlockClientId2() && selection2.anchorNode && activeElement2.contains(selection2.anchorNode)) {
+        if (isFieldFocused && selection2.anchorNode && activeElement2.contains(selection2.anchorNode)) {
           node.focus();
         }
         return () => {
@@ -72441,7 +72445,10 @@ var wp;
           const clickedClientId = getBlockClientId(
             event.target
           );
-          if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && node.ownerDocument.activeElement === node) {
+          if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && // Not `activeElement`: with nothing focused, as after the
+          // keyboard is hidden, it falls back to the body, which in
+          // the iframe is this wrapper.
+          node.matches(":focus")) {
             event.preventDefault();
             return;
           }
