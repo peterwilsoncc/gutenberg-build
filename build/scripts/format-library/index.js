@@ -106,13 +106,19 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	});
 
 // packages/icons/build-module/library/format-italic.mjs
-	var format_italic_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+	var format_italic_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
 		viewBox: "0 0 24 24",
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M11 19L13.5 5" })
+		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+			d: "M15.25 6H13.5L11 18H9.25",
+			strokeLinecap: "square"
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+			d: "M13.5 6H11.5M11 18H13",
+			strokeLinecap: "square"
+		})]
 	});
 
 // packages/icons/build-module/library/format-strikethrough.mjs
