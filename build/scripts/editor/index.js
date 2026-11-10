@@ -62927,8 +62927,8 @@ var wp;
                             ringbuffer,
                             ringbuffer_size
                           );
-                          for (var _x44 = 0; _x44 < copy_dst - ringbuffer_end; _x44++)
-                            ringbuffer[_x44] = ringbuffer[ringbuffer_end + _x44];
+                          for (var _x45 = 0; _x45 < copy_dst - ringbuffer_end; _x45++)
+                            ringbuffer[_x45] = ringbuffer[ringbuffer_end + _x45];
                         }
                       } else {
                         throw new Error(
@@ -95443,7 +95443,7 @@ ${content}
                   {
                     variant: "solid",
                     text: () => getErrorReport(error2, componentStack),
-                    children: (0, import_i18n143.__)("Copy error")
+                    children: (0, import_i18n143._x)("Copy error", "button label")
                   }
                 )
               ] })
