@@ -57688,6 +57688,40 @@ Icon: ButtonIcon });
 		});
 	}
 
+// packages/block-editor/build-module/components/safe-raw-html/index.mjs
+/**
+	* Replaces the children of an element with the nodes of the HTML, sanitized
+	* with `safeHTML`.
+	*
+	* Markup parsed inside an element can produce a different tree from the same
+	* markup parsed elsewhere, so the element receives the nodes of the checked
+	* tree instead of parsing the sanitized markup itself.
+	*
+	* @param element Element to fill.
+	* @param html    HTML to sanitize.
+	*/
+	function setSafeHTML(element, html) {
+		const { body } = element.ownerDocument.implementation.createHTMLDocument("");
+		body.innerHTML = (0, _wordpress_dom.safeHTML)(html);
+		const fragment = element.ownerDocument.createDocumentFragment();
+		while (body.firstChild) fragment.appendChild(body.firstChild);
+		element.replaceChildren(fragment);
+	}
+	/**
+	* Renders HTML, sanitized with `safeHTML`, in a `div`. Use it instead of
+	* `RawHTML` for markup rendered in the editor canvas.
+	*
+	* @param props      Component props.
+	* @param props.html HTML to sanitize and render.
+	*/
+	function SafeRawHTML({ html }) {
+		const ref = (0, _wordpress_element.useRef)(null);
+		(0, _wordpress_element.useLayoutEffect)(() => {
+			setSafeHTML(ref.current, html);
+		}, [html]);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ref });
+	}
+
 // node_modules/.store/@react-spring/shared@10.1.2-3ptIGZgAKMkeKnB2V4vn3A/node_modules/@react-spring/shared/dist/chunk.mjs
 	var __defProp = Object.defineProperty;
 	var __exportAll = (all, no_symbols) => {
@@ -61988,7 +62022,7 @@ Icon: ButtonIcon });
 			const saveContent = __unstableBlockSource ? (0, _wordpress_blocks.serializeRawBlock)(__unstableBlockSource) : (0, _wordpress_blocks.getSaveContent)(blockType, attributes);
 			block = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Block, {
 				className: "has-warning",
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockInvalidWarning, { clientId }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_element.RawHTML, { children: (0, _wordpress_dom.safeHTML)(saveContent) })]
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockInvalidWarning, { clientId }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SafeRawHTML, { html: saveContent })]
 			});
 		} else if (mode === "html") block = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			style: { display: "none" },
@@ -120962,7 +120996,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const [slots, setSlots] = (0, _wordpress_element.useState)([]);
 		(0, _wordpress_element.useLayoutEffect)(() => {
 			const container = containerRef.current;
-			container.innerHTML = (0, _wordpress_dom.safeHTML)(html);
+			setSafeHTML(container, html);
 			setSlots(Array.from(container.querySelectorAll(SLOT_TAG_NAME)).sort((a, b) => Number(a.dataset.slotIndex) - Number(b.dataset.slotIndex)));
 		}, [html]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(LayoutProvider, {
@@ -121056,6 +121090,7 @@ If there's a particular need for this, please submit a feature request at https:
 		isRelativePath,
 		isURLLike,
 		InnerContent,
+		SafeRawHTML,
 		useNativeUndo,
 		usesNativeUndo,
 		isElementVisible,

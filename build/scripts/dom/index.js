@@ -1017,30 +1017,91 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	}
 
 // packages/dom/build-module/dom/safe-html.mjs
-/**
-	* Strips scripts and on* attributes from HTML.
+	const UNSAFE_ELEMENTS = /* @__PURE__ */ new Set([
+		"base",
+		"embed",
+		"meta",
+		"noscript",
+		"object",
+		"script",
+		"template"
+	]);
+	const IFRAME_SANDBOX = "allow-scripts allow-presentation";
+	const MAX_PASSES = 8;
+	const URL_ATTRIBUTES = /* @__PURE__ */ new Set([
+		"action",
+		"archive",
+		"background",
+		"by",
+		"cite",
+		"classid",
+		"codebase",
+		"data",
+		"formaction",
+		"from",
+		"href",
+		"icon",
+		"longdesc",
+		"manifest",
+		"poster",
+		"profile",
+		"src",
+		"to",
+		"usemap",
+		"values",
+		"xlink:href",
+		"xlinkhref",
+		"xmlns"
+	]);
+	const JAVASCRIPT_URL = /^[\u0000-\u001F ]*j[\r\n\t]*a[\r\n\t]*v[\r\n\t]*a[\r\n\t]*s[\r\n\t]*c[\r\n\t]*r[\r\n\t]*i[\r\n\t]*p[\r\n\t]*t[\r\n\t]*\:/i;
+	function isJavaScriptURL(key, value) {
+		if (!URL_ATTRIBUTES.has(key)) return false;
+		return (key === "values" ? value.split(";") : [value]).some((url) => JAVASCRIPT_URL.test(url));
+	}
+	function isCrossOriginURL(src) {
+		try {
+			const { origin, protocol } = new URL(src ?? "", document.baseURI);
+			return (protocol === "https:" || protocol === "http:") && origin !== window.location.origin;
+		} catch {
+			return false;
+		}
+	}
+	function sanitize(html) {
+		const { body } = document.implementation.createHTMLDocument("");
+		body.innerHTML = html;
+		const elements = body.getElementsByTagName("*");
+		let elementIndex = elements.length;
+		const { getAttribute, getAttributeNames, removeAttribute, setAttribute } = Element.prototype;
+		while (elementIndex--) {
+			const element = elements[elementIndex];
+			if (UNSAFE_ELEMENTS.has(element.localName)) {
+				remove(element);
+				continue;
+			}
+			for (const key of getAttributeNames.call(element)) {
+				const value = getAttribute.call(element, key) ?? "";
+				if (key.startsWith("on") || isJavaScriptURL(key, value)) removeAttribute.call(element, key);
+			}
+			if (element.localName === "iframe" && (getAttribute.call(element, "srcdoc") !== null || !isCrossOriginURL(getAttribute.call(element, "src")))) setAttribute.call(element, "sandbox", IFRAME_SANDBOX);
+		}
+		return body.innerHTML;
+	}
+	/**
+	* Strips scripts, on* attributes, script URLs and other active content from
+	* HTML, and sandboxes iframes that the same-origin policy doesn't isolate.
 	*
 	* @param html HTML to sanitize.
 	*
 	* @return The sanitized HTML.
 	*/
 	function safeHTML(html) {
-		const { body } = document.implementation.createHTMLDocument("");
-		body.innerHTML = html;
-		const elements = body.getElementsByTagName("*");
-		let elementIndex = elements.length;
-		while (elementIndex--) {
-			const element = elements[elementIndex];
-			if (element.tagName === "SCRIPT") remove(element);
-			else {
-				let attributeIndex = element.attributes.length;
-				while (attributeIndex--) {
-					const { name: key } = element.attributes[attributeIndex];
-					if (key.startsWith("on")) element.removeAttribute(key);
-				}
-			}
+		let output = html;
+		for (let pass = 0; pass < MAX_PASSES; pass++) {
+			const sanitized = sanitize(output);
+			if (sanitized === output) return sanitized;
+			output = sanitized;
 		}
-		return body.innerHTML;
+		return "";
 	}
 
 // packages/dom/build-module/dom/strip-html.mjs

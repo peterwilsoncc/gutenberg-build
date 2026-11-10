@@ -35326,6 +35326,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/freeform/edit.mjs
+	const { SafeRawHTML: SafeRawHTML$1 } = unlock$1(_wordpress_block_editor.privateApis);
 	function FreeformEdit({ attributes, setAttributes, clientId }) {
 		const { content } = attributes;
 		const [isOpen, setOpen] = (0, _wordpress_element.useState)(false);
@@ -35340,7 +35341,7 @@ Icon: ButtonIcon });
 			}) }) }),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				...(0, _wordpress_block_editor.useBlockProps)(),
-				children: [content ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_element.RawHTML, { children: content }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Placeholder, {
+				children: [content ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SafeRawHTML$1, { html: content }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Placeholder, {
 					icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockIcon, { icon: classic_default }),
 					label: (0, _wordpress_i18n.__)("Classic"),
 					instructions: (0, _wordpress_i18n.__)("Use the classic editor to add content."),
@@ -48588,8 +48589,8 @@ Icon: ButtonIcon });
 	const { lock, unlock } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$37 = {};
-	lock(privateApis$37, {
+	const privateApis$38 = {};
+	lock(privateApis$38, {
 		getResponsiveMediaQueries: getResponsiveMediaQueries$2,
 		getViewportBreakpoints,
 		getViewportBreakpointValueInPixels,
@@ -48706,7 +48707,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/gallery/gallery-styles.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$1(privateApis$37);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$1(privateApis$38);
 	const { globalStylesDataKey } = unlock$1(_wordpress_block_editor.privateApis);
 	const GALLERY_BLOCK_NAME = "core/gallery";
 	const FALLBACK_VALUE = `var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )`;
@@ -59895,6 +59896,7 @@ Icon: ButtonIcon });
 	});
 
 // packages/block-library/build-module/missing/edit.mjs
+	const { SafeRawHTML } = unlock$1(_wordpress_block_editor.privateApis);
 	function MissingEdit({ attributes, clientId }) {
 		const { originalName, originalUndelimitedContent } = attributes;
 		const hasContent = !!originalUndelimitedContent;
@@ -59931,7 +59933,7 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, {
 				actions,
 				children: messageHTML
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_element.RawHTML, { children: (0, _wordpress_dom.safeHTML)(originalUndelimitedContent) })]
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SafeRawHTML, { html: originalUndelimitedContent })]
 		});
 	}
 
@@ -63249,7 +63251,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/navigation/edit/use-layout-custom-properties.mjs
-	const { getResponsiveMediaQueries } = unlock$1(privateApis$37);
+	const { getResponsiveMediaQueries } = unlock$1(privateApis$38);
 	const JUSTIFICATION_VALUES = {
 		left: "flex-start",
 		center: "center",
