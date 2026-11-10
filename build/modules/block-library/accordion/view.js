@@ -1,4 +1,4 @@
-import { getContext, store } from "@wordpress/interactivity";
+import { getContext, getElement, store } from "@wordpress/interactivity";
 
 // packages/block-library/build-module/accordion/view.mjs
 let hashHandled = false;
@@ -28,8 +28,8 @@ const { actions } = store("core/accordion", {
 			const { id, accordionItems, autoclose } = getContext();
 			const targetElement = document.querySelector(":target");
 			if (!targetElement) return;
-			const panelElement = window.document.querySelector(".wp-block-accordion-panel[aria-labelledby=\"" + id + "\"]");
-			if (!panelElement || !panelElement.contains(targetElement)) return;
+			const { ref } = getElement();
+			if (!ref?.contains(targetElement)) return;
 			hashHandled = true;
 			if (autoclose) accordionItems.forEach((item) => {
 				item.isOpen = item.id === id;
