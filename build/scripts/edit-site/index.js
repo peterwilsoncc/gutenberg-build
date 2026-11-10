@@ -17459,7 +17459,20 @@ Icon: ButtonIcon });
 	});
 
 // packages/icons/build-module/library/file.mjs
-	var file_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+	var file_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
+		xmlns: "http://www.w3.org/2000/svg",
+		viewBox: "0 0 24 24",
+		style: { fill: "none" },
+		stroke: "currentColor",
+		strokeWidth: "1.5",
+		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M14 4.75V7.75C14 8.44036 14.5596 9 15.25 9H18.25" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+			d: "M5.75 18L5.75 6C5.75 5.30964 6.30964 4.75 7 4.75H14L18.25 9V18C18.25 18.6904 17.6904 19.25 17 19.25H7C6.30964 19.25 5.75 18.6904 5.75 18Z",
+			strokeLinejoin: "round"
+		})]
+	});
+
+// packages/icons/build-module/library/folder.mjs
+	var folder_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
 		viewBox: "0 0 24 24",
 		style: { fill: "none" },
@@ -74068,7 +74081,7 @@ If there's a particular need for this, please submit a feature request at https:
 				patternViews?.map((view) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CategoryItem, {
 					count: patternCounts[view.slug],
 					label: view.title,
-					icon: file_default,
+					icon: folder_default,
 					id: view.slug,
 					type: PATTERN_TYPES.user,
 					isActive: currentCategory === `${view.slug}` && currentType === PATTERN_TYPES.user
