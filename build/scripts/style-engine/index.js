@@ -563,6 +563,12 @@
 			}
 		},
 		{
+			name: "textWrap",
+			generate: (style, options) => {
+				return generateRule(style, options, ["typography", "textWrap"], "textWrap");
+			}
+		},
+		{
 			name: "writingMode",
 			generate: (style, options) => {
 				return generateRule(style, options, ["typography", "writingMode"], "writingMode");
