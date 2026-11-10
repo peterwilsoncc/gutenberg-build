@@ -97165,10 +97165,7 @@ ${content}
         inputValue,
         onInputValueChange,
         placeholder: (0, import_i18n154.__)("Select author"),
-        statusContent: isSearching ? /* @__PURE__ */ (0, import_jsx_runtime518.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(Spinner, {}),
-          (0, import_i18n154.__)("Searching\u2026")
-        ] }) : authors.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(VisuallyHidden, { children: (0, import_i18n154.sprintf)(
+        statusContent: isSearching ? /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(SearchableSelect2.LoadingIndicator, { children: (0, import_i18n154.__)("Searching\u2026") }) : authors.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime518.jsx)(VisuallyHidden, { children: (0, import_i18n154.sprintf)(
           /* translators: %d: number of results. */
           (0, import_i18n154._n)(
             "%d result found.",

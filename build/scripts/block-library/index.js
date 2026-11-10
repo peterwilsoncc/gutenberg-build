@@ -84269,10 +84269,7 @@ ${text}
     const isLimited = !isHierarchical && listTotal > shownTerms.length;
     let statusContent = /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(ListedTermCount, {});
     if (isPending) {
-      statusContent = /* @__PURE__ */ (0, import_jsx_runtime487.jsxs)(Stack, { direction: "row", gap: "sm", align: "center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(Spinner, {}),
-        (0, import_i18n201.__)("Loading\u2026")
-      ] });
+      statusContent = /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(SearchableChipSelectControl2.LoadingIndicator, {});
     } else if (isLimited) {
       statusContent = /* @__PURE__ */ (0, import_jsx_runtime487.jsx)("div", { className: "block-library-query-inspector__taxonomy-control-limited-count", children: /* @__PURE__ */ (0, import_jsx_runtime487.jsx)(
         LimitedTermCount,
