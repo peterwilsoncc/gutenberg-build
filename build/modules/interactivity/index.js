@@ -3168,7 +3168,7 @@ const isSameServerContent = (content, other) => {
 };
 directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => {
 	const entry = htmlEntries.find(isDefaultDirectiveSuffix);
-	const lastAppliedKey = A(void 0);
+	const writeRecord = A(void 0);
 	const previousHost = A(null);
 	const previousInputs = A(null);
 	const previousServerContent = A(void 0);
@@ -3207,7 +3207,7 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 		previousInputs.current = inputs;
 		if (hostChanged) {
 			previousHost.current = node;
-			lastAppliedKey.current = void 0;
+			writeRecord.current = void 0;
 			owedServerContent.current = void 0;
 			shownServerContent.current = preserveContent ? serverContent : void 0;
 			if (active && preserveContent && !node.hasChildNodes() && fallback?.hasChildNodes()) node.append(node.ownerDocument.importNode(fallback, true));
@@ -3226,29 +3226,35 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 			owedServerContent.current = void 0;
 			if (!shownServerContent.current || !isSameServerContent(shownServerContent.current, owed)) node.replaceChildren(node.ownerDocument.importNode(owed, true));
 			shownServerContent.current = owed;
-			lastAppliedKey.current = void 0;
+			writeRecord.current = void 0;
 			return;
 		}
 		if (!hostChanged && !inputsChanged) return;
 		if (preserveContent) {
-			if (serverHTMLRepresentation) lastAppliedKey.current = void 0;
+			if (serverHTMLRepresentation) writeRecord.current = void 0;
 			return;
 		}
 		shownServerContent.current = void 0;
 		if (!trusted && result !== null && result !== void 0) warn("data-wp-html: the value is not trusted HTML. Use asDangerousHTML() to explicitly trust the markup.");
 		const key = String(resolvedValue);
-		if (lastAppliedKey.current === key) return;
-		if (lastAppliedKey.current === void 0 && node.innerHTML === key) {
-			lastAppliedKey.current = key;
+		const plainString = typeof resolvedValue === "string";
+		const record = writeRecord.current;
+		if (record && ("rejected" in record ? record.rejected === key && record.plainString === plainString : record.applied === key)) return;
+		if (!record && node.innerHTML === key) {
+			writeRecord.current = { applied: key };
 			return;
 		}
 		try {
 			node.innerHTML = resolvedValue;
+			writeRecord.current = { applied: key };
 		} catch (error) {
 			node.innerHTML = emptyHTML;
 			warn(`data-wp-html: the browser rejected this HTML value, so the element was emptied. ${error}`);
+			writeRecord.current = {
+				rejected: key,
+				plainString
+			};
 		}
-		lastAppliedKey.current = key;
 	}, [
 		result,
 		active,
