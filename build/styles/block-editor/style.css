@@ -1755,7 +1755,7 @@ iframe[name=editor-canvas] {
 
 .block-editor-font-family-control__hint {
   margin-inline-start: var(--wpds-dimension-gap-sm, 8px);
-  color: var(--wpds-color-foreground-interactive-neutral-weak, #707070);
+  color: var(--wpds-color-foreground-interactive-neutral-weak, #6e6e6e);
 }
 
 .block-editor-global-styles__toggle-icon {
@@ -1792,7 +1792,7 @@ iframe[name=editor-canvas] {
   border: 0;
   border-radius: var(--wpds-border-radius-sm, 2px);
   background: none;
-  color: var(--wpds-color-foreground-content-neutral-weak, #707070);
+  color: var(--wpds-color-foreground-content-neutral-weak, #6e6e6e);
   cursor: var(--wpds-cursor-control, pointer);
 }
 
@@ -2466,7 +2466,7 @@ iframe[name=editor-canvas] {
   white-space: nowrap;
 }
 .block-editor-link-control__search-item:not(:focus, [aria-selected=true]) .components-menu-item__shortcut {
-  color: var(--wpds-color-foreground-content-neutral-weak, #707070);
+  color: var(--wpds-color-foreground-content-neutral-weak, #6e6e6e);
 }
 
 .block-editor-link-control__preview {
@@ -4079,7 +4079,7 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
 
 .block-editor-inserter__tip kbd {
   padding: 0 4px;
-  border: 1px solid var(--wpds-color-stroke-surface-neutral-strong, #8d8d8d);
+  border: 1px solid var(--wpds-color-stroke-surface-neutral-strong, #8b8b8b);
   border-radius: var(--wpds-border-radius-xs, 1px);
   font-family: var(--wpds-typography-font-family-mono, "Menlo", "Consolas", monaco, monospace);
   white-space: nowrap;

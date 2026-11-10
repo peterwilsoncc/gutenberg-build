@@ -4786,7 +4786,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		],
 		alpha: 1
 	};
-	const UNIVERSAL_CONTRAST_TOPUP = .02;
+	const CONTRAST_ROUNDING_MARGIN = .02;
 	const WHITE_TEXT_CONTRAST_MARGIN = 3.1;
 	const ACCENT_SCALE_BASE_LIGHTNESS_THRESHOLDS = {
 		lighter: {
@@ -4904,7 +4904,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	}
 	function adjustContrastTarget(target) {
 		if (target === 1) return 1;
-		return target + UNIVERSAL_CONTRAST_TOPUP;
+		return target * (1 + CONTRAST_ROUNDING_MARGIN) * Math.exp(CONTRAST_EPSILON);
 	}
 	/**
 	* Prevent the accent scale from referencing a lightness value that
@@ -5164,7 +5164,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	function calculateRamp({ seed, sortedSteps, config, mainDir, oppDir, pinLightness }) {
 		const rampResults = {};
-		let warnings;
 		let maxDeficit = -Infinity;
 		let maxDeficitDirection = "lighter";
 		let maxDeficitStep;
@@ -5217,14 +5216,9 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			}
 			calculatedColors.set(stepName, searchResults.color);
 			rampResults[stepName] = getColorString(searchResults.color);
-			if (!searchResults.reached && !contrast.ignoreWhenAdjustingSeed) {
-				warnings ??= [];
-				warnings.push(stepName);
-			}
 		}
 		return {
 			rampResults,
-			warnings,
 			maxDeficit,
 			maxDeficitDirection,
 			maxDeficitStep
@@ -5249,7 +5243,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			oppDir = worse;
 		}
 		const sortedSteps = sortByDependency(config);
-		const { rampResults, warnings, maxDeficit, maxDeficitDirection, maxDeficitStep } = calculateRamp({
+		const { rampResults, maxDeficit, maxDeficitDirection, maxDeficitStep } = calculateRamp({
 			seed,
 			sortedSteps,
 			config,
@@ -5258,7 +5252,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			pinLightness
 		});
 		let bestRamp = rampResults;
-		let bestWarnings = warnings;
 		if (maxDeficit > .004 && rescaleToFitContrastTargets) {
 			const iterSteps = stepsForStep(maxDeficitStep, config);
 			function getSeedForL(l) {
@@ -5278,17 +5271,23 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			const lowerSeedL = maxDeficitDirection === "lighter" ? 0 : 1;
 			const lowerDeficit = -maxDeficit;
 			const upperSeedL = get(seed, [oklch_default, "l"]);
-			const finalResult = calculateRamp({
-				seed: solveWithBisect(getSeedForL, getDeficitForSeed, lowerSeedL, lowerDeficit, upperSeedL, maxDeficit),
+			const bestSeed = solveWithBisect(getSeedForL, getDeficitForSeed, lowerSeedL, lowerDeficit, upperSeedL, maxDeficit);
+			bestRamp = calculateRamp({
+				seed: bestSeed,
 				sortedSteps,
 				config,
 				mainDir,
 				oppDir,
 				pinLightness
-			});
-			bestRamp = finalResult.rampResults;
-			bestWarnings = finalResult.warnings;
+			}).rampResults;
+			seed = bestSeed;
 		}
+		const serializedSeed = getColorString(seed);
+		const warnings = sortedSteps.filter((stepName) => {
+			const { contrast } = config[stepName];
+			if (contrast.ignoreWhenAdjustingSeed) return false;
+			return [contrast.reference, ...contrast.additionalReferences ?? []].some((referenceName) => getContrast(bestRamp[stepName], referenceName === "seed" ? serializedSeed : bestRamp[referenceName]) < contrast.target);
+		});
 		if (mainDir === "darker") {
 			const tmpSurface1 = bestRamp.surface1;
 			bestRamp.surface1 = bestRamp.surface3;
@@ -5296,7 +5295,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		}
 		return {
 			ramp: bestRamp,
-			warnings: bestWarnings,
+			warnings: warnings.length ? warnings : void 0,
 			direction: mainDir
 		};
 	}
@@ -5475,7 +5474,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				reference: "bgFill1",
 				additionalReferences: ["bgFill2"],
 				followDirection: "best",
-				target: 4.55
+				target: 4.5
 			},
 			lightness: lightnessConstraintForegroundHighContrast,
 			taperChromaOptions: FG_TAPER_CHROMA
@@ -5607,186 +5606,186 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				bgFill1: "#555",
 				bgFill2: "#484848",
 				fgFill: "#f0f0f0",
-				surface6: "#d6d6d6",
-				surface5: "#e6e6e6",
-				surface4: "#ededed",
+				surface6: "#d5d5d5",
+				surface5: "#e5e5e5",
+				surface4: "#ececec",
 				surface3: "#fff",
 				fgSurface4: "#1e1e1e",
-				fgSurface3: "#707070",
-				fgSurface2: "#8d8d8d",
-				fgSurface1: "#aeaeae",
-				stroke3: "#8d8d8d",
-				stroke4: "#6e6e6e",
+				fgSurface3: "#6e6e6e",
+				fgSurface2: "#8b8b8b",
+				fgSurface1: "#acacac",
+				stroke3: "#8b8b8b",
+				stroke4: "#6c6c6c",
 				stroke2: "#dbdbdb",
 				stroke1: "#f0f0f0",
 				bgFillDark: "#1e1e1e",
 				fgFillDark: "#f0f0f0",
 				bgFillInverted2: "#1e1e1e",
-				bgFillInverted1: "#2d2d2d",
+				bgFillInverted1: "#2e2e2e",
 				fgFillInverted: "#f0f0f0",
-				surface1: "#f4f4f4"
+				surface1: "#f3f3f3"
 			},
 			direction: "darker"
 		},
 		primary: {
 			ramp: {
 				bgFill1: "#3858e9",
-				bgFill2: "#2e49d9",
+				bgFill2: "#2d48d9",
 				fgFill: "#eff0f2",
 				surface2: "#f6f8fe",
-				surface6: "#c7d2ee",
-				surface5: "#dce3f4",
-				surface4: "#e5eaf7",
+				surface6: "#c6d1ed",
+				surface5: "#dbe2f4",
+				surface4: "#e4e9f7",
 				surface3: "#fff",
 				fgSurface4: "#0b0070",
 				fgSurface3: "#3858e9",
-				fgSurface2: "#5a82ff",
-				fgSurface1: "#86a9ff",
+				fgSurface2: "#5981ff",
+				fgSurface1: "#83a7ff",
 				stroke3: "#3858e9",
-				stroke4: "#2337c8",
-				stroke2: "#9aaad1",
-				stroke1: "#aebbda",
+				stroke4: "#2336c7",
+				stroke2: "#9cabd2",
+				stroke1: "#b0bcdb",
 				bgFillDark: "#1a1e27",
 				fgFillDark: "#eff0f2",
 				bgFillInverted2: "#1a1e27",
-				bgFillInverted1: "#13009f",
+				bgFillInverted1: "#1400a2",
 				fgFillInverted: "#eff0f2",
-				surface1: "#ecf0fa"
+				surface1: "#ebeffa"
 			},
 			direction: "darker"
 		},
 		info: {
 			ramp: {
 				bgFill1: "#0090ff",
-				bgFill2: "#007fed",
-				fgFill: "#12161a",
+				bgFill2: "#007fec",
+				fgFill: "#101419",
 				surface2: "#f3f9ff",
-				surface6: "#bcd5f2",
-				surface5: "#d3e4f7",
-				surface4: "#deebfa",
+				surface6: "#bbd4f1",
+				surface5: "#d2e3f7",
+				surface4: "#ddebfa",
 				surface3: "#fff",
 				fgSurface4: "#001b4f",
-				fgSurface3: "#006bd7",
-				fgSurface2: "#008bfa",
-				fgSurface1: "#59b0ff",
-				stroke3: "#006bd7",
-				stroke4: "#004fa9",
-				stroke2: "#95b5d9",
-				stroke1: "#adc6e2",
+				fgSurface3: "#0069d5",
+				fgSurface2: "#008af8",
+				fgSurface1: "#55afff",
+				stroke3: "#0069d5",
+				stroke4: "#004ca5",
+				stroke2: "#93b4d9",
+				stroke1: "#acc5e2",
 				bgFillDark: "#1a1f24",
 				fgFillDark: "#eef0f2",
 				bgFillInverted2: "#1a1f24",
-				bgFillInverted1: "#002a69",
+				bgFillInverted1: "#002a6a",
 				fgFillInverted: "#eef0f2",
-				surface1: "#e7f1fd"
+				surface1: "#e6f1fc"
 			},
 			direction: "darker"
 		},
 		success: {
 			ramp: {
 				bgFill1: "#4ab866",
-				bgFill2: "#37a756",
+				bgFill2: "#36a756",
 				fgFill: "#1b1f1c",
 				surface2: "#ebffed",
-				surface6: "#89e89c",
-				surface5: "#a7f5b5",
-				surface4: "#c2f8ca",
+				surface6: "#88e79b",
+				surface5: "#a4f5b2",
+				surface4: "#c0f8c9",
 				surface3: "#fff",
 				fgSurface4: "#002900",
-				fgSurface3: "#008030",
-				fgSurface2: "#2b9f4e",
-				fgSurface1: "#54c16e",
-				stroke3: "#008030",
-				stroke4: "#006113",
-				stroke2: "#84c08f",
-				stroke1: "#92d39d",
+				fgSurface3: "#007e2e",
+				fgSurface2: "#299d4d",
+				fgSurface1: "#52bf6d",
+				stroke3: "#007e2e",
+				stroke4: "#005e12",
+				stroke2: "#84bf8e",
+				stroke1: "#91d29c",
 				bgFillDark: "#1b1f1c",
 				fgFillDark: "#ecf2ec",
 				bgFillInverted2: "#1b1f1c",
 				bgFillInverted1: "#003701",
 				fgFillInverted: "#ecf2ec",
-				surface1: "#d4fbd9"
+				surface1: "#d2fbd8"
 			},
 			direction: "darker"
 		},
 		caution: {
 			ramp: {
 				bgFill1: "#f0d149",
-				bgFill2: "#dcbe2f",
+				bgFill2: "#dcbd2e",
 				fgFill: "#1f1e1b",
 				surface2: "#fff9ca",
-				surface6: "#e8d170",
-				surface5: "#f7e28a",
-				surface4: "#fee995",
+				surface6: "#e6d078",
+				surface5: "#f6e18a",
+				surface4: "#fde893",
 				surface3: "#fff",
 				fgSurface4: "#281d00",
-				fgSurface3: "#836a00",
-				fgSurface2: "#a48700",
-				fgSurface1: "#c7a800",
-				stroke3: "#836a00",
-				stroke4: "#634f00",
-				stroke2: "#bdb17e",
-				stroke1: "#d0c28b",
+				fgSurface3: "#816900",
+				fgSurface2: "#a28500",
+				fgSurface1: "#c5a600",
+				stroke3: "#816900",
+				stroke4: "#604d00",
+				stroke2: "#bcb07d",
+				stroke1: "#cfc18a",
 				bgFillDark: "#1f1e1b",
 				fgFillDark: "#faf1c9",
 				bgFillInverted2: "#1f1e1b",
-				bgFillInverted1: "#392c00",
+				bgFillInverted1: "#3a2c00",
 				fgFillInverted: "#faf1c9",
-				surface1: "#ffefa9"
+				surface1: "#ffefa8"
 			},
 			direction: "darker"
 		},
 		warning: {
 			ramp: {
 				bgFill1: "#f0b849",
-				bgFill2: "#dda633",
+				bgFill2: "#dca532",
 				fgFill: "#1f1e1b",
 				surface2: "#fff7e1",
-				surface6: "#f3cc86",
-				surface5: "#fadead",
-				surface4: "#fde6be",
+				surface6: "#f3cb84",
+				surface5: "#f9ddab",
+				surface4: "#fde5bd",
 				surface3: "#fff",
 				fgSurface4: "#2e1900",
-				fgSurface3: "#936300",
-				fgSurface2: "#b57f00",
-				fgSurface1: "#d7a02b",
-				stroke3: "#936300",
-				stroke4: "#704900",
-				stroke2: "#c8ad7f",
-				stroke1: "#e1bd7c",
+				fgSurface3: "#906200",
+				fgSurface2: "#b37e00",
+				fgSurface1: "#d69f28",
+				stroke3: "#906200",
+				stroke4: "#6d4700",
+				stroke2: "#c7ac7e",
+				stroke1: "#e0bc7d",
 				bgFillDark: "#1f1e1b",
 				fgFillDark: "#f5efe5",
 				bgFillInverted2: "#1f1e1b",
 				bgFillInverted1: "#422800",
 				fgFillInverted: "#f5efe5",
-				surface1: "#ffeccb"
+				surface1: "#ffecca"
 			},
 			direction: "darker"
 		},
 		error: {
 			ramp: {
 				bgFill1: "#cc1818",
-				bgFill2: "#b90000",
+				bgFill2: "#b80000",
 				fgFill: "#f2efef",
 				surface2: "#fff6f5",
-				surface6: "#f2c9c3",
+				surface6: "#f2c8c2",
 				surface5: "#f7dbd7",
-				surface4: "#fae5e1",
+				surface4: "#fae4e0",
 				surface3: "#fff",
 				fgSurface4: "#470000",
 				fgSurface3: "#cc1818",
-				fgSurface2: "#f74c40",
-				fgSurface1: "#ff8879",
+				fgSurface2: "#f54a3f",
+				fgSurface1: "#ff8576",
 				stroke3: "#cc1818",
-				stroke4: "#9d0000",
-				stroke2: "#d99a91",
-				stroke1: "#e0afa7",
+				stroke4: "#9c0000",
+				stroke2: "#d99c93",
+				stroke1: "#e1b1a9",
 				bgFillDark: "#231c1b",
 				fgFillDark: "#f2efef",
 				bgFillInverted2: "#231c1b",
-				bgFillInverted1: "#640000",
+				bgFillInverted1: "#650000",
 				fgFillInverted: "#f2efef",
-				surface1: "#fcece9"
+				surface1: "#fcebe9"
 			},
 			direction: "darker"
 		}
@@ -5971,9 +5970,9 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		["--wp-components-color-gray-100", "var(--wpds-color-background-surface-neutral, #fcfcfc)"],
 		["--wp-components-color-gray-200", "var(--wpds-color-stroke-surface-neutral, #dbdbdb)"],
 		["--wp-components-color-gray-300", "var(--wpds-color-stroke-surface-neutral, #dbdbdb)"],
-		["--wp-components-color-gray-400", "var(--wpds-color-stroke-interactive-neutral, #8d8d8d)"],
-		["--wp-components-color-gray-600", "var(--wpds-color-stroke-interactive-neutral, #8d8d8d)"],
-		["--wp-components-color-gray-700", "var(--wpds-color-foreground-content-neutral-weak, #707070)"],
+		["--wp-components-color-gray-400", "var(--wpds-color-stroke-interactive-neutral, #8b8b8b)"],
+		["--wp-components-color-gray-600", "var(--wpds-color-stroke-interactive-neutral, #8b8b8b)"],
+		["--wp-components-color-gray-700", "var(--wpds-color-foreground-content-neutral-weak, #6e6e6e)"],
 		["--wp-components-color-gray-800", "var(--wpds-color-foreground-content-neutral, #1e1e1e)"]
 	];
 	function customRgbFormat(color) {

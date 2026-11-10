@@ -164,7 +164,7 @@
   z-index: 1;
   padding: 12px 4px;
   margin: 0;
-  color: var(--wpds-color-foreground-content-neutral-weak, #707070);
+  color: var(--wpds-color-foreground-content-neutral-weak, #6e6e6e);
   text-transform: uppercase;
   font-size: var(--wpds-typography-font-size-sm, 12px);
   background-color: #fff;
