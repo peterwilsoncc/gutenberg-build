@@ -56704,7 +56704,6 @@ Icon: ButtonIcon });
 						a: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
 							className: "wp-block-latest-posts__read-more",
 							href: post.link,
-							rel: "noopener",
 							onClick: showRedirectionPreventedNotice
 						}),
 						span: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { className: "screen-reader-text" })
