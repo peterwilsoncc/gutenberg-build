@@ -4983,7 +4983,6 @@ Icon: ButtonIcon });
 							icon: external_default,
 							href: (0, _wordpress_i18n.__)("https://wordpress.org/documentation/article/block-based-widgets-editor/"),
 							target: "_blank",
-							rel: "noopener",
 							children: [(0, _wordpress_i18n.__)("Help"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
 								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {}),
 								children: (0, _wordpress_i18n.__)("(opens in a new tab)")

@@ -34742,7 +34742,6 @@ function MediaPreviewFileInfo({ mediaUrl, displayTitle, mimeType }) {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
 				href: mediaUrl,
 				target: "_blank",
-				rel: "noopener",
 				className: "media-editor-preview__download-link",
 				children: (0, import_i18n.__)("View file")
 			})

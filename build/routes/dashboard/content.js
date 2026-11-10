@@ -48830,10 +48830,7 @@ function IconAction({ action }) {
 			render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HostLink, {
 				href: action.href,
 				download: action.download,
-				...action.openInNewTab ? {
-					target: "_blank",
-					rel: "noopener noreferrer"
-				} : {}
+				target: action.openInNewTab ? "_blank" : void 0
 			})
 		}),
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ButtonLink.Icon, { icon: action.icon })

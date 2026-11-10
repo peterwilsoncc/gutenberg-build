@@ -95366,7 +95366,6 @@ If there's a particular need for this, please submit a feature request at https:
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
 					href: mediaUrl,
 					target: "_blank",
-					rel: "noopener",
 					className: "media-editor-preview__download-link",
 					children: (0, _wordpress_i18n.__)("View file")
 				})
@@ -101808,7 +101807,7 @@ If there's a particular need for this, please submit a feature request at https:
 	/** @typedef {import('@wordpress/block-editor').InserterMediaItem} InserterMediaItem */
 	/** @typedef {import('@wordpress/block-editor').InserterMediaCategory} InserterMediaCategory */
 	const getExternalLink = (url, text) => `<a ${getExternalLinkAttributes(url)}>${text}</a>`;
-	const getExternalLinkAttributes = (url) => `href="${url}" target="_blank" rel="noopener"`;
+	const getExternalLinkAttributes = (url) => `href="${url}" target="_blank"`;
 	const getOpenverseLicense = (license, licenseVersion) => {
 		let licenseName = license.trim();
 		if (license !== "pdm") licenseName = license.toUpperCase().replace("SAMPLING", "Sampling");

@@ -81112,8 +81112,7 @@ Icon: ButtonIcon });
 		const siteIconSettingsUrl = !window?.__experimentalUseCustomizerSiteLogoUrl ? siteUrl + "/wp-admin/options-general.php" : siteUrl + "/wp-admin/customize.php?autofocus[section]=title_tagline";
 		const syncSiteIconHelpText = (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.__)("Site Icons are what you see in browser tabs, bookmark bars, and within the WordPress mobile apps. To use a custom icon that is different from your site logo, use the <a>Site Icon settings</a>."), { a: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
 			href: siteIconSettingsUrl,
-			target: "_blank",
-			rel: "noopener"
+			target: "_blank"
 		}) });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanel, {
