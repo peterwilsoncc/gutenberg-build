@@ -4598,7 +4598,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const ACCORDION_BLOCK = { name: ACCORDION_BLOCK_NAME };
 	function Edit$18({ attributes: { autoclose, iconPosition, showIcon, headingLevel, levelOptions }, clientId, setAttributes, isSelected: isSingleSelected }) {
 		const registry = (0, _wordpress_data.useRegistry)();
-		const { getBlockOrder } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
+		const { getBlockOrder, getBlockName } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)({ role: "group" });
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 		const { updateBlockAttributes, insertBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
@@ -4612,7 +4612,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			insertBlock(newAccordionItem, void 0, clientId);
 		};
 		/**
-		* Update all child Accordion Header blocks with a new heading level
+		* Update all child Accordion Heading blocks with a new heading level
 		* based on the accordion group setting.
 		* @param {number} newHeadingLevel The new heading level to set
 		*/
@@ -4620,7 +4620,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			const innerBlockClientIds = getBlockOrder(clientId);
 			const accordionHeaderClientIds = [];
 			innerBlockClientIds.forEach((contentClientId) => {
-				const headerClientIds = getBlockOrder(contentClientId);
+				const headerClientIds = getBlockOrder(contentClientId).filter((childClientId) => getBlockName(childClientId) === ACCORDION_HEADING_BLOCK_NAME);
 				accordionHeaderClientIds.push(...headerClientIds);
 			});
 			registry.batch(() => {
