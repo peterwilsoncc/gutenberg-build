@@ -31048,11 +31048,13 @@ function isSameValidity(a, b) {
 *
 * The wrapped control is cloned with `label` and `required` props, and the
 * validity state is read from the element returned by `getValidityTarget`.
+* The validation message describes the element returned by
+* `getInteractiveTarget`, or the validity target by default.
 * Validation messages become visible once the control has been touched
 * (blurred at least once), when the enclosing form is submitted, or when an
 * `invalid` event is dispatched on the validity target.
 */
-const ControlWithError = (0, import_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, children, render = DEFAULT_RENDER$2, ...restProps }, forwardedRef) {
+const ControlWithError = (0, import_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, getInteractiveTarget, children, render = DEFAULT_RENDER$2, ...restProps }, forwardedRef) {
 	const [validity, setValidity] = (0, import_element.useState)();
 	const [showMessage, setShowMessage] = (0, import_element.useState)(false);
 	const [isTouched, setIsTouched] = (0, import_element.useState)(false);
@@ -31124,7 +31126,7 @@ const ControlWithError = (0, import_element.forwardRef)(function UnforwardedCont
 	}) : null;
 	const visibleMessage = showMessage ? message : null;
 	(0, import_element.useEffect)(() => {
-		const target = getValidityTarget();
+		const target = getInteractiveTarget ? getInteractiveTarget() : getValidityTarget();
 		if (!target) return;
 		function setDescribedBy(el, shouldAdd) {
 			const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id) => id && id !== messageId);
@@ -31137,7 +31139,8 @@ const ControlWithError = (0, import_element.forwardRef)(function UnforwardedCont
 	}, [
 		visibleMessage,
 		messageId,
-		getValidityTarget
+		getValidityTarget,
+		getInteractiveTarget
 	]);
 	return useRender({
 		render,
@@ -38314,7 +38317,7 @@ function useTransactionState(callback) {
 *   return <div {...props} ref={useMergeRefs(internalRef, ref)} />;
 * });
 */
-function useMergeRefs$7(...refs) {
+function useMergeRefs$8(...refs) {
 	return (0, import__wp_global_react.useMemo)(() => {
 		if (!refs.some(Boolean)) return;
 		return (value) => {
@@ -38511,7 +38514,7 @@ function memo$3(Component, propsAreEqual) {
 */
 function createElement$1(Type, props) {
 	const { wrapElement, render, ...rest } = props;
-	const mergedRef = useMergeRefs$7(props.ref, getRefProperty(render));
+	const mergedRef = useMergeRefs$8(props.ref, getRefProperty(render));
 	let element;
 	if (import__wp_global_react.isValidElement(render)) {
 		const renderProps = {
@@ -38844,7 +38847,7 @@ const useFocusable = createHook(function useFocusable({ focusable = true, access
 		"aria-disabled": disabled || void 0,
 		...props,
 		...metadataProps,
-		ref: useMergeRefs$7(ref, autoFocusRef, props.ref),
+		ref: useMergeRefs$8(ref, autoFocusRef, props.ref),
 		style,
 		tabIndex: getTabIndex({
 			focusable,
@@ -39003,7 +39006,7 @@ const useCommand = createHook(function useCommand({ clickOnEnter = true, clickOn
 		type: isNativeButton ? "button" : void 0,
 		...metadataProps,
 		...props,
-		ref: useMergeRefs$7(ref, props.ref),
+		ref: useMergeRefs$8(ref, props.ref),
 		onKeyDown,
 		onKeyUp,
 		onBlur
@@ -39092,7 +39095,7 @@ const useCollectionItem = createHook(function useCollectionItem({ store, shouldR
 	]);
 	props = {
 		...props,
-		ref: useMergeRefs$7(ref, props.ref)
+		ref: useMergeRefs$8(ref, props.ref)
 	};
 	return props;
 });
@@ -40936,7 +40939,7 @@ const useCompositeItem = createHook(function useCompositeItem({ store, rowId: ro
 		"data-active-item": isActiveItem || void 0,
 		...props,
 		id,
-		ref: useMergeRefs$7(ref, markUnmountingRef, props.ref),
+		ref: useMergeRefs$8(ref, markUnmountingRef, props.ref),
 		tabIndex: isTabbable ? props.tabIndex : -1,
 		onFocus,
 		onBlurCapture,
@@ -41388,7 +41391,7 @@ const useComposite = createHook(function useComposite({ store, composite = true,
 			return getEnabledItem(store, activeId)?.id;
 		}),
 		...props,
-		ref: useMergeRefs$7(ref, setCompositeElement, props.ref),
+		ref: useMergeRefs$8(ref, setCompositeElement, props.ref),
 		onKeyDownCapture,
 		onKeyUpCapture,
 		onFocusCapture,
@@ -41611,7 +41614,7 @@ const useDisclosureContent = createHook(function useDisclosureContent({ store, a
 		hidden,
 		...props,
 		id,
-		ref: useMergeRefs$7(id ? store.setContentElement : null, ref, props.ref),
+		ref: useMergeRefs$8(id ? store.setContentElement : null, ref, props.ref),
 		style
 	};
 	return removeUndefinedValues(props);
@@ -41962,7 +41965,7 @@ const useCompositeHover = createHook(function useCompositeHover({ store, focusOn
 	}, []);
 	props = {
 		...props,
-		ref: useMergeRefs$7(ref, props.ref),
+		ref: useMergeRefs$8(ref, props.ref),
 		onMouseMove,
 		onMouseLeave
 	};
@@ -42486,7 +42489,7 @@ const useCombobox = createHook(function useCombobox({ store, focusable = true, a
 		name: multiSelectable ? void 0 : name,
 		form,
 		disabled,
-		ref: useMergeRefs$7(ref, store.setInputElement, composite ? void 0 : setCompositeElement, props.ref),
+		ref: useMergeRefs$8(ref, store.setInputElement, composite ? void 0 : setCompositeElement, props.ref),
 		onChange,
 		onCompositionStart,
 		onCompositionEnd,
@@ -42925,7 +42928,7 @@ const useComboboxLabel = createHook(function useComboboxLabel({ store, ...props 
 		htmlFor: comboboxId,
 		...props,
 		id,
-		ref: useMergeRefs$7(store.setLabelElement, props.ref)
+		ref: useMergeRefs$8(store.setLabelElement, props.ref)
 	};
 	return props;
 });
@@ -43059,7 +43062,7 @@ const useComboboxList = createHook(function useComboboxList({ store, alwaysVisib
 		...props,
 		id,
 		onFocus,
-		ref: useMergeRefs$7(setContentElement, ref, props.ref),
+		ref: useMergeRefs$8(setContentElement, ref, props.ref),
 		style,
 		tabIndex: -1
 	};
@@ -45250,6 +45253,7 @@ ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 // packages/dataviews/build-module/components/validated-form-controls/form-token-field.mjs
 const UnforwardedValidatedFormTokenField = ({ required, customValidity, markWhenOptional, ...restProps }, forwardedRef) => {
 	const validityTargetRef = (0, import_element.useRef)(null);
+	const getInteractiveTarget = () => validityTargetRef.current?.previousElementSibling?.querySelector("input[type=\"text\"]");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "dataviews-validated-control__wrapper-with-error-delegate",
 		ref: forwardedRef,
@@ -45259,6 +45263,7 @@ const UnforwardedValidatedFormTokenField = ({ required, customValidity, markWhen
 			markWhenOptional,
 			customValidity,
 			getValidityTarget: () => validityTargetRef.current,
+			getInteractiveTarget,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FormTokenField, { ...restProps })
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
 			className: "dataviews-validated-control__error-delegate",
@@ -45268,9 +45273,7 @@ const UnforwardedValidatedFormTokenField = ({ required, customValidity, markWhen
 			value: restProps.value && restProps.value.length > 0 ? "hasvalue" : "",
 			tabIndex: -1,
 			onChange: () => {},
-			onFocus: (e) => {
-				e.target.previousElementSibling?.querySelector("input[type=\"text\"]")?.focus();
-			}
+			onFocus: () => getInteractiveTarget()?.focus()
 		})]
 	});
 };
@@ -45355,6 +45358,8 @@ ValidatedToggleControl.displayName = "ValidatedToggleControl";
 // packages/dataviews/build-module/components/validated-form-controls/toggle-group-control.mjs
 const UnforwardedValidatedToggleGroupControl = ({ required, customValidity, markWhenOptional, ...restProps }, forwardedRef) => {
 	const validityTargetRef = (0, import_element.useRef)(null);
+	const groupRef = (0, import_element.useRef)(null);
+	const mergedRef = (0, import_compose.useMergeRefs)([groupRef, forwardedRef]);
 	const nameAttr = (0, import_element.useId)();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "dataviews-validated-control__wrapper-with-error-delegate",
@@ -45364,8 +45369,9 @@ const UnforwardedValidatedToggleGroupControl = ({ required, customValidity, mark
 			markWhenOptional,
 			customValidity,
 			getValidityTarget: () => validityTargetRef.current,
+			getInteractiveTarget: () => groupRef.current,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalToggleGroupControl, {
-				ref: forwardedRef,
+				ref: mergedRef,
 				...restProps
 			})
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {

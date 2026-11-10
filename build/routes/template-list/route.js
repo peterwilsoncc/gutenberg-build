@@ -24368,11 +24368,13 @@ function isSameValidity(a, b) {
 *
 * The wrapped control is cloned with `label` and `required` props, and the
 * validity state is read from the element returned by `getValidityTarget`.
+* The validation message describes the element returned by
+* `getInteractiveTarget`, or the validity target by default.
 * Validation messages become visible once the control has been touched
 * (blurred at least once), when the enclosing form is submitted, or when an
 * `invalid` event is dispatched on the validity target.
 */
-const ControlWithError = (0, import_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, children, render = DEFAULT_RENDER$1, ...restProps }, forwardedRef) {
+const ControlWithError = (0, import_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, getInteractiveTarget, children, render = DEFAULT_RENDER$1, ...restProps }, forwardedRef) {
 	const [validity, setValidity] = (0, import_element.useState)();
 	const [showMessage, setShowMessage] = (0, import_element.useState)(false);
 	const [isTouched, setIsTouched] = (0, import_element.useState)(false);
@@ -24444,7 +24446,7 @@ const ControlWithError = (0, import_element.forwardRef)(function UnforwardedCont
 	}) : null;
 	const visibleMessage = showMessage ? message : null;
 	(0, import_element.useEffect)(() => {
-		const target = getValidityTarget();
+		const target = getInteractiveTarget ? getInteractiveTarget() : getValidityTarget();
 		if (!target) return;
 		function setDescribedBy(el, shouldAdd) {
 			const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id) => id && id !== messageId);
@@ -24457,7 +24459,8 @@ const ControlWithError = (0, import_element.forwardRef)(function UnforwardedCont
 	}, [
 		visibleMessage,
 		messageId,
-		getValidityTarget
+		getValidityTarget,
+		getInteractiveTarget
 	]);
 	return useRender({
 		render,
@@ -27740,6 +27743,7 @@ ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 // packages/dataviews/build-module/components/validated-form-controls/form-token-field.mjs
 const UnforwardedValidatedFormTokenField = ({ required, customValidity, markWhenOptional, ...restProps }, forwardedRef) => {
 	const validityTargetRef = (0, import_element.useRef)(null);
+	const getInteractiveTarget = () => validityTargetRef.current?.previousElementSibling?.querySelector("input[type=\"text\"]");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "dataviews-validated-control__wrapper-with-error-delegate",
 		ref: forwardedRef,
@@ -27749,6 +27753,7 @@ const UnforwardedValidatedFormTokenField = ({ required, customValidity, markWhen
 			markWhenOptional,
 			customValidity,
 			getValidityTarget: () => validityTargetRef.current,
+			getInteractiveTarget,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FormTokenField, { ...restProps })
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
 			className: "dataviews-validated-control__error-delegate",
@@ -27758,9 +27763,7 @@ const UnforwardedValidatedFormTokenField = ({ required, customValidity, markWhen
 			value: restProps.value && restProps.value.length > 0 ? "hasvalue" : "",
 			tabIndex: -1,
 			onChange: () => {},
-			onFocus: (e) => {
-				e.target.previousElementSibling?.querySelector("input[type=\"text\"]")?.focus();
-			}
+			onFocus: () => getInteractiveTarget()?.focus()
 		})]
 	});
 };
@@ -27845,6 +27848,8 @@ ValidatedToggleControl.displayName = "ValidatedToggleControl";
 // packages/dataviews/build-module/components/validated-form-controls/toggle-group-control.mjs
 const UnforwardedValidatedToggleGroupControl = ({ required, customValidity, markWhenOptional, ...restProps }, forwardedRef) => {
 	const validityTargetRef = (0, import_element.useRef)(null);
+	const groupRef = (0, import_element.useRef)(null);
+	const mergedRef = (0, import_compose.useMergeRefs)([groupRef, forwardedRef]);
 	const nameAttr = (0, import_element.useId)();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "dataviews-validated-control__wrapper-with-error-delegate",
@@ -27854,8 +27859,9 @@ const UnforwardedValidatedToggleGroupControl = ({ required, customValidity, mark
 			markWhenOptional,
 			customValidity,
 			getValidityTarget: () => validityTargetRef.current,
+			getInteractiveTarget: () => groupRef.current,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalToggleGroupControl, {
-				ref: forwardedRef,
+				ref: mergedRef,
 				...restProps
 			})
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {

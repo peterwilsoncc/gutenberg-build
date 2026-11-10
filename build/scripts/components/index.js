@@ -1299,7 +1299,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*   return <div {...props} ref={useMergeRefs(internalRef, ref)} />;
 	* });
 	*/
-	function useMergeRefs$25(...refs) {
+	function useMergeRefs$26(...refs) {
 		return (0, react$1.useMemo)(() => {
 			if (!refs.some(Boolean)) return;
 			return (value) => {
@@ -1438,7 +1438,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function usePortalRef(portalProp = false, portalRefProp) {
 		const [portalNode, setPortalNode] = (0, react$1.useState)(null);
 		return {
-			portalRef: useMergeRefs$25(setPortalNode, portalRefProp),
+			portalRef: useMergeRefs$26(setPortalNode, portalRefProp),
 			portalNode,
 			domReady: !portalProp || portalNode
 		};
@@ -1516,7 +1516,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	function createElement$5(Type, props) {
 		const { wrapElement, render, ...rest } = props;
-		const mergedRef = useMergeRefs$25(props.ref, getRefProperty(render));
+		const mergedRef = useMergeRefs$26(props.ref, getRefProperty(render));
 		let element;
 		if (react$1.isValidElement(render)) {
 			const renderProps = {
@@ -1849,7 +1849,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			"aria-disabled": disabled || void 0,
 			...props,
 			...metadataProps,
-			ref: useMergeRefs$25(ref, autoFocusRef, props.ref),
+			ref: useMergeRefs$26(ref, autoFocusRef, props.ref),
 			style,
 			tabIndex: getTabIndex$1({
 				focusable,
@@ -2008,7 +2008,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			type: isNativeButton ? "button" : void 0,
 			...metadataProps,
 			...props,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onKeyDown,
 			onKeyUp,
 			onBlur
@@ -2097,7 +2097,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		]);
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref)
+			ref: useMergeRefs$26(ref, props.ref)
 		};
 		return props;
 	});
@@ -4018,7 +4018,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"data-active-item": isActiveItem || void 0,
 			...props,
 			id,
-			ref: useMergeRefs$25(ref, markUnmountingRef, props.ref),
+			ref: useMergeRefs$26(ref, markUnmountingRef, props.ref),
 			tabIndex: isTabbable ? props.tabIndex : -1,
 			onFocus,
 			onBlurCapture,
@@ -4604,7 +4604,7 @@ If there's a particular need for this, please submit a feature request at https:
 				return getEnabledItem(store, activeId)?.id;
 			}),
 			...props,
-			ref: useMergeRefs$25(ref, setCompositeElement, props.ref),
+			ref: useMergeRefs$26(ref, setCompositeElement, props.ref),
 			onKeyDownCapture,
 			onKeyUpCapture,
 			onFocusCapture,
@@ -4889,7 +4889,7 @@ If there's a particular need for this, please submit a feature request at https:
 			hidden,
 			...props,
 			id,
-			ref: useMergeRefs$25(id ? store.setContentElement : null, ref, props.ref),
+			ref: useMergeRefs$26(id ? store.setContentElement : null, ref, props.ref),
 			style
 		};
 		return removeUndefinedValues(props);
@@ -5156,7 +5156,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...props,
 			id,
 			children: unmountOnHide && !mounted ? null : props.children,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onKeyDown
 		};
 		props = useFocusable({
@@ -5992,7 +5992,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const usePortal = createHook(function usePortal({ preserveTabOrder, preserveTabOrderAnchor, portalElement, portalRef, portal = true, ...props }) {
 		const ref = (0, react$1.useRef)(null);
-		const refProp = useMergeRefs$25(ref, props.ref);
+		const refProp = useMergeRefs$26(ref, props.ref);
 		const context = (0, react$1.useContext)(PortalContext$1);
 		const [portalNode, setPortalNode] = (0, react$1.useState)(null);
 		const [anchorPortalNode, setAnchorPortalNode] = (0, react$1.useState)(null);
@@ -6684,7 +6684,7 @@ If there's a particular need for this, please submit a feature request at https:
 			onElementChange?.();
 		}, [backdropElement, onElementChange]);
 		const props = useDisclosureContent({
-			ref: useMergeRefs$25(setBackdropElement, backdropRef),
+			ref: useMergeRefs$26(setBackdropElement, backdropRef),
 			store: disclosure,
 			role: "presentation",
 			"data-backdrop": contentElement?.id || "",
@@ -7986,7 +7986,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...props,
 			"data-dialog-portal": hasDefaultModalPortal ? portalNode?.id : void 0,
 			id,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onFocusCapture,
 			onKeyDown,
 			onKeyDownCapture
@@ -10009,7 +10009,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}), [store, registerNestedHovercard]);
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref)
+			ref: useMergeRefs$26(ref, props.ref)
 		};
 		props = useAutoFocusOnHide({
 			store,
@@ -10222,7 +10222,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [store, setAnchorElement]);
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onMouseMove,
 			onClick
 		};
@@ -10609,7 +10609,7 @@ If there's a particular need for this, please submit a feature request at https:
 		props = {
 			role: !isNativeButton && tagName !== "a" ? "button" : void 0,
 			...props,
-			ref: useMergeRefs$25(ref, props.ref)
+			ref: useMergeRefs$26(ref, props.ref)
 		};
 		props = useCommand(props);
 		return props;
@@ -10689,7 +10689,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"aria-controls": useStoreState(store, "contentElement")?.id,
 			...metadataProps,
 			...props,
-			ref: useMergeRefs$25(setDisclosureElement, props.ref),
+			ref: useMergeRefs$26(setDisclosureElement, props.ref),
 			onClick
 		};
 		props = useButton$1(props);
@@ -11000,7 +11000,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...props,
 			disabled: disabled || void 0,
 			id,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onChange,
 			onClick,
 			onFocus
@@ -11492,7 +11492,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"data-name": name,
 			children,
 			...props,
-			ref: useMergeRefs$25(store.setSelectElement, props.ref),
+			ref: useMergeRefs$26(store.setSelectElement, props.ref),
 			onKeyDown
 		};
 		props = usePopoverDisclosure({
@@ -11778,7 +11778,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}, []);
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onMouseMove,
 			onMouseLeave
 		};
@@ -12114,7 +12114,7 @@ If there's a particular need for this, please submit a feature request at https:
 		props = {
 			...props,
 			id,
-			ref: useMergeRefs$25(store.setLabelElement, props.ref),
+			ref: useMergeRefs$26(store.setLabelElement, props.ref),
 			onClick,
 			style: {
 				cursor: "default",
@@ -12236,7 +12236,7 @@ If there's a particular need for this, please submit a feature request at https:
 			hidden,
 			...props,
 			id,
-			ref: useMergeRefs$25(setElement, props.ref),
+			ref: useMergeRefs$26(setElement, props.ref),
 			style,
 			onKeyDown
 		};
@@ -12684,7 +12684,7 @@ If there's a particular need for this, please submit a feature request at https:
 			type: nativeCheckbox ? "checkbox" : void 0,
 			"aria-checked": checked,
 			...props,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onChange,
 			onClick
 		};
@@ -12864,7 +12864,7 @@ If there's a particular need for this, please submit a feature request at https:
 			hidden,
 			...props,
 			id,
-			ref: useMergeRefs$25(id ? store.setContentElement : null, props.ref),
+			ref: useMergeRefs$26(id ? store.setContentElement : null, props.ref),
 			style,
 			onKeyDown
 		};
@@ -12955,7 +12955,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const modal = hasParentMenu ? false : modalProp;
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref)
+			ref: useMergeRefs$26(ref, props.ref)
 		};
 		const { "aria-labelledby": ariaLabelledBy, ...menuListProps } = useMenuList({
 			store,
@@ -13228,7 +13228,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"aria-haspopup": getPopupRole(contentElement, hasCombobox ? "dialog" : "menu"),
 			...props,
 			id,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onFocus,
 			onKeyDown,
 			onClick
@@ -48295,11 +48295,13 @@ VisualLabel });
 	*
 	* The wrapped control is cloned with `label` and `required` props, and the
 	* validity state is read from the element returned by `getValidityTarget`.
+	* The validation message describes the element returned by
+	* `getInteractiveTarget`, or the validity target by default.
 	* Validation messages become visible once the control has been touched
 	* (blurred at least once), when the enclosing form is submitted, or when an
 	* `invalid` event is dispatched on the validity target.
 	*/
-	const ControlWithError = (0, _wordpress_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, children, render = DEFAULT_RENDER$1, ...restProps }, forwardedRef) {
+	const ControlWithError = (0, _wordpress_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, getInteractiveTarget, children, render = DEFAULT_RENDER$1, ...restProps }, forwardedRef) {
 		const [validity, setValidity] = (0, _wordpress_element.useState)();
 		const [showMessage, setShowMessage] = (0, _wordpress_element.useState)(false);
 		const [isTouched, setIsTouched] = (0, _wordpress_element.useState)(false);
@@ -48371,7 +48373,7 @@ VisualLabel });
 		}) : null;
 		const visibleMessage = showMessage ? message : null;
 		(0, _wordpress_element.useEffect)(() => {
-			const target = getValidityTarget();
+			const target = getInteractiveTarget ? getInteractiveTarget() : getValidityTarget();
 			if (!target) return;
 			function setDescribedBy(el, shouldAdd) {
 				const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id) => id && id !== messageId);
@@ -48384,7 +48386,8 @@ VisualLabel });
 		}, [
 			visibleMessage,
 			messageId,
-			getValidityTarget
+			getValidityTarget,
+			getInteractiveTarget
 		]);
 		return useRender({
 			render,
@@ -78579,6 +78582,9 @@ The screen with id ${screen.id} will not be added.`);
 	*/
 	const UnforwardedValidatedContentEditableControl = ({ required, customValidity, markWhenOptional, value, className, ...restProps }, forwardedRef) => {
 		const validityTargetRef = (0, _wordpress_element.useRef)(null);
+		const editableRef = (0, _wordpress_element.useRef)(null);
+		const mergedRef = (0, _wordpress_compose.useMergeRefs)([editableRef, forwardedRef]);
+		const getInteractiveTarget = () => editableRef.current;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "components-validated-control__wrapper-with-error-delegate",
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ControlWithError, {
@@ -78587,8 +78593,9 @@ The screen with id ${screen.id} will not be added.`);
 				markWhenOptional,
 				customValidity,
 				getValidityTarget: () => validityTargetRef.current,
+				getInteractiveTarget,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ContentEditableControl, {
-					ref: forwardedRef,
+					ref: mergedRef,
 					className: clsx("components-validated-control__content-editable", className),
 					"aria-invalid": customValidity?.type === "invalid" || void 0,
 					...restProps
@@ -78601,9 +78608,7 @@ The screen with id ${screen.id} will not be added.`);
 				value: value?.trim() ?? "",
 				tabIndex: -1,
 				onChange: () => {},
-				onFocus: (e) => {
-					e.target.previousElementSibling?.querySelector("[role=\"textbox\"]")?.focus();
-				}
+				onFocus: () => getInteractiveTarget()?.focus()
 			})]
 		});
 	};

@@ -53199,11 +53199,13 @@ Icon: ButtonIcon });
 	*
 	* The wrapped control is cloned with `label` and `required` props, and the
 	* validity state is read from the element returned by `getValidityTarget`.
+	* The validation message describes the element returned by
+	* `getInteractiveTarget`, or the validity target by default.
 	* Validation messages become visible once the control has been touched
 	* (blurred at least once), when the enclosing form is submitted, or when an
 	* `invalid` event is dispatched on the validity target.
 	*/
-	const ControlWithError = (0, _wordpress_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, children, render = DEFAULT_RENDER$2, ...restProps }, forwardedRef) {
+	const ControlWithError = (0, _wordpress_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, getInteractiveTarget, children, render = DEFAULT_RENDER$2, ...restProps }, forwardedRef) {
 		const [validity, setValidity] = (0, _wordpress_element.useState)();
 		const [showMessage, setShowMessage] = (0, _wordpress_element.useState)(false);
 		const [isTouched, setIsTouched] = (0, _wordpress_element.useState)(false);
@@ -53275,7 +53277,7 @@ Icon: ButtonIcon });
 		}) : null;
 		const visibleMessage = showMessage ? message : null;
 		(0, _wordpress_element.useEffect)(() => {
-			const target = getValidityTarget();
+			const target = getInteractiveTarget ? getInteractiveTarget() : getValidityTarget();
 			if (!target) return;
 			function setDescribedBy(el, shouldAdd) {
 				const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id) => id && id !== messageId);
@@ -53288,7 +53290,8 @@ Icon: ButtonIcon });
 		}, [
 			visibleMessage,
 			messageId,
-			getValidityTarget
+			getValidityTarget,
+			getInteractiveTarget
 		]);
 		return useRender({
 			render,
@@ -77124,7 +77127,7 @@ Icon: ButtonIcon });
 	*   return <div {...props} ref={useMergeRefs(internalRef, ref)} />;
 	* });
 	*/
-	function useMergeRefs$17(...refs) {
+	function useMergeRefs$18(...refs) {
 		return (0, react$1.useMemo)(() => {
 			if (!refs.some(Boolean)) return;
 			return (value) => {
@@ -77321,7 +77324,7 @@ Icon: ButtonIcon });
 	*/
 	function createElement$3(Type, props) {
 		const { wrapElement, render, ...rest } = props;
-		const mergedRef = useMergeRefs$17(props.ref, getRefProperty(render));
+		const mergedRef = useMergeRefs$18(props.ref, getRefProperty(render));
 		let element;
 		if (react$1.isValidElement(render)) {
 			const renderProps = {
@@ -77654,7 +77657,7 @@ Icon: ButtonIcon });
 			"aria-disabled": disabled || void 0,
 			...props,
 			...metadataProps,
-			ref: useMergeRefs$17(ref, autoFocusRef, props.ref),
+			ref: useMergeRefs$18(ref, autoFocusRef, props.ref),
 			style,
 			tabIndex: getTabIndex({
 				focusable,
@@ -77813,7 +77816,7 @@ Icon: ButtonIcon });
 			type: isNativeButton ? "button" : void 0,
 			...metadataProps,
 			...props,
-			ref: useMergeRefs$17(ref, props.ref),
+			ref: useMergeRefs$18(ref, props.ref),
 			onKeyDown,
 			onKeyUp,
 			onBlur
@@ -77902,7 +77905,7 @@ Icon: ButtonIcon });
 		]);
 		props = {
 			...props,
-			ref: useMergeRefs$17(ref, props.ref)
+			ref: useMergeRefs$18(ref, props.ref)
 		};
 		return props;
 	});
@@ -79746,7 +79749,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"data-active-item": isActiveItem || void 0,
 			...props,
 			id,
-			ref: useMergeRefs$17(ref, markUnmountingRef, props.ref),
+			ref: useMergeRefs$18(ref, markUnmountingRef, props.ref),
 			tabIndex: isTabbable ? props.tabIndex : -1,
 			onFocus,
 			onBlurCapture,
@@ -80198,7 +80201,7 @@ If there's a particular need for this, please submit a feature request at https:
 				return getEnabledItem(store, activeId)?.id;
 			}),
 			...props,
-			ref: useMergeRefs$17(ref, setCompositeElement, props.ref),
+			ref: useMergeRefs$18(ref, setCompositeElement, props.ref),
 			onKeyDownCapture,
 			onKeyUpCapture,
 			onFocusCapture,
@@ -80421,7 +80424,7 @@ If there's a particular need for this, please submit a feature request at https:
 			hidden,
 			...props,
 			id,
-			ref: useMergeRefs$17(id ? store.setContentElement : null, ref, props.ref),
+			ref: useMergeRefs$18(id ? store.setContentElement : null, ref, props.ref),
 			style
 		};
 		return removeUndefinedValues(props);
@@ -80772,7 +80775,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}, []);
 		props = {
 			...props,
-			ref: useMergeRefs$17(ref, props.ref),
+			ref: useMergeRefs$18(ref, props.ref),
 			onMouseMove,
 			onMouseLeave
 		};
@@ -81296,7 +81299,7 @@ If there's a particular need for this, please submit a feature request at https:
 			name: multiSelectable ? void 0 : name,
 			form,
 			disabled,
-			ref: useMergeRefs$17(ref, store.setInputElement, composite ? void 0 : setCompositeElement, props.ref),
+			ref: useMergeRefs$18(ref, store.setInputElement, composite ? void 0 : setCompositeElement, props.ref),
 			onChange,
 			onCompositionStart,
 			onCompositionEnd,
@@ -81735,7 +81738,7 @@ If there's a particular need for this, please submit a feature request at https:
 			htmlFor: comboboxId,
 			...props,
 			id,
-			ref: useMergeRefs$17(store.setLabelElement, props.ref)
+			ref: useMergeRefs$18(store.setLabelElement, props.ref)
 		};
 		return props;
 	});
@@ -81869,7 +81872,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...props,
 			id,
 			onFocus,
-			ref: useMergeRefs$17(setContentElement, ref, props.ref),
+			ref: useMergeRefs$18(setContentElement, ref, props.ref),
 			style,
 			tabIndex: -1
 		};
@@ -83525,6 +83528,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/dataviews/build-module/components/validated-form-controls/form-token-field.mjs
 	const UnforwardedValidatedFormTokenField = ({ required, customValidity, markWhenOptional, ...restProps }, forwardedRef) => {
 		const validityTargetRef = (0, _wordpress_element.useRef)(null);
+		const getInteractiveTarget = () => validityTargetRef.current?.previousElementSibling?.querySelector("input[type=\"text\"]");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "dataviews-validated-control__wrapper-with-error-delegate",
 			ref: forwardedRef,
@@ -83534,6 +83538,7 @@ If there's a particular need for this, please submit a feature request at https:
 				markWhenOptional,
 				customValidity,
 				getValidityTarget: () => validityTargetRef.current,
+				getInteractiveTarget,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FormTokenField, { ...restProps })
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
 				className: "dataviews-validated-control__error-delegate",
@@ -83543,9 +83548,7 @@ If there's a particular need for this, please submit a feature request at https:
 				value: restProps.value && restProps.value.length > 0 ? "hasvalue" : "",
 				tabIndex: -1,
 				onChange: () => {},
-				onFocus: (e) => {
-					e.target.previousElementSibling?.querySelector("input[type=\"text\"]")?.focus();
-				}
+				onFocus: () => getInteractiveTarget()?.focus()
 			})]
 		});
 	};
@@ -83630,6 +83633,8 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/dataviews/build-module/components/validated-form-controls/toggle-group-control.mjs
 	const UnforwardedValidatedToggleGroupControl = ({ required, customValidity, markWhenOptional, ...restProps }, forwardedRef) => {
 		const validityTargetRef = (0, _wordpress_element.useRef)(null);
+		const groupRef = (0, _wordpress_element.useRef)(null);
+		const mergedRef = (0, _wordpress_compose.useMergeRefs)([groupRef, forwardedRef]);
 		const nameAttr = (0, _wordpress_element.useId)();
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "dataviews-validated-control__wrapper-with-error-delegate",
@@ -83639,8 +83644,9 @@ If there's a particular need for this, please submit a feature request at https:
 				markWhenOptional,
 				customValidity,
 				getValidityTarget: () => validityTargetRef.current,
+				getInteractiveTarget: () => groupRef.current,
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControl, {
-					ref: forwardedRef,
+					ref: mergedRef,
 					...restProps
 				})
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {

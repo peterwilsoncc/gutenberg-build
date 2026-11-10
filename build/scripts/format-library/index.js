@@ -11652,11 +11652,13 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	*
 	* The wrapped control is cloned with `label` and `required` props, and the
 	* validity state is read from the element returned by `getValidityTarget`.
+	* The validation message describes the element returned by
+	* `getInteractiveTarget`, or the validity target by default.
 	* Validation messages become visible once the control has been touched
 	* (blurred at least once), when the enclosing form is submitted, or when an
 	* `invalid` event is dispatched on the validity target.
 	*/
-	const ControlWithError = (0, _wordpress_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, children, render = DEFAULT_RENDER$1, ...restProps }, forwardedRef) {
+	const ControlWithError = (0, _wordpress_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, getInteractiveTarget, children, render = DEFAULT_RENDER$1, ...restProps }, forwardedRef) {
 		const [validity, setValidity] = (0, _wordpress_element.useState)();
 		const [showMessage, setShowMessage] = (0, _wordpress_element.useState)(false);
 		const [isTouched, setIsTouched] = (0, _wordpress_element.useState)(false);
@@ -11728,7 +11730,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		}) : null;
 		const visibleMessage = showMessage ? message : null;
 		(0, _wordpress_element.useEffect)(() => {
-			const target = getValidityTarget();
+			const target = getInteractiveTarget ? getInteractiveTarget() : getValidityTarget();
 			if (!target) return;
 			function setDescribedBy(el, shouldAdd) {
 				const ids = (el.getAttribute("aria-describedby") ?? "").split(" ").filter((id) => id && id !== messageId);
@@ -11741,7 +11743,8 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		}, [
 			visibleMessage,
 			messageId,
-			getValidityTarget
+			getValidityTarget,
+			getInteractiveTarget
 		]);
 		return useRender({
 			render,
