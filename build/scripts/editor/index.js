@@ -101015,6 +101015,7 @@ If there's a particular need for this, please submit a feature request at https:
 		else label = charString;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("kbd", {
 			className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
+			dir: "ltr",
 			"aria-label": label,
 			children: keys.map((key, index) => key === "+" && modifier ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_element.Fragment, { children: key }, index) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("kbd", {
 				className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
@@ -103761,6 +103762,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const ariaLabel = keyCombination.modifier ? _wordpress_keycodes.shortcutAriaLabel[keyCombination.modifier](keyCombination.character) : keyCombination.character;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("kbd", {
 			className: "editor-keyboard-shortcut-help-modal__shortcut-key-combination",
+			dir: "ltr",
 			"aria-label": forceAriaLabel || ariaLabel,
 			children: (Array.isArray(shortcut) ? shortcut : [shortcut]).map((character, index) => {
 				if (character === "+") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_element.Fragment, { children: character }, index);

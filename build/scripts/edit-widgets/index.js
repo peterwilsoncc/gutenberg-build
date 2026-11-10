@@ -6910,6 +6910,7 @@ Icon: ButtonIcon });
 		const ariaLabel = keyCombination.modifier ? _wordpress_keycodes.shortcutAriaLabel[keyCombination.modifier](keyCombination.character) : keyCombination.character;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("kbd", {
 			className: "edit-widgets-keyboard-shortcut-help-modal__shortcut-key-combination",
+			dir: "ltr",
 			"aria-label": forceAriaLabel || ariaLabel,
 			children: (Array.isArray(shortcut) ? shortcut : [shortcut]).map((character, index) => {
 				if (character === "+") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_element.Fragment, { children: character }, index);

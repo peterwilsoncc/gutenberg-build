@@ -4816,7 +4816,7 @@ div.dataviews-view-list {
 }
 
 .media-editor-keyboard-shortcuts-modal .media-editor-keyboard-shortcuts-modal__shortcut-key:last-child {
-  margin: 0 0.2rem 0 0;
+  margin-inline-end: 0;
 }
 
 .rotation-ruler {
@@ -6576,7 +6576,7 @@ mark.wp-note {
   margin: 0 0.2rem 0 0.2rem;
 }
 .editor-keyboard-shortcut-help-modal__shortcut-key:last-child {
-  margin: 0 0.2rem 0 0;
+  margin-inline-end: 0;
 }
 
 .editor-list-view-sidebar {

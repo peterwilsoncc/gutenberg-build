@@ -303,7 +303,7 @@ body.admin-color-fresh {
   margin: 0 0.2rem 0 0.2rem;
 }
 .customize-widgets-keyboard-shortcut-help-modal__shortcut-key:last-child {
-  margin: 0 0 0 0.2rem;
+  margin-inline-end: 0;
 }
 
 .components-popover.more-menu-dropdown__content {

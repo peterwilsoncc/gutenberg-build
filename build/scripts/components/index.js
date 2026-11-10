@@ -14229,6 +14229,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 			className,
 			"aria-label": ariaLabel,
+			dir: "ltr",
 			children: displayText
 		});
 	}

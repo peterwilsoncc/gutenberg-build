@@ -805,7 +805,7 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
   margin: 0 0.2rem 0 0.2rem;
 }
 .edit-widgets-keyboard-shortcut-help-modal__shortcut-key:last-child {
-  margin: 0 0 0 0.2rem;
+  margin-inline-end: 0;
 }
 
 .components-panel__header.edit-widgets-sidebar__panel-tabs {
