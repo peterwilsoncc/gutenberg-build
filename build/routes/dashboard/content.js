@@ -27072,28 +27072,31 @@ function createLifecycleState() {
 * for more details on when to use each pattern.
 */
 function Root$10({ children, open: openProp, onOpenChange, defaultOpen, onConfirm }) {
-	const [internalOpen, setInternalOpen] = (0, import_element.useState)(defaultOpen ?? false);
 	const [lifecycle] = (0, import_element.useState)(createLifecycleState);
 	const lifecycleState = (0, import_element.useSyncExternalStore)(lifecycle.subscribe, lifecycle.getValue, lifecycle.getValue);
 	const actionsRef = (0, import_element.useRef)(null);
 	const onConfirmEvent = (0, import_compose.useEvent)(onConfirm);
 	const confirmIdRef = (0, import_element.useRef)(0);
-	const effectiveOpen = openProp ?? internalOpen;
 	(0, import_element.useEffect)(() => {
-		if (effectiveOpen && lifecycleState.phase === "closing") lifecycle.update({
+		if (openProp && lifecycleState.phase === "closing") lifecycle.update({
 			phase: "idle",
 			showSpinner: false
 		});
 	}, [
-		effectiveOpen,
+		openProp,
 		lifecycle,
 		lifecycleState.phase
 	]);
 	const handleOpenChange = (0, import_element.useCallback)((nextOpen, eventDetails) => {
-		if (!nextOpen && lifecycle.getValue().phase === "pending") return;
-		if (!nextOpen && lifecycle.getValue().phase === "idle") lifecycle.update({ phase: "closing" });
-		setInternalOpen(nextOpen);
+		if (!nextOpen && lifecycle.getValue().phase === "pending") {
+			eventDetails.cancel();
+			return;
+		}
 		onOpenChange?.(nextOpen, eventDetails);
+		if (!nextOpen) lifecycle.update(eventDetails.isCanceled ? {
+			phase: "idle",
+			showSpinner: false
+		} : { phase: "closing" });
 	}, [lifecycle, onOpenChange]);
 	const confirm = (0, import_element.useCallback)(async () => {
 		if (lifecycle.getValue().phase !== "idle") return;
@@ -27147,7 +27150,7 @@ function Root$10({ children, open: openProp, onOpenChange, defaultOpen, onConfir
 		confirm
 	}), [lifecycleState, confirm]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AlertDialogRoot, {
-		open: effectiveOpen,
+		open: openProp,
 		defaultOpen,
 		onOpenChange: handleOpenChange,
 		onOpenChangeComplete: handleOpenChangeComplete,
