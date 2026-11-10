@@ -404,22 +404,6 @@ _wordpress_token_list = __toESM(_wordpress_token_list, 1);
 		]
 	});
 
-// packages/icons/build-module/library/copy-small.mjs
-	var copy_small_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
-		xmlns: "http://www.w3.org/2000/svg",
-		viewBox: "0 0 24 24",
-		style: { fill: "none" },
-		stroke: "currentColor",
-		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Rect, {
-			x: "4.75",
-			y: "4.75",
-			width: "11.5",
-			height: "11.5",
-			rx: "0.875"
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M19.25 8.281V17.281C19.25 18.3692 18.3546 19.25 17.251 19.25H6.25" })]
-	});
-
 // packages/icons/build-module/library/copy.mjs
 	var copy_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -427,7 +411,7 @@ _wordpress_token_list = __toESM(_wordpress_token_list, 1);
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M20.25 6.75V19C20.25 19.6904 19.6904 20.25 19 20.25H6.75" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M3.75 5C3.75 4.30964 4.30964 3.75 5 3.75H16C16.6904 3.75 17.25 4.30964 17.25 5V16C17.25 16.6904 16.6904 17.25 16 17.25H5C4.30964 17.25 3.75 16.6904 3.75 16V5Z" })]
+		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M7.75 19.25H18C18.6904 19.25 19.25 18.6904 19.25 18V7.75" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M6 16.25H15C15.6904 16.25 16.25 15.6904 16.25 15V6C16.25 5.30964 15.6904 4.75 15 4.75L6 4.75C5.30964 4.75 4.75 5.30964 4.75 6L4.75 15C4.75 15.6904 5.30964 16.25 6 16.25Z" })]
 	});
 
 // packages/icons/build-module/library/corner-all.mjs
@@ -1277,12 +1261,14 @@ _wordpress_token_list = __toESM(_wordpress_token_list, 1);
 		})]
 	});
 
-// packages/icons/build-module/library/pin-small.mjs
-	var pin_small_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+// packages/icons/build-module/library/pin.mjs
+	var pin_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
 		viewBox: "0 0 24 24",
-		fill: "currentColor",
-		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M10.97 10.159a3.382 3.382 0 0 0-2.857.955l1.724 1.723-2.836 2.913L7 17h1.25l2.913-2.837 1.723 1.723a3.38 3.38 0 0 0 .606-.825c.33-.63.446-1.343.35-2.032L17 10.695 13.305 7l-2.334 3.159Z" })
+		style: { fill: "none" },
+		stroke: "currentColor",
+		strokeWidth: "1.5",
+		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M5.75 18.25L10 14M13.5355 17.5355L6.46448 10.4645C7.731 9.19794 9.50794 8.75292 11.1332 9.12941L14.25 5.25L18.75 9.75L14.8706 12.8669C15.2471 14.4921 14.8021 16.269 13.5355 17.5355Z" })
 	});
 
 // packages/icons/build-module/library/plus.mjs
@@ -96715,7 +96701,7 @@ If there's a particular need for this, please submit a feature request at https:
 						}),
 						isSticky && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 							className: "block-editor-list-view-block-select-button__sticky",
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default, { icon: pin_small_default })
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default, { icon: pin_default })
 						}),
 						images.length ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 							className: "block-editor-list-view-block-select-button__images",
@@ -103837,7 +103823,7 @@ If there's a particular need for this, please submit a feature request at https:
 						showTooltip: !showIconLabels
 					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-						icon: copy_small_default,
+						icon: copy_default,
 						label: (0, _wordpress_i18n.__)("Copy link"),
 						ref,
 						accessibleWhenDisabled: true,

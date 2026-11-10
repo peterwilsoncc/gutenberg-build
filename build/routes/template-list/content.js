@@ -16393,7 +16393,7 @@ var pin_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.
 	style: { fill: "none" },
 	stroke: "currentColor",
 	strokeWidth: "1.5",
-	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M5 19L10 14M13.5355 17.5355L6.46447 10.4645C7.731 9.19794 9.50794 8.75292 11.1332 9.12941L14.5 4.50002L19.5 9.50002L14.8706 12.8669C15.2471 14.4921 14.8021 16.269 13.5355 17.5355Z" })
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M5.75 18.25L10 14M13.5355 17.5355L6.46448 10.4645C7.731 9.19794 9.50794 8.75292 11.1332 9.12941L14.25 5.25L18.75 9.75L14.8706 12.8669C15.2471 14.4921 14.8021 16.269 13.5355 17.5355Z" })
 });
 
 // packages/icons/build-module/library/post.mjs

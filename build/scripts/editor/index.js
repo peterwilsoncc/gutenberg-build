@@ -4200,20 +4200,14 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M18 5.5H6C5.30964 5.5 4.75 6.05964 4.75 6.75V16V18.4096C4.75 18.8725 5.32471 19.0869 5.62784 18.7371L8 16H18C18.6904 16 19.25 15.4404 19.25 14.75V6.75C19.25 6.05964 18.6904 5.5 18 5.5Z" })
 	});
 
-// packages/icons/build-module/library/copy-small.mjs
-	var copy_small_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
+// packages/icons/build-module/library/copy.mjs
+	var copy_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
 		viewBox: "0 0 24 24",
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Rect, {
-			x: "4.75",
-			y: "4.75",
-			width: "11.5",
-			height: "11.5",
-			rx: "0.875"
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M19.25 8.281V17.281C19.25 18.3692 18.3546 19.25 17.251 19.25H6.25" })]
+		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M7.75 19.25H18C18.6904 19.25 19.25 18.6904 19.25 18V7.75" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M6 16.25H15C15.6904 16.25 16.25 15.6904 16.25 15V6C16.25 5.30964 15.6904 4.75 15 4.75L6 4.75C5.30964 4.75 4.75 5.30964 4.75 6L4.75 15C4.75 15.6904 5.30964 16.25 6 16.25Z" })]
 	});
 
 // packages/icons/build-module/library/desktop.mjs
@@ -94841,7 +94835,7 @@ If there's a particular need for this, please submit a feature request at https:
 					suffix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalInputControlSuffixWrapper, {
 						variant: "control",
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-							icon: copy_small_default,
+							icon: copy_default,
 							ref: copyButtonRef,
 							size: "small",
 							label: (0, _wordpress_i18n.__)("Copy")

@@ -10633,20 +10633,14 @@ var chevron_down_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_pr
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M7 11L12 15L17 11" })
 });
 
-// packages/icons/build-module/library/copy-small.mjs
-var copy_small_default = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_primitives.SVG, {
+// packages/icons/build-module/library/copy.mjs
+var copy_default = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_primitives.SVG, {
 	xmlns: "http://www.w3.org/2000/svg",
 	viewBox: "0 0 24 24",
 	style: { fill: "none" },
 	stroke: "currentColor",
 	strokeWidth: "1.5",
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Rect, {
-		x: "4.75",
-		y: "4.75",
-		width: "11.5",
-		height: "11.5",
-		rx: "0.875"
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M19.25 8.281V17.281C19.25 18.3692 18.3546 19.25 17.251 19.25H6.25" })]
+	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M7.75 19.25H18C18.6904 19.25 19.25 18.6904 19.25 18V7.75" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M6 16.25H15C15.6904 16.25 16.25 15.6904 16.25 15V6C16.25 5.30964 15.6904 4.75 15 4.75L6 4.75C5.30964 4.75 4.75 5.30964 4.75 6L4.75 15C4.75 15.6904 5.30964 16.25 6 16.25Z" })]
 });
 
 // packages/icons/build-module/library/drafts.mjs
@@ -17371,7 +17365,7 @@ const SlugEdit = ({ field, onChange, data }) => {
 						padding: "minimal",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 							size: "small",
-							icon: copy_small_default,
+							icon: copy_default,
 							ref: copyButtonRef,
 							label: (0, import_i18n.__)("Copy")
 						})
