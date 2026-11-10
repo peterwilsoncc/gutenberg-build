@@ -2918,13 +2918,18 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	});
 
 // packages/icons/build-module/library/custom-post-type.mjs
-	var custom_post_type_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+	var custom_post_type_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
 		viewBox: "0 0 24 24",
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M8 12V8M8 4V8M8 8H12M8 8H4M8 8L10.8284 10.8284M8 8L5.17157 5.17157M8 8L10.8284 5.17157M8 8L5.17157 10.8284M4 15H20M4 19H13" })
+		children: [
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M4 15H20M4 19H13" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M8 12V4" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M11.4641 6L4.53589 10" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M11.4641 10L4.53589 6" })
+		]
 	});
 
 // packages/icons/build-module/library/details.mjs
@@ -3082,12 +3087,15 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		stroke: "currentColor",
 		strokeWidth: "1.5",
 		children: [
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M13 8H4M13 16H4" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M4 8H13M4 16H13" }),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-				d: "M20.1241 17.5H18.1241C18.1241 15.4333 20.1241 15.95 20.1241 14.4C20.1241 13.625 19.1241 12.975 18.1241 13.75",
+				d: "M18.9397 18H16.5C16.5 15.7308 19 16.3265 19 14.6246C19 13.7736 17.7199 13.0236 16.5 13.8745",
 				strokeLinecap: "square"
 			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M19 10V5.5L17.5 6" })
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+				d: "M18 10.25V6L16.5 6.5",
+				strokeLinecap: "square"
+			})
 		]
 	});
 
@@ -3101,10 +3109,13 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M11 8H20M11 16H20" }),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-				d: "M6.62408 17.5H4.62408C4.62408 15.4333 6.62408 15.95 6.62408 14.4C6.62408 13.625 5.62408 12.975 4.62408 13.75",
+				d: "M7.93972 18H5.5C5.5 15.7308 8 16.3265 8 14.6246C8 13.7736 6.71986 13.0236 5.5 13.8745",
 				strokeLinecap: "square"
 			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M5.5 10V5.5L4 6" })
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+				d: "M7 10.25V6L5.5 6.5",
+				strokeLinecap: "square"
+			})
 		]
 	});
 
@@ -3800,13 +3811,17 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	});
 
 // packages/icons/build-module/library/post-comments-count.mjs
-	var post_comments_count_default = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+	var post_comments_count_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
 		xmlns: "http://www.w3.org/2000/svg",
 		viewBox: "0 0 24 24",
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M4 5H20M4 9H13M17.5 13L17.3636 14.5M17.3636 14.5L17.1364 17M17.3636 14.5H15.75M17.3636 14.5H19.8636M17.1364 17L17 18.5M17.1364 17H15.5M17.1364 17H19.6364M20 13L19.8636 14.5M19.8636 14.5L19.6364 17M19.8636 14.5H21.25M19.6364 17L19.5 18.5M19.6364 17H21M6 13H12.5C13.1904 13 13.75 13.5596 13.75 14.25V18.291C13.75 18.9813 13.1904 19.541 12.5 19.541H7.76724L5.6268 21.9948C5.32306 22.343 4.75 22.1282 4.75 21.6662V19.541V14.25C4.75 13.5596 5.30964 13 6 13Z" })
+		children: [
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M19.5 8H13C12.3096 8 11.75 8.55964 11.75 9.25V13.291C11.75 13.9813 12.3096 14.541 13 14.541H17.7328L19.8732 16.9948C20.1769 17.343 20.75 17.1282 20.75 16.6662V14.541V9.25C20.75 8.55964 20.1904 8 19.5 8Z" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M7.5 8V15.5M4 8V15.5" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M2 10H9.5M2 13.5H9.5" })
+		]
 	});
 
 // packages/icons/build-module/library/post-comments-form.mjs
@@ -3853,7 +3868,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				fill: "currentColor"
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-				d: "M13 15.0988H11C11 13.0322 13 13.5489 13 11.9989C13 11.2239 12 10.5738 11 11.3488",
+				d: "M13.1897 15.2994H10.75C10.75 13.0302 13.25 13.6259 13.25 11.924C13.25 11.0731 11.9699 10.323 10.75 11.1739",
 				strokeLinecap: "square"
 			})
 		]
@@ -3992,10 +4007,13 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		stroke: "currentColor",
 		strokeWidth: "1.5",
 		children: [
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M8 14.25C8 13.85 8 10.9167 8 9.75L6.5 10.25" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+				d: "M8.25 13.75V9.5L6.75 10",
+				strokeLinecap: "square"
+			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M11 12H13" }),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-				d: "M17.5 13.5H15.5C15.5 11.4333 17.5 11.95 17.5 10.4C17.5 9.62503 16.5 8.975 15.5 9.74999",
+				d: "M17.6897 13.7008H15.25C15.25 11.4316 17.75 12.0273 17.75 10.3254C17.75 9.47445 16.4699 8.72436 15.25 9.5753",
 				strokeLinecap: "square"
 			})
 		]
@@ -4377,8 +4395,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M19.25 12.5429V4.85C19.25 4.79477 19.20523 4.75 19.15 4.75H11.4571C11.3245 4.75 11.1973 4.80268 11.1036 4.89645L3.8536 12.1464C3.6583 12.3417 3.6583 12.6583 3.8536 12.8536L11.1464 20.1464C11.3417 20.3417 11.6583 20.3417 11.8536 20.1464L19.10355 12.8964C19.19732 12.8027 19.25 12.6755 19.25 12.5429Z" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			d: "M13.9096 12.7915L12.4954 14.2057C11.034 12.7443 12.8136 11.6955 11.7176 10.5995C11.1696 10.0515 10.0028 10.2989 9.8437 11.554",
+		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M20.5 4.85V12.5429C20.5 12.6755 20.4473 12.8027 20.3536 12.8964L13.1036 20.1464C12.9083 20.3417 12.5917 20.3417 12.3964 20.1464L5.10355 12.8536C4.90829 12.6583 4.90829 12.3417 5.10355 12.1464L12.3536 4.89645C12.4473 4.80268 12.5745 4.75 12.7071 4.75H20.4C20.4552 4.75 20.5 4.79477 20.5 4.85Z" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+			d: "M12.7251 14.4071L11 12.682C12.6046 11.0774 13.9511 13.2664 15.1545 12.063C15.7562 11.4613 15.3814 10.0257 13.9172 9.76481",
 			strokeLinecap: "square"
 		})]
 	});
@@ -4474,7 +4492,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M6.28261 7.75L6.09288 9.93182M6.09288 9.93182L5.77668 13.5682M6.09288 9.93182H3.84783M6.09288 9.93182H9.57115M5.77668 13.5682L5.58696 15.75M5.77668 13.5682H3.5M5.77668 13.5682H9.25494M9.76087 7.75L9.57115 9.93182M9.57115 9.93182L9.25494 13.5682M9.57115 9.93182H11.5M9.25494 13.5682L9.06522 15.75M9.25494 13.5682H11.1522" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M19 7.75C19 7.75 19 11.8033 19 13.0386C19 14.2739 19.1824 15 20.5 15M19 11.2941C19 9.23529 17.8235 8.41176 16.3824 8.41176C14.7905 8.41176 13.5 9.64706 13.5 11.7059C13.5 13.7647 14.7905 15 16.3824 15C17.5592 15 19 13.7647 19 12.1176" })]
+		children: [
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M9.5 8V15.5M6 8V15.5" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M4 10H11.5M4 13.5H11.5" }),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M19 7.75V11.2941M19 11.2941V12.1176M19 11.2941C19 9.23529 17.8235 8.41176 16.3824 8.41176C14.7905 8.41176 13.5 9.64706 13.5 11.7059C13.5 13.7647 14.7905 15 16.3824 15C17.5592 15 19 13.7647 19 12.1176M19 12.1176V13.0386C19 14.2739 19.1824 15 20.5 15" })
+		]
 	});
 
 // packages/block-library/build-module/utils/hooks.mjs

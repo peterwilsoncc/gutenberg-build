@@ -202,7 +202,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		stroke: "currentColor",
 		strokeWidth: "1.5",
 		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			d: "M17.75 18.5988H15.75C15.75 16.5322 17.75 17.0489 17.75 15.4989C17.75 14.7239 16.75 14.0738 15.75 14.8488",
+			d: "M17.9397 18.7994H15.5C15.5 16.5302 18 17.1259 18 15.424C18 14.5731 16.7199 13.823 15.5 14.6739",
 			strokeLinecap: "square"
 		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M10 12L13 7.4V7M10 12L7 7.4L7.00004 7M10 12L7 16.6V17M10 12L13 16.6V17" })]
 	});
@@ -215,7 +215,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		stroke: "currentColor",
 		strokeWidth: "1.5",
 		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			d: "M17.75 8.59884H15.75C15.75 6.53219 17.75 7.04885 17.75 5.49887C17.75 4.72388 16.75 4.07384 15.75 4.84884",
+			d: "M17.9397 8.79944H15.5C15.5 6.53025 18 7.12592 18 5.42403C18 4.57308 16.7199 3.82299 15.5 4.67394",
 			strokeLinecap: "square"
 		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M10 12L13 7.4V7M10 12L7 7.4L7.00004 7M10 12L7 16.6V17M10 12L13 16.6V17" })]
 	});
