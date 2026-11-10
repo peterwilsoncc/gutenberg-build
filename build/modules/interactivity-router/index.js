@@ -2776,7 +2776,15 @@ const reloadAndDischarge = (token) => {
 		});
 	}
 };
+let entryChangeType = null;
+window.navigation?.addEventListener("currententrychange", (event) => {
+	entryChangeType = event.navigationType;
+});
 window.addEventListener("popstate", async () => {
+	if ((entryChangeType === "push" || entryChangeType === "replace") && currentNavigationId === navigateCallId && state.navigating) {
+		state.url = window.location.href;
+		return;
+	}
 	const pagePath = getPagePath(window.location.href);
 	const token = ++navigationId;
 	currentNavigationId = token;
@@ -2790,18 +2798,26 @@ window.addEventListener("popstate", async () => {
 	try {
 		if (state.initiator !== null && state.initiator !== void 0) state.initiator = null;
 		const page = await pages.get(pagePath);
+		if (currentNavigationId !== token) return;
 		if (!page) {
 			reloadAndDischarge(token);
 			return;
 		}
-		if (currentNavigationId === token) batch(() => {
+		batch(() => {
 			state.navigating = true;
 			state.initiator = null;
 		});
+		if (currentNavigationId !== token) return;
+		const { navigation } = privateState;
 		batch(() => {
 			state.url = window.location.href;
+			if (navigation.hasStarted) {
+				navigation.hasStarted = false;
+				navigation.hasFinished = true;
+			}
 			renderPage(page);
 		});
+		if (isLoadingAnnounced) a11ySpeak("loaded");
 		if (currentNavigationId === token) afterNextFrame(() => {
 			if (currentNavigationId === token) state.navigating = false;
 		});
@@ -2821,9 +2837,10 @@ window.document.querySelectorAll("script[type=module][src]").forEach(({ src }) =
 	const initialVdomMap = await initialVdomPromise;
 	pages.set(getPagePath(window.location.href), Promise.resolve(preparePage(getPagePath(window.location.href), document, { vdom: initialVdomMap })));
 })();
-let navigatingTo = "";
 let navigationId = 0;
 let currentNavigationId = 0;
+let navigateCallId = 0;
+let isLoadingAnnounced = false;
 let hasLoadedNavigationTextsData = false;
 const navigationTexts = {
 	loading: "Loading page, please wait.",
@@ -2885,6 +2902,11 @@ const { state, actions } = store("core/router", {
 		* needed, and updates any interactive regions whose contents have
 		* changed. It also creates a new entry in the browser session history.
 		*
+		* If another navigation (another call or a back/forward traversal)
+		* starts before this one renders its page, this one is abandoned: it
+		* doesn't render its page, change the session history or fall back to
+		* a full page load.
+		*
 		* @param href                               The page href.
 		* @param [options]                          Options object.
 		* @param [options.force]                    If true, it forces re-fetching the URL.
@@ -2895,7 +2917,7 @@ const { state, actions } = store("core/router", {
 		* @param [options.screenReaderAnnouncement] Whether a message for screen readers should be announced while navigating. Default to `true`.
 		* @param [options.initiator]                Who started the navigation. A nonempty string is used as is; `null` suppresses attribution silently; omitting it derives the value from the directive scope. An empty string or any other invalid value warns when `SCRIPT_DEBUG` is enabled, resolves to `null`, and never derives an initiator.
 		*
-		* @return  Promise that resolves once the navigation is completed or aborted.
+		* @return  Promise that resolves once the navigation is completed or abandoned.
 		*/
 		*navigate(href, options = {}) {
 			options = Object.assign(Object.create(null), options);
@@ -2905,19 +2927,19 @@ const { state, actions } = store("core/router", {
 			const pagePath = getPagePath(href);
 			const { navigation } = privateState;
 			const { loadingAnimation = true, screenReaderAnnouncement = true, timeout = 1e4 } = options;
-			navigatingTo = href;
 			actions.prefetch(pagePath, options);
 			const timeoutPromise = new Promise((resolve) => setTimeout(resolve, timeout));
+			const token = ++navigationId;
+			currentNavigationId = token;
+			navigateCallId = token;
 			const loadingTimeout = setTimeout(() => {
-				if (navigatingTo !== href) return;
+				if (currentNavigationId !== token) return;
 				if (loadingAnimation) {
 					navigation.hasStarted = true;
 					navigation.hasFinished = false;
 				}
 				if (screenReaderAnnouncement) a11ySpeak("loading");
 			}, 400);
-			const token = ++navigationId;
-			currentNavigationId = token;
 			try {
 				batch(() => {
 					state.navigating = true;
@@ -2925,19 +2947,20 @@ const { state, actions } = store("core/router", {
 				});
 				const page = yield Promise.race([pages.get(pagePath), timeoutPromise]);
 				clearTimeout(loadingTimeout);
-				if (navigatingTo !== href) return;
-				if (page && !page.initialData?.config?.["core/router"]?.clientNavigationDisabled) {
-					yield importScriptModules(page.scriptModules);
+				const canRenderPage = page && !page.initialData?.config?.["core/router"]?.clientNavigationDisabled;
+				if (canRenderPage && currentNavigationId === token) yield importScriptModules(page.scriptModules);
+				if (currentNavigationId !== token) return;
+				if (canRenderPage) {
 					batch(() => {
 						state.url = href;
-						if (loadingAnimation) {
+						if (loadingAnimation || navigation.hasStarted) {
 							navigation.hasStarted = false;
 							navigation.hasFinished = true;
 						}
 						renderPage(page);
 					});
 					window.history[options.replace ? "replaceState" : "pushState"]({ wpInteractivityId: sessionId }, "", href);
-					if (screenReaderAnnouncement) a11ySpeak("loaded");
+					if (screenReaderAnnouncement || isLoadingAnnounced) a11ySpeak("loaded");
 					const { hash } = new URL(href, window.location.href);
 					if (hash) document.querySelector(hash)?.scrollIntoView();
 				} else {
@@ -2981,10 +3004,12 @@ state.url = state.url || window.location.href;
 *
 * This is a wrapper around the `@wordpress/a11y` package's `speak` function. It handles importing
 * the package on demand and should be used instead of calling `a11y.speak` directly.
+* It also records whether the latest announcement is the loading message.
 *
 * @param messageKey The message to be announced by assistive technologies.
 */
 function a11ySpeak(messageKey) {
+	isLoadingAnnounced = messageKey === "loading";
 	if (!hasLoadedNavigationTextsData) {
 		hasLoadedNavigationTextsData = true;
 		const script = document.querySelector("script[id=\"wp-script-module-data-@wordpress/interactivity-router\"]");
