@@ -30351,7 +30351,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$7 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
+	const SelectControl$6 = (0, _wordpress_element.forwardRef)(function UnforwardedSelectControl({ className, children, items, label, description, details, hideLabelFromVision, placeholder, popupWidth = "content", size = "default", trigger, ...restProps }, ref) {
 		warnSelectControlProps(items, restProps.itemToStringValue);
 		const triggerElement = useRender({
 			render: trigger ?? DEFAULT_TRIGGER,
@@ -30397,7 +30397,7 @@ Icon: ButtonIcon });
 	/**
 	* A complete select field with integrated label and description.
 	*/
-	const SelectControl$6 = Object.assign(SelectControl$7, {
+	const SelectControl$5 = Object.assign(SelectControl$6, {
 		/**
 		* The trigger button, passed through the `trigger` prop to customize
 		* its props while retaining the control's label and selected content.
@@ -30558,7 +30558,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => type !== "monthly",
 						onDeselect: () => setAttributes({ type: "monthly" }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 							label: (0, _wordpress_i18n.__)("Group by"),
 							items: ARCHIVE_TYPE_ITEMS,
 							value: ARCHIVE_TYPE_ITEMS.find((item) => item.value === type) ?? ARCHIVE_TYPE_ITEMS[0],
@@ -31763,7 +31763,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => !!preload,
 						onDeselect: () => setAttributes({ preload: void 0 }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 							label: (0, _wordpress_i18n._x)("Preload", "noun; Audio block parameter"),
 							items: PRELOAD_ITEMS,
 							value: PRELOAD_ITEMS.find((item) => item.value === (preload || null)) ?? PRELOAD_ITEMS[0],
@@ -35116,7 +35116,7 @@ Icon: ButtonIcon });
 								setAttributes({ taxonomy: "category" });
 							},
 							isShownByDefault: true,
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 								label: (0, _wordpress_i18n.__)("Taxonomy"),
 								items: taxonomyItems,
 								value: taxonomyItems.find((item) => item.value === taxonomySlug) ?? taxonomyItems[0],
@@ -44940,7 +44940,7 @@ Icon: ButtonIcon });
 					isShownByDefault: true,
 					hasValue: () => textLinkHref !== href,
 					onDeselect: () => changeLinkDestinationOption(href),
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 						label: (0, _wordpress_i18n.__)("Link to"),
 						value: linkDestinationItems.find((item) => item.value === textLinkHref) ?? linkDestinationItems[0],
 						items: linkDestinationItems,
@@ -49298,7 +49298,7 @@ Icon: ButtonIcon });
 	*/
 	function SourceOrderControl({ order, isRandom, onChange, onSelectRandom }) {
 		const value = isRandom ? RANDOM_ORDER : toOrderValue(order);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 			label: (0, _wordpress_i18n.__)("Order by"),
 			value: SOURCE_ORDER_OPTIONS.find((option) => option.value === value) ?? null,
 			items: SOURCE_ORDER_OPTIONS,
@@ -49346,7 +49346,7 @@ Icon: ButtonIcon });
 		let value = CUSTOM_ORDER;
 		if (isRandom) value = RANDOM_ORDER;
 		else if (currentOrder) value = toOrderValue(currentOrder);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 			label: (0, _wordpress_i18n.__)("Order by"),
 			value: options.find((option) => option.value === value) ?? null,
 			items: options,
@@ -49942,13 +49942,14 @@ Icon: ButtonIcon });
 							label: (0, _wordpress_i18n.__)("Resolution"),
 							hasValue: () => sizeSlug !== "large",
 							onDeselect: () => updateImagesSize("large"),
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 								label: (0, _wordpress_i18n.__)("Resolution"),
-								help: (0, _wordpress_i18n.__)("Select the size of the source images."),
-								value: sizeSlug,
-								options: imageSizeOptions,
-								onChange: updateImagesSize,
-								hideCancelButton: true
+								description: (0, _wordpress_i18n.__)("Select the size of the source images."),
+								value: imageSizeOptions.find((item) => item.value === sizeSlug) ?? imageSizeOptions[0],
+								items: imageSizeOptions,
+								onValueChange: (item) => {
+									if (item && item.value !== sizeSlug) updateImagesSize(item.value);
+								}
 							})
 						}),
 						!isViewportStyleState && hasLinkTo && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
@@ -49967,12 +49968,19 @@ Icon: ButtonIcon });
 							label: (0, _wordpress_i18n.__)("Aspect ratio"),
 							onDeselect: () => setAspectRatio(isViewportStyleState ? void 0 : "auto"),
 							isShownByDefault: true,
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SelectControl, {
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 								label: (0, _wordpress_i18n.__)("Aspect ratio"),
-								help: (0, _wordpress_i18n.__)("Set a consistent aspect ratio for all images in the gallery."),
-								value: activeAspectRatio,
-								options: aspectRatioOptions,
-								onChange: setAspectRatio
+								description: (0, _wordpress_i18n.__)("Set a consistent aspect ratio for all images in the gallery."),
+								value: aspectRatioOptions.find((item) => item.value === activeAspectRatio) ?? aspectRatioOptions[0],
+								items: aspectRatioOptions,
+								onValueChange: (item) => {
+									if (item && item.value !== activeAspectRatio) setAspectRatio(item.value);
+								},
+								children: aspectRatioOptions.map((item, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5.Item, {
+									value: item,
+									label: item.label,
+									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5.ItemLabel, { children: item.label })
+								}, `${item.value}-${index}`))
 							})
 						}),
 						isFlexLayout && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
@@ -55996,7 +56004,7 @@ Icon: ButtonIcon });
 						label: (0, _wordpress_i18n.__)("Display content"),
 						onDeselect: () => setAttributes({ displayContent: "excerpt" }),
 						isShownByDefault: true,
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 							label: (0, _wordpress_i18n.__)("Display content"),
 							items: DISPLAY_CONTENT_ITEMS,
 							value: DISPLAY_CONTENT_ITEMS.find((item) => item.value === displayContent) ?? DISPLAY_CONTENT_ITEMS[0],
@@ -57170,7 +57178,7 @@ Icon: ButtonIcon });
 					isShownByDefault: true,
 					hasValue: () => !!type,
 					onDeselect: () => setAttributes({ type: void 0 }),
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 						label: (0, _wordpress_i18n.__)("List style"),
 						items: LIST_STYLE_ITEMS,
 						value: LIST_STYLE_ITEMS.find((item) => item.value === type) ?? LIST_STYLE_ITEMS[0],
@@ -69549,7 +69557,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => order !== "asc",
 						onDeselect: () => setAttributes({ order: "asc" }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 							label: (0, _wordpress_i18n.__)("Order"),
 							value: selectedOrderItem,
 							items: ORDER_ITEMS,
@@ -69589,7 +69597,7 @@ Icon: ButtonIcon });
 						hasValue: () => waveformStyle !== DEFAULT_WAVEFORM_STYLE,
 						onDeselect: () => onChangeWaveformStyle(DEFAULT_WAVEFORM_STYLE),
 						panelId: waveformPanelId,
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 							label: (0, _wordpress_i18n.__)("Shape"),
 							value: WAVEFORM_STYLE_ITEMS.find((item) => item.value === waveformStyle) ?? WAVEFORM_STYLE_ITEMS[0],
 							items: WAVEFORM_STYLE_ITEMS,
@@ -70304,7 +70312,7 @@ Icon: ButtonIcon });
 						isShownByDefault: true,
 						hasValue: () => avatarSize !== 48,
 						onDeselect: () => setAttributes({ avatarSize: 48 }),
-						children: avatarSizes.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+						children: avatarSizes.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 							label: (0, _wordpress_i18n.__)("Avatar size"),
 							value: avatarSizes.find((item) => item.value === String(avatarSize)) ?? avatarSizes[0],
 							items: avatarSizes,
@@ -73192,7 +73200,7 @@ Icon: ButtonIcon });
 			}) }),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, {
 				group: "advanced",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 					label: (0, _wordpress_i18n.__)("Filter by taxonomy"),
 					items: taxonomyOptions,
 					itemToStringValue: (item) => `taxonomy:${item.value}`,
@@ -80697,7 +80705,7 @@ Icon: ButtonIcon });
 	}];
 	const HtmlElementControl = ({ tagName = "hr", setAttributes }) => {
 		const selectedItem = HTML_ELEMENT_ITEMS.find((item) => item.value === tagName) ?? HTML_ELEMENT_ITEMS[0];
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 			label: (0, _wordpress_i18n.__)("HTML element"),
 			value: selectedItem,
 			onValueChange: (item) => setAttributes({ tagName: item?.value ?? "hr" }),
@@ -83328,7 +83336,7 @@ Icon: ButtonIcon });
 						hasValue: () => !!size,
 						label: (0, _wordpress_i18n.__)("Icon size"),
 						onDeselect: () => setAttributes({ size: void 0 }),
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 							label: (0, _wordpress_i18n.__)("Icon size"),
 							onValueChange: (item) => item && setAttributes({ size: item.value ?? void 0 }),
 							value: sizeItems.find((item) => item.value === (size || null)) ?? sizeItems[0],
@@ -86536,7 +86544,7 @@ Icon: ButtonIcon });
 				label: (0, _wordpress_i18n.__)("Limit heading levels"),
 				onDeselect: () => setAttributes({ maxLevel: void 0 }),
 				isShownByDefault: true,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 					label: (0, _wordpress_i18n.__)("Include headings down to level"),
 					value: HEADING_LEVEL_ITEMS.find((item) => item.value === (maxLevel ? String(maxLevel) : "all")) ?? HEADING_LEVEL_ITEMS[0],
 					items: HEADING_LEVEL_ITEMS,
@@ -87249,7 +87257,7 @@ Icon: ButtonIcon });
 					label: (0, _wordpress_i18n.__)("Taxonomy"),
 					onDeselect: () => setAttributes({ taxonomy: "post_tag" }),
 					isShownByDefault: true,
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 						label: (0, _wordpress_i18n.__)("Taxonomy"),
 						items: taxonomyItems,
 						itemToStringValue: (item) => `taxonomy:${item.value}`,
@@ -87743,7 +87751,7 @@ Icon: ButtonIcon });
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
 				as: "form",
 				onSubmit: createFromWidgets,
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexBlock, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexBlock, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 					label: (0, _wordpress_i18n.__)("Import widget area"),
 					value: options.find((item) => item.value === (selectedSidebar || null)) ?? null,
 					items: options,
@@ -87782,7 +87790,7 @@ Icon: ButtonIcon });
 					setTitle(value);
 				},
 				onFocus: (event) => event.target.select()
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 				label: (0, _wordpress_i18n.__)("Area"),
 				items: areaOptions,
 				value: areaOptions.find((item) => item.value === area) ?? null,
@@ -88937,7 +88945,7 @@ Icon: ButtonIcon });
 			label: taxonomy.name,
 			value: taxonomy.slug
 		}));
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 			items: taxonomyOptions,
 			value: taxonomyOptions.find((item) => item.value === value) ?? null,
 			onValueChange: (item) => {
@@ -88967,7 +88975,7 @@ Icon: ButtonIcon });
 				value: "count/asc"
 			}
 		];
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 			items: orderOptions,
 			value: orderOptions.find((item) => item.value === orderBy + "/" + order) ?? null,
 			onValueChange: (item) => {
@@ -90320,7 +90328,7 @@ Icon: ButtonIcon });
 				onDeselect: () => {
 					setAttributes({ preload: "metadata" });
 				},
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 					label: (0, _wordpress_i18n.__)("Preload"),
 					value: options.find((item) => item.value === preload) ?? null,
 					onValueChange: onChangePreload,
@@ -90431,7 +90439,7 @@ Icon: ButtonIcon });
 				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalVStack, {
 					spacing: "4",
 					children: [
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$6, {
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$5, {
 							className: "block-library-video-tracks-editor__single-track-editor-kind-select",
 							items: KIND_OPTIONS,
 							value: KIND_OPTIONS.find((item) => item.value === kind) ?? null,
