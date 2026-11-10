@@ -833,7 +833,7 @@ var wp;
               "The result of getSnapshot should be cached to avoid an infinite loop"
             ), didWarnUncachedGetSnapshot = true);
           }
-          cachedValue = useState174({
+          cachedValue = useState173({
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
@@ -845,7 +845,7 @@ var wp;
             },
             [subscribe2, value, getSnapshot]
           );
-          useEffect142(
+          useEffect141(
             function() {
               checkIfSnapshotChanged(inst) && forceUpdate({ inst });
               return subscribe2(function() {
@@ -871,7 +871,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React251 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState174 = React251.useState, useEffect142 = React251.useEffect, useLayoutEffect23 = React251.useLayoutEffect, useDebugValue2 = React251.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React251 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState173 = React251.useState, useEffect141 = React251.useEffect, useLayoutEffect23 = React251.useLayoutEffect, useDebugValue2 = React251.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React251.useSyncExternalStore ? React251.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -899,9 +899,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React251 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore5 = shim.useSyncExternalStore, useRef192 = React251.useRef, useEffect142 = React251.useEffect, useMemo208 = React251.useMemo, useDebugValue2 = React251.useDebugValue;
+        var React251 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore5 = shim.useSyncExternalStore, useRef191 = React251.useRef, useEffect141 = React251.useEffect, useMemo208 = React251.useMemo, useDebugValue2 = React251.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector5, isEqual2) {
-          var instRef = useRef192(null);
+          var instRef = useRef191(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -942,7 +942,7 @@ var wp;
             [getSnapshot, getServerSnapshot, selector5, isEqual2]
           );
           var value = useSyncExternalStore5(subscribe2, instRef[0], instRef[1]);
-          useEffect142(
+          useEffect141(
             function() {
               inst.hasValue = true;
               inst.value = value;
@@ -6130,7 +6130,7 @@ var wp;
 
   // packages/block-editor/build-module/hooks/utils.mjs
   var import_blocks109 = __toESM(require_blocks(), 1);
-  var import_element446 = __toESM(require_element(), 1);
+  var import_element445 = __toESM(require_element(), 1);
   var import_data187 = __toESM(require_data(), 1);
   var import_compose146 = __toESM(require_compose(), 1);
   var import_hooks15 = __toESM(require_hooks(), 1);
@@ -20628,7 +20628,7 @@ var wp;
   var import_blocks17 = __toESM(require_blocks(), 1);
   var import_components15 = __toESM(require_components(), 1);
   var import_data15 = __toESM(require_data(), 1);
-  var import_element156 = __toESM(require_element(), 1);
+  var import_element155 = __toESM(require_element(), 1);
   var import_compose21 = __toESM(require_compose(), 1);
 
   // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/useRenderElement.mjs
@@ -43692,7 +43692,7 @@ var wp;
 
   // packages/ui/build-module/breadcrumb/button-item.mjs
   var import_compose7 = __toESM(require_compose(), 1);
-  var import_element67 = __toESM(require_element(), 1);
+  var import_element66 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/button/button.mjs
   var import_a11y4 = __toESM(require_a11y(), 1);
@@ -46214,165 +46214,6 @@ var wp;
     return /* @__PURE__ */ (0, import_jsx_runtime235.jsx)(DirectionProvider, { direction: (0, import_i18n20.isRTL)() ? "rtl" : "ltr", children });
   }
 
-  // packages/ui/build-module/utils/use-iframe-dismissal-bridge.mjs
-  var import_element53 = __toESM(require_element(), 1);
-  function getIframeDocument(iframe) {
-    try {
-      return iframe.contentDocument;
-    } catch {
-      return null;
-    }
-  }
-  function forEachIframe(node, callback) {
-    if (node.nodeType !== Node.ELEMENT_NODE) {
-      return;
-    }
-    const element = node;
-    if (element.tagName === "IFRAME") {
-      callback(element);
-    }
-    element.querySelectorAll("iframe").forEach(callback);
-  }
-  function getNodeDocument(node) {
-    return node?.nodeType === Node.DOCUMENT_NODE ? node : node?.ownerDocument ?? null;
-  }
-  function isInsideCurrentPopup(event, trigger) {
-    const popupId = trigger.getAttribute("aria-controls");
-    if (!popupId) {
-      return false;
-    }
-    let target = event.target;
-    while (target) {
-      const targetDocument = getNodeDocument(target);
-      const targetElement = target.nodeType === Node.ELEMENT_NODE ? target : target.parentElement;
-      const popup = targetDocument?.getElementById(popupId);
-      if (popup && targetElement) {
-        const rootOwnerId = popup.getAttribute("data-rootownerid");
-        if (!rootOwnerId) {
-          return popup.contains(targetElement);
-        }
-        return targetElement.closest("[data-rootownerid]")?.getAttribute("data-rootownerid") === rootOwnerId;
-      }
-      if (targetDocument === trigger.ownerDocument) {
-        break;
-      }
-      target = targetDocument?.defaultView?.frameElement ?? null;
-    }
-    return false;
-  }
-  function useCloseOnIframePointerDown({
-    enabled,
-    onPointerDown,
-    ownerDocument: ownerDocument2
-  }) {
-    (0, import_element53.useEffect)(() => {
-      if (!enabled || !ownerDocument2) {
-        return;
-      }
-      const observeDocument = (document2, listenForPointerDown) => {
-        if (listenForPointerDown) {
-          document2.addEventListener("pointerdown", onPointerDown, true);
-        }
-        const iframeCleanups = /* @__PURE__ */ new Map();
-        const addIframe = (iframe) => {
-          if (iframeCleanups.has(iframe)) {
-            return;
-          }
-          let iframeDocument = null;
-          let iframeDocumentCleanup;
-          const updateIframeDocument = () => {
-            const nextIframeDocument = getIframeDocument(iframe);
-            if (nextIframeDocument === iframeDocument) {
-              return;
-            }
-            iframeDocumentCleanup?.();
-            iframeDocument = nextIframeDocument;
-            iframeDocumentCleanup = iframeDocument ? observeDocument(iframeDocument, true) : void 0;
-          };
-          iframe.addEventListener("load", updateIframeDocument);
-          updateIframeDocument();
-          iframeCleanups.set(iframe, () => {
-            iframe.removeEventListener("load", updateIframeDocument);
-            iframeDocumentCleanup?.();
-          });
-        };
-        const removeIframe = (iframe) => {
-          iframeCleanups.get(iframe)?.();
-          iframeCleanups.delete(iframe);
-        };
-        document2.querySelectorAll("iframe").forEach(addIframe);
-        const MutationObserverConstructor = document2.defaultView?.MutationObserver;
-        const observer = MutationObserverConstructor ? new MutationObserverConstructor((records) => {
-          records.forEach((record) => {
-            record.removedNodes.forEach(
-              (node) => forEachIframe(node, removeIframe)
-            );
-            record.addedNodes.forEach(
-              (node) => forEachIframe(node, addIframe)
-            );
-          });
-        }) : null;
-        observer?.observe(document2.documentElement, {
-          childList: true,
-          subtree: true
-        });
-        return () => {
-          observer?.disconnect();
-          iframeCleanups.forEach((cleanup) => cleanup());
-          if (listenForPointerDown) {
-            document2.removeEventListener(
-              "pointerdown",
-              onPointerDown,
-              true
-            );
-          }
-        };
-      };
-      return observeDocument(ownerDocument2, false);
-    }, [enabled, onPointerDown, ownerDocument2]);
-  }
-  function useIframeDismissalBridge({
-    actionsRef,
-    defaultOpen,
-    disabled: disabled2,
-    modal,
-    onOpenChange,
-    open: openProp
-  }) {
-    const fallbackActionsRef = (0, import_element53.useRef)(null);
-    const resolvedActionsRef = actionsRef ?? fallbackActionsRef;
-    const [uncontrolledOpen, setUncontrolledOpen] = (0, import_element53.useState)(
-      defaultOpen ?? false
-    );
-    const [trigger, setTrigger] = (0, import_element53.useState)(null);
-    const open3 = openProp ?? uncontrolledOpen;
-    const handleIframePointerDown = (0, import_element53.useCallback)(
-      (event) => {
-        if (trigger && !isInsideCurrentPopup(event, trigger)) {
-          resolvedActionsRef.current?.close();
-        }
-      },
-      [resolvedActionsRef, trigger]
-    );
-    useCloseOnIframePointerDown({
-      enabled: open3 && modal === false && !disabled2 && trigger !== null,
-      onPointerDown: handleIframePointerDown,
-      ownerDocument: trigger?.ownerDocument ?? null
-    });
-    const handleOpenChange = (nextOpen, eventDetails) => {
-      onOpenChange(nextOpen, eventDetails);
-      if (eventDetails.isCanceled) {
-        return;
-      }
-      setUncontrolledOpen(nextOpen);
-      setTrigger(nextOpen ? eventDetails.trigger ?? null : null);
-    };
-    return {
-      actionsRef: resolvedActionsRef,
-      onOpenChange: handleOpenChange
-    };
-  }
-
   // packages/ui/build-module/menu/root.mjs
   var import_jsx_runtime236 = __toESM(require_jsx_runtime(), 1);
   function Root(props) {
@@ -46389,18 +46230,17 @@ var wp;
         trigger.focus();
       }
     };
-    const iframeDismissalProps = useIframeDismissalBridge({
-      actionsRef: props.actionsRef,
-      defaultOpen: props.defaultOpen,
-      modal: props.modal,
-      onOpenChange: handleOpenChange,
-      open: props.open
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(index_parts_exports3.Root, { ...props, ...iframeDismissalProps }) }) }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(MenuContext.Provider, { value: { isSubmenu: false }, children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime236.jsx)(
+      index_parts_exports3.Root,
+      {
+        ...props,
+        onOpenChange: handleOpenChange
+      }
+    ) }) }) });
   }
 
   // packages/ui/build-module/menu/separator.mjs
-  var import_element54 = __toESM(require_element(), 1);
+  var import_element53 = __toESM(require_element(), 1);
   var import_jsx_runtime237 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE20 = "data-wp-hash";
   function getRuntime20() {
@@ -46486,7 +46326,7 @@ var wp;
     registerStyle20("6ea01d6030", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._1094d29b1d68df17__positioner{z-index:var(--wp-ui-menu-z-index,initial)}.b0033b5034e8531c__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-sm,320px);--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._5d18178a87169fa7__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}._435b87e9c9dec00c__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._1d722d53e1c1850b__radio-group,._435b87e9c9dec00c__list,._7c71af6b82649e7d__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._1d722d53e1c1850b__radio-group,._7c71af6b82649e7d__group{grid-column:1/-1}._1d722d53e1c1850b__radio-group:has(>._5d75fdeb692cb443__item>._5614b29df27f39f4__item-prefix),._435b87e9c9dec00c__list:has(>._5d75fdeb692cb443__item>._5614b29df27f39f4__item-prefix),._7c71af6b82649e7d__group:has(>._5d75fdeb692cb443__item>._5614b29df27f39f4__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._56eb3186457d1c36__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.e3a98066a7a2267f__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}._5d75fdeb692cb443__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._5614b29df27f39f4__item-prefix,._5d18178a87169fa7__item-selection-indicator,._642c7e435a86580c__item-content{grid-row:1}._5d18178a87169fa7__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}.f9262b3f40feb262__checkbox-selection-icon{translate:0 1px}._684ac045afdf4baf__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._5614b29df27f39f4__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.d85300aa9fdb277c__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._642c7e435a86580c__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._1b342dc0d7e1d359__has-prefix{grid-column:content-start/content-end}}._8ad08abc200ee1d7__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._34ea63be597cb586__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}._00a2e202b2fd1f3f__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._642c7e435a86580c__item-content>._890a7d4be00d4b75__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._642c7e435a86580c__item-content>.d06c0bfd8b23b345__item-shortcut{grid-column:shortcut-start/shortcut-end}._642c7e435a86580c__item-content>.d06c0bfd8b23b345__item-shortcut,._93308f16bd1c5cad__item-trailing{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._93308f16bd1c5cad__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._34ea63be597cb586__item-label+:is(._890a7d4be00d4b75__item-suffix,.d06c0bfd8b23b345__item-shortcut,._93308f16bd1c5cad__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}.d06c0bfd8b23b345__item-shortcut+._93308f16bd1c5cad__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.ceed5efc4ab5e46f__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.ceed5efc4ab5e46f__submenu-chevron:dir(rtl){transform:rotate(180deg)}._3a3c062c80390ce9__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._3a3c062c80390ce9__external-link-indicator:after{content:"\\2197"}._3a3c062c80390ce9__external-link-indicator:dir(rtl):after{content:"\\2196"}._5d75fdeb692cb443__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) ._5d18178a87169fa7__item-selection-indicator,._5d75fdeb692cb443__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(._00a2e202b2fd1f3f__item-description,._890a7d4be00d4b75__item-suffix,.d06c0bfd8b23b345__item-shortcut,._93308f16bd1c5cad__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}');
   }
   var style_default19 = { "positioner": "_1094d29b1d68df17__positioner", "popup": "b0033b5034e8531c__popup", "item-selection-indicator": "_5d18178a87169fa7__item-selection-indicator", "is-root": "a3b87618ff461e0b__is-root _069972d5e326bada__dropdown-motion", "is-submenu": "f996099426988ae2__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only", "list": "_435b87e9c9dec00c__list", "group": "_7c71af6b82649e7d__group", "radio-group": "_1d722d53e1c1850b__radio-group", "item": "_5d75fdeb692cb443__item", "item-prefix": "_5614b29df27f39f4__item-prefix", "group-label": "_56eb3186457d1c36__group-label", "separator": "e3a98066a7a2267f__separator", "item-content": "_642c7e435a86580c__item-content", "checkbox-selection-icon": "f9262b3f40feb262__checkbox-selection-icon", "radio-selection-icon": "_684ac045afdf4baf__radio-selection-icon", "prefix-icon": "d85300aa9fdb277c__prefix-icon", "has-prefix": "_1b342dc0d7e1d359__has-prefix", "item-descriptions": "_8ad08abc200ee1d7__item-descriptions", "item-label": "_34ea63be597cb586__item-label", "item-description": "_00a2e202b2fd1f3f__item-description", "item-suffix": "_890a7d4be00d4b75__item-suffix", "item-shortcut": "d06c0bfd8b23b345__item-shortcut", "item-trailing": "_93308f16bd1c5cad__item-trailing", "submenu-chevron": "ceed5efc4ab5e46f__submenu-chevron", "external-link-indicator": "_3a3c062c80390ce9__external-link-indicator" };
-  var Separator2 = (0, import_element54.forwardRef)(
+  var Separator2 = (0, import_element53.forwardRef)(
     function MenuSeparator({ className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime237.jsx)(
         index_parts_exports3.Separator,
@@ -46500,15 +46340,15 @@ var wp;
   );
 
   // packages/ui/build-module/menu/submenu-root.mjs
-  var import_element55 = __toESM(require_element(), 1);
+  var import_element54 = __toESM(require_element(), 1);
   var import_jsx_runtime238 = __toESM(require_jsx_runtime(), 1);
   function SubmenuRoot(props) {
-    const submenuTriggerRef = (0, import_element55.useRef)(null);
+    const submenuTriggerRef = (0, import_element54.useRef)(null);
     return /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(MenuContext.Provider, { value: { isSubmenu: true, submenuTriggerRef }, children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(MenuGroupContext2.Provider, { value: null, children: /* @__PURE__ */ (0, import_jsx_runtime238.jsx)(index_parts_exports3.SubmenuRoot, { ...props }) }) });
   }
 
   // packages/ui/build-module/menu/submenu-trigger.mjs
-  var import_element56 = __toESM(require_element(), 1);
+  var import_element55 = __toESM(require_element(), 1);
   var import_compose5 = __toESM(require_compose(), 1);
   var import_jsx_runtime239 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE21 = "data-wp-hash";
@@ -46603,7 +46443,7 @@ var wp;
     registerStyle21("6ea01d6030", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._1094d29b1d68df17__positioner{z-index:var(--wp-ui-menu-z-index,initial)}.b0033b5034e8531c__popup{--wp-ui-menu-popup-padding:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-min-width:160px;--wp-ui-menu-max-width:var(--wpds-dimension-surface-width-sm,320px);--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-item-padding-inline-end:var(--wpds-dimension-padding-sm,8px);--_wp-ui-menu-group-head-padding-base:var(--wpds-dimension-padding-sm,8px);--wp-ui-menu-group-head-padding-inline:var(--_wp-ui-menu-group-head-padding-base);--wp-ui-menu-selection-indicator-track-size:0px;--wp-ui-menu-selection-indicator-size:var(--wpds-dimension-size-2xs,16px);--wp-ui-menu-selection-indicator-gap:0px;--_wp-ui-menu-elevation-md:0px 2px 3px 0px #0000000d,0px 4px 5px 0px #0000000a,0px 12px 12px 0px #00000008,0px 16px 16px 0px #00000005;background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-menu-elevation-md);max-height:min(var(--available-height),480px,60dvh);max-width:min(var(--available-width),var(--wp-ui-menu-max-width));min-width:min(var(--available-width),var(--wp-ui-menu-min-width));outline:none;overflow-block:auto;overscroll-behavior:none;padding:var(--wp-ui-menu-popup-padding);scroll-padding:var(--wp-ui-menu-popup-padding);&:has(._5d18178a87169fa7__item-selection-indicator){--_wp-ui-menu-item-padding-inline-start:var(--wpds-dimension-padding-xs,4px);--wp-ui-menu-selection-indicator-track-size:var(--wpds-dimension-size-2xs,16px)}}._435b87e9c9dec00c__list{--_wp-ui-menu-item-label-line-height:var(--wpds-typography-line-height-sm,20px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--_wp-ui-menu-item-label-line-height)}._1d722d53e1c1850b__radio-group,._435b87e9c9dec00c__list,._7c71af6b82649e7d__group{--wp-ui-menu-group-prefix-gap:0px;display:grid;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];min-width:0}._1d722d53e1c1850b__radio-group,._7c71af6b82649e7d__group{grid-column:1/-1}._1d722d53e1c1850b__radio-group:has(>._5d75fdeb692cb443__item>._5614b29df27f39f4__item-prefix),._435b87e9c9dec00c__list:has(>._5d75fdeb692cb443__item>._5614b29df27f39f4__item-prefix),._7c71af6b82649e7d__group:has(>._5d75fdeb692cb443__item>._5614b29df27f39f4__item-prefix){--wp-ui-menu-group-prefix-gap:var(--wpds-dimension-gap-xs,4px)}._56eb3186457d1c36__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);grid-column:prefix-start/content-end;line-height:var(--wpds-typography-line-height-xs,16px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));min-height:var(--wpds-dimension-size-sm,24px);min-width:0;padding-block:var(--wpds-dimension-padding-xs,4px);text-transform:uppercase}.e3a98066a7a2267f__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);grid-column:prefix-start/content-end;height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline:calc(var(--wp-ui-menu-group-head-padding-inline) - var(--_wp-ui-menu-group-head-padding-base));@media (forced-colors:active){background-color:CanvasText}}._5d75fdeb692cb443__item{--wp-ui-menu-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-menu-item-padding-block:var(--wpds-dimension-padding-xs,4px);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);align-content:center;align-items:start;border-radius:var(--wpds-border-radius-sm,2px);display:grid;gap:0;grid-column:1/-1;grid-template-columns:[item-padding-start] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-start)) [selection-start] var(--wp-ui-menu-selection-indicator-track-size) [selection-end] var(--wp-ui-menu-selection-indicator-gap) [prefix-start] max-content [prefix-end] var(--wp-ui-menu-group-prefix-gap) [content-start] minmax(0,1fr) [content-end] var(--wp-ui-menu-item-padding-inline,var(--_wp-ui-menu-item-padding-inline-end)) [item-padding-end];justify-content:stretch;min-height:var(--wp-ui-menu-item-height);min-width:0;padding-block:var(--wp-ui-menu-item-padding-block);scroll-margin:var(--wp-ui-menu-popup-padding);text-decoration:none;user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&[href]{cursor:pointer}@supports (grid-template-columns:subgrid){grid-template-columns:subgrid}&[data-popup-open]:not([data-highlighted],[data-disabled],[aria-disabled=true]){background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);@media (forced-colors:active){--_gcd-div-outline:var(--wpds-border-width-xs,1px) solid GrayText}}&[data-highlighted]:not([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){--_gcd-a-color:HighlightText;background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&:is([data-disabled],[aria-disabled=true]){--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-a-outline:var(--_gcd-div-outline)}@media (forced-colors:active){--_gcd-a-color:GrayText;color:GrayText}}}._5614b29df27f39f4__item-prefix,._5d18178a87169fa7__item-selection-indicator,._642c7e435a86580c__item-content{grid-row:1}._5d18178a87169fa7__item-selection-indicator{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;grid-column:selection-start/selection-end;height:var(--_wp-ui-menu-item-label-line-height);justify-content:center;justify-self:center;margin-inline-end:var(--wpds-dimension-gap-xs,4px);pointer-events:none;width:var(--wp-ui-menu-selection-indicator-size);&[data-unchecked]{opacity:0}}.f9262b3f40feb262__checkbox-selection-icon{translate:0 1px}._684ac045afdf4baf__radio-selection-icon{fill:currentColor;height:var(--wpds-dimension-size-2xs,16px);width:var(--wpds-dimension-size-2xs,16px)}._5614b29df27f39f4__item-prefix{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:prefix-start/prefix-end;justify-content:center;min-width:0}.d85300aa9fdb277c__prefix-icon{align-self:flex-start;flex-shrink:0;margin-block-start:calc((var(--_wp-ui-menu-item-label-line-height) - var(--_wp-ui-menu-prefix-icon-size))/2)}._642c7e435a86580c__item-content{align-items:center;align-self:stretch;box-sizing:border-box;display:grid;grid-column:prefix-start/content-end;grid-template-columns:[label-start] minmax(0,1fr) [label-end suffix-start] auto [suffix-end shortcut-start] auto [shortcut-end trailing-start] auto [trailing-end];min-width:0;pointer-events:none;&._1b342dc0d7e1d359__has-prefix{grid-column:content-start/content-end}}._8ad08abc200ee1d7__item-descriptions{display:flex;flex-direction:column;grid-column:prefix-start/content-end;grid-row:2;min-width:0;padding-block-end:var(--wpds-dimension-padding-xs,4px);pointer-events:none}._34ea63be597cb586__item-label{--_gcd-heading-color:currentColor;--_gcd-p-line-height:var(--_wp-ui-menu-item-label-line-height);color:inherit;grid-column:label-start/label-end;line-height:var(--_wp-ui-menu-item-label-line-height);min-width:0;overflow-wrap:anywhere}._00a2e202b2fd1f3f__item-description{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral-weak,#707070);color:var(--wpds-color-foreground-content-neutral-weak,#707070);overflow-wrap:anywhere}._642c7e435a86580c__item-content>._890a7d4be00d4b75__item-suffix{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;gap:var(--wpds-dimension-gap-xs,4px);grid-column:suffix-start/suffix-end;margin-inline-start:var(--wpds-dimension-gap-md,12px)}._642c7e435a86580c__item-content>.d06c0bfd8b23b345__item-shortcut{grid-column:shortcut-start/shortcut-end}._642c7e435a86580c__item-content>.d06c0bfd8b23b345__item-shortcut,._93308f16bd1c5cad__item-trailing{color:var(--wpds-color-foreground-content-neutral-weak,#707070);margin-inline-start:var(--wpds-dimension-gap-md,12px)}._93308f16bd1c5cad__item-trailing{align-items:center;display:flex;grid-column:trailing-start/trailing-end}._34ea63be597cb586__item-label+:is(._890a7d4be00d4b75__item-suffix,.d06c0bfd8b23b345__item-shortcut,._93308f16bd1c5cad__item-trailing){margin-inline-start:var(--wpds-dimension-gap-xl,24px)}.d06c0bfd8b23b345__item-shortcut+._93308f16bd1c5cad__item-trailing{margin-inline-start:var(--wpds-dimension-gap-xs,4px)}.ceed5efc4ab5e46f__submenu-chevron{margin-inline-end:calc(var(--wpds-dimension-gap-sm, 8px)*-1)}.ceed5efc4ab5e46f__submenu-chevron:dir(rtl){transform:rotate(180deg)}._3a3c062c80390ce9__external-link-indicator{display:inline-block;font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px);text-decoration:none}._3a3c062c80390ce9__external-link-indicator:after{content:"\\2197"}._3a3c062c80390ce9__external-link-indicator:dir(rtl):after{content:"\\2196"}._5d75fdeb692cb443__item:is([data-highlighted],[data-disabled],[aria-disabled=true]) ._5d18178a87169fa7__item-selection-indicator,._5d75fdeb692cb443__item:is([data-highlighted],[data-popup-open],[data-disabled],[aria-disabled=true]) :is(._00a2e202b2fd1f3f__item-description,._890a7d4be00d4b75__item-suffix,.d06c0bfd8b23b345__item-shortcut,._93308f16bd1c5cad__item-trailing){--_gcd-heading-color:currentColor;color:inherit}}}');
   }
   var style_default20 = { "positioner": "_1094d29b1d68df17__positioner", "popup": "b0033b5034e8531c__popup", "item-selection-indicator": "_5d18178a87169fa7__item-selection-indicator", "is-root": "a3b87618ff461e0b__is-root _069972d5e326bada__dropdown-motion", "is-submenu": "f996099426988ae2__is-submenu _66136bf671f00b1f__dropdown-motion--fade-only", "list": "_435b87e9c9dec00c__list", "group": "_7c71af6b82649e7d__group", "radio-group": "_1d722d53e1c1850b__radio-group", "item": "_5d75fdeb692cb443__item", "item-prefix": "_5614b29df27f39f4__item-prefix", "group-label": "_56eb3186457d1c36__group-label", "separator": "e3a98066a7a2267f__separator", "item-content": "_642c7e435a86580c__item-content", "checkbox-selection-icon": "f9262b3f40feb262__checkbox-selection-icon", "radio-selection-icon": "_684ac045afdf4baf__radio-selection-icon", "prefix-icon": "d85300aa9fdb277c__prefix-icon", "has-prefix": "_1b342dc0d7e1d359__has-prefix", "item-descriptions": "_8ad08abc200ee1d7__item-descriptions", "item-label": "_34ea63be597cb586__item-label", "item-description": "_00a2e202b2fd1f3f__item-description", "item-suffix": "_890a7d4be00d4b75__item-suffix", "item-shortcut": "d06c0bfd8b23b345__item-shortcut", "item-trailing": "_93308f16bd1c5cad__item-trailing", "submenu-chevron": "ceed5efc4ab5e46f__submenu-chevron", "external-link-indicator": "_3a3c062c80390ce9__external-link-indicator" };
-  var SubmenuTrigger = (0, import_element56.forwardRef)(
+  var SubmenuTrigger = (0, import_element55.forwardRef)(
     function MenuSubmenuTrigger3({
       children,
       className,
@@ -46667,9 +46507,9 @@ var wp;
   );
 
   // packages/ui/build-module/menu/trigger.mjs
-  var import_element57 = __toESM(require_element(), 1);
+  var import_element56 = __toESM(require_element(), 1);
   var import_jsx_runtime240 = __toESM(require_jsx_runtime(), 1);
-  var Trigger = (0, import_element57.forwardRef)(
+  var Trigger = (0, import_element56.forwardRef)(
     function MenuTrigger3(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime240.jsx)(index_parts_exports3.Trigger, { ref, ...props });
     }
@@ -46687,12 +46527,12 @@ var wp;
   });
 
   // packages/ui/build-module/tooltip/popup.mjs
-  var import_element60 = __toESM(require_element(), 1);
+  var import_element59 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/tooltip/portal.mjs
-  var import_element58 = __toESM(require_element(), 1);
+  var import_element57 = __toESM(require_element(), 1);
   var import_jsx_runtime241 = __toESM(require_jsx_runtime(), 1);
-  var Portal2 = (0, import_element58.forwardRef)(
+  var Portal2 = (0, import_element57.forwardRef)(
     function TooltipPortal3({ container, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime241.jsx)(
         index_parts_exports10.Portal,
@@ -46706,7 +46546,7 @@ var wp;
   );
 
   // packages/ui/build-module/tooltip/positioner.mjs
-  var import_element59 = __toESM(require_element(), 1);
+  var import_element58 = __toESM(require_element(), 1);
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE22 = "data-wp-hash";
   function getRuntime22() {
@@ -46796,7 +46636,7 @@ var wp;
     registerStyle22("aaf79ac691", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b9266862d9435660__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._7bb3fd8a0810be6d__popup{--_wp-ui-elevation-sm:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-sm);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px);@media (forced-colors:active){border-bottom-color:CanvasText;border-bottom-style:solid;border-bottom-width:1px;border-left-color:CanvasText;border-left-style:solid;border-left-width:1px;border-right-color:CanvasText;border-right-style:solid;border-right-width:1px;border-top-color:CanvasText;border-top-style:solid;border-top-width:1px}}}}');
   }
   var style_default21 = { "positioner": "b9266862d9435660__positioner", "popup": "_7bb3fd8a0810be6d__popup" };
-  var Positioner2 = (0, import_element59.forwardRef)(
+  var Positioner2 = (0, import_element58.forwardRef)(
     function TooltipPositioner3({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime242.jsx)(
         index_parts_exports10.Positioner,
@@ -46930,7 +46770,7 @@ var wp;
   }
   var style_default22 = { "positioner": "b9266862d9435660__positioner", "popup": "_7bb3fd8a0810be6d__popup" };
   var POPUP_COLOR = { background: "#1e1e1e" };
-  var Popup2 = (0, import_element60.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
+  var Popup2 = (0, import_element59.forwardRef)(function TooltipPopup3({ portal, positioner, children, className, ...props }, ref) {
     const popupContent = /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(ThemeProvider, { color: POPUP_COLOR, children: /* @__PURE__ */ (0, import_jsx_runtime243.jsx)(
       index_parts_exports10.Popup,
       {
@@ -46949,9 +46789,9 @@ var wp;
   });
 
   // packages/ui/build-module/tooltip/trigger.mjs
-  var import_element61 = __toESM(require_element(), 1);
+  var import_element60 = __toESM(require_element(), 1);
   var import_jsx_runtime244 = __toESM(require_jsx_runtime(), 1);
-  var Trigger2 = (0, import_element61.forwardRef)(
+  var Trigger2 = (0, import_element60.forwardRef)(
     function TooltipTrigger3(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime244.jsx)(index_parts_exports10.Trigger, { ref, ...props });
     }
@@ -46970,10 +46810,10 @@ var wp;
   }
 
   // packages/ui/build-module/breadcrumb/context.mjs
-  var import_element62 = __toESM(require_element(), 1);
-  var BreadcrumbItemRenderContext = (0, import_element62.createContext)(null);
+  var import_element61 = __toESM(require_element(), 1);
+  var BreadcrumbItemRenderContext = (0, import_element61.createContext)(null);
   function useBreadcrumbItemRenderContext() {
-    const context = (0, import_element62.useContext)(BreadcrumbItemRenderContext);
+    const context = (0, import_element61.useContext)(BreadcrumbItemRenderContext);
     if (!context) {
       throw new Error(
         "Breadcrumb: <Breadcrumb.LinkItem>, <Breadcrumb.ButtonItem>, and <Breadcrumb.CurrentItem> must be direct children of <Breadcrumb.Root>."
@@ -46994,12 +46834,12 @@ var wp;
   }
 
   // packages/ui/build-module/breadcrumb/enforce-render-props.mjs
-  var import_element63 = __toESM(require_element(), 1);
+  var import_element62 = __toESM(require_element(), 1);
   function enforceRenderProps(render4, props) {
     if (!render4) {
       return void 0;
     }
-    const enforce = (element) => (0, import_element63.cloneElement)(
+    const enforce = (element) => (0, import_element62.cloneElement)(
       element,
       props
     );
@@ -47114,7 +46954,7 @@ var wp;
   }
 
   // packages/ui/build-module/breadcrumb/measurement-render.mjs
-  var import_element64 = __toESM(require_element(), 1);
+  var import_element63 = __toESM(require_element(), 1);
   var EVENT_HANDLER_PATTERN = /^on[A-Z]/;
   function isBehaviorProp(propName) {
     return propName === "id" || propName === "tabIndex" || EVENT_HANDLER_PATTERN.test(propName);
@@ -47133,7 +46973,7 @@ var wp;
         behaviorOverrides[propName] = void 0;
       }
     }
-    return (0, import_element64.cloneElement)(
+    return (0, import_element63.cloneElement)(
       element,
       behaviorOverrides
     );
@@ -47151,7 +46991,7 @@ var wp;
   }
 
   // packages/ui/build-module/breadcrumb/separator.mjs
-  var import_element65 = __toESM(require_element(), 1);
+  var import_element64 = __toESM(require_element(), 1);
   var import_jsx_runtime248 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE25 = "data-wp-hash";
   function getRuntime25() {
@@ -47237,7 +47077,7 @@ var wp;
     registerStyle25("55246953ce", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.dc82ea589a801d34__root{display:block;max-inline-size:100%;min-inline-size:0;position:relative}._1c207f07a9f250ce__list{--wp-ui-breadcrumb-ring-space:var(--wpds-dimension-padding-xs,4px);list-style:none;margin:0;max-inline-size:100%;min-block-size:calc(var(--wpds-dimension-size-sm, 24px) + var(--wp-ui-breadcrumb-ring-space)*2);overflow-x:auto;overflow-y:hidden;padding-block:var(--wp-ui-breadcrumb-ring-space);padding-inline:calc(var(--wp-ui-breadcrumb-ring-space) + var(--wpds-dimension-padding-xs, 4px));white-space:nowrap}._1c207f07a9f250ce__list,.f5b26130263ff575__item{align-items:center;display:flex;min-inline-size:0}.f5b26130263ff575__item{flex:0 0 auto}._13bfe5cd11128555__label{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);line-height:var(--wpds-typography-line-height-sm,20px);white-space:nowrap}._2175d935fd3dcfff__link{display:inline-block;max-inline-size:100%;min-inline-size:0;overflow:hidden;text-overflow:ellipsis}.d770d59fb715fd27__current-item{max-inline-size:100%}.a105949cf25e432e__current-item--truncating{flex:1 1 auto}._18fa209b473fe1ee__current{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:block;max-inline-size:100%;min-inline-size:0;overflow:hidden;text-overflow:ellipsis}._18fa209b473fe1ee__current,._2175d935fd3dcfff__link:not(._5376e4adbb8661b5__button-item){padding-inline:calc(var(--wpds-dimension-padding-xs, 4px) + 1px)}._8956f24796dd5c91__separator{color:var(--wpds-color-stroke-surface-neutral-strong,#8d8d8d);flex:0 0 auto;padding-inline:var(--wpds-dimension-padding-xs,4px);user-select:none;@media (forced-colors:active){color:CanvasText}}._3aecdad0e8081e67__measurement{block-size:0;inline-size:0;inset-block-start:0;inset-inline-start:0;overflow:hidden;pointer-events:none;position:absolute;visibility:hidden}._2770f4a81991cd70__measurement-item,.d96ef447c9f04436__measurement-row,.fdeccf7ce8d9fb95__measurement-content{align-items:center;display:inline-flex;inline-size:max-content}._441954499ba7cebc__measurement-label{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-block;max-inline-size:none;overflow:visible}._14187234d9af3b5d__measurement-overflow-trigger{inset-block-start:0;inset-inline-start:0;position:absolute}.dc82ea589a801d34__root ._1c207f07a9f250ce__list{--_gcd-ol-padding-block:var(--wp-ui-breadcrumb-ring-space);--_gcd-ol-padding-inline:calc(var(--wp-ui-breadcrumb-ring-space) + var(--wpds-dimension-padding-xs, 4px))}}@layer compositions{._5376e4adbb8661b5__button-item,._65a6252553ff6053__overflow-trigger{--wp-ui-button-padding-inline:var(--wpds-dimension-padding-xs,4px)}._5376e4adbb8661b5__button-item{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-default,400)}._65a6252553ff6053__overflow-trigger{--wp-ui-button-min-width:var(--wpds-dimension-size-sm,24px)}}}');
   }
   var style_default24 = { "root": "dc82ea589a801d34__root", "list": "_1c207f07a9f250ce__list", "item": "f5b26130263ff575__item", "label": "_13bfe5cd11128555__label", "link": "_2175d935fd3dcfff__link", "current-item": "d770d59fb715fd27__current-item", "current-item--truncating": "a105949cf25e432e__current-item--truncating", "current": "_18fa209b473fe1ee__current", "button-item": "_5376e4adbb8661b5__button-item", "separator": "_8956f24796dd5c91__separator", "measurement": "_3aecdad0e8081e67__measurement", "measurement-row": "d96ef447c9f04436__measurement-row", "measurement-item": "_2770f4a81991cd70__measurement-item", "measurement-content": "fdeccf7ce8d9fb95__measurement-content", "measurement-label": "_441954499ba7cebc__measurement-label", "measurement-overflow-trigger": "_14187234d9af3b5d__measurement-overflow-trigger", "overflow-trigger": "_65a6252553ff6053__overflow-trigger" };
-  var Separator3 = (0, import_element65.forwardRef)(
+  var Separator3 = (0, import_element64.forwardRef)(
     function UnforwardedSeparator(_props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime248.jsx)("span", { ref, "aria-hidden": "true", className: style_default24.separator, children: "/" });
     }
@@ -47245,7 +47085,7 @@ var wp;
 
   // packages/ui/build-module/breadcrumb/use-is-truncated.mjs
   var import_compose6 = __toESM(require_compose(), 1);
-  var import_element66 = __toESM(require_element(), 1);
+  var import_element65 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/breadcrumb/layout.mjs
   var FIT_TOLERANCE = 1;
@@ -47321,7 +47161,7 @@ var wp;
 
   // packages/ui/build-module/breadcrumb/use-is-truncated.mjs
   function useIsTruncated(element, measurementVersion) {
-    const [isTruncated, setIsTruncated] = (0, import_element66.useState)(false);
+    const [isTruncated, setIsTruncated] = (0, import_element65.useState)(false);
     (0, import_compose6.useIsomorphicLayoutEffect)(() => {
       if (!element) {
         setIsTruncated(false);
@@ -47456,7 +47296,7 @@ var wp;
       showSeparator
     } = useBreadcrumbItemRenderContext();
     const isMeasurement = mode2 === "measurement";
-    const [element, setElement] = (0, import_element67.useState)(
+    const [element, setElement] = (0, import_element66.useState)(
       null
     );
     const mergedRef = (0, import_compose7.useMergeRefs)([
@@ -47511,7 +47351,7 @@ var wp;
       ] })
     ] });
   }
-  var ButtonItem = (0, import_element67.forwardRef)(
+  var ButtonItem = (0, import_element66.forwardRef)(
     function BreadcrumbButtonItem({ children, onClick, render: render4, ...props }, ref) {
       const { mode: mode2, onButtonActivate } = useBreadcrumbItemRenderContext();
       if (mode2 === "overflow") {
@@ -47559,7 +47399,7 @@ var wp;
 
   // packages/ui/build-module/breadcrumb/current-item.mjs
   var import_compose8 = __toESM(require_compose(), 1);
-  var import_element68 = __toESM(require_element(), 1);
+  var import_element67 = __toESM(require_element(), 1);
   var import_jsx_runtime250 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE27 = "data-wp-hash";
   function getRuntime27() {
@@ -47675,8 +47515,8 @@ var wp;
       showSeparator,
       shouldTruncateCurrent
     } = useBreadcrumbItemRenderContext();
-    const [element, setElement] = (0, import_element68.useState)(null);
-    const [isFocusPinned, setIsFocusPinned] = (0, import_element68.useState)(false);
+    const [element, setElement] = (0, import_element67.useState)(null);
+    const [isFocusPinned, setIsFocusPinned] = (0, import_element67.useState)(false);
     const mergedRef = (0, import_compose8.useMergeRefs)([
       forwardedRef,
       setElement,
@@ -47783,7 +47623,7 @@ var wp;
       )
     ] });
   }
-  var CurrentItem = (0, import_element68.forwardRef)(
+  var CurrentItem = (0, import_element67.forwardRef)(
     function BreadcrumbCurrentItem(props, ref) {
       const { mode: mode2 } = useBreadcrumbItemRenderContext();
       return mode2 === "measurement" ? /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(MeasurementCurrentItem, { ...props }) : /* @__PURE__ */ (0, import_jsx_runtime250.jsx)(VisibleCurrentItem, { ...props, forwardedRef: ref });
@@ -47793,10 +47633,10 @@ var wp;
 
   // packages/ui/build-module/breadcrumb/link-item.mjs
   var import_compose9 = __toESM(require_compose(), 1);
-  var import_element70 = __toESM(require_element(), 1);
+  var import_element69 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/link/link.mjs
-  var import_element69 = __toESM(require_element(), 1);
+  var import_element68 = __toESM(require_element(), 1);
   var import_i18n21 = __toESM(require_i18n(), 1);
   var import_jsx_runtime251 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE28 = "data-wp-hash";
@@ -47895,7 +47735,7 @@ var wp;
     registerStyle28("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
   }
   var global_css_defense_default10 = { "button": "_78c10a0773e51a91__button", "input": "_5b33aa2d48624b4f__input", "textarea": "_980b3b4776ac8f81__textarea", "div": "_43e478b4279a076c__div", "p": "_698099e25b0fb1a6__p", "heading": "_326aee4184d261fd__heading", "a": "e9576240835601ba__a", "ol": "_3f05789653864a73__ol", "li": "_3c72ff72abe57859__li", "span": "_79d16267c15d9eb2__span" };
-  var Link = (0, import_element69.forwardRef)(
+  var Link = (0, import_element68.forwardRef)(
     function UnforwardedLink({
       children,
       variant = "default",
@@ -48048,7 +47888,7 @@ var wp;
       onLinkFocus,
       showSeparator
     } = useBreadcrumbItemRenderContext();
-    const [element, setElement] = (0, import_element70.useState)(
+    const [element, setElement] = (0, import_element69.useState)(
       null
     );
     const mergedRef = (0, import_compose9.useMergeRefs)([forwardedRef, setElement]);
@@ -48162,7 +48002,7 @@ var wp;
       }
     );
   }
-  var LinkItem2 = (0, import_element70.forwardRef)(
+  var LinkItem2 = (0, import_element69.forwardRef)(
     function BreadcrumbLinkItem(props, ref) {
       const { mode: mode2 } = useBreadcrumbItemRenderContext();
       if (mode2 === "measurement") {
@@ -48178,7 +48018,7 @@ var wp;
 
   // packages/ui/build-module/breadcrumb/root.mjs
   var import_compose10 = __toESM(require_compose(), 1);
-  var import_element72 = __toESM(require_element(), 1);
+  var import_element71 = __toESM(require_element(), 1);
   var import_i18n22 = __toESM(require_i18n(), 1);
 
   // packages/react-inert-value/build-module/index.mjs
@@ -48192,7 +48032,7 @@ var wp;
   }
 
   // packages/ui/build-module/breadcrumb/overflow-trigger-button.mjs
-  var import_element71 = __toESM(require_element(), 1);
+  var import_element70 = __toESM(require_element(), 1);
   var import_jsx_runtime253 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE30 = "data-wp-hash";
   function getRuntime30() {
@@ -48278,7 +48118,7 @@ var wp;
     registerStyle30("55246953ce", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.dc82ea589a801d34__root{display:block;max-inline-size:100%;min-inline-size:0;position:relative}._1c207f07a9f250ce__list{--wp-ui-breadcrumb-ring-space:var(--wpds-dimension-padding-xs,4px);list-style:none;margin:0;max-inline-size:100%;min-block-size:calc(var(--wpds-dimension-size-sm, 24px) + var(--wp-ui-breadcrumb-ring-space)*2);overflow-x:auto;overflow-y:hidden;padding-block:var(--wp-ui-breadcrumb-ring-space);padding-inline:calc(var(--wp-ui-breadcrumb-ring-space) + var(--wpds-dimension-padding-xs, 4px));white-space:nowrap}._1c207f07a9f250ce__list,.f5b26130263ff575__item{align-items:center;display:flex;min-inline-size:0}.f5b26130263ff575__item{flex:0 0 auto}._13bfe5cd11128555__label{font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);line-height:var(--wpds-typography-line-height-sm,20px);white-space:nowrap}._2175d935fd3dcfff__link{display:inline-block;max-inline-size:100%;min-inline-size:0;overflow:hidden;text-overflow:ellipsis}.d770d59fb715fd27__current-item{max-inline-size:100%}.a105949cf25e432e__current-item--truncating{flex:1 1 auto}._18fa209b473fe1ee__current{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:block;max-inline-size:100%;min-inline-size:0;overflow:hidden;text-overflow:ellipsis}._18fa209b473fe1ee__current,._2175d935fd3dcfff__link:not(._5376e4adbb8661b5__button-item){padding-inline:calc(var(--wpds-dimension-padding-xs, 4px) + 1px)}._8956f24796dd5c91__separator{color:var(--wpds-color-stroke-surface-neutral-strong,#8d8d8d);flex:0 0 auto;padding-inline:var(--wpds-dimension-padding-xs,4px);user-select:none;@media (forced-colors:active){color:CanvasText}}._3aecdad0e8081e67__measurement{block-size:0;inline-size:0;inset-block-start:0;inset-inline-start:0;overflow:hidden;pointer-events:none;position:absolute;visibility:hidden}._2770f4a81991cd70__measurement-item,.d96ef447c9f04436__measurement-row,.fdeccf7ce8d9fb95__measurement-content{align-items:center;display:inline-flex;inline-size:max-content}._441954499ba7cebc__measurement-label{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:inline-block;max-inline-size:none;overflow:visible}._14187234d9af3b5d__measurement-overflow-trigger{inset-block-start:0;inset-inline-start:0;position:absolute}.dc82ea589a801d34__root ._1c207f07a9f250ce__list{--_gcd-ol-padding-block:var(--wp-ui-breadcrumb-ring-space);--_gcd-ol-padding-inline:calc(var(--wp-ui-breadcrumb-ring-space) + var(--wpds-dimension-padding-xs, 4px))}}@layer compositions{._5376e4adbb8661b5__button-item,._65a6252553ff6053__overflow-trigger{--wp-ui-button-padding-inline:var(--wpds-dimension-padding-xs,4px)}._5376e4adbb8661b5__button-item{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-default,400)}._65a6252553ff6053__overflow-trigger{--wp-ui-button-min-width:var(--wpds-dimension-size-sm,24px)}}}');
   }
   var style_default29 = { "root": "dc82ea589a801d34__root", "list": "_1c207f07a9f250ce__list", "item": "f5b26130263ff575__item", "label": "_13bfe5cd11128555__label", "link": "_2175d935fd3dcfff__link", "current-item": "d770d59fb715fd27__current-item", "current-item--truncating": "a105949cf25e432e__current-item--truncating", "current": "_18fa209b473fe1ee__current", "button-item": "_5376e4adbb8661b5__button-item", "separator": "_8956f24796dd5c91__separator", "measurement": "_3aecdad0e8081e67__measurement", "measurement-row": "d96ef447c9f04436__measurement-row", "measurement-item": "_2770f4a81991cd70__measurement-item", "measurement-content": "fdeccf7ce8d9fb95__measurement-content", "measurement-label": "_441954499ba7cebc__measurement-label", "measurement-overflow-trigger": "_14187234d9af3b5d__measurement-overflow-trigger", "overflow-trigger": "_65a6252553ff6053__overflow-trigger" };
-  var OverflowTriggerButton = (0, import_element71.forwardRef)(
+  var OverflowTriggerButton = (0, import_element70.forwardRef)(
     function UnforwardedOverflowTriggerButton({ children, className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime253.jsx)(
         Button5,
@@ -48402,7 +48242,7 @@ var wp;
         continue;
       }
       for (const arrayChild of child) {
-        if ((0, import_element72.isValidElement)(arrayChild) && arrayChild.key === null) {
+        if ((0, import_element71.isValidElement)(arrayChild) && arrayChild.key === null) {
           throw new Error(
             "Breadcrumb: Items rendered from an array need stable React keys."
           );
@@ -48415,10 +48255,10 @@ var wp;
     if (true) {
       validateNestedArrayKeys(children);
     }
-    const childArray = import_element72.Children.toArray(children);
+    const childArray = import_element71.Children.toArray(children);
     const items = [];
     childArray.forEach((child, index3) => {
-      if (!(0, import_element72.isValidElement)(child)) {
+      if (!(0, import_element71.isValidElement)(child)) {
         if (true) {
           throw new Error(
             "Breadcrumb: <Breadcrumb.Root> only accepts <Breadcrumb.LinkItem>, <Breadcrumb.ButtonItem>, and <Breadcrumb.CurrentItem> as direct children."
@@ -48516,7 +48356,7 @@ var wp;
       paddingBoxWidth - paddingInlineStart - paddingInlineEnd
     );
   }
-  var Root3 = (0, import_element72.forwardRef)(function BreadcrumbRoot({
+  var Root3 = (0, import_element71.forwardRef)(function BreadcrumbRoot({
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     children,
@@ -48525,12 +48365,12 @@ var wp;
     role: _role,
     ...props
   }, forwardedRef) {
-    const items = (0, import_element72.useMemo)(() => getBreadcrumbItems(children), [children]);
-    const ancestorItems = (0, import_element72.useMemo)(
+    const items = (0, import_element71.useMemo)(() => getBreadcrumbItems(children), [children]);
+    const ancestorItems = (0, import_element71.useMemo)(
       () => items.filter((item) => item.kind !== "current"),
       [items]
     );
-    const currentItem = (0, import_element72.useMemo)(
+    const currentItem = (0, import_element71.useMemo)(
       () => items.find((item) => item.kind === "current"),
       [items]
     );
@@ -48539,37 +48379,37 @@ var wp;
     const hasAriaLabel = typeof ariaLabel === "string" && ariaLabel.trim().length > 0;
     const hasAriaLabelledBy = typeof ariaLabelledBy === "string" && ariaLabelledBy.trim().length > 0;
     const resolvedAriaLabel = hasAriaLabel || hasAriaLabelledBy ? ariaLabel : (0, import_i18n22.__)("Breadcrumbs");
-    const [rootElement, setRootElement] = (0, import_element72.useState)(
+    const [rootElement, setRootElement] = (0, import_element71.useState)(
       null
     );
-    const [responsiveState, setResponsiveState] = (0, import_element72.useState)(FULL_TRAIL_STATE);
-    const [measurementVersion, setMeasurementVersion] = (0, import_element72.useState)(0);
-    const [menuOpen, setMenuOpen] = (0, import_element72.useState)(false);
-    const [pinnedItemKey, setPinnedItemKey] = (0, import_element72.useState)(
+    const [responsiveState, setResponsiveState] = (0, import_element71.useState)(FULL_TRAIL_STATE);
+    const [measurementVersion, setMeasurementVersion] = (0, import_element71.useState)(0);
+    const [menuOpen, setMenuOpen] = (0, import_element71.useState)(false);
+    const [pinnedItemKey, setPinnedItemKey] = (0, import_element71.useState)(
       null
     );
-    const [isOverflowTriggerFocused, setIsOverflowTriggerFocused] = (0, import_element72.useState)(false);
+    const [isOverflowTriggerFocused, setIsOverflowTriggerFocused] = (0, import_element71.useState)(false);
     const mergedRootRef = (0, import_compose10.useMergeRefs)([forwardedRef, setRootElement]);
-    const visibleListRef = (0, import_element72.useRef)(null);
-    const intrinsicRowRef = (0, import_element72.useRef)(null);
-    const intrinsicItemRefs = (0, import_element72.useRef)(/* @__PURE__ */ new Map());
-    const intrinsicSeparatorRef = (0, import_element72.useRef)(null);
-    const intrinsicOverflowTriggerRef = (0, import_element72.useRef)(
+    const visibleListRef = (0, import_element71.useRef)(null);
+    const intrinsicRowRef = (0, import_element71.useRef)(null);
+    const intrinsicItemRefs = (0, import_element71.useRef)(/* @__PURE__ */ new Map());
+    const intrinsicSeparatorRef = (0, import_element71.useRef)(null);
+    const intrinsicOverflowTriggerRef = (0, import_element71.useRef)(
       null
     );
-    const activationFocusRef = (0, import_element72.useRef)(null);
-    const menuPopupRef = (0, import_element72.useRef)(null);
-    const currentItemRef = (0, import_element72.useRef)(null);
-    const focusedElementRef = (0, import_element72.useRef)(null);
-    const overflowTriggerRef = (0, import_element72.useRef)(null);
-    const frozenItemsRef = (0, import_element72.useRef)(items);
-    const pendingStateRef = (0, import_element72.useRef)(null);
-    const focusOverflowAfterLayoutRef = (0, import_element72.useRef)(false);
-    const menuOpenRef = (0, import_element72.useRef)(false);
+    const activationFocusRef = (0, import_element71.useRef)(null);
+    const menuPopupRef = (0, import_element71.useRef)(null);
+    const currentItemRef = (0, import_element71.useRef)(null);
+    const focusedElementRef = (0, import_element71.useRef)(null);
+    const overflowTriggerRef = (0, import_element71.useRef)(null);
+    const frozenItemsRef = (0, import_element71.useRef)(items);
+    const pendingStateRef = (0, import_element71.useRef)(null);
+    const focusOverflowAfterLayoutRef = (0, import_element71.useRef)(false);
+    const menuOpenRef = (0, import_element71.useRef)(false);
     const selectionChanged = (variant === "selection" || frozenItemsRef.current.some(
       (item) => item.kind === "button"
     )) && !itemKeysAreEqual(frozenItemsRef.current, items);
-    const focusCurrentItem = (0, import_element72.useCallback)(() => {
+    const focusCurrentItem = (0, import_element71.useCallback)(() => {
       const current = currentItemRef.current;
       if (current) {
         current.tabIndex = -1;
@@ -48591,7 +48431,7 @@ var wp;
     if (!menuOpen && !isOverflowTriggerFocused) {
       frozenItemsRef.current = items;
     }
-    const applyResponsiveState = (0, import_element72.useCallback)(
+    const applyResponsiveState = (0, import_element71.useCallback)(
       (next) => {
         if (menuOpen && !selectionChanged) {
           pendingStateRef.current = next;
@@ -48720,7 +48560,7 @@ var wp;
         overflowTriggerRef.current.focus();
       }
     }, [responsiveState.collapsedKeys]);
-    const applyPendingResponsiveState = (0, import_element72.useCallback)(() => {
+    const applyPendingResponsiveState = (0, import_element71.useCallback)(() => {
       if (!pendingStateRef.current) {
         return;
       }
@@ -48728,7 +48568,7 @@ var wp;
       pendingStateRef.current = null;
       setResponsiveState(pendingState);
     }, []);
-    const handleMenuOpenChange = (0, import_element72.useCallback)(
+    const handleMenuOpenChange = (0, import_element71.useCallback)(
       (open3, eventDetails) => {
         menuOpenRef.current = open3;
         if (!open3 && eventDetails.reason === "item-press") {
@@ -48765,7 +48605,7 @@ var wp;
         variant
       ]
     );
-    const handleOverflowTriggerBlur = (0, import_element72.useCallback)(() => {
+    const handleOverflowTriggerBlur = (0, import_element71.useCallback)(() => {
       if (menuOpenRef.current) {
         return;
       }
@@ -48963,7 +48803,7 @@ var wp;
         }
       )
     ] });
-    const enforcedRender = (0, import_element72.useMemo)(
+    const enforcedRender = (0, import_element71.useMemo)(
       () => enforceRenderProps(render4, {
         "aria-label": variant === "navigation" ? resolvedAriaLabel : void 0,
         "aria-labelledby": variant === "navigation" && hasAriaLabelledBy ? ariaLabelledBy : void 0,
@@ -55453,15 +55293,15 @@ var wp;
   }
 
   // packages/ui/build-module/calendar/calendar.mjs
-  var import_element79 = __toESM(require_element(), 1);
+  var import_element78 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/calendar/utils/components.mjs
-  var import_element75 = __toESM(require_element(), 1);
+  var import_element74 = __toESM(require_element(), 1);
   var import_compose11 = __toESM(require_compose(), 1);
   var import_i18n23 = __toESM(require_i18n(), 1);
 
   // packages/ui/build-module/icon-button/icon-button.mjs
-  var import_element73 = __toESM(require_element(), 1);
+  var import_element72 = __toESM(require_element(), 1);
   var import_jsx_runtime255 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE32 = "data-wp-hash";
   function getRuntime32() {
@@ -55547,7 +55387,7 @@ var wp;
     registerStyle32("2a111665b3", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._7f5dbf30e44a43dd__icon-button{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}._1b3c0d159ecbf3d5__icon{margin:-1px}}}");
   }
   var style_default31 = { "icon-button": "_7f5dbf30e44a43dd__icon-button", "icon": "_1b3c0d159ecbf3d5__icon" };
-  var IconButton = (0, import_element73.forwardRef)(
+  var IconButton = (0, import_element72.forwardRef)(
     function UnforwardedIconButton({
       label,
       className,
@@ -55611,8 +55451,8 @@ var wp;
   );
 
   // packages/ui/build-module/calendar/utils/root-context.mjs
-  var import_element74 = __toESM(require_element(), 1);
-  var RootContext = (0, import_element74.createContext)({});
+  var import_element73 = __toESM(require_element(), 1);
+  var RootContext = (0, import_element73.createContext)({});
 
   // packages/ui/build-module/calendar/utils/components.mjs
   var import_jsx_runtime256 = __toESM(require_jsx_runtime(), 1);
@@ -55697,7 +55537,7 @@ var wp;
     ] });
   }
   function Root5({ rootRef, ...props }) {
-    const { render: render4, ref, role, defaultAriaLabel } = (0, import_element75.useContext)(RootContext);
+    const { render: render4, ref, role, defaultAriaLabel } = (0, import_element74.useContext)(RootContext);
     const { months, labels } = useDayPicker();
     const hasExplicitLabel = props["aria-label"] !== void 0 || props["aria-labelledby"] !== void 0;
     let ariaLabel = props["aria-label"];
@@ -55918,7 +55758,7 @@ var wp;
   }
 
   // packages/ui/build-module/calendar/utils/use-controlled-value.mjs
-  var import_element76 = __toESM(require_element(), 1);
+  var import_element75 = __toESM(require_element(), 1);
   function useControlledValue2({
     defaultValue: defaultValue2,
     onChange,
@@ -55926,9 +55766,9 @@ var wp;
   }) {
     const hasValue3 = typeof valueProp !== "undefined";
     const initialValue = hasValue3 ? valueProp : defaultValue2;
-    const [state, setState] = (0, import_element76.useState)(initialValue);
+    const [state, setState] = (0, import_element75.useState)(initialValue);
     const value = hasValue3 ? valueProp : state;
-    const uncontrolledSetValue = (0, import_element76.useCallback)(
+    const uncontrolledSetValue = (0, import_element75.useCallback)(
       (nextValue, ...args) => {
         setState(nextValue);
         onChange?.(nextValue, ...args);
@@ -55948,7 +55788,7 @@ var wp;
 
   // packages/ui/build-module/calendar/utils/use-localization-props.mjs
   var import_i18n24 = __toESM(require_i18n(), 1);
-  var import_element77 = __toESM(require_element(), 1);
+  var import_element76 = __toESM(require_element(), 1);
   function isLocaleRTL(locale) {
     const direction = (locale.getTextInfo?.() ?? locale.textInfo)?.direction;
     if (direction) {
@@ -56004,7 +55844,7 @@ var wp;
     timeZone,
     mode: mode2
   }) => {
-    return (0, import_element77.useMemo)(() => {
+    return (0, import_element76.useMemo)(() => {
       const isLocaleString = typeof locale === "string";
       const dateFnsLocale = isLocaleString || locale === void 0 ? enUS : locale;
       const supportedLocaleCode = getSupportedLocaleCode(
@@ -56131,19 +55971,19 @@ var wp;
 
   // packages/ui/build-module/calendar/utils/use-preserve-day-focus.mjs
   var import_compose12 = __toESM(require_compose(), 1);
-  var import_element78 = __toESM(require_element(), 1);
+  var import_element77 = __toESM(require_element(), 1);
   function usePreserveDayFocus(forwardedRef, month) {
-    const rootRef = (0, import_element78.useRef)(null);
-    const hadDayFocusRef = (0, import_element78.useRef)(false);
+    const rootRef = (0, import_element77.useRef)(null);
+    const hadDayFocusRef = (0, import_element77.useRef)(false);
     const mergedRef = (0, import_compose12.useMergeRefs)([rootRef, forwardedRef]);
     const monthIndex = month ? month.getFullYear() * 12 + month.getMonth() : void 0;
-    const onDayFocus = (0, import_element78.useCallback)(() => {
+    const onDayFocus = (0, import_element77.useCallback)(() => {
       hadDayFocusRef.current = true;
     }, []);
-    const onDayBlur = (0, import_element78.useCallback)(() => {
+    const onDayBlur = (0, import_element77.useCallback)(() => {
       hadDayFocusRef.current = false;
     }, []);
-    (0, import_element78.useEffect)(() => {
+    (0, import_element77.useEffect)(() => {
       if (!hadDayFocusRef.current) {
         return;
       }
@@ -56174,7 +56014,7 @@ var wp;
 
   // packages/ui/build-module/calendar/calendar.mjs
   var import_jsx_runtime257 = __toESM(require_jsx_runtime(), 1);
-  var Calendar = (0, import_element79.forwardRef)(
+  var Calendar = (0, import_element78.forwardRef)(
     function UnforwardedCalendar({
       defaultValue: defaultValue2,
       value: valueProp,
@@ -56194,11 +56034,11 @@ var wp;
         timeZone,
         mode: "single"
       });
-      const labels = (0, import_element79.useMemo)(
+      const labels = (0, import_element78.useMemo)(
         () => customLabels ? { ...localizationProps.labels, ...customLabels } : localizationProps.labels,
         [localizationProps.labels, customLabels]
       );
-      const onChange = (0, import_element79.useCallback)(
+      const onChange = (0, import_element78.useCallback)(
         (selected2, triggerDate, modifiers, e2) => {
           onValueChange?.(
             selected2 ?? null,
@@ -56215,7 +56055,7 @@ var wp;
         onChange
       });
       const dayFocusProps = usePreserveDayFocus(ref, month);
-      const rootContextValue = (0, import_element79.useMemo)(
+      const rootContextValue = (0, import_element78.useMemo)(
         () => ({
           render: render4,
           ref: dayFocusProps.ref,
@@ -56245,7 +56085,7 @@ var wp;
   );
 
   // packages/ui/build-module/calendar/range-calendar.mjs
-  var import_element80 = __toESM(require_element(), 1);
+  var import_element79 = __toESM(require_element(), 1);
   var import_jsx_runtime258 = __toESM(require_jsx_runtime(), 1);
   function usePreviewRange({
     value,
@@ -56256,7 +56096,7 @@ var wp;
     max: max3,
     disabled: disabled2
   }) {
-    return (0, import_element80.useMemo)(() => {
+    return (0, import_element79.useMemo)(() => {
       if (!hoveredDate || !value?.from) {
         return;
       }
@@ -56331,7 +56171,7 @@ var wp;
       disabled2
     ]);
   }
-  var RangeCalendar = (0, import_element80.forwardRef)(
+  var RangeCalendar = (0, import_element79.forwardRef)(
     function UnforwardedRangeCalendar({
       defaultValue: defaultValue2,
       value: valueProp,
@@ -56356,11 +56196,11 @@ var wp;
         timeZone,
         mode: "range"
       });
-      const labels = (0, import_element80.useMemo)(
+      const labels = (0, import_element79.useMemo)(
         () => customLabels ? { ...localizationProps.labels, ...customLabels } : localizationProps.labels,
         [localizationProps.labels, customLabels]
       );
-      const onChange = (0, import_element80.useCallback)(
+      const onChange = (0, import_element79.useCallback)(
         (selected2, triggerDate, modifiers2, e2) => {
           onValueChange?.(
             selected2 ?? null,
@@ -56377,7 +56217,7 @@ var wp;
         onChange
       });
       const dayFocusProps = usePreserveDayFocus(ref, month);
-      const [hoveredDate, setHoveredDate] = (0, import_element80.useState)(
+      const [hoveredDate, setHoveredDate] = (0, import_element79.useState)(
         void 0
       );
       const previewRange = usePreviewRange({
@@ -56389,14 +56229,14 @@ var wp;
         max: max3,
         disabled: disabled2
       });
-      const modifiers = (0, import_element80.useMemo)(() => {
+      const modifiers = (0, import_element79.useMemo)(() => {
         return {
           preview: previewRange,
           preview_start: previewRange?.from,
           preview_end: previewRange?.to
         };
       }, [previewRange]);
-      const rootContextValue = (0, import_element80.useMemo)(
+      const rootContextValue = (0, import_element79.useMemo)(
         () => ({
           render: render4,
           ref: dayFocusProps.ref,
@@ -56445,7 +56285,7 @@ var wp;
   });
 
   // packages/ui/build-module/card/root.mjs
-  var import_element81 = __toESM(require_element(), 1);
+  var import_element80 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE34 = "data-wp-hash";
   function getRuntime34() {
     const globalScope = globalThis;
@@ -56534,7 +56374,7 @@ var wp;
     registerStyle34("ada2aa0e9f", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.bced04d30c075714__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}.b4b2578de6f75764__header,.cadd1062398e929c__content{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.b4b2578de6f75764__header+.cadd1062398e929c__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c25959d41c245c8c__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}.bced04d30c075714__root>:is(.b4b2578de6f75764__header,.cadd1062398e929c__content):first-child>.c25959d41c245c8c__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.b4b2578de6f75764__header,.cadd1062398e929c__content):last-child>.c25959d41c245c8c__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
   }
   var style_default33 = { "root": "bced04d30c075714__root", "header": "b4b2578de6f75764__header", "content": "cadd1062398e929c__content", "fullbleed": "c25959d41c245c8c__fullbleed" };
-  var Root6 = (0, import_element81.forwardRef)(function Card({ render: render4, ...restProps }, ref) {
+  var Root6 = (0, import_element80.forwardRef)(function Card({ render: render4, ...restProps }, ref) {
     const mergedClassName = clsx_default(style_default33.root, resets_default13["box-sizing"]);
     const element = useRender({
       defaultTagName: "div",
@@ -56546,7 +56386,7 @@ var wp;
   });
 
   // packages/ui/build-module/card/header.mjs
-  var import_element82 = __toESM(require_element(), 1);
+  var import_element81 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE35 = "data-wp-hash";
   function getRuntime35() {
     const globalScope = globalThis;
@@ -56631,7 +56471,7 @@ var wp;
     registerStyle35("ada2aa0e9f", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.bced04d30c075714__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}.b4b2578de6f75764__header,.cadd1062398e929c__content{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.b4b2578de6f75764__header+.cadd1062398e929c__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c25959d41c245c8c__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}.bced04d30c075714__root>:is(.b4b2578de6f75764__header,.cadd1062398e929c__content):first-child>.c25959d41c245c8c__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.b4b2578de6f75764__header,.cadd1062398e929c__content):last-child>.c25959d41c245c8c__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
   }
   var style_default34 = { "root": "bced04d30c075714__root", "header": "b4b2578de6f75764__header", "content": "cadd1062398e929c__content", "fullbleed": "c25959d41c245c8c__fullbleed" };
-  var Header = (0, import_element82.forwardRef)(
+  var Header = (0, import_element81.forwardRef)(
     function CardHeader({ render: render4, ...props }, ref) {
       const element = useRender({
         defaultTagName: "div",
@@ -56644,7 +56484,7 @@ var wp;
   );
 
   // packages/ui/build-module/card/content.mjs
-  var import_element83 = __toESM(require_element(), 1);
+  var import_element82 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE36 = "data-wp-hash";
   function getRuntime36() {
     const globalScope = globalThis;
@@ -56729,7 +56569,7 @@ var wp;
     registerStyle36("ada2aa0e9f", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.bced04d30c075714__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}.b4b2578de6f75764__header,.cadd1062398e929c__content{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.b4b2578de6f75764__header+.cadd1062398e929c__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c25959d41c245c8c__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}.bced04d30c075714__root>:is(.b4b2578de6f75764__header,.cadd1062398e929c__content):first-child>.c25959d41c245c8c__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.b4b2578de6f75764__header,.cadd1062398e929c__content):last-child>.c25959d41c245c8c__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
   }
   var style_default35 = { "root": "bced04d30c075714__root", "header": "b4b2578de6f75764__header", "content": "cadd1062398e929c__content", "fullbleed": "c25959d41c245c8c__fullbleed" };
-  var Content = (0, import_element83.forwardRef)(
+  var Content = (0, import_element82.forwardRef)(
     function CardContent({ render: render4, ...props }, ref) {
       const element = useRender({
         defaultTagName: "div",
@@ -56742,7 +56582,7 @@ var wp;
   );
 
   // packages/ui/build-module/card/full-bleed.mjs
-  var import_element84 = __toESM(require_element(), 1);
+  var import_element83 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE37 = "data-wp-hash";
   function getRuntime37() {
     const globalScope = globalThis;
@@ -56827,7 +56667,7 @@ var wp;
     registerStyle37("ada2aa0e9f", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.bced04d30c075714__root{--wp-ui-card-padding:var(--wpds-dimension-padding-2xl,24px);--wp-ui-card-header-content-gap:var(--wpds-dimension-gap-xl,24px);--wp-ui-card-header-content-margin:calc(var(--wp-ui-card-header-content-gap) - var(--wp-ui-card-padding));background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:1px solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-lg,8px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;overflow:clip}.b4b2578de6f75764__header,.cadd1062398e929c__content{padding:var(--wp-ui-card-padding);&:not(:first-child):not(:last-child){padding-block-end:0}}.b4b2578de6f75764__header+.cadd1062398e929c__content{margin-block-start:var(--wp-ui-card-header-content-margin);padding-block-start:0}.c25959d41c245c8c__fullbleed{margin-inline:calc(var(--wp-ui-card-padding)*-1);width:calc(100% + var(--wp-ui-card-padding)*2)}.bced04d30c075714__root>:is(.b4b2578de6f75764__header,.cadd1062398e929c__content):first-child>.c25959d41c245c8c__fullbleed:first-child{margin-block-start:calc(var(--wp-ui-card-padding)*-1)}:is(.b4b2578de6f75764__header,.cadd1062398e929c__content):last-child>.c25959d41c245c8c__fullbleed:last-child{margin-block-end:calc(var(--wp-ui-card-padding)*-1)}}}");
   }
   var style_default36 = { "root": "bced04d30c075714__root", "header": "b4b2578de6f75764__header", "content": "cadd1062398e929c__content", "fullbleed": "c25959d41c245c8c__fullbleed" };
-  var FullBleed = (0, import_element84.forwardRef)(
+  var FullBleed = (0, import_element83.forwardRef)(
     function CardFullBleed({ render: render4, ...props }, ref) {
       const element = useRender({
         defaultTagName: "div",
@@ -56843,10 +56683,10 @@ var wp;
   );
 
   // packages/ui/build-module/card/title.mjs
-  var import_element85 = __toESM(require_element(), 1);
+  var import_element84 = __toESM(require_element(), 1);
   var import_jsx_runtime259 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime259.jsx)("div", {});
-  var Title = (0, import_element85.forwardRef)(
+  var Title = (0, import_element84.forwardRef)(
     function CardTitle({ render: render4 = DEFAULT_TAG, children, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(
         Text,
@@ -56862,27 +56702,27 @@ var wp;
   );
 
   // packages/ui/build-module/collapsible/panel.mjs
-  var import_element86 = __toESM(require_element(), 1);
+  var import_element85 = __toESM(require_element(), 1);
   var import_jsx_runtime260 = __toESM(require_jsx_runtime(), 1);
-  var Panel = (0, import_element86.forwardRef)(
+  var Panel = (0, import_element85.forwardRef)(
     function CollapsiblePanel3(props, forwardedRef) {
       return /* @__PURE__ */ (0, import_jsx_runtime260.jsx)(index_parts_exports2.Panel, { ref: forwardedRef, ...props });
     }
   );
 
   // packages/ui/build-module/collapsible/root.mjs
-  var import_element87 = __toESM(require_element(), 1);
+  var import_element86 = __toESM(require_element(), 1);
   var import_jsx_runtime261 = __toESM(require_jsx_runtime(), 1);
-  var Root7 = (0, import_element87.forwardRef)(
+  var Root7 = (0, import_element86.forwardRef)(
     function CollapsibleRoot3(props, forwardedRef) {
       return /* @__PURE__ */ (0, import_jsx_runtime261.jsx)(index_parts_exports2.Root, { ref: forwardedRef, ...props });
     }
   );
 
   // packages/ui/build-module/collapsible/trigger.mjs
-  var import_element88 = __toESM(require_element(), 1);
+  var import_element87 = __toESM(require_element(), 1);
   var import_jsx_runtime262 = __toESM(require_jsx_runtime(), 1);
-  var Trigger3 = (0, import_element88.forwardRef)(
+  var Trigger3 = (0, import_element87.forwardRef)(
     function CollapsibleTrigger3(props, forwardedRef) {
       return /* @__PURE__ */ (0, import_jsx_runtime262.jsx)(index_parts_exports2.Trigger, { ref: forwardedRef, ...props });
     }
@@ -56898,9 +56738,9 @@ var wp;
   });
 
   // packages/ui/build-module/collapsible-card/root.mjs
-  var import_element89 = __toESM(require_element(), 1);
+  var import_element88 = __toESM(require_element(), 1);
   var import_jsx_runtime263 = __toESM(require_jsx_runtime(), 1);
-  var Root32 = (0, import_element89.forwardRef)(
+  var Root32 = (0, import_element88.forwardRef)(
     function CollapsibleCardRoot({ render: render4, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime263.jsx)(
         Root7,
@@ -56915,11 +56755,11 @@ var wp;
 
   // packages/ui/build-module/collapsible-card/header.mjs
   var import_compose13 = __toESM(require_compose(), 1);
-  var import_element91 = __toESM(require_element(), 1);
+  var import_element90 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/collapsible-card/context.mjs
-  var import_element90 = __toESM(require_element(), 1);
-  var HeaderDescriptionIdContext = (0, import_element90.createContext)(null);
+  var import_element89 = __toESM(require_element(), 1);
+  var HeaderDescriptionIdContext = (0, import_element89.createContext)(null);
 
   // packages/ui/build-module/collapsible-card/header.mjs
   var import_jsx_runtime264 = __toESM(require_jsx_runtime(), 1);
@@ -57011,7 +56851,7 @@ var wp;
     registerStyle38("726f348f3f", "._78c10a0773e51a91__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._5b33aa2d48624b4f__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#707070))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}}._980b3b4776ac8f81__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}._43e478b4279a076c__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._698099e25b0fb1a6__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._326aee4184d261fd__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.e9576240835601ba__a,.e9576240835601ba__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._3f05789653864a73__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}._3c72ff72abe57859__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._79d16267c15d9eb2__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
   }
   var global_css_defense_default13 = { "button": "_78c10a0773e51a91__button", "input": "_5b33aa2d48624b4f__input", "textarea": "_980b3b4776ac8f81__textarea", "div": "_43e478b4279a076c__div", "p": "_698099e25b0fb1a6__p", "heading": "_326aee4184d261fd__heading", "a": "e9576240835601ba__a", "ol": "_3f05789653864a73__ol", "li": "_3c72ff72abe57859__li", "span": "_79d16267c15d9eb2__span" };
-  var Header2 = (0, import_element91.forwardRef)(
+  var Header2 = (0, import_element90.forwardRef)(
     function CollapsibleCardHeader({
       children,
       className,
@@ -57019,12 +56859,12 @@ var wp;
       "aria-describedby": ariaDescribedByProp,
       ...restProps
     }, ref) {
-      const [descriptionIds, setDescriptionIds] = (0, import_element91.useState)(
+      const [descriptionIds, setDescriptionIds] = (0, import_element90.useState)(
         []
       );
-      const [orderedDescriptionIds, setOrderedDescriptionIds] = (0, import_element91.useState)([]);
-      const headerContentRef = (0, import_element91.useRef)(null);
-      const registerDescriptionId = (0, import_element91.useCallback)((id) => {
+      const [orderedDescriptionIds, setOrderedDescriptionIds] = (0, import_element90.useState)([]);
+      const headerContentRef = (0, import_element90.useRef)(null);
+      const registerDescriptionId = (0, import_element90.useCallback)((id) => {
         setDescriptionIds((currentDescriptionIds) => {
           if (currentDescriptionIds.includes(id)) {
             return currentDescriptionIds;
@@ -57039,7 +56879,7 @@ var wp;
           );
         };
       }, []);
-      const contextValue = (0, import_element91.useMemo)(
+      const contextValue = (0, import_element90.useMemo)(
         () => ({ registerDescriptionId }),
         [registerDescriptionId]
       );
@@ -57122,7 +56962,7 @@ var wp;
   );
 
   // packages/ui/build-module/collapsible-card/header-description.mjs
-  var import_element92 = __toESM(require_element(), 1);
+  var import_element91 = __toESM(require_element(), 1);
   var import_jsx_runtime265 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE39 = "data-wp-hash";
   function getRuntime39() {
@@ -57209,16 +57049,16 @@ var wp;
   }
   var style_module_default2 = { "heading-wrapper": "c518fd8936700931__heading-wrapper", "header-content": "fea34f4e9dfacd71__header-content", "header-description": "_0d708389b4074955__header-description", "header-trigger-positioner": "ff044cc511d350dc__header-trigger-positioner", "header-trigger-wrapper": "fff122094d192bfe__header-trigger-wrapper", "header": "_2d6d78d85e28c6a1__header", "header-trigger": "bd8376580a8ef445__header-trigger", "content": "b470df8119d32037__content", "overflow-visible": "_640cbe83366c89c3__overflow-visible", "content-inner": "_51c02cc98c745389__content-inner" };
   var DEFAULT_TAG2 = /* @__PURE__ */ (0, import_jsx_runtime265.jsx)("div", {});
-  var HeaderDescription = (0, import_element92.forwardRef)(function CollapsibleCardHeaderDescription({ children, className, id: idProp, render: render4 = DEFAULT_TAG2, ...restProps }, ref) {
-    const generatedId = (0, import_element92.useId)();
+  var HeaderDescription = (0, import_element91.forwardRef)(function CollapsibleCardHeaderDescription({ children, className, id: idProp, render: render4 = DEFAULT_TAG2, ...restProps }, ref) {
+    const generatedId = (0, import_element91.useId)();
     const descriptionId = idProp ?? generatedId;
-    const context = (0, import_element92.useContext)(HeaderDescriptionIdContext);
+    const context = (0, import_element91.useContext)(HeaderDescriptionIdContext);
     if (!context) {
       throw new Error(
         "CollapsibleCard.HeaderDescription: Missing parent <CollapsibleCard.Header>. Render <CollapsibleCard.HeaderDescription> inside <CollapsibleCard.Header>."
       );
     }
-    (0, import_element92.useEffect)(() => {
+    (0, import_element91.useEffect)(() => {
       return context?.registerDescriptionId(descriptionId);
     }, [context, descriptionId]);
     return /* @__PURE__ */ (0, import_jsx_runtime265.jsx)(
@@ -57237,7 +57077,7 @@ var wp;
   });
 
   // packages/ui/build-module/collapsible-card/content.mjs
-  var import_element93 = __toESM(require_element(), 1);
+  var import_element92 = __toESM(require_element(), 1);
   var import_jsx_runtime266 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE40 = "data-wp-hash";
   function getRuntime40() {
@@ -57323,7 +57163,7 @@ var wp;
     registerStyle40("4b918be902", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.c518fd8936700931__heading-wrapper{--_gcd-heading-color:inherit;--_gcd-heading-font-size:inherit;--_gcd-heading-font-weight:inherit;--_gcd-heading-margin:0;font-family:inherit;line-height:inherit}.fea34f4e9dfacd71__header-content{flex:1;min-width:0}._0d708389b4074955__header-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.ff044cc511d350dc__header-trigger-positioner{align-self:flex-start;flex-shrink:0;margin-block-start:calc(var(--wpds-typography-line-height-sm, 20px)/2);max-height:0;overflow:visible}.fff122094d192bfe__header-trigger-wrapper{border-radius:var(--wpds-border-radius-sm,2px);display:flex;translate:0 -50%}._2d6d78d85e28c6a1__header:focus-visible .fff122094d192bfe__header-trigger-wrapper{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}@media not (prefers-reduced-motion){.bd8376580a8ef445__header-trigger{transition:rotate .15s ease-out}}._2d6d78d85e28c6a1__header[data-panel-open] .bd8376580a8ef445__header-trigger{rotate:180deg}._2d6d78d85e28c6a1__header[data-disabled] .bd8376580a8ef445__header-trigger{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}.b470df8119d32037__content{height:var(--collapsible-panel-height);margin-block-start:var(--wp-ui-card-header-content-margin);overflow:hidden}.b470df8119d32037__content._640cbe83366c89c3__overflow-visible{overflow:visible}.b470df8119d32037__content[hidden]:not([hidden=until-found]){display:none}.b470df8119d32037__content[data-ending-style],.b470df8119d32037__content[data-starting-style]{height:0}@media not (prefers-reduced-motion){.b470df8119d32037__content{transition:all .15s ease-out}}}@layer compositions{._51c02cc98c745389__content-inner{padding-block-start:0}._2d6d78d85e28c6a1__header{align-items:stretch;display:flex;flex-direction:row;gap:var(--wpds-dimension-gap-sm,8px);outline:none}._2d6d78d85e28c6a1__header:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}}}");
   }
   var style_module_default3 = { "heading-wrapper": "c518fd8936700931__heading-wrapper", "header-content": "fea34f4e9dfacd71__header-content", "header-description": "_0d708389b4074955__header-description", "header-trigger-positioner": "ff044cc511d350dc__header-trigger-positioner", "header-trigger-wrapper": "fff122094d192bfe__header-trigger-wrapper", "header": "_2d6d78d85e28c6a1__header", "header-trigger": "bd8376580a8ef445__header-trigger", "content": "b470df8119d32037__content", "overflow-visible": "_640cbe83366c89c3__overflow-visible", "content-inner": "_51c02cc98c745389__content-inner" };
-  var Content2 = (0, import_element93.forwardRef)(
+  var Content2 = (0, import_element92.forwardRef)(
     function CollapsibleCardContent({ className, render: render4, children, hiddenUntilFound = true, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime266.jsx)(
         Panel,
@@ -57350,7 +57190,7 @@ var wp;
   );
 
   // packages/ui/build-module/utils/use-deprioritized-initial-focus.mjs
-  var import_element94 = __toESM(require_element(), 1);
+  var import_element93 = __toESM(require_element(), 1);
 
   // node_modules/.store/tabbable@6.4.0-49g9Jwl_jIng6IFnC6-0hg/node_modules/tabbable/dist/index.esm.js
   var candidateSelectors = ["input:not([inert]):not([inert] *)", "select:not([inert]):not([inert] *)", "textarea:not([inert]):not([inert] *)", "a[href]:not([inert]):not([inert] *)", "button:not([inert]):not([inert] *)", "[tabindex]:not(slot):not([inert]):not([inert] *)", "audio[controls]:not([inert]):not([inert] *)", "video[controls]:not([inert]):not([inert] *)", '[contenteditable]:not([contenteditable="false"]):not([inert]):not([inert] *)', "details>summary:first-of-type:not([inert]):not([inert] *)", "details:not([inert]):not([inert] *)"];
@@ -57676,7 +57516,7 @@ var wp;
     initialFocus,
     deprioritizedAttributes
   }) {
-    const popupRef = (0, import_element94.useRef)(null);
+    const popupRef = (0, import_element93.useRef)(null);
     let resolvedInitialFocus = initialFocus;
     if (initialFocus === void 0 || initialFocus === true) {
       resolvedInitialFocus = (interactionType) => {
@@ -57702,7 +57542,7 @@ var wp;
   }
 
   // packages/ui/build-module/stack/stack.mjs
-  var import_element95 = __toESM(require_element(), 1);
+  var import_element94 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE41 = "data-wp-hash";
   function getRuntime41() {
     const globalScope = globalThis;
@@ -57796,7 +57636,7 @@ var wp;
     "2xl": "var(--wpds-dimension-gap-2xl, 32px)",
     "3xl": "var(--wpds-dimension-gap-3xl, 40px)"
   };
-  var Stack = (0, import_element95.forwardRef)(
+  var Stack = (0, import_element94.forwardRef)(
     function UnforwardedStack({ direction, gap, align, justify, wrap, render: render4, ...props }, ref) {
       const style = {
         gap: gap && gapTokens[gap],
@@ -57818,16 +57658,16 @@ var wp;
   );
 
   // packages/ui/build-module/utils/create-overlay-title-validation.mjs
-  var import_element97 = __toESM(require_element(), 1);
+  var import_element96 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/utils/use-schedule-validation.mjs
   var import_compose14 = __toESM(require_compose(), 1);
-  var import_element96 = __toESM(require_element(), 1);
+  var import_element95 = __toESM(require_element(), 1);
   function useScheduleValidation(validate) {
     const validateEvent = (0, import_compose14.useEvent)(validate);
-    const timerRef = (0, import_element96.useRef)(null);
-    const unmountedRef = (0, import_element96.useRef)(false);
-    const scheduleValidation = (0, import_element96.useCallback)(() => {
+    const timerRef = (0, import_element95.useRef)(null);
+    const unmountedRef = (0, import_element95.useRef)(false);
+    const scheduleValidation = (0, import_element95.useCallback)(() => {
       if (unmountedRef.current) {
         return;
       }
@@ -57839,7 +57679,7 @@ var wp;
         timerRef.current = null;
       }, 0);
     }, [validateEvent]);
-    (0, import_element96.useEffect)(() => {
+    (0, import_element95.useEffect)(() => {
       unmountedRef.current = false;
       return () => {
         unmountedRef.current = true;
@@ -57856,9 +57696,9 @@ var wp;
   var VALIDATION_ENABLED2 = true;
   function createOverlayTitleValidation(componentName) {
     const componentNameLowerCase = componentName.toLowerCase();
-    const OverlayValidationContext = VALIDATION_ENABLED2 ? (0, import_element97.createContext)(null) : null;
+    const OverlayValidationContext = VALIDATION_ENABLED2 ? (0, import_element96.createContext)(null) : null;
     function useValidationContextDev() {
-      return (0, import_element97.useContext)(OverlayValidationContext);
+      return (0, import_element96.useContext)(OverlayValidationContext);
     }
     function useValidationContextProd() {
       return null;
@@ -57867,7 +57707,7 @@ var wp;
     function ValidationProviderDev({
       children
     }) {
-      const titleElementRef = (0, import_element97.useRef)(null);
+      const titleElementRef = (0, import_element96.useRef)(null);
       const scheduleValidation = useScheduleValidation(() => {
         const titleElement = titleElementRef.current;
         if (!titleElement) {
@@ -57882,7 +57722,7 @@ var wp;
           );
         }
       });
-      const registerTitle = (0, import_element97.useCallback)(
+      const registerTitle = (0, import_element96.useCallback)(
         (element) => {
           titleElementRef.current = element;
           scheduleValidation();
@@ -57893,11 +57733,11 @@ var wp;
         },
         [scheduleValidation]
       );
-      const contextValue = (0, import_element97.useMemo)(
+      const contextValue = (0, import_element96.useMemo)(
         () => ({ registerTitle }),
         [registerTitle]
       );
-      (0, import_element97.useEffect)(() => {
+      (0, import_element96.useEffect)(() => {
         scheduleValidation();
       }, [scheduleValidation]);
       return /* @__PURE__ */ (0, import_jsx_runtime267.jsx)(OverlayValidationContext.Provider, { value: contextValue, children });
@@ -57915,10 +57755,10 @@ var wp;
   }
 
   // packages/ui/build-module/form/primitives/input/input.mjs
-  var import_element100 = __toESM(require_element(), 1);
+  var import_element99 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/input-layout/input-layout.mjs
-  var import_element98 = __toESM(require_element(), 1);
+  var import_element97 = __toESM(require_element(), 1);
   var import_jsx_runtime268 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE42 = "data-wp-hash";
   function getRuntime42() {
@@ -58012,7 +57852,7 @@ var wp;
     registerStyle42("a933c8f665", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
   }
   var style_default38 = { "input-layout": "b58f09bec1a5dbde__input-layout", "is-size-compact": "c6959524c70627d6__is-size-compact", "is-size-small": "aa52ad890a16cc91__is-size-small", "is-disabled": "_50a72abb47530e8a__is-disabled", "is-borderless": "_33a5f404fc55a9f2__is-borderless", "input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot", "slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper", "is-padding-minimal": "_50d0eced305893d5__is-padding-minimal" };
-  var InputLayout = (0, import_element98.forwardRef)(
+  var InputLayout = (0, import_element97.forwardRef)(
     function UnforwardedInputLayout({
       className,
       children,
@@ -58038,7 +57878,7 @@ var wp;
           ),
           ...restProps,
           children: [
-            import_element98.Children.count(prefix2) > 0 && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
+            import_element97.Children.count(prefix2) > 0 && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
               "div",
               {
                 className: style_default38["slot-wrapper"],
@@ -58047,7 +57887,7 @@ var wp;
               }
             ),
             children,
-            import_element98.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
+            import_element97.Children.count(suffix) > 0 && /* @__PURE__ */ (0, import_jsx_runtime268.jsx)(
               "div",
               {
                 className: style_default38["slot-wrapper"],
@@ -58062,7 +57902,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/input-layout/slot.mjs
-  var import_element99 = __toESM(require_element(), 1);
+  var import_element98 = __toESM(require_element(), 1);
   var import_jsx_runtime269 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE43 = "data-wp-hash";
   function getRuntime43() {
@@ -58148,7 +57988,7 @@ var wp;
     registerStyle43("a933c8f665", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b58f09bec1a5dbde__input-layout{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-md,12px);background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:var(--wpds-border-width-xs,1px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);height:var(--wpds-dimension-size-lg,40px);line-height:1;&.c6959524c70627d6__is-size-compact{height:var(--wpds-dimension-size-md,32px)}&.aa52ad890a16cc91__is-size-small,&.c6959524c70627d6__is-size-compact{--wp-ui-input-layout-padding-inline:var(--wpds-dimension-padding-sm,8px)}&.aa52ad890a16cc91__is-size-small{height:var(--wpds-dimension-size-sm,24px)}&._50a72abb47530e8a__is-disabled,&:has([data-can-disable-input-layout][data-disabled]){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}&:not(._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText}}}&._33a5f404fc55a9f2__is-borderless{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border-color:transparent}&:has(._7ef4bcd6bfde61ae__input-layout-slot:focus-within){--_gcd-div-outline:none;outline:none}&:hover:not(._50a72abb47530e8a__is-disabled,:has([data-can-disable-input-layout][data-disabled]),._33a5f404fc55a9f2__is-borderless){background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&:has(:invalid[data-validity-visible]){--focus-color:var(--wpds-color-stroke-interactive-error,#cc1818);border-color:var(--wpds-color-stroke-interactive-error,#cc1818);&:hover{border-color:var(--wpds-color-stroke-interactive-error-active,#9d0000)}}}._7c0c0ce7b5c57b8f__slot-wrapper{display:contents}._7ef4bcd6bfde61ae__input-layout-slot{align-items:center;display:flex;&._50d0eced305893d5__is-padding-minimal{--wp-ui-input-layout-prefix-padding-start:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px));--wp-ui-input-layout-suffix-padding-end:calc(var(--wp-ui-input-layout-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}[data-slot-type=prefix] &{padding-inline-start:var(--wp-ui-input-layout-prefix-padding-start,var(--wp-ui-input-layout-padding-inline))}[data-slot-type=suffix] &{padding-inline-end:var(--wp-ui-input-layout-suffix-padding-end,var(--wp-ui-input-layout-padding-inline))}}}}');
   }
   var style_default39 = { "input-layout": "b58f09bec1a5dbde__input-layout", "is-size-compact": "c6959524c70627d6__is-size-compact", "is-size-small": "aa52ad890a16cc91__is-size-small", "is-disabled": "_50a72abb47530e8a__is-disabled", "is-borderless": "_33a5f404fc55a9f2__is-borderless", "input-layout-slot": "_7ef4bcd6bfde61ae__input-layout-slot", "slot-wrapper": "_7c0c0ce7b5c57b8f__slot-wrapper", "is-padding-minimal": "_50d0eced305893d5__is-padding-minimal" };
-  var InputLayoutSlot = (0, import_element99.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
+  var InputLayoutSlot = (0, import_element98.forwardRef)(function UnforwardedInputLayoutSlot({ padding = "default", className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime269.jsx)(
       "div",
       {
@@ -58263,7 +58103,7 @@ var wp;
     registerStyle44("a53cd10a80", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9edfcd97eeaee9dc__input{--_gcd-input-padding:var(--wp-ui-input-padding-block,0px) var(--wp-ui-input-layout-padding-inline,0px);--_gcd-input-font-size:max(var(--wpds-typography-font-size-md,13px),16px);background:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:inherit;font-size:inherit;line-height:inherit;outline:none;padding-block:var(--wp-ui-input-padding-block,0);padding-inline:var(--wp-ui-input-layout-padding-inline,0);width:100%;@media (min-width:600px){--_gcd-input-font-size:inherit}&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}&:disabled,&[aria-disabled=true]{--_gcd-input-placeholder-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&::placeholder{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){color:GrayText}}&[type=email],&[type=url]{direction:ltr}&[type=number]{appearance:textfield;&::-webkit-inner-spin-button,&::-webkit-outer-spin-button{appearance:none;margin:0}}}}@layer compositions{.edc52bf0fe80b57f__layout{font-size:max(var(--wpds-typography-font-size-md,13px),16px);@media (min-width:600px){font-size:var(--wpds-typography-font-size-md,13px)}}}}");
   }
   var style_default40 = { "input": "_9edfcd97eeaee9dc__input", "layout": "edc52bf0fe80b57f__layout" };
-  var Input3 = (0, import_element100.forwardRef)(
+  var Input3 = (0, import_element99.forwardRef)(
     function UnforwardedInput({ className, size: size4 = "default", prefix: prefix2, suffix, style, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime270.jsx)(
         InputLayout2,
@@ -58396,7 +58236,7 @@ var wp;
   }
 
   // packages/ui/build-module/form/primitives/checkbox/checkbox.mjs
-  var import_element101 = __toESM(require_element(), 1);
+  var import_element100 = __toESM(require_element(), 1);
   var import_jsx_runtime271 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE46 = "data-wp-hash";
   function getRuntime46() {
@@ -58490,7 +58330,7 @@ var wp;
     registerStyle46("ecdf49ebe4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._63457135733e4745__root{--_checkbox-input-size:var(--wp-ui-checkbox-input-size,var(--wpds-dimension-size-2xs,16px));aspect-ratio:1;background-color:var(--wpds-color-background-interactive-neutral,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:min(var(--wpds-border-radius-sm,2px),2px);display:inline-block;flex-shrink:0;padding:0;position:relative;width:var(--_checkbox-input-size);&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&:hover,[data-highlighted] &{background-color:var(--wpds-color-background-interactive-neutral-active,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}&[aria-checked=mixed],&[aria-checked=true]{background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));border-color:transparent;color:var(--wpds-color-foreground-interactive-brand-strong,#fff)}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-disabled,var(--wpds-color-background-surface-neutral-strong,#fff));border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}&:after{aspect-ratio:1;content:"";left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:max(var(--_checkbox-input-size),var(--wpds-dimension-size-sm,24px))}}.e5da9f589362d532__indicator-icon{inset:calc(0px - var(--wpds-border-width-xs, 1px));position:absolute}}}');
   }
   var style_default41 = { "root": "_63457135733e4745__root", "indicator-icon": "e5da9f589362d532__indicator-icon" };
-  var Checkbox = (0, import_element101.forwardRef)(
+  var Checkbox = (0, import_element100.forwardRef)(
     function UnforwardedCheckbox({ className, indeterminate, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime271.jsx)(
         index_parts_exports.Root,
@@ -58526,7 +58366,7 @@ var wp;
 
   // packages/ui/build-module/form/primitives/control-with-error/control-with-error.mjs
   var import_i18n25 = __toESM(require_i18n(), 1);
-  var import_element102 = __toESM(require_element(), 1);
+  var import_element101 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/validity-indicator/validity-indicator.mjs
   var import_jsx_runtime272 = __toESM(require_jsx_runtime(), 1);
@@ -58675,7 +58515,7 @@ var wp;
     ] });
   }
   var VALIDITY_VISIBLE_ATTRIBUTE = "data-validity-visible";
-  var ControlWithError = (0, import_element102.forwardRef)(function UnforwardedControlWithError({
+  var ControlWithError = (0, import_element101.forwardRef)(function UnforwardedControlWithError({
     required,
     markWhenOptional,
     customValidity,
@@ -58684,12 +58524,12 @@ var wp;
     render: render4 = DEFAULT_RENDER,
     ...restProps
   }, forwardedRef) {
-    const [errorMessage, setErrorMessage] = (0, import_element102.useState)();
-    const [statusMessage, setStatusMessage] = (0, import_element102.useState)();
-    const [showMessage, setShowMessage] = (0, import_element102.useState)(false);
-    const [isTouched, setIsTouched] = (0, import_element102.useState)(false);
-    const wrapperRef = (0, import_element102.useRef)(null);
-    (0, import_element102.useEffect)(() => {
+    const [errorMessage, setErrorMessage] = (0, import_element101.useState)();
+    const [statusMessage, setStatusMessage] = (0, import_element101.useState)();
+    const [showMessage, setShowMessage] = (0, import_element101.useState)(false);
+    const [isTouched, setIsTouched] = (0, import_element101.useState)(false);
+    const wrapperRef = (0, import_element101.useRef)(null);
+    (0, import_element101.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const handler = () => {
         if (customValidity?.type !== "validating") {
@@ -58701,7 +58541,7 @@ var wp;
       validityTarget?.addEventListener("invalid", handler);
       return () => validityTarget?.removeEventListener("invalid", handler);
     }, [customValidity?.type, getValidityTarget]);
-    (0, import_element102.useEffect)(() => {
+    (0, import_element101.useEffect)(() => {
       const validityTarget = getValidityTarget();
       const suppressNativePopover = (event) => {
         event.preventDefault();
@@ -58735,7 +58575,7 @@ var wp;
         );
       };
     }, [getValidityTarget]);
-    (0, import_element102.useEffect)(() => {
+    (0, import_element101.useEffect)(() => {
       const validityTarget = getValidityTarget();
       if (!customValidity?.type) {
         validityTarget?.setCustomValidity("");
@@ -58772,7 +58612,7 @@ var wp;
         }
       }
     }, [customValidity, getValidityTarget]);
-    (0, import_element102.useEffect)(() => {
+    (0, import_element101.useEffect)(() => {
       if (!isTouched || showMessage) {
         return;
       }
@@ -58800,7 +58640,7 @@ var wp;
         }
       });
     };
-    const messageId = (0, import_element102.useId)();
+    const messageId = (0, import_element101.useId)();
     const message2 = (() => {
       if (errorMessage) {
         return /* @__PURE__ */ (0, import_jsx_runtime273.jsx)(
@@ -58825,7 +58665,7 @@ var wp;
       return null;
     })();
     const visibleMessage = showMessage ? message2 : null;
-    (0, import_element102.useEffect)(() => {
+    (0, import_element101.useEffect)(() => {
       const target = getValidityTarget();
       if (!target) {
         return;
@@ -58850,7 +58690,7 @@ var wp;
       props: mergeProps(restProps, {
         onBlur,
         children: /* @__PURE__ */ (0, import_jsx_runtime273.jsxs)(import_jsx_runtime273.Fragment, { children: [
-          (0, import_element102.cloneElement)(children, {
+          (0, import_element101.cloneElement)(children, {
             label: appendRequiredIndicator(
               children.props.label,
               required,
@@ -58877,7 +58717,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/field/root.mjs
-  var import_element103 = __toESM(require_element(), 1);
+  var import_element102 = __toESM(require_element(), 1);
   var import_jsx_runtime274 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE48 = "data-wp-hash";
   function getRuntime48() {
@@ -58964,7 +58804,7 @@ var wp;
   }
   var resets_default16 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
   var DEFAULT_RENDER2 = (props) => /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(Stack, { ...props, direction: "column", gap: "sm" });
-  var Root8 = (0, import_element103.forwardRef)(
+  var Root8 = (0, import_element102.forwardRef)(
     function UnforwardedRoot({ className, render: render4 = DEFAULT_RENDER2, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime274.jsx)(
         index_parts_exports4.Root,
@@ -58979,14 +58819,14 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/field/item.mjs
-  var import_element104 = __toESM(require_element(), 1);
+  var import_element103 = __toESM(require_element(), 1);
   var import_jsx_runtime275 = __toESM(require_jsx_runtime(), 1);
-  var Item3 = (0, import_element104.forwardRef)(function UnforwardedItem(props, ref) {
+  var Item3 = (0, import_element103.forwardRef)(function UnforwardedItem(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime275.jsx)(index_parts_exports4.Item, { ref, ...props });
   });
 
   // packages/ui/build-module/form/primitives/field/label.mjs
-  var import_element105 = __toESM(require_element(), 1);
+  var import_element104 = __toESM(require_element(), 1);
   var import_jsx_runtime276 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE49 = "data-wp-hash";
   function getRuntime49() {
@@ -59072,7 +58912,7 @@ var wp;
     registerStyle49("71ecfbcef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
-  var Label = (0, import_element105.forwardRef)(
+  var Label = (0, import_element104.forwardRef)(
     function UnforwardedLabel({ className, hideFromVision, variant, ...restProps }, ref) {
       const label = /* @__PURE__ */ (0, import_jsx_runtime276.jsx)(
         index_parts_exports4.Label,
@@ -59094,7 +58934,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/field/description.mjs
-  var import_element106 = __toESM(require_element(), 1);
+  var import_element105 = __toESM(require_element(), 1);
   var import_jsx_runtime277 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE50 = "data-wp-hash";
   function getRuntime50() {
@@ -59184,7 +59024,7 @@ var wp;
     registerStyle50("71ecfbcef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default2 = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
-  var Description = (0, import_element106.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
+  var Description = (0, import_element105.forwardRef)(function UnforwardedDescription({ className, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime277.jsx)(
       index_parts_exports4.Description,
       {
@@ -59200,7 +59040,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/field/details.mjs
-  var import_element107 = __toESM(require_element(), 1);
+  var import_element106 = __toESM(require_element(), 1);
   var import_i18n26 = __toESM(require_i18n(), 1);
   var import_jsx_runtime278 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE51 = "data-wp-hash";
@@ -59287,7 +59127,7 @@ var wp;
     registerStyle51("71ecfbcef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default3 = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
-  var Details = (0, import_element107.forwardRef)(
+  var Details = (0, import_element106.forwardRef)(
     function UnforwardedDetails({ className, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime278.jsxs)(import_jsx_runtime278.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(VisuallyHidden, { render: /* @__PURE__ */ (0, import_jsx_runtime278.jsx)(index_parts_exports4.Description, {}), children: (0, import_i18n26.__)("More details follow the field.") }),
@@ -59304,16 +59144,16 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/field/control.mjs
-  var import_element108 = __toESM(require_element(), 1);
+  var import_element107 = __toESM(require_element(), 1);
   var import_jsx_runtime279 = __toESM(require_jsx_runtime(), 1);
-  var Control = (0, import_element108.forwardRef)(
+  var Control = (0, import_element107.forwardRef)(
     function UnforwardedControl(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime279.jsx)(index_parts_exports4.Control, { ref, ...props });
     }
   );
 
   // packages/ui/build-module/form/primitives/field/visual-label.mjs
-  var import_element109 = __toESM(require_element(), 1);
+  var import_element108 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE52 = "data-wp-hash";
   function getRuntime52() {
     const globalScope = globalThis;
@@ -59398,7 +59238,7 @@ var wp;
     registerStyle52("71ecfbcef4", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.b83e088455118c35__label{--wp-ui-field-label-line-height:var(--wpds-typography-line-height-xs,16px);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-xs,11px);font-weight:var(--wpds-typography-font-weight-emphasis,600);line-height:var(--wp-ui-field-label-line-height);text-transform:uppercase;&._7cbfa5d2e598834a__is-plain{font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);text-transform:none}}._507b5c7970fe2ffd__description{--_gcd-p-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-p-line-height:var(--wpds-typography-line-height-xs,16px);--_gcd-p-margin:0;text-wrap:pretty;color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:var(--wpds-typography-line-height-xs,16px)}}}');
   }
   var field_default4 = { "label": "b83e088455118c35__label", "is-plain": "_7cbfa5d2e598834a__is-plain", "description": "_507b5c7970fe2ffd__description" };
-  var VisualLabel = (0, import_element109.forwardRef)(
+  var VisualLabel = (0, import_element108.forwardRef)(
     function UnforwardedVisualLabel({ className, render: render4, variant, ...restProps }, ref) {
       return useRender({
         defaultTagName: "span",
@@ -59426,21 +59266,21 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/fieldset/root.mjs
-  var import_element111 = __toESM(require_element(), 1);
+  var import_element110 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/fieldset/context.mjs
-  var import_element110 = __toESM(require_element(), 1);
+  var import_element109 = __toESM(require_element(), 1);
   var fallbackContext = {
     registerDescriptionId: () => {
     },
     unregisterDescriptionId: () => {
     }
   };
-  var FieldsetContext = (0, import_element110.createContext)(
+  var FieldsetContext = (0, import_element109.createContext)(
     null
   );
   var useFieldsetContext = (componentName) => {
-    const context = (0, import_element110.useContext)(FieldsetContext);
+    const context = (0, import_element109.useContext)(FieldsetContext);
     if (!context) {
       throw new Error(
         `${componentName}: Missing parent <Fieldset.Root>. Render <${componentName}> inside <Fieldset.Root>.`
@@ -59535,9 +59375,9 @@ var wp;
     registerStyle53("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
   }
   var style_default43 = { "root": "e261be5ffdbff866__root", "legend": "_9c09ae15728936d6__legend", "is-hidden": "_76f0f4f5a833a38d__is-hidden", "description": "cac73664494ce854__description" };
-  var FieldsetRoot3 = (0, import_element111.forwardRef)(function UnforwardedFieldsetRoot({ className, children, ...restProps }, ref) {
-    const [descriptionId, setDescriptionId] = (0, import_element111.useState)();
-    const contextValue = (0, import_element111.useMemo)(
+  var FieldsetRoot3 = (0, import_element110.forwardRef)(function UnforwardedFieldsetRoot({ className, children, ...restProps }, ref) {
+    const [descriptionId, setDescriptionId] = (0, import_element110.useState)();
+    const contextValue = (0, import_element110.useMemo)(
       () => ({
         registerDescriptionId: (id) => setDescriptionId(id),
         unregisterDescriptionId: () => setDescriptionId(void 0)
@@ -59557,7 +59397,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/fieldset/legend.mjs
-  var import_element112 = __toESM(require_element(), 1);
+  var import_element111 = __toESM(require_element(), 1);
   var import_jsx_runtime281 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE54 = "data-wp-hash";
   function getRuntime54() {
@@ -59647,7 +59487,7 @@ var wp;
     registerStyle54("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
   }
   var style_default44 = { "root": "e261be5ffdbff866__root", "legend": "_9c09ae15728936d6__legend", "is-hidden": "_76f0f4f5a833a38d__is-hidden", "description": "cac73664494ce854__description" };
-  var FieldsetLegend3 = (0, import_element112.forwardRef)(
+  var FieldsetLegend3 = (0, import_element111.forwardRef)(
     function UnforwardedFieldsetLegend({ className, hideFromVision, ...restProps }, ref) {
       const legend = /* @__PURE__ */ (0, import_jsx_runtime281.jsx)(
         index_parts_exports5.Legend,
@@ -59670,7 +59510,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/fieldset/description.mjs
-  var import_element113 = __toESM(require_element(), 1);
+  var import_element112 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE55 = "data-wp-hash";
   function getRuntime55() {
     const globalScope = globalThis;
@@ -59763,11 +59603,11 @@ var wp;
     registerStyle55("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
   }
   var style_default45 = { "root": "e261be5ffdbff866__root", "legend": "_9c09ae15728936d6__legend", "is-hidden": "_76f0f4f5a833a38d__is-hidden", "description": "cac73664494ce854__description" };
-  var FieldsetDescription = (0, import_element113.forwardRef)(function UnforwardedFieldsetDescription({ className, id: idProp, render: render4, ...restProps }, ref) {
-    const generatedId = (0, import_element113.useId)();
+  var FieldsetDescription = (0, import_element112.forwardRef)(function UnforwardedFieldsetDescription({ className, id: idProp, render: render4, ...restProps }, ref) {
+    const generatedId = (0, import_element112.useId)();
     const id = idProp ?? generatedId;
     const { registerDescriptionId, unregisterDescriptionId } = useFieldsetContext("Fieldset.Description");
-    (0, import_element113.useEffect)(() => {
+    (0, import_element112.useEffect)(() => {
       registerDescriptionId(id);
       return unregisterDescriptionId;
     }, [registerDescriptionId, unregisterDescriptionId, id]);
@@ -59792,7 +59632,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/fieldset/details.mjs
-  var import_element114 = __toESM(require_element(), 1);
+  var import_element113 = __toESM(require_element(), 1);
   var import_i18n27 = __toESM(require_i18n(), 1);
   var import_jsx_runtime282 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE56 = "data-wp-hash";
@@ -59883,10 +59723,10 @@ var wp;
     registerStyle56("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
   }
   var style_default46 = { "root": "e261be5ffdbff866__root", "legend": "_9c09ae15728936d6__legend", "is-hidden": "_76f0f4f5a833a38d__is-hidden", "description": "cac73664494ce854__description" };
-  var FieldsetDetails = (0, import_element114.forwardRef)(function UnforwardedFieldsetDetails({ className, children, ...restProps }, ref) {
-    const id = (0, import_element114.useId)();
+  var FieldsetDetails = (0, import_element113.forwardRef)(function UnforwardedFieldsetDetails({ className, children, ...restProps }, ref) {
+    const id = (0, import_element113.useId)();
     const { registerDescriptionId, unregisterDescriptionId } = useFieldsetContext("Fieldset.Details");
-    (0, import_element114.useEffect)(() => {
+    (0, import_element113.useEffect)(() => {
       registerDescriptionId(id);
       return unregisterDescriptionId;
     }, [registerDescriptionId, unregisterDescriptionId, id]);
@@ -59925,7 +59765,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/select/group.mjs
-  var import_element115 = __toESM(require_element(), 1);
+  var import_element114 = __toESM(require_element(), 1);
   var import_jsx_runtime283 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE57 = "data-wp-hash";
   function getRuntime57() {
@@ -60011,7 +59851,7 @@ var wp;
     registerStyle57("7ad1c0f17c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.db3b5361087077bf__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._55f74d412c3e00e8__is-width-anchor{width:var(--anchor-width)}&._90e0b62205351f85__is-width-content{width:auto}&._30ba87899c0b11ce__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._402d4db0488da324__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._34ead52b2d60b21d__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&._3fec17b6dc9029c3__is-width-available{width:var(--available-width)}}._89cf8b0bb3319c7e__is-align-item-with-trigger[data-side=none] .db3b5361087077bf__popup{max-height:none}._66636b371582ead4__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.b6aeb640498fae5d__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._325f1b7764907c29__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._597ea43c6bec63d8__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._5865110cf5678449__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._597ea43c6bec63d8__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._09c9c50e605390ff__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._6361da5eb54e618d__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}._88cf016d20b4f2ef__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.c466e5465a76d4f6__item-layout{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);&:has(>.b6aeb640498fae5d__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}}.b9c803da5aae76d5__item{user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&._8931f3eb02e2e0ad__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._494b2a9f2e72b67f__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}.b6aeb640498fae5d__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);justify-content:center;pointer-events:none;width:var(--wpds-dimension-size-2xs,16px)}._494b2a9f2e72b67f__item-indicator-icon{translate:0 1px}.b40c7d58965ce4a5__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._3c629930ceb193c7__item-text{display:flex;flex-direction:column;min-width:0}._5c4aad98ed7a8382__item-label{--_gcd-heading-color:currentColor;min-width:0}.deb952050541c0e4__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.b9c803da5aae76d5__item[data-disabled] .deb952050541c0e4__item-description,.b9c803da5aae76d5__item[data-highlighted]:not([data-disabled]) .deb952050541c0e4__item-description{--_gcd-heading-color:currentColor;color:inherit}._5f8e4a2a04ecdade__loading-indicator{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}.c1bf7c14e9600f0a__status{grid-area:status;&:has(._5f8e4a2a04ecdade__loading-indicator){padding-block:var(--wp-ui-popup-padding)}}._0850de87108c9441__empty:not(:empty){grid-area:main}._0850de87108c9441__empty:not(:empty),.c1bf7c14e9600f0a__status:not(:empty):not(:has([data-visually-hidden],._5f8e4a2a04ecdade__loading-indicator)){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}@layer compositions{.eaec70f7db4a63ef__loading-spinner{height:var(--wpds-dimension-size-3xs,12px);width:var(--wpds-dimension-size-3xs,12px)}}}');
   }
   var item_popup_default2 = { "popup": "db3b5361087077bf__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_55f74d412c3e00e8__is-width-anchor", "is-width-content": "_90e0b62205351f85__is-width-content", "is-width-sm": "_30ba87899c0b11ce__is-width-sm", "is-width-md": "_402d4db0488da324__is-width-md", "is-width-lg": "_34ead52b2d60b21d__is-width-lg", "is-width-available": "_3fec17b6dc9029c3__is-width-available", "is-align-item-with-trigger": "_89cf8b0bb3319c7e__is-align-item-with-trigger", "list-chrome": "_66636b371582ead4__list-chrome", "item-icon": "b6aeb640498fae5d__item-icon", "list": "_325f1b7764907c29__list _66636b371582ead4__list-chrome", "list-scrollable-container": "_597ea43c6bec63d8__list-scrollable-container", "list-footer": "_5865110cf5678449__list-footer", "group": "_09c9c50e605390ff__group", "group-label": "_6361da5eb54e618d__group-label", "separator": "_88cf016d20b4f2ef__separator", "item-layout": "c466e5465a76d4f6__item-layout", "item": "b9c803da5aae76d5__item c466e5465a76d4f6__item-layout", "is-size-small": "_8931f3eb02e2e0ad__is-size-small", "item-indicator-icon": "_494b2a9f2e72b67f__item-indicator-icon", "item-content": "b40c7d58965ce4a5__item-content", "item-text": "_3c629930ceb193c7__item-text", "item-label": "_5c4aad98ed7a8382__item-label", "item-description": "deb952050541c0e4__item-description", "loading-indicator": "_5f8e4a2a04ecdade__loading-indicator c466e5465a76d4f6__item-layout", "status": "c1bf7c14e9600f0a__status", "empty": "_0850de87108c9441__empty", "loading-spinner": "eaec70f7db4a63ef__loading-spinner" };
-  var Group2 = (0, import_element115.forwardRef)(
+  var Group2 = (0, import_element114.forwardRef)(
     function UnforwardedGroup({ className, children, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime283.jsx)(
         index_parts_exports7.Group,
@@ -60026,7 +59866,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/select/group-label.mjs
-  var import_element116 = __toESM(require_element(), 1);
+  var import_element115 = __toESM(require_element(), 1);
   var import_jsx_runtime284 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE58 = "data-wp-hash";
   function getRuntime58() {
@@ -60112,7 +59952,7 @@ var wp;
     registerStyle58("7ad1c0f17c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.db3b5361087077bf__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._55f74d412c3e00e8__is-width-anchor{width:var(--anchor-width)}&._90e0b62205351f85__is-width-content{width:auto}&._30ba87899c0b11ce__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._402d4db0488da324__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._34ead52b2d60b21d__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&._3fec17b6dc9029c3__is-width-available{width:var(--available-width)}}._89cf8b0bb3319c7e__is-align-item-with-trigger[data-side=none] .db3b5361087077bf__popup{max-height:none}._66636b371582ead4__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.b6aeb640498fae5d__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._325f1b7764907c29__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._597ea43c6bec63d8__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._5865110cf5678449__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._597ea43c6bec63d8__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._09c9c50e605390ff__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._6361da5eb54e618d__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}._88cf016d20b4f2ef__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.c466e5465a76d4f6__item-layout{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);&:has(>.b6aeb640498fae5d__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}}.b9c803da5aae76d5__item{user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&._8931f3eb02e2e0ad__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._494b2a9f2e72b67f__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}.b6aeb640498fae5d__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);justify-content:center;pointer-events:none;width:var(--wpds-dimension-size-2xs,16px)}._494b2a9f2e72b67f__item-indicator-icon{translate:0 1px}.b40c7d58965ce4a5__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._3c629930ceb193c7__item-text{display:flex;flex-direction:column;min-width:0}._5c4aad98ed7a8382__item-label{--_gcd-heading-color:currentColor;min-width:0}.deb952050541c0e4__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.b9c803da5aae76d5__item[data-disabled] .deb952050541c0e4__item-description,.b9c803da5aae76d5__item[data-highlighted]:not([data-disabled]) .deb952050541c0e4__item-description{--_gcd-heading-color:currentColor;color:inherit}._5f8e4a2a04ecdade__loading-indicator{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}.c1bf7c14e9600f0a__status{grid-area:status;&:has(._5f8e4a2a04ecdade__loading-indicator){padding-block:var(--wp-ui-popup-padding)}}._0850de87108c9441__empty:not(:empty){grid-area:main}._0850de87108c9441__empty:not(:empty),.c1bf7c14e9600f0a__status:not(:empty):not(:has([data-visually-hidden],._5f8e4a2a04ecdade__loading-indicator)){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}@layer compositions{.eaec70f7db4a63ef__loading-spinner{height:var(--wpds-dimension-size-3xs,12px);width:var(--wpds-dimension-size-3xs,12px)}}}');
   }
   var item_popup_default3 = { "popup": "db3b5361087077bf__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_55f74d412c3e00e8__is-width-anchor", "is-width-content": "_90e0b62205351f85__is-width-content", "is-width-sm": "_30ba87899c0b11ce__is-width-sm", "is-width-md": "_402d4db0488da324__is-width-md", "is-width-lg": "_34ead52b2d60b21d__is-width-lg", "is-width-available": "_3fec17b6dc9029c3__is-width-available", "is-align-item-with-trigger": "_89cf8b0bb3319c7e__is-align-item-with-trigger", "list-chrome": "_66636b371582ead4__list-chrome", "item-icon": "b6aeb640498fae5d__item-icon", "list": "_325f1b7764907c29__list _66636b371582ead4__list-chrome", "list-scrollable-container": "_597ea43c6bec63d8__list-scrollable-container", "list-footer": "_5865110cf5678449__list-footer", "group": "_09c9c50e605390ff__group", "group-label": "_6361da5eb54e618d__group-label", "separator": "_88cf016d20b4f2ef__separator", "item-layout": "c466e5465a76d4f6__item-layout", "item": "b9c803da5aae76d5__item c466e5465a76d4f6__item-layout", "is-size-small": "_8931f3eb02e2e0ad__is-size-small", "item-indicator-icon": "_494b2a9f2e72b67f__item-indicator-icon", "item-content": "b40c7d58965ce4a5__item-content", "item-text": "_3c629930ceb193c7__item-text", "item-label": "_5c4aad98ed7a8382__item-label", "item-description": "deb952050541c0e4__item-description", "loading-indicator": "_5f8e4a2a04ecdade__loading-indicator c466e5465a76d4f6__item-layout", "status": "c1bf7c14e9600f0a__status", "empty": "_0850de87108c9441__empty", "loading-spinner": "eaec70f7db4a63ef__loading-spinner" };
-  var GroupLabel2 = (0, import_element116.forwardRef)(
+  var GroupLabel2 = (0, import_element115.forwardRef)(
     function UnforwardedGroupLabel({ className, children, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime284.jsx)(
         Text,
@@ -60130,10 +59970,10 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/select/item.mjs
-  var import_element119 = __toESM(require_element(), 1);
+  var import_element118 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/select/item-description.mjs
-  var import_element117 = __toESM(require_element(), 1);
+  var import_element116 = __toESM(require_element(), 1);
   var import_jsx_runtime285 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE59 = "data-wp-hash";
   function getRuntime59() {
@@ -60220,7 +60060,7 @@ var wp;
   }
   var item_popup_default4 = { "popup": "db3b5361087077bf__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_55f74d412c3e00e8__is-width-anchor", "is-width-content": "_90e0b62205351f85__is-width-content", "is-width-sm": "_30ba87899c0b11ce__is-width-sm", "is-width-md": "_402d4db0488da324__is-width-md", "is-width-lg": "_34ead52b2d60b21d__is-width-lg", "is-width-available": "_3fec17b6dc9029c3__is-width-available", "is-align-item-with-trigger": "_89cf8b0bb3319c7e__is-align-item-with-trigger", "list-chrome": "_66636b371582ead4__list-chrome", "item-icon": "b6aeb640498fae5d__item-icon", "list": "_325f1b7764907c29__list _66636b371582ead4__list-chrome", "list-scrollable-container": "_597ea43c6bec63d8__list-scrollable-container", "list-footer": "_5865110cf5678449__list-footer", "group": "_09c9c50e605390ff__group", "group-label": "_6361da5eb54e618d__group-label", "separator": "_88cf016d20b4f2ef__separator", "item-layout": "c466e5465a76d4f6__item-layout", "item": "b9c803da5aae76d5__item c466e5465a76d4f6__item-layout", "is-size-small": "_8931f3eb02e2e0ad__is-size-small", "item-indicator-icon": "_494b2a9f2e72b67f__item-indicator-icon", "item-content": "b40c7d58965ce4a5__item-content", "item-text": "_3c629930ceb193c7__item-text", "item-label": "_5c4aad98ed7a8382__item-label", "item-description": "deb952050541c0e4__item-description", "loading-indicator": "_5f8e4a2a04ecdade__loading-indicator c466e5465a76d4f6__item-layout", "status": "c1bf7c14e9600f0a__status", "empty": "_0850de87108c9441__empty", "loading-spinner": "eaec70f7db4a63ef__loading-spinner" };
   var ITEM_DESCRIPTION_DIRECT_CHILD2 = /* @__PURE__ */ Symbol();
-  var ItemDescription2 = (0, import_element117.forwardRef)(function UnforwardedItemDescription(props, ref) {
+  var ItemDescription2 = (0, import_element116.forwardRef)(function UnforwardedItemDescription(props, ref) {
     const { className, validationToken, ...restProps } = props;
     if (validationToken !== ITEM_DESCRIPTION_DIRECT_CHILD2) {
       throw new Error(
@@ -60242,7 +60082,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/select/item-label.mjs
-  var import_element118 = __toESM(require_element(), 1);
+  var import_element117 = __toESM(require_element(), 1);
   var import_jsx_runtime286 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE60 = "data-wp-hash";
   function getRuntime60() {
@@ -60328,7 +60168,7 @@ var wp;
     registerStyle60("7ad1c0f17c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.db3b5361087077bf__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._55f74d412c3e00e8__is-width-anchor{width:var(--anchor-width)}&._90e0b62205351f85__is-width-content{width:auto}&._30ba87899c0b11ce__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._402d4db0488da324__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._34ead52b2d60b21d__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&._3fec17b6dc9029c3__is-width-available{width:var(--available-width)}}._89cf8b0bb3319c7e__is-align-item-with-trigger[data-side=none] .db3b5361087077bf__popup{max-height:none}._66636b371582ead4__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.b6aeb640498fae5d__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._325f1b7764907c29__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._597ea43c6bec63d8__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._5865110cf5678449__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._597ea43c6bec63d8__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._09c9c50e605390ff__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._6361da5eb54e618d__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}._88cf016d20b4f2ef__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.c466e5465a76d4f6__item-layout{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);&:has(>.b6aeb640498fae5d__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}}.b9c803da5aae76d5__item{user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&._8931f3eb02e2e0ad__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._494b2a9f2e72b67f__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}.b6aeb640498fae5d__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);justify-content:center;pointer-events:none;width:var(--wpds-dimension-size-2xs,16px)}._494b2a9f2e72b67f__item-indicator-icon{translate:0 1px}.b40c7d58965ce4a5__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._3c629930ceb193c7__item-text{display:flex;flex-direction:column;min-width:0}._5c4aad98ed7a8382__item-label{--_gcd-heading-color:currentColor;min-width:0}.deb952050541c0e4__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.b9c803da5aae76d5__item[data-disabled] .deb952050541c0e4__item-description,.b9c803da5aae76d5__item[data-highlighted]:not([data-disabled]) .deb952050541c0e4__item-description{--_gcd-heading-color:currentColor;color:inherit}._5f8e4a2a04ecdade__loading-indicator{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}.c1bf7c14e9600f0a__status{grid-area:status;&:has(._5f8e4a2a04ecdade__loading-indicator){padding-block:var(--wp-ui-popup-padding)}}._0850de87108c9441__empty:not(:empty){grid-area:main}._0850de87108c9441__empty:not(:empty),.c1bf7c14e9600f0a__status:not(:empty):not(:has([data-visually-hidden],._5f8e4a2a04ecdade__loading-indicator)){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}@layer compositions{.eaec70f7db4a63ef__loading-spinner{height:var(--wpds-dimension-size-3xs,12px);width:var(--wpds-dimension-size-3xs,12px)}}}');
   }
   var item_popup_default5 = { "popup": "db3b5361087077bf__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_55f74d412c3e00e8__is-width-anchor", "is-width-content": "_90e0b62205351f85__is-width-content", "is-width-sm": "_30ba87899c0b11ce__is-width-sm", "is-width-md": "_402d4db0488da324__is-width-md", "is-width-lg": "_34ead52b2d60b21d__is-width-lg", "is-width-available": "_3fec17b6dc9029c3__is-width-available", "is-align-item-with-trigger": "_89cf8b0bb3319c7e__is-align-item-with-trigger", "list-chrome": "_66636b371582ead4__list-chrome", "item-icon": "b6aeb640498fae5d__item-icon", "list": "_325f1b7764907c29__list _66636b371582ead4__list-chrome", "list-scrollable-container": "_597ea43c6bec63d8__list-scrollable-container", "list-footer": "_5865110cf5678449__list-footer", "group": "_09c9c50e605390ff__group", "group-label": "_6361da5eb54e618d__group-label", "separator": "_88cf016d20b4f2ef__separator", "item-layout": "c466e5465a76d4f6__item-layout", "item": "b9c803da5aae76d5__item c466e5465a76d4f6__item-layout", "is-size-small": "_8931f3eb02e2e0ad__is-size-small", "item-indicator-icon": "_494b2a9f2e72b67f__item-indicator-icon", "item-content": "b40c7d58965ce4a5__item-content", "item-text": "_3c629930ceb193c7__item-text", "item-label": "_5c4aad98ed7a8382__item-label", "item-description": "deb952050541c0e4__item-description", "loading-indicator": "_5f8e4a2a04ecdade__loading-indicator c466e5465a76d4f6__item-layout", "status": "c1bf7c14e9600f0a__status", "empty": "_0850de87108c9441__empty", "loading-spinner": "eaec70f7db4a63ef__loading-spinner" };
-  var ItemLabel2 = (0, import_element118.forwardRef)(
+  var ItemLabel2 = (0, import_element117.forwardRef)(
     function UnforwardedItemLabel({ children, className, render: render4, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime286.jsx)(
         Text,
@@ -60444,7 +60284,7 @@ var wp;
     descriptionValidationToken: ITEM_DESCRIPTION_DIRECT_CHILD2,
     validationMessage: "Select.ItemLabel must be the first direct child of every select item, followed only by Select.ItemDescription components."
   };
-  var Item4 = (0, import_element119.forwardRef)(
+  var Item4 = (0, import_element118.forwardRef)(
     function UnforwardedItem2({
       className,
       value,
@@ -60495,12 +60335,12 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/select/popup.mjs
-  var import_element122 = __toESM(require_element(), 1);
+  var import_element121 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/primitives/select/portal.mjs
-  var import_element120 = __toESM(require_element(), 1);
+  var import_element119 = __toESM(require_element(), 1);
   var import_jsx_runtime288 = __toESM(require_jsx_runtime(), 1);
-  var Portal3 = (0, import_element120.forwardRef)(function SelectPortal3({ container, ...restProps }, ref) {
+  var Portal3 = (0, import_element119.forwardRef)(function SelectPortal3({ container, ...restProps }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime288.jsx)(
       index_parts_exports7.Portal,
       {
@@ -60512,7 +60352,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/primitives/select/positioner.mjs
-  var import_element121 = __toESM(require_element(), 1);
+  var import_element120 = __toESM(require_element(), 1);
   var import_jsx_runtime289 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE62 = "data-wp-hash";
   function getRuntime62() {
@@ -60606,7 +60446,7 @@ var wp;
     registerStyle62("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
   }
   var style_default47 = { "positioner": "cc0f09fba19eb669__positioner", "list": "_3a3c25e09f4fd1ec__list" };
-  var Positioner3 = (0, import_element121.forwardRef)(
+  var Positioner3 = (0, import_element120.forwardRef)(
     function SelectPositioner3({ className, alignItemWithTrigger = true, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime289.jsx)(
         index_parts_exports7.Positioner,
@@ -60716,7 +60556,7 @@ var wp;
     registerStyle63("656946f66b", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.cc0f09fba19eb669__positioner{z-index:var(--wp-ui-select-z-index,initial)}._3a3c25e09f4fd1ec__list{display:block;min-block-size:0;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}}}");
   }
   var style_default48 = { "positioner": "cc0f09fba19eb669__positioner", "list": "_3a3c25e09f4fd1ec__list" };
-  var Popup3 = (0, import_element122.forwardRef)(
+  var Popup3 = (0, import_element121.forwardRef)(
     function UnforwardedPopup({ className, portal, positioner, width, children, ...restProps }, ref) {
       const popupContent = /* @__PURE__ */ (0, import_jsx_runtime290.jsx)(
         index_parts_exports7.Popup,
@@ -60756,7 +60596,7 @@ var wp;
   }
 
   // packages/ui/build-module/form/primitives/select/separator.mjs
-  var import_element123 = __toESM(require_element(), 1);
+  var import_element122 = __toESM(require_element(), 1);
   var import_jsx_runtime292 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE64 = "data-wp-hash";
   function getRuntime64() {
@@ -60842,7 +60682,7 @@ var wp;
     registerStyle64("7ad1c0f17c", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.db3b5361087077bf__popup{--wp-ui-popup-padding:var(--wpds-dimension-padding-xs,4px);--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);display:grid;grid-template-areas:"header" "status" "main";grid-template-rows:auto auto minmax(0,1fr);max-height:min(var(--available-height),480px,60dvh);max-width:var(--available-width);min-width:var(--anchor-width);&._55f74d412c3e00e8__is-width-anchor{width:var(--anchor-width)}&._90e0b62205351f85__is-width-content{width:auto}&._30ba87899c0b11ce__is-width-sm{width:min(var(--available-width),var(--wpds-dimension-surface-width-sm,320px))}&._402d4db0488da324__is-width-md{width:min(var(--available-width),var(--wpds-dimension-surface-width-md,400px))}&._34ead52b2d60b21d__is-width-lg{width:min(var(--available-width),var(--wpds-dimension-surface-width-lg,560px))}&._3fec17b6dc9029c3__is-width-available{width:var(--available-width)}}._89cf8b0bb3319c7e__is-align-item-with-trigger[data-side=none] .db3b5361087077bf__popup{max-height:none}._66636b371582ead4__list-chrome{--_wp-ui-popup-selection-offset:0px;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);grid-area:main;line-height:var(--wpds-typography-line-height-sm,20px);&:has(.b6aeb640498fae5d__item-icon){--_wp-ui-popup-selection-offset:calc(var(--wpds-dimension-size-2xs, 16px) + var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-padding-xs, 4px))}}._325f1b7764907c29__list{display:grid;grid-template-areas:"scrollable" "footer";grid-template-rows:minmax(0,1fr) auto}._597ea43c6bec63d8__list-scrollable-container{grid-area:scrollable;overflow-block:auto;overscroll-behavior:contain;scroll-padding-block:var(--wp-ui-popup-padding);&:not(:empty){padding-block:var(--wp-ui-popup-padding)}}._5865110cf5678449__list-footer{grid-area:footer;padding-block:var(--wp-ui-popup-padding);._597ea43c6bec63d8__list-scrollable-container:not(:empty)+&{border-block-start:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}._09c9c50e605390ff__group:not(:first-child){margin-block-start:var(--wpds-dimension-gap-sm,8px)}._6361da5eb54e618d__group-label{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;min-height:var(--wpds-dimension-size-sm,24px);padding-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));padding-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset))}._88cf016d20b4f2ef__separator{background-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);height:var(--wpds-border-width-xs,1px);margin-block:var(--wpds-dimension-gap-xs,4px);margin-inline-end:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px));margin-inline-start:calc(var(--wp-ui-popup-padding) + var(--wpds-dimension-padding-sm, 8px) + var(--_wp-ui-popup-selection-offset));@media (forced-colors:active){background-color:CanvasText}}.c466e5465a76d4f6__item-layout{--wp-ui-popup-item-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:var(--wpds-dimension-padding-xs,4px);align-items:center;border-radius:var(--wpds-border-radius-sm,2px);display:flex;gap:var(--wpds-dimension-gap-xs,4px);justify-content:flex-start;margin-inline:var(--wp-ui-popup-padding);min-height:var(--wp-ui-popup-item-height);min-width:0;overflow-wrap:anywhere;padding-block:var(--wp-ui-popup-item-padding-block);padding-inline:var(--wp-ui-popup-item-padding-inline);&:has(>.b6aeb640498fae5d__item-icon){align-content:center;align-items:start;display:grid;grid-template-columns:auto minmax(0,1fr);padding-inline-start:calc(var(--wp-ui-popup-item-padding-inline) - var(--wpds-dimension-padding-xs, 4px))}}.b9c803da5aae76d5__item{user-select:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&._8931f3eb02e2e0ad__is-size-small{--wp-ui-popup-item-height:var(--wpds-dimension-size-sm,24px);--wp-ui-popup-item-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-popup-item-padding-block:2px}&:not([data-selected]){._494b2a9f2e72b67f__item-indicator-icon{opacity:0}}&[data-highlighted]:not([data-disabled]){background-color:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));color:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);outline:none;@media (forced-colors:active){background-color:Highlight;color:HighlightText;forced-color-adjust:none}}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);&:focus-visible{--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:0}@media (forced-colors:active){color:GrayText}}}.b6aeb640498fae5d__item-icon{align-items:center;display:flex;height:var(--wpds-typography-line-height-sm,20px);justify-content:center;pointer-events:none;width:var(--wpds-dimension-size-2xs,16px)}._494b2a9f2e72b67f__item-indicator-icon{translate:0 1px}.b40c7d58965ce4a5__item-content{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);min-width:0}._3c629930ceb193c7__item-text{display:flex;flex-direction:column;min-width:0}._5c4aad98ed7a8382__item-label{--_gcd-heading-color:currentColor;min-width:0}.deb952050541c0e4__item-description{color:var(--wpds-color-foreground-content-neutral-weak,#707070)}.b9c803da5aae76d5__item[data-disabled] .deb952050541c0e4__item-description,.b9c803da5aae76d5__item[data-highlighted]:not([data-disabled]) .deb952050541c0e4__item-description{--_gcd-heading-color:currentColor;color:inherit}._5f8e4a2a04ecdade__loading-indicator{color:var(--wpds-color-foreground-content-neutral-weak,#707070);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px)}.c1bf7c14e9600f0a__status{grid-area:status;&:has(._5f8e4a2a04ecdade__loading-indicator){padding-block:var(--wp-ui-popup-padding)}}._0850de87108c9441__empty:not(:empty){grid-area:main}._0850de87108c9441__empty:not(:empty),.c1bf7c14e9600f0a__status:not(:empty):not(:has([data-visually-hidden],._5f8e4a2a04ecdade__loading-indicator)){--wp-ui-popup-empty-min-height:var(--wpds-dimension-size-md,32px);--wp-ui-popup-empty-padding-inline:var(--wpds-dimension-padding-md,12px);align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#707070);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wp-ui-popup-empty-min-height);padding-inline:var(--wp-ui-popup-empty-padding-inline)}}@layer compositions{.eaec70f7db4a63ef__loading-spinner{height:var(--wpds-dimension-size-3xs,12px);width:var(--wpds-dimension-size-3xs,12px)}}}');
   }
   var item_popup_default9 = { "popup": "db3b5361087077bf__popup _069972d5e326bada__dropdown-motion", "is-width-anchor": "_55f74d412c3e00e8__is-width-anchor", "is-width-content": "_90e0b62205351f85__is-width-content", "is-width-sm": "_30ba87899c0b11ce__is-width-sm", "is-width-md": "_402d4db0488da324__is-width-md", "is-width-lg": "_34ead52b2d60b21d__is-width-lg", "is-width-available": "_3fec17b6dc9029c3__is-width-available", "is-align-item-with-trigger": "_89cf8b0bb3319c7e__is-align-item-with-trigger", "list-chrome": "_66636b371582ead4__list-chrome", "item-icon": "b6aeb640498fae5d__item-icon", "list": "_325f1b7764907c29__list _66636b371582ead4__list-chrome", "list-scrollable-container": "_597ea43c6bec63d8__list-scrollable-container", "list-footer": "_5865110cf5678449__list-footer", "group": "_09c9c50e605390ff__group", "group-label": "_6361da5eb54e618d__group-label", "separator": "_88cf016d20b4f2ef__separator", "item-layout": "c466e5465a76d4f6__item-layout", "item": "b9c803da5aae76d5__item c466e5465a76d4f6__item-layout", "is-size-small": "_8931f3eb02e2e0ad__is-size-small", "item-indicator-icon": "_494b2a9f2e72b67f__item-indicator-icon", "item-content": "b40c7d58965ce4a5__item-content", "item-text": "_3c629930ceb193c7__item-text", "item-label": "_5c4aad98ed7a8382__item-label", "item-description": "deb952050541c0e4__item-description", "loading-indicator": "_5f8e4a2a04ecdade__loading-indicator c466e5465a76d4f6__item-layout", "status": "c1bf7c14e9600f0a__status", "empty": "_0850de87108c9441__empty", "loading-spinner": "eaec70f7db4a63ef__loading-spinner" };
-  var Separator4 = (0, import_element123.forwardRef)(
+  var Separator4 = (0, import_element122.forwardRef)(
     function SelectSeparator2({
       className,
       orientation: _orientation,
@@ -60860,7 +60700,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/select/trigger.mjs
-  var import_element124 = __toESM(require_element(), 1);
+  var import_element123 = __toESM(require_element(), 1);
   var import_i18n28 = __toESM(require_i18n(), 1);
   var import_jsx_runtime293 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE65 = "data-wp-hash";
@@ -60951,7 +60791,7 @@ var wp;
     registerStyle65("56b0509c70", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.f19aaaa579fccf54__trigger-wrapper{&.bfac6d240be543bd__is-minimal{width:fit-content}}.e1f5987e5bdc9112__trigger{align-items:center;background-color:transparent;border:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:inherit;font-size:inherit;gap:var(--wpds-dimension-gap-xs,4px);justify-content:space-between;line-height:1.4;padding-block:4px;padding-inline-end:calc(var(--wp-ui-input-layout-padding-inline) - 4px);padding-inline-start:var(--wp-ui-input-layout-padding-inline);text-align:start;user-select:none;width:100%;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}&.bfac6d240be543bd__is-minimal{width:auto}&:focus{outline:none}&[data-disabled]{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}}.ba63264311039401__trigger-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;.e1f5987e5bdc9112__trigger[data-placeholder]:not([data-disabled]) &{color:var(--wpds-color-foreground-interactive-neutral-weak,#707070)}}.cb34834e4f533240__trigger-caret{flex:0 0 auto}}}");
   }
   var select_trigger_default = { "trigger-wrapper": "f19aaaa579fccf54__trigger-wrapper", "is-minimal": "bfac6d240be543bd__is-minimal", "trigger": "e1f5987e5bdc9112__trigger", "trigger-value": "ba63264311039401__trigger-value", "trigger-caret": "cb34834e4f533240__trigger-caret" };
-  var Trigger4 = (0, import_element124.forwardRef)(
+  var Trigger4 = (0, import_element123.forwardRef)(
     function UnforwardedTrigger({
       className,
       size: size4,
@@ -61007,7 +60847,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/switch/switch.mjs
-  var import_element125 = __toESM(require_element(), 1);
+  var import_element124 = __toESM(require_element(), 1);
   var import_jsx_runtime294 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE66 = "data-wp-hash";
   function getRuntime66() {
@@ -61097,7 +60937,7 @@ var wp;
     registerStyle66("802808f1bc", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._926035ee40d473a6__root{--_wp-ui-switch-height:var(--wpds-dimension-size-2xs,16px);--_wp-ui-switch-track-inset:var(--wpds-border-width-xs,1px);appearance:none;background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:var(--_wp-ui-switch-track-inset) solid var(--wpds-color-stroke-interactive-neutral,#8d8d8d);border-radius:999px;display:inline-block;flex-shrink:0;height:var(--_wp-ui-switch-height);padding:var(--_wp-ui-switch-track-inset);width:calc(var(--_wp-ui-switch-height)*2)}._926035ee40d473a6__root:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}._926035ee40d473a6__root:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}@media not (prefers-reduced-motion){._926035ee40d473a6__root:not(:hover):not(:active){transition:background-color var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),border-color var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}._926035ee40d473a6__root:hover:not([data-disabled],[data-checked]),[data-highlighted] ._926035ee40d473a6__root:not([data-checked]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6e6e6e)}._926035ee40d473a6__root[data-checked]{background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));border-color:transparent}@media (forced-colors:active){._926035ee40d473a6__root[data-checked]{background-color:Highlight}}._926035ee40d473a6__root[data-checked][data-disabled]{background-color:var(--wpds-color-background-interactive-brand-strong-disabled,#e6e6e6)}@media (forced-colors:active){._926035ee40d473a6__root[data-checked][data-disabled]{background-color:GrayText}}._926035ee40d473a6__root[data-disabled]:not([data-checked]){background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);border-color:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}@media (forced-colors:active){._926035ee40d473a6__root[data-disabled]:not([data-checked]){border-color:GrayText}}.ec0f255a3819a35b__thumb{--_wp-ui-elevation-xs:0 1px 1px rgba(0,0,0,.03),0 1px 2px rgba(0,0,0,.02),0 3px 3px rgba(0,0,0,.02),0 4px 4px rgba(0,0,0,.01);aspect-ratio:1;background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);border-radius:50%;box-shadow:var(--_wp-ui-elevation-xs);display:block;height:calc(var(--_wp-ui-switch-height) - var(--_wp-ui-switch-track-inset)*4)}@media not (prefers-reduced-motion){.ec0f255a3819a35b__thumb{transition:background-color var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1)),transform var(--wpds-motion-duration-md,.2s) var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1))}}@media (forced-colors:active){.ec0f255a3819a35b__thumb{background-color:ButtonText;transition:none}}.ec0f255a3819a35b__thumb[data-checked]{background-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);transform:translateX(var(--_wp-ui-switch-height))}@media (forced-colors:active){.ec0f255a3819a35b__thumb[data-checked]{background-color:HighlightText}}.ec0f255a3819a35b__thumb[data-checked]:dir(rtl){transform:translateX(calc(var(--_wp-ui-switch-height)*-1))}.ec0f255a3819a35b__thumb[data-checked][data-disabled]{background-color:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8d8d8d)}@media (forced-colors:active){.ec0f255a3819a35b__thumb[data-checked][data-disabled]{background-color:Canvas}}.ec0f255a3819a35b__thumb[data-disabled]:not([data-checked]){background-color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d)}@media (forced-colors:active){.ec0f255a3819a35b__thumb[data-disabled]:not([data-checked]){background-color:GrayText}}}}");
   }
   var style_module_default4 = { "root": "_926035ee40d473a6__root", "thumb": "ec0f255a3819a35b__thumb" };
-  var Switch = (0, import_element125.forwardRef)(
+  var Switch = (0, import_element124.forwardRef)(
     function UnforwardedSwitch({ className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime294.jsx)(
         index_parts_exports8.Root,
@@ -61116,7 +60956,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/primitives/textarea/textarea.mjs
-  var import_element126 = __toESM(require_element(), 1);
+  var import_element125 = __toESM(require_element(), 1);
   var import_jsx_runtime295 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE67 = "data-wp-hash";
   function getRuntime67() {
@@ -61208,10 +61048,10 @@ var wp;
   var global_css_defense_default20 = { "button": "_78c10a0773e51a91__button", "input": "_5b33aa2d48624b4f__input", "textarea": "_980b3b4776ac8f81__textarea", "div": "_43e478b4279a076c__div", "p": "_698099e25b0fb1a6__p", "heading": "_326aee4184d261fd__heading", "a": "e9576240835601ba__a", "ol": "_3f05789653864a73__ol", "li": "_3c72ff72abe57859__li", "span": "_79d16267c15d9eb2__span" };
   var wrappedRender = (render4, restProps) => {
     return function textareaRender(props) {
-      return typeof render4 === "function" ? render4(mergeProps(props, restProps)) : (0, import_element126.cloneElement)(render4, mergeProps(props, restProps));
+      return typeof render4 === "function" ? render4(mergeProps(props, restProps)) : (0, import_element125.cloneElement)(render4, mergeProps(props, restProps));
     };
   };
-  var Textarea = (0, import_element126.forwardRef)(
+  var Textarea = (0, import_element125.forwardRef)(
     function UnforwardedTextarea({
       className,
       defaultValue: defaultValue2,
@@ -61250,7 +61090,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/input-control/input-control.mjs
-  var import_element127 = __toESM(require_element(), 1);
+  var import_element126 = __toESM(require_element(), 1);
   var import_jsx_runtime296 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE68 = "data-wp-hash";
   function getRuntime68() {
@@ -61336,7 +61176,7 @@ var wp;
     registerStyle68("1122fa5d0a", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{@supports (-webkit-hyphens:none) and (not (-moz-appearance:none)){.df5861c8fb684609__root input[type=date]:not([data-filled]):not(:focus),.df5861c8fb684609__root input[type=datetime-local]:not([data-filled]):not(:focus),.df5861c8fb684609__root input[type=time]:not([data-filled]):not(:focus){--_gcd-input-color:transparent;--_gcd-input-color-disabled:transparent;color:transparent;&:disabled::-webkit-datetime-edit-text{color:transparent}}}}}");
   }
   var style_default50 = { "root": "df5861c8fb684609__root" };
-  var InputControl = (0, import_element127.forwardRef)(
+  var InputControl = (0, import_element126.forwardRef)(
     function UnforwardedInputControl({
       className,
       label,
@@ -61355,7 +61195,7 @@ var wp;
   );
 
   // packages/ui/build-module/form/select-control/select-control.mjs
-  var import_element130 = __toESM(require_element(), 1);
+  var import_element129 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/form/select-control/dev-warnings.mjs
   var import_warning2 = __toESM(require_warning(), 1);
@@ -61368,25 +61208,25 @@ var wp;
   }
 
   // packages/ui/build-module/form/select-control/item.mjs
-  var import_element128 = __toESM(require_element(), 1);
+  var import_element127 = __toESM(require_element(), 1);
   var import_jsx_runtime297 = __toESM(require_jsx_runtime(), 1);
-  var Item5 = (0, import_element128.forwardRef)(
+  var Item5 = (0, import_element127.forwardRef)(
     function UnforwardedItem3(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime297.jsx)(select_exports.Item, { ref, ...props });
     }
   );
 
   // packages/ui/build-module/form/select-control/trigger.mjs
-  var import_element129 = __toESM(require_element(), 1);
+  var import_element128 = __toESM(require_element(), 1);
   var import_jsx_runtime298 = __toESM(require_jsx_runtime(), 1);
-  var Trigger5 = (0, import_element129.forwardRef)(function UnforwardedTrigger2(props, ref) {
+  var Trigger5 = (0, import_element128.forwardRef)(function UnforwardedTrigger2(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime298.jsx)(select_exports.Trigger, { ref, ...props });
   });
 
   // packages/ui/build-module/form/select-control/select-control.mjs
   var import_jsx_runtime299 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_TRIGGER = /* @__PURE__ */ (0, import_jsx_runtime299.jsx)(Trigger5, {});
-  var SelectControl = (0, import_element130.forwardRef)(function UnforwardedSelectControl({
+  var SelectControl = (0, import_element129.forwardRef)(function UnforwardedSelectControl({
     className,
     children,
     items,
@@ -61473,7 +61313,7 @@ var wp;
   });
 
   // packages/ui/build-module/form/switch-control/switch-control.mjs
-  var import_element131 = __toESM(require_element(), 1);
+  var import_element130 = __toESM(require_element(), 1);
   var import_jsx_runtime300 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE69 = "data-wp-hash";
   function getRuntime69() {
@@ -61563,8 +61403,8 @@ var wp;
   var TextContainer = ({
     isStack,
     ...restProps
-  }) => isStack ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(Stack, { direction: "column", gap: "xs", ...restProps }) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_element131.Fragment, { ...restProps });
-  var SwitchControl = (0, import_element131.forwardRef)(
+  }) => isStack ? /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(Stack, { direction: "column", gap: "xs", ...restProps }) : /* @__PURE__ */ (0, import_jsx_runtime300.jsx)(import_element130.Fragment, { ...restProps });
+  var SwitchControl = (0, import_element130.forwardRef)(
     function UnforwardedSwitchControl({
       label,
       description,
@@ -61610,9 +61450,9 @@ var wp;
   );
 
   // packages/ui/build-module/form/textarea-control/textarea-control.mjs
-  var import_element132 = __toESM(require_element(), 1);
+  var import_element131 = __toESM(require_element(), 1);
   var import_jsx_runtime301 = __toESM(require_jsx_runtime(), 1);
-  var TextareaControl = (0, import_element132.forwardRef)(function UnforwardedTextareaControl({
+  var TextareaControl = (0, import_element131.forwardRef)(function UnforwardedTextareaControl({
     className,
     label,
     description,
@@ -61629,11 +61469,11 @@ var wp;
   });
 
   // packages/ui/build-module/form/with-validation/validated-input-control/validated-input-control.mjs
-  var import_element133 = __toESM(require_element(), 1);
+  var import_element132 = __toESM(require_element(), 1);
   var import_compose15 = __toESM(require_compose(), 1);
   var import_jsx_runtime302 = __toESM(require_jsx_runtime(), 1);
-  var ValidatedInputControl = (0, import_element133.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
-    const validityTargetRef = (0, import_element133.useRef)(null);
+  var ValidatedInputControl = (0, import_element132.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+    const validityTargetRef = (0, import_element132.useRef)(null);
     const mergedRefs = (0, import_compose15.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime302.jsx)(
       ControlWithError,
@@ -61648,11 +61488,11 @@ var wp;
   });
 
   // packages/ui/build-module/form/with-validation/validated-textarea-control/validated-textarea-control.mjs
-  var import_element134 = __toESM(require_element(), 1);
+  var import_element133 = __toESM(require_element(), 1);
   var import_compose16 = __toESM(require_compose(), 1);
   var import_jsx_runtime303 = __toESM(require_jsx_runtime(), 1);
-  var ValidatedTextareaControl = (0, import_element134.forwardRef)(function UnforwardedValidatedTextareaControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
-    const validityTargetRef = (0, import_element134.useRef)(null);
+  var ValidatedTextareaControl = (0, import_element133.forwardRef)(function UnforwardedValidatedTextareaControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
+    const validityTargetRef = (0, import_element133.useRef)(null);
     const mergedRefs = (0, import_compose16.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime303.jsx)(
       ControlWithError,
@@ -61679,7 +61519,7 @@ var wp;
   });
 
   // packages/ui/build-module/notice/root.mjs
-  var import_element135 = __toESM(require_element(), 1);
+  var import_element134 = __toESM(require_element(), 1);
   var import_jsx_runtime304 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE70 = "data-wp-hash";
   function getRuntime70() {
@@ -61776,7 +61616,7 @@ var wp;
     success: published_default,
     error: error_default
   };
-  var Root10 = (0, import_element135.forwardRef)(function Notice({ intent = "neutral", children, icon, render: render4, ...restProps }, ref) {
+  var Root10 = (0, import_element134.forwardRef)(function Notice({ intent = "neutral", children, icon, render: render4, ...restProps }, ref) {
     const iconElement = icon === null ? null : icon ?? icons[intent];
     const mergedClassName = clsx_default(
       style_default52.notice,
@@ -61808,7 +61648,7 @@ var wp;
   });
 
   // packages/ui/build-module/notice/title.mjs
-  var import_element136 = __toESM(require_element(), 1);
+  var import_element135 = __toESM(require_element(), 1);
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE71 = "data-wp-hash";
   function getRuntime71() {
@@ -61894,7 +61734,7 @@ var wp;
     registerStyle71("e57e872b6c", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._173ad03087dbb509__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;isolation:isolate;padding:var(--wpds-dimension-padding-md,12px)}._86733bd626c7e048__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._6688caffadaf5a66__description{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._48b3142dec93ee87__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._173ad03087dbb509__notice:has(._6688caffadaf5a66__description) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}.adcfc74c7c481a8b__action-button{flex-shrink:0}.b0ce2ddf3e16f445__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._234d6ae581e5eb29__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._4e822398b0e00dd5__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}._1ef9a1d966bd5220__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}.e98dc9c1e2c0bf3b__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}._673065a55bda7056__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._6688caffadaf5a66__description{grid-column:1/3}}}@layer compositions{._6d6c0651ee903d00__title{--_gcd-heading-color:var(--wp-ui-notice-text-color);color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}.b0ce2ddf3e16f445__action-link{margin-block:auto}._234d6ae581e5eb29__close-icon,.adcfc74c7c481a8b__action-button,.b0ce2ddf3e16f445__action-link{mix-blend-mode:luminosity;@media (forced-colors:active){mix-blend-mode:normal}}}}");
   }
   var style_default53 = { "notice": "_173ad03087dbb509__notice", "icon": "_86733bd626c7e048__icon", "description": "_6688caffadaf5a66__description", "actions": "_48b3142dec93ee87__actions", "title": "_6d6c0651ee903d00__title", "action-button": "adcfc74c7c481a8b__action-button", "action-link": "b0ce2ddf3e16f445__action-link", "close-icon": "_234d6ae581e5eb29__close-icon", "is-info": "_4e822398b0e00dd5__is-info", "is-warning": "_1ef9a1d966bd5220__is-warning", "is-success": "e98dc9c1e2c0bf3b__is-success", "is-error": "_673065a55bda7056__is-error" };
-  var Title2 = (0, import_element136.forwardRef)(
+  var Title2 = (0, import_element135.forwardRef)(
     function NoticeTitle({ className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(
         Text,
@@ -61909,7 +61749,7 @@ var wp;
   );
 
   // packages/ui/build-module/notice/description.mjs
-  var import_element137 = __toESM(require_element(), 1);
+  var import_element136 = __toESM(require_element(), 1);
   var import_jsx_runtime306 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE72 = "data-wp-hash";
   function getRuntime72() {
@@ -61995,7 +61835,7 @@ var wp;
     registerStyle72("e57e872b6c", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._173ad03087dbb509__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;isolation:isolate;padding:var(--wpds-dimension-padding-md,12px)}._86733bd626c7e048__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._6688caffadaf5a66__description{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._48b3142dec93ee87__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._173ad03087dbb509__notice:has(._6688caffadaf5a66__description) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}.adcfc74c7c481a8b__action-button{flex-shrink:0}.b0ce2ddf3e16f445__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._234d6ae581e5eb29__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._4e822398b0e00dd5__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}._1ef9a1d966bd5220__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}.e98dc9c1e2c0bf3b__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}._673065a55bda7056__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._6688caffadaf5a66__description{grid-column:1/3}}}@layer compositions{._6d6c0651ee903d00__title{--_gcd-heading-color:var(--wp-ui-notice-text-color);color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}.b0ce2ddf3e16f445__action-link{margin-block:auto}._234d6ae581e5eb29__close-icon,.adcfc74c7c481a8b__action-button,.b0ce2ddf3e16f445__action-link{mix-blend-mode:luminosity;@media (forced-colors:active){mix-blend-mode:normal}}}}");
   }
   var style_default54 = { "notice": "_173ad03087dbb509__notice", "icon": "_86733bd626c7e048__icon", "description": "_6688caffadaf5a66__description", "actions": "_48b3142dec93ee87__actions", "title": "_6d6c0651ee903d00__title", "action-button": "adcfc74c7c481a8b__action-button", "action-link": "b0ce2ddf3e16f445__action-link", "close-icon": "_234d6ae581e5eb29__close-icon", "is-info": "_4e822398b0e00dd5__is-info", "is-warning": "_1ef9a1d966bd5220__is-warning", "is-success": "e98dc9c1e2c0bf3b__is-success", "is-error": "_673065a55bda7056__is-error" };
-  var Description2 = (0, import_element137.forwardRef)(
+  var Description2 = (0, import_element136.forwardRef)(
     function NoticeDescription({ className, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime306.jsx)(
         Text,
@@ -62010,7 +61850,7 @@ var wp;
   );
 
   // packages/ui/build-module/notice/actions.mjs
-  var import_element138 = __toESM(require_element(), 1);
+  var import_element137 = __toESM(require_element(), 1);
   var STYLE_HASH_ATTRIBUTE73 = "data-wp-hash";
   function getRuntime73() {
     const globalScope = globalThis;
@@ -62095,7 +61935,7 @@ var wp;
     registerStyle73("e57e872b6c", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._173ad03087dbb509__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;isolation:isolate;padding:var(--wpds-dimension-padding-md,12px)}._86733bd626c7e048__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._6688caffadaf5a66__description{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._48b3142dec93ee87__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._173ad03087dbb509__notice:has(._6688caffadaf5a66__description) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}.adcfc74c7c481a8b__action-button{flex-shrink:0}.b0ce2ddf3e16f445__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._234d6ae581e5eb29__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._4e822398b0e00dd5__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}._1ef9a1d966bd5220__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}.e98dc9c1e2c0bf3b__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}._673065a55bda7056__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._6688caffadaf5a66__description{grid-column:1/3}}}@layer compositions{._6d6c0651ee903d00__title{--_gcd-heading-color:var(--wp-ui-notice-text-color);color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}.b0ce2ddf3e16f445__action-link{margin-block:auto}._234d6ae581e5eb29__close-icon,.adcfc74c7c481a8b__action-button,.b0ce2ddf3e16f445__action-link{mix-blend-mode:luminosity;@media (forced-colors:active){mix-blend-mode:normal}}}}");
   }
   var style_default55 = { "notice": "_173ad03087dbb509__notice", "icon": "_86733bd626c7e048__icon", "description": "_6688caffadaf5a66__description", "actions": "_48b3142dec93ee87__actions", "title": "_6d6c0651ee903d00__title", "action-button": "adcfc74c7c481a8b__action-button", "action-link": "b0ce2ddf3e16f445__action-link", "close-icon": "_234d6ae581e5eb29__close-icon", "is-info": "_4e822398b0e00dd5__is-info", "is-warning": "_1ef9a1d966bd5220__is-warning", "is-success": "e98dc9c1e2c0bf3b__is-success", "is-error": "_673065a55bda7056__is-error" };
-  var Actions = (0, import_element138.forwardRef)(
+  var Actions = (0, import_element137.forwardRef)(
     function NoticeActions({ render: render4, ...props }, ref) {
       const element = useRender({
         defaultTagName: "div",
@@ -62113,7 +61953,7 @@ var wp;
   );
 
   // packages/ui/build-module/notice/close-icon-button.mjs
-  var import_element139 = __toESM(require_element(), 1);
+  var import_element138 = __toESM(require_element(), 1);
   var import_i18n29 = __toESM(require_i18n(), 1);
   var import_jsx_runtime307 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE74 = "data-wp-hash";
@@ -62200,7 +62040,7 @@ var wp;
     registerStyle74("e57e872b6c", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._173ad03087dbb509__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;isolation:isolate;padding:var(--wpds-dimension-padding-md,12px)}._86733bd626c7e048__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._6688caffadaf5a66__description{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._48b3142dec93ee87__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._173ad03087dbb509__notice:has(._6688caffadaf5a66__description) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}.adcfc74c7c481a8b__action-button{flex-shrink:0}.b0ce2ddf3e16f445__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._234d6ae581e5eb29__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._4e822398b0e00dd5__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}._1ef9a1d966bd5220__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}.e98dc9c1e2c0bf3b__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}._673065a55bda7056__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._6688caffadaf5a66__description{grid-column:1/3}}}@layer compositions{._6d6c0651ee903d00__title{--_gcd-heading-color:var(--wp-ui-notice-text-color);color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}.b0ce2ddf3e16f445__action-link{margin-block:auto}._234d6ae581e5eb29__close-icon,.adcfc74c7c481a8b__action-button,.b0ce2ddf3e16f445__action-link{mix-blend-mode:luminosity;@media (forced-colors:active){mix-blend-mode:normal}}}}");
   }
   var style_default56 = { "notice": "_173ad03087dbb509__notice", "icon": "_86733bd626c7e048__icon", "description": "_6688caffadaf5a66__description", "actions": "_48b3142dec93ee87__actions", "title": "_6d6c0651ee903d00__title", "action-button": "adcfc74c7c481a8b__action-button", "action-link": "b0ce2ddf3e16f445__action-link", "close-icon": "_234d6ae581e5eb29__close-icon", "is-info": "_4e822398b0e00dd5__is-info", "is-warning": "_1ef9a1d966bd5220__is-warning", "is-success": "e98dc9c1e2c0bf3b__is-success", "is-error": "_673065a55bda7056__is-error" };
-  var CloseIconButton = (0, import_element139.forwardRef)(function NoticeCloseIconButton({ className, icon = close_small_default, label = (0, import_i18n29.__)("Dismiss"), ...props }, ref) {
+  var CloseIconButton = (0, import_element138.forwardRef)(function NoticeCloseIconButton({ className, icon = close_small_default, label = (0, import_i18n29.__)("Dismiss"), ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime307.jsx)(
       IconButton,
       {
@@ -62217,7 +62057,7 @@ var wp;
   });
 
   // packages/ui/build-module/notice/action-button.mjs
-  var import_element140 = __toESM(require_element(), 1);
+  var import_element139 = __toESM(require_element(), 1);
   var import_jsx_runtime308 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE75 = "data-wp-hash";
   function getRuntime75() {
@@ -62303,7 +62143,7 @@ var wp;
     registerStyle75("e57e872b6c", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._173ad03087dbb509__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;isolation:isolate;padding:var(--wpds-dimension-padding-md,12px)}._86733bd626c7e048__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._6688caffadaf5a66__description{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._48b3142dec93ee87__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._173ad03087dbb509__notice:has(._6688caffadaf5a66__description) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}.adcfc74c7c481a8b__action-button{flex-shrink:0}.b0ce2ddf3e16f445__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._234d6ae581e5eb29__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._4e822398b0e00dd5__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}._1ef9a1d966bd5220__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}.e98dc9c1e2c0bf3b__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}._673065a55bda7056__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._6688caffadaf5a66__description{grid-column:1/3}}}@layer compositions{._6d6c0651ee903d00__title{--_gcd-heading-color:var(--wp-ui-notice-text-color);color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}.b0ce2ddf3e16f445__action-link{margin-block:auto}._234d6ae581e5eb29__close-icon,.adcfc74c7c481a8b__action-button,.b0ce2ddf3e16f445__action-link{mix-blend-mode:luminosity;@media (forced-colors:active){mix-blend-mode:normal}}}}");
   }
   var style_default57 = { "notice": "_173ad03087dbb509__notice", "icon": "_86733bd626c7e048__icon", "description": "_6688caffadaf5a66__description", "actions": "_48b3142dec93ee87__actions", "title": "_6d6c0651ee903d00__title", "action-button": "adcfc74c7c481a8b__action-button", "action-link": "b0ce2ddf3e16f445__action-link", "close-icon": "_234d6ae581e5eb29__close-icon", "is-info": "_4e822398b0e00dd5__is-info", "is-warning": "_1ef9a1d966bd5220__is-warning", "is-success": "e98dc9c1e2c0bf3b__is-success", "is-error": "_673065a55bda7056__is-error" };
-  var ActionButton = (0, import_element140.forwardRef)(
+  var ActionButton = (0, import_element139.forwardRef)(
     function NoticeActionButton({ className, loading, loadingAnnouncement, variant, ...props }, ref) {
       const loadingProps = loading !== void 0 ? { loading, loadingAnnouncement: loadingAnnouncement ?? "" } : {};
       return /* @__PURE__ */ (0, import_jsx_runtime308.jsx)(
@@ -62326,7 +62166,7 @@ var wp;
   );
 
   // packages/ui/build-module/notice/action-link.mjs
-  var import_element141 = __toESM(require_element(), 1);
+  var import_element140 = __toESM(require_element(), 1);
   var import_jsx_runtime309 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE76 = "data-wp-hash";
   function getRuntime76() {
@@ -62412,7 +62252,7 @@ var wp;
     registerStyle76("e57e872b6c", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._173ad03087dbb509__notice{--icon-height:var(--wpds-dimension-size-sm,24px);--text-vertical-padding:calc((var(--icon-height) - var(--wpds-typography-line-height-sm, 20px))/2);--wp-ui-notice-background-color:var(--wpds-color-background-surface-neutral-weak,#f4f4f4);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-neutral,#dbdbdb);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);align-items:start;background-color:var(--wp-ui-notice-background-color);border:1px solid var(--wp-ui-notice-border-color);border-radius:var(--wpds-border-radius-lg,8px);container-type:inline-size;display:grid;grid-template-columns:auto 1fr auto;isolation:isolate;padding:var(--wpds-dimension-padding-md,12px)}._86733bd626c7e048__icon{color:var(--wp-ui-notice-decorative-icon-color);grid-column:1;grid-row:1;margin-inline-end:var(--wpds-dimension-gap-xs,4px)}._6688caffadaf5a66__description{color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}._48b3142dec93ee87__actions{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-md,12px);grid-column:2}._173ad03087dbb509__notice:has(._6688caffadaf5a66__description) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions{margin-block-start:var(--wpds-dimension-gap-sm,8px)}.adcfc74c7c481a8b__action-button{flex-shrink:0}.b0ce2ddf3e16f445__action-link{flex-shrink:0;&:not(:first-child){margin-inline-start:var(--wpds-dimension-gap-xs,4px)}&:not(:last-child){margin-inline-end:var(--wpds-dimension-gap-xs,4px)}}._234d6ae581e5eb29__close-icon{grid-column:3;grid-row:1;margin-inline-start:var(--wpds-dimension-gap-xs,4px)}._4e822398b0e00dd5__is-info{--wp-ui-notice-background-color:var(--wpds-color-background-surface-info-weak,#f3f9ff);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-info,#adc6e2);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-info,#001b4f);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-info-weak,#006bd7)}._1ef9a1d966bd5220__is-warning{--wp-ui-notice-background-color:var(--wpds-color-background-surface-warning-weak,#fff7e1);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-warning,#e1bd7c);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-warning,#2e1900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-warning-weak,#936300)}.e98dc9c1e2c0bf3b__is-success{--wp-ui-notice-background-color:var(--wpds-color-background-surface-success-weak,#ebffed);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-success,#92d39d);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-success,#002900);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-success-weak,#008030)}._673065a55bda7056__is-error{--wp-ui-notice-background-color:var(--wpds-color-background-surface-error-weak,#fff6f5);--wp-ui-notice-border-color:var(--wpds-color-stroke-surface-error,#e0afa7);--wp-ui-notice-text-color:var(--wpds-color-foreground-content-error,#470000);--wp-ui-notice-decorative-icon-color:var(--wpds-color-foreground-content-error-weak,#cc1818)}@container (max-width: 320px){._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._48b3142dec93ee87__actions,._173ad03087dbb509__notice:has(._6d6c0651ee903d00__title) ._6688caffadaf5a66__description{grid-column:1/3}}}@layer compositions{._6d6c0651ee903d00__title{--_gcd-heading-color:var(--wp-ui-notice-text-color);color:var(--wp-ui-notice-text-color);grid-column:2;padding-block:var(--text-vertical-padding)}.b0ce2ddf3e16f445__action-link{margin-block:auto}._234d6ae581e5eb29__close-icon,.adcfc74c7c481a8b__action-button,.b0ce2ddf3e16f445__action-link{mix-blend-mode:luminosity;@media (forced-colors:active){mix-blend-mode:normal}}}}");
   }
   var style_default58 = { "notice": "_173ad03087dbb509__notice", "icon": "_86733bd626c7e048__icon", "description": "_6688caffadaf5a66__description", "actions": "_48b3142dec93ee87__actions", "title": "_6d6c0651ee903d00__title", "action-button": "adcfc74c7c481a8b__action-button", "action-link": "b0ce2ddf3e16f445__action-link", "close-icon": "_234d6ae581e5eb29__close-icon", "is-info": "_4e822398b0e00dd5__is-info", "is-warning": "_1ef9a1d966bd5220__is-warning", "is-success": "e98dc9c1e2c0bf3b__is-success", "is-error": "_673065a55bda7056__is-error" };
-  var ActionLink = (0, import_element141.forwardRef)(
+  var ActionLink = (0, import_element140.forwardRef)(
     function NoticeActionLink({ className, render: render4, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime309.jsx)(
         Text,
@@ -62442,7 +62282,7 @@ var wp;
   });
 
   // packages/ui/build-module/popover/arrow.mjs
-  var import_element142 = __toESM(require_element(), 1);
+  var import_element141 = __toESM(require_element(), 1);
   var import_jsx_runtime310 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE77 = "data-wp-hash";
   function getRuntime77() {
@@ -62556,7 +62396,7 @@ var wp;
       }
     );
   }
-  var Arrow = (0, import_element142.forwardRef)(function PopoverArrow3({ children, className, ...props }, ref) {
+  var Arrow = (0, import_element141.forwardRef)(function PopoverArrow3({ children, className, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime310.jsx)(
       index_parts_exports6.Arrow,
       {
@@ -62569,9 +62409,9 @@ var wp;
   });
 
   // packages/ui/build-module/popover/close.mjs
-  var import_element143 = __toESM(require_element(), 1);
+  var import_element142 = __toESM(require_element(), 1);
   var import_jsx_runtime311 = __toESM(require_jsx_runtime(), 1);
-  var Close = (0, import_element143.forwardRef)(
+  var Close = (0, import_element142.forwardRef)(
     function PopoverClose3(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime311.jsx)(
         index_parts_exports6.Close,
@@ -62585,9 +62425,9 @@ var wp;
   );
 
   // packages/ui/build-module/popover/description.mjs
-  var import_element144 = __toESM(require_element(), 1);
+  var import_element143 = __toESM(require_element(), 1);
   var import_jsx_runtime312 = __toESM(require_jsx_runtime(), 1);
-  var Description3 = (0, import_element144.forwardRef)(
+  var Description3 = (0, import_element143.forwardRef)(
     function PopoverDescription3({ children, ...props }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime312.jsx)(
         Text,
@@ -62602,7 +62442,7 @@ var wp;
   );
 
   // packages/ui/build-module/popover/popup.mjs
-  var import_element147 = __toESM(require_element(), 1);
+  var import_element146 = __toESM(require_element(), 1);
   var import_compose17 = __toESM(require_compose(), 1);
 
   // packages/ui/build-module/popover/context.mjs
@@ -62611,9 +62451,9 @@ var wp;
   var PopoverValidationProvider = popoverTitleValidation.ValidationProvider;
 
   // packages/ui/build-module/popover/portal.mjs
-  var import_element145 = __toESM(require_element(), 1);
+  var import_element144 = __toESM(require_element(), 1);
   var import_jsx_runtime313 = __toESM(require_jsx_runtime(), 1);
-  var Portal4 = (0, import_element145.forwardRef)(
+  var Portal4 = (0, import_element144.forwardRef)(
     function PopoverPortal3({ container, ...restProps }, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime313.jsx)(
         index_parts_exports6.Portal,
@@ -62627,7 +62467,7 @@ var wp;
   );
 
   // packages/ui/build-module/popover/positioner.mjs
-  var import_element146 = __toESM(require_element(), 1);
+  var import_element145 = __toESM(require_element(), 1);
   var import_jsx_runtime314 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE78 = "data-wp-hash";
   function getRuntime78() {
@@ -62717,7 +62557,7 @@ var wp;
     registerStyle78("bd963049ad", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._824d97667ec2c8a9__positioner{z-index:var(--wp-ui-popover-z-index,initial)}.cf429b98492842a1__popup{outline:0}.a40a45dd1b4f7912__surface{--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);padding:var(--wpds-dimension-padding-lg,16px)}._0ae5efe5a5ea582d__backdrop~* .a40a45dd1b4f7912__surface{border-color:transparent}@media (forced-colors:active){._0ae5efe5a5ea582d__backdrop~* .a40a45dd1b4f7912__surface,.a40a45dd1b4f7912__surface{border-color:CanvasText}}.b1d4dfaf312ca03b__arrow{display:flex;&[data-side=top]{bottom:-8px;rotate:180deg}&[data-side=bottom]{rotate:0deg;top:-8px}&[data-side=left]{inset-inline-end:-13px;rotate:90deg}&[data-side=right]{inset-inline-start:-13px;rotate:-90deg}}._18c37a40df5b90ab__arrow-fill{fill:var(--wpds-color-background-surface-neutral-strong,#fff)}.af31f017966d9e8c__arrow-stroke{fill:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._23206add88d491e4__title{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._0ae5efe5a5ea582d__backdrop{background-color:rgba(0,0,0,.15);inset:0;opacity:1;position:fixed;z-index:var(--wp-ui-popover-z-index,initial);&[data-ending-style],&[data-starting-style]{opacity:0}@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}}}');
   }
   var style_default60 = { "positioner": "_824d97667ec2c8a9__positioner", "popup": "cf429b98492842a1__popup _069972d5e326bada__dropdown-motion", "surface": "a40a45dd1b4f7912__surface", "backdrop": "_0ae5efe5a5ea582d__backdrop", "arrow": "b1d4dfaf312ca03b__arrow", "arrow-fill": "_18c37a40df5b90ab__arrow-fill", "arrow-stroke": "af31f017966d9e8c__arrow-stroke", "title": "_23206add88d491e4__title" };
-  var Positioner4 = (0, import_element146.forwardRef)(
+  var Positioner4 = (0, import_element145.forwardRef)(
     function PopoverPositioner3({
       align = "center",
       // Matches the popup's border-radius (--wpds-border-radius-md).
@@ -62833,7 +62673,7 @@ var wp;
   }
   var style_default61 = { "positioner": "_824d97667ec2c8a9__positioner", "popup": "cf429b98492842a1__popup _069972d5e326bada__dropdown-motion", "surface": "a40a45dd1b4f7912__surface", "backdrop": "_0ae5efe5a5ea582d__backdrop", "arrow": "b1d4dfaf312ca03b__arrow", "arrow-fill": "_18c37a40df5b90ab__arrow-fill", "arrow-stroke": "af31f017966d9e8c__arrow-stroke", "title": "_23206add88d491e4__title" };
   var CLOSE_ATTR = "data-wp-ui-popover-close";
-  var Popup4 = (0, import_element147.forwardRef)(function PopoverPopup3({
+  var Popup4 = (0, import_element146.forwardRef)(function PopoverPopup3({
     backdrop = false,
     children,
     className,
@@ -62879,18 +62719,12 @@ var wp;
   // packages/ui/build-module/popover/root.mjs
   var import_jsx_runtime316 = __toESM(require_jsx_runtime(), 1);
   function Root11(props) {
-    const iframeDismissalProps = useIframeDismissalBridge({
-      defaultOpen: props.defaultOpen,
-      modal: props.modal ?? false,
-      onOpenChange: (nextOpen, eventDetails) => props.onOpenChange?.(nextOpen, eventDetails),
-      open: props.open
-    });
-    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(index_parts_exports6.Root, { ...props, ...iframeDismissalProps }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime316.jsx)(index_parts_exports6.Root, { ...props }) });
   }
 
   // packages/ui/build-module/popover/title.mjs
   var import_compose18 = __toESM(require_compose(), 1);
-  var import_element148 = __toESM(require_element(), 1);
+  var import_element147 = __toESM(require_element(), 1);
   var import_jsx_runtime317 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE80 = "data-wp-hash";
   function getRuntime80() {
@@ -62976,12 +62810,12 @@ var wp;
     registerStyle80("bd963049ad", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._824d97667ec2c8a9__positioner{z-index:var(--wp-ui-popover-z-index,initial)}.cf429b98492842a1__popup{outline:0}.a40a45dd1b4f7912__surface{--_wp-ui-elevation-md:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:var(--_wp-ui-elevation-md);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);padding:var(--wpds-dimension-padding-lg,16px)}._0ae5efe5a5ea582d__backdrop~* .a40a45dd1b4f7912__surface{border-color:transparent}@media (forced-colors:active){._0ae5efe5a5ea582d__backdrop~* .a40a45dd1b4f7912__surface,.a40a45dd1b4f7912__surface{border-color:CanvasText}}.b1d4dfaf312ca03b__arrow{display:flex;&[data-side=top]{bottom:-8px;rotate:180deg}&[data-side=bottom]{rotate:0deg;top:-8px}&[data-side=left]{inset-inline-end:-13px;rotate:90deg}&[data-side=right]{inset-inline-start:-13px;rotate:-90deg}}._18c37a40df5b90ab__arrow-fill{fill:var(--wpds-color-background-surface-neutral-strong,#fff)}.af31f017966d9e8c__arrow-stroke{fill:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._23206add88d491e4__title{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._0ae5efe5a5ea582d__backdrop{background-color:rgba(0,0,0,.15);inset:0;opacity:1;position:fixed;z-index:var(--wp-ui-popover-z-index,initial);&[data-ending-style],&[data-starting-style]{opacity:0}@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}}}');
   }
   var style_default62 = { "positioner": "_824d97667ec2c8a9__positioner", "popup": "cf429b98492842a1__popup _069972d5e326bada__dropdown-motion", "surface": "a40a45dd1b4f7912__surface", "backdrop": "_0ae5efe5a5ea582d__backdrop", "arrow": "b1d4dfaf312ca03b__arrow", "arrow-fill": "_18c37a40df5b90ab__arrow-fill", "arrow-stroke": "af31f017966d9e8c__arrow-stroke", "title": "_23206add88d491e4__title" };
-  var Title3 = (0, import_element148.forwardRef)(
+  var Title3 = (0, import_element147.forwardRef)(
     function PopoverTitle3({ children, ...props }, forwardedRef) {
       const validationContext = usePopoverValidationContext();
-      const internalRef = (0, import_element148.useRef)(null);
+      const internalRef = (0, import_element147.useRef)(null);
       const mergedRef = (0, import_compose18.useMergeRefs)([internalRef, forwardedRef]);
-      (0, import_element148.useEffect)(() => {
+      (0, import_element147.useEffect)(() => {
         if (validationContext) {
           return validationContext.registerTitle(internalRef.current);
         }
@@ -63001,9 +62835,9 @@ var wp;
   );
 
   // packages/ui/build-module/popover/trigger.mjs
-  var import_element149 = __toESM(require_element(), 1);
+  var import_element148 = __toESM(require_element(), 1);
   var import_jsx_runtime318 = __toESM(require_jsx_runtime(), 1);
-  var Trigger6 = (0, import_element149.forwardRef)(
+  var Trigger6 = (0, import_element148.forwardRef)(
     function PopoverTrigger3(props, ref) {
       return /* @__PURE__ */ (0, import_jsx_runtime318.jsx)(index_parts_exports6.Trigger, { ref, ...props });
     }
@@ -63019,7 +62853,7 @@ var wp;
   });
 
   // packages/ui/build-module/tabs/list.mjs
-  var import_element150 = __toESM(require_element(), 1);
+  var import_element149 = __toESM(require_element(), 1);
   var import_compose19 = __toESM(require_compose(), 1);
   var import_jsx_runtime319 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE81 = "data-wp-hash";
@@ -63107,7 +62941,7 @@ var wp;
   }
   var style_default63 = { "tablist": "a0e75f120439a0aa__tablist", "is-scrolling": "d0a55a85eda75e42__is-scrolling", "is-overflowing-first": "_3458825d62377029__is-overflowing-first", "is-overflowing-last": "_485eb1577637fe68__is-overflowing-last", "is-minimal-variant": "_75bc52ead60e02b3__is-minimal-variant", "indicator": "_8db3ebc0bb0b18de__indicator", "tab": "cbf34d4b11b8d6d4__tab", "tab-children": "_48bd1f7fa091c988__tab-children" };
   var SCROLL_EPSILON = 1;
-  var List = (0, import_element150.forwardRef)(
+  var List = (0, import_element149.forwardRef)(
     function TabList({
       children,
       variant = "default",
@@ -63115,13 +62949,13 @@ var wp;
       activateOnFocus,
       ...otherProps
     }, forwardedRef) {
-      const [listEl, setListEl] = (0, import_element150.useState)(null);
-      const [overflow, setOverflow] = (0, import_element150.useState)({
+      const [listEl, setListEl] = (0, import_element149.useState)(null);
+      const [overflow, setOverflow] = (0, import_element149.useState)({
         first: false,
         last: false,
         isScrolling: false
       });
-      (0, import_element150.useEffect)(() => {
+      (0, import_element149.useEffect)(() => {
         if (!listEl) {
           return;
         }
@@ -63211,16 +63045,16 @@ var wp;
   );
 
   // packages/ui/build-module/tabs/panel.mjs
-  var import_element152 = __toESM(require_element(), 1);
+  var import_element151 = __toESM(require_element(), 1);
 
   // packages/ui/build-module/tabs/context.mjs
-  var import_element151 = __toESM(require_element(), 1);
+  var import_element150 = __toESM(require_element(), 1);
   var import_jsx_runtime320 = __toESM(require_jsx_runtime(), 1);
   var VALIDATION_ENABLED3 = true;
-  var TabsValidationContext = VALIDATION_ENABLED3 ? (0, import_element151.createContext)(null) : null;
+  var TabsValidationContext = VALIDATION_ENABLED3 ? (0, import_element150.createContext)(null) : null;
   function useRegisterTabDev() {
-    const context = (0, import_element151.useContext)(TabsValidationContext);
-    (0, import_element151.useEffect)(() => {
+    const context = (0, import_element150.useContext)(TabsValidationContext);
+    (0, import_element150.useEffect)(() => {
       if (context) {
         return context.registerTab();
       }
@@ -63231,8 +63065,8 @@ var wp;
   }
   var useRegisterTab = VALIDATION_ENABLED3 ? useRegisterTabDev : useRegisterTabProd;
   function useRegisterPanelDev() {
-    const context = (0, import_element151.useContext)(TabsValidationContext);
-    (0, import_element151.useEffect)(() => {
+    const context = (0, import_element150.useContext)(TabsValidationContext);
+    (0, import_element150.useEffect)(() => {
       if (context) {
         return context.registerPanel();
       }
@@ -63245,8 +63079,8 @@ var wp;
   function TabsValidationProviderDev({
     children
   }) {
-    const tabCountRef = (0, import_element151.useRef)(0);
-    const panelCountRef = (0, import_element151.useRef)(0);
+    const tabCountRef = (0, import_element150.useRef)(0);
+    const panelCountRef = (0, import_element150.useRef)(0);
     const scheduleValidation = useScheduleValidation(() => {
       const tabCount = tabCountRef.current;
       const panelCount = panelCountRef.current;
@@ -63256,7 +63090,7 @@ var wp;
         );
       }
     });
-    const registerTab = (0, import_element151.useCallback)(() => {
+    const registerTab = (0, import_element150.useCallback)(() => {
       tabCountRef.current += 1;
       scheduleValidation();
       return () => {
@@ -63264,7 +63098,7 @@ var wp;
         scheduleValidation();
       };
     }, [scheduleValidation]);
-    const registerPanel = (0, import_element151.useCallback)(() => {
+    const registerPanel = (0, import_element150.useCallback)(() => {
       panelCountRef.current += 1;
       scheduleValidation();
       return () => {
@@ -63272,7 +63106,7 @@ var wp;
         scheduleValidation();
       };
     }, [scheduleValidation]);
-    const contextValue = (0, import_element151.useMemo)(
+    const contextValue = (0, import_element150.useMemo)(
       () => ({
         registerTab,
         registerPanel
@@ -63378,7 +63212,7 @@ var wp;
     registerStyle82("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
   }
   var focus_module_default8 = { "outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus", "outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible", "outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within", "outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active", "outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active" };
-  var Panel2 = (0, import_element152.forwardRef)(
+  var Panel2 = (0, import_element151.forwardRef)(
     function TabPanel({ className, ...otherProps }, forwardedRef) {
       useRegisterPanel();
       return /* @__PURE__ */ (0, import_jsx_runtime321.jsx)(
@@ -63397,16 +63231,16 @@ var wp;
   );
 
   // packages/ui/build-module/tabs/root.mjs
-  var import_element153 = __toESM(require_element(), 1);
+  var import_element152 = __toESM(require_element(), 1);
   var import_jsx_runtime322 = __toESM(require_jsx_runtime(), 1);
-  var Root12 = (0, import_element153.forwardRef)(
+  var Root12 = (0, import_element152.forwardRef)(
     function TabsRoot3({ ...otherProps }, forwardedRef) {
       return /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(DirectionProvider3, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime322.jsx)(index_parts_exports9.Root, { ref: forwardedRef, ...otherProps }) }) });
     }
   );
 
   // packages/ui/build-module/tabs/tab.mjs
-  var import_element154 = __toESM(require_element(), 1);
+  var import_element153 = __toESM(require_element(), 1);
   var import_jsx_runtime323 = __toESM(require_jsx_runtime(), 1);
   var STYLE_HASH_ATTRIBUTE83 = "data-wp-hash";
   function getRuntime83() {
@@ -63492,7 +63326,7 @@ var wp;
     registerStyle83("3d953ec7ac", '@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a0e75f120439a0aa__tablist{--direction-start:left;--direction-end:right;align-items:stretch;display:flex;overflow-inline:auto;overscroll-behavior-inline:none;position:relative;&:dir(rtl){--direction-start:right;--direction-end:left}&[data-orientation=horizontal]{--fade-width:4rem;--fade-gradient-base:transparent 0%,#000 var(--fade-width);--fade-gradient-composed:var(--fade-gradient-base),#000 60%,transparent 50%;width:fit-content;&:not(.d0a55a85eda75e42__is-scrolling){overflow:visible}&._3458825d62377029__is-overflowing-first{mask-image:linear-gradient(to var(--direction-end),var(--fade-gradient-base))}&._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to var(--direction-start),var(--fade-gradient-base))}&._3458825d62377029__is-overflowing-first._485eb1577637fe68__is-overflowing-last{mask-image:linear-gradient(to right,var(--fade-gradient-composed)),linear-gradient(to left,var(--fade-gradient-composed))}&._75bc52ead60e02b3__is-minimal-variant{gap:1rem}}&[data-orientation=vertical]{flex-direction:column}}._8db3ebc0bb0b18de__indicator{@media not (prefers-reduced-motion){transition-duration:.2s;transition-property:translate,width,height;transition-timing-function:ease-out}background-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);outline:2px solid transparent;outline-offset:-1px;pointer-events:none;position:absolute;z-index:1;.a0e75f120439a0aa__tablist:has(>.cbf34d4b11b8d6d4__tab[aria-selected=true]:not([data-disabled]):focus-visible)\n				&{background-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}&[data-orientation=horizontal]{bottom:0;height:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));left:0;translate:var(--active-tab-left) 0;width:var(--active-tab-width)}&[data-orientation=vertical]{height:max(0px,calc(var(--active-tab-height) - var(--wpds-dimension-padding-md, 12px)*2));inset-inline-start:0;top:var(--wpds-dimension-padding-md,12px);translate:0 var(--active-tab-top);width:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}.cbf34d4b11b8d6d4__tab{align-items:center;background:transparent;border:none;border-radius:0;box-shadow:none;color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);cursor:var(--wpds-cursor-control,pointer);display:flex;flex:1 0 auto;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:400;line-height:1.2;outline:none;padding:0;position:relative;white-space:nowrap;z-index:1;&:is([aria-selected=true],[data-disabled]){cursor:default}&[data-disabled]{color:var(--wpds-color-foreground-interactive-neutral-disabled,#8d8d8d);@media (forced-colors:active){color:GrayText}}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);&:after{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ededed);opacity:1}}&:after,&:before{border-radius:var(--wpds-border-radius-sm,2px);opacity:0;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid transparent;pointer-events:none;position:absolute;z-index:-1;@media not (prefers-reduced-motion){transition:opacity .1s linear}}&:focus-visible:after{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}[data-orientation=horizontal] &{height:48px;padding-inline:var(--wpds-dimension-padding-lg,16px);scroll-margin:24px;&:after{content:"";inset-block:calc(var(--wpds-dimension-padding-md, 12px) + var(--wpds-dimension-padding-xs, 4px));inset-inline:var(--wpds-dimension-padding-lg,16px);outline-offset:var(--wpds-dimension-padding-xs,4px)}&:not([data-disabled]):is(:not([aria-selected=true]):hover,:not([aria-selected=true]):active,:focus-visible):after{box-shadow:0 0 0 var(--wpds-dimension-padding-xs,4px) var(--wpds-color-background-interactive-neutral-weak-active,#ededed)}}._75bc52ead60e02b3__is-minimal-variant[data-orientation=horizontal] &{padding-inline:0;&:after{inset-inline:0}}._75bc52ead60e02b3__is-minimal-variant.d0a55a85eda75e42__is-scrolling[data-orientation=horizontal] &{&:before{content:"";inset-block:var(--wpds-dimension-padding-md,12px);inset-inline:round(up,var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)),1px);z-index:0}&:focus-visible{&:before{opacity:1;outline-color:var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9))}&:after{outline:none}}}[data-orientation=vertical] &{min-height:var(--wpds-dimension-size-lg,40px);padding:var(--wpds-dimension-padding-md,12px);&:after{content:"";inset:0;outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*-1)}}}._48bd1f7fa091c988__tab-children{align-items:center;display:flex;flex-grow:1;[data-orientation=horizontal] &{justify-content:center}[data-orientation=vertical] &{justify-content:start}}}}');
   }
   var style_default64 = { "tablist": "a0e75f120439a0aa__tablist", "is-scrolling": "d0a55a85eda75e42__is-scrolling", "is-overflowing-first": "_3458825d62377029__is-overflowing-first", "is-overflowing-last": "_485eb1577637fe68__is-overflowing-last", "is-minimal-variant": "_75bc52ead60e02b3__is-minimal-variant", "indicator": "_8db3ebc0bb0b18de__indicator", "tab": "cbf34d4b11b8d6d4__tab", "tab-children": "_48bd1f7fa091c988__tab-children" };
-  var Tab = (0, import_element154.forwardRef)(
+  var Tab = (0, import_element153.forwardRef)(
     function UnforwardedTab({ className, children, ...otherProps }, forwardedRef) {
       useRegisterTab();
       return /* @__PURE__ */ (0, import_jsx_runtime323.jsx)(
@@ -63522,7 +63356,7 @@ var wp;
   var import_es62 = __toESM(require_es6(), 1);
   var import_blocks16 = __toESM(require_blocks(), 1);
   var import_data14 = __toESM(require_data(), 1);
-  var import_element155 = __toESM(require_element(), 1);
+  var import_element154 = __toESM(require_element(), 1);
   var import_compose20 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-bindings/use-block-bindings-utils.mjs
@@ -63582,7 +63416,7 @@ var wp;
     source,
     sourceKey
   }) {
-    const itemBindings = (0, import_element155.useMemo)(
+    const itemBindings = (0, import_element154.useMemo)(
       () => ({
         source: sourceKey,
         args: field.args || {
@@ -63591,7 +63425,7 @@ var wp;
       }),
       [field.args, field.key, sourceKey]
     );
-    const blockContext = (0, import_element155.useContext)(block_context_default);
+    const blockContext = (0, import_element154.useContext)(block_context_default);
     const values = (0, import_data14.useSelect)(
       (select3) => (
         // A source offering fields provides their values.
@@ -63673,7 +63507,7 @@ var wp;
   }) {
     const { updateBlockBindings } = useBlockBindingsUtils();
     const isMobile = (0, import_compose21.useViewportMatch)("medium", "<");
-    const blockContext = (0, import_element156.useContext)(block_context_default);
+    const blockContext = (0, import_element155.useContext)(block_context_default);
     const compatibleFields = (0, import_data15.useSelect)(
       (select3) => {
         const {
@@ -63872,23 +63706,23 @@ var wp;
   // packages/block-editor/build-module/components/block-breadcrumb/index.mjs
   var import_data17 = __toESM(require_data(), 1);
   var import_i18n33 = __toESM(require_i18n(), 1);
-  var import_element159 = __toESM(require_element(), 1);
+  var import_element158 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-block-refs.mjs
-  var import_element158 = __toESM(require_element(), 1);
+  var import_element157 = __toESM(require_element(), 1);
   var import_compose23 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/provider/block-refs-provider.mjs
-  var import_element157 = __toESM(require_element(), 1);
+  var import_element156 = __toESM(require_element(), 1);
   var import_compose22 = __toESM(require_compose(), 1);
   var import_jsx_runtime328 = __toESM(require_jsx_runtime(), 1);
-  var BlockRefs = (0, import_element157.createContext)({
+  var BlockRefs = (0, import_element156.createContext)({
     refsMap: (0, import_compose22.observableMap)(),
     eventHandlers: /* @__PURE__ */ new Map()
   });
   BlockRefs.displayName = "BlockRefsContext";
   function BlockRefsProvider({ children }) {
-    const value = (0, import_element157.useMemo)(
+    const value = (0, import_element156.useMemo)(
       () => ({ refsMap: (0, import_compose22.observableMap)(), eventHandlers: /* @__PURE__ */ new Map() }),
       []
     );
@@ -63897,7 +63731,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-block-refs.mjs
   function useBlockRefProvider(clientId) {
-    const { refsMap } = (0, import_element158.useContext)(BlockRefs);
+    const { refsMap } = (0, import_element157.useContext)(BlockRefs);
     return (0, import_compose23.useRefEffect)(
       (element) => {
         refsMap.set(clientId, element);
@@ -63914,8 +63748,8 @@ var wp;
     }
   }
   function useBlockElementRef(clientId, ref) {
-    const { refsMap } = (0, import_element158.useContext)(BlockRefs);
-    (0, import_element158.useLayoutEffect)(() => {
+    const { refsMap } = (0, import_element157.useContext)(BlockRefs);
+    (0, import_element157.useLayoutEffect)(() => {
       assignRef(ref, refsMap.get(clientId));
       const unsubscribe = refsMap.subscribe(
         clientId,
@@ -63928,7 +63762,7 @@ var wp;
     }, [refsMap, clientId, ref]);
   }
   function useBlockElement(clientId) {
-    const [blockElement, setBlockElement] = (0, import_element158.useState)(null);
+    const [blockElement, setBlockElement] = (0, import_element157.useState)(null);
     useBlockElementRef(clientId, setBlockElement);
     return blockElement;
   }
@@ -64023,7 +63857,7 @@ var wp;
       [parents]
     );
     const rootLabel = typeof rootLabelText === "string" && rootLabelText.trim() ? rootLabelText : (0, import_i18n33._x)("Document", "noun, breadcrumb");
-    const blockRef = (0, import_element159.useRef)(void 0);
+    const blockRef = (0, import_element158.useRef)(void 0);
     useBlockElementRef(clientId, blockRef);
     return /* @__PURE__ */ (0, import_jsx_runtime329.jsxs)(
       breadcrumb_exports.Root,
@@ -64087,18 +63921,18 @@ var wp;
 
   // packages/block-editor/build-module/components/block-canvas/index.mjs
   var import_compose116 = __toESM(require_compose(), 1);
-  var import_element357 = __toESM(require_element(), 1);
+  var import_element356 = __toESM(require_element(), 1);
   var import_data135 = __toESM(require_data(), 1);
   var import_components169 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-list/index.mjs
   var import_data91 = __toESM(require_data(), 1);
   var import_compose103 = __toESM(require_compose(), 1);
-  var import_element322 = __toESM(require_element(), 1);
+  var import_element321 = __toESM(require_element(), 1);
   var import_blocks51 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-list/block.mjs
-  var import_element173 = __toESM(require_element(), 1);
+  var import_element172 = __toESM(require_element(), 1);
   var import_blocks25 = __toESM(require_blocks(), 1);
   var import_components23 = __toESM(require_components(), 1);
   var import_data32 = __toESM(require_data(), 1);
@@ -64108,7 +63942,7 @@ var wp;
   // packages/block-editor/build-module/components/block-list/block-invalid-warning.mjs
   var import_i18n35 = __toESM(require_i18n(), 1);
   var import_components19 = __toESM(require_components(), 1);
-  var import_element162 = __toESM(require_element(), 1);
+  var import_element161 = __toESM(require_element(), 1);
   var import_blocks20 = __toESM(require_blocks(), 1);
   var import_data19 = __toESM(require_data(), 1);
 
@@ -64323,13 +64157,13 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-compare/index.mjs
-  var import_element161 = __toESM(require_element(), 1);
+  var import_element160 = __toESM(require_element(), 1);
   var import_i18n34 = __toESM(require_i18n(), 1);
   var import_blocks19 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-compare/block-view.mjs
   var import_components18 = __toESM(require_components(), 1);
-  var import_element160 = __toESM(require_element(), 1);
+  var import_element159 = __toESM(require_element(), 1);
   var import_dom35 = __toESM(require_dom(), 1);
   var import_jsx_runtime330 = __toESM(require_jsx_runtime(), 1);
   function BlockView({
@@ -64344,7 +64178,7 @@ var wp;
       /* @__PURE__ */ (0, import_jsx_runtime330.jsxs)("div", { className: "block-editor-block-compare__content", children: [
         /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("h2", { className: "block-editor-block-compare__heading", children: title }),
         /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("div", { className: "block-editor-block-compare__html", children: rawContent }),
-        /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("div", { className: "block-editor-block-compare__preview edit-post-visual-editor", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_element160.RawHTML, { children: (0, import_dom35.safeHTML)(renderedContent) }) })
+        /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("div", { className: "block-editor-block-compare__preview edit-post-visual-editor", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(import_element159.RawHTML, { children: (0, import_dom35.safeHTML)(renderedContent) }) })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime330.jsx)("div", { className: "block-editor-block-compare__action", children: /* @__PURE__ */ (0, import_jsx_runtime330.jsx)(
         import_components18.Button,
@@ -64363,7 +64197,7 @@ var wp;
   var import_jsx_runtime331 = __toESM(require_jsx_runtime(), 1);
   function getChangedValue(value) {
     return value.split(/(\n)/).map(
-      (piece, index3) => piece === "\n" ? /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_element161.Fragment, { children: [
+      (piece, index3) => piece === "\n" ? /* @__PURE__ */ (0, import_jsx_runtime331.jsxs)(import_element160.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime331.jsx)(
           "span",
           {
@@ -64449,9 +64283,9 @@ var wp;
       [clientId]
     );
     const { replaceBlock: replaceBlock2 } = (0, import_data19.useDispatch)(store);
-    const [compare2, setCompare] = (0, import_element162.useState)(false);
-    const onCompareClose = (0, import_element162.useCallback)(() => setCompare(false), []);
-    const convert = (0, import_element162.useMemo)(
+    const [compare2, setCompare] = (0, import_element161.useState)(false);
+    const onCompareClose = (0, import_element161.useCallback)(() => setCompare(false), []);
+    const convert = (0, import_element161.useMemo)(
       () => ({
         toHTML() {
           const htmlBlock = (0, import_blocks20.createBlock)(
@@ -64477,7 +64311,7 @@ var wp;
       }),
       [block, replaceBlock2]
     );
-    const secondaryActions = (0, import_element162.useMemo)(
+    const secondaryActions = (0, import_element161.useMemo)(
       () => [
         {
           // translators: Button to fix block content
@@ -64544,8 +64378,8 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-list/block-crash-boundary.mjs
-  var import_element163 = __toESM(require_element(), 1);
-  var BlockCrashBoundary = class extends import_element163.Component {
+  var import_element162 = __toESM(require_element(), 1);
+  var BlockCrashBoundary = class extends import_element162.Component {
     constructor() {
       super(...arguments);
       this.state = {
@@ -64567,7 +64401,7 @@ var wp;
   var block_crash_boundary_default = BlockCrashBoundary;
 
   // packages/block-editor/build-module/components/block-list/block-html.mjs
-  var import_element164 = __toESM(require_element(), 1);
+  var import_element163 = __toESM(require_element(), 1);
   var import_data20 = __toESM(require_data(), 1);
   var import_blocks21 = __toESM(require_blocks(), 1);
 
@@ -64599,14 +64433,14 @@ var wp;
   // packages/block-editor/build-module/components/block-list/block-html.mjs
   var import_jsx_runtime334 = __toESM(require_jsx_runtime(), 1);
   function BlockHTML({ clientId }) {
-    const [html, setHtml] = (0, import_element164.useState)("");
+    const [html, setHtml] = (0, import_element163.useState)("");
     const nativeUndoRef = useNativeUndo();
     const block = (0, import_data20.useSelect)(
       (select3) => select3(store).getBlock(clientId),
       [clientId]
     );
     const { updateBlock: updateBlock2 } = (0, import_data20.useDispatch)(store);
-    const blockContent = (0, import_element164.useMemo)(
+    const blockContent = (0, import_element163.useMemo)(
       () => block ? (0, import_blocks21.getBlockContent)(block) : "",
       [block]
     );
@@ -64635,7 +64469,7 @@ var wp;
         setHtml(content);
       }
     };
-    (0, import_element164.useEffect)(() => {
+    (0, import_element163.useEffect)(() => {
       setHtml(blockContent);
     }, [blockContent]);
     return /* @__PURE__ */ (0, import_jsx_runtime334.jsx)(
@@ -64652,7 +64486,7 @@ var wp;
   var block_html_default = BlockHTML;
 
   // packages/block-editor/build-module/components/block-list/use-block-props/index.mjs
-  var import_element172 = __toESM(require_element(), 1);
+  var import_element171 = __toESM(require_element(), 1);
   var import_i18n42 = __toESM(require_i18n(), 1);
   var import_blocks24 = __toESM(require_blocks(), 1);
   var import_compose34 = __toESM(require_compose(), 1);
@@ -67283,7 +67117,7 @@ var wp;
   var animated = host.animated;
 
   // packages/block-editor/build-module/components/use-moving-animation/index.mjs
-  var import_element165 = __toESM(require_element(), 1);
+  var import_element164 = __toESM(require_element(), 1);
   var import_dom36 = __toESM(require_dom(), 1);
   var import_data21 = __toESM(require_data(), 1);
   var BLOCK_ANIMATION_THRESHOLD = 200;
@@ -67297,7 +67131,7 @@ var wp;
     triggerAnimationOnChange,
     clientId
   }) {
-    const ref = (0, import_element165.useRef)(void 0);
+    const ref = (0, import_element164.useRef)(void 0);
     const {
       isTyping: isTyping3,
       getGlobalBlockCount: getGlobalBlockCount2,
@@ -67307,14 +67141,14 @@ var wp;
       isAncestorMultiSelected: isAncestorMultiSelected2,
       isDraggingBlocks: isDraggingBlocks2
     } = (0, import_data21.useSelect)(store);
-    const { previous, prevRect } = (0, import_element165.useMemo)(
+    const { previous, prevRect } = (0, import_element164.useMemo)(
       () => ({
         previous: ref.current && getAbsolutePosition(ref.current),
         prevRect: ref.current && ref.current.getBoundingClientRect()
       }),
       [triggerAnimationOnChange]
     );
-    (0, import_element165.useLayoutEffect)(() => {
+    (0, import_element164.useLayoutEffect)(() => {
       if (!previous || !ref.current) {
         return;
       }
@@ -67388,7 +67222,7 @@ var wp;
   var use_moving_animation_default = useMovingAnimation;
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-focus-first-element.mjs
-  var import_element166 = __toESM(require_element(), 1);
+  var import_element165 = __toESM(require_element(), 1);
   var import_dom37 = __toESM(require_dom(), 1);
   var import_data22 = __toESM(require_data(), 1);
 
@@ -67503,9 +67337,9 @@ var wp;
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-focus-first-element.mjs
   function useFocusFirstElement({ clientId, initialPosition: initialPosition2 }) {
-    const ref = (0, import_element166.useRef)();
+    const ref = (0, import_element165.useRef)();
     const { isBlockSelected: isBlockSelected2, isMultiSelecting: isMultiSelecting3, isZoomOut: isZoomOut2, getSelectionStart: getSelectionStart2 } = unlock((0, import_data22.useSelect)(store));
-    (0, import_element166.useEffect)(() => {
+    (0, import_element165.useEffect)(() => {
       if (!isBlockSelected2(clientId) || isMultiSelecting3() || isZoomOut2()) {
         return;
       }
@@ -67644,12 +67478,12 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-register-block-event-handlers.mjs
-  var import_element168 = __toESM(require_element(), 1);
+  var import_element167 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/writing-flow/use-editable-root-event-handlers.mjs
   var import_data24 = __toESM(require_data(), 1);
   var import_compose27 = __toESM(require_compose(), 1);
-  var import_element167 = __toESM(require_element(), 1);
+  var import_element166 = __toESM(require_element(), 1);
   var SUPPORTED_EVENTS = {
     onKeyDown: "keydown",
     onKeyUp: "keyup",
@@ -67742,7 +67576,7 @@ var wp;
   }
   function useEditableRootEventHandlers() {
     const { hasMultiSelection: hasMultiSelection2, getBlockParents: getBlockParents2 } = (0, import_data24.useSelect)(store);
-    const { refsMap, eventHandlers } = (0, import_element167.useContext)(BlockRefs);
+    const { refsMap, eventHandlers } = (0, import_element166.useContext)(BlockRefs);
     return (0, import_compose27.useRefEffect)(
       (node) => {
         function onEvent(event) {
@@ -67795,14 +67629,14 @@ var wp;
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-register-block-event-handlers.mjs
   function useRegisterBlockEventHandlers(clientId, wrapperProps) {
-    const { eventHandlers } = (0, import_element168.useContext)(BlockRefs);
+    const { eventHandlers } = (0, import_element167.useContext)(BlockRefs);
     const handlers = getEventHandlers(wrapperProps);
-    const handlersRef = (0, import_element168.useRef)();
-    (0, import_element168.useInsertionEffect)(() => {
+    const handlersRef = (0, import_element167.useRef)();
+    (0, import_element167.useInsertionEffect)(() => {
       handlersRef.current = handlers;
     });
     const hasHandlers = !!handlers;
-    (0, import_element168.useEffect)(() => {
+    (0, import_element167.useEffect)(() => {
       if (hasHandlers) {
         eventHandlers.set(clientId, handlersRef);
         return () => eventHandlers.delete(clientId);
@@ -68177,9 +68011,9 @@ var wp;
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-intersection-observer.mjs
   var import_compose29 = __toESM(require_compose(), 1);
-  var import_element169 = __toESM(require_element(), 1);
+  var import_element168 = __toESM(require_element(), 1);
   function useIntersectionObserver() {
-    const observer = (0, import_element169.useContext)(IntersectionObserver2);
+    const observer = (0, import_element168.useContext)(IntersectionObserver2);
     return (0, import_compose29.useRefEffect)(
       (node) => {
         if (observer) {
@@ -68335,7 +68169,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-visibility/modal.mjs
   var import_i18n38 = __toESM(require_i18n(), 1);
-  var import_element170 = __toESM(require_element(), 1);
+  var import_element169 = __toESM(require_element(), 1);
   var import_components20 = __toESM(require_components(), 1);
   var import_data27 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts = __toESM(require_keyboard_shortcuts(), 1);
@@ -68461,11 +68295,11 @@ var wp;
       ),
       []
     );
-    const viewportEntries = (0, import_element170.useMemo)(
+    const viewportEntries = (0, import_element169.useMemo)(
       () => getBlockVisibilityViewportEntries(viewportSettings),
       [viewportSettings]
     );
-    const initialViewportValues = (0, import_element170.useMemo)(() => {
+    const initialViewportValues = (0, import_element169.useMemo)(() => {
       if (blocks2?.length === 0) {
         return {
           hideEverywhere: false,
@@ -68482,13 +68316,13 @@ var wp;
         viewportChecked: viewportValues
       };
     }, [blocks2, viewportEntries]);
-    const [viewportChecked, setViewportChecked] = (0, import_element170.useState)(
+    const [viewportChecked, setViewportChecked] = (0, import_element169.useState)(
       initialViewportValues?.viewportChecked ?? {}
     );
-    const [hideEverywhere, setHideEverywhere] = (0, import_element170.useState)(
+    const [hideEverywhere, setHideEverywhere] = (0, import_element169.useState)(
       initialViewportValues?.hideEverywhere ?? false
     );
-    const handleViewportCheckboxChange = (0, import_element170.useCallback)(
+    const handleViewportCheckboxChange = (0, import_element169.useCallback)(
       (viewport, isChecked) => {
         setViewportChecked({
           ...viewportChecked,
@@ -68497,7 +68331,7 @@ var wp;
       },
       [viewportChecked]
     );
-    const noticeMessage = (0, import_element170.useMemo)(() => {
+    const noticeMessage = (0, import_element169.useMemo)(() => {
       if (!hideEverywhere) {
         return (0, import_i18n38.sprintf)(
           // translators: %s: The shortcut key to access the List View.
@@ -68520,13 +68354,13 @@ var wp;
       );
       return (0, import_i18n38.sprintf)(message2, listViewShortcut);
     }, [hideEverywhere, blocks2?.length, listViewShortcut]);
-    const isAnyViewportChecked = (0, import_element170.useMemo)(
+    const isAnyViewportChecked = (0, import_element169.useMemo)(
       () => Object.values(viewportChecked).some(
         (checked4) => checked4 === true || checked4 === null
       ),
       [viewportChecked]
     );
-    const isDirty = (0, import_element170.useMemo)(() => {
+    const isDirty = (0, import_element169.useMemo)(() => {
       if (hideEverywhere !== initialViewportValues.hideEverywhere) {
         return true;
       }
@@ -68539,7 +68373,7 @@ var wp;
       initialViewportValues,
       viewportEntries
     ]);
-    const hasIndeterminateValues = (0, import_element170.useMemo)(() => {
+    const hasIndeterminateValues = (0, import_element169.useMemo)(() => {
       if (hideEverywhere === null) {
         return true;
       }
@@ -68547,7 +68381,7 @@ var wp;
         (checked4) => checked4 === null
       );
     }, [hideEverywhere, viewportChecked]);
-    const handleSubmit = (0, import_element170.useCallback)(
+    const handleSubmit = (0, import_element169.useCallback)(
       (event) => {
         event.preventDefault();
         const newVisibility = hideEverywhere ? false : {
@@ -68672,7 +68506,7 @@ var wp;
               ),
               listViewShortcut
             ) }),
-            !hasMultipleBlocks && !hideEverywhere && isAnyViewportChecked && /* @__PURE__ */ (0, import_jsx_runtime335.jsx)("p", { className: "block-editor-block-visibility-modal__description", children: (0, import_element170.createInterpolateElement)(
+            !hasMultipleBlocks && !hideEverywhere && isAnyViewportChecked && /* @__PURE__ */ (0, import_jsx_runtime335.jsx)("p", { className: "block-editor-block-visibility-modal__description", children: (0, import_element169.createInterpolateElement)(
               (0, import_i18n38.sprintf)(
                 // translators: %s: The shortcut key to access the List View
                 (0, import_i18n38.__)(
@@ -68756,14 +68590,14 @@ var wp;
   // packages/block-editor/build-module/components/block-visibility/viewport-toolbar.mjs
   var import_i18n39 = __toESM(require_i18n(), 1);
   var import_components21 = __toESM(require_components(), 1);
-  var import_element171 = __toESM(require_element(), 1);
+  var import_element170 = __toESM(require_element(), 1);
   var import_blocks23 = __toESM(require_blocks(), 1);
   var import_data28 = __toESM(require_data(), 1);
   var import_jsx_runtime336 = __toESM(require_jsx_runtime(), 1);
   function BlockVisibilityViewportToolbar({
     clientIds
   }) {
-    const hasBlockVisibilityButtonShownRef = (0, import_element171.useRef)(false);
+    const hasBlockVisibilityButtonShownRef = (0, import_element170.useRef)(false);
     const [blockVisibility2] = useSettings("blockVisibility.allowEditing");
     const { canToggleBlockVisibility, areBlocksHiddenAnywhere } = (0, import_data28.useSelect)(
       (select3) => {
@@ -68785,7 +68619,7 @@ var wp;
       [clientIds]
     );
     const blockEditorDispatch = (0, import_data28.useDispatch)(store);
-    (0, import_element171.useEffect)(() => {
+    (0, import_element170.useEffect)(() => {
       if (areBlocksHiddenAnywhere) {
         hasBlockVisibilityButtonShownRef.current = true;
       }
@@ -69010,7 +68844,7 @@ var wp;
       ariaLabel,
       ghostBlock,
       rootClientId
-    } = (0, import_element172.useContext)(PrivateBlockContext);
+    } = (0, import_element171.useContext)(PrivateBlockContext);
     const ghostRef = useGhostMaterialize(rootClientId, ghostBlock);
     useRegisterBlockEventHandlers(clientId, wrapperProps);
     const defaultViewRef = (0, import_compose34.useRefEffect)((element) => {
@@ -69219,7 +69053,7 @@ var wp;
       isSelectionWithinCurrentSection,
       themeSupportsLayout,
       ...context
-    } = (0, import_element173.useContext)(PrivateBlockContext);
+    } = (0, import_element172.useContext)(PrivateBlockContext);
     const parentLayout = useLayout() || {};
     let blockEdit = /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(
       BlockEdit,
@@ -69269,7 +69103,7 @@ var wp;
       const saveContent = __unstableBlockSource ? (0, import_blocks25.serializeRawBlock)(__unstableBlockSource) : (0, import_blocks25.getSaveContent)(blockType, attributes);
       block = /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(Block, { className: "has-warning", children: [
         /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(BlockInvalidWarning, { clientId }),
-        /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(import_element173.RawHTML, { children: (0, import_dom42.safeHTML)(saveContent) })
+        /* @__PURE__ */ (0, import_jsx_runtime339.jsx)(import_element172.RawHTML, { children: (0, import_dom42.safeHTML)(saveContent) })
       ] });
     } else if (mode2 === "html") {
       block = /* @__PURE__ */ (0, import_jsx_runtime339.jsxs)(import_jsx_runtime339.Fragment, { children: [
@@ -69556,7 +69390,7 @@ var wp;
   )(BlockListBlock);
   function BlockListBlockProvider(props) {
     const { clientId, rootClientId, ghostBlock } = props;
-    const ghostBlockWithoutAttributes = (0, import_element173.useMemo)(
+    const ghostBlockWithoutAttributes = (0, import_element172.useMemo)(
       () => ghostBlock ? {
         clientId: ghostBlock.clientId,
         name: ghostBlock.name,
@@ -69720,7 +69554,7 @@ var wp;
       viewportSettings: selectedProps?.viewportSettings,
       view: defaultViewRef.current
     });
-    const block = (0, import_element173.useMemo)(
+    const block = (0, import_element172.useMemo)(
       () => ({
         ...selectedProps?.blockWithoutAttributes,
         attributes: selectedProps?.attributes
@@ -69843,7 +69677,7 @@ var wp;
       }
     ) });
   }
-  var block_default2 = (0, import_element173.memo)(BlockListBlockProvider);
+  var block_default2 = (0, import_element172.memo)(BlockListBlockProvider);
 
   // packages/block-editor/build-module/components/block-list-appender/index.mjs
   var import_data78 = __toESM(require_data(), 1);
@@ -69861,10 +69695,10 @@ var wp;
   var import_components118 = __toESM(require_components(), 1);
   var import_data76 = __toESM(require_data(), 1);
   var import_blocks44 = __toESM(require_blocks(), 1);
-  var import_element309 = __toESM(require_element(), 1);
+  var import_element308 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inserter/menu.mjs
-  var import_element307 = __toESM(require_element(), 1);
+  var import_element306 = __toESM(require_element(), 1);
   var import_components116 = __toESM(require_components(), 1);
   var import_i18n133 = __toESM(require_i18n(), 1);
   var import_compose93 = __toESM(require_compose(), 1);
@@ -69872,7 +69706,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/tips.mjs
   var import_i18n43 = __toESM(require_i18n(), 1);
-  var import_element174 = __toESM(require_element(), 1);
+  var import_element173 = __toESM(require_element(), 1);
   var import_jsx_runtime340 = __toESM(require_jsx_runtime(), 1);
   function SlashKey({ children }) {
     return /* @__PURE__ */ (0, import_jsx_runtime340.jsxs)(import_jsx_runtime340.Fragment, { children: [
@@ -69881,19 +69715,19 @@ var wp;
     ] });
   }
   var globalTips = [
-    (0, import_element174.createInterpolateElement)(
+    (0, import_element173.createInterpolateElement)(
       (0, import_i18n43.__)(
         "While writing, you can press <kbd>/</kbd> to quickly insert new blocks."
       ),
       { kbd: /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(SlashKey, {}) }
     ),
-    (0, import_element174.createInterpolateElement)(
+    (0, import_element173.createInterpolateElement)(
       (0, import_i18n43.__)(
         "Indent a list by pressing <kbd>space</kbd> at the beginning of a line."
       ),
       { kbd: /* @__PURE__ */ (0, import_jsx_runtime340.jsx)("kbd", {}) }
     ),
-    (0, import_element174.createInterpolateElement)(
+    (0, import_element173.createInterpolateElement)(
       (0, import_i18n43.__)(
         "Outdent a list by pressing <kbd>backspace</kbd> at the beginning of a line."
       ),
@@ -69903,7 +69737,7 @@ var wp;
     (0, import_i18n43.__)("Change a block's type by pressing the block icon on the toolbar.")
   ];
   function Tips() {
-    const [randomIndex] = (0, import_element174.useState)(
+    const [randomIndex] = (0, import_element173.useState)(
       () => Math.floor(Math.random() * globalTips.length)
     );
     return /* @__PURE__ */ (0, import_jsx_runtime340.jsx)(
@@ -69920,7 +69754,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/preview-panel.mjs
   var import_blocks35 = __toESM(require_blocks(), 1);
-  var import_element195 = __toESM(require_element(), 1);
+  var import_element194 = __toESM(require_element(), 1);
   var import_i18n54 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-card/index.mjs
@@ -70058,18 +69892,18 @@ var wp;
   // packages/block-editor/build-module/components/block-preview/index.mjs
   var import_compose56 = __toESM(require_compose(), 1);
   var import_data59 = __toESM(require_data(), 1);
-  var import_element194 = __toESM(require_element(), 1);
+  var import_element193 = __toESM(require_element(), 1);
   var import_deprecated8 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/provider/index.mjs
   var import_data38 = __toESM(require_data(), 1);
-  var import_element181 = __toESM(require_element(), 1);
+  var import_element180 = __toESM(require_element(), 1);
   var import_components25 = __toESM(require_components(), 1);
   var import_i18n46 = __toESM(require_i18n(), 1);
   var import_upload_media = __toESM(require_upload_media(), 1);
 
   // packages/block-editor/build-module/components/provider/with-registry-provider.mjs
-  var import_element175 = __toESM(require_element(), 1);
+  var import_element174 = __toESM(require_element(), 1);
   var import_data34 = __toESM(require_data(), 1);
   var import_compose36 = __toESM(require_compose(), 1);
   var import_jsx_runtime342 = __toESM(require_jsx_runtime(), 1);
@@ -70091,7 +69925,7 @@ var wp;
       ...props
     }) {
       const registry = (0, import_data34.useRegistry)();
-      const [subRegistries] = (0, import_element175.useState)(
+      const [subRegistries] = (0, import_element174.useState)(
         () => /* @__PURE__ */ new WeakMap()
       );
       const subRegistry = getSubRegistry(
@@ -70109,15 +69943,15 @@ var wp;
   var with_registry_provider_default = withRegistryProvider;
 
   // packages/block-editor/build-module/components/provider/use-block-sync.mjs
-  var import_element177 = __toESM(require_element(), 1);
+  var import_element176 = __toESM(require_element(), 1);
   var import_data35 = __toESM(require_data(), 1);
   var import_blocks27 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/provider/selection-context.mjs
-  var import_element176 = __toESM(require_element(), 1);
+  var import_element175 = __toESM(require_element(), 1);
   var noop7 = () => {
   };
-  var SelectionContext = (0, import_element176.createContext)({
+  var SelectionContext = (0, import_element175.createContext)({
     getSelection: () => void 0,
     onChangeSelection: noop7
   });
@@ -70173,7 +70007,7 @@ var wp;
     onInput = noop8
   }) {
     const registry = (0, import_data35.useRegistry)();
-    const { getSelection, onChangeSelection } = (0, import_element177.useContext)(SelectionContext);
+    const { getSelection, onChangeSelection } = (0, import_element176.useContext)(SelectionContext);
     const {
       resetBlocks: resetBlocks2,
       resetSelection: resetSelection2,
@@ -70182,14 +70016,14 @@ var wp;
       __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2
     } = registry.dispatch(store);
     const { getBlockName: getBlockName2, getBlocks: getBlocks2, getSelectionStart: getSelectionStart2, getSelectionEnd: getSelectionEnd2 } = registry.select(store);
-    const pendingChangesRef = (0, import_element177.useRef)({ incoming: null, outgoing: [] });
-    const subscribedRef = (0, import_element177.useRef)(false);
-    const idMappingRef = (0, import_element177.useRef)({
+    const pendingChangesRef = (0, import_element176.useRef)({ incoming: null, outgoing: [] });
+    const subscribedRef = (0, import_element176.useRef)(false);
+    const idMappingRef = (0, import_element176.useRef)({
       externalToInternal: /* @__PURE__ */ new Map(),
       internalToExternal: /* @__PURE__ */ new Map()
     });
-    const appliedSelectionRef = (0, import_element177.useRef)(null);
-    const isRestoringSelectionRef = (0, import_element177.useRef)(false);
+    const appliedSelectionRef = (0, import_element176.useRef)(null);
+    const isRestoringSelectionRef = (0, import_element176.useRef)(false);
     const restoreSelection = () => {
       const selection2 = getSelection();
       if (!selection2?.selectionStart?.clientId || selection2 === appliedSelectionRef.current) {
@@ -70271,13 +70105,13 @@ var wp;
         resetBlocks2([]);
       }
     };
-    const onInputRef = (0, import_element177.useRef)(onInput);
-    const onChangeRef = (0, import_element177.useRef)(onChange);
-    (0, import_element177.useEffect)(() => {
+    const onInputRef = (0, import_element176.useRef)(onInput);
+    const onChangeRef = (0, import_element176.useRef)(onChange);
+    (0, import_element176.useEffect)(() => {
       onInputRef.current = onInput;
       onChangeRef.current = onChange;
     }, [onInput, onChange]);
-    (0, import_element177.useEffect)(() => {
+    (0, import_element176.useEffect)(() => {
       const isOutgoing = (
         // An unset value is never pending.
         pendingChangesRef.current.outgoing.includes(
@@ -70295,7 +70129,7 @@ var wp;
         restoreSelection();
       }
     }, [controlledBlocks, clientId]);
-    (0, import_element177.useEffect)(() => {
+    (0, import_element176.useEffect)(() => {
       const {
         getSelectedBlocksInitialCaretPosition: getSelectedBlocksInitialCaretPosition2,
         isLastBlockChangePersistent: isLastBlockChangePersistent2,
@@ -70393,7 +70227,7 @@ var wp;
         unsubscribe();
       };
     }, [registry, clientId]);
-    (0, import_element177.useEffect)(() => {
+    (0, import_element176.useEffect)(() => {
       return () => {
         unsetControlledBlocks();
       };
@@ -70401,7 +70235,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/keyboard-shortcuts/index.mjs
-  var import_element178 = __toESM(require_element(), 1);
+  var import_element177 = __toESM(require_element(), 1);
   var import_data36 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts3 = __toESM(require_keyboard_shortcuts(), 1);
   var import_i18n45 = __toESM(require_i18n(), 1);
@@ -70413,7 +70247,7 @@ var wp;
       import_keyboard_shortcuts3.store
     );
     const [blockVisibility2] = useSettings("blockVisibility.allowEditing");
-    (0, import_element178.useEffect)(() => {
+    (0, import_element177.useEffect)(() => {
       registerShortcut({
         name: "core/block-editor/copy",
         category: "block",
@@ -70618,7 +70452,7 @@ var wp;
   var keyboard_shortcuts_default = KeyboardShortcuts;
 
   // packages/block-editor/build-module/components/block-keyboard-shortcuts/index.mjs
-  var import_element179 = __toESM(require_element(), 1);
+  var import_element178 = __toESM(require_element(), 1);
   var import_data37 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts4 = __toESM(require_keyboard_shortcuts(), 1);
   var import_blocks28 = __toESM(require_blocks(), 1);
@@ -70640,7 +70474,7 @@ var wp;
     } = (0, import_data37.useSelect)(store);
     const { getBlockVariations: getBlockVariations2, getActiveBlockVariation } = (0, import_data37.useSelect)(import_blocks28.store);
     const { replaceBlocks: replaceBlocks2, updateBlockAttributes: updateBlockAttributes2 } = (0, import_data37.useDispatch)(store);
-    return (0, import_element179.useCallback)(
+    return (0, import_element178.useCallback)(
       ({
         targetBlockName,
         blockNames,
@@ -70727,8 +70561,8 @@ var wp;
     const { registerShortcut, unregisterShortcut } = (0, import_data37.useDispatch)(
       import_keyboard_shortcuts4.store
     );
-    const registeredRef = (0, import_element179.useRef)(/* @__PURE__ */ new Map());
-    (0, import_element179.useEffect)(() => {
+    const registeredRef = (0, import_element178.useRef)(/* @__PURE__ */ new Map());
+    (0, import_element178.useEffect)(() => {
       const registered = /* @__PURE__ */ new Map();
       const combinations = /* @__PURE__ */ new Map();
       for (const shortcut of shortcuts) {
@@ -70788,9 +70622,9 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/provider/use-media-upload-settings.mjs
-  var import_element180 = __toESM(require_element(), 1);
+  var import_element179 = __toESM(require_element(), 1);
   function useMediaUploadSettings(settings3 = {}) {
-    return (0, import_element180.useMemo)(
+    return (0, import_element179.useMemo)(
       () => ({
         mediaUpload: settings3.mediaUpload,
         mediaSideload: settings3.mediaSideload,
@@ -70968,7 +70802,7 @@ var wp;
       const isHeicCanvasEnabled = shouldEnableHeicCanvasProcessing();
       const useUploadMediaPipeline = isClientSideMediaEnabled || isHeicCanvasEnabled;
       const isMediaUploadIntercepted = !!_settings?.mediaUpload?.__isMediaUploadInterceptor;
-      const settings3 = (0, import_element181.useMemo)(() => {
+      const settings3 = (0, import_element180.useMemo)(() => {
         if (useUploadMediaPipeline && _settings?.mediaUpload && !isMediaUploadIntercepted) {
           const uploadFn = isClientSideMediaEnabled ? mediaUpload : heicMediaUpload;
           const interceptor = uploadFn.bind(
@@ -70993,7 +70827,7 @@ var wp;
       const { __experimentalUpdateSettings: __experimentalUpdateSettings2 } = unlock(
         (0, import_data38.useDispatch)(store)
       );
-      (0, import_element181.useEffect)(() => {
+      (0, import_element180.useEffect)(() => {
         __experimentalUpdateSettings2(
           {
             ...settings3,
@@ -71009,11 +70843,11 @@ var wp;
         stripExperimentalSettings,
         __experimentalUpdateSettings2
       ]);
-      const selectionRef = (0, import_element181.useRef)(props.selection);
+      const selectionRef = (0, import_element180.useRef)(props.selection);
       selectionRef.current = props.selection;
-      const onChangeSelectionRef = (0, import_element181.useRef)(props.onChangeSelection ?? noop9);
+      const onChangeSelectionRef = (0, import_element180.useRef)(props.onChangeSelection ?? noop9);
       onChangeSelectionRef.current = props.onChangeSelection ?? noop9;
-      const selectionContextValue = (0, import_element181.useMemo)(
+      const selectionContextValue = (0, import_element180.useMemo)(
         () => ({
           getSelection: () => selectionRef.current,
           onChangeSelection: (...args) => onChangeSelectionRef.current(...args)
@@ -71060,12 +70894,12 @@ var wp;
   // packages/block-editor/build-module/components/block-preview/auto.mjs
   var import_compose55 = __toESM(require_compose(), 1);
   var import_data58 = __toESM(require_data(), 1);
-  var import_element192 = __toESM(require_element(), 1);
+  var import_element191 = __toESM(require_element(), 1);
   var import_components35 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/iframe/index.mjs
   var import_react63 = __toESM(require_react(), 1);
-  var import_element190 = __toESM(require_element(), 1);
+  var import_element189 = __toESM(require_element(), 1);
   var import_i18n53 = __toESM(require_i18n(), 1);
   var import_compose54 = __toESM(require_compose(), 1);
   var import_components33 = __toESM(require_components(), 1);
@@ -71075,7 +70909,7 @@ var wp;
   var import_data55 = __toESM(require_data(), 1);
   var import_i18n52 = __toESM(require_i18n(), 1);
   var import_compose52 = __toESM(require_compose(), 1);
-  var import_element188 = __toESM(require_element(), 1);
+  var import_element187 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/writing-flow/use-editable-root.mjs
   var import_data39 = __toESM(require_data(), 1);
@@ -71390,7 +71224,7 @@ var wp;
   var import_i18n48 = __toESM(require_i18n(), 1);
   var import_data42 = __toESM(require_data(), 1);
   var import_compose40 = __toESM(require_compose(), 1);
-  var import_element182 = __toESM(require_element(), 1);
+  var import_element181 = __toESM(require_element(), 1);
   var import_jsx_runtime345 = __toESM(require_jsx_runtime(), 1);
   var PREVENT_SCROLL_ON_FOCUS = {
     position: "absolute",
@@ -71400,9 +71234,9 @@ var wp;
   };
   var ENTRY_KEYS = ["Enter", " ", "F2", "Escape"];
   function useTabNav() {
-    const containerRef = (0, import_element182.useRef)(void 0);
-    const focusCaptureBeforeRef = (0, import_element182.useRef)(void 0);
-    const focusCaptureAfterRef = (0, import_element182.useRef)(void 0);
+    const containerRef = (0, import_element181.useRef)(void 0);
+    const focusCaptureBeforeRef = (0, import_element181.useRef)(void 0);
+    const focusCaptureAfterRef = (0, import_element181.useRef)(void 0);
     const hintId = (0, import_compose40.useInstanceId)(
       useTabNav,
       "block-editor-writing-flow__canvas-stop-hint"
@@ -71418,7 +71252,7 @@ var wp;
       isZoomOut: isZoomOut2
     } = unlock((0, import_data42.useSelect)(store));
     const { setLastFocus: setLastFocus2 } = unlock((0, import_data42.useDispatch)(store));
-    const noCaptureRef = (0, import_element182.useRef)(void 0);
+    const noCaptureRef = (0, import_element181.useRef)(void 0);
     function enterCanvas() {
       containerRef.current.ownerDocument.defaultView.focus();
       if (hasMultiSelection2()) {
@@ -72804,7 +72638,7 @@ var wp;
   var import_compose50 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/utils/use-notify-copy.mjs
-  var import_element183 = __toESM(require_element(), 1);
+  var import_element182 = __toESM(require_element(), 1);
   var import_blocks32 = __toESM(require_blocks(), 1);
   var import_data51 = __toESM(require_data(), 1);
   var import_i18n49 = __toESM(require_i18n(), 1);
@@ -72813,7 +72647,7 @@ var wp;
     const { getBlockName: getBlockName2 } = (0, import_data51.useSelect)(store);
     const { getBlockType: getBlockType34 } = (0, import_data51.useSelect)(import_blocks32.store);
     const { createSuccessNotice } = (0, import_data51.useDispatch)(import_notices3.store);
-    return (0, import_element183.useCallback)(
+    return (0, import_element182.useCallback)(
       (eventType, selectedBlockClientIds) => {
         let notice = "";
         if (eventType === "copyStyles") {
@@ -73247,7 +73081,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/multi-block-format-edit.mjs
   var import_data54 = __toESM(require_data(), 1);
-  var import_element187 = __toESM(require_element(), 1);
+  var import_element186 = __toESM(require_element(), 1);
   var import_compose51 = __toESM(require_compose(), 1);
   var import_components32 = __toESM(require_components(), 1);
   var import_blocks34 = __toESM(require_blocks(), 1);
@@ -73255,7 +73089,7 @@ var wp;
 
   // packages/block-editor/build-module/components/rich-text/format-edit.mjs
   var import_rich_text6 = __toESM(require_rich_text(), 1);
-  var import_element184 = __toESM(require_element(), 1);
+  var import_element183 = __toESM(require_element(), 1);
   var import_jsx_runtime346 = __toESM(require_jsx_runtime(), 1);
   var import_react62 = __toESM(require_react(), 1);
   var DEFAULT_BLOCK_CONTEXT = {};
@@ -73273,8 +73107,8 @@ var wp;
       edit: EditFunction,
       [usesContextKey]: usesContext
     } = settings3;
-    const blockContext = (0, import_element184.useContext)(block_context_default);
-    const context = (0, import_element184.useMemo)(() => {
+    const blockContext = (0, import_element183.useContext)(block_context_default);
+    const context = (0, import_element183.useMemo)(() => {
       return usesContext ? Object.fromEntries(
         Object.entries(blockContext).filter(
           ([key]) => usesContext.includes(key)
@@ -73396,7 +73230,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-controls/slot.mjs
-  var import_element185 = __toESM(require_element(), 1);
+  var import_element184 = __toESM(require_element(), 1);
   var import_components28 = __toESM(require_components(), 1);
   var import_warning7 = __toESM(require_warning(), 1);
   var import_jsx_runtime348 = __toESM(require_jsx_runtime(), 1);
@@ -73405,9 +73239,9 @@ var wp;
     group = "default",
     ...props
   }) {
-    const toolbarState = (0, import_element185.useContext)(import_components28.__experimentalToolbarContext);
-    const contextState = (0, import_element185.useContext)(ComponentsContext);
-    const fillProps = (0, import_element185.useMemo)(
+    const toolbarState = (0, import_element184.useContext)(import_components28.__experimentalToolbarContext);
+    const contextState = (0, import_element184.useContext)(ComponentsContext);
+    const fillProps = (0, import_element184.useMemo)(
       () => ({
         forwardedContext: [
           [import_components28.__experimentalToolbarContext.Provider, { value: toolbarState }],
@@ -73500,7 +73334,7 @@ var wp;
 
   // packages/block-editor/build-module/components/navigable-toolbar/index.mjs
   var import_components30 = __toESM(require_components(), 1);
-  var import_element186 = __toESM(require_element(), 1);
+  var import_element185 = __toESM(require_element(), 1);
   var import_data53 = __toESM(require_data(), 1);
   var import_deprecated7 = __toESM(require_deprecated(), 1);
   var import_dom59 = __toESM(require_dom(), 1);
@@ -73534,10 +73368,10 @@ var wp;
   }
   function useIsAccessibleToolbar(toolbarRef) {
     const initialAccessibleToolbarState = true;
-    const [isAccessibleToolbar, setIsAccessibleToolbar] = (0, import_element186.useState)(
+    const [isAccessibleToolbar, setIsAccessibleToolbar] = (0, import_element185.useState)(
       initialAccessibleToolbarState
     );
-    const determineIsAccessibleToolbar = (0, import_element186.useCallback)(() => {
+    const determineIsAccessibleToolbar = (0, import_element185.useCallback)(() => {
       const tabbables = import_dom59.focus.tabbable.find(toolbarRef.current).filter(
         (element) => !element.hasAttribute("data-base-ui-focus-guard")
       );
@@ -73554,7 +73388,7 @@ var wp;
       }
       setIsAccessibleToolbar(onlyToolbarItem);
     }, [toolbarRef]);
-    (0, import_element186.useLayoutEffect)(() => {
+    (0, import_element185.useLayoutEffect)(() => {
       const observer = new window.MutationObserver(
         determineIsAccessibleToolbar
       );
@@ -73575,13 +73409,13 @@ var wp;
     shouldUseKeyboardFocusShortcut,
     focusEditorOnEscape
   }) {
-    const [initialFocusOnMount] = (0, import_element186.useState)(focusOnMount);
-    const [initialIndex] = (0, import_element186.useState)(defaultIndex);
+    const [initialFocusOnMount] = (0, import_element185.useState)(focusOnMount);
+    const [initialIndex] = (0, import_element185.useState)(defaultIndex);
     const { getLastFocus: getLastFocus2, getSelectedBlockClientId: getSelectedBlockClientId2 } = unlock(
       (0, import_data53.useSelect)(store)
     );
-    const { refsMap } = (0, import_element186.useContext)(BlockRefs);
-    const focusToolbar = (0, import_element186.useCallback)(() => {
+    const { refsMap } = (0, import_element185.useContext)(BlockRefs);
+    const focusToolbar = (0, import_element185.useCallback)(() => {
       focusFirstTabbableIn(toolbarRef.current);
     }, [toolbarRef]);
     const focusToolbarViaShortcut = () => {
@@ -73590,12 +73424,12 @@ var wp;
       }
     };
     (0, import_keyboard_shortcuts7.useShortcut)("core/block-editor/focus-toolbar", focusToolbarViaShortcut);
-    (0, import_element186.useEffect)(() => {
+    (0, import_element185.useEffect)(() => {
       if (initialFocusOnMount) {
         focusToolbar();
       }
     }, [isAccessibleToolbar, initialFocusOnMount, focusToolbar]);
-    (0, import_element186.useEffect)(() => {
+    (0, import_element185.useEffect)(() => {
       const navigableToolbarRef = toolbarRef.current;
       let raf2 = 0;
       if (!initialFocusOnMount && !hasFocusWithin(navigableToolbarRef)) {
@@ -73622,7 +73456,7 @@ var wp;
         onIndexChange(index3);
       };
     }, [initialIndex, initialFocusOnMount, onIndexChange, toolbarRef]);
-    (0, import_element186.useEffect)(() => {
+    (0, import_element185.useEffect)(() => {
       if (!focusEditorOnEscape) {
         return;
       }
@@ -73659,7 +73493,7 @@ var wp;
     orientation = "horizontal",
     ...props
   }) {
-    const toolbarRef = (0, import_element186.useRef)(void 0);
+    const toolbarRef = (0, import_element185.useRef)(void 0);
     const isAccessibleToolbar = useIsAccessibleToolbar(toolbarRef);
     useToolbarFocus({
       toolbarRef,
@@ -73774,9 +73608,9 @@ var wp;
     ...DEFAULT_BLOCK_EDIT_CONTEXT,
     [mayDisplayControlsKey]: true
   };
-  var ShortcutsContext = (0, import_element187.createContext)(void 0);
+  var ShortcutsContext = (0, import_element186.createContext)(void 0);
   function useMultiBlockFormatShortcuts() {
-    const keyboardShortcuts = (0, import_element187.useContext)(ShortcutsContext);
+    const keyboardShortcuts = (0, import_element186.useContext)(ShortcutsContext);
     return (0, import_compose51.useRefEffect)(
       (element) => {
         if (keyboardShortcuts) {
@@ -73836,8 +73670,8 @@ var wp;
     children,
     contentRef
   }) {
-    const [keyboardShortcuts] = (0, import_element187.useState)(() => /* @__PURE__ */ new Set());
-    const fallbackRef = (0, import_element187.useRef)(null);
+    const [keyboardShortcuts] = (0, import_element186.useState)(() => /* @__PURE__ */ new Set());
+    const fallbackRef = (0, import_element186.useRef)(null);
     const selection2 = (0, import_data54.useSelect)(selector2, []);
     return /* @__PURE__ */ (0, import_jsx_runtime353.jsxs)(ShortcutsContext.Provider, { value: keyboardShortcuts, children: [
       children,
@@ -73881,7 +73715,7 @@ var wp;
       },
       [clientIds, keys]
     );
-    const { allowedFormats, withoutInteractiveFormatting, disabled: disabled2 } = (0, import_element187.useMemo)(() => {
+    const { allowedFormats, withoutInteractiveFormatting, disabled: disabled2 } = (0, import_element186.useMemo)(() => {
       const fields = clientIds.map(
         (clientId, i) => getFieldFormatSettings(clientId, keys[i])
       );
@@ -73900,11 +73734,11 @@ var wp;
       allowedFormats,
       withoutInteractiveFormatting
     });
-    const [inputEvents] = (0, import_element187.useState)(
+    const [inputEvents] = (0, import_element186.useState)(
       () => /* @__PURE__ */ new Set()
     );
-    const records = (0, import_element187.useMemo)(() => values.map(toRecord), [values]);
-    const value = (0, import_element187.useMemo)(() => {
+    const records = (0, import_element186.useMemo)(() => values.map(toRecord), [values]);
+    const value = (0, import_element186.useMemo)(() => {
       const position = ({ clientId, offset: offset4 = 0 }) => records.slice(0, clientIds.indexOf(clientId)).reduce(
         (sum, { text }) => sum + text.length + SEPARATOR.length,
         offset4
@@ -74076,7 +73910,7 @@ var wp;
       after
     ] });
   }
-  var writing_flow_default = (0, import_element188.forwardRef)(WritingFlow);
+  var writing_flow_default = (0, import_element187.forwardRef)(WritingFlow);
 
   // packages/block-editor/build-module/components/iframe/get-compatibility-styles.mjs
   var compatibilityStyles = null;
@@ -74153,7 +73987,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/iframe/use-scale-canvas.mjs
-  var import_element189 = __toESM(require_element(), 1);
+  var import_element188 = __toESM(require_element(), 1);
   var import_compose53 = __toESM(require_compose(), 1);
   function calculateScale({
     frameSize,
@@ -74221,24 +74055,24 @@ var wp;
     maxContainerWidth = 750,
     scale
   }) {
-    const [{ height: contentHeight }, setContentRect] = (0, import_element189.useState)(NULL_SIZE);
+    const [{ height: contentHeight }, setContentRect] = (0, import_element188.useState)(NULL_SIZE);
     const contentRef = (0, import_compose53.useResizeObserver)((entries) => {
       setContentRect(extractSize(entries));
     });
     const [
       { width: containerWidth, height: containerHeight },
       setContainerRect
-    ] = (0, import_element189.useState)(NULL_SIZE);
+    ] = (0, import_element188.useState)(NULL_SIZE);
     const containerRef = (0, import_compose53.useResizeObserver)((entries) => {
       setContainerRect(extractSize(entries));
     });
-    const initialContainerWidthRef = (0, import_element189.useRef)(0);
+    const initialContainerWidthRef = (0, import_element188.useRef)(0);
     const isZoomedOut = scale !== 1;
     const prefersReducedMotion = (0, import_compose53.useReducedMotion)();
     const isAutoScaled = scale === "auto-scaled";
-    const startAnimationRef = (0, import_element189.useRef)(false);
-    const animationRef = (0, import_element189.useRef)(null);
-    (0, import_element189.useEffect)(() => {
+    const startAnimationRef = (0, import_element188.useRef)(false);
+    const animationRef = (0, import_element188.useRef)(null);
+    (0, import_element188.useEffect)(() => {
       if (!isZoomedOut) {
         initialContainerWidthRef.current = containerWidth;
       }
@@ -74254,21 +74088,21 @@ var wp;
       maxContainerWidth,
       scaleContainerWidth
     }) : scale;
-    const transitionFromRef = (0, import_element189.useRef)({
+    const transitionFromRef = (0, import_element188.useRef)({
       scaleValue,
       frameSize,
       containerHeight: 0,
       scrollTop: 0,
       scrollHeight: 0
     });
-    const transitionToRef = (0, import_element189.useRef)({
+    const transitionToRef = (0, import_element188.useRef)({
       scaleValue,
       frameSize,
       containerHeight: 0,
       scrollTop: 0,
       scrollHeight: 0
     });
-    const startZoomOutAnimation = (0, import_element189.useCallback)(() => {
+    const startZoomOutAnimation = (0, import_element188.useCallback)(() => {
       const { scrollTop } = transitionFromRef.current;
       const { scrollTop: scrollTopNext } = transitionToRef.current;
       iframeDocument.documentElement.style.setProperty(
@@ -74295,7 +74129,7 @@ var wp;
         }
       );
     }, [iframeDocument]);
-    const finishZoomOutAnimation = (0, import_element189.useCallback)(() => {
+    const finishZoomOutAnimation = (0, import_element188.useCallback)(() => {
       startAnimationRef.current = false;
       animationRef.current = null;
       iframeDocument.documentElement.style.setProperty(
@@ -74320,8 +74154,8 @@ var wp;
       );
       transitionFromRef.current = transitionToRef.current;
     }, [iframeDocument]);
-    const previousIsZoomedOut = (0, import_element189.useRef)(false);
-    (0, import_element189.useEffect)(() => {
+    const previousIsZoomedOut = (0, import_element188.useRef)(false);
+    (0, import_element188.useEffect)(() => {
       if (!iframeDocument) {
         return;
       }
@@ -74339,7 +74173,7 @@ var wp;
         iframeDocument.documentElement.classList.remove("is-zoomed-out");
       };
     }, [iframeDocument, isZoomedOut]);
-    (0, import_element189.useEffect)(() => {
+    (0, import_element188.useEffect)(() => {
       if (!iframeDocument) {
         return;
       }
@@ -74438,12 +74272,91 @@ var wp;
     };
   }
 
-  // packages/block-editor/build-module/components/iframe/index.mjs
-  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
-  function bubbleEvent(event, Constructor, frame) {
+  // packages/block-editor/build-module/components/iframe/clone-event.mjs
+  var EVENT_FIELDS = ["bubbles", "cancelable", "composed"];
+  var UI_EVENT_FIELDS = [...EVENT_FIELDS, "detail", "view"];
+  var MOUSE_EVENT_FIELDS = [
+    ...UI_EVENT_FIELDS,
+    "screenX",
+    "screenY",
+    "clientX",
+    "clientY",
+    "ctrlKey",
+    "shiftKey",
+    "altKey",
+    "metaKey",
+    "button",
+    "buttons",
+    "relatedTarget",
+    "movementX",
+    "movementY"
+  ];
+  var DRAG_EVENT_FIELDS = [...MOUSE_EVENT_FIELDS, "dataTransfer"];
+  var POINTER_EVENT_FIELDS = [
+    ...MOUSE_EVENT_FIELDS,
+    "pointerId",
+    "width",
+    "height",
+    "pressure",
+    "tangentialPressure",
+    "tiltX",
+    "tiltY",
+    "twist",
+    "altitudeAngle",
+    "azimuthAngle",
+    "pointerType",
+    "isPrimary"
+  ];
+  var KEYBOARD_EVENT_FIELDS = [
+    ...UI_EVENT_FIELDS,
+    "key",
+    "code",
+    "location",
+    "repeat",
+    "isComposing",
+    "ctrlKey",
+    "shiftKey",
+    "altKey",
+    "metaKey",
+    // Deprecated, but still widely read, and they default to 0 if omitted.
+    "charCode",
+    "keyCode",
+    "which"
+  ];
+  var EVENT_FIELDS_BY_INTERFACE = {
+    Event: EVENT_FIELDS,
+    UIEvent: UI_EVENT_FIELDS,
+    MouseEvent: MOUSE_EVENT_FIELDS,
+    DragEvent: DRAG_EVENT_FIELDS,
+    PointerEvent: POINTER_EVENT_FIELDS,
+    KeyboardEvent: KEYBOARD_EVENT_FIELDS
+  };
+  var MODIFIER_MEMBERS = {
+    modifierAltGraph: "AltGraph",
+    modifierCapsLock: "CapsLock",
+    modifierNumLock: "NumLock",
+    modifierScrollLock: "ScrollLock",
+    modifierFn: "Fn",
+    modifierSymbol: "Symbol"
+  };
+  function getEventConstructor(interfaceName) {
+    return window[interfaceName];
+  }
+  function hasModifierState(event) {
+    return "getModifierState" in event;
+  }
+  function cloneEvent(event, frame) {
+    const interfaceName = Object.getPrototypeOf(event).constructor.name;
     const init2 = {};
-    for (const key in event) {
-      init2[key] = event[key];
+    for (const field of EVENT_FIELDS_BY_INTERFACE[interfaceName] ?? EVENT_FIELDS) {
+      init2[field] = event[field];
+    }
+    if (hasModifierState(event)) {
+      for (const [member, modifier] of Object.entries(
+        MODIFIER_MEMBERS
+      )) {
+        init2[member] = event.getModifierState(modifier);
+      }
     }
     if (
       // A frame that dispatches events has a document and window.
@@ -74453,14 +74366,54 @@ var wp;
       init2.clientX += rect.left;
       init2.clientY += rect.top;
     }
-    const newEvent = new Constructor(event.type, init2);
-    if (init2.defaultPrevented) {
-      newEvent.preventDefault();
+    const clone = new (getEventConstructor(interfaceName))(
+      event.type,
+      init2
+    );
+    if (event.defaultPrevented) {
+      clone.preventDefault();
     }
-    const cancelled2 = !frame.dispatchEvent(newEvent);
+    return clone;
+  }
+
+  // packages/block-editor/build-module/components/iframe/index.mjs
+  var import_jsx_runtime355 = __toESM(require_jsx_runtime(), 1);
+  var BRIDGED_EVENTS = [
+    { native: "dragover", react: "onDragOver" },
+    { native: "mousemove", react: "onMouseMove" },
+    { native: "pointerdown", react: "onPointerDown" },
+    { native: "mousedown", react: "onMouseDown" },
+    { native: "click", react: "onClick" },
+    { native: "keydown", react: "onKeyDown" }
+  ];
+  function bubbleEvent(event, frame) {
+    const cancelled2 = !frame.dispatchEvent(cloneEvent(event, frame));
     if (cancelled2) {
       event.preventDefault();
     }
+  }
+  function hasCrossedPortalBoundary(event) {
+    return event.currentTarget.ownerDocument !== event.target.ownerDocument;
+  }
+  function stopReactPortalPropagation(event) {
+    const { stopPropagation: stopPropagation2 } = event.nativeEvent;
+    event.nativeEvent.stopPropagation = () => {
+    };
+    event.stopPropagation();
+    event.nativeEvent.stopPropagation = stopPropagation2;
+  }
+  function getPortalBoundaryEventProps(props) {
+    const boundaryProps = {};
+    for (const { react: propName } of BRIDGED_EVENTS) {
+      boundaryProps[propName] = (event) => {
+        if (hasCrossedPortalBoundary(event)) {
+          stopReactPortalPropagation(event);
+          return;
+        }
+        props[propName]?.(event);
+      };
+    }
+    return boundaryProps;
   }
   function useBubbleEvents(iframeDocument) {
     return (0, import_compose54.useRefEffect)(() => {
@@ -74469,25 +74422,19 @@ var wp;
         return;
       }
       const { frameElement } = defaultView;
-      const html = iframeDocument.documentElement;
-      const eventTypes = ["dragover", "mousemove"];
       const handlers = {};
-      for (const name of eventTypes) {
-        handlers[name] = (event) => {
-          const prototype = Object.getPrototypeOf(event);
-          const constructorName = prototype.constructor.name;
-          const Constructor = window[constructorName];
-          bubbleEvent(
-            event,
-            Constructor,
-            frameElement
-          );
+      for (const { native } of BRIDGED_EVENTS) {
+        handlers[native] = (event) => {
+          bubbleEvent(event, frameElement);
         };
-        html.addEventListener(name, handlers[name]);
+        iframeDocument.addEventListener(native, handlers[native]);
       }
       return () => {
-        for (const name of eventTypes) {
-          html.removeEventListener(name, handlers[name]);
+        for (const { native } of BRIDGED_EVENTS) {
+          iframeDocument.removeEventListener(
+            native,
+            handlers[native]
+          );
         }
       };
     });
@@ -74551,8 +74498,8 @@ var wp;
         isPreviewMode: settings3.isPreviewMode
       };
     }, []);
-    const [iframeDocument, setIframeDocument] = (0, import_element190.useState)();
-    const [bodyClasses, setBodyClasses] = (0, import_element190.useState)([]);
+    const [iframeDocument, setIframeDocument] = (0, import_element189.useState)();
+    const [bodyClasses, setBodyClasses] = (0, import_element189.useState)([]);
     const [before, writingFlowRef, after] = useWritingFlow();
     const setRef2 = (0, import_compose54.useRefEffect)((node) => {
       let iFrameDocument;
@@ -74661,6 +74608,7 @@ var wp;
         "iframe",
         {
           ...props,
+          ...getPortalBoundaryEventProps(props),
           style: {
             ...props.style,
             height: props.style?.height,
@@ -74674,24 +74622,7 @@ var wp;
           tabIndex,
           src,
           title,
-          onKeyDown: (event) => {
-            if (props.onKeyDown) {
-              props.onKeyDown(event);
-            }
-            if (event.currentTarget.ownerDocument !== event.target.ownerDocument) {
-              const { stopPropagation: stopPropagation2 } = event.nativeEvent;
-              event.nativeEvent.stopPropagation = () => {
-              };
-              event.stopPropagation();
-              event.nativeEvent.stopPropagation = stopPropagation2;
-              bubbleEvent(
-                event,
-                window.KeyboardEvent,
-                event.currentTarget
-              );
-            }
-          },
-          children: iframeDocument && (0, import_element190.createPortal)(
+          children: iframeDocument && (0, import_element189.createPortal)(
             /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(
               "body",
               {
@@ -74734,11 +74665,11 @@ var wp;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime355.jsx)(Iframe, { ...props, forwardedRef: ref });
   }
-  var iframe_default = (0, import_element190.forwardRef)(IframeIfReady);
+  var iframe_default = (0, import_element189.forwardRef)(IframeIfReady);
 
   // packages/block-editor/build-module/components/editor-styles/index.mjs
   var import_components34 = __toESM(require_components(), 1);
-  var import_element191 = __toESM(require_element(), 1);
+  var import_element190 = __toESM(require_element(), 1);
   var import_data57 = __toESM(require_data(), 1);
 
   // node_modules/.store/parsel-js@1.1.2-ptMv75cntIKeTaIe2vbqkg/node_modules/parsel-js/dist/parsel.js
@@ -75029,7 +74960,7 @@ var wp;
   var import_jsx_runtime356 = __toESM(require_jsx_runtime(), 1);
   D([e, r2]);
   function useDarkThemeBodyClassName(styles, scope) {
-    return (0, import_element191.useCallback)(
+    return (0, import_element190.useCallback)(
       (node) => {
         if (!node) {
           return;
@@ -75066,7 +74997,7 @@ var wp;
       (select3) => unlock(select3(store)).getStyleOverrides(),
       []
     );
-    const [transformedStyles, transformedSvgs] = (0, import_element191.useMemo)(() => {
+    const [transformedStyles, transformedSvgs] = (0, import_element190.useMemo)(() => {
       const _styles = Object.values(styles ?? []);
       const orderedOverrides = [
         ...overrides.filter(
@@ -75122,11 +75053,11 @@ var wp;
       )
     ] });
   }
-  var editor_styles_default = (0, import_element191.memo)(EditorStyles);
+  var editor_styles_default = (0, import_element190.memo)(EditorStyles);
 
   // packages/block-editor/build-module/components/block-preview/auto.mjs
   var import_jsx_runtime357 = __toESM(require_jsx_runtime(), 1);
-  var MemoizedBlockList = (0, import_element192.memo)(BlockList);
+  var MemoizedBlockList = (0, import_element191.memo)(BlockList);
   var MAX_HEIGHT = 2e3;
   var EMPTY_ADDITIONAL_STYLES = [];
   function ScaledBlockPreview({
@@ -75145,7 +75076,7 @@ var wp;
         styles: settings3.styles
       };
     }, []);
-    const editorStyles = (0, import_element192.useMemo)(() => {
+    const editorStyles = (0, import_element191.useMemo)(() => {
       if (styles) {
         return [
           ...styles,
@@ -75227,15 +75158,15 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/block-preview/async.mjs
-  var import_element193 = __toESM(require_element(), 1);
+  var import_element192 = __toESM(require_element(), 1);
   var import_priority_queue = __toESM(require_priority_queue(), 1);
   var blockPreviewQueue = (0, import_priority_queue.createQueue)();
   function Async({ children, placeholder }) {
-    const [shouldRender, setShouldRender] = (0, import_element193.useState)(false);
-    (0, import_element193.useEffect)(() => {
+    const [shouldRender, setShouldRender] = (0, import_element192.useState)(false);
+    (0, import_element192.useEffect)(() => {
       const context = {};
       blockPreviewQueue.add(context, () => {
-        (0, import_element193.flushSync)(() => {
+        (0, import_element192.flushSync)(() => {
           setShouldRender(true);
         });
       });
@@ -75284,14 +75215,14 @@ var wp;
       (select3) => select3(store).getSettings(),
       []
     );
-    const settings3 = (0, import_element194.useMemo)(
+    const settings3 = (0, import_element193.useMemo)(
       () => ({
         ...originalSettings,
         isPreviewMode: true
       }),
       [originalSettings]
     );
-    const renderedBlocks = (0, import_element194.useMemo)(
+    const renderedBlocks = (0, import_element193.useMemo)(
       () => Array.isArray(blocks2) ? blocks2 : [blocks2],
       [blocks2]
     );
@@ -75314,7 +75245,7 @@ var wp;
       }
     );
   }
-  var MemoizedBlockPreview = (0, import_element194.memo)(BlockPreview);
+  var MemoizedBlockPreview = (0, import_element193.memo)(BlockPreview);
   MemoizedBlockPreview.Async = Async;
   var block_preview_default = MemoizedBlockPreview;
   function useBlockPreview({ blocks: blocks2, props = {}, layout }) {
@@ -75322,7 +75253,7 @@ var wp;
       (select3) => select3(store).getSettings(),
       []
     );
-    const settings3 = (0, import_element194.useMemo)(
+    const settings3 = (0, import_element193.useMemo)(
       () => ({
         ...originalSettings,
         styles: void 0,
@@ -75333,7 +75264,7 @@ var wp;
     );
     const disabledRef = (0, import_compose56.useDisabled)();
     const ref = (0, import_compose56.useMergeRefs)([props.ref, disabledRef]);
-    const renderedBlocks = (0, import_element194.useMemo)(
+    const renderedBlocks = (0, import_element193.useMemo)(
       () => Array.isArray(blocks2) ? blocks2 : [blocks2],
       [blocks2]
     );
@@ -75364,7 +75295,7 @@ var wp;
   function InserterPreviewPanel({ item }) {
     const { name, title, icon, description, initialAttributes, example } = item;
     const isReusable = (0, import_blocks35.isReusableBlock)(item);
-    const blocks2 = (0, import_element195.useMemo)(() => {
+    const blocks2 = (0, import_element194.useMemo)(() => {
       if (!example) {
         return (0, import_blocks35.createBlock)(name, initialAttributes);
       }
@@ -75421,7 +75352,7 @@ var wp;
 
   // packages/block-editor/build-module/components/inserter/block-types-tab.mjs
   var import_i18n58 = __toESM(require_i18n(), 1);
-  var import_element202 = __toESM(require_element(), 1);
+  var import_element201 = __toESM(require_element(), 1);
   var import_compose58 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-types-list/index.mjs
@@ -75429,23 +75360,23 @@ var wp;
   var import_compose57 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/inserter-list-item/index.mjs
-  var import_element201 = __toESM(require_element(), 1);
+  var import_element200 = __toESM(require_element(), 1);
   var import_blocks37 = __toESM(require_blocks(), 1);
   var import_components41 = __toESM(require_components(), 1);
   var import_keycodes10 = __toESM(require_keycodes(), 1);
 
   // packages/block-editor/build-module/components/inserter-listbox/index.mjs
   var import_components38 = __toESM(require_components(), 1);
-  var import_element199 = __toESM(require_element(), 1);
+  var import_element198 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inserter-listbox/group.mjs
-  var import_element196 = __toESM(require_element(), 1);
+  var import_element195 = __toESM(require_element(), 1);
   var import_i18n55 = __toESM(require_i18n(), 1);
   var import_a11y6 = __toESM(require_a11y(), 1);
   var import_jsx_runtime360 = __toESM(require_jsx_runtime(), 1);
   function InserterListboxGroup(props, ref) {
-    const [shouldSpeak, setShouldSpeak] = (0, import_element196.useState)(false);
-    (0, import_element196.useEffect)(() => {
+    const [shouldSpeak, setShouldSpeak] = (0, import_element195.useState)(false);
+    (0, import_element195.useEffect)(() => {
       if (shouldSpeak) {
         (0, import_a11y6.speak)(
           (0, import_i18n55.__)("Use left and right arrow keys to move through blocks")
@@ -75473,20 +75404,20 @@ var wp;
       }
     );
   }
-  var group_default2 = (0, import_element196.forwardRef)(InserterListboxGroup);
+  var group_default2 = (0, import_element195.forwardRef)(InserterListboxGroup);
 
   // packages/block-editor/build-module/components/inserter-listbox/row.mjs
-  var import_element197 = __toESM(require_element(), 1);
+  var import_element196 = __toESM(require_element(), 1);
   var import_components36 = __toESM(require_components(), 1);
   var import_jsx_runtime361 = __toESM(require_jsx_runtime(), 1);
   function InserterListboxRow(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime361.jsx)(import_components36.Composite.Group, { role: "presentation", ref, ...props });
   }
-  var row_default2 = (0, import_element197.forwardRef)(InserterListboxRow);
+  var row_default2 = (0, import_element196.forwardRef)(InserterListboxRow);
 
   // packages/block-editor/build-module/components/inserter-listbox/item.mjs
   var import_components37 = __toESM(require_components(), 1);
-  var import_element198 = __toESM(require_element(), 1);
+  var import_element197 = __toESM(require_element(), 1);
   var import_jsx_runtime362 = __toESM(require_jsx_runtime(), 1);
   function InserterListboxItem({ isFirst, as: Component4, children, ...props }, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime362.jsx)(
@@ -75517,7 +75448,7 @@ var wp;
       }
     );
   }
-  var item_default = (0, import_element198.forwardRef)(InserterListboxItem);
+  var item_default = (0, import_element197.forwardRef)(InserterListboxItem);
 
   // packages/block-editor/build-module/components/inserter-listbox/index.mjs
   var import_jsx_runtime363 = __toESM(require_jsx_runtime(), 1);
@@ -75525,7 +75456,7 @@ var wp;
     key,
     children
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_element199.Fragment, { children }, key);
+    return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(import_element198.Fragment, { children }, key);
   }
   function InserterListbox({ children }) {
     return /* @__PURE__ */ (0, import_jsx_runtime363.jsx)(
@@ -75544,7 +75475,7 @@ var wp;
   var import_components40 = __toESM(require_components(), 1);
   var import_blocks36 = __toESM(require_blocks(), 1);
   var import_data60 = __toESM(require_data(), 1);
-  var import_element200 = __toESM(require_element(), 1);
+  var import_element199 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-draggable/draggable-chip.mjs
   var import_i18n56 = __toESM(require_i18n(), 1);
@@ -75605,7 +75536,7 @@ var wp;
     const { startDragging: startDragging2, stopDragging: stopDragging2 } = unlock(
       (0, import_data60.useDispatch)(store)
     );
-    const patternBlock = (0, import_element200.useMemo)(() => {
+    const patternBlock = (0, import_element199.useMemo)(() => {
       return pattern?.type === INSERTER_PATTERN_TYPES.user && pattern?.syncStatus !== "unsynced" ? [(0, import_blocks36.createBlock)("core/block", { ref: pattern.id })] : void 0;
     }, [pattern?.type, pattern?.syncStatus, pattern?.id]);
     if (!isEnabled) {
@@ -75665,12 +75596,12 @@ var wp;
     isDraggable,
     ...props
   }) {
-    const isDraggingRef = (0, import_element201.useRef)(false);
+    const isDraggingRef = (0, import_element200.useRef)(false);
     const itemIconStyle = item.icon ? {
       backgroundColor: item.icon.background,
       color: item.icon.foreground
     } : {};
-    const blocks2 = (0, import_element201.useMemo)(
+    const blocks2 = (0, import_element200.useMemo)(
       () => [
         (0, import_blocks37.createBlock)(
           item.name,
@@ -75770,7 +75701,7 @@ var wp;
       }
     );
   }
-  var inserter_list_item_default = (0, import_element201.memo)(InserterListItem);
+  var inserter_list_item_default = (0, import_element200.memo)(InserterListItem);
 
   // packages/block-editor/build-module/components/block-types-list/index.mjs
   var import_jsx_runtime367 = __toESM(require_jsx_runtime(), 1);
@@ -75849,16 +75780,16 @@ var wp;
     showMostUsedBlocks,
     className
   }) {
-    const suggestedItems = (0, import_element202.useMemo)(() => {
+    const suggestedItems = (0, import_element201.useMemo)(() => {
       return orderBy(items, "frecency", "desc").slice(
         0,
         MAX_SUGGESTED_ITEMS
       );
     }, [items]);
-    const uncategorizedItems = (0, import_element202.useMemo)(() => {
+    const uncategorizedItems = (0, import_element201.useMemo)(() => {
       return items.filter((item) => !item.category);
     }, [items]);
-    const itemsPerCollection = (0, import_element202.useMemo)(() => {
+    const itemsPerCollection = (0, import_element201.useMemo)(() => {
       const result = { ...collections };
       Object.keys(collections).forEach((namespace) => {
         result[namespace] = items.filter(
@@ -75870,10 +75801,10 @@ var wp;
       });
       return result;
     }, [items, collections]);
-    (0, import_element202.useEffect)(() => () => onHover(null), []);
+    (0, import_element201.useEffect)(() => () => onHover(null), []);
     const currentlyRenderedCategories = (0, import_compose58.useAsyncList)(categories);
     const didRenderAllCategories = categories.length === currentlyRenderedCategories.length;
-    const collectionEntries = (0, import_element202.useMemo)(() => {
+    const collectionEntries = (0, import_element201.useMemo)(() => {
       return Object.entries(collections);
     }, [collections]);
     const currentlyRenderedCollections = (0, import_compose58.useAsyncList)(
@@ -75964,7 +75895,7 @@ var wp;
       rootClientId,
       onInsert
     );
-    const [itemsForCurrentRoot, itemsRemaining] = (0, import_element202.useMemo)(() => {
+    const [itemsForCurrentRoot, itemsRemaining] = (0, import_element201.useMemo)(() => {
       const forCurrentRoot = [];
       const remaining = [];
       for (const item of items) {
@@ -76012,17 +75943,17 @@ var wp;
       )
     ] }) });
   }
-  var block_types_tab_default = (0, import_element202.forwardRef)(BlockTypesTab);
+  var block_types_tab_default = (0, import_element201.forwardRef)(BlockTypesTab);
 
   // packages/block-editor/build-module/components/inserter/block-patterns-tab/index.mjs
-  var import_element213 = __toESM(require_element(), 1);
+  var import_element212 = __toESM(require_element(), 1);
   var import_compose63 = __toESM(require_compose(), 1);
   var import_components51 = __toESM(require_components(), 1);
   var import_i18n70 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/inserter/block-patterns-explorer/index.mjs
   var import_components46 = __toESM(require_components(), 1);
-  var import_element209 = __toESM(require_element(), 1);
+  var import_element208 = __toESM(require_element(), 1);
   var import_i18n66 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/inserter/block-patterns-explorer/pattern-explorer-sidebar.mjs
@@ -76058,14 +75989,14 @@ var wp;
   var pattern_explorer_sidebar_default = PatternExplorerSidebar;
 
   // packages/block-editor/build-module/components/inserter/block-patterns-explorer/pattern-list.mjs
-  var import_element207 = __toESM(require_element(), 1);
+  var import_element206 = __toESM(require_element(), 1);
   var import_i18n64 = __toESM(require_i18n(), 1);
   var import_compose61 = __toESM(require_compose(), 1);
   var import_a11y8 = __toESM(require_a11y(), 1);
 
   // packages/block-editor/build-module/components/block-patterns-list/index.mjs
   var import_blocks39 = __toESM(require_blocks(), 1);
-  var import_element203 = __toESM(require_element(), 1);
+  var import_element202 = __toESM(require_element(), 1);
   var import_components45 = __toESM(require_components(), 1);
   var import_compose59 = __toESM(require_compose(), 1);
   var import_i18n61 = __toESM(require_i18n(), 1);
@@ -76201,12 +76132,12 @@ var wp;
     category,
     isSelected: isSelected2
   }) {
-    const [isDragging3, setIsDragging] = (0, import_element203.useState)(false);
+    const [isDragging3, setIsDragging] = (0, import_element202.useState)(false);
     const { blocks: blocks2, viewportWidth } = pattern;
     const instanceId = (0, import_compose59.useInstanceId)(BlockPattern);
     const descriptionId = `block-editor-block-patterns-list__item-description-${instanceId}`;
     const isUserPattern = pattern.type === INSERTER_PATTERN_TYPES.user;
-    const patternBlocks = (0, import_element203.useMemo)(() => {
+    const patternBlocks = (0, import_element202.useMemo)(() => {
       if (!category || !isDraggable) {
         return blocks2;
       }
@@ -76343,9 +76274,9 @@ var wp;
     showTitlesAsTooltip,
     pagingProps
   }, ref) {
-    const [activeCompositeId, setActiveCompositeId] = (0, import_element203.useState)(void 0);
-    const [activePattern, setActivePattern] = (0, import_element203.useState)(null);
-    (0, import_element203.useEffect)(() => {
+    const [activeCompositeId, setActiveCompositeId] = (0, import_element202.useState)(void 0);
+    const [activePattern, setActivePattern] = (0, import_element202.useState)(null);
+    (0, import_element202.useEffect)(() => {
       const firstCompositeItemId = blockPatterns[0]?.name;
       setActiveCompositeId(firstCompositeItemId);
     }, [blockPatterns]);
@@ -76383,7 +76314,7 @@ var wp;
       }
     );
   }
-  var block_patterns_list_default = (0, import_element203.forwardRef)(BlockPatternsList);
+  var block_patterns_list_default = (0, import_element202.forwardRef)(BlockPatternsList);
 
   // packages/block-editor/build-module/components/inserter/hooks/use-insertion-point.mjs
   var import_data61 = __toESM(require_data(), 1);
@@ -76391,7 +76322,7 @@ var wp;
   var import_i18n62 = __toESM(require_i18n(), 1);
   var import_notices4 = __toESM(require_notices(), 1);
   var import_a11y7 = __toESM(require_a11y(), 1);
-  var import_element204 = __toESM(require_element(), 1);
+  var import_element203 = __toESM(require_element(), 1);
   function getIndex({
     destinationRootClientId,
     destinationIndex,
@@ -76471,7 +76402,7 @@ var wp;
       setLastFocus: setLastFocus2
     } = unlock((0, import_data61.useDispatch)(store));
     const { createErrorNotice } = (0, import_data61.useDispatch)(import_notices4.store);
-    const onInsertBlocks = (0, import_element204.useCallback)(
+    const onInsertBlocks = (0, import_element203.useCallback)(
       (blocks2, meta, shouldForceFocusBlock = false, _rootClientId) => {
         if (shouldForceFocusBlock || shouldFocusBlock || selectBlockOnInsert) {
           setLastFocus2(null);
@@ -76549,7 +76480,7 @@ var wp;
         registry
       ]
     );
-    const onToggleInsertionPoint = (0, import_element204.useCallback)(
+    const onToggleInsertionPoint = (0, import_element203.useCallback)(
       (item) => {
         if (item) {
           const destination = getDestination(
@@ -76591,7 +76522,7 @@ var wp;
   var use_insertion_point_default = useInsertionPoint;
 
   // packages/block-editor/build-module/components/inserter/hooks/use-patterns-state.mjs
-  var import_element205 = __toESM(require_element(), 1);
+  var import_element204 = __toESM(require_element(), 1);
   var import_blocks41 = __toESM(require_blocks(), 1);
   var import_data62 = __toESM(require_data(), 1);
   var import_i18n63 = __toESM(require_i18n(), 1);
@@ -76623,7 +76554,7 @@ var wp;
       },
       [rootClientId, options]
     );
-    const filteredPatterns = (0, import_element205.useMemo)(() => {
+    const filteredPatterns = (0, import_element204.useMemo)(() => {
       return patterns2.filter((pattern) => {
         const hasNavigationCategory = pattern.categories?.includes("navigation");
         if (hasNavigationCategory && !isWithinNavigationOverlayContext) {
@@ -76635,7 +76566,7 @@ var wp;
     const { getClosestAllowedInsertionPointForPattern: getClosestAllowedInsertionPointForPattern2 } = unlock(
       (0, import_data62.useSelect)(store)
     );
-    const allCategories = (0, import_element205.useMemo)(() => {
+    const allCategories = (0, import_element204.useMemo)(() => {
       const categories = [...patternCategories];
       userPatternCategories?.forEach((userCategory) => {
         if (!categories.find(
@@ -76647,7 +76578,7 @@ var wp;
       return categories;
     }, [patternCategories, userPatternCategories]);
     const { createSuccessNotice } = (0, import_data62.useDispatch)(import_notices5.store);
-    const onClickPattern = (0, import_element205.useCallback)(
+    const onClickPattern = (0, import_element204.useCallback)(
       (pattern, blocks2) => {
         const destinationRootClientId = isQuick ? rootClientId : getClosestAllowedInsertionPointForPattern2(
           pattern,
@@ -76699,12 +76630,12 @@ var wp;
   var use_patterns_state_default = usePatternsState;
 
   // packages/block-editor/build-module/components/inserter/hooks/use-patterns-paging.mjs
-  var import_element206 = __toESM(require_element(), 1);
+  var import_element205 = __toESM(require_element(), 1);
   var import_compose60 = __toESM(require_compose(), 1);
   var import_dom60 = __toESM(require_dom(), 1);
   var PAGE_SIZE = 20;
   function usePatternsPaging(currentCategoryPatterns, currentCategory, scrollContainerRef, currentFilter = "") {
-    const [currentPage, setCurrentPage] = (0, import_element206.useState)(1);
+    const [currentPage, setCurrentPage] = (0, import_element205.useState)(1);
     const previousCategory = (0, import_compose60.usePrevious)(currentCategory);
     const previousFilter = (0, import_compose60.usePrevious)(currentFilter);
     if ((previousCategory !== currentCategory || previousFilter !== currentFilter) && currentPage !== 1) {
@@ -76712,7 +76643,7 @@ var wp;
     }
     const totalItems = currentCategoryPatterns.length;
     const pageIndex = currentPage - 1;
-    const categoryPatterns = (0, import_element206.useMemo)(() => {
+    const categoryPatterns = (0, import_element205.useMemo)(() => {
       return currentCategoryPatterns.slice(
         pageIndex * PAGE_SIZE,
         pageIndex * PAGE_SIZE + PAGE_SIZE
@@ -76726,7 +76657,7 @@ var wp;
       scrollContainer?.scrollTo(0, 0);
       setCurrentPage(page);
     };
-    (0, import_element206.useEffect)(
+    (0, import_element205.useEffect)(
       function scrollToTopOnCategoryChange() {
         const scrollContainer = (0, import_dom60.getScrollContainer)(
           scrollContainerRef?.current
@@ -76753,7 +76684,7 @@ var wp;
     rootClientId,
     onModalClose
   }) {
-    const container = (0, import_element207.useRef)();
+    const container = (0, import_element206.useRef)();
     const debouncedSpeak = (0, import_compose61.useDebounce)(import_a11y8.speak, 500);
     const [destinationRootClientId, onInsertBlocks] = use_insertion_point_default({
       rootClientId,
@@ -76764,13 +76695,13 @@ var wp;
       destinationRootClientId,
       selectedCategory
     );
-    const registeredPatternCategories = (0, import_element207.useMemo)(
+    const registeredPatternCategories = (0, import_element206.useMemo)(
       () => patternCategories.map(
         (patternCategory) => patternCategory.name
       ),
       [patternCategories]
     );
-    const filteredBlockPatterns = (0, import_element207.useMemo)(() => {
+    const filteredBlockPatterns = (0, import_element206.useMemo)(() => {
       const filteredPatterns = patterns2.filter((pattern) => {
         if (selectedCategory === allPatternsCategory.name) {
           return true;
@@ -76799,7 +76730,7 @@ var wp;
       selectedCategory,
       registeredPatternCategories
     ]);
-    (0, import_element207.useEffect)(() => {
+    (0, import_element206.useEffect)(() => {
       if (!searchValue) {
         return;
       }
@@ -76816,7 +76747,7 @@ var wp;
       selectedCategory,
       container
     );
-    const [previousSearchValue, setPreviousSearchValue] = (0, import_element207.useState)(searchValue);
+    const [previousSearchValue, setPreviousSearchValue] = (0, import_element206.useState)(searchValue);
     if (searchValue !== previousSearchValue) {
       setPreviousSearchValue(searchValue);
       pagingProps.changePage(1);
@@ -76854,7 +76785,7 @@ var wp;
   var pattern_list_default = PatternList;
 
   // packages/block-editor/build-module/components/inserter/block-patterns-tab/use-pattern-categories.mjs
-  var import_element208 = __toESM(require_element(), 1);
+  var import_element207 = __toESM(require_element(), 1);
   var import_i18n65 = __toESM(require_i18n(), 1);
   var import_a11y9 = __toESM(require_a11y(), 1);
   function usePatternCategories(rootClientId, sourceFilter = "all") {
@@ -76862,13 +76793,13 @@ var wp;
       void 0,
       rootClientId
     );
-    const filteredPatterns = (0, import_element208.useMemo)(
+    const filteredPatterns = (0, import_element207.useMemo)(
       () => sourceFilter === "all" ? patterns2 : patterns2.filter(
         (pattern) => !isPatternFiltered(pattern, sourceFilter)
       ),
       [sourceFilter, patterns2]
     );
-    const populatedCategories = (0, import_element208.useMemo)(() => {
+    const populatedCategories = (0, import_element207.useMemo)(() => {
       const categories = getPopulatedCategories(
         filteredPatterns,
         allCategories
@@ -76908,8 +76839,8 @@ var wp;
   // packages/block-editor/build-module/components/inserter/block-patterns-explorer/index.mjs
   var import_jsx_runtime375 = __toESM(require_jsx_runtime(), 1);
   function PatternsExplorer({ initialCategory, rootClientId, onModalClose }) {
-    const [searchValue, setSearchValue] = (0, import_element209.useState)("");
-    const [selectedCategory, setSelectedCategory] = (0, import_element209.useState)(
+    const [searchValue, setSearchValue] = (0, import_element208.useState)("");
+    const [selectedCategory, setSelectedCategory] = (0, import_element208.useState)(
       initialCategory?.name
     );
     const patternCategories = usePatternCategories(rootClientId);
@@ -77034,14 +76965,14 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/inserter/block-patterns-tab/pattern-category-previews.mjs
-  var import_element211 = __toESM(require_element(), 1);
+  var import_element210 = __toESM(require_element(), 1);
   var import_i18n69 = __toESM(require_i18n(), 1);
   var import_components49 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/inserter/block-patterns-tab/patterns-filter.mjs
   var import_components48 = __toESM(require_components(), 1);
   var import_i18n68 = __toESM(require_i18n(), 1);
-  var import_element210 = __toESM(require_element(), 1);
+  var import_element209 = __toESM(require_element(), 1);
   var import_jsx_runtime377 = __toESM(require_jsx_runtime(), 1);
   var getShouldDisableSyncFilter = (sourceFilter) => sourceFilter !== "all" && sourceFilter !== "user";
   var getShouldHideSourcesFilter = (category) => {
@@ -77091,7 +77022,7 @@ var wp;
     );
     const shouldHideSourcesFilter = getShouldHideSourcesFilter(category);
     const shouldShowAuthorFilter = currentPatternSourceFilter === INSERTER_PATTERN_TYPES.user;
-    const patternSyncMenuOptions = (0, import_element210.useMemo)(
+    const patternSyncMenuOptions = (0, import_element209.useMemo)(
       () => [
         {
           value: "all",
@@ -77189,7 +77120,7 @@ var wp;
               value: patternSyncFilter
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime377.jsx)("div", { className: "block-editor-inserter__patterns-filter-help", children: (0, import_element210.createInterpolateElement)(
+          /* @__PURE__ */ (0, import_jsx_runtime377.jsx)("div", { className: "block-editor-inserter__patterns-filter-help", children: (0, import_element209.createInterpolateElement)(
             (0, import_i18n68.__)(
               "Patterns are available from the <Link>WordPress.org Pattern Directory</Link>, bundled in the active theme, or created by users on this site. Only patterns created on this site can be synced."
             ),
@@ -77225,17 +77156,17 @@ var wp;
       rootClientId,
       category?.name
     );
-    const [patternSyncFilter, setPatternSyncFilter] = (0, import_element211.useState)("all");
-    const [patternSourceFilter, setPatternSourceFilter] = (0, import_element211.useState)("all");
-    const [patternAuthorFilter, setPatternAuthorFilter] = (0, import_element211.useState)("all");
+    const [patternSyncFilter, setPatternSyncFilter] = (0, import_element210.useState)("all");
+    const [patternSourceFilter, setPatternSourceFilter] = (0, import_element210.useState)("all");
+    const [patternAuthorFilter, setPatternAuthorFilter] = (0, import_element210.useState)("all");
     const isUserSource = category.name === sitePatternsCategory.name || patternSourceFilter === INSERTER_PATTERN_TYPES.user;
     const currentPatternAuthorFilter = isUserSource ? patternAuthorFilter : "all";
     const availableCategories = usePatternCategories(
       rootClientId,
       patternSourceFilter
     );
-    const scrollContainerRef = (0, import_element211.useRef)();
-    const currentCategoryPatterns = (0, import_element211.useMemo)(
+    const scrollContainerRef = (0, import_element210.useRef)();
+    const currentCategoryPatterns = (0, import_element210.useMemo)(
       () => allPatterns.filter((pattern) => {
         if (isPatternFiltered(
           pattern,
@@ -77279,22 +77210,22 @@ var wp;
       scrollContainerRef
     );
     const { changePage } = pagingProps;
-    (0, import_element211.useEffect)(() => () => onHover(null), []);
-    const onSetPatternSyncFilter = (0, import_element211.useCallback)(
+    (0, import_element210.useEffect)(() => () => onHover(null), []);
+    const onSetPatternSyncFilter = (0, import_element210.useCallback)(
       (value) => {
         setPatternSyncFilter(value);
         changePage(1);
       },
       [setPatternSyncFilter, changePage]
     );
-    const onSetPatternSourceFilter = (0, import_element211.useCallback)(
+    const onSetPatternSourceFilter = (0, import_element210.useCallback)(
       (value) => {
         setPatternSourceFilter(value);
         changePage(1);
       },
       [setPatternSourceFilter, changePage]
     );
-    const onSetPatternAuthorFilter = (0, import_element211.useCallback)(
+    const onSetPatternAuthorFilter = (0, import_element210.useCallback)(
       (value) => {
         setPatternAuthorFilter(value);
         changePage(1);
@@ -77377,7 +77308,7 @@ var wp;
   // packages/block-editor/build-module/components/inserter/category-tabs/index.mjs
   var import_compose62 = __toESM(require_compose(), 1);
   var import_components50 = __toESM(require_components(), 1);
-  var import_element212 = __toESM(require_element(), 1);
+  var import_element211 = __toESM(require_element(), 1);
   var import_jsx_runtime379 = __toESM(require_jsx_runtime(), 1);
   var { Tabs } = unlock(import_components50.privateApis);
   function CategoryTabs({
@@ -77395,7 +77326,7 @@ var wp;
     };
     const previousSelectedCategory = (0, import_compose62.usePrevious)(selectedCategory);
     const selectedTabId = selectedCategory ? selectedCategory.name : null;
-    const [activeTabId, setActiveId] = (0, import_element212.useState)();
+    const [activeTabId, setActiveId] = (0, import_element211.useState)();
     const firstTabId = categories?.[0]?.name;
     if (selectedTabId === null && !activeTabId && firstTabId) {
       setActiveId(firstTabId);
@@ -77470,7 +77401,7 @@ var wp;
     rootClientId,
     children
   }) {
-    const [showPatternsExplorer, setShowPatternsExplorer] = (0, import_element213.useState)(false);
+    const [showPatternsExplorer, setShowPatternsExplorer] = (0, import_element212.useState)(false);
     const categories = usePatternCategories(rootClientId);
     const isMobile = (0, import_compose63.useViewportMatch)("medium", "<");
     if (!categories.length) {
@@ -77521,11 +77452,11 @@ var wp;
   var block_patterns_tab_default = BlockPatternsTab;
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-tab.mjs
-  var import_element303 = __toESM(require_element(), 1);
+  var import_element302 = __toESM(require_element(), 1);
   var import_i18n131 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/inserter/media-tab/hooks.mjs
-  var import_element214 = __toESM(require_element(), 1);
+  var import_element213 = __toESM(require_element(), 1);
   var import_data63 = __toESM(require_data(), 1);
   var EMPTY_MEDIA_LIST = [];
   function normalizeFetchResult(result) {
@@ -77539,15 +77470,15 @@ var wp;
     };
   }
   function useMediaResults(category, query = {}, refreshKey) {
-    const [mediaList, setMediaList] = (0, import_element214.useState)();
-    const [resolvedSource, setResolvedSource] = (0, import_element214.useState)();
-    const [totals, setTotals] = (0, import_element214.useState)({});
-    const [isLoading, setIsLoading] = (0, import_element214.useState)(false);
-    const lastRequestRef = (0, import_element214.useRef)();
-    const lastQueryKeyRef = (0, import_element214.useRef)();
-    const lastFetchRef = (0, import_element214.useRef)();
-    const lastSourceRef = (0, import_element214.useRef)();
-    (0, import_element214.useEffect)(() => {
+    const [mediaList, setMediaList] = (0, import_element213.useState)();
+    const [resolvedSource, setResolvedSource] = (0, import_element213.useState)();
+    const [totals, setTotals] = (0, import_element213.useState)({});
+    const [isLoading, setIsLoading] = (0, import_element213.useState)(false);
+    const lastRequestRef = (0, import_element213.useRef)();
+    const lastQueryKeyRef = (0, import_element213.useRef)();
+    const lastFetchRef = (0, import_element213.useRef)();
+    const lastSourceRef = (0, import_element213.useRef)();
+    (0, import_element213.useEffect)(() => {
       (async () => {
         const key = JSON.stringify({
           category: category.name,
@@ -77594,11 +77525,11 @@ var wp;
     };
   }
   function useMediaCategories(rootClientId) {
-    const [categories, setCategories] = (0, import_element214.useState)(
+    const [categories, setCategories] = (0, import_element213.useState)(
       /** @type {InserterMediaCategory[]} */
       []
     );
-    const [hasResolved, setHasResolved] = (0, import_element214.useState)(false);
+    const [hasResolved, setHasResolved] = (0, import_element213.useState)(false);
     const inserterMediaCategories = (0, import_data63.useSelect)(
       (select3) => unlock(select3(store)).getInserterMediaCategories(),
       []
@@ -77623,7 +77554,7 @@ var wp;
       },
       [rootClientId]
     );
-    (0, import_element214.useEffect)(() => {
+    (0, import_element213.useEffect)(() => {
       (async () => {
         const _categories = [];
         if (!inserterMediaCategories) {
@@ -77741,20 +77672,20 @@ var wp;
   // packages/block-editor/build-module/components/inserter/media-tab/media-panel.mjs
   var import_i18n129 = __toESM(require_i18n(), 1);
   var import_components112 = __toESM(require_components(), 1);
-  var import_element302 = __toESM(require_element(), 1);
+  var import_element301 = __toESM(require_element(), 1);
   var import_compose91 = __toESM(require_compose(), 1);
   var import_dom61 = __toESM(require_dom(), 1);
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-grid.mjs
-  var import_element299 = __toESM(require_element(), 1);
+  var import_element298 = __toESM(require_element(), 1);
   var import_i18n124 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/dataviews/index.mjs
-  var import_element286 = __toESM(require_element(), 1);
+  var import_element285 = __toESM(require_element(), 1);
   var import_deprecated9 = __toESM(require_deprecated(), 1);
 
   // packages/dataviews/build-module/components/dataviews-context/index.mjs
-  var import_element215 = __toESM(require_element(), 1);
+  var import_element214 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/constants.mjs
   var import_i18n71 = __toESM(require_i18n(), 1);
@@ -77809,7 +77740,7 @@ var wp;
   ];
 
   // packages/dataviews/build-module/components/dataviews-context/index.mjs
-  var DataViewsContext = (0, import_element215.createContext)({
+  var DataViewsContext = (0, import_element214.createContext)({
     view: { type: LAYOUT_TABLE },
     onChangeView: () => {
     },
@@ -77829,7 +77760,7 @@ var wp;
     isItemClickable: () => true,
     renderItemLink: void 0,
     containerWidth: 0,
-    containerRef: (0, import_element215.createRef)(),
+    containerRef: (0, import_element214.createRef)(),
     resizeObserverRef: () => {
     },
     defaultLayouts: { list: {}, grid: {}, table: {} },
@@ -77853,7 +77784,7 @@ var wp;
   var import_i18n80 = __toESM(require_i18n(), 1);
   var import_components57 = __toESM(require_components(), 1);
   var import_compose66 = __toESM(require_compose(), 1);
-  var import_element224 = __toESM(require_element(), 1);
+  var import_element223 = __toESM(require_element(), 1);
   var import_keycodes12 = __toESM(require_keycodes(), 1);
 
   // packages/dataviews/build-module/components/dataviews-selection-checkbox/index.mjs
@@ -77896,7 +77827,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
   var import_components53 = __toESM(require_components(), 1);
   var import_i18n74 = __toESM(require_i18n(), 1);
-  var import_element216 = __toESM(require_element(), 1);
+  var import_element215 = __toESM(require_element(), 1);
   var import_data64 = __toESM(require_data(), 1);
   var import_compose64 = __toESM(require_compose(), 1);
 
@@ -77975,7 +77906,7 @@ var wp;
     registry,
     setActiveModalAction
   }) {
-    const { primaryActions, regularActions } = (0, import_element216.useMemo)(() => {
+    const { primaryActions, regularActions } = (0, import_element215.useMemo)(() => {
       return actions.reduce(
         (acc, action) => {
           (action.isPrimary ? acc.primaryActions : acc.regularActions).push(action);
@@ -78013,7 +77944,7 @@ var wp;
     isCompact
   }) {
     const registry = (0, import_data64.useRegistry)();
-    const { primaryActions, eligibleActions } = (0, import_element216.useMemo)(() => {
+    const { primaryActions, eligibleActions } = (0, import_element215.useMemo)(() => {
       const _eligibleActions = actions.filter(
         (action) => !action.isEligible || action.isEligible(item)
       );
@@ -78076,7 +78007,7 @@ var wp;
     isSmall,
     registry
   }) {
-    const [activeModalAction, setActiveModalAction] = (0, import_element216.useState)(
+    const [activeModalAction, setActiveModalAction] = (0, import_element215.useState)(
       null
     );
     return /* @__PURE__ */ (0, import_jsx_runtime384.jsxs)(import_jsx_runtime384.Fragment, { children: [
@@ -78123,7 +78054,7 @@ var wp;
     registry,
     buttonVariant
   }) {
-    const [activeModalAction, setActiveModalAction] = (0, import_element216.useState)(null);
+    const [activeModalAction, setActiveModalAction] = (0, import_element215.useState)(null);
     const isMobileViewport = (0, import_compose64.useViewportMatch)("medium", "<");
     if (isMobileViewport) {
       return null;
@@ -78162,7 +78093,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
   var import_components54 = __toESM(require_components(), 1);
   var import_i18n76 = __toESM(require_i18n(), 1);
-  var import_element217 = __toESM(require_element(), 1);
+  var import_element216 = __toESM(require_element(), 1);
   var import_data65 = __toESM(require_data(), 1);
   var import_compose65 = __toESM(require_compose(), 1);
 
@@ -78199,13 +78130,13 @@ var wp;
     );
   }
   function useHasAPossibleBulkAction(actions, item) {
-    return (0, import_element217.useMemo)(
+    return (0, import_element216.useMemo)(
       () => hasAPossibleBulkAction(actions, item),
       [actions, item]
     );
   }
   function useSomeItemHasAPossibleBulkAction(actions, data) {
-    return (0, import_element217.useMemo)(
+    return (0, import_element216.useMemo)(
       () => data.some((item) => hasAPossibleBulkAction(actions, item)),
       [actions, data]
     );
@@ -78219,7 +78150,7 @@ var wp;
     disableSelectAll = false,
     checkboxRef
   }) {
-    const selectableItems = (0, import_element217.useMemo)(() => {
+    const selectableItems = (0, import_element216.useMemo)(() => {
       return data.filter((item) => {
         return actions.some(
           (action) => action.supportsBulk && (!action.isEligible || action.isEligible(item))
@@ -78294,7 +78225,7 @@ var wp;
     onAction,
     isMenuItem
   }) {
-    const selectedEligibleItems = (0, import_element217.useMemo)(
+    const selectedEligibleItems = (0, import_element216.useMemo)(
       () => selectedItems.filter(
         (item) => !action.isEligible || action.isEligible(item)
       ),
@@ -78423,10 +78354,10 @@ var wp;
     selectionCheckboxRef,
     onActionInProgressChange
   }) {
-    const { paginationInfo } = (0, import_element217.useContext)(dataviews_context_default);
-    const [pendingContent, setPendingContent] = (0, import_element217.useState)();
+    const { paginationInfo } = (0, import_element216.useContext)(dataviews_context_default);
+    const [pendingContent, setPendingContent] = (0, import_element216.useState)();
     const registry = (0, import_data65.useRegistry)();
-    const [activeModal, setActiveModal] = (0, import_element217.useState)(null);
+    const [activeModal, setActiveModal] = (0, import_element216.useState)(null);
     const onAction = async (action, items) => {
       if ("RenderModal" in action) {
         setActiveModal({ action, items });
@@ -78442,23 +78373,23 @@ var wp;
       }
     };
     const isMobile = (0, import_compose65.useViewportMatch)("medium", "<");
-    const bulkActions = (0, import_element217.useMemo)(
+    const bulkActions = (0, import_element216.useMemo)(
       () => actions.filter((action) => action.supportsBulk),
       [actions]
     );
-    const selectableItems = (0, import_element217.useMemo)(() => {
+    const selectableItems = (0, import_element216.useMemo)(() => {
       return data.filter((item) => {
         return bulkActions.some(
           (action) => !action.isEligible || action.isEligible(item)
         );
       });
     }, [data, bulkActions]);
-    const selectedItems = (0, import_element217.useMemo)(() => {
+    const selectedItems = (0, import_element216.useMemo)(() => {
       return data.filter(
         (item) => selection2.includes(getItemId2(item)) && selectableItems.includes(item)
       );
     }, [selection2, data, getItemId2, selectableItems]);
-    const actionsToShow = (0, import_element217.useMemo)(
+    const actionsToShow = (0, import_element216.useMemo)(
       () => actions.filter((action) => {
         return action.supportsBulk && selectedItems.some(
           (item) => !action.isEligible || action.isEligible(item)
@@ -78504,7 +78435,7 @@ var wp;
       onChangeSelection,
       getItemId: getItemId2,
       view
-    } = (0, import_element217.useContext)(dataviews_context_default);
+    } = (0, import_element216.useContext)(dataviews_context_default);
     return /* @__PURE__ */ (0, import_jsx_runtime385.jsx)(
       BulkActionsContent,
       {
@@ -78523,7 +78454,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
   var import_i18n77 = __toESM(require_i18n(), 1);
   var import_components55 = __toESM(require_components(), 1);
-  var import_element218 = __toESM(require_element(), 1);
+  var import_element217 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/utils/get-hideable-fields.mjs
   function getHideableFields(view, fields) {
@@ -78547,12 +78478,12 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/table/column-header-menu.mjs
   var import_jsx_runtime386 = __toESM(require_jsx_runtime(), 1);
   function WithMenuSeparators({ children }) {
-    return import_element218.Children.toArray(children).filter(Boolean).map((child, i) => /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(import_element218.Fragment, { children: [
+    return import_element217.Children.toArray(children).filter(Boolean).map((child, i) => /* @__PURE__ */ (0, import_jsx_runtime386.jsxs)(import_element217.Fragment, { children: [
       i > 0 && /* @__PURE__ */ (0, import_jsx_runtime386.jsx)(menu_exports.Separator, {}),
       child
     ] }, i));
   }
-  var _HeaderMenu = (0, import_element218.forwardRef)(function HeaderMenu({
+  var _HeaderMenu = (0, import_element217.forwardRef)(function HeaderMenu({
     fieldId,
     view,
     fields,
@@ -78570,7 +78501,7 @@ var wp;
     let canAddFilter = false;
     let operators = [];
     const field = fields.find((f) => f.id === fieldId);
-    const { setIsShowingFilter } = (0, import_element218.useContext)(dataviews_context_default);
+    const { setIsShowingFilter } = (0, import_element217.useContext)(dataviews_context_default);
     if (!field) {
       return null;
     }
@@ -78790,7 +78721,7 @@ var wp;
   var column_header_menu_default = ColumnHeaderMenu;
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/item-click-wrapper.mjs
-  var import_element219 = __toESM(require_element(), 1);
+  var import_element218 = __toESM(require_element(), 1);
   var import_jsx_runtime387 = __toESM(require_jsx_runtime(), 1);
   function getClickableItemProps({
     item,
@@ -78836,7 +78767,7 @@ var wp;
         ...extraProps,
         children
       });
-      return (0, import_element219.cloneElement)(renderedElement, {
+      return (0, import_element218.cloneElement)(renderedElement, {
         onClick: (event) => {
           event.stopPropagation();
           if (renderedElement.props.onClick) {
@@ -78942,7 +78873,7 @@ var wp;
   var column_primary_default = ColumnPrimary;
 
   // packages/dataviews/build-module/components/dataviews-layouts/table/use-scroll-state.mjs
-  var import_element220 = __toESM(require_element(), 1);
+  var import_element219 = __toESM(require_element(), 1);
   var import_i18n78 = __toESM(require_i18n(), 1);
   var isScrolledToEnd = (element) => {
     if ((0, import_i18n78.isRTL)()) {
@@ -78955,9 +78886,9 @@ var wp;
     scrollContainerRef,
     enabledHorizontal = false
   }) {
-    const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, import_element220.useState)(false);
-    const [isVerticallyScrolled, setIsVerticallyScrolled] = (0, import_element220.useState)(false);
-    const handleScroll = (0, import_element220.useCallback)(() => {
+    const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, import_element219.useState)(false);
+    const [isVerticallyScrolled, setIsVerticallyScrolled] = (0, import_element219.useState)(false);
+    const handleScroll = (0, import_element219.useCallback)(() => {
       const scrollContainer = scrollContainerRef.current;
       if (!scrollContainer) {
         return;
@@ -78967,7 +78898,7 @@ var wp;
       }
       setIsVerticallyScrolled(scrollContainer.scrollTop > 0);
     }, [scrollContainerRef, enabledHorizontal]);
-    (0, import_element220.useEffect)(() => {
+    (0, import_element219.useEffect)(() => {
       if (typeof window === "undefined" || !scrollContainerRef.current) {
         return () => {
         };
@@ -78997,7 +78928,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/use-selection-props.mjs
-  var import_element221 = __toESM(require_element(), 1);
+  var import_element220 = __toESM(require_element(), 1);
   var import_keycodes11 = __toESM(require_keycodes(), 1);
   function getRange(orderedIds, fromIndex, toIndex) {
     return orderedIds.slice(
@@ -79064,12 +78995,12 @@ var wp;
   }) {
     const isMultiselect = selectionMode === "multi";
     const allowDeselect = selectionMode !== "single-required";
-    const gestureRef = (0, import_element221.useRef)(null);
+    const gestureRef = (0, import_element220.useRef)(null);
     const anchorTo = (id) => {
       gestureRef.current = { anchorId: id, lastTargetId: null };
     };
-    const isTouchDeviceRef = (0, import_element221.useRef)(false);
-    (0, import_element221.useEffect)(() => {
+    const isTouchDeviceRef = (0, import_element220.useRef)(false);
+    (0, import_element220.useEffect)(() => {
       const markTouchDevice = () => {
         isTouchDeviceRef.current = true;
       };
@@ -79169,7 +79100,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-view-config/properties-section.mjs
   var import_components56 = __toESM(require_components(), 1);
   var import_i18n79 = __toESM(require_i18n(), 1);
-  var import_element222 = __toESM(require_element(), 1);
+  var import_element221 = __toESM(require_element(), 1);
   var import_jsx_runtime389 = __toESM(require_jsx_runtime(), 1);
   function FieldItem3({
     field,
@@ -79187,7 +79118,7 @@ var wp;
   function PropertiesSection({
     showLabel = true
   }) {
-    const { view, fields, onChangeView } = (0, import_element222.useContext)(dataviews_context_default);
+    const { view, fields, onChangeView } = (0, import_element221.useContext)(dataviews_context_default);
     const regularFields = getHideableFields(view, fields);
     if (!regularFields?.length) {
       return null;
@@ -79273,10 +79204,10 @@ var wp;
   }
 
   // packages/dataviews/build-module/hooks/use-delayed-loading.mjs
-  var import_element223 = __toESM(require_element(), 1);
+  var import_element222 = __toESM(require_element(), 1);
   function useDelayedLoading(isLoading, options = { delay: 400 }) {
-    const [showLoader, setShowLoader] = (0, import_element223.useState)(false);
-    (0, import_element223.useEffect)(() => {
+    const [showLoader, setShowLoader] = (0, import_element222.useState)(false);
+    (0, import_element222.useEffect)(() => {
       if (!isLoading) {
         return;
       }
@@ -79341,7 +79272,7 @@ var wp;
     isActionsColumnSticky,
     posinset
   }) {
-    const { paginationInfo } = (0, import_element224.useContext)(dataviews_context_default);
+    const { paginationInfo } = (0, import_element223.useContext)(dataviews_context_default);
     const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
     const isSelected2 = hasPossibleBulkAction && selection2.includes(id);
     const {
@@ -79459,7 +79390,7 @@ var wp;
     className,
     empty
   }) {
-    const { containerRef } = (0, import_element224.useContext)(dataviews_context_default);
+    const { containerRef } = (0, import_element223.useContext)(dataviews_context_default);
     const isDelayedLoading = useDelayedLoading(isLoading);
     const groupField = view.groupBy?.field ? fields.find((f) => f.id === view.groupBy?.field) : null;
     const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
@@ -79473,21 +79404,21 @@ var wp;
       selectionMode: "multi",
       shouldSelectOnClick: false
     });
-    const headerMenuRefs = (0, import_element224.useRef)(/* @__PURE__ */ new Map());
-    const headerMenuToFocusRef = (0, import_element224.useRef)(void 0);
-    const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element224.useState)();
-    const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element224.useState)(null);
-    (0, import_element224.useEffect)(() => {
+    const headerMenuRefs = (0, import_element223.useRef)(/* @__PURE__ */ new Map());
+    const headerMenuToFocusRef = (0, import_element223.useRef)(void 0);
+    const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element223.useState)();
+    const [contextMenuAnchor, setContextMenuAnchor] = (0, import_element223.useState)(null);
+    (0, import_element223.useEffect)(() => {
       if (headerMenuToFocusRef.current) {
         headerMenuToFocusRef.current.focus();
         headerMenuToFocusRef.current = void 0;
       }
     });
-    const tableNoticeId = (0, import_element224.useId)();
-    const tableHeaderRef = (0, import_element224.useRef)(null);
-    const tableSelectionRef = (0, import_element224.useRef)(null);
-    const bulkSelectionRef = (0, import_element224.useRef)(null);
-    const bulkActionsRef = (0, import_element224.useRef)(null);
+    const tableNoticeId = (0, import_element223.useId)();
+    const tableHeaderRef = (0, import_element223.useRef)(null);
+    const tableSelectionRef = (0, import_element223.useRef)(null);
+    const bulkSelectionRef = (0, import_element223.useRef)(null);
+    const bulkActionsRef = (0, import_element223.useRef)(null);
     const syncBulkActionsPosition = () => {
       const header = tableHeaderRef.current;
       const overlay = bulkActionsRef.current;
@@ -79504,12 +79435,12 @@ var wp;
       syncBulkActionsPosition
     );
     const tableHeaderRefs = (0, import_compose66.useMergeRefs)([tableHeaderRef, resizeHeaderRef]);
-    const [isActionInProgress, setIsActionInProgress] = (0, import_element224.useState)(false);
+    const [isActionInProgress, setIsActionInProgress] = (0, import_element223.useState)(false);
     const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
     const showBulkActions = hasBulkActions && selection2.length > 0 || isActionInProgress;
-    (0, import_element224.useLayoutEffect)(syncBulkActionsPosition, [showBulkActions]);
-    const hadSelectionRef = (0, import_element224.useRef)(false);
-    (0, import_element224.useEffect)(() => {
+    (0, import_element223.useLayoutEffect)(syncBulkActionsPosition, [showBulkActions]);
+    const hadSelectionRef = (0, import_element223.useRef)(false);
+    (0, import_element223.useEffect)(() => {
       const tableHead = tableHeaderRef.current;
       const ownerDocument2 = tableHead?.ownerDocument;
       if (showBulkActions && tableHead?.contains(ownerDocument2?.activeElement ?? null)) {
@@ -79865,19 +79796,19 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/index.mjs
   var import_components60 = __toESM(require_components(), 1);
-  var import_element229 = __toESM(require_element(), 1);
+  var import_element228 = __toESM(require_element(), 1);
   var import_i18n83 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/composite-grid.mjs
   var import_components59 = __toESM(require_components(), 1);
   var import_i18n82 = __toESM(require_i18n(), 1);
   var import_compose67 = __toESM(require_compose(), 1);
-  var import_element228 = __toESM(require_element(), 1);
+  var import_element227 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-layouts/grid/preview-size-picker.mjs
   var import_components58 = __toESM(require_components(), 1);
   var import_i18n81 = __toESM(require_i18n(), 1);
-  var import_element225 = __toESM(require_element(), 1);
+  var import_element224 = __toESM(require_element(), 1);
   var import_jsx_runtime391 = __toESM(require_jsx_runtime(), 1);
   var imageSizes = [
     {
@@ -79910,9 +79841,9 @@ var wp;
   ];
   var DEFAULT_PREVIEW_SIZE = imageSizes[2].value;
   function useGridColumns() {
-    const context = (0, import_element225.useContext)(dataviews_context_default);
+    const context = (0, import_element224.useContext)(dataviews_context_default);
     const view = context.view;
-    return (0, import_element225.useMemo)(() => {
+    return (0, import_element224.useMemo)(() => {
       const containerWidth = context.containerWidth;
       const gap = 32;
       const previewSize = view.layout?.previewSize ?? DEFAULT_PREVIEW_SIZE;
@@ -79924,9 +79855,9 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/grid-items.mjs
-  var import_element226 = __toESM(require_element(), 1);
+  var import_element225 = __toESM(require_element(), 1);
   var import_jsx_runtime392 = __toESM(require_jsx_runtime(), 1);
-  var GridItems = (0, import_element226.forwardRef)(({ className, previewSize, style, ...props }, ref) => {
+  var GridItems = (0, import_element225.forwardRef)(({ className, previewSize, style, ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime392.jsx)(
       "div",
       {
@@ -79942,10 +79873,10 @@ var wp;
   });
 
   // packages/dataviews/build-module/components/dataviews-layouts/utils/use-infinite-scroll.mjs
-  var import_element227 = __toESM(require_element(), 1);
+  var import_element226 = __toESM(require_element(), 1);
   function useIntersectionObserver2(elementRef, posinset) {
-    const { intersectionObserver } = (0, import_element227.useContext)(dataviews_context_default);
-    (0, import_element227.useEffect)(() => {
+    const { intersectionObserver } = (0, import_element226.useContext)(dataviews_context_default);
+    (0, import_element226.useEffect)(() => {
       const element = elementRef.current;
       if (!element || posinset === void 0 || !intersectionObserver) {
         return;
@@ -79971,7 +79902,7 @@ var wp;
     }
     return chunks;
   }
-  var GridItem = (0, import_element228.forwardRef)(
+  var GridItem = (0, import_element227.forwardRef)(
     function UnforwardedGridItem({
       view,
       selection: selection2,
@@ -80000,8 +79931,8 @@ var wp;
       } = view;
       const hasBulkAction = useHasAPossibleBulkAction(actions, item);
       const id = getItemId2(item);
-      const elementRef = (0, import_element228.useRef)(null);
-      const setRefs = (0, import_element228.useCallback)(
+      const elementRef = (0, import_element227.useRef)(null);
+      const setRefs = (0, import_element227.useCallback)(
         (node) => {
           elementRef.current = node;
           if (typeof forwardedRef === "function") {
@@ -80219,7 +80150,7 @@ var wp;
     actions,
     getSelectionProps
   }) {
-    const { paginationInfo, resizeObserverRef } = (0, import_element228.useContext)(dataviews_context_default);
+    const { paginationInfo, resizeObserverRef } = (0, import_element227.useContext)(dataviews_context_default);
     const gridColumns = useGridColumns();
     const gridStyle = {
       "--wp-dataviews-media-aspect-ratio": view.layout?.aspectRatio && MEDIA_ASPECT_RATIOS.includes(view.layout.aspectRatio) ? view.layout.aspectRatio : "1/1"
@@ -80472,12 +80403,12 @@ var wp;
     className,
     empty
   }) {
-    const [isActionInProgress, setIsActionInProgress] = (0, import_element229.useState)(false);
-    const selectionCheckboxRef = (0, import_element229.useRef)(null);
-    const bulkActionsRef = (0, import_element229.useRef)(null);
-    const hadSelectionRef = (0, import_element229.useRef)(false);
+    const [isActionInProgress, setIsActionInProgress] = (0, import_element228.useState)(false);
+    const selectionCheckboxRef = (0, import_element228.useRef)(null);
+    const bulkActionsRef = (0, import_element228.useRef)(null);
+    const hadSelectionRef = (0, import_element228.useRef)(false);
     const hasSelection = selection2.length > 0;
-    (0, import_element229.useEffect)(() => {
+    (0, import_element228.useEffect)(() => {
       const ownerDocument2 = bulkActionsRef.current?.ownerDocument;
       if (hadSelectionRef.current && !hasSelection && (ownerDocument2?.activeElement === ownerDocument2?.body || bulkActionsRef.current?.contains(
         ownerDocument2?.activeElement ?? null
@@ -80590,7 +80521,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/list/index.mjs
   var import_compose68 = __toESM(require_compose(), 1);
   var import_components61 = __toESM(require_components(), 1);
-  var import_element230 = __toESM(require_element(), 1);
+  var import_element229 = __toESM(require_element(), 1);
   var import_i18n84 = __toESM(require_i18n(), 1);
   var import_data66 = __toESM(require_data(), 1);
   var import_jsx_runtime395 = __toESM(require_jsx_runtime(), 1);
@@ -80609,7 +80540,7 @@ var wp;
     item
   }) {
     const registry = (0, import_data66.useRegistry)();
-    const [isModalOpen, setIsModalOpen] = (0, import_element230.useState)(false);
+    const [isModalOpen, setIsModalOpen] = (0, import_element229.useState)(false);
     const compositeItemId = generatePrimaryActionCompositeId(
       idPrefix,
       primaryAction.id
@@ -80677,20 +80608,20 @@ var wp;
       showDescription = true,
       infiniteScrollEnabled
     } = view;
-    const itemRef = (0, import_element230.useRef)(null);
+    const itemRef = (0, import_element229.useRef)(null);
     const labelId = `${idPrefix}-label`;
     const descriptionId = `${idPrefix}-description`;
     const registry = (0, import_data66.useRegistry)();
-    const [isHovered, setIsHovered] = (0, import_element230.useState)(false);
-    const [activeModalAction, setActiveModalAction] = (0, import_element230.useState)(
+    const [isHovered, setIsHovered] = (0, import_element229.useState)(false);
+    const [activeModalAction, setActiveModalAction] = (0, import_element229.useState)(
       null
     );
     const handleHover = ({ type }) => {
       const isHover = type === "mouseenter";
       setIsHovered(isHover);
     };
-    const { paginationInfo } = (0, import_element230.useContext)(dataviews_context_default);
-    (0, import_element230.useEffect)(() => {
+    const { paginationInfo } = (0, import_element229.useContext)(dataviews_context_default);
+    (0, import_element229.useEffect)(() => {
       if (isSelected2) {
         itemRef.current?.scrollIntoView({
           behavior: "auto",
@@ -80699,7 +80630,7 @@ var wp;
         });
       }
     }, [isSelected2]);
-    const { primaryAction, eligibleActions } = (0, import_element230.useMemo)(() => {
+    const { primaryAction, eligibleActions } = (0, import_element229.useMemo)(() => {
       const _eligibleActions = actions.filter(
         (action) => !action.isEligible || action.isEligible(item)
       );
@@ -80927,7 +80858,7 @@ var wp;
     } = props;
     const baseId = (0, import_compose68.useInstanceId)(ViewList, "view-list");
     const isDelayedLoading = useDelayedLoading(!!isLoading);
-    const { paginationInfo } = (0, import_element230.useContext)(dataviews_context_default);
+    const { paginationInfo } = (0, import_element229.useContext)(dataviews_context_default);
     const selectedItem = data?.findLast(
       (item) => selection2.includes(getItemId2(item))
     );
@@ -80946,11 +80877,11 @@ var wp;
       selectionMode: "single-required",
       shouldSelectOnClick: true
     });
-    const generateCompositeItemIdPrefix = (0, import_element230.useCallback)(
+    const generateCompositeItemIdPrefix = (0, import_element229.useCallback)(
       (item) => `${baseId}-${getItemId2(item)}`,
       [baseId, getItemId2]
     );
-    const isActiveCompositeItem = (0, import_element230.useCallback)(
+    const isActiveCompositeItem = (0, import_element229.useCallback)(
       (item, idToCheck) => {
         return idToCheck.startsWith(
           generateCompositeItemIdPrefix(item)
@@ -80958,9 +80889,9 @@ var wp;
       },
       [generateCompositeItemIdPrefix]
     );
-    const [activeCompositeId, setActiveCompositeId] = (0, import_element230.useState)(void 0);
-    const compositeRef = (0, import_element230.useRef)(null);
-    (0, import_element230.useEffect)(() => {
+    const [activeCompositeId, setActiveCompositeId] = (0, import_element229.useState)(void 0);
+    const compositeRef = (0, import_element229.useRef)(null);
+    (0, import_element229.useEffect)(() => {
       if (selectedItem) {
         setActiveCompositeId(
           generateItemWrapperCompositeId(
@@ -80974,7 +80905,7 @@ var wp;
     );
     const previousActiveItemIndex = (0, import_compose68.usePrevious)(activeItemIndex);
     const isActiveIdInList = activeItemIndex !== -1;
-    const selectCompositeItem = (0, import_element230.useCallback)(
+    const selectCompositeItem = (0, import_element229.useCallback)(
       (targetIndex, generateCompositeId) => {
         const clampedIndex = Math.min(
           data.length - 1,
@@ -80996,7 +80927,7 @@ var wp;
       },
       [data, generateCompositeItemIdPrefix]
     );
-    (0, import_element230.useEffect)(() => {
+    (0, import_element229.useEffect)(() => {
       const wasActiveIdInList = previousActiveItemIndex !== void 0 && previousActiveItemIndex !== -1;
       if (!isActiveIdInList && wasActiveIdInList) {
         selectCompositeItem(
@@ -81005,7 +80936,7 @@ var wp;
         );
       }
     }, [isActiveIdInList, selectCompositeItem, previousActiveItemIndex]);
-    const onDropdownTriggerKeyDown = (0, import_element230.useCallback)(
+    const onDropdownTriggerKeyDown = (0, import_element229.useCallback)(
       (event) => {
         if (event.key === "ArrowDown") {
           event.preventDefault();
@@ -81147,7 +81078,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
   var import_i18n85 = __toESM(require_i18n(), 1);
-  var import_element231 = __toESM(require_element(), 1);
+  var import_element230 = __toESM(require_element(), 1);
   var import_jsx_runtime396 = __toESM(require_jsx_runtime(), 1);
   function ActivityGroup({
     groupName,
@@ -81156,7 +81087,7 @@ var wp;
     showLabel = true,
     children
   }) {
-    const groupHeader = showLabel ? (0, import_element231.createInterpolateElement)(
+    const groupHeader = showLabel ? (0, import_element230.createInterpolateElement)(
       // translators: %s: The label of the field e.g. "Status".
       (0, import_i18n85.sprintf)((0, import_i18n85.__)("%s: <groupName />"), groupField.label).trim(),
       {
@@ -81184,7 +81115,7 @@ var wp;
   }
 
   // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-item.mjs
-  var import_element232 = __toESM(require_element(), 1);
+  var import_element231 = __toESM(require_element(), 1);
   var import_data67 = __toESM(require_data(), 1);
   var import_compose69 = __toESM(require_compose(), 1);
   var import_jsx_runtime397 = __toESM(require_jsx_runtime(), 1);
@@ -81208,10 +81139,10 @@ var wp;
       showDescription = true,
       infiniteScrollEnabled
     } = view;
-    const itemRef = (0, import_element232.useRef)(null);
+    const itemRef = (0, import_element231.useRef)(null);
     const registry = (0, import_data67.useRegistry)();
-    const { paginationInfo } = (0, import_element232.useContext)(dataviews_context_default);
-    const { primaryActions, eligibleActions } = (0, import_element232.useMemo)(() => {
+    const { paginationInfo } = (0, import_element231.useContext)(dataviews_context_default);
+    const { primaryActions, eligibleActions } = (0, import_element231.useMemo)(() => {
       const _eligibleActions = actions.filter(
         (action) => !action.isEligible || action.isEligible(item)
       );
@@ -81243,7 +81174,7 @@ var wp;
       }
     ) });
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime397.jsx)(titleField.render, { item, field: titleField }) : null;
-    const verticalGap = (0, import_element232.useMemo)(() => {
+    const verticalGap = (0, import_element231.useMemo)(() => {
       switch (density) {
         case "comfortable":
           return "md";
@@ -81457,24 +81388,24 @@ var wp;
   var import_components65 = __toESM(require_components(), 1);
   var import_i18n88 = __toESM(require_i18n(), 1);
   var import_compose70 = __toESM(require_compose(), 1);
-  var import_element235 = __toESM(require_element(), 1);
+  var import_element234 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_components64 = __toESM(require_components(), 1);
   var import_data68 = __toESM(require_data(), 1);
-  var import_element234 = __toESM(require_element(), 1);
+  var import_element233 = __toESM(require_element(), 1);
   var import_i18n87 = __toESM(require_i18n(), 1);
 
   // packages/dataviews/build-module/components/dataviews-pagination/index.mjs
   var import_components63 = __toESM(require_components(), 1);
-  var import_element233 = __toESM(require_element(), 1);
+  var import_element232 = __toESM(require_element(), 1);
   var import_i18n86 = __toESM(require_i18n(), 1);
   var import_jsx_runtime399 = __toESM(require_jsx_runtime(), 1);
   function hasPaginationControls(view, paginationInfo) {
     return !view.infiniteScrollEnabled && paginationInfo.totalItems > 0 && paginationInfo.totalPages > 1;
   }
   function DataViewsPageSelect({ className }) {
-    const { view, onChangeView, paginationInfo } = (0, import_element233.useContext)(dataviews_context_default);
+    const { view, onChangeView, paginationInfo } = (0, import_element232.useContext)(dataviews_context_default);
     if (!hasPaginationControls(view, paginationInfo)) {
       return null;
     }
@@ -81503,7 +81434,7 @@ var wp;
         align: "center",
         gap: "xs",
         className: clsx_default("dataviews-pagination__page-select", className),
-        children: (0, import_element233.createInterpolateElement)(
+        children: (0, import_element232.createInterpolateElement)(
           (0, import_i18n86.sprintf)(
             // translators: 1: Current page number, 2: Total number of pages.
             (0, import_i18n86._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
@@ -81557,7 +81488,7 @@ var wp;
   function DataViewsPageNavigation({
     className
   }) {
-    const { view, onChangeView, paginationInfo } = (0, import_element233.useContext)(dataviews_context_default);
+    const { view, onChangeView, paginationInfo } = (0, import_element232.useContext)(dataviews_context_default);
     if (!hasPaginationControls(view, paginationInfo)) {
       return null;
     }
@@ -81611,7 +81542,7 @@ var wp;
     children,
     className
   }) {
-    const { view, paginationInfo } = (0, import_element233.useContext)(dataviews_context_default);
+    const { view, paginationInfo } = (0, import_element232.useContext)(dataviews_context_default);
     if (!hasPaginationControls(view, paginationInfo)) {
       return null;
     }
@@ -81630,12 +81561,12 @@ var wp;
       }
     );
   }
-  var dataviews_pagination_default = (0, import_element233.memo)(DataViewsPagination);
+  var dataviews_pagination_default = (0, import_element232.memo)(DataViewsPagination);
 
   // packages/dataviews/build-module/components/dataviews-picker-footer/index.mjs
   var import_jsx_runtime400 = __toESM(require_jsx_runtime(), 1);
   function useIsMultiselectPicker(actions) {
-    return (0, import_element234.useMemo)(() => {
+    return (0, import_element233.useMemo)(() => {
       return !!actions?.length && actions?.every((action) => action.supportsBulk);
     }, [actions]);
   }
@@ -81660,7 +81591,7 @@ var wp;
   }) {
     const { showTitle = true, showMedia = true, showDescription = true } = view;
     const id = getItemId2(item);
-    const elementRef = (0, import_element235.useRef)(null);
+    const elementRef = (0, import_element234.useRef)(null);
     const isSelected2 = selection2.includes(id);
     useIntersectionObserver2(elementRef, posinset);
     const renderedMediaField = mediaField?.render ? /* @__PURE__ */ (0, import_jsx_runtime401.jsx)(
@@ -81842,7 +81773,7 @@ var wp;
     className,
     empty
   }) {
-    const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element235.useContext)(dataviews_context_default);
+    const { resizeObserverRef, paginationInfo, itemListLabel } = (0, import_element234.useContext)(dataviews_context_default);
     const titleField = fields.find(
       (field) => field.id === view?.titleField
     );
@@ -82069,7 +82000,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/picker-table/index.mjs
   var import_i18n89 = __toESM(require_i18n(), 1);
   var import_components66 = __toESM(require_components(), 1);
-  var import_element236 = __toESM(require_element(), 1);
+  var import_element235 = __toESM(require_element(), 1);
   var import_jsx_runtime402 = __toESM(require_jsx_runtime(), 1);
   function TableColumnField2({
     item,
@@ -82101,10 +82032,10 @@ var wp;
     selectionProps,
     posinset
   }) {
-    const { paginationInfo } = (0, import_element236.useContext)(dataviews_context_default);
+    const { paginationInfo } = (0, import_element235.useContext)(dataviews_context_default);
     const isSelected2 = selection2.includes(id);
-    const [isHovered, setIsHovered] = (0, import_element236.useState)(false);
-    const elementRef = (0, import_element236.useRef)(null);
+    const [isHovered, setIsHovered] = (0, import_element235.useState)(false);
+    const elementRef = (0, import_element235.useRef)(null);
     useIntersectionObserver2(elementRef, posinset);
     const {
       showTitle = true,
@@ -82232,11 +82163,11 @@ var wp;
     className,
     empty
   }) {
-    const headerMenuRefs = (0, import_element236.useRef)(/* @__PURE__ */ new Map());
-    const headerMenuToFocusRef = (0, import_element236.useRef)(void 0);
-    const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element236.useState)();
+    const headerMenuRefs = (0, import_element235.useRef)(/* @__PURE__ */ new Map());
+    const headerMenuToFocusRef = (0, import_element235.useRef)(void 0);
+    const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0, import_element235.useState)();
     const isMultiselect = useIsMultiselectPicker(actions) ?? false;
-    (0, import_element236.useEffect)(() => {
+    (0, import_element235.useEffect)(() => {
       if (headerMenuToFocusRef.current) {
         headerMenuToFocusRef.current.focus();
         headerMenuToFocusRef.current = void 0;
@@ -82255,7 +82186,7 @@ var wp;
       selectionMode: isMultiselect ? "multi" : "single-clearable",
       shouldSelectOnClick: true
     });
-    const tableNoticeId = (0, import_element236.useId)();
+    const tableNoticeId = (0, import_element235.useId)();
     if (nextHeaderMenuToFocus) {
       headerMenuToFocusRef.current = nextHeaderMenuToFocus;
       setNextHeaderMenuToFocus(void 0);
@@ -82480,7 +82411,7 @@ var wp;
 
   // packages/dataviews/build-module/components/dataviews-layouts/picker-activity/index.mjs
   var import_components67 = __toESM(require_components(), 1);
-  var import_element237 = __toESM(require_element(), 1);
+  var import_element236 = __toESM(require_element(), 1);
   var import_compose71 = __toESM(require_compose(), 1);
   var import_i18n90 = __toESM(require_i18n(), 1);
   var import_jsx_runtime403 = __toESM(require_jsx_runtime(), 1);
@@ -82500,7 +82431,7 @@ var wp;
     posinset,
     setsize
   }) {
-    const elementRef = (0, import_element237.useRef)(null);
+    const elementRef = (0, import_element236.useRef)(null);
     useIntersectionObserver2(elementRef, posinset);
     const { showTitle = true, showMedia = true, showDescription = true } = view;
     const id = getItemId2(item);
@@ -82525,7 +82456,7 @@ var wp;
     ) });
     const renderedTitleField = showTitle && titleField?.render ? /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(titleField.render, { item, field: titleField }) : null;
     const renderedDescriptionField = showDescription && descriptionField?.render ? /* @__PURE__ */ (0, import_jsx_runtime403.jsx)(descriptionField.render, { item, field: descriptionField }) : null;
-    const verticalGap = (0, import_element237.useMemo)(() => {
+    const verticalGap = (0, import_element236.useMemo)(() => {
       switch (density) {
         case "comfortable":
           return "md";
@@ -82651,7 +82582,7 @@ var wp;
     className,
     empty
   }) {
-    const { itemListLabel, paginationInfo } = (0, import_element237.useContext)(dataviews_context_default);
+    const { itemListLabel, paginationInfo } = (0, import_element236.useContext)(dataviews_context_default);
     const isMultiselect = useIsMultiselectPicker(actions);
     const titleField = fields.find(
       (field) => field.id === view?.titleField
@@ -82744,10 +82675,10 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/utils/density-picker.mjs
   var import_components68 = __toESM(require_components(), 1);
   var import_i18n91 = __toESM(require_i18n(), 1);
-  var import_element238 = __toESM(require_element(), 1);
+  var import_element237 = __toESM(require_element(), 1);
   var import_jsx_runtime404 = __toESM(require_jsx_runtime(), 1);
   function DensityPicker() {
-    const context = (0, import_element238.useContext)(dataviews_context_default);
+    const context = (0, import_element237.useContext)(dataviews_context_default);
     const view = context.view;
     return /* @__PURE__ */ (0, import_jsx_runtime404.jsxs)(
       import_components68.__experimentalToggleGroupControl,
@@ -82800,10 +82731,10 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/utils/media-fit-control.mjs
   var import_components69 = __toESM(require_components(), 1);
   var import_i18n92 = __toESM(require_i18n(), 1);
-  var import_element239 = __toESM(require_element(), 1);
+  var import_element238 = __toESM(require_element(), 1);
   var import_jsx_runtime405 = __toESM(require_jsx_runtime(), 1);
   function MediaFitControl() {
-    const context = (0, import_element239.useContext)(dataviews_context_default);
+    const context = (0, import_element238.useContext)(dataviews_context_default);
     const view = context.view;
     if (!context.config?.mediaFitControl) {
       return null;
@@ -82833,7 +82764,7 @@ var wp;
   // packages/dataviews/build-module/components/dataviews-layouts/utils/preview-size-picker.mjs
   var import_components70 = __toESM(require_components(), 1);
   var import_i18n93 = __toESM(require_i18n(), 1);
-  var import_element240 = __toESM(require_element(), 1);
+  var import_element239 = __toESM(require_element(), 1);
   var import_jsx_runtime406 = __toESM(require_jsx_runtime(), 1);
   var imageSizes2 = [
     {
@@ -82865,7 +82796,7 @@ var wp;
     }
   ];
   function PreviewSizePicker() {
-    const context = (0, import_element240.useContext)(dataviews_context_default);
+    const context = (0, import_element239.useContext)(dataviews_context_default);
     const view = context.view;
     const breakValues = imageSizes2.filter((size4) => {
       return context.containerWidth >= size4.breakpoint;
@@ -82968,12 +82899,12 @@ var wp;
   ];
 
   // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
-  var import_element248 = __toESM(require_element(), 1);
+  var import_element247 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-filters/filter.mjs
   var import_components73 = __toESM(require_components(), 1);
   var import_i18n97 = __toESM(require_i18n(), 1);
-  var import_element245 = __toESM(require_element(), 1);
+  var import_element244 = __toESM(require_element(), 1);
 
   // node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/button/utils.js
   function withDefaultButtonType(props) {
@@ -85671,11 +85602,11 @@ If there's a particular need for this, please submit a feature request at https:
   function useStore2(createStore2, props) {
     const [store2, setStore] = React249.useState(() => createStore2(props));
     useSafeLayoutEffect(() => init(store2), [store2]);
-    const useState174 = React249.useCallback((keyOrSelector) => useStoreState(store2, keyOrSelector), [store2]);
+    const useState173 = React249.useCallback((keyOrSelector) => useStoreState(store2, keyOrSelector), [store2]);
     return [React249.useMemo(() => ({
       ...store2,
-      useState: useState174
-    }), [store2, useState174]), useEvent2(() => {
+      useState: useState173
+    }), [store2, useState173]), useEvent2(() => {
       setStore((store3) => createStore2({
         ...props,
         ...store3.getState()
@@ -88014,7 +87945,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_remove_accents2 = __toESM(require_remove_accents(), 1);
   var import_compose72 = __toESM(require_compose(), 1);
   var import_i18n95 = __toESM(require_i18n(), 1);
-  var import_element242 = __toESM(require_element(), 1);
+  var import_element241 = __toESM(require_element(), 1);
   var import_components71 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataviews-filters/utils.mjs
@@ -88033,16 +87964,16 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/dataviews/build-module/hooks/use-elements.mjs
-  var import_element241 = __toESM(require_element(), 1);
+  var import_element240 = __toESM(require_element(), 1);
   var EMPTY_ARRAY9 = [];
   function useElements({
     elements,
     getElements
   }) {
     const staticElements = Array.isArray(elements) && elements.length > 0 ? elements : EMPTY_ARRAY9;
-    const [records, setRecords] = (0, import_element241.useState)(staticElements);
-    const [isLoading, setIsLoading] = (0, import_element241.useState)(false);
-    (0, import_element241.useEffect)(() => {
+    const [records, setRecords] = (0, import_element240.useState)(staticElements);
+    const [isLoading, setIsLoading] = (0, import_element240.useState)(false);
+    (0, import_element240.useEffect)(() => {
       if (!getElements) {
         setRecords(staticElements);
         return;
@@ -88115,7 +88046,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   function ListBox({ view, filter, onChangeView }) {
     const baseId = (0, import_compose72.useInstanceId)(ListBox, "dataviews-filter-list-box");
-    const [activeCompositeId, setActiveCompositeId] = (0, import_element242.useState)(
+    const [activeCompositeId, setActiveCompositeId] = (0, import_element241.useState)(
       // When there are one or less operators, the first item is set as active
       // (by setting the initial `activeId` to `undefined`).
       // With 2 or more operators, the focus is moved on the operators control
@@ -88238,13 +88169,13 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ComboboxList22({ view, filter, onChangeView }) {
-    const [searchValue, setSearchValue] = (0, import_element242.useState)("");
-    const deferredSearchValue = (0, import_element242.useDeferredValue)(searchValue);
+    const [searchValue, setSearchValue] = (0, import_element241.useState)("");
+    const deferredSearchValue = (0, import_element241.useDeferredValue)(searchValue);
     const currentFilter = view.filters?.find(
       (_filter) => _filter.field === filter.field
     );
     const currentValue = getCurrentValue(filter, currentFilter);
-    const matches2 = (0, import_element242.useMemo)(() => {
+    const matches2 = (0, import_element241.useMemo)(() => {
       const normalizedSearch = normalizeSearchInput(deferredSearchValue);
       return filter.elements.filter(
         (item) => normalizeSearchInput(item.label).includes(normalizedSearch)
@@ -88373,7 +88304,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/input-widget.mjs
   var import_es64 = __toESM(require_es6(), 1);
   var import_compose73 = __toESM(require_compose(), 1);
-  var import_element243 = __toESM(require_element(), 1);
+  var import_element242 = __toESM(require_element(), 1);
   var import_components72 = __toESM(require_components(), 1);
   var import_jsx_runtime418 = __toESM(require_jsx_runtime(), 1);
   function InputWidget({
@@ -88386,7 +88317,7 @@ If there's a particular need for this, please submit a feature request at https:
       (f) => f.field === filter.field
     );
     const currentValue = getCurrentValue(filter, currentFilter);
-    const field = (0, import_element243.useMemo)(() => {
+    const field = (0, import_element242.useMemo)(() => {
       const currentField = fields.find((f) => f.id === filter.field);
       if (currentField) {
         return {
@@ -88406,7 +88337,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return currentField;
     }, [fields, filter.field]);
-    const data = (0, import_element243.useMemo)(() => {
+    const data = (0, import_element242.useMemo)(() => {
       return (view.filters ?? []).reduce(
         (acc, activeFilter) => {
           acc[activeFilter.field] = activeFilter.value;
@@ -88465,7 +88396,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/utils/operators.mjs
   var import_i18n96 = __toESM(require_i18n(), 1);
-  var import_element244 = __toESM(require_element(), 1);
+  var import_element243 = __toESM(require_element(), 1);
   var import_date2 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/field-types/utils/parse-time.mjs
@@ -88519,7 +88450,7 @@ If there's a particular need for this, please submit a feature request at https:
   var isNoneOperatorDefinition = {
     /* translators: DataViews operator name */
     label: (0, import_i18n96.__)("Is none of"),
-    filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+    filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
       (0, import_i18n96.sprintf)(
         /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
         (0, import_i18n96.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
@@ -88549,7 +88480,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IS_ANY,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Includes"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
           (0, import_i18n96.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
@@ -88582,7 +88513,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IS_ALL,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Includes all"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
           (0, import_i18n96.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
@@ -88613,7 +88544,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_BETWEEN,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Between (inc)"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
           (0, import_i18n96.__)(
@@ -88649,7 +88580,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IN_THE_PAST,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("In the past"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
           (0, import_i18n96.__)(
@@ -88677,7 +88608,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_OVER,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Over"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
           (0, import_i18n96.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
@@ -88703,7 +88634,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IS,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Is"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
           (0, import_i18n96.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -88721,7 +88652,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_IS_NOT,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Is not"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
           (0, import_i18n96.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -88739,7 +88670,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_LESS_THAN,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Less than"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
           (0, import_i18n96.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
@@ -88761,7 +88692,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_GREATER_THAN,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Greater than"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
           (0, import_i18n96.__)(
@@ -88785,7 +88716,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_LESS_THAN_OR_EQUAL,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Less than or equal"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
           (0, import_i18n96.__)(
@@ -88809,7 +88740,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_GREATER_THAN_OR_EQUAL,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Greater than or equal"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
           (0, import_i18n96.__)(
@@ -88833,7 +88764,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_BEFORE,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Before"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
           (0, import_i18n96.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
@@ -88858,7 +88789,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_AFTER,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("After"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
           (0, import_i18n96.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
@@ -88883,7 +88814,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_BEFORE_INC,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Before (inc)"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
           (0, import_i18n96.__)(
@@ -88910,7 +88841,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_AFTER_INC,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("After (inc)"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
           (0, import_i18n96.__)(
@@ -88937,7 +88868,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_CONTAINS,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Contains"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
           (0, import_i18n96.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
@@ -88959,7 +88890,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_NOT_CONTAINS,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Doesn't contain"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
           (0, import_i18n96.__)(
@@ -88983,7 +88914,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_STARTS_WITH,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Starts with"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
           (0, import_i18n96.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
@@ -89005,7 +88936,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_ON,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("On"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
           (0, import_i18n96.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
@@ -89030,7 +88961,7 @@ If there's a particular need for this, please submit a feature request at https:
       name: OPERATOR_NOT_ON,
       /* translators: DataViews operator name */
       label: (0, import_i18n96.__)("Not on"),
-      filterText: (filter, activeElements) => (0, import_element244.createInterpolateElement)(
+      filterText: (filter, activeElements) => (0, import_element243.createInterpolateElement)(
         (0, import_i18n96.sprintf)(
           /* translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
           (0, import_i18n96.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
@@ -89185,13 +89116,13 @@ If there's a particular need for this, please submit a feature request at https:
     fields,
     ...commonProps
   }) {
-    const toggleRef = (0, import_element245.useRef)(null);
+    const toggleRef = (0, import_element244.useRef)(null);
     const { filter, view, onChangeView } = commonProps;
     const filterInView = view.filters?.find(
       (f) => f.field === filter.field
     );
     let activeElements = [];
-    const field = (0, import_element245.useMemo)(() => {
+    const field = (0, import_element244.useMemo)(() => {
       const currentField = fields.find((f) => f.id === filter.field);
       if (currentField) {
         return {
@@ -89374,7 +89305,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/add-filter.mjs
   var import_components74 = __toESM(require_components(), 1);
   var import_i18n98 = __toESM(require_i18n(), 1);
-  var import_element246 = __toESM(require_element(), 1);
+  var import_element245 = __toESM(require_element(), 1);
   var import_jsx_runtime421 = __toESM(require_jsx_runtime(), 1);
   function AddFilterMenu({
     filters,
@@ -89442,7 +89373,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var add_filter_default = (0, import_element246.forwardRef)(AddFilter);
+  var add_filter_default = (0, import_element245.forwardRef)(AddFilter);
 
   // packages/dataviews/build-module/components/dataviews-filters/reset-filters.mjs
   var import_components75 = __toESM(require_components(), 1);
@@ -89481,9 +89412,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-filters/use-filters.mjs
-  var import_element247 = __toESM(require_element(), 1);
+  var import_element246 = __toESM(require_element(), 1);
   function useFilters(fields, view) {
-    return (0, import_element247.useMemo)(() => {
+    return (0, import_element246.useMemo)(() => {
       const filters = [];
       fields.forEach((field) => {
         if (field.filterBy === false || !field.hasElements && !field.Edit) {
@@ -89534,8 +89465,8 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-filters/filters.mjs
   var import_jsx_runtime423 = __toESM(require_jsx_runtime(), 1);
   function Filters({ className }) {
-    const { fields, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element248.useContext)(dataviews_context_default);
-    const addFilterRef = (0, import_element248.useRef)(null);
+    const { fields, view, onChangeView, openedFilter, setOpenedFilter } = (0, import_element247.useContext)(dataviews_context_default);
+    const addFilterRef = (0, import_element247.useRef)(null);
     const filters = use_filters_default(fields, view);
     const addFilter23 = /* @__PURE__ */ (0, import_jsx_runtime423.jsx)(
       add_filter_default,
@@ -89592,10 +89523,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var filters_default = (0, import_element248.memo)(Filters);
+  var filters_default = (0, import_element247.memo)(Filters);
 
   // packages/dataviews/build-module/components/dataviews-filters/toggle.mjs
-  var import_element249 = __toESM(require_element(), 1);
+  var import_element248 = __toESM(require_element(), 1);
   var import_components76 = __toESM(require_components(), 1);
   var import_i18n100 = __toESM(require_i18n(), 1);
   var import_jsx_runtime424 = __toESM(require_jsx_runtime(), 1);
@@ -89607,9 +89538,9 @@ If there's a particular need for this, please submit a feature request at https:
       setOpenedFilter,
       isShowingFilter,
       setIsShowingFilter
-    } = (0, import_element249.useContext)(dataviews_context_default);
-    const buttonRef = (0, import_element249.useRef)(null);
-    const onChangeViewWithFilterVisibility = (0, import_element249.useCallback)(
+    } = (0, import_element248.useContext)(dataviews_context_default);
+    const buttonRef = (0, import_element248.useRef)(null);
+    const onChangeViewWithFilterVisibility = (0, import_element248.useCallback)(
       (_view) => {
         onChangeView(_view);
         setIsShowingFilter(true);
@@ -89674,7 +89605,7 @@ If there's a particular need for this, please submit a feature request at https:
     filtersCount,
     children
   }) {
-    (0, import_element249.useEffect)(
+    (0, import_element248.useEffect)(
       () => () => {
         buttonRef.current?.focus();
       },
@@ -89688,10 +89619,10 @@ If there's a particular need for this, please submit a feature request at https:
   var toggle_default = FiltersToggle;
 
   // packages/dataviews/build-module/components/dataviews-filters/filters-toggled.mjs
-  var import_element250 = __toESM(require_element(), 1);
+  var import_element249 = __toESM(require_element(), 1);
   var import_jsx_runtime425 = __toESM(require_jsx_runtime(), 1);
   function FiltersToggled(props) {
-    const { isShowingFilter } = (0, import_element250.useContext)(dataviews_context_default);
+    const { isShowingFilter } = (0, import_element249.useContext)(dataviews_context_default);
     if (!isShowingFilter) {
       return null;
     }
@@ -89700,7 +89631,7 @@ If there's a particular need for this, please submit a feature request at https:
   var filters_toggled_default = FiltersToggled;
 
   // packages/dataviews/build-module/components/dataviews-layout/index.mjs
-  var import_element251 = __toESM(require_element(), 1);
+  var import_element250 = __toESM(require_element(), 1);
   var import_components77 = __toESM(require_components(), 1);
   var import_i18n101 = __toESM(require_i18n(), 1);
   var import_jsx_runtime426 = __toESM(require_jsx_runtime(), 1);
@@ -89724,7 +89655,7 @@ If there's a particular need for this, please submit a feature request at https:
       defaultLayouts,
       containerRef,
       empty = /* @__PURE__ */ (0, import_jsx_runtime426.jsx)("p", { children: (0, import_i18n101.__)("No results") })
-    } = (0, import_element251.useContext)(dataviews_context_default);
+    } = (0, import_element250.useContext)(dataviews_context_default);
     const isDelayedInitialLoading = useDelayedLoading(!hasInitiallyLoaded, {
       delay: 200
     });
@@ -89761,13 +89692,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataviews-footer/index.mjs
-  var import_element253 = __toESM(require_element(), 1);
+  var import_element252 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataviews-footer/item-count.mjs
-  var import_element252 = __toESM(require_element(), 1);
+  var import_element251 = __toESM(require_element(), 1);
   var import_jsx_runtime427 = __toESM(require_jsx_runtime(), 1);
   function DataViewsItemCount() {
-    const { data, paginationInfo, view } = (0, import_element252.useContext)(dataviews_context_default);
+    const { data, paginationInfo, view } = (0, import_element251.useContext)(dataviews_context_default);
     return /* @__PURE__ */ (0, import_jsx_runtime427.jsx)("span", { className: "dataviews-footer__item-count", children: getFooterMessage(
       0,
       data.length,
@@ -89787,7 +89718,7 @@ If there's a particular need for this, please submit a feature request at https:
       actions = EMPTY_ARRAY10,
       isLoading,
       hasInitiallyLoaded
-    } = (0, import_element253.useContext)(dataviews_context_default);
+    } = (0, import_element252.useContext)(dataviews_context_default);
     const isRefreshing = !!isLoading && hasInitiallyLoaded && !!data?.length;
     const isDelayedRefreshing = useDelayedLoading(!!isRefreshing);
     const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data) && [LAYOUT_TABLE, LAYOUT_GRID].includes(view.type);
@@ -89818,27 +89749,27 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataviews-search/index.mjs
   var import_i18n102 = __toESM(require_i18n(), 1);
-  var import_element254 = __toESM(require_element(), 1);
+  var import_element253 = __toESM(require_element(), 1);
   var import_components78 = __toESM(require_components(), 1);
   var import_compose74 = __toESM(require_compose(), 1);
   var import_jsx_runtime429 = __toESM(require_jsx_runtime(), 1);
-  var DataViewsSearch = (0, import_element254.memo)(function Search({ label }) {
-    const { view, onChangeView } = (0, import_element254.useContext)(dataviews_context_default);
+  var DataViewsSearch = (0, import_element253.memo)(function Search({ label }) {
+    const { view, onChangeView } = (0, import_element253.useContext)(dataviews_context_default);
     const [search, setSearch, debouncedSearch] = (0, import_compose74.useDebouncedInput)(
       view.search
     );
-    (0, import_element254.useEffect)(() => {
+    (0, import_element253.useEffect)(() => {
       if (view.search !== debouncedSearch) {
         setSearch(view.search ?? "");
       }
     }, [view.search, setSearch]);
-    const onChangeViewRef = (0, import_element254.useRef)(onChangeView);
-    const viewRef = (0, import_element254.useRef)(view);
-    (0, import_element254.useEffect)(() => {
+    const onChangeViewRef = (0, import_element253.useRef)(onChangeView);
+    const viewRef = (0, import_element253.useRef)(view);
+    (0, import_element253.useEffect)(() => {
       onChangeViewRef.current = onChangeView;
       viewRef.current = view;
     }, [onChangeView, view]);
-    (0, import_element254.useEffect)(() => {
+    (0, import_element253.useEffect)(() => {
       if (debouncedSearch !== viewRef.current?.search) {
         onChangeViewRef.current({
           ...viewRef.current,
@@ -89866,7 +89797,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataviews-view-config/index.mjs
   var import_components79 = __toESM(require_components(), 1);
   var import_i18n103 = __toESM(require_i18n(), 1);
-  var import_element255 = __toESM(require_element(), 1);
+  var import_element254 = __toESM(require_element(), 1);
   var import_warning8 = __toESM(require_warning(), 1);
   var import_compose75 = __toESM(require_compose(), 1);
   var import_jsx_runtime430 = __toESM(require_jsx_runtime(), 1);
@@ -89876,7 +89807,7 @@ If there's a particular need for this, please submit a feature request at https:
     offset: 9
   };
   function ViewTypeMenu() {
-    const { view, onChangeView, defaultLayouts } = (0, import_element255.useContext)(dataviews_context_default);
+    const { view, onChangeView, defaultLayouts } = (0, import_element254.useContext)(dataviews_context_default);
     const availableLayouts = Object.keys(defaultLayouts);
     if (availableLayouts.length <= 1) {
       return null;
@@ -89943,8 +89874,8 @@ If there's a particular need for this, please submit a feature request at https:
     ] });
   }
   function SortFieldControl() {
-    const { view, fields, onChangeView } = (0, import_element255.useContext)(dataviews_context_default);
-    const orderOptions = (0, import_element255.useMemo)(() => {
+    const { view, fields, onChangeView } = (0, import_element254.useContext)(dataviews_context_default);
+    const orderOptions = (0, import_element254.useMemo)(() => {
       const sortableFields = fields.filter(
         (field) => field.enableSorting !== false
       );
@@ -89975,7 +89906,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function SortDirectionControl() {
-    const { view, fields, onChangeView } = (0, import_element255.useContext)(dataviews_context_default);
+    const { view, fields, onChangeView } = (0, import_element254.useContext)(dataviews_context_default);
     const sortableFields = fields.filter(
       (field) => field.enableSorting !== false
     );
@@ -90025,7 +89956,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ItemsPerPageControl() {
-    const { view, config: config2, onChangeView } = (0, import_element255.useContext)(dataviews_context_default);
+    const { view, config: config2, onChangeView } = (0, import_element254.useContext)(dataviews_context_default);
     const { infiniteScrollEnabled } = view;
     if (!config2 || !config2.perPageSizes || config2.perPageSizes.length < 2 || config2.perPageSizes.length > 6 || infiniteScrollEnabled) {
       return null;
@@ -90059,7 +89990,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ResetViewButton() {
-    const { onReset } = (0, import_element255.useContext)(dataviews_context_default);
+    const { onReset } = (0, import_element254.useContext)(dataviews_context_default);
     if (onReset === void 0) {
       return null;
     }
@@ -90082,7 +90013,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function DataviewsViewConfigDropdown() {
-    const { view, onReset } = (0, import_element255.useContext)(dataviews_context_default);
+    const { view, onReset } = (0, import_element254.useContext)(dataviews_context_default);
     const popoverId = (0, import_compose75.useInstanceId)(
       _DataViewsViewConfig,
       "dataviews-view-config-dropdown"
@@ -90181,14 +90112,14 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime430.jsx)(DataviewsViewConfigDropdown, {})
     ] });
   }
-  var DataViewsViewConfig = (0, import_element255.memo)(_DataViewsViewConfig);
+  var DataViewsViewConfig = (0, import_element254.memo)(_DataViewsViewConfig);
   var dataviews_view_config_default = DataViewsViewConfig;
 
   // packages/dataviews/build-module/components/dataform-controls/checkbox.mjs
-  var import_element264 = __toESM(require_element(), 1);
+  var import_element263 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/validated-form-controls/checkbox-control.mjs
-  var import_element256 = __toESM(require_element(), 1);
+  var import_element255 = __toESM(require_element(), 1);
   var import_compose76 = __toESM(require_compose(), 1);
   var import_components80 = __toESM(require_components(), 1);
   var import_jsx_runtime431 = __toESM(require_jsx_runtime(), 1);
@@ -90198,7 +90129,7 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element256.useRef)(null);
+    const validityTargetRef = (0, import_element255.useRef)(null);
     const mergedRefs = (0, import_compose76.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime431.jsx)(
       ControlWithError,
@@ -90220,11 +90151,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var ValidatedCheckboxControl = (0, import_element256.forwardRef)(UnforwardedValidatedCheckboxControl);
+  var ValidatedCheckboxControl = (0, import_element255.forwardRef)(UnforwardedValidatedCheckboxControl);
   ValidatedCheckboxControl.displayName = "ValidatedCheckboxControl";
 
   // packages/dataviews/build-module/components/validated-form-controls/combobox-control.mjs
-  var import_element257 = __toESM(require_element(), 1);
+  var import_element256 = __toESM(require_element(), 1);
   var import_compose77 = __toESM(require_compose(), 1);
   var import_components81 = __toESM(require_components(), 1);
   var import_jsx_runtime432 = __toESM(require_jsx_runtime(), 1);
@@ -90234,9 +90165,9 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element257.useRef)(null);
+    const validityTargetRef = (0, import_element256.useRef)(null);
     const mergedRefs = (0, import_compose77.useMergeRefs)([forwardedRef, validityTargetRef]);
-    (0, import_element257.useEffect)(() => {
+    (0, import_element256.useEffect)(() => {
       const input = validityTargetRef.current?.querySelector(
         'input[role="combobox"]'
       );
@@ -90262,11 +90193,11 @@ If there's a particular need for this, please submit a feature request at https:
       )
     );
   };
-  var ValidatedComboboxControl = (0, import_element257.forwardRef)(UnforwardedValidatedComboboxControl);
+  var ValidatedComboboxControl = (0, import_element256.forwardRef)(UnforwardedValidatedComboboxControl);
   ValidatedComboboxControl.displayName = "ValidatedComboboxControl";
 
   // packages/dataviews/build-module/components/validated-form-controls/form-token-field.mjs
-  var import_element258 = __toESM(require_element(), 1);
+  var import_element257 = __toESM(require_element(), 1);
   var import_components82 = __toESM(require_components(), 1);
   var import_jsx_runtime433 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedFormTokenField = ({
@@ -90275,7 +90206,7 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element258.useRef)(null);
+    const validityTargetRef = (0, import_element257.useRef)(null);
     return /* @__PURE__ */ (0, import_jsx_runtime433.jsxs)(
       "div",
       {
@@ -90315,11 +90246,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var ValidatedFormTokenField = (0, import_element258.forwardRef)(UnforwardedValidatedFormTokenField);
+  var ValidatedFormTokenField = (0, import_element257.forwardRef)(UnforwardedValidatedFormTokenField);
   ValidatedFormTokenField.displayName = "ValidatedFormTokenField";
 
   // packages/dataviews/build-module/components/validated-form-controls/number-control.mjs
-  var import_element259 = __toESM(require_element(), 1);
+  var import_element258 = __toESM(require_element(), 1);
   var import_compose78 = __toESM(require_compose(), 1);
   var import_components83 = __toESM(require_components(), 1);
   var import_jsx_runtime434 = __toESM(require_jsx_runtime(), 1);
@@ -90329,7 +90260,7 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element259.useRef)(null);
+    const validityTargetRef = (0, import_element258.useRef)(null);
     const mergedRefs = (0, import_compose78.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime434.jsx)(
       ControlWithError,
@@ -90343,11 +90274,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var ValidatedNumberControl = (0, import_element259.forwardRef)(UnforwardedValidatedNumberControl);
+  var ValidatedNumberControl = (0, import_element258.forwardRef)(UnforwardedValidatedNumberControl);
   ValidatedNumberControl.displayName = "ValidatedNumberControl";
 
   // packages/dataviews/build-module/components/validated-form-controls/radio-control.mjs
-  var import_element260 = __toESM(require_element(), 1);
+  var import_element259 = __toESM(require_element(), 1);
   var import_compose79 = __toESM(require_compose(), 1);
   var import_components84 = __toESM(require_components(), 1);
   var import_jsx_runtime435 = __toESM(require_jsx_runtime(), 1);
@@ -90357,7 +90288,7 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element260.useRef)(null);
+    const validityTargetRef = (0, import_element259.useRef)(null);
     const mergedRefs = (0, import_compose79.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime435.jsx)(
       ControlWithError,
@@ -90374,11 +90305,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var ValidatedRadioControl = (0, import_element260.forwardRef)(UnforwardedValidatedRadioControl);
+  var ValidatedRadioControl = (0, import_element259.forwardRef)(UnforwardedValidatedRadioControl);
   ValidatedRadioControl.displayName = "ValidatedRadioControl";
 
   // packages/dataviews/build-module/components/validated-form-controls/select-control.mjs
-  var import_element261 = __toESM(require_element(), 1);
+  var import_element260 = __toESM(require_element(), 1);
   var import_compose80 = __toESM(require_compose(), 1);
   var import_components85 = __toESM(require_components(), 1);
   var import_jsx_runtime436 = __toESM(require_jsx_runtime(), 1);
@@ -90388,7 +90319,7 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element261.useRef)(null);
+    const validityTargetRef = (0, import_element260.useRef)(null);
     const mergedRefs = (0, import_compose80.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime436.jsx)(
       ControlWithError,
@@ -90410,11 +90341,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var ValidatedSelectControl = (0, import_element261.forwardRef)(UnforwardedValidatedSelectControl);
+  var ValidatedSelectControl = (0, import_element260.forwardRef)(UnforwardedValidatedSelectControl);
   ValidatedSelectControl.displayName = "ValidatedSelectControl";
 
   // packages/dataviews/build-module/components/validated-form-controls/toggle-control.mjs
-  var import_element262 = __toESM(require_element(), 1);
+  var import_element261 = __toESM(require_element(), 1);
   var import_compose81 = __toESM(require_compose(), 1);
   var import_components86 = __toESM(require_components(), 1);
   var import_jsx_runtime437 = __toESM(require_jsx_runtime(), 1);
@@ -90424,7 +90355,7 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element262.useRef)(null);
+    const validityTargetRef = (0, import_element261.useRef)(null);
     const mergedRefs = (0, import_compose81.useMergeRefs)([forwardedRef, validityTargetRef]);
     return /* @__PURE__ */ (0, import_jsx_runtime437.jsx)(
       ControlWithError,
@@ -90445,11 +90376,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var ValidatedToggleControl = (0, import_element262.forwardRef)(UnforwardedValidatedToggleControl);
+  var ValidatedToggleControl = (0, import_element261.forwardRef)(UnforwardedValidatedToggleControl);
   ValidatedToggleControl.displayName = "ValidatedToggleControl";
 
   // packages/dataviews/build-module/components/validated-form-controls/toggle-group-control.mjs
-  var import_element263 = __toESM(require_element(), 1);
+  var import_element262 = __toESM(require_element(), 1);
   var import_components87 = __toESM(require_components(), 1);
   var import_jsx_runtime438 = __toESM(require_jsx_runtime(), 1);
   var UnforwardedValidatedToggleGroupControl = ({
@@ -90458,8 +90389,8 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     ...restProps
   }, forwardedRef) => {
-    const validityTargetRef = (0, import_element263.useRef)(null);
-    const nameAttr = (0, import_element263.useId)();
+    const validityTargetRef = (0, import_element262.useRef)(null);
+    const nameAttr = (0, import_element262.useId)();
     return /* @__PURE__ */ (0, import_jsx_runtime438.jsxs)("div", { className: "dataviews-validated-control__wrapper-with-error-delegate", children: [
       /* @__PURE__ */ (0, import_jsx_runtime438.jsx)(
         ControlWithError,
@@ -90493,7 +90424,7 @@ If there's a particular need for this, please submit a feature request at https:
       )
     ] });
   };
-  var ValidatedToggleGroupControl = (0, import_element263.forwardRef)(UnforwardedValidatedToggleGroupControl);
+  var ValidatedToggleGroupControl = (0, import_element262.forwardRef)(UnforwardedValidatedToggleGroupControl);
   ValidatedToggleGroupControl.displayName = "ValidatedToggleGroupControl";
 
   // packages/dataviews/build-module/components/dataform-controls/utils/get-custom-validity.mjs
@@ -90534,7 +90465,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { getValue, setValue, label, description, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element264.useCallback)(() => {
+    const onChangeControl = (0, import_element263.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
@@ -90557,7 +90488,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/combobox.mjs
   var import_components88 = __toESM(require_components(), 1);
-  var import_element265 = __toESM(require_element(), 1);
+  var import_element264 = __toESM(require_element(), 1);
   var import_jsx_runtime440 = __toESM(require_jsx_runtime(), 1);
   function Combobox3({
     data,
@@ -90568,7 +90499,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, description, placeholder, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
-    const onChangeControl = (0, import_element265.useCallback)(
+    const onChangeControl = (0, import_element264.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue ?? "" })),
       [data, onChange, setValue]
     );
@@ -90599,14 +90530,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/datetime.mjs
   var import_components90 = __toESM(require_components(), 1);
-  var import_element268 = __toESM(require_element(), 1);
+  var import_element267 = __toESM(require_element(), 1);
   var import_i18n106 = __toESM(require_i18n(), 1);
   var import_a11y10 = __toESM(require_a11y(), 1);
   var import_date5 = __toESM(require_date(), 1);
 
   // packages/dataviews/build-module/components/dataform-controls/utils/relative-date-control.mjs
   var import_components89 = __toESM(require_components(), 1);
-  var import_element266 = __toESM(require_element(), 1);
+  var import_element265 = __toESM(require_element(), 1);
   var import_i18n104 = __toESM(require_i18n(), 1);
   var import_jsx_runtime441 = __toESM(require_jsx_runtime(), 1);
   var TIME_UNITS_OPTIONS = {
@@ -90636,7 +90567,7 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const fieldValue = getValue({ item: data });
     const { value: relValue = "", unit = options[0].value } = fieldValue && typeof fieldValue === "object" ? fieldValue : {};
-    const onChangeValue = (0, import_element266.useCallback)(
+    const onChangeValue = (0, import_element265.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -90645,7 +90576,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [onChange, setValue, data, unit]
     );
-    const onChangeUnit = (0, import_element266.useCallback)(
+    const onChangeUnit = (0, import_element265.useCallback)(
       (newUnit) => onChange(
         setValue({
           item: data,
@@ -90698,11 +90629,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/utils/use-disabled-date-matchers.mjs
-  var import_element267 = __toESM(require_element(), 1);
+  var import_element266 = __toESM(require_element(), 1);
   function useDisabledDateMatchers(isValid2, parseDateFn) {
     const minConstraint = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
     const maxConstraint = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-    const disabledMatchers = (0, import_element267.useMemo)(() => {
+    const disabledMatchers = (0, import_element266.useMemo)(() => {
       const matchers = [];
       if (minConstraint) {
         const minDate = parseDateFn(minConstraint);
@@ -90802,11 +90733,11 @@ If there's a particular need for this, please submit a feature request at https:
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
     const { timezone } = (0, import_date5.getSettings)();
     const timeZone = timezone.string || (0, import_date5.dateI18n)("P");
-    const [calendarMonth, setCalendarMonth] = (0, import_element268.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element267.useState)(() => {
       const parsedDate = parseDateTime(value);
       return toCalendarDate(parsedDate || /* @__PURE__ */ new Date(), timeZone);
     });
-    (0, import_element268.useEffect)(() => {
+    (0, import_element267.useEffect)(() => {
       const parsedDate = parseDateTime(value);
       if (parsedDate) {
         const targetMonth = toCalendarDate(parsedDate, timeZone);
@@ -90818,17 +90749,17 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     }, [timeZone, value]);
-    const inputControlRef = (0, import_element268.useRef)(null);
-    const validationTimeoutRef = (0, import_element268.useRef)(void 0);
+    const inputControlRef = (0, import_element267.useRef)(null);
+    const validationTimeoutRef = (0, import_element267.useRef)(void 0);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDateTime);
-    const onChangeCallback = (0, import_element268.useCallback)(
+    const onChangeCallback = (0, import_element267.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    (0, import_element268.useEffect)(() => {
+    (0, import_element267.useEffect)(() => {
       return () => clearTimeout(validationTimeoutRef.current);
     }, []);
-    const onSelectDate = (0, import_element268.useCallback)(
+    const onSelectDate = (0, import_element267.useCallback)(
       (newDate) => {
         if (newDate) {
           const wpDate = (0, import_date5.dateI18n)("Y-m-d", newDate);
@@ -90854,7 +90785,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback, value]
     );
-    const handleManualDateTimeChange = (0, import_element268.useCallback)(
+    const handleManualDateTimeChange = (0, import_element267.useCallback)(
       (newValue) => {
         if (newValue) {
           const dateTime = (0, import_date5.getDate)(newValue);
@@ -90962,7 +90893,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-controls/date.mjs
   var import_components91 = __toESM(require_components(), 1);
   var import_a11y11 = __toESM(require_a11y(), 1);
-  var import_element269 = __toESM(require_element(), 1);
+  var import_element268 = __toESM(require_element(), 1);
   var import_i18n107 = __toESM(require_i18n(), 1);
   var import_date6 = __toESM(require_date(), 1);
   var import_jsx_runtime443 = __toESM(require_jsx_runtime(), 1);
@@ -91061,8 +90992,8 @@ If there's a particular need for this, please submit a feature request at https:
     children
   }) {
     const { isValid: isValid2 } = field;
-    const [customValidity, setCustomValidity] = (0, import_element269.useState)(void 0);
-    const validateRefs = (0, import_element269.useCallback)(() => {
+    const [customValidity, setCustomValidity] = (0, import_element268.useState)(void 0);
+    const validateRefs = (0, import_element268.useCallback)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       for (const ref of refs) {
         const input = ref.current;
@@ -91076,7 +91007,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setCustomValidity(void 0);
     }, [inputRefs]);
-    (0, import_element269.useEffect)(() => {
+    (0, import_element268.useEffect)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       const result = validity ? getCustomValidity(isValid2, validity) : void 0;
       for (const ref of refs) {
@@ -91088,7 +91019,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     }, [inputRefs, isValid2, validity]);
-    (0, import_element269.useEffect)(() => {
+    (0, import_element268.useEffect)(() => {
       const refs = Array.isArray(inputRefs) ? inputRefs : [inputRefs];
       const handleInvalid = (event) => {
         event.preventDefault();
@@ -91103,7 +91034,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [inputRefs, setIsTouched]);
-    (0, import_element269.useEffect)(() => {
+    (0, import_element268.useEffect)(() => {
       if (!isTouched) {
         return;
       }
@@ -91114,7 +91045,7 @@ If there's a particular need for this, please submit a feature request at https:
         validateRefs();
       }
     }, [isTouched, isValid2, validity, validateRefs]);
-    (0, import_element269.useEffect)(() => {
+    (0, import_element268.useEffect)(() => {
       if (isTouched && customValidity?.message) {
         (0, import_a11y11.speak)(customValidity.message);
       }
@@ -91156,18 +91087,18 @@ If there's a particular need for this, please submit a feature request at https:
       format: fieldFormat
     } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const [selectedPresetId, setSelectedPresetId] = (0, import_element269.useState)(
+    const [selectedPresetId, setSelectedPresetId] = (0, import_element268.useState)(
       null
     );
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
     const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
     const fieldValue = getValue({ item: data });
     const value = typeof fieldValue === "string" ? fieldValue : void 0;
-    const [calendarMonth, setCalendarMonth] = (0, import_element269.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element268.useState)(() => {
       const parsedDate = parseDate2(value);
       return parsedDate || /* @__PURE__ */ new Date();
     });
-    (0, import_element269.useEffect)(() => {
+    (0, import_element268.useEffect)(() => {
       const parsedDate = parseDate2(value);
       if (parsedDate) {
         setCalendarMonth(
@@ -91175,14 +91106,14 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     }, [value]);
-    const [isTouched, setIsTouched] = (0, import_element269.useState)(false);
-    const validityTargetRef = (0, import_element269.useRef)(null);
+    const [isTouched, setIsTouched] = (0, import_element268.useState)(false);
+    const validityTargetRef = (0, import_element268.useRef)(null);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
-    const onChangeCallback = (0, import_element269.useCallback)(
+    const onChangeCallback = (0, import_element268.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
-    const onSelectDate = (0, import_element269.useCallback)(
+    const onSelectDate = (0, import_element268.useCallback)(
       (newDate) => {
         const dateValue = newDate ? formatDate(newDate) : void 0;
         onChangeCallback(dateValue);
@@ -91191,7 +91122,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback]
     );
-    const handlePresetClick = (0, import_element269.useCallback)(
+    const handlePresetClick = (0, import_element268.useCallback)(
       (preset) => {
         const presetDate = preset.getValue();
         const dateValue = formatDate(presetDate);
@@ -91202,7 +91133,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback]
     );
-    const handleManualDateChange = (0, import_element269.useCallback)(
+    const handleManualDateChange = (0, import_element268.useCallback)(
       (newValue) => {
         onChangeCallback(newValue);
         if (newValue) {
@@ -91341,7 +91272,7 @@ If there's a particular need for this, please submit a feature request at https:
     const weekStartsOn = fieldFormat.weekStartsOn ?? (0, import_date6.getSettings)().l10n.startOfWeek;
     const locale = getCalendarLocale((0, import_date6.getSettings)().l10n.locale);
     const { minConstraint, maxConstraint, disabledMatchers } = useDisabledDateMatchers(isValid2, parseDate2);
-    const onChangeCallback = (0, import_element269.useCallback)(
+    const onChangeCallback = (0, import_element268.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -91352,10 +91283,10 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [data, onChange, setValue]
     );
-    const [selectedPresetId, setSelectedPresetId] = (0, import_element269.useState)(
+    const [selectedPresetId, setSelectedPresetId] = (0, import_element268.useState)(
       null
     );
-    const selectedRange = (0, import_element269.useMemo)(() => {
+    const selectedRange = (0, import_element268.useMemo)(() => {
       if (!value) {
         return null;
       }
@@ -91365,11 +91296,11 @@ If there's a particular need for this, please submit a feature request at https:
         to: parseDate2(to2) || void 0
       };
     }, [value]);
-    const [calendarMonth, setCalendarMonth] = (0, import_element269.useState)(() => {
+    const [calendarMonth, setCalendarMonth] = (0, import_element268.useState)(() => {
       return selectedRange?.from || /* @__PURE__ */ new Date();
     });
     const [fromValue, toValue] = value ?? [];
-    (0, import_element269.useEffect)(() => {
+    (0, import_element268.useEffect)(() => {
       setCalendarMonth((currentMonth) => {
         const from = parseDate2(fromValue);
         const to2 = parseDate2(toValue);
@@ -91387,10 +91318,10 @@ If there's a particular need for this, please submit a feature request at https:
         return targetMonth && !isRangeVisible ? targetMonth : currentMonth;
       });
     }, [fromValue, toValue]);
-    const [isTouched, setIsTouched] = (0, import_element269.useState)(false);
-    const fromInputRef = (0, import_element269.useRef)(null);
-    const toInputRef = (0, import_element269.useRef)(null);
-    const updateDateRange = (0, import_element269.useCallback)(
+    const [isTouched, setIsTouched] = (0, import_element268.useState)(false);
+    const fromInputRef = (0, import_element268.useRef)(null);
+    const toInputRef = (0, import_element268.useRef)(null);
+    const updateDateRange = (0, import_element268.useCallback)(
       (fromDate, toDate2) => {
         if (!fromDate && !toDate2) {
           onChangeCallback(void 0);
@@ -91403,7 +91334,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onChangeCallback]
     );
-    const onSelectCalendarRange = (0, import_element269.useCallback)(
+    const onSelectCalendarRange = (0, import_element268.useCallback)(
       (newRange) => {
         updateDateRange(newRange?.from, newRange?.to);
         setSelectedPresetId(null);
@@ -91411,7 +91342,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [updateDateRange]
     );
-    const handlePresetClick = (0, import_element269.useCallback)(
+    const handlePresetClick = (0, import_element268.useCallback)(
       (preset) => {
         const [startDate, endDate] = preset.getValue();
         setCalendarMonth(startDate);
@@ -91421,7 +91352,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [updateDateRange]
     );
-    const handleManualDateChange = (0, import_element269.useCallback)(
+    const handleManualDateChange = (0, import_element268.useCallback)(
       (fromOrTo, newValue) => {
         const [currentFrom, currentTo] = value || [
           void 0,
@@ -91615,7 +91546,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/select.mjs
   var import_components92 = __toESM(require_components(), 1);
-  var import_element270 = __toESM(require_element(), 1);
+  var import_element269 = __toESM(require_element(), 1);
   var import_jsx_runtime444 = __toESM(require_jsx_runtime(), 1);
   function Select2({
     data,
@@ -91629,7 +91560,7 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const isMultiple = type === "array";
     const value = getValue({ item: data }) ?? (isMultiple ? [] : "");
-    const onChangeControl = (0, import_element270.useCallback)(
+    const onChangeControl = (0, import_element269.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -91674,7 +91605,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/utils/validated-input.mjs
-  var import_element271 = __toESM(require_element(), 1);
+  var import_element270 = __toESM(require_element(), 1);
   var import_jsx_runtime446 = __toESM(require_jsx_runtime(), 1);
   function ValidatedText({
     data,
@@ -91690,7 +91621,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, placeholder, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data });
     const disabled2 = field.isDisabled({ item: data, field });
-    const onValueChangeControl = (0, import_element271.useCallback)(
+    const onValueChangeControl = (0, import_element270.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -91806,7 +91737,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/utils/validated-number.mjs
   var import_components93 = __toESM(require_components(), 1);
-  var import_element272 = __toESM(require_element(), 1);
+  var import_element271 = __toESM(require_element(), 1);
   var import_i18n108 = __toESM(require_i18n(), 1);
   var import_jsx_runtime450 = __toESM(require_jsx_runtime(), 1);
   function toNumberOrEmpty(value) {
@@ -91823,11 +91754,11 @@ If there's a particular need for this, please submit a feature request at https:
     step
   }) {
     const [min3 = "", max3 = ""] = value;
-    const onChangeMin = (0, import_element272.useCallback)(
+    const onChangeMin = (0, import_element271.useCallback)(
       (newValue) => onChange([toNumberOrEmpty(newValue), max3]),
       [onChange, max3]
     );
-    const onChangeMax = (0, import_element272.useCallback)(
+    const onChangeMax = (0, import_element271.useCallback)(
       (newValue) => onChange([min3, toNumberOrEmpty(newValue)]),
       [onChange, min3]
     );
@@ -91876,7 +91807,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const value = getValue({ item: data }) ?? "";
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element272.useCallback)(
+    const onChangeControl = (0, import_element271.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -91890,7 +91821,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [data, onChange, setValue]
     );
-    const onChangeBetweenControls = (0, import_element272.useCallback)(
+    const onChangeBetweenControls = (0, import_element271.useCallback)(
       (newValue) => {
         onChange(
           setValue({
@@ -91951,7 +91882,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/radio.mjs
   var import_components94 = __toESM(require_components(), 1);
-  var import_element273 = __toESM(require_element(), 1);
+  var import_element272 = __toESM(require_element(), 1);
   var import_jsx_runtime453 = __toESM(require_jsx_runtime(), 1);
   function Radio({
     data,
@@ -91968,7 +91899,7 @@ If there's a particular need for this, please submit a feature request at https:
       getElements: field.getElements
     });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element273.useCallback)(
+    const onChangeControl = (0, import_element272.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -91993,7 +91924,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/text.mjs
-  var import_element274 = __toESM(require_element(), 1);
+  var import_element273 = __toESM(require_element(), 1);
   var import_jsx_runtime454 = __toESM(require_jsx_runtime(), 1);
   function Text2({
     data,
@@ -92015,8 +91946,8 @@ If there's a particular need for this, please submit a feature request at https:
           hideLabelFromVision,
           markWhenOptional,
           validity,
-          prefix: prefix2 ? /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(InputLayout2.Slot, { padding: prefixPadding, children: typeof prefix2 === "string" ? prefix2 : (0, import_element274.createElement)(prefix2) }) : void 0,
-          suffix: suffix ? /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(InputLayout2.Slot, { padding: suffixPadding, children: typeof suffix === "string" ? suffix : (0, import_element274.createElement)(suffix) }) : void 0
+          prefix: prefix2 ? /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(InputLayout2.Slot, { padding: prefixPadding, children: typeof prefix2 === "string" ? prefix2 : (0, import_element273.createElement)(prefix2) }) : void 0,
+          suffix: suffix ? /* @__PURE__ */ (0, import_jsx_runtime454.jsx)(InputLayout2.Slot, { padding: suffixPadding, children: typeof suffix === "string" ? suffix : (0, import_element273.createElement)(suffix) }) : void 0
         }
       }
     );
@@ -92024,7 +91955,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/time.mjs
   var import_components95 = __toESM(require_components(), 1);
-  var import_element275 = __toESM(require_element(), 1);
+  var import_element274 = __toESM(require_element(), 1);
   var import_i18n109 = __toESM(require_i18n(), 1);
   var import_jsx_runtime455 = __toESM(require_jsx_runtime(), 1);
   function getStep(timeFormat, values) {
@@ -92056,11 +91987,11 @@ If there's a particular need for this, please submit a feature request at https:
     max: max3
   }) {
     const [from = "", to2 = ""] = value;
-    const onChangeFrom = (0, import_element275.useCallback)(
+    const onChangeFrom = (0, import_element274.useCallback)(
       (newValue) => onChange([newValue ?? "", to2]),
       [onChange, to2]
     );
-    const onChangeTo = (0, import_element275.useCallback)(
+    const onChangeTo = (0, import_element274.useCallback)(
       (newValue) => onChange([from, newValue ?? ""]),
       [onChange, from]
     );
@@ -92116,7 +92047,7 @@ If there's a particular need for this, please submit a feature request at https:
     const timeFormat = field.format?.time;
     const min3 = typeof isValid2.min?.constraint === "string" ? isValid2.min.constraint : void 0;
     const max3 = typeof isValid2.max?.constraint === "string" ? isValid2.max.constraint : void 0;
-    const onChangeControl = (0, import_element275.useCallback)(
+    const onChangeControl = (0, import_element274.useCallback)(
       (newValue) => onChange(
         setValue({
           item: data,
@@ -92125,7 +92056,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [data, onChange, setValue]
     );
-    const onChangeBetweenControls = (0, import_element275.useCallback)(
+    const onChangeBetweenControls = (0, import_element274.useCallback)(
       ([from, to2]) => onChange(
         setValue({
           item: data,
@@ -92180,7 +92111,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/toggle.mjs
-  var import_element276 = __toESM(require_element(), 1);
+  var import_element275 = __toESM(require_element(), 1);
   var import_jsx_runtime456 = __toESM(require_jsx_runtime(), 1);
   function Toggle({
     field,
@@ -92192,7 +92123,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { label, description, getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
-    const onChangeControl = (0, import_element276.useCallback)(() => {
+    const onChangeControl = (0, import_element275.useCallback)(() => {
       onChange(
         setValue({ item: data, value: !getValue({ item: data }) })
       );
@@ -92214,7 +92145,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-controls/textarea.mjs
-  var import_element277 = __toESM(require_element(), 1);
+  var import_element276 = __toESM(require_element(), 1);
   var import_jsx_runtime457 = __toESM(require_jsx_runtime(), 1);
   function Textarea2({
     data,
@@ -92229,7 +92160,7 @@ If there's a particular need for this, please submit a feature request at https:
     const disabled2 = field.isDisabled({ item: data, field });
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const value = field.getValue({ item: data });
-    const onValueChangeControl = (0, import_element277.useCallback)(
+    const onValueChangeControl = (0, import_element276.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -92256,7 +92187,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/toggle-group.mjs
   var import_components96 = __toESM(require_components(), 1);
-  var import_element278 = __toESM(require_element(), 1);
+  var import_element277 = __toESM(require_element(), 1);
   var import_jsx_runtime458 = __toESM(require_jsx_runtime(), 1);
   function ToggleGroup({
     data,
@@ -92269,7 +92200,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { getValue, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = getValue({ item: data });
-    const onChangeControl = (0, import_element278.useCallback)(
+    const onChangeControl = (0, import_element277.useCallback)(
       (newValue) => onChange(setValue({ item: data, value: newValue })),
       [data, onChange, setValue]
     );
@@ -92311,7 +92242,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/array.mjs
   var import_components97 = __toESM(require_components(), 1);
-  var import_element279 = __toESM(require_element(), 1);
+  var import_element278 = __toESM(require_element(), 1);
   var import_jsx_runtime459 = __toESM(require_jsx_runtime(), 1);
   function ArrayControl({
     data,
@@ -92328,7 +92259,7 @@ If there's a particular need for this, please submit a feature request at https:
       elements: field.elements,
       getElements: field.getElements
     });
-    const arrayValueAsElements = (0, import_element279.useMemo)(
+    const arrayValueAsElements = (0, import_element278.useMemo)(
       () => Array.isArray(value) ? value.map((token) => {
         const element = elements?.find(
           (suggestion) => suggestion.value === token
@@ -92337,7 +92268,7 @@ If there's a particular need for this, please submit a feature request at https:
       }) : [],
       [value, elements]
     );
-    const onChangeControl = (0, import_element279.useCallback)(
+    const onChangeControl = (0, import_element278.useCallback)(
       (tokens) => {
         const valueTokens = tokens.map((token) => {
           if (typeof token === "object" && "value" in token) {
@@ -92401,7 +92332,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/color.mjs
   var import_components98 = __toESM(require_components(), 1);
-  var import_element280 = __toESM(require_element(), 1);
+  var import_element279 = __toESM(require_element(), 1);
   var import_i18n110 = __toESM(require_i18n(), 1);
   var import_jsx_runtime460 = __toESM(require_jsx_runtime(), 1);
   var ColorPickerDropdown = ({
@@ -92448,13 +92379,13 @@ If there's a particular need for this, please submit a feature request at https:
     const { label, placeholder, description, setValue, isValid: isValid2 } = field;
     const disabled2 = field.isDisabled({ item: data, field });
     const value = field.getValue({ item: data }) || "";
-    const handleColorChange = (0, import_element280.useCallback)(
+    const handleColorChange = (0, import_element279.useCallback)(
       (newColor) => {
         onChange(setValue({ item: data, value: newColor }));
       },
       [data, onChange, setValue]
     );
-    const handleInputChange = (0, import_element280.useCallback)(
+    const handleInputChange = (0, import_element279.useCallback)(
       (newValue) => {
         onChange(setValue({ item: data, value: newValue || "" }));
       },
@@ -92489,7 +92420,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/dataviews/build-module/components/dataform-controls/password.mjs
   var import_components99 = __toESM(require_components(), 1);
-  var import_element281 = __toESM(require_element(), 1);
+  var import_element280 = __toESM(require_element(), 1);
   var import_i18n111 = __toESM(require_i18n(), 1);
   var import_jsx_runtime461 = __toESM(require_jsx_runtime(), 1);
   function Password({
@@ -92500,9 +92431,9 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const [isVisible2, setIsVisible] = (0, import_element281.useState)(false);
+    const [isVisible2, setIsVisible] = (0, import_element280.useState)(false);
     const disabled2 = field.isDisabled({ item: data, field });
-    const toggleVisibility = (0, import_element281.useCallback)(() => {
+    const toggleVisibility = (0, import_element280.useCallback)(() => {
       setIsVisible((prev) => !prev);
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime461.jsx)(
@@ -93762,11 +93693,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-container-width.mjs
-  var import_element282 = __toESM(require_element(), 1);
+  var import_element281 = __toESM(require_element(), 1);
   var import_compose82 = __toESM(require_compose(), 1);
   function useContainerWidth() {
-    const [width, setWidth] = (0, import_element282.useState)(0);
-    const measureRef = (0, import_element282.useCallback)((element) => {
+    const [width, setWidth] = (0, import_element281.useState)(0);
+    const measureRef = (0, import_element281.useCallback)((element) => {
       if (element) {
         setWidth(element.offsetWidth);
       }
@@ -93783,7 +93714,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-data.mjs
-  var import_element283 = __toESM(require_element(), 1);
+  var import_element282 = __toESM(require_element(), 1);
   function useData({
     view,
     data: shownData,
@@ -93793,32 +93724,32 @@ If there's a particular need for this, please submit a feature request at https:
     selection: selection2
   }) {
     const isInfiniteScrollEnabled = view.infiniteScrollEnabled;
-    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element283.useState)(!isLoading);
-    (0, import_element283.useEffect)(() => {
+    const [hasInitiallyLoaded, setHasInitiallyLoaded] = (0, import_element282.useState)(!isLoading);
+    (0, import_element282.useEffect)(() => {
       if (!isLoading) {
         setHasInitiallyLoaded(true);
       }
     }, [isLoading]);
-    const previousDataRef = (0, import_element283.useRef)(shownData);
-    const previousPaginationInfoRef = (0, import_element283.useRef)(paginationInfo);
-    (0, import_element283.useEffect)(() => {
+    const previousDataRef = (0, import_element282.useRef)(shownData);
+    const previousPaginationInfoRef = (0, import_element282.useRef)(paginationInfo);
+    (0, import_element282.useEffect)(() => {
       if (!isLoading) {
         previousDataRef.current = shownData;
         previousPaginationInfoRef.current = paginationInfo;
       }
     }, [shownData, isLoading, paginationInfo]);
-    const [visibleEntries, setVisibleEntries] = (0, import_element283.useState)([]);
-    const positionMapRef = (0, import_element283.useRef)(/* @__PURE__ */ new Map());
-    const allLoadedRecordsRef = (0, import_element283.useRef)([]);
-    const prevViewParamsRef = (0, import_element283.useRef)({
+    const [visibleEntries, setVisibleEntries] = (0, import_element282.useState)([]);
+    const positionMapRef = (0, import_element282.useRef)(/* @__PURE__ */ new Map());
+    const allLoadedRecordsRef = (0, import_element282.useRef)([]);
+    const prevViewParamsRef = (0, import_element282.useRef)({
       search: void 0,
       filters: void 0,
       perPage: void 0
     });
-    const scrollDirectionRef = (0, import_element283.useRef)(void 0);
-    const prevStartPositionRef = (0, import_element283.useRef)(void 0);
-    const hasInitializedRef = (0, import_element283.useRef)(false);
-    const allLoadedRecords = (0, import_element283.useMemo)(() => {
+    const scrollDirectionRef = (0, import_element282.useRef)(void 0);
+    const prevStartPositionRef = (0, import_element282.useRef)(void 0);
+    const hasInitializedRef = (0, import_element282.useRef)(false);
+    const allLoadedRecords = (0, import_element282.useMemo)(() => {
       if (view.startPosition !== void 0 && prevStartPositionRef.current !== void 0) {
         if (view.startPosition < prevStartPositionRef.current) {
           scrollDirectionRef.current = "up";
@@ -93940,7 +93871,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-infinite-scroll.mjs
-  var import_element284 = __toESM(require_element(), 1);
+  var import_element283 = __toESM(require_element(), 1);
   var import_compose83 = __toESM(require_compose(), 1);
   function captureAnchorElement(container, anchorElementRef, direction) {
     const containerRect = container.getBoundingClientRect();
@@ -93976,18 +93907,18 @@ If there's a particular need for this, please submit a feature request at https:
     containerRef,
     setVisibleEntries
   }) {
-    const anchorElementRef = (0, import_element284.useRef)(null);
-    const viewRef = (0, import_element284.useRef)(view);
-    const isLoadingRef = (0, import_element284.useRef)(isLoading);
-    const onChangeViewRef = (0, import_element284.useRef)(onChangeView);
-    const totalItemsRef = (0, import_element284.useRef)(paginationInfo.totalItems);
-    (0, import_element284.useLayoutEffect)(() => {
+    const anchorElementRef = (0, import_element283.useRef)(null);
+    const viewRef = (0, import_element283.useRef)(view);
+    const isLoadingRef = (0, import_element283.useRef)(isLoading);
+    const onChangeViewRef = (0, import_element283.useRef)(onChangeView);
+    const totalItemsRef = (0, import_element283.useRef)(paginationInfo.totalItems);
+    (0, import_element283.useLayoutEffect)(() => {
       viewRef.current = view;
       isLoadingRef.current = isLoading;
       onChangeViewRef.current = onChangeView;
       totalItemsRef.current = paginationInfo.totalItems;
     }, [view, isLoading, onChangeView, paginationInfo.totalItems]);
-    const intersectionObserverCallback = (0, import_element284.useCallback)(
+    const intersectionObserverCallback = (0, import_element283.useCallback)(
       (entries) => {
         if (!setVisibleEntries) {
           return;
@@ -94019,7 +93950,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [setVisibleEntries]
     );
-    (0, import_element284.useLayoutEffect)(() => {
+    (0, import_element283.useLayoutEffect)(() => {
       const container = containerRef.current;
       const anchor = anchorElementRef.current;
       if (!container || !view.infiniteScrollEnabled || !anchor || isLoading) {
@@ -94039,10 +93970,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
       anchorElementRef.current = null;
     }, [containerRef, isLoading, view.infiniteScrollEnabled]);
-    const intersectionObserverRef = (0, import_element284.useRef)(
+    const intersectionObserverRef = (0, import_element283.useRef)(
       null
     );
-    (0, import_element284.useEffect)(() => {
+    (0, import_element283.useEffect)(() => {
       if (!view.infiniteScrollEnabled || !intersectionObserverCallback) {
         if (intersectionObserverRef.current) {
           intersectionObserverRef.current.disconnect();
@@ -94061,7 +93992,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [view.infiniteScrollEnabled, intersectionObserverCallback]);
-    (0, import_element284.useEffect)(() => {
+    (0, import_element283.useEffect)(() => {
       if (!view.infiniteScrollEnabled || !containerRef.current) {
         return;
       }
@@ -94121,7 +94052,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/hooks/use-page-clamp.mjs
-  var import_element285 = __toESM(require_element(), 1);
+  var import_element284 = __toESM(require_element(), 1);
   var import_compose84 = __toESM(require_compose(), 1);
   function usePageClamp({
     view,
@@ -94136,7 +94067,7 @@ If there's a particular need for this, please submit a feature request at https:
         onChangeView({ ...view, page: lastPage });
       }
     });
-    (0, import_element285.useEffect)(() => {
+    (0, import_element284.useEffect)(() => {
       if (isLoading || lastPage === null || !page || page <= lastPage) {
         return;
       }
@@ -94158,7 +94089,7 @@ If there's a particular need for this, please submit a feature request at https:
     search = true,
     searchLabel = void 0
   }) {
-    const { view } = (0, import_element286.useContext)(dataviews_context_default);
+    const { view } = (0, import_element285.useContext)(dataviews_context_default);
     const isInfiniteScroll = view.infiniteScrollEnabled;
     return /* @__PURE__ */ (0, import_jsx_runtime465.jsxs)(import_jsx_runtime465.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime465.jsxs)(
@@ -94222,7 +94153,7 @@ If there's a particular need for this, please submit a feature request at https:
     onReset
   }) {
     useEnableWpCompatOverlaySlot();
-    const [selectionState, setSelectionState] = (0, import_element286.useState)([]);
+    const [selectionState, setSelectionState] = (0, import_element285.useState)([]);
     const isUncontrolled = selectionProperty === void 0 || onChangeSelection === void 0;
     const selection2 = isUncontrolled ? selectionState : selectionProperty;
     const {
@@ -94238,9 +94169,9 @@ If there's a particular need for this, please submit a feature request at https:
       selection: selection2,
       paginationInfo
     });
-    const containerRef = (0, import_element286.useRef)(null);
+    const containerRef = (0, import_element285.useRef)(null);
     const [containerWidth, resizeObserverRef] = useContainerWidth();
-    const [openedFilter, setOpenedFilter] = (0, import_element286.useState)(null);
+    const [openedFilter, setOpenedFilter] = (0, import_element285.useState)(null);
     function setSelectionWithChange(value) {
       const newValue = typeof value === "function" ? value(selection2) : value;
       if (isUncontrolled) {
@@ -94250,8 +94181,8 @@ If there's a particular need for this, please submit a feature request at https:
         onChangeSelection(newValue);
       }
     }
-    const _fields = (0, import_element286.useMemo)(() => normalizeFields(fields), [fields]);
-    const _selection = (0, import_element286.useMemo)(() => {
+    const _fields = (0, import_element285.useMemo)(() => normalizeFields(fields), [fields]);
+    const _selection = (0, import_element285.useMemo)(() => {
       if (view.infiniteScrollEnabled) {
         return selection2;
       }
@@ -94260,13 +94191,13 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }, [selection2, data, getItemId2, view.infiniteScrollEnabled]);
     const filters = use_filters_default(_fields, view);
-    const hasPrimaryOrLockedFilters = (0, import_element286.useMemo)(
+    const hasPrimaryOrLockedFilters = (0, import_element285.useMemo)(
       () => (filters || []).some(
         (filter) => filter.isPrimary || filter.isLocked
       ),
       [filters]
     );
-    const [isShowingFilter, setIsShowingFilter] = (0, import_element286.useState)(
+    const [isShowingFilter, setIsShowingFilter] = (0, import_element285.useState)(
       hasPrimaryOrLockedFilters
     );
     const { intersectionObserver } = useInfiniteScroll({
@@ -94283,12 +94214,12 @@ If there's a particular need for this, please submit a feature request at https:
       isLoading,
       totalPages: paginationInfo.totalPages
     });
-    (0, import_element286.useEffect)(() => {
+    (0, import_element285.useEffect)(() => {
       if (hasPrimaryOrLockedFilters && !isShowingFilter) {
         setIsShowingFilter(true);
       }
     }, [hasPrimaryOrLockedFilters, isShowingFilter]);
-    const defaultLayouts = (0, import_element286.useMemo)(
+    const defaultLayouts = (0, import_element285.useMemo)(
       () => Object.fromEntries(
         Object.entries(defaultLayoutsProperty).filter(([layoutType]) => {
           return dataViewsLayouts.some(
@@ -94367,12 +94298,12 @@ If there's a particular need for this, please submit a feature request at https:
   var dataviews_default = DataViewsSubComponents;
 
   // packages/dataviews/build-module/dataform/index.mjs
-  var import_element297 = __toESM(require_element(), 1);
+  var import_element296 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-context/index.mjs
-  var import_element287 = __toESM(require_element(), 1);
+  var import_element286 = __toESM(require_element(), 1);
   var import_jsx_runtime466 = __toESM(require_jsx_runtime(), 1);
-  var DataFormContext = (0, import_element287.createContext)({
+  var DataFormContext = (0, import_element286.createContext)({
     fields: []
   });
   DataFormContext.displayName = "DataFormContext";
@@ -94385,10 +94316,10 @@ If there's a particular need for this, please submit a feature request at https:
   var dataform_context_default = DataFormContext;
 
   // packages/dataviews/build-module/components/dataform-layouts/data-form-layout.mjs
-  var import_element296 = __toESM(require_element(), 1);
+  var import_element295 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/regular/index.mjs
-  var import_element288 = __toESM(require_element(), 1);
+  var import_element287 = __toESM(require_element(), 1);
   var import_components100 = __toESM(require_components(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/can-render-field.mjs
@@ -94536,9 +94467,9 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const { fields } = (0, import_element288.useContext)(dataform_context_default);
+    const { fields } = (0, import_element287.useContext)(dataform_context_default);
     const layout = field.layout;
-    const form = (0, import_element288.useMemo)(
+    const form = (0, import_element287.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : []
@@ -94631,7 +94562,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/panel/modal.mjs
   var import_deepmerge3 = __toESM(require_cjs(), 1);
   var import_components103 = __toESM(require_components(), 1);
-  var import_element292 = __toESM(require_element(), 1);
+  var import_element291 = __toESM(require_element(), 1);
   var import_compose86 = __toESM(require_compose(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/summary-button.mjs
@@ -94839,7 +94770,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/hooks/use-form-validity.mjs
   var import_deepmerge2 = __toESM(require_cjs(), 1);
   var import_es65 = __toESM(require_es6(), 1);
-  var import_element289 = __toESM(require_element(), 1);
+  var import_element288 = __toESM(require_element(), 1);
   var import_i18n120 = __toESM(require_i18n(), 1);
   function isFormValid(formValidity) {
     if (!formValidity) {
@@ -95262,11 +95193,11 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useFormValidity(item, fields, form) {
-    const [formValidity, setFormValidity] = (0, import_element289.useState)();
-    const customCounterRef = (0, import_element289.useRef)({});
-    const elementsCounterRef = (0, import_element289.useRef)({});
-    const previousValuesRef = (0, import_element289.useRef)({});
-    const validate = (0, import_element289.useCallback)(() => {
+    const [formValidity, setFormValidity] = (0, import_element288.useState)();
+    const customCounterRef = (0, import_element288.useRef)({});
+    const elementsCounterRef = (0, import_element288.useRef)({});
+    const previousValuesRef = (0, import_element288.useRef)({});
+    const validate = (0, import_element288.useCallback)(() => {
       const promiseHandler = {
         customCounterRef,
         elementsCounterRef,
@@ -95324,7 +95255,7 @@ If there's a particular need for this, please submit a feature request at https:
         return validity;
       });
     }, [item, fields, form]);
-    (0, import_element289.useEffect)(() => {
+    (0, import_element288.useEffect)(() => {
       validate();
     }, [validate]);
     return {
@@ -95335,9 +95266,9 @@ If there's a particular need for this, please submit a feature request at https:
   var use_form_validity_default = useFormValidity;
 
   // packages/dataviews/build-module/hooks/use-reveal-validity.mjs
-  var import_element290 = __toESM(require_element(), 1);
+  var import_element289 = __toESM(require_element(), 1);
   function useRevealValidity(ref, shouldReveal) {
-    const revealValidity = (0, import_element290.useCallback)(() => {
+    const revealValidity = (0, import_element289.useCallback)(() => {
       const inputs = ref.current?.querySelectorAll("input, textarea, select");
       let revealedCount = 0;
       inputs?.forEach((input) => {
@@ -95350,7 +95281,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
       return revealedCount;
     }, [ref]);
-    (0, import_element290.useEffect)(() => {
+    (0, import_element289.useEffect)(() => {
       if (shouldReveal) {
         revealValidity();
       }
@@ -95359,7 +95290,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/panel/utils/use-field-from-form-field.mjs
-  var import_element291 = __toESM(require_element(), 1);
+  var import_element290 = __toESM(require_element(), 1);
 
   // packages/dataviews/build-module/components/dataform-layouts/get-summary-fields.mjs
   function extractSummaryIds(summary) {
@@ -95396,7 +95327,7 @@ If there's a particular need for this, please submit a feature request at https:
     return fields.find((_field) => _field.id === field.id);
   };
   function useFieldFromFormField(field) {
-    const { fields } = (0, import_element291.useContext)(dataform_context_default);
+    const { fields } = (0, import_element290.useContext)(dataform_context_default);
     const layout = field.layout;
     const summaryFields = getSummaryFields(layout.summary, fields);
     const fieldDefinition = getFieldDefinition(field, fields);
@@ -95428,14 +95359,14 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { openAs } = field.layout;
     const { applyLabel, cancelLabel } = openAs;
-    const { fields } = (0, import_element292.useContext)(dataform_context_default);
-    const [changes, setChanges] = (0, import_element292.useState)({});
-    const modalData = (0, import_element292.useMemo)(() => {
+    const { fields } = (0, import_element291.useContext)(dataform_context_default);
+    const [changes, setChanges] = (0, import_element291.useState)({});
+    const modalData = (0, import_element291.useMemo)(() => {
       return (0, import_deepmerge3.default)(data, changes, {
         arrayMerge: (target, source) => source
       });
     }, [data, changes]);
-    const form = (0, import_element292.useMemo)(
+    const form = (0, import_element291.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -95471,7 +95402,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
     };
     const focusOnMountRef = (0, import_compose86.useFocusOnMount)("firstInputElement");
-    const contentRef = (0, import_element292.useRef)(null);
+    const contentRef = (0, import_element291.useRef)(null);
     const mergedRef = (0, import_compose86.useMergeRefs)([focusOnMountRef, contentRef]);
     useRevealValidity(contentRef, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime470.jsxs)(
@@ -95543,8 +95474,8 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     validity
   }) {
-    const [touched, setTouched] = (0, import_element292.useState)(false);
-    const [isOpen, setIsOpen] = (0, import_element292.useState)(false);
+    const [touched, setTouched] = (0, import_element291.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element291.useState)(false);
     const { fieldDefinition, fieldLabel, summaryFields } = use_field_from_form_field_default(field);
     if (!fieldDefinition) {
       return null;
@@ -95587,7 +95518,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/dataviews/build-module/components/dataform-layouts/panel/dropdown.mjs
   var import_components104 = __toESM(require_components(), 1);
   var import_i18n121 = __toESM(require_i18n(), 1);
-  var import_element293 = __toESM(require_element(), 1);
+  var import_element292 = __toESM(require_element(), 1);
   var import_compose87 = __toESM(require_compose(), 1);
   var import_jsx_runtime471 = __toESM(require_jsx_runtime(), 1);
   function DropdownHeader({
@@ -95620,7 +95551,7 @@ If there's a particular need for this, please submit a feature request at https:
     touched,
     children
   }) {
-    const ref = (0, import_element293.useRef)(null);
+    const ref = (0, import_element292.useRef)(null);
     useRevealValidity(ref, touched);
     return /* @__PURE__ */ (0, import_jsx_runtime471.jsx)("div", { ref, children });
   }
@@ -95630,11 +95561,11 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     validity
   }) {
-    const [touched, setTouched] = (0, import_element293.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element293.useState)(
+    const [touched, setTouched] = (0, import_element292.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element292.useState)(
       null
     );
-    const popoverProps = (0, import_element293.useMemo)(
+    const popoverProps = (0, import_element292.useMemo)(
       () => ({
         // Anchor the popover to the middle of the entire row so that it doesn't
         // move around when the label changes.
@@ -95648,7 +95579,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [dialogRef, dialogProps] = (0, import_compose87.__experimentalUseDialog)({
       focusOnMount: "firstInputElement"
     });
-    const form = (0, import_element293.useMemo)(
+    const form = (0, import_element292.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: !!field.children ? field.children : (
@@ -95658,7 +95589,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [field]
     );
-    const formValidity = (0, import_element293.useMemo)(() => {
+    const formValidity = (0, import_element292.useMemo)(() => {
       if (validity === void 0) {
         return void 0;
       }
@@ -95771,7 +95702,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/card/index.mjs
-  var import_element294 = __toESM(require_element(), 1);
+  var import_element293 = __toESM(require_element(), 1);
   var import_a11y12 = __toESM(require_a11y(), 1);
   var import_compose88 = __toESM(require_compose(), 1);
 
@@ -95939,11 +95870,11 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     validity
   }) {
-    const { fields } = (0, import_element294.useContext)(dataform_context_default);
+    const { fields } = (0, import_element293.useContext)(dataform_context_default);
     const layout = field.layout;
-    const contentRef = (0, import_element294.useRef)(null);
-    const hasFocusedContentRef = (0, import_element294.useRef)(false);
-    const form = (0, import_element294.useMemo)(
+    const contentRef = (0, import_element293.useRef)(null);
+    const hasFocusedContentRef = (0, import_element293.useRef)(false);
+    const form = (0, import_element293.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
@@ -95951,12 +95882,12 @@ If there's a particular need for this, please submit a feature request at https:
       [field]
     );
     const { isOpened, isCollapsible } = layout;
-    const [isOpen, setIsOpen] = (0, import_element294.useState)(isOpened);
-    const [touched, setTouched] = (0, import_element294.useState)(false);
-    (0, import_element294.useEffect)(() => {
+    const [isOpen, setIsOpen] = (0, import_element293.useState)(isOpened);
+    const [touched, setTouched] = (0, import_element293.useState)(false);
+    (0, import_element293.useEffect)(() => {
       setIsOpen(isOpened);
     }, [isOpened]);
-    const handleOpenChange = (0, import_element294.useCallback)((open3) => {
+    const handleOpenChange = (0, import_element293.useCallback)((open3) => {
       if (!open3) {
         setTouched(true);
       }
@@ -95966,10 +95897,10 @@ If there's a particular need for this, please submit a feature request at https:
       contentRef,
       (isCollapsible ? isOpen : true) && touched
     );
-    const handleContentFocus = (0, import_element294.useCallback)(() => {
+    const handleContentFocus = (0, import_element293.useCallback)(() => {
       hasFocusedContentRef.current = true;
     }, []);
-    const handleFocusOutside = (0, import_element294.useCallback)(() => {
+    const handleFocusOutside = (0, import_element293.useCallback)(() => {
       if (!hasFocusedContentRef.current) {
         return;
       }
@@ -96137,7 +96068,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/dataviews/build-module/components/dataform-layouts/details/index.mjs
-  var import_element295 = __toESM(require_element(), 1);
+  var import_element294 = __toESM(require_element(), 1);
   var import_i18n123 = __toESM(require_i18n(), 1);
   var import_a11y13 = __toESM(require_a11y(), 1);
   var import_compose89 = __toESM(require_compose(), 1);
@@ -96148,20 +96079,20 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     validity
   }) {
-    const { fields } = (0, import_element295.useContext)(dataform_context_default);
-    const detailsRef = (0, import_element295.useRef)(null);
-    const contentRef = (0, import_element295.useRef)(null);
-    const hasFocusedContentRef = (0, import_element295.useRef)(false);
-    const [touched, setTouched] = (0, import_element295.useState)(false);
-    const [isOpen, setIsOpen] = (0, import_element295.useState)(false);
-    const form = (0, import_element295.useMemo)(
+    const { fields } = (0, import_element294.useContext)(dataform_context_default);
+    const detailsRef = (0, import_element294.useRef)(null);
+    const contentRef = (0, import_element294.useRef)(null);
+    const hasFocusedContentRef = (0, import_element294.useRef)(false);
+    const [touched, setTouched] = (0, import_element294.useState)(false);
+    const [isOpen, setIsOpen] = (0, import_element294.useState)(false);
+    const form = (0, import_element294.useMemo)(
       () => ({
         layout: DEFAULT_LAYOUT,
         fields: field.children ?? []
       }),
       [field]
     );
-    (0, import_element295.useEffect)(() => {
+    (0, import_element294.useEffect)(() => {
       const details = detailsRef.current;
       if (!details) {
         return;
@@ -96179,10 +96110,10 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const revealValidity = useRevealValidity(contentRef, isOpen && touched);
-    const handleContentFocus = (0, import_element295.useCallback)(() => {
+    const handleContentFocus = (0, import_element294.useCallback)(() => {
       hasFocusedContentRef.current = true;
     }, []);
-    const handleFocusOutside = (0, import_element295.useCallback)(() => {
+    const handleFocusOutside = (0, import_element294.useCallback)(() => {
       if (!hasFocusedContentRef.current) {
         return;
       }
@@ -96336,8 +96267,8 @@ If there's a particular need for this, please submit a feature request at https:
     children,
     as
   }) {
-    const { fields: fieldDefinitions } = (0, import_element296.useContext)(dataform_context_default);
-    const markWhenOptional = (0, import_element296.useMemo)(() => {
+    const { fields: fieldDefinitions } = (0, import_element295.useContext)(dataform_context_default);
+    const markWhenOptional = (0, import_element295.useMemo)(() => {
       const requiredCount = fieldDefinitions.filter(
         (f) => !!f.isValid?.required
       ).length;
@@ -96392,8 +96323,8 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     validity
   }) {
-    const normalizedForm = (0, import_element297.useMemo)(() => normalize_form_default(form), [form]);
-    const normalizedFields = (0, import_element297.useMemo)(
+    const normalizedForm = (0, import_element296.useMemo)(() => normalize_form_default(form), [form]);
+    const normalizedFields = (0, import_element296.useMemo)(
       () => normalizeFields(fields),
       [fields]
     );
@@ -96416,7 +96347,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-search.mjs
   var import_components106 = __toESM(require_components(), 1);
-  var import_element298 = __toESM(require_element(), 1);
+  var import_element297 = __toESM(require_element(), 1);
   var import_compose90 = __toESM(require_compose(), 1);
   var import_jsx_runtime480 = __toESM(require_jsx_runtime(), 1);
   function MediaSearch({
@@ -96425,7 +96356,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChange
   }) {
     const [search, setSearch, debouncedSearch] = (0, import_compose90.useDebouncedInput)(defaultValue2);
-    (0, import_element298.useEffect)(() => {
+    (0, import_element297.useEffect)(() => {
       onChange(debouncedSearch);
     }, [debouncedSearch, onChange]);
     return /* @__PURE__ */ (0, import_jsx_runtime480.jsx)(
@@ -96454,7 +96385,7 @@ If there's a particular need for this, please submit a feature request at https:
     mediaType,
     isInserting
   }) {
-    const [block, preview] = (0, import_element299.useMemo)(
+    const [block, preview] = (0, import_element298.useMemo)(
       () => getBlockAndPreviewFromMedia(item, mediaType),
       [item, mediaType]
     );
@@ -96510,7 +96441,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChangePage,
     footer
   }) {
-    const fields = (0, import_element299.useMemo)(
+    const fields = (0, import_element298.useMemo)(
       () => [
         {
           id: "preview",
@@ -96537,7 +96468,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [mediaType, insertingId]
     );
-    const view = (0, import_element299.useMemo)(
+    const view = (0, import_element298.useMemo)(
       () => ({
         type: "grid",
         page,
@@ -96552,7 +96483,7 @@ If there's a particular need for this, please submit a feature request at https:
       }),
       [page, perPage, search]
     );
-    const onChangeView = (0, import_element299.useCallback)(
+    const onChangeView = (0, import_element298.useCallback)(
       (nextView) => {
         const nextPage = nextView.page ?? 1;
         if (nextPage !== page) {
@@ -96561,7 +96492,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [page, onChangePage]
     );
-    const paginationInfo = (0, import_element299.useMemo)(
+    const paginationInfo = (0, import_element298.useMemo)(
       () => ({
         totalItems: totalItems ?? 0,
         totalPages: totalPages ?? 1
@@ -96660,7 +96591,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inserter/media-tab/use-media-insert.mjs
-  var import_element300 = __toESM(require_element(), 1);
+  var import_element299 = __toESM(require_element(), 1);
   var import_i18n125 = __toESM(require_i18n(), 1);
   var import_blocks43 = __toESM(require_blocks(), 1);
   var import_data69 = __toESM(require_data(), 1);
@@ -96669,12 +96600,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url5 = __toESM(require_url(), 1);
   var ALLOWED_MEDIA_TYPES = ["image"];
   function useMediaInsert(onInsert) {
-    const [insertingId, setInsertingId] = (0, import_element300.useState)();
-    const [pendingExternalBlock, setPendingExternalBlock] = (0, import_element300.useState)();
+    const [insertingId, setInsertingId] = (0, import_element299.useState)();
+    const [pendingExternalBlock, setPendingExternalBlock] = (0, import_element299.useState)();
     const { createErrorNotice, createSuccessNotice } = (0, import_data69.useDispatch)(import_notices6.store);
     const { getSettings: getSettings9, getBlock: getBlock2 } = (0, import_data69.useSelect)(store);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data69.useDispatch)(store);
-    const insert7 = (0, import_element300.useCallback)(
+    const insert7 = (0, import_element299.useCallback)(
       (previewBlock, itemId) => {
         if (insertingId !== void 0) {
           return;
@@ -96749,7 +96680,7 @@ If there's a particular need for this, please submit a feature request at https:
         getBlock2
       ]
     );
-    const confirmExternalInsert = (0, import_element300.useCallback)(() => {
+    const confirmExternalInsert = (0, import_element299.useCallback)(() => {
       onInsert((0, import_blocks43.cloneBlock)(pendingExternalBlock));
       createSuccessNotice((0, import_i18n125.__)("Image inserted."), {
         type: "snackbar",
@@ -96757,7 +96688,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
       setPendingExternalBlock(void 0);
     }, [onInsert, pendingExternalBlock, createSuccessNotice]);
-    const cancelExternalInsert = (0, import_element300.useCallback)(
+    const cancelExternalInsert = (0, import_element299.useCallback)(
       () => setPendingExternalBlock(void 0),
       []
     );
@@ -96771,7 +96702,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inserter/media-tab/use-attachment-actions.mjs
-  var import_element301 = __toESM(require_element(), 1);
+  var import_element300 = __toESM(require_element(), 1);
   var import_i18n127 = __toESM(require_i18n(), 1);
   var import_data70 = __toESM(require_data(), 1);
   var import_notices7 = __toESM(require_notices(), 1);
@@ -96828,21 +96759,21 @@ If there's a particular need for this, please submit a feature request at https:
     const attach = supportsAttachments ? category.attach : void 0;
     const detach = supportsAttachments ? category.detach : void 0;
     const subscribe2 = supportsAttachments ? category.subscribe : void 0;
-    const [refreshKey, setRefreshKey] = (0, import_element301.useState)(0);
+    const [refreshKey, setRefreshKey] = (0, import_element300.useState)(0);
     const { createErrorNotice, createSuccessNotice, createWarningNotice } = (0, import_data70.useDispatch)(import_notices7.store);
-    const refresh = (0, import_element301.useCallback)(() => {
+    const refresh = (0, import_element300.useCallback)(() => {
       if (supportsAttachments) {
         category.invalidate?.(query);
       }
       setRefreshKey((key) => key + 1);
     }, [category, query, supportsAttachments]);
-    (0, import_element301.useEffect)(() => {
+    (0, import_element300.useEffect)(() => {
       if (!subscribe2) {
         return;
       }
       return subscribe2(() => setRefreshKey((key) => key + 1), query);
     }, [subscribe2, query]);
-    const handleAttach = (0, import_element301.useCallback)(
+    const handleAttach = (0, import_element300.useCallback)(
       async (selectedMedia) => {
         if (!attach) {
           return;
@@ -96894,7 +96825,7 @@ If there's a particular need for this, please submit a feature request at https:
         createWarningNotice
       ]
     );
-    const handleDetach = (0, import_element301.useCallback)(
+    const handleDetach = (0, import_element300.useCallback)(
       async (media) => {
         if (!detach) {
           return;
@@ -96919,7 +96850,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [detach, category, refresh, createErrorNotice, createSuccessNotice]
     );
-    const actions = (0, import_element301.useMemo)(() => {
+    const actions = (0, import_element300.useMemo)(() => {
       const list = [];
       if (category.getReportUrl) {
         list.push({
@@ -97120,9 +97051,9 @@ If there's a particular need for this, please submit a feature request at https:
     sourceMenu,
     footer
   }) {
-    const panelRef = (0, import_element302.useRef)();
-    const [page, setPage] = (0, import_element302.useState)(1);
-    const [perPage, setPerPage] = (0, import_element302.useState)(getItemsPerPage);
+    const panelRef = (0, import_element301.useRef)();
+    const [page, setPage] = (0, import_element301.useState)(1);
+    const [perPage, setPerPage] = (0, import_element301.useState)(getItemsPerPage);
     const previousCategory = (0, import_compose91.usePrevious)(category.name);
     const previousSearch = (0, import_compose91.usePrevious)(search);
     if ((previousCategory !== category.name || previousSearch !== search) && page !== 1) {
@@ -97134,7 +97065,7 @@ If there's a particular need for this, please submit a feature request at https:
         setPerPage(nextPerPage);
       }
     }
-    const query = (0, import_element302.useMemo)(
+    const query = (0, import_element301.useMemo)(
       () => ({
         per_page: perPage,
         page,
@@ -97150,7 +97081,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (typeof totalPages === "number" && page > numPages) {
       setPage(numPages);
     }
-    const changePage = (0, import_element302.useCallback)((nextPage) => {
+    const changePage = (0, import_element301.useCallback)((nextPage) => {
       (0, import_dom61.getScrollContainer)(panelRef.current)?.scrollTo?.(0, 0);
       setPage(nextPage);
     }, []);
@@ -97161,7 +97092,7 @@ If there's a particular need for this, please submit a feature request at https:
       confirmExternalInsert,
       cancelExternalInsert
     } = useMediaInsert(onInsert);
-    const handleClickItem = (0, import_element302.useCallback)(
+    const handleClickItem = (0, import_element301.useCallback)(
       (item) => {
         const [block] = getBlockAndPreviewFromMedia(
           item,
@@ -97284,7 +97215,7 @@ If there's a particular need for this, please submit a feature request at https:
     onInsert
   }) {
     const { categories: mediaCategories, hasResolved } = useMediaCategories(rootClientId);
-    const onSelectMedia = (0, import_element303.useCallback)(
+    const onSelectMedia = (0, import_element302.useCallback)(
       (media) => {
         const item = media;
         if (!item?.url) {
@@ -97303,14 +97234,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [onInsert]
     );
-    const categories = (0, import_element303.useMemo)(
+    const categories = (0, import_element302.useMemo)(
       () => mediaCategories.map((mediaCategory) => ({
         ...mediaCategory,
         label: mediaCategory.labels.name
       })),
       [mediaCategories]
     );
-    const { libraryCategories, sources } = (0, import_element303.useMemo)(() => {
+    const { libraryCategories, sources } = (0, import_element302.useMemo)(() => {
       const library = categories.filter(
         (category2) => LIBRARY_CATEGORIES.includes(category2.name)
       );
@@ -97324,9 +97255,9 @@ If there's a particular need for this, please submit a feature request at https:
         ]
       };
     }, [categories]);
-    const [sourceName, setSourceName] = (0, import_element303.useState)(LIBRARY_SOURCE);
-    const [mediaType, setMediaType] = (0, import_element303.useState)(DEFAULT_MEDIA_TYPE);
-    const [search, setSearch] = (0, import_element303.useState)("");
+    const [sourceName, setSourceName] = (0, import_element302.useState)(LIBRARY_SOURCE);
+    const [mediaType, setMediaType] = (0, import_element302.useState)(DEFAULT_MEDIA_TYPE);
+    const [search, setSearch] = (0, import_element302.useState)("");
     const activeSource = sources.find((source) => source.name === sourceName) ?? sources[0];
     const isLibrary = activeSource?.name === LIBRARY_SOURCE;
     const mediaTypes = isLibrary ? libraryCategories.map((category2) => ({
@@ -97373,7 +97304,7 @@ If there's a particular need for this, please submit a feature request at https:
   var media_tab_default = MediaTab;
 
   // packages/block-editor/build-module/components/inserter/search-results.mjs
-  var import_element304 = __toESM(require_element(), 1);
+  var import_element303 = __toESM(require_element(), 1);
   var import_i18n132 = __toESM(require_i18n(), 1);
   var import_compose92 = __toESM(require_compose(), 1);
   var import_a11y14 = __toESM(require_a11y(), 1);
@@ -97440,7 +97371,7 @@ If there's a particular need for this, please submit a feature request at https:
       void 0,
       isQuick
     );
-    const filteredBlockPatterns = (0, import_element304.useMemo)(() => {
+    const filteredBlockPatterns = (0, import_element303.useMemo)(() => {
       if (maxBlockPatterns === 0) {
         return [];
       }
@@ -97451,7 +97382,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (prioritizePatterns && filteredBlockPatterns.length > 2) {
       maxBlockTypesToShow = 0;
     }
-    const filteredBlockTypes = (0, import_element304.useMemo)(() => {
+    const filteredBlockTypes = (0, import_element303.useMemo)(() => {
       if (maxBlockTypesToShow === 0) {
         return [];
       }
@@ -97480,7 +97411,7 @@ If there's a particular need for this, please submit a feature request at https:
       maxBlockTypesToShow,
       prioritizedBlocks
     ]);
-    (0, import_element304.useEffect)(() => {
+    (0, import_element303.useEffect)(() => {
       if (!filterValue) {
         return;
       }
@@ -97564,7 +97495,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/tabbed-sidebar/index.mjs
   var import_components115 = __toESM(require_components(), 1);
-  var import_element305 = __toESM(require_element(), 1);
+  var import_element304 = __toESM(require_element(), 1);
   var import_jsx_runtime490 = __toESM(require_jsx_runtime(), 1);
   var { Tabs: Tabs2 } = unlock(import_components115.privateApis);
   function TabbedSidebar({
@@ -97626,11 +97557,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     ) });
   }
-  var tabbed_sidebar_default = (0, import_element305.forwardRef)(TabbedSidebar);
+  var tabbed_sidebar_default = (0, import_element304.forwardRef)(TabbedSidebar);
 
   // packages/block-editor/build-module/hooks/use-zoom-out.mjs
   var import_data73 = __toESM(require_data(), 1);
-  var import_element306 = __toESM(require_element(), 1);
+  var import_element305 = __toESM(require_element(), 1);
   function useZoomOut(enabled = true) {
     const { setZoomLevel: setZoomLevel2, resetZoomLevel: resetZoomLevel2 } = unlock((0, import_data73.useDispatch)(store));
     const { isZoomedOut, isZoomOut: isZoomOut2 } = (0, import_data73.useSelect)((select3) => {
@@ -97640,14 +97571,14 @@ If there's a particular need for this, please submit a feature request at https:
         isZoomOut: _isZoomOut
       };
     }, []);
-    const controlZoomLevelRef = (0, import_element306.useRef)(false);
-    const isEnabledRef = (0, import_element306.useRef)(enabled);
-    (0, import_element306.useEffect)(() => {
+    const controlZoomLevelRef = (0, import_element305.useRef)(false);
+    const isEnabledRef = (0, import_element305.useRef)(enabled);
+    (0, import_element305.useEffect)(() => {
       if (isZoomedOut !== isEnabledRef.current) {
         controlZoomLevelRef.current = false;
       }
     }, [isZoomedOut]);
-    (0, import_element306.useEffect)(() => {
+    (0, import_element305.useEffect)(() => {
       isEnabledRef.current = enabled;
       if (enabled !== isZoomOut2()) {
         controlZoomLevelRef.current = true;
@@ -97694,11 +97625,11 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const [filterValue, setFilterValue, delayedFilterValue] = (0, import_compose93.useDebouncedInput)(__experimentalFilterValue);
-    const [hoveredItem, setHoveredItem] = (0, import_element307.useState)(null);
-    const [selectedPatternCategory, setSelectedPatternCategory] = (0, import_element307.useState)(
+    const [hoveredItem, setHoveredItem] = (0, import_element306.useState)(null);
+    const [selectedPatternCategory, setSelectedPatternCategory] = (0, import_element306.useState)(
       __experimentalInitialCategory
     );
-    const [patternFilter, setPatternFilter] = (0, import_element307.useState)("all");
+    const [patternFilter, setPatternFilter] = (0, import_element306.useState)("all");
     const isLargeViewport = (0, import_compose93.useViewportMatch)("large");
     const isMobileViewport = (0, import_compose93.useViewportMatch)("medium", "<");
     const maybeCloseInserter = isMobileViewport ? onClose : NOOP2;
@@ -97711,7 +97642,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return "blocks";
     }
-    const [selectedTab, setSelectedTab] = (0, import_element307.useState)(getInitialTab());
+    const [selectedTab, setSelectedTab] = (0, import_element306.useState)(getInitialTab());
     const shouldUseZoomOut = hasSectionRootClientId && (selectedTab === "patterns" || selectedTab === "media");
     useZoomOut(shouldUseZoomOut && isLargeViewport);
     const [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint] = use_insertion_point_default({
@@ -97722,8 +97653,8 @@ If there's a particular need for this, please submit a feature request at https:
       shouldFocusBlock
     });
     const { hideInsertionPoint: hideInsertionPoint2 } = (0, import_data74.useDispatch)(store);
-    const blockTypesTabRef = (0, import_element307.useRef)();
-    const onInsert = (0, import_element307.useCallback)(
+    const blockTypesTabRef = (0, import_element306.useRef)();
+    const onInsert = (0, import_element306.useCallback)(
       (blocks2, meta, shouldForceFocusBlock, _rootClientId) => {
         hideInsertionPoint2();
         onInsertBlocks(
@@ -97751,7 +97682,7 @@ If there's a particular need for this, please submit a feature request at https:
         shouldFocusBlock
       ]
     );
-    const onInsertPattern = (0, import_element307.useCallback)(
+    const onInsertPattern = (0, import_element306.useCallback)(
       (blocks2, patternName, ...args) => {
         hideInsertionPoint2();
         onInsertBlocks(blocks2, { patternName }, ...args);
@@ -97760,14 +97691,14 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [hideInsertionPoint2, onInsertBlocks, maybeCloseInserter, onSelect]
     );
-    const onHover = (0, import_element307.useCallback)(
+    const onHover = (0, import_element306.useCallback)(
       (item) => {
         onToggleInsertionPoint(item);
         setHoveredItem(item);
       },
       [onToggleInsertionPoint, setHoveredItem]
     );
-    const onClickPatternCategory = (0, import_element307.useCallback)(
+    const onClickPatternCategory = (0, import_element306.useCallback)(
       (patternCategory, filter) => {
         setSelectedPatternCategory(patternCategory);
         setPatternFilter(filter);
@@ -97776,11 +97707,11 @@ If there's a particular need for this, please submit a feature request at https:
       [setSelectedPatternCategory, onPatternCategorySelection]
     );
     const showPatternPanel = selectedTab === "patterns" && !delayedFilterValue && !!selectedPatternCategory;
-    const [isScrolled, setIsScrolled] = (0, import_element307.useState)(false);
-    const blocksPanelRef = (0, import_element307.useRef)(null);
-    const patternsPanelRef = (0, import_element307.useRef)(null);
-    const mediaPanelRef = (0, import_element307.useRef)(null);
-    (0, import_element307.useEffect)(() => {
+    const [isScrolled, setIsScrolled] = (0, import_element306.useState)(false);
+    const blocksPanelRef = (0, import_element306.useRef)(null);
+    const patternsPanelRef = (0, import_element306.useRef)(null);
+    const mediaPanelRef = (0, import_element306.useRef)(null);
+    (0, import_element306.useEffect)(() => {
       const handleScroll = (event) => {
         setIsScrolled(event.currentTarget.scrollTop > 0);
       };
@@ -97798,7 +97729,7 @@ If there's a particular need for this, please submit a feature request at https:
         );
       };
     }, []);
-    const inserterSearch = (0, import_element307.useMemo)(() => {
+    const inserterSearch = (0, import_element306.useMemo)(() => {
       if (selectedTab === "media") {
         return null;
       }
@@ -97852,7 +97783,7 @@ If there's a particular need for this, please submit a feature request at https:
       isAppender,
       isScrolled
     ]);
-    const blocksTab = (0, import_element307.useMemo)(() => {
+    const blocksTab = (0, import_element306.useMemo)(() => {
       return /* @__PURE__ */ (0, import_jsx_runtime491.jsxs)(import_jsx_runtime491.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime491.jsx)("div", { className: "block-editor-inserter__block-list", children: /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
           block_types_tab_default,
@@ -97876,7 +97807,7 @@ If there's a particular need for this, please submit a feature request at https:
       showMostUsedBlocks,
       showInserterHelpPanel
     ]);
-    const patternsTab = (0, import_element307.useMemo)(() => {
+    const patternsTab = (0, import_element306.useMemo)(() => {
       return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
         block_patterns_tab_default,
         {
@@ -97904,7 +97835,7 @@ If there's a particular need for this, please submit a feature request at https:
       selectedPatternCategory,
       showPatternPanel
     ]);
-    const mediaTab = (0, import_element307.useMemo)(() => {
+    const mediaTab = (0, import_element306.useMemo)(() => {
       return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
         media_tab_default,
         {
@@ -97919,8 +97850,8 @@ If there's a particular need for this, please submit a feature request at https:
       }
       setSelectedTab(value);
     };
-    const tabsRef = (0, import_element307.useRef)();
-    (0, import_element307.useLayoutEffect)(() => {
+    const tabsRef = (0, import_element306.useRef)();
+    (0, import_element306.useLayoutEffect)(() => {
       if (!tabsRef.current) {
         return;
       }
@@ -97992,7 +97923,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var PrivateInserterMenu = (0, import_element307.forwardRef)(InserterMenu);
+  var PrivateInserterMenu = (0, import_element306.forwardRef)(InserterMenu);
   function PublicInserterMenu(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime491.jsx)(
       PrivateInserterMenu,
@@ -98003,10 +97934,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var menu_default = (0, import_element307.forwardRef)(PublicInserterMenu);
+  var menu_default = (0, import_element306.forwardRef)(PublicInserterMenu);
 
   // packages/block-editor/build-module/components/inserter/quick-inserter.mjs
-  var import_element308 = __toESM(require_element(), 1);
+  var import_element307 = __toESM(require_element(), 1);
   var import_i18n134 = __toESM(require_i18n(), 1);
   var import_components117 = __toESM(require_components(), 1);
   var import_data75 = __toESM(require_data(), 1);
@@ -98022,7 +97953,7 @@ If there's a particular need for this, please submit a feature request at https:
     selectBlockOnInsert,
     hasSearch = true
   }) {
-    const [filterValue, setFilterValue] = (0, import_element308.useState)("");
+    const [filterValue, setFilterValue] = (0, import_element307.useState)("");
     const [destinationRootClientId, onInsertBlocks] = use_insertion_point_default({
       onSelect,
       rootClientId,
@@ -98049,7 +97980,7 @@ If there's a particular need for this, please submit a feature request at https:
       [clientId]
     );
     const showSearch = hasSearch && blockTypes.length > SEARCH_THRESHOLD;
-    (0, import_element308.useEffect)(() => {
+    (0, import_element307.useEffect)(() => {
       if (setInserterIsOpened) {
         setInserterIsOpened(false);
       }
@@ -98188,7 +98119,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var InserterToggle = (0, import_element309.forwardRef)(UnforwardedInserterToggle);
+  var InserterToggle = (0, import_element308.forwardRef)(UnforwardedInserterToggle);
   var UnforwardedInserter = ({
     clientId,
     rootClientId,
@@ -98393,7 +98324,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   };
-  var Inserter = (0, import_element309.forwardRef)(UnforwardedInserter);
+  var Inserter = (0, import_element308.forwardRef)(UnforwardedInserter);
   var inserter_default = Inserter;
 
   // packages/block-editor/build-module/components/default-block-appender/index.mjs
@@ -98473,7 +98404,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/button-block-appender/index.mjs
   var import_components119 = __toESM(require_components(), 1);
-  var import_element310 = __toESM(require_element(), 1);
+  var import_element309 = __toESM(require_element(), 1);
   var import_i18n137 = __toESM(require_i18n(), 1);
   var import_deprecated10 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime495 = __toESM(require_jsx_runtime(), 1);
@@ -98542,14 +98473,14 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var ButtonBlockerAppender = (0, import_element310.forwardRef)((props, ref) => {
+  var ButtonBlockerAppender = (0, import_element309.forwardRef)((props, ref) => {
     (0, import_deprecated10.default)(`wp.blockEditor.ButtonBlockerAppender`, {
       alternative: "wp.blockEditor.ButtonBlockAppender",
       since: "5.9"
     });
     return ButtonBlockAppender(props, ref);
   });
-  var button_block_appender_default = (0, import_element310.forwardRef)(ButtonBlockAppender);
+  var button_block_appender_default = (0, import_element309.forwardRef)(ButtonBlockAppender);
 
   // packages/block-editor/build-module/components/block-list-appender/index.mjs
   var import_jsx_runtime496 = __toESM(require_jsx_runtime(), 1);
@@ -98606,18 +98537,18 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-list/use-in-between-inserter.mjs
   var import_compose98 = __toESM(require_compose(), 1);
   var import_data82 = __toESM(require_data(), 1);
-  var import_element315 = __toESM(require_element(), 1);
+  var import_element314 = __toESM(require_element(), 1);
   var import_i18n139 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/block-tools/insertion-point.mjs
   var import_data81 = __toESM(require_data(), 1);
-  var import_element314 = __toESM(require_element(), 1);
+  var import_element313 = __toESM(require_element(), 1);
   var import_components123 = __toESM(require_components(), 1);
   var import_compose97 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-popover/inbetween.mjs
   var import_data79 = __toESM(require_data(), 1);
-  var import_element311 = __toESM(require_element(), 1);
+  var import_element310 = __toESM(require_element(), 1);
   var import_components120 = __toESM(require_components(), 1);
   var import_i18n138 = __toESM(require_i18n(), 1);
 
@@ -98668,7 +98599,7 @@ If there's a particular need for this, please submit a feature request at https:
     nearestSide = "right",
     ...props
   }) {
-    const [popoverRecomputeCounter, forcePopoverRecompute] = (0, import_element311.useReducer)(
+    const [popoverRecomputeCounter, forcePopoverRecompute] = (0, import_element310.useReducer)(
       // Module is there to make sure that the counter doesn't overflow.
       (s) => (s + 1) % MAX_POPOVER_RECOMPUTE_COUNTER,
       0
@@ -98695,7 +98626,7 @@ If there's a particular need for this, please submit a feature request at https:
     const previousElement = useBlockElement(previousClientId);
     const nextElement = useBlockElement(nextClientId);
     const isVertical = orientation === "vertical";
-    const popoverAnchor = (0, import_element311.useMemo)(() => {
+    const popoverAnchor = (0, import_element310.useMemo)(() => {
       if (
         // popoverRecomputeCounter is by definition always equal or greater than 0.
         // This check is only there to satisfy the correctness of the
@@ -98750,7 +98681,7 @@ If there's a particular need for this, please submit a feature request at https:
       nearestSide
     ]);
     const popoverScrollRef = use_popover_scroll_default(__unstableContentRef);
-    (0, import_element311.useLayoutEffect)(() => {
+    (0, import_element310.useLayoutEffect)(() => {
       if (!previousElement) {
         return;
       }
@@ -98760,7 +98691,7 @@ If there's a particular need for this, please submit a feature request at https:
         observer.disconnect();
       };
     }, [previousElement]);
-    (0, import_element311.useLayoutEffect)(() => {
+    (0, import_element310.useLayoutEffect)(() => {
       if (!nextElement) {
         return;
       }
@@ -98770,7 +98701,7 @@ If there's a particular need for this, please submit a feature request at https:
         observer.disconnect();
       };
     }, [nextElement]);
-    (0, import_element311.useLayoutEffect)(() => {
+    (0, import_element310.useLayoutEffect)(() => {
       if (!previousElement) {
         return;
       }
@@ -98820,12 +98751,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components122 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-popover/cover.mjs
-  var import_element313 = __toESM(require_element(), 1);
+  var import_element312 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-popover/index.mjs
   var import_compose95 = __toESM(require_compose(), 1);
   var import_components121 = __toESM(require_components(), 1);
-  var import_element312 = __toESM(require_element(), 1);
+  var import_element311 = __toESM(require_element(), 1);
   var import_jsx_runtime498 = __toESM(require_jsx_runtime(), 1);
   var MAX_POPOVER_RECOMPUTE_COUNTER2 = Number.MAX_SAFE_INTEGER;
   function BlockPopover({
@@ -98846,12 +98777,12 @@ If there's a particular need for this, please submit a feature request at https:
     const [
       popoverDimensionsRecomputeCounter,
       forceRecomputePopoverDimensions
-    ] = (0, import_element312.useReducer)(
+    ] = (0, import_element311.useReducer)(
       // Module is there to make sure that the counter doesn't overflow.
       (s) => (s + 1) % MAX_POPOVER_RECOMPUTE_COUNTER2,
       0
     );
-    (0, import_element312.useLayoutEffect)(() => {
+    (0, import_element311.useLayoutEffect)(() => {
       if (!selectedElement) {
         return;
       }
@@ -98873,7 +98804,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [selectedElement]);
-    const popoverAnchor = (0, import_element312.useMemo)(() => {
+    const popoverAnchor = (0, import_element311.useMemo)(() => {
       if (
         // popoverDimensionsRecomputeCounter is by definition always equal or greater
         // than 0. This check is only there to satisfy the correctness of the
@@ -98920,7 +98851,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var PrivateBlockPopover = (0, import_element312.forwardRef)(BlockPopover);
+  var PrivateBlockPopover = (0, import_element311.forwardRef)(BlockPopover);
   var PublicBlockPopover = ({ clientId, bottomClientId, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime498.jsx)(
     PrivateBlockPopover,
     {
@@ -98933,7 +98864,7 @@ If there's a particular need for this, please submit a feature request at https:
       children
     }
   );
-  var block_popover_default = (0, import_element312.forwardRef)(PublicBlockPopover);
+  var block_popover_default = (0, import_element311.forwardRef)(PublicBlockPopover);
 
   // packages/block-editor/build-module/components/block-popover/cover.mjs
   var import_jsx_runtime499 = __toESM(require_jsx_runtime(), 1);
@@ -98971,9 +98902,9 @@ If there's a particular need for this, please submit a feature request at https:
     additionalStyles = {},
     children
   }) {
-    const [width, setWidth] = (0, import_element313.useState)(selectedElement.offsetWidth);
-    const [height, setHeight] = (0, import_element313.useState)(selectedElement.offsetHeight);
-    (0, import_element313.useEffect)(() => {
+    const [width, setWidth] = (0, import_element312.useState)(selectedElement.offsetWidth);
+    const [height, setHeight] = (0, import_element312.useState)(selectedElement.offsetHeight);
+    (0, import_element312.useEffect)(() => {
       const observer = new window.ResizeObserver(() => {
         setWidth(selectedElement.offsetWidth);
         setHeight(selectedElement.offsetHeight);
@@ -98981,7 +98912,7 @@ If there's a particular need for this, please submit a feature request at https:
       observer.observe(selectedElement, { box: "border-box" });
       return () => observer.disconnect();
     }, [selectedElement]);
-    const style = (0, import_element313.useMemo)(() => {
+    const style = (0, import_element312.useMemo)(() => {
       return {
         position: "absolute",
         width,
@@ -98991,7 +98922,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [width, height, additionalStyles]);
     return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)("div", { style, children });
   }
-  var cover_default = (0, import_element313.forwardRef)(BlockPopoverCover);
+  var cover_default = (0, import_element312.forwardRef)(BlockPopoverCover);
 
   // packages/block-editor/build-module/components/block-popover/drop-zone.mjs
   var import_jsx_runtime500 = __toESM(require_jsx_runtime(), 1);
@@ -99041,7 +98972,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-tools/insertion-point.mjs
   var import_jsx_runtime501 = __toESM(require_jsx_runtime(), 1);
-  var InsertionPointOpenRef = (0, import_element314.createContext)();
+  var InsertionPointOpenRef = (0, import_element313.createContext)();
   InsertionPointOpenRef.displayName = "InsertionPointOpenRefContext";
   function InbetweenInsertionPointPopover({
     __unstablePopoverSlot,
@@ -99050,8 +98981,8 @@ If there's a particular need for this, please submit a feature request at https:
     nearestSide = "right"
   }) {
     const { selectBlock: selectBlock2, hideInsertionPoint: hideInsertionPoint2 } = (0, import_data81.useDispatch)(store);
-    const openRef = (0, import_element314.useContext)(InsertionPointOpenRef);
-    const ref = (0, import_element314.useRef)();
+    const openRef = (0, import_element313.useContext)(InsertionPointOpenRef);
+    const ref = (0, import_element313.useRef)();
     const {
       orientation,
       previousClientId,
@@ -99112,7 +99043,7 @@ If there's a particular need for this, please submit a feature request at https:
         openRef.current = true;
       }
     }
-    const maybeResetOpenRef = (0, import_element314.useCallback)(
+    const maybeResetOpenRef = (0, import_element313.useCallback)(
       (node) => {
         if (!node && openRef.current) {
           openRef.current = false;
@@ -99265,8 +99196,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-list/use-in-between-inserter.mjs
   function useInBetweenInserter() {
-    const openRef = (0, import_element315.useContext)(InsertionPointOpenRef);
-    const { refsMap } = (0, import_element315.useContext)(BlockRefs);
+    const openRef = (0, import_element314.useContext)(InsertionPointOpenRef);
+    const { refsMap } = (0, import_element314.useContext)(BlockRefs);
     const isInBetweenInserterDisabled = (0, import_data82.useSelect)((select3) => {
       const settings3 = select3(store).getSettings();
       return settings3.isDistractionFree || settings3.isPreviewMode || unlock(select3(store)).isZoomOut();
@@ -99421,7 +99352,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inner-blocks/index.mjs
   var import_compose101 = __toESM(require_compose(), 1);
-  var import_element320 = __toESM(require_element(), 1);
+  var import_element319 = __toESM(require_element(), 1);
   var import_data89 = __toESM(require_data(), 1);
   var import_blocks50 = __toESM(require_blocks(), 1);
 
@@ -99456,7 +99387,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inner-blocks/use-nested-settings-update.mjs
-  var import_element316 = __toESM(require_element(), 1);
+  var import_element315 = __toESM(require_element(), 1);
   var import_data84 = __toESM(require_data(), 1);
   var import_deprecated11 = __toESM(require_deprecated(), 1);
   var import_is_shallow_equal = __toESM(require_is_shallow_equal(), 1);
@@ -99471,7 +99402,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useShallowMemo(value) {
-    const [memo22] = (0, import_element316.useState)(createShallowMemo);
+    const [memo22] = (0, import_element315.useState)(createShallowMemo);
     return memo22(value);
   }
   function useNestedSettingsUpdate(clientId, parentLock, allowedBlocks, prioritizedInserterBlocks, defaultBlock, directInsert, __experimentalDefaultBlock, __experimentalDirectInsert, templateLock, captureToolbars, orientation, layout) {
@@ -99481,7 +99412,7 @@ If there's a particular need for this, please submit a feature request at https:
       prioritizedInserterBlocks
     );
     const _templateLock = templateLock === void 0 || parentLock === "contentOnly" ? parentLock : templateLock;
-    (0, import_element316.useLayoutEffect)(() => {
+    (0, import_element315.useLayoutEffect)(() => {
       const newSettings = {
         allowedBlocks: _allowedBlocks,
         prioritizedInserterBlocks: _prioritizedInserterBlocks,
@@ -99554,7 +99485,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inner-blocks/use-inner-block-template-sync.mjs
   var import_es66 = __toESM(require_es6(), 1);
-  var import_element317 = __toESM(require_element(), 1);
+  var import_element316 = __toESM(require_element(), 1);
   var import_data85 = __toESM(require_data(), 1);
   var import_blocks46 = __toESM(require_blocks(), 1);
   var import_deprecated12 = __toESM(require_deprecated(), 1);
@@ -99578,8 +99509,8 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }
     const registry = (0, import_data85.useRegistry)();
-    const existingTemplateRef = (0, import_element317.useRef)(null);
-    (0, import_element317.useLayoutEffect)(() => {
+    const existingTemplateRef = (0, import_element316.useRef)(null);
+    (0, import_element316.useLayoutEffect)(() => {
       let isCancelled = false;
       const {
         getBlockName: getBlockName2,
@@ -99673,13 +99604,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/use-block-drop-zone/index.mjs
   var import_data88 = __toESM(require_data(), 1);
-  var import_element319 = __toESM(require_element(), 1);
+  var import_element318 = __toESM(require_element(), 1);
   var import_compose100 = __toESM(require_compose(), 1);
   var import_i18n140 = __toESM(require_i18n(), 1);
   var import_blocks49 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/use-on-block-drop/index.mjs
-  var import_element318 = __toESM(require_element(), 1);
+  var import_element317 = __toESM(require_element(), 1);
   var import_blocks48 = __toESM(require_blocks(), 1);
   var import_data87 = __toESM(require_data(), 1);
   var import_dom64 = __toESM(require_dom(), 1);
@@ -99801,7 +99732,7 @@ If there's a particular need for this, please submit a feature request at https:
       removeBlocks: removeBlocks2
     } = (0, import_data87.useDispatch)(store);
     const registry = (0, import_data87.useRegistry)();
-    const insertOrReplaceBlocks = (0, import_element318.useCallback)(
+    const insertOrReplaceBlocks = (0, import_element317.useCallback)(
       (blocks2, updateSelection = true, initialPosition2 = 0, clientIdsToReplace = []) => {
         if (!Array.isArray(blocks2)) {
           blocks2 = [blocks2];
@@ -99869,7 +99800,7 @@ If there's a particular need for this, please submit a feature request at https:
         insertBlocks2
       ]
     );
-    const moveBlocks = (0, import_element318.useCallback)(
+    const moveBlocks = (0, import_element317.useCallback)(
       (sourceClientIds, sourceRootClientId, insertIndex) => {
         if (operation === "replace") {
           const sourceBlocks = getBlocksByClientId2(
@@ -100121,7 +100052,7 @@ If there's a particular need for this, please submit a feature request at https:
     isDisabled = false
   } = {}) {
     const registry = (0, import_data88.useRegistry)();
-    const [dropTarget, setDropTarget] = (0, import_element319.useState)({
+    const [dropTarget, setDropTarget] = (0, import_element318.useState)({
       index: null,
       operation: "insert"
     });
@@ -100157,7 +100088,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
     const throttled = (0, import_compose100.useThrottle)(
-      (0, import_element319.useCallback)(
+      (0, import_element318.useCallback)(
         (event, ownerDocument2) => {
           if (!isDragging3()) {
             startDragging2();
@@ -100350,7 +100281,7 @@ If there's a particular need for this, please submit a feature request at https:
     const context = useBlockContext(clientId);
     return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(BlockContextProvider, { value: context, children });
   }
-  var BlockListItemsMemo = (0, import_element320.memo)(BlockListItems);
+  var BlockListItemsMemo = (0, import_element319.memo)(BlockListItems);
   function UncontrolledInnerBlocks(props) {
     const {
       clientId,
@@ -100397,12 +100328,12 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const defaultLayoutBlockSupport = (0, import_blocks50.getBlockSupport)(name, "layout") || (0, import_blocks50.getBlockSupport)(name, "__experimentalLayout") || EMPTY_OBJECT2;
     const { allowSizingOnChildren = false } = defaultLayoutBlockSupport;
-    const normalizedLayout = (0, import_element320.useMemo)(
+    const normalizedLayout = (0, import_element319.useMemo)(
       () => normalizeLegacyLayout(layout),
       [layout]
     );
     const usedLayout = normalizedLayout || defaultLayoutBlockSupport.default || EMPTY_OBJECT2;
-    const memoedLayout = (0, import_element320.useMemo)(
+    const memoedLayout = (0, import_element319.useMemo)(
       () => ({
         // Default layout will know about any content/wide size defined by the theme.
         ...defaultLayout2,
@@ -100433,7 +100364,7 @@ If there's a particular need for this, please submit a feature request at https:
     useBlockSync(props);
     return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)(UncontrolledInnerBlocks, { ...props });
   }
-  var ForwardedInnerBlocks = (0, import_element320.forwardRef)((props, ref) => {
+  var ForwardedInnerBlocks = (0, import_element319.forwardRef)((props, ref) => {
     const innerBlocksProps = useInnerBlocksProps({ ref }, props);
     return /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { className: "block-editor-inner-blocks", children: /* @__PURE__ */ (0, import_jsx_runtime505.jsx)("div", { ...innerBlocksProps }) });
   });
@@ -100542,7 +100473,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components124 = __toESM(require_components(), 1);
   var import_compose102 = __toESM(require_compose(), 1);
   var import_data90 = __toESM(require_data(), 1);
-  var import_element321 = __toESM(require_element(), 1);
+  var import_element320 = __toESM(require_element(), 1);
   var import_i18n141 = __toESM(require_i18n(), 1);
   var import_jsx_runtime506 = __toESM(require_jsx_runtime(), 1);
   function ZoomOutSeparator({
@@ -100550,7 +100481,7 @@ If there's a particular need for this, please submit a feature request at https:
     rootClientId = "",
     position = "top"
   }) {
-    const [isDraggedOver, setIsDraggedOver] = (0, import_element321.useState)(false);
+    const [isDraggedOver, setIsDraggedOver] = (0, import_element320.useState)(false);
     const {
       sectionRootClientId,
       sectionClientIds,
@@ -100648,7 +100579,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-list/index.mjs
   var import_jsx_runtime507 = __toESM(require_jsx_runtime(), 1);
-  var IntersectionObserver2 = (0, import_element322.createContext)();
+  var IntersectionObserver2 = (0, import_element321.createContext)();
   IntersectionObserver2.displayName = "IntersectionObserverContext";
   var pendingBlockVisibilityUpdatesPerRegistry = /* @__PURE__ */ new WeakMap();
   var delayedBlockVisibilityDebounceOptions = {
@@ -100687,7 +100618,7 @@ If there's a particular need for this, please submit a feature request at https:
     const registry = (0, import_data91.useRegistry)();
     const { setBlockVisibility: setBlockVisibility2 } = (0, import_data91.useDispatch)(store);
     const delayedBlockVisibilityUpdates = (0, import_compose103.useDebounce)(
-      (0, import_element322.useCallback)(() => {
+      (0, import_element321.useCallback)(() => {
         const updates = {};
         pendingBlockVisibilityUpdatesPerRegistry.get(registry).forEach(([id, isIntersecting]) => {
           updates[id] = isIntersecting;
@@ -100697,7 +100628,7 @@ If there's a particular need for this, please submit a feature request at https:
       300,
       delayedBlockVisibilityDebounceOptions
     );
-    const intersectionObserver = (0, import_element322.useMemo)(() => {
+    const intersectionObserver = (0, import_element321.useMemo)(() => {
       const { IntersectionObserver: Observer } = window;
       if (!Observer) {
         return;
@@ -100752,7 +100683,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId]
     );
-    (0, import_element322.useEffect)(() => {
+    (0, import_element321.useEffect)(() => {
       if (!isBlockOrDescendantSelected) {
         stopEditingContentOnlySection2();
       }
@@ -100840,7 +100771,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [rootClientId, hasAppender, hasCustomAppender]
     );
-    const ghostBlock = (0, import_element322.useMemo)(
+    const ghostBlock = (0, import_element321.useMemo)(
       () => ghostBlockName ? (0, import_blocks51.createBlock)(ghostBlockName, ghostBlockAttributes) : null,
       [ghostBlockName, ghostBlockAttributes]
     );
@@ -100904,7 +100835,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_dom68 = __toESM(require_dom(), 1);
   var import_components168 = __toESM(require_components(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
-  var import_element356 = __toESM(require_element(), 1);
+  var import_element355 = __toESM(require_element(), 1);
   var import_blocks81 = __toESM(require_blocks(), 1);
   var import_a11y17 = __toESM(require_a11y(), 1);
   var import_i18n174 = __toESM(require_i18n(), 1);
@@ -100913,19 +100844,19 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose107 = __toESM(require_compose(), 1);
   var import_data96 = __toESM(require_data(), 1);
   var import_dom65 = __toESM(require_dom(), 1);
-  var import_element331 = __toESM(require_element(), 1);
+  var import_element330 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/hooks/position.mjs
   var import_i18n143 = __toESM(require_i18n(), 1);
   var import_blocks53 = __toESM(require_blocks(), 1);
   var import_compose106 = __toESM(require_compose(), 1);
   var import_data95 = __toESM(require_data(), 1);
-  var import_element330 = __toESM(require_element(), 1);
+  var import_element329 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/fill.mjs
   var import_components127 = __toESM(require_components(), 1);
   var import_warning9 = __toESM(require_warning(), 1);
-  var import_element325 = __toESM(require_element(), 1);
+  var import_element324 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/groups.mjs
   var import_components125 = __toESM(require_components(), 1);
@@ -100984,16 +100915,16 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/block-style-state.mjs
-  var import_element323 = __toESM(require_element(), 1);
+  var import_element322 = __toESM(require_element(), 1);
   var DEFAULT_STATE_VALUE2 = "default";
   var DEFAULT_BLOCK_STYLE_STATE2 = {
     viewport: DEFAULT_STATE_VALUE2,
     pseudo: DEFAULT_STATE_VALUE2
   };
-  var BlockStyleStateContext = (0, import_element323.createContext)(DEFAULT_BLOCK_STYLE_STATE2);
+  var BlockStyleStateContext = (0, import_element322.createContext)(DEFAULT_BLOCK_STYLE_STATE2);
   var BlockStyleStateProvider = BlockStyleStateContext.Provider;
   function useBlockStyleState() {
-    return (0, import_element323.useContext)(BlockStyleStateContext);
+    return (0, import_element322.useContext)(BlockStyleStateContext);
   }
   function hasViewportBlockStyleState(selectedState) {
     return !!selectedState?.viewport && selectedState.viewport !== DEFAULT_STATE_VALUE2;
@@ -101053,7 +100984,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls/list-view-content-popover.mjs
   var import_components126 = __toESM(require_components(), 1);
-  var import_element324 = __toESM(require_element(), 1);
+  var import_element323 = __toESM(require_element(), 1);
   var import_compose104 = __toESM(require_compose(), 1);
   var import_data92 = __toESM(require_data(), 1);
   var import_jsx_runtime508 = __toESM(require_jsx_runtime(), 1);
@@ -101083,10 +101014,10 @@ If there's a particular need for this, please submit a feature request at https:
         isOpen: privateSelectors.isListViewContentPanelOpen()
       };
     }, []);
-    const [anchorElement, setAnchorElement] = (0, import_element324.useState)(
+    const [anchorElement, setAnchorElement] = (0, import_element323.useState)(
       null
     );
-    (0, import_element324.useLayoutEffect)(() => {
+    (0, import_element323.useLayoutEffect)(() => {
       if (!selectedClientId || !listViewRef?.current) {
         setAnchorElement(null);
         return;
@@ -101158,13 +101089,13 @@ If there's a particular need for this, please submit a feature request at https:
     resetAllFilter,
     children
   }) {
-    const { registerResetAllFilter, deregisterResetAllFilter } = (0, import_element325.useContext)(import_components127.__experimentalToolsPanelContext);
+    const { registerResetAllFilter, deregisterResetAllFilter } = (0, import_element324.useContext)(import_components127.__experimentalToolsPanelContext);
     const selectedState = useBlockStyleState();
-    const scopedResetAllFilter = (0, import_element325.useMemo)(
+    const scopedResetAllFilter = (0, import_element324.useMemo)(
       () => scopeResetAllFilterToState(selectedState, resetAllFilter),
       [resetAllFilter, selectedState]
     );
-    (0, import_element325.useEffect)(() => {
+    (0, import_element324.useEffect)(() => {
       if (scopedResetAllFilter && registerResetAllFilter && deregisterResetAllFilter) {
         registerResetAllFilter(scopedResetAllFilter);
         return () => {
@@ -101193,18 +101124,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls/slot.mjs
   var import_components130 = __toESM(require_components(), 1);
-  var import_element329 = __toESM(require_element(), 1);
+  var import_element328 = __toESM(require_element(), 1);
   var import_warning10 = __toESM(require_warning(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.mjs
   var import_components128 = __toESM(require_components(), 1);
   var import_data93 = __toESM(require_data(), 1);
-  var import_element327 = __toESM(require_element(), 1);
+  var import_element326 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/global-styles/utils.mjs
   var import_compose105 = __toESM(require_compose(), 1);
-  var import_element326 = __toESM(require_element(), 1);
-  var ToolsPanelPopoverPropsContext = (0, import_element326.createContext)({
+  var import_element325 = __toESM(require_element(), 1);
+  var ToolsPanelPopoverPropsContext = (0, import_element325.createContext)({
     dropdown: {
       placement: "left-start",
       // Inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
@@ -101219,11 +101150,11 @@ If there's a particular need for this, please submit a feature request at https:
   });
   function useToolsPanelDropdownMenuProps() {
     const isMobile = (0, import_compose105.useViewportMatch)("medium", "<");
-    const { dropdown } = (0, import_element326.useContext)(ToolsPanelPopoverPropsContext);
+    const { dropdown } = (0, import_element325.useContext)(ToolsPanelPopoverPropsContext);
     return !isMobile ? { popoverProps: dropdown } : {};
   }
   function useToolsPanelItemPopoverProps() {
-    return (0, import_element326.useContext)(ToolsPanelPopoverPropsContext).item;
+    return (0, import_element325.useContext)(ToolsPanelPopoverPropsContext).item;
   }
   function scopeSelector2(scope, selector5) {
     if (!scope || !selector5) {
@@ -101264,7 +101195,7 @@ If there's a particular need for this, please submit a feature request at https:
     } = (0, import_data93.useSelect)(store);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const panelId = getSelectedBlockClientId2();
-    const resetAll = (0, import_element327.useCallback)(
+    const resetAll = (0, import_element326.useCallback)(
       (resetFilters = []) => {
         const newAttributes = {};
         const clientIds = hasMultiSelection2() ? getMultiSelectedBlockClientIds2() : [panelId];
@@ -101320,15 +101251,15 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls/block-support-slot-container.mjs
   var import_components129 = __toESM(require_components(), 1);
-  var import_element328 = __toESM(require_element(), 1);
+  var import_element327 = __toESM(require_element(), 1);
   var import_jsx_runtime511 = __toESM(require_jsx_runtime(), 1);
   function BlockSupportSlotContainer({
     Slot: Slot10,
     fillProps,
     ...props
   }) {
-    const toolsPanelContext = (0, import_element328.useContext)(import_components129.__experimentalToolsPanelContext);
-    const computedFillProps = (0, import_element328.useMemo)(
+    const toolsPanelContext = (0, import_element327.useContext)(import_components129.__experimentalToolsPanelContext);
+    const computedFillProps = (0, import_element327.useMemo)(
       () => ({
         ...fillProps ?? {},
         forwardedContext: [
@@ -101379,7 +101310,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var slot_default = (0, import_element329.forwardRef)(InspectorControlsSlot);
+  var slot_default = (0, import_element328.forwardRef)(InspectorControlsSlot);
 
   // packages/block-editor/build-module/components/inspector-controls/index.mjs
   var import_jsx_runtime513 = __toESM(require_jsx_runtime(), 1);
@@ -101634,7 +101565,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       blockInformation.title
     ) : null;
-    const options = (0, import_element330.useMemo)(() => {
+    const options = (0, import_element329.useMemo)(() => {
       const availableOptions = [DEFAULT_OPTION];
       if (allowSticky || value === STICKY_OPTION.value) {
         availableOptions.push(STICKY_OPTION);
@@ -101778,7 +101709,7 @@ If there's a particular need for this, please submit a feature request at https:
     clientId
   }) {
     const selectedBlockElement = useBlockElement(clientId);
-    const [toolbarHeight, setToolbarHeight] = (0, import_element331.useState)(0);
+    const [toolbarHeight, setToolbarHeight] = (0, import_element330.useState)(0);
     const { blockIndex, isSticky } = (0, import_data96.useSelect)(
       (select3) => {
         const { getBlockIndex: getBlockIndex2, getBlockAttributes: getBlockAttributes3 } = select3(store);
@@ -101791,13 +101722,13 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId]
     );
-    const scrollContainer = (0, import_element331.useMemo)(() => {
+    const scrollContainer = (0, import_element330.useMemo)(() => {
       if (!contentElement) {
         return;
       }
       return (0, import_dom65.getScrollContainer)(contentElement);
     }, [contentElement]);
-    const [props, setProps] = (0, import_element331.useState)(
+    const [props, setProps] = (0, import_element330.useState)(
       () => getProps(
         contentElement,
         selectedBlockElement,
@@ -101809,7 +101740,7 @@ If there's a particular need for this, please submit a feature request at https:
     const popoverRef = (0, import_compose107.useRefEffect)((popoverNode) => {
       setToolbarHeight(popoverNode.offsetHeight);
     }, []);
-    const updateProps = (0, import_element331.useCallback)(
+    const updateProps = (0, import_element330.useCallback)(
       () => setProps(
         getProps(
           contentElement,
@@ -101827,8 +101758,8 @@ If there's a particular need for this, please submit a feature request at https:
         isSticky
       ]
     );
-    (0, import_element331.useLayoutEffect)(updateProps, [blockIndex, updateProps]);
-    (0, import_element331.useLayoutEffect)(() => {
+    (0, import_element330.useLayoutEffect)(updateProps, [blockIndex, updateProps]);
+    (0, import_element330.useLayoutEffect)(() => {
       if (!contentElement || !selectedBlockElement) {
         return;
       }
@@ -101932,13 +101863,13 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-tools/block-toolbar-popover.mjs
   var import_data129 = __toESM(require_data(), 1);
-  var import_element354 = __toESM(require_element(), 1);
+  var import_element353 = __toESM(require_element(), 1);
   var import_keyboard_shortcuts10 = __toESM(require_keyboard_shortcuts(), 1);
 
   // packages/block-editor/build-module/components/block-toolbar/index.mjs
   var import_i18n172 = __toESM(require_i18n(), 1);
   var import_data128 = __toESM(require_data(), 1);
-  var import_element353 = __toESM(require_element(), 1);
+  var import_element352 = __toESM(require_element(), 1);
   var import_compose114 = __toESM(require_compose(), 1);
   var import_blocks79 = __toESM(require_blocks(), 1);
   var import_components166 = __toESM(require_components(), 1);
@@ -101952,22 +101883,22 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks54 = __toESM(require_blocks(), 1);
   var import_components131 = __toESM(require_components(), 1);
   var import_data98 = __toESM(require_data(), 1);
-  var import_element333 = __toESM(require_element(), 1);
+  var import_element332 = __toESM(require_element(), 1);
   var import_compose108 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-draggable/use-scroll-when-dragging.mjs
   var import_dom67 = __toESM(require_dom(), 1);
-  var import_element332 = __toESM(require_element(), 1);
+  var import_element331 = __toESM(require_element(), 1);
   var SCROLL_INACTIVE_DISTANCE_PX = 50;
   var SCROLL_INTERVAL_MS = 25;
   var PIXELS_PER_SECOND_PER_PERCENTAGE = 1e3;
   var VELOCITY_MULTIPLIER = PIXELS_PER_SECOND_PER_PERCENTAGE * (SCROLL_INTERVAL_MS / 1e3);
   function useScrollWhenDragging() {
-    const dragStartYRef = (0, import_element332.useRef)(null);
-    const velocityYRef = (0, import_element332.useRef)(null);
-    const scrollParentYRef = (0, import_element332.useRef)(null);
-    const scrollEditorIntervalRef = (0, import_element332.useRef)(null);
-    (0, import_element332.useEffect)(
+    const dragStartYRef = (0, import_element331.useRef)(null);
+    const velocityYRef = (0, import_element331.useRef)(null);
+    const scrollParentYRef = (0, import_element331.useRef)(null);
+    const scrollEditorIntervalRef = (0, import_element331.useRef)(null);
+    (0, import_element331.useEffect)(
       () => () => {
         if (scrollEditorIntervalRef.current) {
           clearInterval(scrollEditorIntervalRef.current);
@@ -101976,7 +101907,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const startScrolling = (0, import_element332.useCallback)((event) => {
+    const startScrolling = (0, import_element331.useCallback)((event) => {
       dragStartYRef.current = event.clientY;
       scrollParentYRef.current = (0, import_dom67.getScrollContainer)(event.target);
       scrollEditorIntervalRef.current = setInterval(() => {
@@ -101988,7 +101919,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }, SCROLL_INTERVAL_MS);
     }, []);
-    const scrollOnDragOver = (0, import_element332.useCallback)((event) => {
+    const scrollOnDragOver = (0, import_element331.useCallback)((event) => {
       if (!scrollParentYRef.current) {
         return;
       }
@@ -102077,11 +102008,11 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientIds]
     );
-    const isDraggingRef = (0, import_element333.useRef)(false);
+    const isDraggingRef = (0, import_element332.useRef)(false);
     const [startScrolling, scrollOnDragOver, stopScrolling] = useScrollWhenDragging();
     const { getAllowedBlocks: getAllowedBlocks2, getBlockNamesByClientId: getBlockNamesByClientId2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data98.useSelect)(store);
     const { startDraggingBlocks: startDraggingBlocks2, stopDraggingBlocks: stopDraggingBlocks2 } = (0, import_data98.useDispatch)(store);
-    (0, import_element333.useEffect)(() => {
+    (0, import_element332.useEffect)(() => {
       return () => {
         if (isDraggingRef.current) {
           stopDraggingBlocks2();
@@ -102090,7 +102021,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, []);
     const blockEl = useBlockElement(clientIds[0]);
     const editorRoot = blockEl?.closest("body");
-    (0, import_element333.useEffect)(() => {
+    (0, import_element332.useEffect)(() => {
       if (!editorRoot || !fadeWhenDisabled) {
         return;
       }
@@ -102214,7 +102145,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components132 = __toESM(require_components(), 1);
   var import_compose109 = __toESM(require_compose(), 1);
   var import_data99 = __toESM(require_data(), 1);
-  var import_element334 = __toESM(require_element(), 1);
+  var import_element333 = __toESM(require_element(), 1);
   var import_i18n145 = __toESM(require_i18n(), 1);
   var import_keycodes14 = __toESM(require_keycodes(), 1);
 
@@ -102511,10 +102442,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return null;
   };
-  var BlockMoverButton = (0, import_element334.forwardRef)(
+  var BlockMoverButton = (0, import_element333.forwardRef)(
     ({ clientIds, direction, orientation: moverOrientation, ...props }, ref) => {
       const instanceId = (0, import_compose109.useInstanceId)(BlockMoverButton);
-      const normalizedClientIds = (0, import_element334.useMemo)(
+      const normalizedClientIds = (0, import_element333.useMemo)(
         () => Array.isArray(clientIds) ? clientIds : [clientIds],
         [clientIds]
       );
@@ -102612,10 +102543,10 @@ If there's a particular need for this, please submit a feature request at https:
       ] });
     }
   );
-  var BlockMoverUpButton = (0, import_element334.forwardRef)((props, ref) => {
+  var BlockMoverUpButton = (0, import_element333.forwardRef)((props, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(BlockMoverButton, { direction: "up", ref, ...props });
   });
-  var BlockMoverDownButton = (0, import_element334.forwardRef)((props, ref) => {
+  var BlockMoverDownButton = (0, import_element333.forwardRef)((props, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime517.jsx)(BlockMoverButton, { direction: "down", ref, ...props });
   });
 
@@ -102707,12 +102638,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components134 = __toESM(require_components(), 1);
   var import_data102 = __toESM(require_data(), 1);
   var import_i18n147 = __toESM(require_i18n(), 1);
-  var import_element336 = __toESM(require_element(), 1);
+  var import_element335 = __toESM(require_element(), 1);
   var import_blocks56 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-toolbar/utils.mjs
   var import_data101 = __toESM(require_data(), 1);
-  var import_element335 = __toESM(require_element(), 1);
+  var import_element334 = __toESM(require_element(), 1);
   var { clearTimeout: clearTimeout2, setTimeout: setTimeout2 } = window;
   var DEBOUNCE_TIMEOUT = 200;
   function useDebouncedShowGestures({
@@ -102723,7 +102654,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const { getSelectedBlockClientId: getSelectedBlockClientId2, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data101.useSelect)(store);
     const { toggleBlockHighlight: toggleBlockHighlight2 } = (0, import_data101.useDispatch)(store);
-    const timeoutRef = (0, import_element335.useRef)();
+    const timeoutRef = (0, import_element334.useRef)();
     const isDistractionFree = (0, import_data101.useSelect)(
       (select3) => select3(store).getSettings().isDistractionFree,
       []
@@ -102767,7 +102698,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }, debounceTimeout);
     };
-    (0, import_element335.useEffect)(
+    (0, import_element334.useEffect)(
       () => () => {
         handleOnChange(false);
         clearTimeoutRef();
@@ -102784,18 +102715,18 @@ If there's a particular need for this, please submit a feature request at https:
     highlightParent = false,
     debounceTimeout = DEBOUNCE_TIMEOUT
   }) {
-    const [isFocused, setIsFocused] = (0, import_element335.useState)(false);
+    const [isFocused, setIsFocused] = (0, import_element334.useState)(false);
     const { debouncedShowGestures, debouncedHideGestures } = useDebouncedShowGestures({
       ref,
       debounceTimeout,
       isFocused,
       highlightParent
     });
-    const registerRef = (0, import_element335.useRef)(false);
+    const registerRef = (0, import_element334.useRef)(false);
     const isFocusedWithin = () => {
       return ref?.current && ref.current.contains(ref.current.ownerDocument.activeElement);
     };
-    (0, import_element335.useEffect)(() => {
+    (0, import_element334.useEffect)(() => {
       const node = ref.current;
       const handleOnFocus = () => {
         if (isFocusedWithin()) {
@@ -102882,7 +102813,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const blockInformation = useBlockDisplayInformation(parentClientId);
-    const nodeRef = (0, import_element336.useRef)();
+    const nodeRef = (0, import_element335.useRef)();
     const showHoveredOrFocusedGestures = useShowHoveredOrFocusedGestures({
       ref: nodeRef,
       highlightParent: true
@@ -102974,7 +102905,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks68 = __toESM(require_blocks(), 1);
   var import_components149 = __toESM(require_components(), 1);
   var import_data116 = __toESM(require_data(), 1);
-  var import_element344 = __toESM(require_element(), 1);
+  var import_element343 = __toESM(require_element(), 1);
   var import_i18n159 = __toESM(require_i18n(), 1);
   var import_keyboard_shortcuts9 = __toESM(require_keyboard_shortcuts(), 1);
   var import_compose111 = __toESM(require_compose(), 1);
@@ -102984,7 +102915,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks60 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/use-paste-styles/index.mjs
-  var import_element337 = __toESM(require_element(), 1);
+  var import_element336 = __toESM(require_element(), 1);
   var import_blocks58 = __toESM(require_blocks(), 1);
   var import_data103 = __toESM(require_data(), 1);
   var import_notices8 = __toESM(require_notices(), 1);
@@ -103116,7 +103047,7 @@ If there's a particular need for this, please submit a feature request at https:
     const registry = (0, import_data103.useRegistry)();
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data103.useDispatch)(store);
     const { createSuccessNotice, createWarningNotice, createErrorNotice } = (0, import_data103.useDispatch)(import_notices8.store);
-    return (0, import_element337.useCallback)(
+    return (0, import_element336.useCallback)(
       async (targetBlocks) => {
         let html = "";
         try {
@@ -103559,7 +103490,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-lock/menu-item.mjs
   var import_i18n153 = __toESM(require_i18n(), 1);
-  var import_element339 = __toESM(require_element(), 1);
+  var import_element338 = __toESM(require_element(), 1);
   var import_components142 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-lock/use-block-lock.mjs
@@ -103589,7 +103520,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-lock/modal.mjs
   var import_i18n152 = __toESM(require_i18n(), 1);
-  var import_element338 = __toESM(require_element(), 1);
+  var import_element337 = __toESM(require_element(), 1);
   var import_components141 = __toESM(require_components(), 1);
   var import_data110 = __toESM(require_data(), 1);
   var import_blocks64 = __toESM(require_blocks(), 1);
@@ -103608,7 +103539,7 @@ If there's a particular need for this, please submit a feature request at https:
     clientId,
     onClose
   }) {
-    const [lock4, setLock] = (0, import_element338.useState)({
+    const [lock4, setLock] = (0, import_element337.useState)({
       move: false,
       remove: false
     });
@@ -103626,10 +103557,10 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId]
     );
-    const [applyTemplateLock, setApplyTemplateLock] = (0, import_element338.useState)(!!templateLock);
+    const [applyTemplateLock, setApplyTemplateLock] = (0, import_element337.useState)(!!templateLock);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data110.useDispatch)(store);
     const blockInformation = useBlockDisplayInformation(clientId);
-    (0, import_element338.useEffect)(() => {
+    (0, import_element337.useEffect)(() => {
       setLock({
         move: isMoveLocked,
         remove: isRemoveLocked,
@@ -103814,7 +103745,7 @@ If there's a particular need for this, please submit a feature request at https:
     clientId
   }) {
     const { canLock, isLocked } = useBlockLock(clientId);
-    const [isModalOpen, toggleModal] = (0, import_element339.useReducer)(
+    const [isModalOpen, toggleModal] = (0, import_element338.useReducer)(
       (isActive) => !isActive,
       false
     );
@@ -103840,18 +103771,18 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-lock/toolbar.mjs
   var import_i18n154 = __toESM(require_i18n(), 1);
   var import_components143 = __toESM(require_components(), 1);
-  var import_element340 = __toESM(require_element(), 1);
+  var import_element339 = __toESM(require_element(), 1);
   var import_jsx_runtime525 = __toESM(require_jsx_runtime(), 1);
   function BlockLockToolbar({
     clientId
   }) {
     const { canLock, isLocked } = useBlockLock(clientId);
-    const [isModalOpen, toggleModal] = (0, import_element340.useReducer)(
+    const [isModalOpen, toggleModal] = (0, import_element339.useReducer)(
       (isActive) => !isActive,
       false
     );
-    const hasLockButtonShownRef = (0, import_element340.useRef)(false);
-    (0, import_element340.useEffect)(() => {
+    const hasLockButtonShownRef = (0, import_element339.useRef)(false);
+    (0, import_element339.useEffect)(() => {
       if (isLocked) {
         hasLockButtonShownRef.current = true;
       }
@@ -103920,14 +103851,14 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-rename/rename-control.mjs
   var import_components146 = __toESM(require_components(), 1);
   var import_i18n157 = __toESM(require_i18n(), 1);
-  var import_element342 = __toESM(require_element(), 1);
+  var import_element341 = __toESM(require_element(), 1);
   var import_data113 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts8 = __toESM(require_keyboard_shortcuts(), 1);
 
   // packages/block-editor/build-module/components/block-rename/modal.mjs
   var import_components145 = __toESM(require_components(), 1);
   var import_i18n156 = __toESM(require_i18n(), 1);
-  var import_element341 = __toESM(require_element(), 1);
+  var import_element340 = __toESM(require_element(), 1);
   var import_a11y16 = __toESM(require_a11y(), 1);
   var import_data112 = __toESM(require_data(), 1);
 
@@ -103939,7 +103870,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-rename/modal.mjs
   var import_jsx_runtime527 = __toESM(require_jsx_runtime(), 1);
   function BlockRenameModal({ clientId, onClose }) {
-    const [editedBlockName, setEditedBlockName] = (0, import_element341.useState)();
+    const [editedBlockName, setEditedBlockName] = (0, import_element340.useState)();
     const blockInformation = useBlockDisplayInformation(clientId);
     const { metadata } = (0, import_data112.useSelect)(
       (select3) => {
@@ -104045,7 +103976,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-rename/rename-control.mjs
   var import_jsx_runtime528 = __toESM(require_jsx_runtime(), 1);
   function BlockRenameControl({ clientId }) {
-    const [renamingBlock, setRenamingBlock] = (0, import_element342.useState)(false);
+    const [renamingBlock, setRenamingBlock] = (0, import_element341.useState)(false);
     const shortcut = (0, import_data113.useSelect)(
       (select3) => select3(import_keyboard_shortcuts8.store).getShortcutRepresentation(
         "core/block-editor/rename"
@@ -104184,7 +104115,7 @@ If there's a particular need for this, please submit a feature request at https:
   var block_settings_menu_controls_default = BlockSettingsMenuControls;
 
   // packages/block-editor/build-module/components/block-settings-menu/block-parent-selector-menu-item.mjs
-  var import_element343 = __toESM(require_element(), 1);
+  var import_element342 = __toESM(require_element(), 1);
   var import_components148 = __toESM(require_components(), 1);
   var import_compose110 = __toESM(require_compose(), 1);
   var import_data115 = __toESM(require_data(), 1);
@@ -104196,7 +104127,7 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const isSmallViewport = (0, import_compose110.useViewportMatch)("medium", "<");
     const { selectBlock: selectBlock2 } = (0, import_data115.useDispatch)(store);
-    const menuItemRef = (0, import_element343.useRef)();
+    const menuItemRef = (0, import_element342.useRef)();
     const gesturesProps = useShowHoveredOrFocusedGestures({
       ref: menuItemRef,
       highlightParent: true
@@ -104527,8 +104458,8 @@ If there's a particular need for this, please submit a feature request at https:
                     clientIds
                   }
                 ),
-                typeof children === "function" ? children({ onClose }) : import_element344.Children.map(
-                  (child) => (0, import_element344.cloneElement)(child, { onClose })
+                typeof children === "function" ? children({ onClose }) : import_element343.Children.map(
+                  (child) => (0, import_element343.cloneElement)(child, { onClose })
                 ),
                 canRemove && /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(import_components149.MenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime531.jsx)(
                   import_components149.MenuItem,
@@ -104624,7 +104555,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components153 = __toESM(require_components(), 1);
   var import_i18n161 = __toESM(require_i18n(), 1);
   var import_blocks70 = __toESM(require_blocks(), 1);
-  var import_element345 = __toESM(require_element(), 1);
+  var import_element344 = __toESM(require_element(), 1);
   var import_data119 = __toESM(require_data(), 1);
   var import_jsx_runtime534 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY14 = [];
@@ -104653,7 +104584,7 @@ If there's a particular need for this, please submit a feature request at https:
       [clientId]
     );
     const { replaceBlocks: replaceBlocks2 } = (0, import_data119.useDispatch)(store);
-    const sameCategoryPatternsWithSingleWrapper = (0, import_element345.useMemo)(() => {
+    const sameCategoryPatternsWithSingleWrapper = (0, import_element344.useMemo)(() => {
       if (categories.length === 0 || !patterns2 || patterns2.length === 0) {
         return EMPTY_ARRAY14;
       }
@@ -104725,7 +104656,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-styles/use-styles-for-block.mjs
   var import_data120 = __toESM(require_data(), 1);
   var import_blocks71 = __toESM(require_blocks(), 1);
-  var import_element346 = __toESM(require_element(), 1);
+  var import_element345 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-styles/utils.mjs
   var import_token_list = __toESM(require_token_list(), 1);
@@ -104772,7 +104703,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-styles/use-styles-for-block.mjs
   function useGenericPreviewBlock(block, type) {
-    return (0, import_element346.useMemo)(() => {
+    return (0, import_element345.useMemo)(() => {
       const example = type?.example;
       const blockName = type?.name;
       if (example && blockName) {
@@ -105022,7 +104953,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n165 = __toESM(require_i18n(), 1);
   var import_components158 = __toESM(require_components(), 1);
   var import_blocks74 = __toESM(require_blocks(), 1);
-  var import_element348 = __toESM(require_element(), 1);
+  var import_element347 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-switcher/preview-block-popover.mjs
   var import_components156 = __toESM(require_components(), 1);
@@ -105055,7 +104986,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components157 = __toESM(require_components(), 1);
   var import_blocks73 = __toESM(require_blocks(), 1);
   var import_data124 = __toESM(require_data(), 1);
-  var import_element347 = __toESM(require_element(), 1);
+  var import_element346 = __toESM(require_element(), 1);
   var import_jsx_runtime538 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_OBJECT3 = {};
   function useBlockVariationTransforms({ clientIds, blocks: blocks2 }) {
@@ -105081,7 +105012,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientIds, blocks2]
     );
-    const transformations = (0, import_element347.useMemo)(() => {
+    const transformations = (0, import_element346.useMemo)(() => {
       return blockVariationTransformations?.filter(
         ({ name }) => name !== activeBlockVariation?.name
       );
@@ -105093,7 +105024,7 @@ If there's a particular need for this, please submit a feature request at https:
     onSelect,
     blocks: blocks2
   }) => {
-    const [hoveredTransformItemName, setHoveredTransformItemName] = (0, import_element347.useState)();
+    const [hoveredTransformItemName, setHoveredTransformItemName] = (0, import_element346.useState)();
     return /* @__PURE__ */ (0, import_jsx_runtime538.jsxs)(import_jsx_runtime538.Fragment, { children: [
       hoveredTransformItemName && /* @__PURE__ */ (0, import_jsx_runtime538.jsx)(
         PreviewBlockPopover,
@@ -105153,7 +105084,7 @@ If there's a particular need for this, please submit a feature request at https:
       "core/list": 3,
       "core/quote": 4
     };
-    const transformations = (0, import_element348.useMemo)(() => {
+    const transformations = (0, import_element347.useMemo)(() => {
       const priorityTextTransformsNames = Object.keys(
         priorityContentTransformationBlocks
       );
@@ -105190,7 +105121,7 @@ If there's a particular need for this, please submit a feature request at https:
     onSelectVariation,
     blocks: blocks2
   }) => {
-    const [hoveredTransformItem, setHoveredTransformItem] = (0, import_element348.useState)();
+    const [hoveredTransformItem, setHoveredTransformItem] = (0, import_element347.useState)();
     const { priorityTextTransformations, restTransformations } = useGroupedTransforms(possibleBlockTransformations);
     const hasBothContentTransformations = priorityTextTransformations.length && restTransformations.length;
     const restTransformItems = !!restTransformations.length && /* @__PURE__ */ (0, import_jsx_runtime539.jsx)(
@@ -105281,7 +105212,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-switcher/block-styles-menu.mjs
   var import_i18n166 = __toESM(require_i18n(), 1);
   var import_components160 = __toESM(require_components(), 1);
-  var import_element349 = __toESM(require_element(), 1);
+  var import_element348 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-styles/menu-items.mjs
   var import_components159 = __toESM(require_components(), 1);
@@ -105329,7 +105260,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_jsx_runtime541 = __toESM(require_jsx_runtime(), 1);
   function BlockStylesMenu({ hoveredBlock, onSwitch }) {
     const { clientId } = hoveredBlock;
-    const [hoveredStyle, setHoveredStyle] = (0, import_element349.useState)(null);
+    const [hoveredStyle, setHoveredStyle] = (0, import_element348.useState)(null);
     const {
       onSelect,
       stylesToRender,
@@ -105340,7 +105271,7 @@ If there's a particular need for this, please submit a feature request at https:
       clientId,
       onSwitch
     });
-    const previewBlocks = (0, import_element349.useMemo)(() => {
+    const previewBlocks = (0, import_element348.useMemo)(() => {
       if (!hoveredStyle || !genericPreviewBlock) {
         return null;
       }
@@ -105385,12 +105316,12 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-switcher/pattern-transformations-menu.mjs
   var import_i18n167 = __toESM(require_i18n(), 1);
-  var import_element351 = __toESM(require_element(), 1);
+  var import_element350 = __toESM(require_element(), 1);
   var import_compose113 = __toESM(require_compose(), 1);
   var import_components161 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-switcher/use-transformed-patterns.mjs
-  var import_element350 = __toESM(require_element(), 1);
+  var import_element349 = __toESM(require_element(), 1);
   var import_blocks76 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-switcher/utils.mjs
@@ -105466,7 +105397,7 @@ If there's a particular need for this, please submit a feature request at https:
     return _patternBlocks;
   };
   var useTransformedPatterns = (patterns2, selectedBlocks) => {
-    return (0, import_element350.useMemo)(
+    return (0, import_element349.useMemo)(
       () => patterns2.reduce((accumulator, _pattern) => {
         const transformedBlocks = getPatternTransformedBlocks(
           selectedBlocks,
@@ -105492,7 +105423,7 @@ If there's a particular need for this, please submit a feature request at https:
     patterns: statePatterns,
     onSelect
   }) {
-    const [showTransforms, setShowTransforms] = (0, import_element351.useState)(false);
+    const [showTransforms, setShowTransforms] = (0, import_element350.useState)(false);
     const patterns2 = use_transformed_patterns_default(statePatterns, blocks2);
     if (!patterns2.length) {
       return null;
@@ -105803,7 +105734,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-toolbar/pattern-overrides-dropdown.mjs
   var import_components164 = __toESM(require_components(), 1);
   var import_i18n170 = __toESM(require_i18n(), 1);
-  var import_element352 = __toESM(require_element(), 1);
+  var import_element351 = __toESM(require_element(), 1);
   var import_data126 = __toESM(require_data(), 1);
   var import_jsx_runtime545 = __toESM(require_jsx_runtime(), 1);
   function PatternOverridesPopoverContent({ clientIds, blockTitle }) {
@@ -105834,8 +105765,8 @@ If there's a particular need for this, please submit a feature request at https:
     blockTitle,
     label
   }) {
-    const [isOpen, setIsOpen] = (0, import_element352.useState)(false);
-    const anchorRef = (0, import_element352.useRef)();
+    const [isOpen, setIsOpen] = (0, import_element351.useState)(false);
+    const anchorRef = (0, import_element351.useRef)();
     return /* @__PURE__ */ (0, import_jsx_runtime545.jsxs)(import_jsx_runtime545.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime545.jsx)(
         import_components164.ToolbarButton,
@@ -106136,8 +106067,8 @@ If there's a particular need for this, please submit a feature request at https:
         canEdit: _canEditBlock
       };
     }, []);
-    const toolbarWrapperRef = (0, import_element353.useRef)(null);
-    const nodeRef = (0, import_element353.useRef)();
+    const toolbarWrapperRef = (0, import_element352.useRef)(null);
+    const nodeRef = (0, import_element352.useRef)();
     const showHoveredOrFocusedGestures = useShowHoveredOrFocusedGestures({
       ref: nodeRef
     });
@@ -106278,17 +106209,17 @@ If there's a particular need for this, please submit a feature request at https:
     __unstableContentRef
   }) {
     const { capturingClientId, isInsertionPointVisible, lastClientId } = useSelectedBlockToolProps(clientId);
-    const initialToolbarItemIndexRef = (0, import_element354.useRef)();
-    (0, import_element354.useEffect)(() => {
+    const initialToolbarItemIndexRef = (0, import_element353.useRef)();
+    (0, import_element353.useEffect)(() => {
       initialToolbarItemIndexRef.current = void 0;
     }, [clientId]);
     const { stopTyping: stopTyping2 } = (0, import_data129.useDispatch)(store);
-    const isToolbarForcedRef = (0, import_element354.useRef)(false);
+    const isToolbarForcedRef = (0, import_element353.useRef)(false);
     (0, import_keyboard_shortcuts10.useShortcut)("core/block-editor/focus-toolbar", () => {
       isToolbarForcedRef.current = true;
       stopTyping2(true);
     });
-    (0, import_element354.useEffect)(() => {
+    (0, import_element353.useEffect)(() => {
       isToolbarForcedRef.current = false;
     });
     const clientIdToPositionOver = capturingClientId || clientId;
@@ -106324,7 +106255,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-tools/zoom-out-mode-inserters.mjs
   var import_data130 = __toESM(require_data(), 1);
-  var import_element355 = __toESM(require_element(), 1);
+  var import_element354 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-tools/zoom-out-mode-inserter-button.mjs
   var import_components167 = __toESM(require_components(), 1);
@@ -106354,7 +106285,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-tools/zoom-out-mode-inserters.mjs
   var import_jsx_runtime550 = __toESM(require_jsx_runtime(), 1);
   function ZoomOutModeInserters() {
-    const [isReady, setIsReady] = (0, import_element355.useState)(false);
+    const [isReady, setIsReady] = (0, import_element354.useState)(false);
     const {
       hasSelection,
       blockOrder,
@@ -106385,7 +106316,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const { showInsertionPoint: showInsertionPoint2 } = unlock((0, import_data130.useDispatch)(store));
-    (0, import_element355.useEffect)(() => {
+    (0, import_element354.useEffect)(() => {
       const timeout = setTimeout(() => {
         setIsReady(true);
       }, 500);
@@ -106509,7 +106440,7 @@ If there's a particular need for this, please submit a feature request at https:
     const { getGroupingBlockName } = (0, import_data132.useSelect)(import_blocks81.store);
     const { showEmptyBlockSideInserter, showBlockToolbarPopover } = useShowBlockTools();
     const pasteStyles = usePasteStyles();
-    const [renamingBlockClientId, setRenamingBlockClientId] = (0, import_element356.useState)(null);
+    const [renamingBlockClientId, setRenamingBlockClientId] = (0, import_element355.useState)(null);
     const { canRename } = useBlockRename(
       getBlockName2(getSelectedBlockClientIds2()[0])
     );
@@ -106663,7 +106594,7 @@ If there's a particular need for this, please submit a feature request at https:
             "block-editor-block-tools--is-dragging": isDragging3
           }),
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime551.jsxs)(InsertionPointOpenRef.Provider, { value: (0, import_element356.useRef)(false), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime551.jsxs)(InsertionPointOpenRef.Provider, { value: (0, import_element355.useRef)(false), children: [
               !isTyping3 && !isZoomOutMode && /* @__PURE__ */ (0, import_jsx_runtime551.jsx)(
                 InsertionPoint,
                 {
@@ -107166,7 +107097,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isTabletViewport = (0, import_compose116.useViewportMatch)("medium", "<");
     const resetTypingRef = useMouseMoveTypingReset();
     const clearerRef = useBlockSelectionClearer();
-    const localRef = (0, import_element357.useRef)();
+    const localRef = (0, import_element356.useRef)();
     const contentRef = (0, import_compose116.useMergeRefs)([
       contentRefProp,
       clearerRef,
@@ -107314,7 +107245,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components177 = __toESM(require_components(), 1);
   var import_i18n185 = __toESM(require_i18n(), 1);
   var import_data148 = __toESM(require_data(), 1);
-  var import_element374 = __toESM(require_element(), 1);
+  var import_element373 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/list-view/index.mjs
   var import_compose122 = __toESM(require_compose(), 1);
@@ -107322,32 +107253,32 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components176 = __toESM(require_components(), 1);
   var import_data147 = __toESM(require_data(), 1);
   var import_deprecated14 = __toESM(require_deprecated(), 1);
-  var import_element373 = __toESM(require_element(), 1);
+  var import_element372 = __toESM(require_element(), 1);
   var import_i18n184 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/list-view/branch.mjs
   var import_components174 = __toESM(require_components(), 1);
-  var import_element366 = __toESM(require_element(), 1);
+  var import_element365 = __toESM(require_element(), 1);
   var import_data140 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/list-view/appender.mjs
   var import_compose117 = __toESM(require_compose(), 1);
   var import_a11y18 = __toESM(require_a11y(), 1);
   var import_data136 = __toESM(require_data(), 1);
-  var import_element359 = __toESM(require_element(), 1);
+  var import_element358 = __toESM(require_element(), 1);
   var import_i18n177 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/list-view/context.mjs
-  var import_element358 = __toESM(require_element(), 1);
-  var ListViewContext = (0, import_element358.createContext)({});
+  var import_element357 = __toESM(require_element(), 1);
+  var ListViewContext = (0, import_element357.createContext)({});
   ListViewContext.displayName = "ListViewContext";
-  var useListViewContext = () => (0, import_element358.useContext)(ListViewContext);
-  var ListViewTreeStateContext = (0, import_element358.createContext)({});
+  var useListViewContext = () => (0, import_element357.useContext)(ListViewContext);
+  var ListViewTreeStateContext = (0, import_element357.createContext)({});
   ListViewTreeStateContext.displayName = "ListViewTreeStateContext";
-  var useListViewTreeState = () => (0, import_element358.useContext)(ListViewTreeStateContext);
-  var ListViewInsertedBlockContext = (0, import_element358.createContext)(null);
+  var useListViewTreeState = () => (0, import_element357.useContext)(ListViewTreeStateContext);
+  var ListViewInsertedBlockContext = (0, import_element357.createContext)(null);
   ListViewInsertedBlockContext.displayName = "ListViewInsertedBlockContext";
-  var useInsertedBlockClientId = () => (0, import_element358.useContext)(ListViewInsertedBlockContext);
+  var useInsertedBlockClientId = () => (0, import_element357.useContext)(ListViewInsertedBlockContext);
 
   // packages/block-editor/build-module/components/list-view/aria-referenced-text.mjs
   var import_react83 = __toESM(require_react(), 1);
@@ -107357,7 +107288,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/list-view/appender.mjs
   var import_jsx_runtime555 = __toESM(require_jsx_runtime(), 1);
-  var Appender = (0, import_element359.forwardRef)(
+  var Appender = (0, import_element358.forwardRef)(
     ({ nestingLevel, blockCount, clientId, ...props }, ref) => {
       const { setInsertedBlockClientId } = useListViewContext();
       const insertedBlockClientId = useInsertedBlockClientId();
@@ -107384,7 +107315,7 @@ If there's a particular need for this, please submit a feature request at https:
         clientId: insertedBlockClientId,
         context: "list-view"
       });
-      (0, import_element359.useEffect)(() => {
+      (0, import_element358.useEffect)(() => {
         if (!insertedBlockTitle?.length) {
           return;
         }
@@ -107439,7 +107370,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks84 = __toESM(require_blocks(), 1);
   var import_components173 = __toESM(require_components(), 1);
   var import_compose119 = __toESM(require_compose(), 1);
-  var import_element365 = __toESM(require_element(), 1);
+  var import_element364 = __toESM(require_element(), 1);
   var import_data139 = __toESM(require_data(), 1);
   var import_i18n180 = __toESM(require_i18n(), 1);
   var import_keycodes19 = __toESM(require_keycodes(), 1);
@@ -107450,10 +107381,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/list-view/leaf.mjs
   var import_components171 = __toESM(require_components(), 1);
   var import_compose118 = __toESM(require_compose(), 1);
-  var import_element360 = __toESM(require_element(), 1);
+  var import_element359 = __toESM(require_element(), 1);
   var import_jsx_runtime556 = __toESM(require_jsx_runtime(), 1);
   var AnimatedTreeGridRow = animated(import_components171.__experimentalTreeGridRow);
-  var ListViewLeaf = (0, import_element360.forwardRef)(
+  var ListViewLeaf = (0, import_element359.forwardRef)(
     ({
       isDragged,
       isSelected: isSelected2,
@@ -107490,14 +107421,14 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/list-view/use-list-view-scroll-into-view.mjs
   var import_dom70 = __toESM(require_dom(), 1);
-  var import_element361 = __toESM(require_element(), 1);
+  var import_element360 = __toESM(require_element(), 1);
   function useListViewScrollIntoView({
     isSelected: isSelected2,
     selectedClientIds,
     rowItemRef
   }) {
     const isSingleSelection = selectedClientIds.length === 1;
-    (0, import_element361.useLayoutEffect)(() => {
+    (0, import_element360.useLayoutEffect)(() => {
       if (!isSelected2 || !isSingleSelection || !rowItemRef.current) {
         return;
       }
@@ -107516,11 +107447,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/list-view/block-contents.mjs
-  var import_element364 = __toESM(require_element(), 1);
+  var import_element363 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/list-view/block-select-button.mjs
   var import_components172 = __toESM(require_components(), 1);
-  var import_element363 = __toESM(require_element(), 1);
+  var import_element362 = __toESM(require_element(), 1);
   var import_data138 = __toESM(require_data(), 1);
   var import_blocks83 = __toESM(require_blocks(), 1);
   var import_keycodes18 = __toESM(require_keycodes(), 1);
@@ -107551,7 +107482,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/list-view/use-list-view-images.mjs
-  var import_element362 = __toESM(require_element(), 1);
+  var import_element361 = __toESM(require_element(), 1);
   var import_data137 = __toESM(require_data(), 1);
   var MAX_IMAGES = 3;
   var IMAGE_GETTERS = {
@@ -107619,7 +107550,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId]
     );
-    const images = (0, import_element362.useMemo)(() => {
+    const images = (0, import_element361.useMemo)(() => {
       return getImagesFromBlock(block, isExpanded);
     }, [block, isExpanded]);
     return images;
@@ -107786,7 +107717,7 @@ If there's a particular need for this, please submit a feature request at https:
       )
     );
   }
-  var block_select_button_default = (0, import_element363.forwardRef)(ListViewBlockSelectButton);
+  var block_select_button_default = (0, import_element362.forwardRef)(ListViewBlockSelectButton);
 
   // packages/block-editor/build-module/components/list-view/block-contents.mjs
   var import_jsx_runtime559 = __toESM(require_jsx_runtime(), 1);
@@ -107804,7 +107735,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var ListViewBlockContents = (0, import_element364.forwardRef)(
+  var ListViewBlockContents = (0, import_element363.forwardRef)(
     ({
       onClick,
       onToggleExpanded,
@@ -107990,12 +107921,12 @@ If there's a particular need for this, please submit a feature request at https:
     selectedClientIds,
     isSyncedBranch
   }) {
-    const cellRef = (0, import_element365.useRef)(null);
-    const rowRef = (0, import_element365.useRef)(null);
-    const settingsRef = (0, import_element365.useRef)(null);
-    const [isHovered, setIsHovered] = (0, import_element365.useState)(false);
-    const [settingsAnchorRect, setSettingsAnchorRect] = (0, import_element365.useState)();
-    const [isRenameModalOpen, setIsRenameModalOpen] = (0, import_element365.useState)(false);
+    const cellRef = (0, import_element364.useRef)(null);
+    const rowRef = (0, import_element364.useRef)(null);
+    const settingsRef = (0, import_element364.useRef)(null);
+    const [isHovered, setIsHovered] = (0, import_element364.useState)(false);
+    const [settingsAnchorRect, setSettingsAnchorRect] = (0, import_element364.useState)();
+    const [isRenameModalOpen, setIsRenameModalOpen] = (0, import_element364.useState)(false);
     const isFirstSelectedBlock = isSelected2 && selectedClientIds[0] === clientId;
     const isLastSelectedBlock = isSelected2 && selectedClientIds[selectedClientIds.length - 1] === clientId;
     const {
@@ -108241,15 +108172,15 @@ If there's a particular need for this, please submit a feature request at https:
         }
       }
     }
-    const onMouseEnter = (0, import_element365.useCallback)(() => {
+    const onMouseEnter = (0, import_element364.useCallback)(() => {
       setIsHovered(true);
       debouncedToggleBlockHighlight(clientId, true);
     }, [clientId, setIsHovered, debouncedToggleBlockHighlight]);
-    const onMouseLeave = (0, import_element365.useCallback)(() => {
+    const onMouseLeave = (0, import_element364.useCallback)(() => {
       setIsHovered(false);
       debouncedToggleBlockHighlight(clientId, false);
     }, [clientId, setIsHovered, debouncedToggleBlockHighlight]);
-    const selectEditorBlock = (0, import_element365.useCallback)(
+    const selectEditorBlock = (0, import_element364.useCallback)(
       (event) => {
         const isKeyboardActivation = event?.detail === 0;
         selectBlock2(event, clientId, isKeyboardActivation ? 0 : null);
@@ -108257,7 +108188,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId, selectBlock2]
     );
-    const updateFocusAndSelection = (0, import_element365.useCallback)(
+    const updateFocusAndSelection = (0, import_element364.useCallback)(
       (focusClientId, shouldSelectBlock) => {
         if (shouldSelectBlock) {
           selectBlock2(void 0, focusClientId, null, null);
@@ -108266,7 +108197,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [selectBlock2, treeGridElementRef]
     );
-    const toggleExpanded = (0, import_element365.useCallback)(
+    const toggleExpanded = (0, import_element364.useCallback)(
       (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -108280,7 +108211,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId, updateExpansion, isExpanded]
     );
-    const onContextMenu = (0, import_element365.useCallback)(
+    const onContextMenu = (0, import_element364.useCallback)(
       (event) => {
         const { ownerDocument: ownerDocument2 } = settingsRef?.current || {};
         if (!ownerDocument2 || !ownerDocument2.hasFocus()) {
@@ -108296,7 +108227,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [allowRightClickOverrides, settingsRef, showBlockActions]
     );
-    const onMouseDown = (0, import_element365.useCallback)(
+    const onMouseDown = (0, import_element364.useCallback)(
       (event) => {
         if (allowRightClickOverrides && event.button === 2) {
           event.preventDefault();
@@ -108304,7 +108235,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [allowRightClickOverrides]
     );
-    const settingsPopoverAnchor = (0, import_element365.useMemo)(() => {
+    const settingsPopoverAnchor = (0, import_element364.useMemo)(() => {
       const { ownerDocument: ownerDocument2 } = rowRef?.current || {};
       if (!settingsAnchorRect || !ownerDocument2) {
         return void 0;
@@ -108316,7 +108247,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       };
     }, [settingsAnchorRect]);
-    const clearSettingsAnchorRect = (0, import_element365.useCallback)(() => {
+    const clearSettingsAnchorRect = (0, import_element364.useCallback)(() => {
       setSettingsAnchorRect(void 0);
     }, [setSettingsAnchorRect]);
     useListViewScrollIntoView({
@@ -108512,7 +108443,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var block_default3 = (0, import_element365.memo)(ListViewBlock);
+  var block_default3 = (0, import_element364.memo)(ListViewBlock);
 
   // packages/block-editor/build-module/components/list-view/branch.mjs
   var import_jsx_runtime561 = __toESM(require_jsx_runtime(), 1);
@@ -108711,12 +108642,12 @@ If there's a particular need for this, please submit a feature request at https:
       )
     ] });
   }
-  var branch_default = (0, import_element366.memo)(ListViewBranch);
+  var branch_default = (0, import_element365.memo)(ListViewBranch);
 
   // packages/block-editor/build-module/components/list-view/drop-indicator.mjs
   var import_components175 = __toESM(require_components(), 1);
   var import_dom72 = __toESM(require_dom(), 1);
-  var import_element367 = __toESM(require_element(), 1);
+  var import_element366 = __toESM(require_element(), 1);
   var import_i18n181 = __toESM(require_i18n(), 1);
   var import_jsx_runtime562 = __toESM(require_jsx_runtime(), 1);
   function ListViewDropIndicatorPreview({
@@ -108730,7 +108661,7 @@ If there's a particular need for this, please submit a feature request at https:
       context: "list-view"
     });
     const { rootClientId, clientId, dropPosition } = blockDropTarget || {};
-    const [rootBlockElement, blockElement] = (0, import_element367.useMemo)(() => {
+    const [rootBlockElement, blockElement] = (0, import_element366.useMemo)(() => {
       if (!listViewRef.current) {
         return [];
       }
@@ -108744,7 +108675,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [listViewRef, rootClientId, clientId]);
     const targetElement = blockElement || rootBlockElement;
     const rtl = (0, import_i18n181.isRTL)();
-    const getDropIndicatorWidth = (0, import_element367.useCallback)(
+    const getDropIndicatorWidth = (0, import_element366.useCallback)(
       (targetElementRect, indent) => {
         if (!targetElement) {
           return 0;
@@ -108776,7 +108707,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [rtl, targetElement]
     );
-    const style = (0, import_element367.useMemo)(() => {
+    const style = (0, import_element366.useMemo)(() => {
       if (!targetElement) {
         return {};
       }
@@ -108785,7 +108716,7 @@ If there's a particular need for this, please submit a feature request at https:
         width: getDropIndicatorWidth(targetElementRect, 0)
       };
     }, [getDropIndicatorWidth, targetElement]);
-    const horizontalScrollOffsetStyle = (0, import_element367.useMemo)(() => {
+    const horizontalScrollOffsetStyle = (0, import_element366.useMemo)(() => {
       if (!targetElement) {
         return {};
       }
@@ -108809,7 +108740,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       return {};
     }, [rtl, targetElement]);
-    const ariaLevel = (0, import_element367.useMemo)(() => {
+    const ariaLevel = (0, import_element366.useMemo)(() => {
       if (!rootBlockElement) {
         return 1;
       }
@@ -108819,13 +108750,13 @@ If there's a particular need for this, please submit a feature request at https:
       );
       return _ariaLevel ? _ariaLevel + 1 : 1;
     }, [rootBlockElement]);
-    const hasAdjacentSelectedBranch = (0, import_element367.useMemo)(() => {
+    const hasAdjacentSelectedBranch = (0, import_element366.useMemo)(() => {
       if (!targetElement) {
         return false;
       }
       return targetElement.classList.contains("is-branch-selected");
     }, [targetElement]);
-    const popoverAnchor = (0, import_element367.useMemo)(() => {
+    const popoverAnchor = (0, import_element366.useMemo)(() => {
       const isValidDropPosition = dropPosition === "top" || dropPosition === "bottom" || dropPosition === "inside";
       if (!targetElement || !isValidDropPosition) {
         return void 0;
@@ -108935,7 +108866,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_a11y20 = __toESM(require_a11y(), 1);
   var import_i18n182 = __toESM(require_i18n(), 1);
   var import_data141 = __toESM(require_data(), 1);
-  var import_element368 = __toESM(require_element(), 1);
+  var import_element367 = __toESM(require_element(), 1);
   var import_keycodes20 = __toESM(require_keycodes(), 1);
   var import_blocks85 = __toESM(require_blocks(), 1);
   function useBlockSelection() {
@@ -108949,7 +108880,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasSelectedBlock: hasSelectedBlock2
     } = (0, import_data141.useSelect)(store);
     const { getBlockType: getBlockType34 } = (0, import_data141.useSelect)(import_blocks85.store);
-    const updateBlockSelection = (0, import_element368.useCallback)(
+    const updateBlockSelection = (0, import_element367.useCallback)(
       async (event, clientId, destinationClientId, focusPosition) => {
         if (!event?.shiftKey && event?.keyCode !== import_keycodes20.ESCAPE) {
           selectBlock2(clientId, focusPosition);
@@ -109042,9 +108973,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/list-view/use-list-view-block-indexes.mjs
-  var import_element369 = __toESM(require_element(), 1);
+  var import_element368 = __toESM(require_element(), 1);
   function useListViewBlockIndexes(blocks2) {
-    const blockIndexes = (0, import_element369.useMemo)(() => {
+    const blockIndexes = (0, import_element368.useMemo)(() => {
       const indexes = {};
       let currentGlobalIndex = 0;
       const traverseBlocks = (blockList) => {
@@ -109083,7 +109014,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/list-view/use-list-view-collapse-items.mjs
-  var import_element370 = __toESM(require_element(), 1);
+  var import_element369 = __toESM(require_element(), 1);
   var import_data143 = __toESM(require_data(), 1);
   function useListViewCollapseItems({ updateExpansion }) {
     const { expandedBlock: expandedBlock2, getBlockParents: getBlockParents2 } = (0, import_data143.useSelect)((select3) => {
@@ -109095,7 +109026,7 @@ If there's a particular need for this, please submit a feature request at https:
         getBlockParents: _getBlockParents
       };
     }, []);
-    (0, import_element370.useEffect)(() => {
+    (0, import_element369.useEffect)(() => {
       if (expandedBlock2) {
         const blockParents = getBlockParents2(expandedBlock2, false);
         updateExpansion({ type: "replace", clientIds: blockParents });
@@ -109105,7 +109036,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/list-view/use-list-view-drop-zone.mjs
   var import_data144 = __toESM(require_data(), 1);
-  var import_element371 = __toESM(require_element(), 1);
+  var import_element370 = __toESM(require_element(), 1);
   var import_compose120 = __toESM(require_compose(), 1);
   var import_i18n183 = __toESM(require_i18n(), 1);
   var NESTING_LEVEL_INDENTATION = 24;
@@ -109285,12 +109216,12 @@ If there's a particular need for this, please submit a feature request at https:
       getDraggedBlockClientIds: getDraggedBlockClientIds2,
       canInsertBlocks: canInsertBlocks2
     } = (0, import_data144.useSelect)(store);
-    const [target, setTarget] = (0, import_element371.useState)();
+    const [target, setTarget] = (0, import_element370.useState)();
     const { rootClientId: targetRootClientId, blockIndex: targetBlockIndex } = target || {};
     const onBlockDrop2 = useOnBlockDrop(targetRootClientId, targetBlockIndex);
     const rtl = (0, import_i18n183.isRTL)();
     const previousRootClientId = (0, import_compose120.usePrevious)(targetRootClientId);
-    const maybeExpandBlock = (0, import_element371.useCallback)(
+    const maybeExpandBlock = (0, import_element370.useCallback)(
       (_target) => {
         const { rootClientId } = _target || {};
         if (!rootClientId) {
@@ -109310,7 +109241,7 @@ If there's a particular need for this, please submit a feature request at https:
       500,
       EXPAND_THROTTLE_OPTIONS
     );
-    (0, import_element371.useEffect)(() => {
+    (0, import_element370.useEffect)(() => {
       if (target?.dropPosition !== "inside" || previousRootClientId !== target?.rootClientId) {
         throttledMaybeExpandBlock.cancel();
         return;
@@ -109319,7 +109250,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [previousRootClientId, target, throttledMaybeExpandBlock]);
     const draggedBlockClientIds = getDraggedBlockClientIds2();
     const throttled = (0, import_compose120.useThrottle)(
-      (0, import_element371.useCallback)(
+      (0, import_element370.useCallback)(
         (event, currentTarget) => {
           const position = { x: event.clientX, y: event.clientY };
           const isBlockDrag = !!draggedBlockClientIds?.length;
@@ -109396,13 +109327,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/list-view/use-list-view-expand-selected-item.mjs
-  var import_element372 = __toESM(require_element(), 1);
+  var import_element371 = __toESM(require_element(), 1);
   var import_data145 = __toESM(require_data(), 1);
   function useListViewExpandSelectedItem({
     firstSelectedBlockClientId,
     updateExpansion
   }) {
-    const [selectedTreeId, setSelectedTreeId] = (0, import_element372.useState)(null);
+    const [selectedTreeId, setSelectedTreeId] = (0, import_element371.useState)(null);
     const { selectedBlockParentClientIds } = (0, import_data145.useSelect)(
       (select3) => {
         const { getBlockParents: getBlockParents2 } = select3(store);
@@ -109415,7 +109346,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [firstSelectedBlockClientId]
     );
-    (0, import_element372.useEffect)(() => {
+    (0, import_element371.useEffect)(() => {
       if (selectedTreeId === firstSelectedBlockClientId) {
         return;
       }
@@ -109625,13 +109556,13 @@ If there's a particular need for this, please submit a feature request at https:
       [draggedClientIds]
     );
     const { updateBlockSelection } = useBlockSelection();
-    const [expansionState, updateExpansion] = (0, import_element373.useReducer)(expansion, {});
-    const [insertedBlockClientId, setInsertedBlockClientId] = (0, import_element373.useState)(null);
+    const [expansionState, updateExpansion] = (0, import_element372.useReducer)(expansion, {});
+    const [insertedBlockClientId, setInsertedBlockClientId] = (0, import_element372.useState)(null);
     const { setSelectedTreeId } = useListViewExpandSelectedItem({
       firstSelectedBlockClientId: selectedClientIds[0],
       updateExpansion
     });
-    const selectEditorBlock = (0, import_element373.useCallback)(
+    const selectEditorBlock = (0, import_element372.useCallback)(
       /**
        * @param {MouseEvent | KeyboardEvent | undefined} event
        * @param {string}                                 blockClientId
@@ -109650,7 +109581,7 @@ If there's a particular need for this, please submit a feature request at https:
       dropZoneElement,
       updateExpansion
     });
-    const elementRef = (0, import_element373.useRef)();
+    const elementRef = (0, import_element372.useRef)();
     const clipBoardRef = useClipboardHandler2({
       selectBlock: selectEditorBlock
     });
@@ -109695,19 +109626,19 @@ If there's a particular need for this, please submit a feature request at https:
       dropZoneRef,
       ref
     ]);
-    const expandRow = (0, import_element373.useCallback)((row) => {
+    const expandRow = (0, import_element372.useCallback)((row) => {
       const clientId = row?.dataset?.block;
       if (clientId) {
         updateExpansion({ type: "expand", clientIds: [clientId] });
       }
     }, []);
-    const collapseRow = (0, import_element373.useCallback)((row) => {
+    const collapseRow = (0, import_element372.useCallback)((row) => {
       const clientId = row?.dataset?.block;
       if (clientId) {
         updateExpansion({ type: "collapse", clientIds: [clientId] });
       }
     }, []);
-    const focusRow = (0, import_element373.useCallback)(
+    const focusRow = (0, import_element372.useCallback)(
       (event, startRow, endRow) => {
         if (event.shiftKey) {
           updateBlockSelection(
@@ -109721,7 +109652,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     useListViewCollapseItems({ updateExpansion });
     const firstDraggedBlockClientId = draggedClientIds?.[0];
-    const { blockDropTargetIndex, blockDropPosition, firstDraggedBlockIndex } = (0, import_element373.useMemo)(() => {
+    const { blockDropTargetIndex, blockDropPosition, firstDraggedBlockIndex } = (0, import_element372.useMemo)(() => {
       let _blockDropTargetIndex, _firstDraggedBlockIndex;
       if (blockDropTarget?.clientId) {
         const foundBlockIndex = blockIndexes[blockDropTarget.clientId];
@@ -109739,7 +109670,7 @@ If there's a particular need for this, please submit a feature request at https:
         firstDraggedBlockIndex: _firstDraggedBlockIndex
       };
     }, [blockDropTarget, blockIndexes, firstDraggedBlockClientId]);
-    const contextValue = (0, import_element373.useMemo)(
+    const contextValue = (0, import_element372.useMemo)(
       () => ({
         AdditionalBlockContent,
         BlockSettingsMenu: BlockSettingsMenu2,
@@ -109758,7 +109689,7 @@ If there's a particular need for this, please submit a feature request at https:
         updateExpansion
       ]
     );
-    const treeStateContextValue = (0, import_element373.useMemo)(
+    const treeStateContextValue = (0, import_element372.useMemo)(
       () => ({
         blockDropPosition,
         blockDropTargetIndex,
@@ -109852,8 +109783,8 @@ If there's a particular need for this, please submit a feature request at https:
       showContentPopover && /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(ListViewContentPopover, { listViewRef: elementRef })
     ] });
   }
-  var PrivateListView = (0, import_element373.forwardRef)(ListViewComponent);
-  var list_view_default2 = (0, import_element373.forwardRef)((props, ref) => {
+  var PrivateListView = (0, import_element372.forwardRef)(ListViewComponent);
+  var list_view_default2 = (0, import_element372.forwardRef)((props, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime563.jsx)(
       PrivateListView,
       {
@@ -109926,10 +109857,10 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var dropdown_default2 = (0, import_element374.forwardRef)(BlockNavigationDropdown);
+  var dropdown_default2 = (0, import_element373.forwardRef)(BlockNavigationDropdown);
 
   // packages/block-editor/build-module/components/block-styles/index.mjs
-  var import_element375 = __toESM(require_element(), 1);
+  var import_element374 = __toESM(require_element(), 1);
   var import_data149 = __toESM(require_data(), 1);
   var import_compose123 = __toESM(require_compose(), 1);
   var import_components178 = __toESM(require_components(), 1);
@@ -109953,21 +109884,21 @@ If there's a particular need for this, please submit a feature request at https:
       clientId,
       onSwitch
     });
-    const [hoveredStyle, setHoveredStyle] = (0, import_element375.useState)(null);
-    const [blockStylesAnchor, setBlockStylesAnchor] = (0, import_element375.useState)(null);
+    const [hoveredStyle, setHoveredStyle] = (0, import_element374.useState)(null);
+    const [blockStylesAnchor, setBlockStylesAnchor] = (0, import_element374.useState)(null);
     const dropdownMenuProps = useToolsPanelDropdownMenuProps();
     const instanceId = (0, import_compose123.useInstanceId)(
       BlockStyles,
       "block-editor-block-styles"
     );
-    const styleRows = (0, import_element375.useMemo)(() => {
+    const styleRows = (0, import_element374.useMemo)(() => {
       const rows = [];
       for (let i = 0; i < (stylesToRender?.length ?? 0); i += 2) {
         rows.push(stylesToRender.slice(i, i + 2));
       }
       return rows;
     }, [stylesToRender]);
-    const previewBlocks = (0, import_element375.useMemo)(() => {
+    const previewBlocks = (0, import_element374.useMemo)(() => {
       if (!hoveredStyle || !genericPreviewBlock) {
         return null;
       }
@@ -110251,7 +110182,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data151 = __toESM(require_data(), 1);
   var import_blocks86 = __toESM(require_blocks(), 1);
   var import_components183 = __toESM(require_components(), 1);
-  var import_element376 = __toESM(require_element(), 1);
+  var import_element375 = __toESM(require_element(), 1);
   var import_compose124 = __toESM(require_compose(), 1);
   var import_i18n190 = __toESM(require_i18n(), 1);
 
@@ -110484,8 +110415,8 @@ If there's a particular need for this, please submit a feature request at https:
     initialViewMode = VIEWMODES.carousel,
     showTitles = false
   }) => {
-    const [viewMode, setViewMode] = (0, import_element376.useState)(initialViewMode);
-    const [activeSlide, setActiveSlide] = (0, import_element376.useState)(0);
+    const [viewMode, setViewMode] = (0, import_element375.useState)(initialViewMode);
+    const [activeSlide, setActiveSlide] = (0, import_element375.useState)(0);
     const { replaceBlock: replaceBlock2 } = (0, import_data151.useDispatch)(store);
     const patterns2 = use_patterns_setup_default(clientId, blockName, filterPatternsFn);
     if (!patterns2?.length) {
@@ -110546,7 +110477,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n191 = __toESM(require_i18n(), 1);
   var import_components184 = __toESM(require_components(), 1);
   var import_data152 = __toESM(require_data(), 1);
-  var import_element377 = __toESM(require_element(), 1);
+  var import_element376 = __toESM(require_element(), 1);
   var import_jsx_runtime571 = __toESM(require_jsx_runtime(), 1);
   function VariationsButtons({
     className,
@@ -110691,7 +110622,7 @@ If there's a particular need for this, please submit a feature request at https:
       [blockClientId]
     );
     const selectedValue = activeBlockVariation?.name;
-    const hasUniqueIcons = (0, import_element377.useMemo)(() => {
+    const hasUniqueIcons = (0, import_element376.useMemo)(() => {
       const variationIcons = /* @__PURE__ */ new Set();
       if (!variations) {
         return false;
@@ -110810,7 +110741,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/border-radius-control/index.mjs
   var import_components190 = __toESM(require_components(), 1);
-  var import_element379 = __toESM(require_element(), 1);
+  var import_element378 = __toESM(require_element(), 1);
   var import_i18n196 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/border-radius-control/linked-button.mjs
@@ -110895,7 +110826,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components189 = __toESM(require_components(), 1);
   var import_compose125 = __toESM(require_compose(), 1);
   var import_i18n194 = __toESM(require_i18n(), 1);
-  var import_element378 = __toESM(require_element(), 1);
+  var import_element377 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/preset-input-control/constants.mjs
   var ICON_SIZE = 24;
@@ -111045,7 +110976,7 @@ If there's a particular need for this, please submit a feature request at https:
     showTooltip,
     units: units2
   }) {
-    const value = (0, import_element378.useMemo)(
+    const value = (0, import_element377.useMemo)(
       () => getPresetValueFromCustomValue(valueProp, presets, presetType),
       [valueProp, presets, presetType]
     );
@@ -111057,13 +110988,13 @@ If there's a particular need for this, please submit a feature request at https:
     const hasPresets = marks.length > 0;
     const showRangeControl = presets.length <= RANGE_CONTROL_MAX_SIZE2;
     const allPlaceholder = isMixed ? (0, import_i18n194.__)("Mixed") : placeholder ?? null;
-    const [minValue, setMinValue] = (0, import_element378.useState)(minimumCustomValue);
-    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element378.useState)(
+    const [minValue, setMinValue] = (0, import_element377.useState)(minimumCustomValue);
+    const [showCustomValueControl, setShowCustomValueControl] = (0, import_element377.useState)(
       !disableCustomValues && value !== void 0 && !isValuePreset(value, presetType)
     );
     let currentValue = null;
     const previousValue = (0, import_compose125.usePrevious)(value);
-    (0, import_element378.useEffect)(() => {
+    (0, import_element377.useEffect)(() => {
       if (!!value && previousValue !== value && !isValuePreset(value, presetType) && showCustomValueControl !== true) {
         setShowCustomValueControl(true);
       }
@@ -111274,7 +111205,7 @@ If there's a particular need for this, please submit a feature request at https:
     const defaultSizes = presets?.default ?? EMPTY_ARRAY15;
     const customSizes = presets?.custom ?? EMPTY_ARRAY15;
     const themeSizes = presets?.theme ?? EMPTY_ARRAY15;
-    return (0, import_element379.useMemo)(() => {
+    return (0, import_element378.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n196.__)("None"), slug: "0", size: 0 },
         ...customSizes,
@@ -111349,12 +111280,12 @@ If there's a particular need for this, please submit a feature request at https:
     values,
     presets
   }) {
-    const [isLinked, setIsLinked] = (0, import_element379.useState)(
+    const [isLinked, setIsLinked] = (0, import_element378.useState)(
       !hasDefinedValues(values) || !hasMixedValues(values)
     );
     const options = useBorderRadiusSizes(presets);
     const cornerValues = values;
-    const [selectedUnits, setSelectedUnits] = (0, import_element379.useState)({
+    const [selectedUnits, setSelectedUnits] = (0, import_element378.useState)({
       flat: typeof values === "string" ? (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(values)[1] : void 0,
       topLeft: (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(cornerValues?.topLeft)[1],
       topRight: (0, import_components190.__experimentalParseQuantityAndUnitFromRawValue)(
@@ -111786,7 +111717,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/date-format-picker/index.mjs
   var import_i18n199 = __toESM(require_i18n(), 1);
   var import_date13 = __toESM(require_date(), 1);
-  var import_element380 = __toESM(require_element(), 1);
+  var import_element379 = __toESM(require_element(), 1);
   var import_jsx_runtime582 = __toESM(require_jsx_runtime(), 1);
   var exampleDate = /* @__PURE__ */ new Date();
   exampleDate.setDate(20);
@@ -111859,7 +111790,7 @@ If there's a particular need for this, please submit a feature request at https:
       label: (0, import_i18n199.__)("Custom"),
       description: (0, import_i18n199.__)("Enter your own date format")
     };
-    const [isCustom, setIsCustom] = (0, import_element380.useState)(
+    const [isCustom, setIsCustom] = (0, import_element379.useState)(
       () => !!format7 && !suggestedOptions.some((option) => option.value === format7)
     );
     return /* @__PURE__ */ (0, import_jsx_runtime582.jsxs)(Stack, { direction: "column", gap: "sm", children: [
@@ -111897,7 +111828,7 @@ If there's a particular need for this, please submit a feature request at https:
         {
           label: (0, import_i18n199.__)("Custom format"),
           hideLabelFromVision: true,
-          details: (0, import_element380.createInterpolateElement)(
+          details: (0, import_element379.createInterpolateElement)(
             (0, import_i18n199.__)(
               "Enter a date or time <Link>format string</Link>."
             ),
@@ -112676,7 +112607,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/colors-gradients/dropdown.mjs
   var import_components199 = __toESM(require_components(), 1);
-  var import_element381 = __toESM(require_element(), 1);
+  var import_element380 = __toESM(require_element(), 1);
   var import_i18n210 = __toESM(require_i18n(), 1);
   var import_jsx_runtime590 = __toESM(require_jsx_runtime(), 1);
   var WithToolsPanelItem = ({
@@ -112744,7 +112675,7 @@ If there's a particular need for this, please submit a feature request at https:
       onGradientChange,
       label
     } = settings3;
-    const colorButtonRef = (0, import_element381.useRef)(void 0);
+    const colorButtonRef = (0, import_element380.useRef)(void 0);
     const toggleProps = {
       onClick: onToggle,
       className: clsx_default(
@@ -112865,7 +112796,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose128 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/colors-gradients/use-multiple-origin-colors-and-gradients.mjs
-  var import_element382 = __toESM(require_element(), 1);
+  var import_element381 = __toESM(require_element(), 1);
   var import_i18n211 = __toESM(require_i18n(), 1);
   function useMultipleOriginColorsAndGradients() {
     const [
@@ -112895,7 +112826,7 @@ If there's a particular need for this, please submit a feature request at https:
       disableCustomColors: !enableCustomColors,
       disableCustomGradients: !enableCustomGradients
     };
-    colorGradientSettings.colors = (0, import_element382.useMemo)(() => {
+    colorGradientSettings.colors = (0, import_element381.useMemo)(() => {
       const result = [];
       if (themeColors && themeColors.length) {
         result.push({
@@ -112934,7 +112865,7 @@ If there's a particular need for this, please submit a feature request at https:
       defaultColors,
       shouldDisplayDefaultColors
     ]);
-    colorGradientSettings.gradients = (0, import_element382.useMemo)(() => {
+    colorGradientSettings.gradients = (0, import_element381.useMemo)(() => {
       const result = [];
       if (themeGradients && themeGradients.length) {
         result.push({
@@ -113079,7 +113010,7 @@ If there's a particular need for this, please submit a feature request at https:
   var panel_color_gradient_settings_default = PanelColorGradientSettings;
 
   // packages/block-editor/build-module/components/dimension-control/index.mjs
-  var import_element383 = __toESM(require_element(), 1);
+  var import_element382 = __toESM(require_element(), 1);
   var import_components201 = __toESM(require_components(), 1);
   var import_i18n212 = __toESM(require_i18n(), 1);
   var import_jsx_runtime592 = __toESM(require_jsx_runtime(), 1);
@@ -113094,7 +113025,7 @@ If there's a particular need for this, please submit a feature request at https:
     const defaultSizes = presets?.default ?? EMPTY_ARRAY16;
     const customSizes = presets?.custom ?? EMPTY_ARRAY16;
     const themeSizes = presets?.theme ?? EMPTY_ARRAY16;
-    return (0, import_element383.useMemo)(() => {
+    return (0, import_element382.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n212.__)("None"), slug: "0", size: 0 },
         ...customSizes,
@@ -113130,7 +113061,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     });
     const options = useDimensionSizes(dimensionSizes);
-    const [selectedUnit, setSelectedUnit] = (0, import_element383.useState)(() => {
+    const [selectedUnit, setSelectedUnit] = (0, import_element382.useState)(() => {
       const [, unit] = (0, import_components201.__experimentalParseQuantityAndUnitFromRawValue)(value);
       return unit || units2[0]?.value || "px";
     });
@@ -113205,7 +113136,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/height-control/index.mjs
-  var import_element384 = __toESM(require_element(), 1);
+  var import_element383 = __toESM(require_element(), 1);
   var import_components202 = __toESM(require_components(), 1);
   var import_i18n213 = __toESM(require_i18n(), 1);
   var import_deprecated16 = __toESM(require_deprecated(), 1);
@@ -113263,7 +113194,7 @@ If there's a particular need for this, please submit a feature request at https:
         "vw"
       ]
     });
-    const selectedUnit = (0, import_element384.useMemo)(
+    const selectedUnit = (0, import_element383.useMemo)(
       () => (0, import_components202.__experimentalParseQuantityAndUnitFromRawValue)(value),
       [value]
     )[1] || units2[0]?.value || "px";
@@ -114168,10 +114099,10 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/image-cropper/build-module/components/image-cropper/index.mjs
-  var import_element387 = __toESM(require_element(), 1);
+  var import_element386 = __toESM(require_element(), 1);
 
   // packages/image-cropper/build-module/provider/index.mjs
-  var import_element386 = __toESM(require_element(), 1);
+  var import_element385 = __toESM(require_element(), 1);
 
   // node_modules/.store/dequal@2.0.3-i0E7NB0LKMTt-IGua292bA/node_modules/dequal/dist/index.mjs
   var has = Object.prototype.hasOwnProperty;
@@ -114250,7 +114181,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/image-cropper/build-module/provider/use-image-cropper.mjs
-  var import_element385 = __toESM(require_element(), 1);
+  var import_element384 = __toESM(require_element(), 1);
 
   // packages/image-cropper/build-module/constants.mjs
   var MIN_ZOOM2 = 1;
@@ -114358,11 +114289,11 @@ If there's a particular need for this, please submit a feature request at https:
     mediaSize: null
   };
   function useCropper() {
-    const [cropperState, setInternalCropperState] = (0, import_element385.useState)(
+    const [cropperState, setInternalCropperState] = (0, import_element384.useState)(
       DEFAULT_CROPPER_STATE
     );
-    const [resetState, setInternalResetState] = (0, import_element385.useState)(null);
-    const setCropperState = (0, import_element385.useCallback)(
+    const [resetState, setInternalResetState] = (0, import_element384.useState)(null);
+    const setCropperState = (0, import_element384.useCallback)(
       (newState) => {
         setInternalCropperState((prev) => {
           const updates = typeof newState === "function" ? newState(prev) : newState;
@@ -114377,7 +114308,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       []
     );
-    const setResetState = (0, import_element385.useCallback)(
+    const setResetState = (0, import_element384.useCallback)(
       (newResetState = null) => {
         if (!newResetState) {
           setInternalResetState(null);
@@ -114395,7 +114326,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [setCropperState, setInternalResetState]
     );
-    const reset = (0, import_element385.useCallback)(() => {
+    const reset = (0, import_element384.useCallback)(() => {
       if (resetState) {
         const resetUpdates = {
           // Reset media position to center
@@ -114423,7 +114354,7 @@ If there's a particular need for this, please submit a feature request at https:
         setCropperState({ ...DEFAULT_CROPPER_STATE });
       }
     }, [resetState, setCropperState]);
-    const isDirty = (0, import_element385.useMemo)(() => {
+    const isDirty = (0, import_element384.useMemo)(() => {
       if (resetState) {
         const currentState2 = {
           crop: cropperState.croppedAreaPixels || cropperState.croppedArea,
@@ -114443,7 +114374,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
       return false === dequal(currentState, DEFAULT_INITIAL_STATE);
     }, [cropperState, resetState]);
-    const getCroppedImage2 = (0, import_element385.useCallback)(
+    const getCroppedImage2 = (0, import_element384.useCallback)(
       async (src) => {
         if (!cropperState.croppedAreaPixels) {
           return null;
@@ -114461,7 +114392,7 @@ If there's a particular need for this, please submit a feature request at https:
         cropperState.flip
       ]
     );
-    return (0, import_element385.useMemo)(
+    return (0, import_element384.useMemo)(
       () => ({
         cropperState,
         setCropperState,
@@ -114485,7 +114416,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/image-cropper/build-module/provider/index.mjs
   var import_jsx_runtime594 = __toESM(require_jsx_runtime(), 1);
-  var ImageCropperContext = (0, import_element386.createContext)({
+  var ImageCropperContext = (0, import_element385.createContext)({
     cropperState: {
       crop: { x: 0, y: 0 },
       croppedArea: { x: 0, y: 0, width: 100, height: 100 },
@@ -114510,7 +114441,7 @@ If there's a particular need for this, please submit a feature request at https:
     children
   }) {
     const cropperApi = useCropper();
-    const contextValue = (0, import_element386.useMemo)(() => {
+    const contextValue = (0, import_element385.useMemo)(() => {
       return {
         ...cropperApi
       };
@@ -114518,7 +114449,7 @@ If there's a particular need for this, please submit a feature request at https:
     return /* @__PURE__ */ (0, import_jsx_runtime594.jsx)(ImageCropperContext.Provider, { value: contextValue, children });
   }
   var useImageCropper = () => {
-    const context = (0, import_element386.useContext)(ImageCropperContext);
+    const context = (0, import_element385.useContext)(ImageCropperContext);
     if (!context) {
       throw new Error("Missing ImageCropperContext");
     }
@@ -114540,7 +114471,7 @@ If there's a particular need for this, please submit a feature request at https:
     const setZoom = (newZoom) => setCropperState({ zoom: newZoom });
     const setRotation = (newRotation) => setCropperState({ rotation: newRotation });
     const setMediaSize = (newMediaSize) => setCropperState({ mediaSize: newMediaSize });
-    const onCropComplete = (0, import_element387.useCallback)(
+    const onCropComplete = (0, import_element386.useCallback)(
       (areaPercentage, areaPixels) => {
         setCropperState({
           croppedArea: areaPercentage,
@@ -114596,11 +114527,11 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/image-editor/context.mjs
-  var import_element390 = __toESM(require_element(), 1);
+  var import_element389 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/image-editor/use-save-image.mjs
   var import_data154 = __toESM(require_data(), 1);
-  var import_element388 = __toESM(require_element(), 1);
+  var import_element387 = __toESM(require_element(), 1);
   var import_i18n214 = __toESM(require_i18n(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
   var import_dom73 = __toESM(require_dom(), 1);
@@ -114618,7 +114549,7 @@ If there's a particular need for this, please submit a feature request at https:
     onFinishEditing
   }) {
     const { createErrorNotice, createSuccessNotice } = (0, import_data154.useDispatch)(import_notices9.store);
-    const [isInProgress, setIsInProgress] = (0, import_element388.useState)(false);
+    const [isInProgress, setIsInProgress] = (0, import_element387.useState)(false);
     const { editMediaEntity } = (0, import_data154.useSelect)((select3) => {
       const settings3 = select3(store).getSettings();
       return {
@@ -114626,11 +114557,11 @@ If there's a particular need for this, please submit a feature request at https:
         editMediaEntity: settings3?.[mediaEditKey]
       };
     }, []);
-    const cancel = (0, import_element388.useCallback)(() => {
+    const cancel = (0, import_element387.useCallback)(() => {
       setIsInProgress(false);
       onFinishEditing();
     }, [onFinishEditing]);
-    const apply = (0, import_element388.useCallback)(async () => {
+    const apply = (0, import_element387.useCallback)(async () => {
       if (!editMediaEntity) {
         onFinishEditing();
         createErrorNotice(
@@ -114729,7 +114660,7 @@ If there's a particular need for this, please submit a feature request at https:
       onFinishEditing,
       editMediaEntity
     ]);
-    return (0, import_element388.useMemo)(
+    return (0, import_element387.useMemo)(
       () => ({
         isInProgress,
         apply,
@@ -114740,23 +114671,23 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/image-editor/use-transform-image.mjs
-  var import_element389 = __toESM(require_element(), 1);
+  var import_element388 = __toESM(require_element(), 1);
   var import_hooks6 = __toESM(require_hooks(), 1);
   function useTransformImage({
     url,
     naturalWidth,
     naturalHeight
   }) {
-    const [editedUrl, setEditedUrl] = (0, import_element389.useState)();
+    const [editedUrl, setEditedUrl] = (0, import_element388.useState)();
     const { cropperState, setCropperState } = useImageCropper();
     const { zoom, aspectRatio, crop, croppedArea } = cropperState;
-    const setZoom = (0, import_element389.useCallback)(
+    const setZoom = (0, import_element388.useCallback)(
       (newZoom) => {
         setCropperState({ zoom: newZoom });
       },
       [setCropperState]
     );
-    const setAspectRatio = (0, import_element389.useCallback)(
+    const setAspectRatio = (0, import_element388.useCallback)(
       (newAspect) => {
         setCropperState({ aspectRatio: newAspect });
       },
@@ -114764,11 +114695,11 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const defaultAspect = naturalWidth / naturalHeight;
     const rotatedAspect = naturalHeight / naturalWidth;
-    (0, import_element389.useEffect)(() => {
+    (0, import_element388.useEffect)(() => {
       setAspectRatio(defaultAspect);
     }, []);
-    const [internalRotation, setInternalRotation] = (0, import_element389.useState)(0);
-    const rotateClockwise = (0, import_element389.useCallback)(() => {
+    const [internalRotation, setInternalRotation] = (0, import_element388.useState)(0);
+    const rotateClockwise = (0, import_element388.useCallback)(() => {
       const angle = (internalRotation + 90) % 360;
       let naturalAspectRatio = defaultAspect;
       const isDefaultAspect = defaultAspect === aspectRatio || rotatedAspect === aspectRatio;
@@ -114845,7 +114776,7 @@ If there's a particular need for this, please submit a feature request at https:
       rotatedAspect,
       setInternalRotation
     ]);
-    return (0, import_element389.useMemo)(
+    return (0, import_element388.useMemo)(
       () => ({
         editedUrl,
         setEditedUrl,
@@ -114874,11 +114805,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/image-editor/context.mjs
   var import_jsx_runtime596 = __toESM(require_jsx_runtime(), 1);
-  var ImageEditingContext = (0, import_element390.createContext)(
+  var ImageEditingContext = (0, import_element389.createContext)(
     {}
   );
   ImageEditingContext.displayName = "ImageEditingContext";
-  var useImageEditingContext = () => (0, import_element390.useContext)(ImageEditingContext);
+  var useImageEditingContext = () => (0, import_element389.useContext)(ImageEditingContext);
   function ImageEditingProvider({
     id,
     url,
@@ -114900,7 +114831,7 @@ If there's a particular need for this, please submit a feature request at https:
       onFinishEditing,
       ...transformImage
     });
-    const providerValue = (0, import_element390.useMemo)(
+    const providerValue = (0, import_element389.useMemo)(
       () => ({
         ...transformImage,
         ...saveImage
@@ -115203,11 +115134,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n219 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/image-size-control/use-dimension-handler.mjs
-  var import_element391 = __toESM(require_element(), 1);
+  var import_element390 = __toESM(require_element(), 1);
   function useDimensionHandler(customHeight, customWidth, defaultHeight, defaultWidth, onChange) {
-    const [currentWidth, setCurrentWidth] = (0, import_element391.useState)(customWidth ?? defaultWidth ?? "");
-    const [currentHeight, setCurrentHeight] = (0, import_element391.useState)(customHeight ?? defaultHeight ?? "");
-    (0, import_element391.useEffect)(() => {
+    const [currentWidth, setCurrentWidth] = (0, import_element390.useState)(customWidth ?? defaultWidth ?? "");
+    const [currentHeight, setCurrentHeight] = (0, import_element390.useState)(customHeight ?? defaultHeight ?? "");
+    (0, import_element390.useEffect)(() => {
       if (customWidth === void 0 && defaultWidth !== void 0) {
         setCurrentWidth(defaultWidth);
       }
@@ -115215,7 +115146,7 @@ If there's a particular need for this, please submit a feature request at https:
         setCurrentHeight(defaultHeight);
       }
     }, [defaultWidth, defaultHeight]);
-    (0, import_element391.useEffect)(() => {
+    (0, import_element390.useEffect)(() => {
       if (customWidth !== void 0 && // `parseInt` reads a number as its string form.
       Number.parseInt(customWidth) !== Number.parseInt(currentWidth)) {
         setCurrentWidth(customWidth);
@@ -115470,7 +115401,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/link-control/index.mjs
   var import_components218 = __toESM(require_components(), 1);
   var import_i18n230 = __toESM(require_i18n(), 1);
-  var import_element399 = __toESM(require_element(), 1);
+  var import_element398 = __toESM(require_element(), 1);
   var import_compose133 = __toESM(require_compose(), 1);
   var import_dom76 = __toESM(require_dom(), 1);
   var import_keycodes22 = __toESM(require_keycodes(), 1);
@@ -115484,7 +115415,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components211 = __toESM(require_components(), 1);
   var import_compose130 = __toESM(require_compose(), 1);
   var import_i18n221 = __toESM(require_i18n(), 1);
-  var import_element392 = __toESM(require_element(), 1);
+  var import_element391 = __toESM(require_element(), 1);
   var import_jsx_runtime606 = __toESM(require_jsx_runtime(), 1);
   function LinkSettingsDrawer({
     children,
@@ -115492,7 +115423,7 @@ If there's a particular need for this, please submit a feature request at https:
     setSettingsOpen
   }) {
     const prefersReducedMotion = (0, import_compose130.useReducedMotion)();
-    const MaybeAnimatePresence = prefersReducedMotion ? import_element392.Fragment : import_components211.__unstableAnimatePresence;
+    const MaybeAnimatePresence = prefersReducedMotion ? import_element391.Fragment : import_components211.__unstableAnimatePresence;
     const MaybeMotionDiv = prefersReducedMotion ? "div" : import_components211.__unstableMotion.div;
     const id = (0, import_compose130.useInstanceId)(LinkSettingsDrawer);
     const settingsDrawerId = `link-control-settings-drawer-${id}`;
@@ -115533,7 +115464,7 @@ If there's a particular need for this, please submit a feature request at https:
   var settings_drawer_default = LinkSettingsDrawer;
 
   // packages/block-editor/build-module/components/link-control/search-input.mjs
-  var import_element395 = __toESM(require_element(), 1);
+  var import_element394 = __toESM(require_element(), 1);
   var import_i18n226 = __toESM(require_i18n(), 1);
   var import_deprecated20 = __toESM(require_deprecated(), 1);
 
@@ -115545,7 +115476,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/link-control/search-create-button.mjs
   var import_i18n222 = __toESM(require_i18n(), 1);
   var import_components212 = __toESM(require_components(), 1);
-  var import_element393 = __toESM(require_element(), 1);
+  var import_element392 = __toESM(require_element(), 1);
   var import_jsx_runtime607 = __toESM(require_jsx_runtime(), 1);
   var LinkControlSearchCreate = ({
     searchTerm,
@@ -115560,7 +115491,7 @@ If there's a particular need for this, please submit a feature request at https:
     if (buttonText) {
       text = typeof buttonText === "function" ? buttonText(searchTerm) : buttonText;
     } else {
-      text = (0, import_element393.createInterpolateElement)(
+      text = (0, import_element392.createInterpolateElement)(
         (0, import_i18n222.sprintf)(
           /* translators: %s: search term. */
           (0, import_i18n222.__)("Create: <mark>%s</mark>"),
@@ -115843,7 +115774,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/link-control/use-search-handler.mjs
-  var import_element394 = __toESM(require_element(), 1);
+  var import_element393 = __toESM(require_element(), 1);
   var import_data155 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/link-control/normalize-url.mjs
@@ -115930,7 +115861,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const directEntryHandler = allowDirectEntry ? handleDirectEntry : handleNoop;
-    return (0, import_element394.useCallback)(
+    return (0, import_element393.useCallback)(
       (val, { isInitialSuggestions }) => {
         return isURLLike(val) ? directEntryHandler(val, { isInitialSuggestions }) : handleEntitySearch(
           val,
@@ -115959,7 +115890,7 @@ If there's a particular need for this, please submit a feature request at https:
   var noopSearchHandler = () => Promise.resolve([]);
   var noop17 = () => {
   };
-  var LinkControlSearchInput = (0, import_element395.forwardRef)(
+  var LinkControlSearchInput = (0, import_element394.forwardRef)(
     ({
       value,
       children,
@@ -115990,7 +115921,7 @@ If there's a particular need for this, please submit a feature request at https:
         transformSuggestions
       );
       const searchHandler = showSuggestions ? fetchSuggestions || genericSearchHandler : noopSearchHandler;
-      const [focusedSuggestion, setFocusedSuggestion] = (0, import_element395.useState)();
+      const [focusedSuggestion, setFocusedSuggestion] = (0, import_element394.useState)();
       const onInputChange = (selection2, suggestion) => {
         onChange(selection2);
         setFocusedSuggestion(suggestion);
@@ -116094,7 +116025,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-control/use-rich-url-data.mjs
   var import_data156 = __toESM(require_data(), 1);
-  var import_element396 = __toESM(require_element(), 1);
+  var import_element395 = __toESM(require_element(), 1);
   function reducer(state, action) {
     switch (action.type) {
       case "RESOLVED":
@@ -116121,7 +116052,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
   }
   function useRemoteUrlData(url) {
-    const [state, dispatch] = (0, import_element396.useReducer)(reducer, {
+    const [state, dispatch] = (0, import_element395.useReducer)(reducer, {
       richData: null,
       isFetching: false
     });
@@ -116131,7 +116062,7 @@ If there's a particular need for this, please submit a feature request at https:
         fetchRichUrlData: getSettings9().__experimentalFetchRichUrlData
       };
     }, []);
-    (0, import_element396.useEffect)(() => {
+    (0, import_element395.useEffect)(() => {
       if (url?.length && fetchRichUrlData && typeof AbortController !== "undefined") {
         dispatch({
           type: "LOADING"
@@ -116388,11 +116319,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-control/use-create-page.mjs
   var import_i18n229 = __toESM(require_i18n(), 1);
-  var import_element397 = __toESM(require_element(), 1);
+  var import_element396 = __toESM(require_element(), 1);
   function useCreatePage(handleCreatePage) {
-    const cancelableCreateSuggestion = (0, import_element397.useRef)(void 0);
-    const [isCreatingPage, setIsCreatingPage] = (0, import_element397.useState)(false);
-    const [errorMessage, setErrorMessage] = (0, import_element397.useState)(null);
+    const cancelableCreateSuggestion = (0, import_element396.useRef)(void 0);
+    const [isCreatingPage, setIsCreatingPage] = (0, import_element396.useState)(false);
+    const [errorMessage, setErrorMessage] = (0, import_element396.useState)(null);
     const createPage = async function(suggestionTitle) {
       setIsCreatingPage(true);
       setErrorMessage(null);
@@ -116420,7 +116351,7 @@ If there's a particular need for this, please submit a feature request at https:
         setIsCreatingPage(false);
       }
     };
-    (0, import_element397.useEffect)(() => {
+    (0, import_element396.useEffect)(() => {
       return () => {
         if (cancelableCreateSuggestion.current) {
           cancelableCreateSuggestion.current.cancel();
@@ -116450,11 +116381,11 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/components/link-control/use-internal-value.mjs
-  var import_element398 = __toESM(require_element(), 1);
+  var import_element397 = __toESM(require_element(), 1);
   var import_fast_deep_equal = __toESM(require_fast_deep_equal(), 1);
   function useInternalValue(value) {
-    const [internalValue, setInternalValue] = (0, import_element398.useState)(value || {});
-    const [previousValue, setPreviousValue] = (0, import_element398.useState)(value);
+    const [internalValue, setInternalValue] = (0, import_element397.useState)(value || {});
+    const [previousValue, setPreviousValue] = (0, import_element397.useState)(value);
     if (!(0, import_fast_deep_equal.default)(value, previousValue)) {
       setPreviousValue(value);
       setInternalValue(value);
@@ -116528,8 +116459,8 @@ If there's a particular need for this, please submit a feature request at https:
     if (withCreateSuggestion === void 0 && createSuggestion) {
       withCreateSuggestion = true;
     }
-    const [settingsOpen, setSettingsOpen] = (0, import_element399.useState)(false);
-    const [customValidity, setCustomValidity] = (0, import_element399.useState)(void 0);
+    const [settingsOpen, setSettingsOpen] = (0, import_element398.useState)(false);
+    const [customValidity, setCustomValidity] = (0, import_element398.useState)(void 0);
     const { advancedSettingsPreference } = (0, import_data158.useSelect)((select3) => {
       const prefsStore = select3(import_preferences3.store);
       return {
@@ -116544,12 +116475,12 @@ If there's a particular need for this, please submit a feature request at https:
       setSettingsOpen(prefVal);
     };
     const isSettingsOpen = advancedSettingsPreference || settingsOpen;
-    const isMountingRef = (0, import_element399.useRef)(true);
-    const wrapperNode = (0, import_element399.useRef)(null);
+    const isMountingRef = (0, import_element398.useRef)(true);
+    const wrapperNode = (0, import_element398.useRef)(null);
     const wrapperRef = (0, import_compose133.useMergeRefs)([wrapperNode, useNativeUndo()]);
-    const textInputRef = (0, import_element399.useRef)(null);
-    const searchInputRef = (0, import_element399.useRef)(null);
-    const entityUrlFallbackRef = (0, import_element399.useRef)(void 0);
+    const textInputRef = (0, import_element398.useRef)(null);
+    const searchInputRef = (0, import_element398.useRef)(null);
+    const entityUrlFallbackRef = (0, import_element398.useRef)(void 0);
     const settingsKeys = settings3.map(({ id }) => id);
     const [
       internalControlValue,
@@ -116569,17 +116500,17 @@ If there's a particular need for this, please submit a feature request at https:
       // The internal value follows `value`, which is set here.
       value && !(0, import_is_shallow_equal4.isShallowEqualObjects)(internalControlValue, value)
     );
-    const [isEditingLink, setIsEditingLink] = (0, import_element399.useState)(
+    const [isEditingLink, setIsEditingLink] = (0, import_element398.useState)(
       forceIsEditingLink !== void 0 ? forceIsEditingLink : !value || !value.url
     );
     const { createPage, isCreatingPage, errorMessage } = useCreatePage(createSuggestion);
-    (0, import_element399.useEffect)(() => {
+    (0, import_element398.useEffect)(() => {
       if (forceIsEditingLink === void 0) {
         return;
       }
       setIsEditingLink(forceIsEditingLink);
     }, [forceIsEditingLink]);
-    (0, import_element399.useEffect)(() => {
+    (0, import_element398.useEffect)(() => {
       if (isMountingRef.current) {
         return;
       }
@@ -116589,14 +116520,14 @@ If there's a particular need for this, please submit a feature request at https:
       );
       nextFocusTarget.focus();
     }, [isEditingLink, isCreatingPage]);
-    (0, import_element399.useEffect)(() => {
+    (0, import_element398.useEffect)(() => {
       isMountingRef.current = false;
       return () => {
         isMountingRef.current = true;
       };
     }, []);
-    const prevInputValueRef = (0, import_element399.useRef)(void 0);
-    (0, import_element399.useEffect)(() => {
+    const prevInputValueRef = (0, import_element398.useRef)(void 0);
+    (0, import_element398.useEffect)(() => {
       if (prevInputValueRef.current === void 0) {
         prevInputValueRef.current = propInputValue;
         return;
@@ -116608,7 +116539,7 @@ If there's a particular need for this, please submit a feature request at https:
         prevInputValueRef.current = propInputValue;
       }
     }, [propInputValue]);
-    (0, import_element399.useEffect)(() => {
+    (0, import_element398.useEffect)(() => {
       if (customValidity?.type === "invalid") {
         const inputElement = searchInputRef.current;
         if (inputElement && typeof inputElement.reportValidity === "function") {
@@ -116734,7 +116665,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       onCancel?.();
     };
-    const [shouldFocusSearchInput, setShouldFocusSearchInput] = (0, import_element399.useState)(false);
+    const [shouldFocusSearchInput, setShouldFocusSearchInput] = (0, import_element398.useState)(false);
     const handleUnlink = () => {
       const { id, kind, type, ...restValue } = internalControlValue;
       setInternalControlValue({
@@ -116746,7 +116677,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
       setShouldFocusSearchInput(true);
     };
-    (0, import_element399.useEffect)(() => {
+    (0, import_element398.useEffect)(() => {
       if (shouldFocusSearchInput) {
         searchInputRef.current?.focus();
         setShouldFocusSearchInput(false);
@@ -116754,7 +116685,7 @@ If there's a particular need for this, please submit a feature request at https:
     }, [shouldFocusSearchInput]);
     const currentUrlInputValue = internalControlValue?.url !== void 0 ? internalControlValue.url : propInputValue || "";
     const currentInputIsEmpty = !currentUrlInputValue?.trim()?.length;
-    (0, import_element399.useEffect)(() => {
+    (0, import_element398.useEffect)(() => {
       setCustomValidity(void 0);
     }, [currentUrlInputValue]);
     const isUrlValid = !customValidity;
@@ -116764,7 +116695,7 @@ If there's a particular need for this, please submit a feature request at https:
     const isEditing = (isEditingLink || !value) && !isCreatingPage;
     const isDisabled = currentInputIsEmpty || !isUrlValid || value && !valueHasChanges;
     const showSettings = !!settings3?.length && isEditingLink && hasLinkValue;
-    const previewValue = (0, import_element399.useMemo)(() => {
+    const previewValue = (0, import_element398.useMemo)(() => {
       if (value?.kind === "taxonomy" && !value?.url && entityUrlFallbackRef.current) {
         return {
           ...value,
@@ -117077,7 +117008,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose134 = __toESM(require_compose(), 1);
   var import_dom77 = __toESM(require_dom(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
-  var import_element400 = __toESM(require_element(), 1);
+  var import_element399 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/media-placeholder/utils.mjs
   function getComputedAcceptAttribute(allowedTypes, allowedMimeTypes, accept) {
@@ -117150,7 +117081,7 @@ If there's a particular need for this, please submit a feature request at https:
       };
     }, []);
     const errorNoticeID = `block-editor/media-replace-flow/error-notice/${++uniqueId}`;
-    const computedAccept = (0, import_element400.useMemo)(
+    const computedAccept = (0, import_element399.useMemo)(
       () => getComputedAcceptAttribute(
         allowedTypes,
         allowedMimeTypes,
@@ -117353,13 +117284,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/media-placeholder/index.mjs
   var import_components226 = __toESM(require_components(), 1);
   var import_i18n237 = __toESM(require_i18n(), 1);
-  var import_element403 = __toESM(require_element(), 1);
+  var import_element402 = __toESM(require_element(), 1);
   var import_data161 = __toESM(require_data(), 1);
   var import_deprecated23 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/url-popover/index.mjs
   var import_i18n236 = __toESM(require_i18n(), 1);
-  var import_element402 = __toESM(require_element(), 1);
+  var import_element401 = __toESM(require_element(), 1);
   var import_components225 = __toESM(require_components(), 1);
   var import_deprecated22 = __toESM(require_deprecated(), 1);
 
@@ -117434,7 +117365,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/url-input/index.mjs
   var import_a11y24 = __toESM(require_a11y(), 1);
   var import_i18n234 = __toESM(require_i18n(), 1);
-  var import_element401 = __toESM(require_element(), 1);
+  var import_element400 = __toESM(require_element(), 1);
   var import_keycodes24 = __toESM(require_keycodes(), 1);
   var import_components223 = __toESM(require_components(), 1);
   var import_compose135 = __toESM(require_compose(), 1);
@@ -117477,19 +117408,19 @@ If there's a particular need for this, please submit a feature request at https:
     const instanceId = (0, import_compose135.useInstanceId)(URLInput);
     const { getSettings: getSettings9 } = (0, import_data160.useSelect)(store);
     const debouncedSpeak = (0, import_compose135.useDebounce)(import_a11y24.speak, 500);
-    const [suggestions, setSuggestions] = (0, import_element401.useState)(
+    const [suggestions, setSuggestions] = (0, import_element400.useState)(
       []
     );
-    const [suggestionsValue, setSuggestionsValue] = (0, import_element401.useState)(
+    const [suggestionsValue, setSuggestionsValue] = (0, import_element400.useState)(
       null
     );
-    const [selectedSuggestion, setSelectedSuggestion] = (0, import_element401.useState)(null);
-    const [isSuggestionsListOpen, setIsSuggestionsListOpen] = (0, import_element401.useState)(false);
-    const [isLoading, setIsLoading] = (0, import_element401.useState)(false);
-    const [isComposing, setIsComposing] = (0, import_element401.useState)(false);
-    const fallbackInputRef = (0, import_element401.useRef)(null);
-    const suggestionNodesRef = (0, import_element401.useRef)([]);
-    const suggestionsRequestRef = (0, import_element401.useRef)(
+    const [selectedSuggestion, setSelectedSuggestion] = (0, import_element400.useState)(null);
+    const [isSuggestionsListOpen, setIsSuggestionsListOpen] = (0, import_element400.useState)(false);
+    const [isLoading, setIsLoading] = (0, import_element400.useState)(false);
+    const [isComposing, setIsComposing] = (0, import_element400.useState)(false);
+    const fallbackInputRef = (0, import_element400.useRef)(null);
+    const suggestionNodesRef = (0, import_element400.useRef)([]);
+    const suggestionsRequestRef = (0, import_element400.useRef)(
       null
     );
     const controlInputRef = inputRef ?? fallbackInputRef;
@@ -117556,7 +117487,7 @@ If there's a particular need for this, please submit a feature request at https:
       });
     });
     const debouncedUpdateSuggestions = (0, import_compose135.useDebounce)(updateSuggestions, 200);
-    (0, import_element401.useEffect)(() => {
+    (0, import_element400.useEffect)(() => {
       if (!disableSuggestions && !isComposing && (value.length || showInitialSuggestions)) {
         debouncedUpdateSuggestions(value);
       }
@@ -117567,12 +117498,12 @@ If there's a particular need for this, please submit a feature request at https:
       showInitialSuggestions,
       debouncedUpdateSuggestions
     ]);
-    (0, import_element401.useEffect)(() => {
+    (0, import_element400.useEffect)(() => {
       if (!showSuggestions) {
         setIsSuggestionsListOpen(false);
       }
     }, [showSuggestions]);
-    (0, import_element401.useEffect)(() => {
+    (0, import_element400.useEffect)(() => {
       if (showSuggestions && selectedSuggestion !== null) {
         suggestionNodesRef.current[selectedSuggestion]?.scrollIntoView({
           behavior: "instant",
@@ -117581,7 +117512,7 @@ If there's a particular need for this, please submit a feature request at https:
         });
       }
     }, [showSuggestions, selectedSuggestion]);
-    (0, import_element401.useEffect)(() => {
+    (0, import_element400.useEffect)(() => {
       return () => {
         suggestionsRequestRef.current?.cancel?.();
         suggestionsRequestRef.current = null;
@@ -117731,7 +117662,7 @@ If there's a particular need for this, please submit a feature request at https:
     markWhenOptional,
     renderControl
   }) {
-    const [isValidated, setIsValidated] = (0, import_element401.useState)(
+    const [isValidated, setIsValidated] = (0, import_element400.useState)(
       customValidity !== void 0
     );
     if (customValidity !== void 0 && !isValidated) {
@@ -117881,7 +117812,7 @@ If there's a particular need for this, please submit a feature request at https:
     import_components225.privateApis
   );
   var DEFAULT_PLACEMENT = "bottom";
-  var URLPopover = (0, import_element402.forwardRef)(
+  var URLPopover = (0, import_element401.forwardRef)(
     ({
       additionalControls,
       children,
@@ -117907,7 +117838,7 @@ If there's a particular need for this, please submit a feature request at https:
         computedPlacement = __experimentalPopoverLegacyPositionToPlacement(position);
       }
       computedPlacement = computedPlacement || DEFAULT_PLACEMENT;
-      const [isSettingsExpanded, setIsSettingsExpanded] = (0, import_element402.useState)(false);
+      const [isSettingsExpanded, setIsSettingsExpanded] = (0, import_element401.useState)(false);
       const showSettings = !!renderSettings && isSettingsExpanded;
       const toggleSettingsVisibility = () => {
         setIsSettingsExpanded(!isSettingsExpanded);
@@ -117993,10 +117924,10 @@ If there's a particular need for this, please submit a feature request at https:
     onChangeSrc,
     onSelectURL
   }) => {
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element403.useState)(
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element402.useState)(
       null
     );
-    const [isURLInputVisible, setIsURLInputVisible] = (0, import_element403.useState)(false);
+    const [isURLInputVisible, setIsURLInputVisible] = (0, import_element402.useState)(false);
     const openURLInput = () => {
       setIsURLInputVisible(true);
     };
@@ -118079,11 +118010,11 @@ If there's a particular need for this, please submit a feature request at https:
         allowedMimeTypes: settings3.allowedMimeTypes
       };
     }, []);
-    const [src, setSrc] = (0, import_element403.useState)("");
-    (0, import_element403.useEffect)(() => {
+    const [src, setSrc] = (0, import_element402.useState)("");
+    (0, import_element402.useEffect)(() => {
       setSrc(value?.src ?? "");
     }, [value?.src]);
-    const computedAccept = (0, import_element403.useMemo)(
+    const computedAccept = (0, import_element402.useMemo)(
       () => getComputedAcceptAttribute(
         allowedTypes,
         allowedMimeTypes,
@@ -118465,14 +118396,14 @@ If there's a particular need for this, please submit a feature request at https:
   var panel_color_settings_default = PanelColorSettings;
 
   // packages/block-editor/build-module/components/plain-text/index.mjs
-  var import_element411 = __toESM(require_element(), 1);
+  var import_element410 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/editable-text/index.mjs
-  var import_element410 = __toESM(require_element(), 1);
+  var import_element409 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/rich-text/index.mjs
   var import_es67 = __toESM(require_es6(), 1);
-  var import_element409 = __toESM(require_element(), 1);
+  var import_element408 = __toESM(require_element(), 1);
   var import_data163 = __toESM(require_data(), 1);
   var import_compose141 = __toESM(require_compose(), 1);
   var import_rich_text21 = __toESM(require_rich_text(), 1);
@@ -118481,7 +118412,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n238 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/rich-text/use-mark-persistent.mjs
-  var import_element404 = __toESM(require_element(), 1);
+  var import_element403 = __toESM(require_element(), 1);
   var import_compose136 = __toESM(require_compose(), 1);
   var TYPING_TIMEOUT = 1e3;
   function getChangeType(previous, next) {
@@ -118493,13 +118424,13 @@ If there's a particular need for this, please submit a feature request at https:
   function useMarkPersistent({ html, value, onMarkPersistent }) {
     const { text } = value;
     const hasActiveFormats = !!value.activeFormats?.length;
-    const previousRef = (0, import_element404.useRef)();
+    const previousRef = (0, import_element403.useRef)();
     const markPersistent = (0, import_compose136.useEvent)(onMarkPersistent);
     const markPersistentDebounced = (0, import_compose136.useDebounce)(
       markPersistent,
       TYPING_TIMEOUT
     );
-    (0, import_element404.useLayoutEffect)(() => {
+    (0, import_element403.useLayoutEffect)(() => {
       const previous = previousRef.current;
       const next = { html, text, hasActiveFormats };
       if (!previous) {
@@ -118527,7 +118458,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/index.mjs
-  var import_element405 = __toESM(require_element(), 1);
+  var import_element404 = __toESM(require_element(), 1);
   var import_compose139 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/before-input-rules.mjs
@@ -119061,15 +118992,15 @@ If there's a particular need for this, please submit a feature request at https:
     firefox_compat_default
   ];
   function useEventListeners(props) {
-    const propsRef = (0, import_element405.useRef)(props);
-    (0, import_element405.useInsertionEffect)(() => {
+    const propsRef = (0, import_element404.useRef)(props);
+    (0, import_element404.useInsertionEffect)(() => {
       propsRef.current = props;
     });
-    const refEffects = (0, import_element405.useMemo)(
+    const refEffects = (0, import_element404.useMemo)(
       () => allEventListeners.map((refEffect) => refEffect(propsRef)),
       [propsRef]
     );
-    const dropEffect = (0, import_element405.useMemo)(() => drop(propsRef), [propsRef]);
+    const dropEffect = (0, import_element404.useMemo)(() => drop(propsRef), [propsRef]);
     return (0, import_compose139.useRefEffect)(
       (element) => {
         const cleanups = [
@@ -119085,7 +119016,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/rich-text/content.mjs
-  var import_element406 = __toESM(require_element(), 1);
+  var import_element405 = __toESM(require_element(), 1);
   var import_blocks90 = __toESM(require_blocks(), 1);
   var import_deprecated24 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime623 = __toESM(require_jsx_runtime(), 1);
@@ -119115,18 +119046,18 @@ If there's a particular need for this, please submit a feature request at https:
     format: format7,
     ...props
   }) {
-    value = /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(import_element406.RawHTML, { children: valueToHTMLString(value, multiline) });
+    value = /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(import_element405.RawHTML, { children: valueToHTMLString(value, multiline) });
     return Tag ? /* @__PURE__ */ (0, import_jsx_runtime623.jsx)(Tag, { ...props, children: value }) : value;
   }
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.mjs
-  var import_element408 = __toESM(require_element(), 1);
+  var import_element407 = __toESM(require_element(), 1);
   var import_blocks91 = __toESM(require_blocks(), 1);
   var import_rich_text20 = __toESM(require_rich_text(), 1);
   var import_deprecated26 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/rich-text/multiline.mjs
-  var import_element407 = __toESM(require_element(), 1);
+  var import_element406 = __toESM(require_element(), 1);
   var import_deprecated25 = __toESM(require_deprecated(), 1);
   var import_data162 = __toESM(require_data(), 1);
   var import_keycodes27 = __toESM(require_keycodes(), 1);
@@ -119183,8 +119114,8 @@ If there's a particular need for this, please submit a feature request at https:
     } = lineProps;
     const { clientId } = useBlockEditContext();
     const { selectionChange: selectionChange2 } = (0, import_data162.useDispatch)(store);
-    const latestRef = (0, import_element407.useRef)();
-    (0, import_element407.useInsertionEffect)(() => {
+    const latestRef = (0, import_element406.useRef)();
+    (0, import_element406.useInsertionEffect)(() => {
       latestRef.current = { ...lineProps, clientId };
     });
     const ref = useEnterRef(latestRef);
@@ -119284,12 +119215,12 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }) });
   }
-  var multiline_default = (0, import_element407.forwardRef)(RichTextMultiline);
+  var multiline_default = (0, import_element406.forwardRef)(RichTextMultiline);
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.mjs
   var import_jsx_runtime625 = __toESM(require_jsx_runtime(), 1);
   function withDeprecations(Component4) {
-    return (0, import_element408.forwardRef)((props, ref) => {
+    return (0, import_element407.forwardRef)((props, ref) => {
       let value = props.value;
       let onChange = props.onChange;
       if (Array.isArray(value)) {
@@ -119386,16 +119317,16 @@ If there's a particular need for this, please submit a feature request at https:
     readOnly,
     ...props
   }, forwardedRef) {
-    const { supportsSplitting } = (0, import_element409.useContext)(PrivateBlockContext);
+    const { supportsSplitting } = (0, import_element408.useContext)(PrivateBlockContext);
     const instanceId = (0, import_compose141.useInstanceId)(RichTextWrapper);
-    const anchorRef = (0, import_element409.useRef)();
-    const [anchorElement, setAnchorElement] = (0, import_element409.useState)(null);
+    const anchorRef = (0, import_element408.useRef)();
+    const [anchorElement, setAnchorElement] = (0, import_element408.useState)(null);
     const context = useBlockEditContext();
     const { clientId, isSelected: isBlockSelected2, name: blockName } = context;
     const isBlockMultiSelected2 = context[isMultiSelectedKey];
     const blockBindings = context[blockBindingsKey];
     const hasDefaultEditingMode = context[blockEditingModeKey] === "default";
-    const blockContext = (0, import_element409.useContext)(block_context_default);
+    const blockContext = (0, import_element408.useContext)(block_context_default);
     const registry = (0, import_data163.useRegistry)();
     const selector5 = (select3) => {
       if (!isBlockSelected2 && !isBlockMultiSelected2) {
@@ -119528,7 +119459,7 @@ If there's a particular need for this, please submit a feature request at https:
       disableFormats
     });
     const hasFormats = !adjustedAllowedFormats || adjustedAllowedFormats.length > 0;
-    (0, import_element409.useEffect)(() => {
+    (0, import_element408.useEffect)(() => {
       if (!identifier) {
         return;
       }
@@ -119547,7 +119478,7 @@ If there's a particular need for this, please submit a feature request at https:
       withoutInteractiveFormatting,
       shouldDisableEditing
     ]);
-    const onSelectionChange = (0, import_element409.useCallback)(
+    const onSelectionChange = (0, import_element408.useCallback)(
       (start2, end) => {
         const selection2 = {};
         const unset = start2 === void 0 && end === void 0;
@@ -119605,7 +119536,7 @@ If there's a particular need for this, please submit a feature request at https:
       __unstableDependencies: [tagName],
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element409.useMemo)(
+      __unstableFormatTypeHandlerContext: (0, import_element408.useMemo)(
         () => ({
           richTextIdentifier: identifier,
           blockClientId: clientId
@@ -119613,7 +119544,7 @@ If there's a particular need for this, please submit a feature request at https:
         [identifier, clientId]
       )
     });
-    (0, import_element409.useLayoutEffect)(() => {
+    (0, import_element408.useLayoutEffect)(() => {
       const element = anchorRef.current;
       if (!isSelected2 || element?.contentEditable !== "true") {
         return;
@@ -119633,7 +119564,7 @@ If there's a particular need for this, please submit a feature request at https:
         target.focus();
       }
     }, [selectionStart, selectionEnd, isSelected2]);
-    (0, import_element409.useLayoutEffect)(() => {
+    (0, import_element408.useLayoutEffect)(() => {
       if (crossBlockStart === void 0 && crossBlockEnd === void 0) {
         return;
       }
@@ -119679,7 +119610,7 @@ If there's a particular need for this, please submit a feature request at https:
       "aria-owns": ariaOwns,
       "aria-activedescendant": ariaActiveDescendant
     } = autocompleteProps;
-    (0, import_element409.useEffect)(() => {
+    (0, import_element408.useEffect)(() => {
       if (!isSelected2) {
         return;
       }
@@ -119721,8 +119652,8 @@ If there's a particular need for this, please submit a feature request at https:
       value,
       onMarkPersistent: __unstableMarkLastChangeAsPersistent2
     });
-    const [keyboardShortcuts] = (0, import_element409.useState)(() => /* @__PURE__ */ new Set());
-    const [inputEvents] = (0, import_element409.useState)(() => /* @__PURE__ */ new Set());
+    const [keyboardShortcuts] = (0, import_element408.useState)(() => /* @__PURE__ */ new Set());
+    const [inputEvents] = (0, import_element408.useState)(() => /* @__PURE__ */ new Set());
     function onFocus() {
       anchorRef.current?.focus();
     }
@@ -119812,9 +119743,9 @@ If there's a particular need for this, please submit a feature request at https:
       )
     ] });
   }
-  var ForwardedRichTextWrapper = (0, import_element409.forwardRef)(RichTextWrapper);
+  var ForwardedRichTextWrapper = (0, import_element408.forwardRef)(RichTextWrapper);
   var RichTextWithDeprecations = withDeprecations(ForwardedRichTextWrapper);
-  var PublicForwardedRichTextContainer = (0, import_element409.forwardRef)((props, ref) => {
+  var PublicForwardedRichTextContainer = (0, import_element408.forwardRef)((props, ref) => {
     const context = useBlockEditContext();
     const isPreviewMode = context[isPreviewModeKey];
     if (isPreviewMode) {
@@ -119866,7 +119797,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/editable-text/index.mjs
   var import_jsx_runtime628 = __toESM(require_jsx_runtime(), 1);
-  var EditableText = (0, import_element410.forwardRef)((props, ref) => {
+  var EditableText = (0, import_element409.forwardRef)((props, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime628.jsx)(rich_text_default, { ref, ...props, __unstableDisableFormats: true });
   });
   EditableText.Content = function Content4({
@@ -119880,7 +119811,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/plain-text/index.mjs
   var import_jsx_runtime629 = __toESM(require_jsx_runtime(), 1);
-  var PlainText = (0, import_element411.forwardRef)(({ __experimentalVersion, ...props }, ref) => {
+  var PlainText = (0, import_element410.forwardRef)(({ __experimentalVersion, ...props }, ref) => {
     if (__experimentalVersion === 2) {
       return /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(editable_text_default, { ref, ...props });
     }
@@ -119899,7 +119830,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/responsive-block-control/index.mjs
   var import_i18n240 = __toESM(require_i18n(), 1);
-  var import_element412 = __toESM(require_element(), 1);
+  var import_element411 = __toESM(require_element(), 1);
   var import_components229 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/responsive-block-control/label.mjs
@@ -119986,7 +119917,7 @@ If there's a particular need for this, please submit a feature request at https:
       defaultLabel2
     );
     const defaultResponsiveControls = () => {
-      return viewports.map((viewport) => /* @__PURE__ */ (0, import_jsx_runtime631.jsx)(import_element412.Fragment, { children: renderDefaultControl(
+      return viewports.map((viewport) => /* @__PURE__ */ (0, import_jsx_runtime631.jsx)(import_element411.Fragment, { children: renderDefaultControl(
         /* @__PURE__ */ (0, import_jsx_runtime631.jsx)(
           ResponsiveBlockControlLabel,
           {
@@ -120054,11 +119985,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/url-input/button.mjs
   var import_i18n241 = __toESM(require_i18n(), 1);
-  var import_element413 = __toESM(require_element(), 1);
+  var import_element412 = __toESM(require_element(), 1);
   var import_components231 = __toESM(require_components(), 1);
   var import_jsx_runtime633 = __toESM(require_jsx_runtime(), 1);
   function URLInputButton({ url, onChange }) {
-    const [expanded, toggleExpanded] = (0, import_element413.useReducer)(
+    const [expanded, toggleExpanded] = (0, import_element412.useReducer)(
       (isExpanded) => !isExpanded,
       false
     );
@@ -120119,7 +120050,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/url-popover/image-url-input-ui.mjs
   var import_i18n242 = __toESM(require_i18n(), 1);
-  var import_element414 = __toESM(require_element(), 1);
+  var import_element413 = __toESM(require_element(), 1);
   var import_dom78 = __toESM(require_dom(), 1);
   var import_components232 = __toESM(require_components(), 1);
   var import_url13 = __toESM(require_url(), 1);
@@ -120144,18 +120075,18 @@ If there's a particular need for this, please submit a feature request at https:
     onSetLightbox,
     resetLightbox
   }) => {
-    const [isOpen, setIsOpen] = (0, import_element414.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element414.useState)(
+    const [isOpen, setIsOpen] = (0, import_element413.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element413.useState)(
       null
     );
     const openLinkUI = () => {
       setIsOpen(true);
     };
-    const [isEditingLink, setIsEditingLink] = (0, import_element414.useState)(false);
-    const [urlInput, setUrlInput] = (0, import_element414.useState)(null);
-    const autocompleteRef = (0, import_element414.useRef)(null);
-    const wrapperRef = (0, import_element414.useRef)(void 0);
-    (0, import_element414.useEffect)(() => {
+    const [isEditingLink, setIsEditingLink] = (0, import_element413.useState)(false);
+    const [urlInput, setUrlInput] = (0, import_element413.useState)(null);
+    const autocompleteRef = (0, import_element413.useRef)(null);
+    const wrapperRef = (0, import_element413.useRef)(void 0);
+    (0, import_element413.useEffect)(() => {
       if (!wrapperRef.current) {
         return;
       }
@@ -120291,7 +120222,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: (0, import_i18n242.__)("Link relation"),
           value: rel ?? "",
           onChange: onSetLinkRel,
-          help: (0, import_element414.createInterpolateElement)(
+          help: (0, import_element413.createInterpolateElement)(
             (0, import_i18n242.__)(
               "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
             ),
@@ -120445,11 +120376,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/spacing-sizes-control/index.mjs
   var import_components235 = __toESM(require_components(), 1);
-  var import_element417 = __toESM(require_element(), 1);
+  var import_element416 = __toESM(require_element(), 1);
   var import_i18n246 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/spacing-sizes-control/hooks/use-spacing-sizes.mjs
-  var import_element415 = __toESM(require_element(), 1);
+  var import_element414 = __toESM(require_element(), 1);
   var import_i18n243 = __toESM(require_i18n(), 1);
   var EMPTY_ARRAY17 = [];
   var compare = new Intl.Collator("und", { numeric: true }).compare;
@@ -120468,7 +120399,7 @@ If there's a particular need for this, please submit a feature request at https:
     const customSizes = customSpacingSizes ?? EMPTY_ARRAY17;
     const themeSizes = themeSpacingSizes ?? EMPTY_ARRAY17;
     const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : EMPTY_ARRAY17;
-    return (0, import_element415.useMemo)(() => {
+    return (0, import_element414.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n243.__)("None"), slug: "0", size: 0 },
         ...customSizes,
@@ -120492,7 +120423,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/input-controls/spacing-input-control.mjs
-  var import_element416 = __toESM(require_element(), 1);
+  var import_element415 = __toESM(require_element(), 1);
   var import_data164 = __toESM(require_data(), 1);
   var import_i18n244 = __toESM(require_i18n(), 1);
   var import_components233 = __toESM(require_components(), 1);
@@ -120554,7 +120485,7 @@ If there's a particular need for this, please submit a feature request at https:
         "rem"
       ]
     });
-    const presets = (0, import_element416.useMemo)(() => {
+    const presets = (0, import_element415.useMemo)(() => {
       return spacingSizes?.map((preset) => ({
         name: preset.name,
         slug: preset.slug,
@@ -120789,7 +120720,7 @@ If there's a particular need for this, please submit a feature request at https:
     const inputValues = values || DEFAULT_VALUES;
     const hasOneSide = sides2?.length === 1;
     const hasOnlyAxialSides = sides2?.includes("horizontal") && sides2?.includes("vertical") && sides2?.length === 2;
-    const [view, setView] = (0, import_element417.useState)(getInitialView(inputValues, sides2));
+    const [view, setView] = (0, import_element416.useState)(getInitialView(inputValues, sides2));
     const toggleLinked = () => {
       setView(view === VIEWS.axial ? VIEWS.custom : VIEWS.axial);
     };
@@ -120881,7 +120812,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks108 = __toESM(require_blocks(), 1);
   var import_components262 = __toESM(require_components(), 1);
   var import_data185 = __toESM(require_data(), 1);
-  var import_element441 = __toESM(require_element(), 1);
+  var import_element440 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-inspector/edit-contents.mjs
   var import_components236 = __toESM(require_components(), 1);
@@ -120974,14 +120905,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data166 = __toESM(require_data(), 1);
   var import_i18n248 = __toESM(require_i18n(), 1);
   var import_components238 = __toESM(require_components(), 1);
-  var import_element418 = __toESM(require_element(), 1);
+  var import_element417 = __toESM(require_element(), 1);
   var import_jsx_runtime642 = __toESM(require_jsx_runtime(), 1);
   function SkipToSelectedBlock() {
     const selectedBlockClientId = (0, import_data166.useSelect)(
       (select3) => select3(store).getBlockSelectionStart(),
       []
     );
-    const ref = (0, import_element418.useRef)(void 0);
+    const ref = (0, import_element417.useRef)(void 0);
     useBlockElementRef(
       // An unset ID matches no block element.
       selectedBlockClientId,
@@ -121061,7 +120992,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.mjs
   var import_components258 = __toESM(require_components(), 1);
-  var import_element439 = __toESM(require_element(), 1);
+  var import_element438 = __toESM(require_element(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
   var import_data182 = __toESM(require_data(), 1);
 
@@ -121141,7 +121072,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/inspector-controls-tabs/styles-tab.mjs
   var import_i18n270 = __toESM(require_i18n(), 1);
   var import_data180 = __toESM(require_data(), 1);
-  var import_element437 = __toESM(require_element(), 1);
+  var import_element436 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/position-controls-panel.mjs
   var import_components242 = __toESM(require_components(), 1);
@@ -121247,19 +121178,19 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/elements.mjs
   var import_blocks100 = __toESM(require_blocks(), 1);
-  var import_element429 = __toESM(require_element(), 1);
+  var import_element428 = __toESM(require_element(), 1);
   var import_data175 = __toESM(require_data(), 1);
   var import_i18n261 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/color-panel.mjs
   var import_components245 = __toESM(require_components(), 1);
-  var import_element421 = __toESM(require_element(), 1);
+  var import_element420 = __toESM(require_element(), 1);
   var import_i18n256 = __toESM(require_i18n(), 1);
   var import_style_engine4 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/components/global-styles/color-gradient-dropdown-item.mjs
   var import_components244 = __toESM(require_components(), 1);
-  var import_element419 = __toESM(require_element(), 1);
+  var import_element418 = __toESM(require_element(), 1);
   var import_i18n254 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/inheritance/index.mjs
@@ -121481,7 +121412,7 @@ If there's a particular need for this, please submit a feature request at https:
     showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const popoverProps = useToolsPanelItemPopoverProps();
-    const colorGradientDropdownButtonRef = (0, import_element419.useRef)(void 0);
+    const colorGradientDropdownButtonRef = (0, import_element418.useRef)(void 0);
     const itemClassName = clsx_default("block-editor-color-gradient-item", className);
     const hasLocalOverride = showInheritanceLabelIndicators && hasValue3() && hasInheritedValue;
     const inheritanceProps = showInheritanceLabelIndicators ? getInheritanceProps(isPlaceholder, hasLocalOverride, itemClassName) : { className: itemClassName };
@@ -121584,7 +121515,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/hooks.mjs
-  var import_element420 = __toESM(require_element(), 1);
+  var import_element419 = __toESM(require_element(), 1);
   var import_data169 = __toESM(require_data(), 1);
   var import_blocks94 = __toESM(require_blocks(), 1);
   var import_i18n255 = __toESM(require_i18n(), 1);
@@ -121603,7 +121534,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [blockName, element]
     );
-    return (0, import_element420.useMemo)(() => {
+    return (0, import_element419.useMemo)(() => {
       const updatedSettings = { ...parentSettings };
       if (!supportedStyles.includes("fontSize")) {
         updatedSettings.typography = {
@@ -121741,7 +121672,7 @@ If there's a particular need for this, please submit a feature request at https:
     const themeColors = settings3?.color?.palette?.theme;
     const defaultColors = settings3?.color?.palette?.default;
     const shouldDisplayDefaultColors = settings3?.color?.defaultPalette;
-    return (0, import_element420.useMemo)(() => {
+    return (0, import_element419.useMemo)(() => {
       const result = [];
       if (themeColors && themeColors.length) {
         result.push({
@@ -121783,7 +121714,7 @@ If there's a particular need for this, please submit a feature request at https:
     const themeGradients = settings3?.color?.gradients?.theme;
     const defaultGradients = settings3?.color?.gradients?.default;
     const shouldDisplayDefaultGradients = settings3?.color?.defaultGradients;
-    return (0, import_element420.useMemo)(() => {
+    return (0, import_element419.useMemo)(() => {
       const result = [];
       if (themeGradients && themeGradients.length) {
         result.push({
@@ -121825,7 +121756,7 @@ If there's a particular need for this, please submit a feature request at https:
     const gradients = useGradientsPerOrigin(settings3);
     const areCustomSolidsEnabled = settings3?.color?.custom;
     const areCustomGradientsEnabled = settings3?.color?.customGradient;
-    const allColors = (0, import_element420.useMemo)(
+    const allColors = (0, import_element419.useMemo)(
       () => colors2.flatMap(({ colors: originColors }) => originColors),
       [colors2]
     );
@@ -122020,7 +121951,7 @@ If there's a particular need for this, please submit a feature request at https:
     const showCaptionPanel = useHasCaptionPanel(settings3);
     const showButtonPanel = useHasButtonPanel(settings3);
     const showHeadingPanel = useHasHeadingPanel(settings3);
-    const elements = (0, import_element421.useMemo)(
+    const elements = (0, import_element420.useMemo)(
       () => [
         {
           name: "caption",
@@ -122081,7 +122012,7 @@ If there's a particular need for this, please submit a feature request at https:
         showHeadingPanel
       ]
     );
-    const resetAllFilter = (0, import_element421.useCallback)(
+    const resetAllFilter = (0, import_element420.useCallback)(
       (previousValue) => {
         return {
           ...previousValue,
@@ -122331,14 +122262,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/inherited-value-context.mjs
-  var import_element423 = __toESM(require_element(), 1);
+  var import_element422 = __toESM(require_element(), 1);
   var import_data171 = __toESM(require_data(), 1);
   var import_blocks96 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/hooks/block-style-variation.mjs
   var import_blocks95 = __toESM(require_blocks(), 1);
   var import_data170 = __toESM(require_data(), 1);
-  var import_element422 = __toESM(require_element(), 1);
+  var import_element421 = __toESM(require_element(), 1);
   var import_jsx_runtime650 = __toESM(require_jsx_runtime(), 1);
   var { getVariationStyle: getVariationStyle3 } = unlock(privateApis);
   var VARIATION_PREFIX = "is-style-";
@@ -122381,7 +122312,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const { getBlockName: getBlockName2 } = (0, import_data170.useSelect)(store);
-    const overridesWithConfig = (0, import_element422.useMemo)(() => {
+    const overridesWithConfig = (0, import_element421.useMemo)(() => {
       if (!overrides?.length) {
         return;
       }
@@ -122465,7 +122396,7 @@ If there's a particular need for this, please submit a feature request at https:
         globalStyles: settings3[globalStylesDataKey]
       };
     }, []);
-    return (0, import_element422.useMemo)(() => {
+    return (0, import_element421.useMemo)(() => {
       const variationStyles = getVariationStyle3(
         {
           settings: globalSettings,
@@ -122505,7 +122436,7 @@ If there's a particular need for this, please submit a feature request at https:
       variation,
       clientId
     );
-    const variationStyles = (0, import_element422.useMemo)(() => {
+    const variationStyles = (0, import_element421.useMemo)(() => {
       if (!variation) {
         return;
       }
@@ -122562,7 +122493,7 @@ If there's a particular need for this, please submit a feature request at https:
         links: settings3[globalStylesLinksDataKey] ?? null
       };
     }, []);
-    return (0, import_element423.useMemo)(
+    return (0, import_element422.useMemo)(
       () => rawGlobalStylesData ? { styles: rawGlobalStylesData, _links: links ?? void 0 } : null,
       [rawGlobalStylesData, links]
     );
@@ -122581,7 +122512,7 @@ If there's a particular need for this, please submit a feature request at https:
     return levelAttribute || contextLevel || contextOwned.fallbackLevel;
   }
   function useContextHeadingLevel(blockName) {
-    const blockContext = (0, import_element423.useContext)(block_context_default);
+    const blockContext = (0, import_element422.useContext)(block_context_default);
     const contextKey = CONTEXT_HEADING_LEVEL_BLOCKS[blockName]?.contextKey;
     return contextKey ? blockContext[contextKey] : void 0;
   }
@@ -122652,7 +122583,7 @@ If there's a particular need for this, please submit a feature request at https:
       className
     );
     const globalStyles = useRawGlobalStyles();
-    return (0, import_element423.useMemo)(() => {
+    return (0, import_element422.useMemo)(() => {
       if (!blockName) {
         return { value: {}, sources: {} };
       }
@@ -122675,16 +122606,16 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/color.mjs
   var import_hooks10 = __toESM(require_hooks(), 1);
   var import_blocks99 = __toESM(require_blocks(), 1);
-  var import_element428 = __toESM(require_element(), 1);
+  var import_element427 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/hooks/background.mjs
   var import_blocks98 = __toESM(require_blocks(), 1);
   var import_data174 = __toESM(require_data(), 1);
-  var import_element427 = __toESM(require_element(), 1);
+  var import_element426 = __toESM(require_element(), 1);
   var import_i18n260 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/contrast-checker.mjs
-  var import_element424 = __toESM(require_element(), 1);
+  var import_element423 = __toESM(require_element(), 1);
   var import_data172 = __toESM(require_data(), 1);
   var import_blocks97 = __toESM(require_blocks(), 1);
   var import_a11y25 = __toESM(require_a11y(), 1);
@@ -122741,14 +122672,14 @@ If there's a particular need for this, please submit a feature request at https:
     messageOverride
   }) {
     const blockEl = useBlockElement(clientId);
-    const [colors2, setColors] = (0, import_element424.useReducer)(reducer2, {});
+    const [colors2, setColors] = (0, import_element423.useReducer)(reducer2, {});
     const blockType = (0, import_data172.useSelect)(
       (select3) => {
         return name && enabled ? select3(import_blocks97.store).getBlockType(name) : void 0;
       },
       [name, enabled]
     );
-    (0, import_element424.useLayoutEffect)(() => {
+    (0, import_element423.useLayoutEffect)(() => {
       if (!enabled || !blockEl || !blockType) {
         return;
       }
@@ -122758,7 +122689,7 @@ If there's a particular need for this, please submit a feature request at https:
         )
       );
     });
-    (0, import_element424.useLayoutEffect)(() => {
+    (0, import_element423.useLayoutEffect)(() => {
       if (!enabled || !blockEl || !blockType) {
         return;
       }
@@ -122782,7 +122713,7 @@ If there's a particular need for this, please submit a feature request at https:
       enableAlphaChecker: true
     }) : null;
     const speakMessage = warning9?.speakMessage;
-    (0, import_element424.useEffect)(() => {
+    (0, import_element423.useEffect)(() => {
       if (speakMessage) {
         (0, import_a11y25.speak)(speakMessage);
       }
@@ -122792,7 +122723,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/background-panel.mjs
   var import_components248 = __toESM(require_components(), 1);
-  var import_element426 = __toESM(require_element(), 1);
+  var import_element425 = __toESM(require_element(), 1);
   var import_i18n259 = __toESM(require_i18n(), 1);
   var import_style_engine5 = __toESM(require_style_engine(), 1);
 
@@ -122845,7 +122776,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n258 = __toESM(require_i18n(), 1);
   var import_notices12 = __toESM(require_notices(), 1);
   var import_url14 = __toESM(require_url(), 1);
-  var import_element425 = __toESM(require_element(), 1);
+  var import_element424 = __toESM(require_element(), 1);
   var import_data173 = __toESM(require_data(), 1);
   var import_dom79 = __toESM(require_dom(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
@@ -122897,7 +122828,7 @@ If there's a particular need for this, please submit a feature request at https:
     onToggleCallback = noop23
   }) {
     const { isOpen, ...restToggleProps } = toggleProps;
-    (0, import_element425.useEffect)(() => {
+    (0, import_element424.useEffect)(() => {
       if (typeof isOpen !== "undefined") {
         onToggleCallback(isOpen);
       }
@@ -123032,7 +122963,7 @@ If there's a particular need for this, please submit a feature request at https:
     defaultValues,
     containerRef
   }) {
-    const [isUploading, setIsUploading] = (0, import_element425.useState)(false);
+    const [isUploading, setIsUploading] = (0, import_element424.useState)(false);
     const { getSettings: getSettings9 } = (0, import_data173.useSelect)(store);
     const { id, title, url } = style?.background?.backgroundImage || {
       ...inheritedValue?.background?.backgroundImage
@@ -123362,7 +123293,7 @@ If there's a particular need for this, please submit a feature request at https:
         _links: _settings[globalStylesLinksDataKey]
       };
     }, []);
-    const resolvedInheritedValue = (0, import_element425.useMemo)(() => {
+    const resolvedInheritedValue = (0, import_element424.useMemo)(() => {
       const resolvedValues = {
         background: {}
       };
@@ -123395,8 +123326,8 @@ If there's a particular need for this, please submit a feature request at https:
     const hasLocalOverride = showInheritanceLabelIndicators && localHasImageValue && hasBackgroundImageValue(resolvedInheritedValue);
     const imageValue = value?.background?.backgroundImage || inheritedValue?.background?.backgroundImage;
     const shouldShowBackgroundImageControls = hasImageValue && "none" !== imageValue && (settings3?.background?.backgroundSize || settings3?.background?.backgroundPosition || settings3?.background?.backgroundRepeat);
-    const [isDropDownOpen, setIsDropDownOpen] = (0, import_element425.useState)(false);
-    const containerRef = (0, import_element425.useRef)();
+    const [isDropDownOpen, setIsDropDownOpen] = (0, import_element424.useState)(false);
+    const containerRef = (0, import_element424.useRef)();
     return /* @__PURE__ */ (0, import_jsx_runtime652.jsx)(
       "div",
       {
@@ -123600,7 +123531,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) : (0, import_i18n259.__)(
       "The gradient clips the background to the text, including any color or image."
     );
-    const resetAllFilter = (0, import_element426.useCallback)(
+    const resetAllFilter = (0, import_element425.useCallback)(
       (previousValue) => {
         const clearsColorBackground = showBackgroundColorControl;
         const clearsColorGradient = hasBackgroundGradientControl || showLegacyColorGradientControl;
@@ -123992,7 +123923,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function BackgroundInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element427.useCallback)(
+    const attributesResetAllFilter = (0, import_element426.useCallback)(
       (attributes) => backgroundResetAllFilter(attributes, resetAllFilter),
       [resetAllFilter]
     );
@@ -124269,7 +124200,7 @@ If there's a particular need for this, please submit a feature request at https:
       "color.palette.theme",
       "color.palette.default"
     );
-    const colors2 = (0, import_element428.useMemo)(
+    const colors2 = (0, import_element427.useMemo)(
       () => [
         ...userPalette || [],
         ...themePalette || [],
@@ -124358,7 +124289,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/elements.mjs
   var import_jsx_runtime655 = __toESM(require_jsx_runtime(), 1);
   function ElementsInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element429.useCallback)(
+    const attributesResetAllFilter = (0, import_element428.useCallback)(
       (attributes) => {
         const updatedStyle = resetAllFilter(attributes.style);
         return {
@@ -124407,7 +124338,7 @@ If there's a particular need for this, please submit a feature request at https:
       selectedState
     );
     const isStateSelected = !isDefaultBlockStyleState2(selectedState);
-    const value = (0, import_element429.useMemo)(() => {
+    const value = (0, import_element428.useMemo)(() => {
       if (isStateSelected) {
         return getStyleForState2(style, selectedState);
       }
@@ -124459,18 +124390,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/typography.mjs
   var import_blocks106 = __toESM(require_blocks(), 1);
-  var import_element436 = __toESM(require_element(), 1);
+  var import_element435 = __toESM(require_element(), 1);
   var import_data179 = __toESM(require_data(), 1);
   var import_i18n269 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/typography-panel.mjs
   var import_components252 = __toESM(require_components(), 1);
   var import_i18n265 = __toESM(require_i18n(), 1);
-  var import_element432 = __toESM(require_element(), 1);
+  var import_element431 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/text-alignment-control/index.mjs
   var import_i18n262 = __toESM(require_i18n(), 1);
-  var import_element430 = __toESM(require_element(), 1);
+  var import_element429 = __toESM(require_element(), 1);
   var import_components249 = __toESM(require_components(), 1);
   var import_jsx_runtime656 = __toESM(require_jsx_runtime(), 1);
   var TEXT_ALIGNMENT_OPTIONS = [
@@ -124502,7 +124433,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     options = DEFAULT_OPTIONS
   }) {
-    const validOptions = (0, import_element430.useMemo)(
+    const validOptions = (0, import_element429.useMemo)(
       () => TEXT_ALIGNMENT_OPTIONS.filter(
         (option) => options.includes(option.value)
       ),
@@ -124639,7 +124570,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/global-styles/text-shadow-panel.mjs
   var import_i18n264 = __toESM(require_i18n(), 1);
   var import_components251 = __toESM(require_components(), 1);
-  var import_element431 = __toESM(require_element(), 1);
+  var import_element430 = __toESM(require_element(), 1);
   var import_jsx_runtime658 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY18 = [];
   var PRESETS_SELECT_THRESHOLD = 7;
@@ -124700,7 +124631,7 @@ If there's a particular need for this, please submit a feature request at https:
       "typography.textShadowPresets.theme",
       "typography.textShadowPresets.custom"
     );
-    const presets = (0, import_element431.useMemo)(
+    const presets = (0, import_element430.useMemo)(
       () => [
         ...defaultPresetsEnabled && defaultPresets || EMPTY_ARRAY18,
         ...themePresets || EMPTY_ARRAY18,
@@ -124801,7 +124732,7 @@ If there's a particular need for this, please submit a feature request at https:
     onToggle,
     isOpen
   }) {
-    const buttonRef = (0, import_element431.useRef)(void 0);
+    const buttonRef = (0, import_element430.useRef)(void 0);
     return /* @__PURE__ */ (0, import_jsx_runtime658.jsxs)(import_jsx_runtime658.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime658.jsx)(
         import_components251.Button,
@@ -125036,7 +124967,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function NoticeForControl({ label, isShownByDefault, children }) {
-    const { menuItems } = (0, import_element432.useContext)(import_components252.__experimentalToolsPanelContext);
+    const { menuItems } = (0, import_element431.useContext)(import_components252.__experimentalToolsPanelContext);
     const isShown = isShownByDefault || !!menuItems?.optional?.[label];
     return isShown ? children : null;
   }
@@ -125164,7 +125095,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const fontFamily = decodeValue(value?.typography?.fontFamily) ?? inheritedFontFamily;
     const isFontFamilyPlaceholder = !hasValue(value?.typography?.fontFamily) && hasValue(inheritedFontFamily);
-    const { fontFamilies, fontFamilyFaces } = (0, import_element432.useMemo)(() => {
+    const { fontFamilies, fontFamilyFaces } = (0, import_element431.useMemo)(() => {
       return getMergedFontFamiliesAndFontFamilyFaces(settings3, fontFamily);
     }, [settings3, fontFamily]);
     const setFontFamily = (newValue) => {
@@ -125277,7 +125208,7 @@ If there's a particular need for this, please submit a feature request at https:
     const fontStyle = decodeValue(value?.typography?.fontStyle) ?? inheritedFontStyle;
     const fontWeight = decodeValue(value?.typography?.fontWeight) ?? inheritedFontWeight;
     const isFontAppearancePlaceholder = !hasValue(value?.typography?.fontStyle) && !hasValue(value?.typography?.fontWeight) && (hasValue(inheritedFontStyle) || hasValue(inheritedFontWeight));
-    const setFontAppearance = (0, import_element432.useCallback)(
+    const setFontAppearance = (0, import_element431.useCallback)(
       ({ fontStyle: newFontStyle, fontWeight: newFontWeight }) => {
         if (newFontStyle !== fontStyle || newFontWeight !== fontWeight) {
           onChange({
@@ -125292,7 +125223,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [fontStyle, fontWeight, onChange, value]
     );
-    const setFontAppearanceWithInheritedCommit = (0, import_element432.useCallback)(
+    const setFontAppearanceWithInheritedCommit = (0, import_element431.useCallback)(
       (next) => {
         if (isFontAppearancePlaceholder && next.fontStyle === fontStyle && next.fontWeight === fontWeight) {
           onChange({
@@ -125317,7 +125248,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     const hasFontAppearance = () => hasValue(value?.typography?.fontStyle) || hasValue(value?.typography?.fontWeight);
-    const resetFontAppearance = (0, import_element432.useCallback)(() => {
+    const resetFontAppearance = (0, import_element431.useCallback)(() => {
       setFontAppearance({});
     }, [setFontAppearance]);
     const hasLineHeightEnabled = useHasLineHeightControl(settings3);
@@ -125516,7 +125447,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const hasTextShadow = () => hasValue(value?.typography?.textShadow);
     const resetTextShadow = () => setTextShadow(void 0);
-    const resetAllFilter = (0, import_element432.useCallback)(
+    const resetAllFilter = (0, import_element431.useCallback)(
       (previousValue) => {
         const clearsTextGradient = hasTextGradientEnabled && previousValue?.background?.backgroundClip === "text";
         const background = clearsTextGradient ? {
@@ -126154,7 +126085,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-editing-mode/index.mjs
   var import_data176 = __toESM(require_data(), 1);
-  var import_element433 = __toESM(require_element(), 1);
+  var import_element432 = __toESM(require_element(), 1);
   function useBlockEditingMode(mode2) {
     const context = useBlockEditContext();
     const { clientId = "" } = context;
@@ -126166,7 +126097,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [clientId]
     );
-    (0, import_element433.useEffect)(() => {
+    (0, import_element432.useEffect)(() => {
       if (!mode2) {
         return;
       }
@@ -126329,7 +126260,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/fit-text.mjs
   var import_hooks14 = __toESM(require_hooks(), 1);
   var import_blocks105 = __toESM(require_blocks(), 1);
-  var import_element435 = __toESM(require_element(), 1);
+  var import_element434 = __toESM(require_element(), 1);
   var import_data178 = __toESM(require_data(), 1);
   var import_i18n268 = __toESM(require_i18n(), 1);
   var import_components255 = __toESM(require_components(), 1);
@@ -126388,7 +126319,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/fit-text-size-warning/index.mjs
-  var import_element434 = __toESM(require_element(), 1);
+  var import_element433 = __toESM(require_element(), 1);
   var import_i18n267 = __toESM(require_i18n(), 1);
   var import_components254 = __toESM(require_components(), 1);
   var import_a11y26 = __toESM(require_a11y(), 1);
@@ -126397,7 +126328,7 @@ If there's a particular need for this, please submit a feature request at https:
     const message2 = (0, import_i18n267.__)(
       "The text may be too small to read. Consider using a larger container or less text."
     );
-    (0, import_element434.useEffect)(() => {
+    (0, import_element433.useEffect)(() => {
       (0, import_a11y26.speak)(message2);
     }, [message2]);
     return /* @__PURE__ */ (0, import_jsx_runtime663.jsx)("div", { className: "block-editor-fit-text-size-warning", children: /* @__PURE__ */ (0, import_jsx_runtime663.jsx)(
@@ -126434,7 +126365,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useFitText({ fitText, name, clientId }) {
-    const [fontSize, setFontSize] = (0, import_element435.useState)(
+    const [fontSize, setFontSize] = (0, import_element434.useState)(
       null
     );
     const hasFitTextSupport2 = (0, import_blocks105.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
@@ -126456,7 +126387,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId, hasFitTextSupport2, fitText]
     );
-    const applyFitText = (0, import_element435.useCallback)(() => {
+    const applyFitText = (0, import_element434.useCallback)(() => {
       if (!blockElement || !hasFitTextSupport2 || !fitText) {
         return;
       }
@@ -126470,7 +126401,7 @@ If there's a particular need for this, please submit a feature request at https:
       const optimalSize = optimizeFitText(blockElement, applyFontSizeStyle);
       setFontSize(optimalSize);
     }, [blockElement, hasFitTextSupport2, fitText]);
-    (0, import_element435.useEffect)(() => {
+    (0, import_element434.useEffect)(() => {
       if (!fitText || !blockElement || !clientId || !hasFitTextSupport2 || blockMode === "html") {
         return;
       }
@@ -126518,7 +126449,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasFitTextSupport2,
       blockMode
     ]);
-    (0, import_element435.useEffect)(() => {
+    (0, import_element434.useEffect)(() => {
       if (fitText && blockElement && hasFitTextSupport2 && blockMode !== "html") {
         const frameId = window.requestAnimationFrame(() => {
           if (blockElement) {
@@ -126784,7 +126715,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function TypographyInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element436.useCallback)(
+    const attributesResetAllFilter = (0, import_element435.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle(attributes);
         const updatedStyle = resetAllFilter(existingStyle);
@@ -126862,7 +126793,7 @@ If there's a particular need for this, please submit a feature request at https:
       className,
       selectedState
     );
-    const baseValue = (0, import_element436.useMemo)(
+    const baseValue = (0, import_element435.useMemo)(
       () => attributesToStyle({
         style,
         fontFamily,
@@ -126882,7 +126813,7 @@ If there's a particular need for this, please submit a feature request at https:
         gradient
       ]
     );
-    const value = (0, import_element436.useMemo)(
+    const value = (0, import_element435.useMemo)(
       () => isStateSelected ? getStyleForState2(style, selectedState) : baseValue,
       [isStateSelected, selectedState, style, baseValue]
     );
@@ -126981,11 +126912,11 @@ If there's a particular need for this, please submit a feature request at https:
     const setAttributes = (newAttributes) => {
       updateBlockAttributes2(clientId, newAttributes);
     };
-    const typographySettings = (0, import_element437.useMemo)(
+    const typographySettings = (0, import_element436.useMemo)(
       () => ({ ...settings3, typography: {} }),
       [settings3]
     );
-    const backgroundSettings = (0, import_element437.useMemo)(
+    const backgroundSettings = (0, import_element436.useMemo)(
       () => ({
         ...settings3,
         background: {
@@ -127120,7 +127051,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks107 = __toESM(require_blocks(), 1);
   var import_data181 = __toESM(require_data(), 1);
   var import_components256 = __toESM(require_components(), 1);
-  var import_element438 = __toESM(require_element(), 1);
+  var import_element437 = __toESM(require_element(), 1);
   var import_compose144 = __toESM(require_compose(), 1);
   var import_jsx_runtime667 = __toESM(require_jsx_runtime(), 1);
   function BlockQuickNavigation({
@@ -127193,7 +127124,7 @@ If there's a particular need for this, please submit a feature request at https:
     const clearBlockHighlightOnUnmount = (0, import_compose144.useEvent)(
       () => toggleBlockHighlight2(clientId, false)
     );
-    (0, import_element438.useEffect)(
+    (0, import_element437.useEffect)(
       // React ignores the value the cleanup returns.
       () => (() => clearBlockHighlightOnUnmount()),
       [clearBlockHighlightOnUnmount]
@@ -127260,7 +127191,7 @@ If there's a particular need for this, please submit a feature request at https:
     isSectionBlock: isSectionBlock2,
     contentClientIds
   }) {
-    const listViewRef = (0, import_element439.useRef)(null);
+    const listViewRef = (0, import_element438.useRef)(null);
     const showIconLabels = (0, import_data182.useSelect)((select3) => {
       return select3(import_preferences4.store).get("core", "showIconLabels");
     }, []);
@@ -127269,11 +127200,11 @@ If there's a particular need for this, please submit a feature request at https:
         select3(store)
       ).getRequestedInspectorTab()
     }));
-    const [selectedTabId, setSelectedTabId] = (0, import_element439.useState)(
+    const [selectedTabId, setSelectedTabId] = (0, import_element438.useState)(
       () => requestedTab?.tabName ?? tabs[0]?.name
     );
-    const hasUserSelectionRef = (0, import_element439.useRef)(false);
-    const isProgrammaticSwitchRef = (0, import_element439.useRef)(false);
+    const hasUserSelectionRef = (0, import_element438.useRef)(false);
+    const isProgrammaticSwitchRef = (0, import_element438.useRef)(false);
     const {
       __unstableSetOpenListViewPanel: setOpenListViewPanel,
       __unstableIncrementListViewExpandRevision: incrementListViewExpandRevision,
@@ -127282,10 +127213,10 @@ If there's a particular need for this, please submit a feature request at https:
     const { clearRequestedInspectorTab: clearRequestedInspectorTab2 } = unlock(
       (0, import_data182.useDispatch)(store)
     );
-    (0, import_element439.useEffect)(() => {
+    (0, import_element438.useEffect)(() => {
       hasUserSelectionRef.current = false;
     }, [clientId]);
-    (0, import_element439.useEffect)(() => {
+    (0, import_element438.useEffect)(() => {
       if (!requestedTab) {
         return;
       }
@@ -127303,7 +127234,7 @@ If there's a particular need for this, please submit a feature request at https:
       incrementListViewExpandRevision,
       clearRequestedInspectorTab2
     ]);
-    (0, import_element439.useEffect)(() => {
+    (0, import_element438.useEffect)(() => {
       if (selectedTabId === TAB_LIST_VIEW.name && !hasUserSelectionRef.current) {
         setAllListViewPanelsOpen();
         incrementListViewExpandRevision();
@@ -127314,7 +127245,7 @@ If there's a particular need for this, please submit a feature request at https:
       setAllListViewPanelsOpen,
       incrementListViewExpandRevision
     ]);
-    (0, import_element439.useEffect)(() => {
+    (0, import_element438.useEffect)(() => {
       if (!tabs?.length || hasUserSelectionRef.current && tabs.some((tab) => tab.name === selectedTabId)) {
         return;
       }
@@ -127516,7 +127447,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/hooks/states.mjs
-  var import_element440 = __toESM(require_element(), 1);
+  var import_element439 = __toESM(require_element(), 1);
   var import_i18n274 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/state-control.mjs
@@ -127782,7 +127713,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DEFAULT_STATE_VALUE4 = "default";
   var EMPTY_STATE_OPTIONS = [];
   function BlockStatesControl({ name, value, onChange, children }) {
-    const pseudoStateOptions = (0, import_element440.useMemo)(
+    const pseudoStateOptions = (0, import_element439.useMemo)(
       () => getPseudoStateOptions(name),
       [name]
     );
@@ -127803,12 +127734,12 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function BlockStateBadges({ name, value, isResponsiveEditing: isResponsiveEditing3 }) {
-    const pseudoStateOptions = (0, import_element440.useMemo)(
+    const pseudoStateOptions = (0, import_element439.useMemo)(
       () => getPseudoStateOptions(name),
       [name]
     );
     const [viewportSettings] = useSettings("viewport");
-    const deviceStateOptions = (0, import_element440.useMemo)(
+    const deviceStateOptions = (0, import_element439.useMemo)(
       () => getDeviceStateOptions(viewportSettings),
       [viewportSettings]
     );
@@ -128160,7 +128091,7 @@ If there's a particular need for this, please submit a feature request at https:
     isResponsiveEditing: isResponsiveEditing3,
     blockStatesEditingEnabled = true
   }) => {
-    const listViewRef = (0, import_element441.useRef)(null);
+    const listViewRef = (0, import_element440.useRef)(null);
     const hasMultipleTabs = availableTabs?.length > 1;
     const isEditingStyleState = hasViewportBlockStyleState(selectedBlockStyleState2) && isResponsiveEditing3 || hasPseudoBlockStyleState(selectedBlockStyleState2);
     const showStateBadges = blockEditingMode === "default" && isEditingStyleState;
@@ -128324,7 +128255,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inserter/library.mjs
   var import_data186 = __toESM(require_data(), 1);
-  var import_element442 = __toESM(require_element(), 1);
+  var import_element441 = __toESM(require_element(), 1);
   var import_jsx_runtime676 = __toESM(require_jsx_runtime(), 1);
   var noop24 = () => {
   };
@@ -128373,7 +128304,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var PrivateInserterLibrary = (0, import_element442.forwardRef)(InserterLibrary);
+  var PrivateInserterLibrary = (0, import_element441.forwardRef)(InserterLibrary);
   function PublicInserterLibrary(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime676.jsx)(
       PrivateInserterLibrary,
@@ -128384,7 +128315,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var library_default = (0, import_element442.forwardRef)(PublicInserterLibrary);
+  var library_default = (0, import_element441.forwardRef)(PublicInserterLibrary);
 
   // packages/block-editor/build-module/components/selection-scroll-into-view/index.mjs
   var import_deprecated30 = __toESM(require_deprecated(), 1);
@@ -128534,10 +128465,10 @@ If there's a particular need for this, please submit a feature request at https:
   var typewriter_default = TypewriterOrIEBypass;
 
   // packages/block-editor/build-module/components/recursion-provider/index.mjs
-  var import_element443 = __toESM(require_element(), 1);
+  var import_element442 = __toESM(require_element(), 1);
   var import_deprecated31 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime678 = __toESM(require_jsx_runtime(), 1);
-  var RenderedRefsContext = (0, import_element443.createContext)({});
+  var RenderedRefsContext = (0, import_element442.createContext)({});
   RenderedRefsContext.displayName = "RenderedRefsContext";
   function addToBlockType(renderedBlocks, blockName, uniqueId2) {
     const result = {
@@ -128548,17 +128479,17 @@ If there's a particular need for this, please submit a feature request at https:
     return result;
   }
   function RecursionProvider({ children, uniqueId: uniqueId2, blockName = "" }) {
-    const previouslyRenderedBlocks = (0, import_element443.useContext)(RenderedRefsContext);
+    const previouslyRenderedBlocks = (0, import_element442.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
-    const newRenderedBlocks = (0, import_element443.useMemo)(
+    const newRenderedBlocks = (0, import_element442.useMemo)(
       () => addToBlockType(previouslyRenderedBlocks, blockName, uniqueId2),
       [previouslyRenderedBlocks, blockName, uniqueId2]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(RenderedRefsContext.Provider, { value: newRenderedBlocks, children });
   }
   function useHasRecursion(uniqueId2, blockName = "") {
-    const previouslyRenderedBlocks = (0, import_element443.useContext)(RenderedRefsContext);
+    const previouslyRenderedBlocks = (0, import_element442.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
     return Boolean(previouslyRenderedBlocks[blockName]?.has(uniqueId2));
@@ -128581,7 +128512,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/publish-date-time-picker/index.mjs
   var import_components264 = __toESM(require_components(), 1);
   var import_i18n277 = __toESM(require_i18n(), 1);
-  var import_element444 = __toESM(require_element(), 1);
+  var import_element443 = __toESM(require_element(), 1);
   var import_date14 = __toESM(require_date(), 1);
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.mjs
@@ -128671,7 +128602,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(DatePickerComponent, { ...datePickerProps })
     ] });
   }
-  var PrivatePublishDateTimePicker = (0, import_element444.forwardRef)(PublishDateTimePicker);
+  var PrivatePublishDateTimePicker = (0, import_element443.forwardRef)(PublishDateTimePicker);
   function PublicPublishDateTimePicker(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime680.jsx)(
       PrivatePublishDateTimePicker,
@@ -128683,11 +128614,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var publish_date_time_picker_default = (0, import_element444.forwardRef)(PublicPublishDateTimePicker);
+  var publish_date_time_picker_default = (0, import_element443.forwardRef)(PublicPublishDateTimePicker);
 
   // packages/block-editor/build-module/components/tool-selector/index.mjs
   var import_deprecated32 = __toESM(require_deprecated(), 1);
-  var import_element445 = __toESM(require_element(), 1);
+  var import_element444 = __toESM(require_element(), 1);
   function ToolSelector() {
     (0, import_deprecated32.default)("wp.blockEditor.ToolSelector", {
       since: "6.9",
@@ -128695,7 +128626,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return null;
   }
-  var tool_selector_default = (0, import_element445.forwardRef)(ToolSelector);
+  var tool_selector_default = (0, import_element444.forwardRef)(ToolSelector);
 
   // packages/block-editor/build-module/hooks/utils.mjs
   var import_jsx_runtime681 = __toESM(require_jsx_runtime(), 1);
@@ -128777,8 +128708,8 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data187.useDispatch)(store)
     );
     const registry = (0, import_data187.useRegistry)();
-    const fallbackId = (0, import_element446.useId)();
-    (0, import_element446.useEffect)(() => {
+    const fallbackId = (0, import_element445.useId)();
+    (0, import_element445.useEffect)(() => {
       if (!css && !assets) {
         return;
       }
@@ -128971,7 +128902,7 @@ If there's a particular need for this, please submit a feature request at https:
       "typography.textShadowPresets.default",
       "typography.textShadowPresets.theme"
     );
-    const rawSettings = (0, import_element446.useMemo)(() => {
+    const rawSettings = (0, import_element445.useMemo)(() => {
       return {
         background: {
           backgroundImage,
@@ -129146,7 +129077,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function createBlockEditFilter(features) {
     features = features.map((settings3) => {
-      return { ...settings3, Edit: (0, import_element446.memo)(settings3.edit) };
+      return { ...settings3, Edit: (0, import_element445.memo)(settings3.edit) };
     });
     const withBlockEditHooks = (0, import_compose146.createHigherOrderComponent)(
       (OriginalBlockEdit) => function WithBlockEditHooks(props) {
@@ -129209,7 +129140,7 @@ If there's a particular need for this, please submit a feature request at https:
       nextAll[index3] = next;
       return nextAll;
     });
-    (0, import_element446.useEffect)(() => {
+    (0, import_element445.useEffect)(() => {
       setWrapperProps(wrapperProps);
       return () => {
         setWrapperProps(void 0);
@@ -129217,11 +129148,11 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return null;
   }
-  var BlockPropsPure = (0, import_element446.memo)(BlockProps);
+  var BlockPropsPure = (0, import_element445.memo)(BlockProps);
   function createBlockListBlockFilter(features) {
     const withBlockListBlockHooks = (0, import_compose146.createHigherOrderComponent)(
       (BlockListBlock2) => function WithBlockListBlockHooks(props) {
-        const [allWrapperProps, setAllWrapperProps] = (0, import_element446.useState)(Array(features.length).fill(void 0));
+        const [allWrapperProps, setAllWrapperProps] = (0, import_element445.useState)(Array(features.length).fill(void 0));
         return [
           ...features.map((feature, i) => {
             const {
@@ -129486,13 +129417,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
   var import_components271 = __toESM(require_components(), 1);
   var import_i18n280 = __toESM(require_i18n(), 1);
-  var import_element450 = __toESM(require_element(), 1);
+  var import_element449 = __toESM(require_element(), 1);
   var import_data190 = __toESM(require_data(), 1);
   var import_blocks113 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.mjs
   var import_components270 = __toESM(require_components(), 1);
-  var import_element449 = __toESM(require_element(), 1);
+  var import_element448 = __toESM(require_element(), 1);
   var import_i18n279 = __toESM(require_i18n(), 1);
   var import_data189 = __toESM(require_data(), 1);
 
@@ -129501,12 +129432,12 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data188 = __toESM(require_data(), 1);
   var import_components269 = __toESM(require_components(), 1);
   var import_i18n278 = __toESM(require_i18n(), 1);
-  var import_element448 = __toESM(require_element(), 1);
+  var import_element447 = __toESM(require_element(), 1);
   var import_compose148 = __toESM(require_compose(), 1);
   var import_a11y27 = __toESM(require_a11y(), 1);
 
   // packages/block-editor/build-module/components/block-manager/category.mjs
-  var import_element447 = __toESM(require_element(), 1);
+  var import_element446 = __toESM(require_element(), 1);
   var import_compose147 = __toESM(require_compose(), 1);
   var import_components268 = __toESM(require_components(), 1);
 
@@ -129548,7 +129479,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChange
   }) {
     const instanceId = (0, import_compose147.useInstanceId)(BlockManagerCategory);
-    const toggleVisible = (0, import_element447.useCallback)(
+    const toggleVisible = (0, import_element446.useCallback)(
       (blockType, nextIsChecked) => {
         if (nextIsChecked) {
           onChange([...selectedBlockTypes, blockType]);
@@ -129562,7 +129493,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [selectedBlockTypes, onChange]
     );
-    const toggleAllVisible = (0, import_element447.useCallback)(
+    const toggleAllVisible = (0, import_element446.useCallback)(
       (nextIsChecked) => {
         if (nextIsChecked) {
           onChange([
@@ -129636,7 +129567,7 @@ If there's a particular need for this, please submit a feature request at https:
     showSelectAll = true
   }) {
     const debouncedSpeak = (0, import_compose148.useDebounce)(import_a11y27.speak, 500);
-    const [search, setSearch] = (0, import_element448.useState)("");
+    const [search, setSearch] = (0, import_element447.useState)("");
     const { categories, isMatchingSearchTerm } = (0, import_data188.useSelect)((select3) => {
       return {
         categories: select3(import_blocks112.store).getCategories(),
@@ -129648,7 +129579,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const isIndeterminate = selectedBlockTypes.length > 0 && selectedBlockTypes.length !== blockTypes.length;
     const isAllChecked = blockTypes.length > 0 && selectedBlockTypes.length === blockTypes.length;
-    (0, import_element448.useEffect)(() => {
+    (0, import_element447.useEffect)(() => {
       if (!search) {
         return;
       }
@@ -129733,7 +129664,7 @@ If there's a particular need for this, please submit a feature request at https:
     selectedBlockTypes,
     onClose
   }) {
-    const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element449.useState)(selectedBlockTypes);
+    const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element448.useState)(selectedBlockTypes);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data189.useDispatch)(store);
     const handleSubmit = () => {
       const isFullySelected = currentSelectedBlockTypes.length === blockTypes.length;
@@ -129814,7 +129745,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
   var import_jsx_runtime687 = __toESM(require_jsx_runtime(), 1);
   function BlockAllowedBlocksControl({ clientId }) {
-    const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element450.useState)(false);
+    const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element449.useState)(false);
     const { blockTypes, selectedBlockNames } = (0, import_data190.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
@@ -130190,7 +130121,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/style.mjs
-  var import_element460 = __toESM(require_element(), 1);
+  var import_element459 = __toESM(require_element(), 1);
   var import_hooks28 = __toESM(require_hooks(), 1);
   var import_data195 = __toESM(require_data(), 1);
   var import_blocks122 = __toESM(require_blocks(), 1);
@@ -130200,7 +130131,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/border.mjs
   var import_blocks119 = __toESM(require_blocks(), 1);
   var import_components283 = __toESM(require_components(), 1);
-  var import_element457 = __toESM(require_element(), 1);
+  var import_element456 = __toESM(require_element(), 1);
   var import_hooks27 = __toESM(require_hooks(), 1);
   var import_data193 = __toESM(require_data(), 1);
 
@@ -130233,12 +130164,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/global-styles/dimensions-panel.mjs
   var import_i18n285 = __toESM(require_i18n(), 1);
   var import_components277 = __toESM(require_components(), 1);
-  var import_element452 = __toESM(require_element(), 1);
+  var import_element451 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/child-layout-control/index.mjs
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n283 = __toESM(require_i18n(), 1);
-  var import_element451 = __toESM(require_element(), 1);
+  var import_element450 = __toESM(require_element(), 1);
   var import_data192 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/grid/use-get-number-of-blocks-before-cell.mjs
@@ -130365,7 +130296,7 @@ If there's a particular need for this, please submit a feature request at https:
         flexSize: void 0
       });
     };
-    (0, import_element451.useEffect)(() => {
+    (0, import_element450.useEffect)(() => {
       if (isFlexSizeValue(selfStretch) && !flexSize) {
         onChange({
           ...childLayout,
@@ -130977,8 +130908,8 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     });
     const minimumMargin = -Infinity;
-    const [minMarginValue, setMinMarginValue] = (0, import_element452.useState)(minimumMargin);
-    const resetAllFilter = (0, import_element452.useCallback)((previousValue) => {
+    const [minMarginValue, setMinMarginValue] = (0, import_element451.useState)(minimumMargin);
+    const resetAllFilter = (0, import_element451.useCallback)((previousValue) => {
       return {
         ...previousValue,
         layout: cleanEmptyObject({
@@ -131599,18 +131530,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/border-panel.mjs
   var import_components279 = __toESM(require_components(), 1);
-  var import_element454 = __toESM(require_element(), 1);
+  var import_element453 = __toESM(require_element(), 1);
   var import_i18n287 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/shadow-panel-components.mjs
   var import_i18n286 = __toESM(require_i18n(), 1);
   var import_components278 = __toESM(require_components(), 1);
-  var import_element453 = __toESM(require_element(), 1);
+  var import_element452 = __toESM(require_element(), 1);
   var import_jsx_runtime694 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY20 = [];
   function ShadowPopoverContainer({ shadow, onShadowChange, settings: settings3 }) {
     const shadows = useShadowPresets(settings3);
-    const presets = (0, import_element453.useMemo)(() => {
+    const presets = (0, import_element452.useMemo)(() => {
       if (!shadows.length) {
         return shadows;
       }
@@ -131739,7 +131670,7 @@ If there's a particular need for this, please submit a feature request at https:
   function renderShadowToggle(shadow, onShadowChange, resetConfig) {
     const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
     return function ShadowToggle({ onToggle, isOpen }) {
-      const shadowButtonRef = (0, import_element453.useRef)(void 0);
+      const shadowButtonRef = (0, import_element452.useRef)(void 0);
       const toggleProps = {
         onClick: onToggle,
         className: clsx_default(
@@ -131789,7 +131720,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useShadowPresets(settings3) {
-    return (0, import_element453.useMemo)(() => {
+    return (0, import_element452.useMemo)(() => {
       if (!settings3?.shadow) {
         return EMPTY_ARRAY20;
       }
@@ -131887,7 +131818,7 @@ If there's a particular need for this, please submit a feature request at https:
     const colors2 = useColorsPerOrigin(settings3);
     const itemPopoverProps = useToolsPanelItemPopoverProps();
     const areCustomSolidsEnabled = settings3?.color?.custom;
-    const decodeValue = (0, import_element454.useCallback)(
+    const decodeValue = (0, import_element453.useCallback)(
       (rawValue) => getValueFromVariable({ settings: settings3 }, "", rawValue),
       [settings3]
     );
@@ -131905,7 +131836,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
       return colorObject ? "var:preset|color|" + colorObject.slug : colorValue;
     };
-    const decodeBorder = (0, import_element454.useCallback)(
+    const decodeBorder = (0, import_element453.useCallback)(
       (source) => {
         if (!source) {
           return void 0;
@@ -131927,11 +131858,11 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [decodeValue]
     );
-    const localBorder = (0, import_element454.useMemo)(
+    const localBorder = (0, import_element453.useMemo)(
       () => decodeBorder(value?.border),
       [value?.border, decodeBorder]
     );
-    const inheritedBorder = (0, import_element454.useMemo)(
+    const inheritedBorder = (0, import_element453.useMemo)(
       () => decodeBorder(inheritedValue?.border),
       [inheritedValue?.border, decodeBorder]
     );
@@ -131942,7 +131873,7 @@ If there's a particular need for this, please submit a feature request at https:
     const showBorderStyle = useHasBorderStyleControl(settings3);
     const showBorderWidth = useHasBorderWidthControl(settings3);
     const showBorderRadius = useHasBorderRadiusControl(settings3);
-    const localBorderRadius = (0, import_element454.useMemo)(() => {
+    const localBorderRadius = (0, import_element453.useMemo)(() => {
       if (typeof value?.border?.radius !== "object") {
         return decodeValue(value?.border?.radius);
       }
@@ -131953,7 +131884,7 @@ If there's a particular need for this, please submit a feature request at https:
         bottomRight: decodeValue(value?.border?.radius?.bottomRight)
       };
     }, [value?.border?.radius, decodeValue]);
-    const inheritedBorderRadius = (0, import_element454.useMemo)(() => {
+    const inheritedBorderRadius = (0, import_element453.useMemo)(() => {
       const rawRadius = inheritedValue?.border?.radius;
       if (typeof rawRadius !== "object") {
         return decodeValue(rawRadius);
@@ -131974,7 +131905,7 @@ If there's a particular need for this, please submit a feature request at https:
       return !!borderValues;
     };
     const isBorderRadiusPlaceholder = !hasBorderRadius() && inheritedBorderRadius !== void 0 && inheritedBorderRadius !== "";
-    const borderRadius = (0, import_element454.useMemo)(() => {
+    const borderRadius = (0, import_element453.useMemo)(() => {
       if (!isBorderRadiusPlaceholder) {
         return localBorderRadius;
       }
@@ -132045,7 +131976,7 @@ If there's a particular need for this, please submit a feature request at https:
         radius: value?.border?.radius
       });
     };
-    const resetAllFilter = (0, import_element454.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element453.useCallback)((previousValue) => {
       return {
         ...previousValue,
         border: void 0,
@@ -132154,7 +132085,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/global-styles/filters-panel.mjs
   var import_components280 = __toESM(require_components(), 1);
   var import_i18n288 = __toESM(require_i18n(), 1);
-  var import_element455 = __toESM(require_element(), 1);
+  var import_element454 = __toESM(require_element(), 1);
   var import_jsx_runtime696 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY21 = [];
   function useMultiOriginColorPresets(settings3, { presetSetting, defaultSetting }) {
@@ -132162,7 +132093,7 @@ If there's a particular need for this, please submit a feature request at https:
     const userPresets = settings3?.color?.[presetSetting]?.custom || EMPTY_ARRAY21;
     const themePresets = settings3?.color?.[presetSetting]?.theme || EMPTY_ARRAY21;
     const defaultPresets = settings3?.color?.[presetSetting]?.default || EMPTY_ARRAY21;
-    return (0, import_element455.useMemo)(
+    return (0, import_element454.useMemo)(
       () => [
         ...userPresets,
         ...themePresets,
@@ -132226,7 +132157,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
   var renderToggle2 = (duotone, resetConfig) => function Toggle2({ onToggle, isOpen }) {
     const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
-    const duotoneButtonRef = (0, import_element455.useRef)(void 0);
+    const duotoneButtonRef = (0, import_element454.useRef)(void 0);
     const toggleProps = {
       onClick: onToggle,
       className: clsx_default(
@@ -132325,7 +132256,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasDuotone = () => !!value?.filter?.duotone;
     const resetDuotone = () => setDuotone(void 0);
     const hasDuotoneLocalOverride = showInheritanceLabelIndicators && hasDuotone() && inheritedDuotone !== void 0;
-    const resetAllFilter = (0, import_element455.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element454.useCallback)((previousValue) => {
       return {
         ...previousValue,
         filter: {
@@ -132446,7 +132377,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/advanced-panel.mjs
   var import_components282 = __toESM(require_components(), 1);
-  var import_element456 = __toESM(require_element(), 1);
+  var import_element455 = __toESM(require_element(), 1);
   var import_i18n290 = __toESM(require_i18n(), 1);
   var import_jsx_runtime698 = __toESM(require_jsx_runtime(), 1);
   function validateCSS(css) {
@@ -132480,11 +132411,11 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const hasOwnCSS = typeof value?.css === "string" && value.css.trim() !== "";
     const customCSS = (hasOwnCSS ? value.css : inheritedValue?.css) ?? "";
-    const [cssError, setCSSError] = (0, import_element456.useState)(
+    const [cssError, setCSSError] = (0, import_element455.useState)(
       () => getCSSValidationError(customCSS)
     );
-    const ownValueRef = (0, import_element456.useRef)(customCSS);
-    (0, import_element456.useEffect)(() => {
+    const ownValueRef = (0, import_element455.useRef)(customCSS);
+    (0, import_element455.useEffect)(() => {
       if (customCSS === ownValueRef.current) {
         return;
       }
@@ -132598,7 +132529,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function BordersInspectorControl({ label, children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element457.useCallback)(
+    const attributesResetAllFilter = (0, import_element456.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle2(attributes);
         const updatedStyle = resetAllFilter(existingStyle);
@@ -132646,7 +132577,7 @@ If there's a particular need for this, please submit a feature request at https:
       selectedState
     );
     const isStateSelected = !isDefaultBlockStyleState2(selectedState);
-    const value = (0, import_element457.useMemo)(() => {
+    const value = (0, import_element456.useMemo)(() => {
       if (isStateSelected) {
         return getStyleForState2(style, selectedState);
       }
@@ -132781,13 +132712,13 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/dimensions.mjs
-  var import_element459 = __toESM(require_element(), 1);
+  var import_element458 = __toESM(require_element(), 1);
   var import_data194 = __toESM(require_data(), 1);
   var import_blocks120 = __toESM(require_blocks(), 1);
   var import_deprecated33 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
-  var import_element458 = __toESM(require_element(), 1);
+  var import_element457 = __toESM(require_element(), 1);
   var import_is_shallow_equal5 = __toESM(require_is_shallow_equal(), 1);
   var import_jsx_runtime700 = __toESM(require_jsx_runtime(), 1);
   function SpacingVisualizer({
@@ -132797,17 +132728,17 @@ If there's a particular need for this, please submit a feature request at https:
     forceShow
   }) {
     const blockElement = useBlockElement(clientId);
-    const [style, updateStyle] = (0, import_element458.useReducer)(
+    const [style, updateStyle] = (0, import_element457.useReducer)(
       // Styles are only computed once the block element is rendered.
       () => computeStyle(blockElement),
       void 0
     );
-    (0, import_element458.useEffect)(() => {
+    (0, import_element457.useEffect)(() => {
       if (blockElement && forceShow) {
         updateStyle();
       }
     }, [blockElement, forceShow]);
-    (0, import_element458.useEffect)(() => {
+    (0, import_element457.useEffect)(() => {
       if (!blockElement) {
         return;
       }
@@ -132820,9 +132751,9 @@ If there's a particular need for this, please submit a feature request at https:
         observer.disconnect();
       };
     }, [blockElement]);
-    const previousValueRef = (0, import_element458.useRef)(value);
-    const [isActive, setIsActive] = (0, import_element458.useState)(false);
-    (0, import_element458.useEffect)(() => {
+    const previousValueRef = (0, import_element457.useRef)(value);
+    const [isActive, setIsActive] = (0, import_element457.useState)(false);
+    (0, import_element457.useEffect)(() => {
       if ((0, import_is_shallow_equal5.isShallowEqual)(value, previousValueRef.current) || forceShow) {
         return;
       }
@@ -132913,11 +132844,11 @@ If there's a particular need for this, please submit a feature request at https:
   var DIMENSIONS_SUPPORT_KEY = "dimensions";
   var SPACING_SUPPORT_KEY2 = "spacing";
   function useVisualizer() {
-    const [property, setProperty] = (0, import_element459.useState)(false);
+    const [property, setProperty] = (0, import_element458.useState)(false);
     const { hideBlockInterface: hideBlockInterface2, showBlockInterface: showBlockInterface2 } = unlock(
       (0, import_data194.useDispatch)(store)
     );
-    (0, import_element459.useEffect)(() => {
+    (0, import_element458.useEffect)(() => {
       if (!property) {
         showBlockInterface2();
       } else {
@@ -132927,7 +132858,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [property, setProperty];
   }
   function DimensionsInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element459.useCallback)(
+    const attributesResetAllFilter = (0, import_element458.useCallback)(
       (attributes) => {
         const existingStyle = attributes.style;
         const updatedStyle = resetAllFilter(existingStyle);
@@ -133609,7 +133540,7 @@ If there's a particular need for this, please submit a feature request at https:
       [clientId, name]
     );
     const isPseudoSelectorState = hasPseudoBlockStyleState(selectedState);
-    const canvasStateCSS = (0, import_element460.useMemo)(() => {
+    const canvasStateCSS = (0, import_element459.useMemo)(() => {
       if (!showStateOnCanvas || !isPseudoSelectorState) {
         return void 0;
       }
@@ -133755,7 +133686,7 @@ If there's a particular need for this, please submit a feature request at https:
     const baseElementSelector = `.${blockElementsContainerIdentifier}`;
     const blockElementStyles = style?.elements;
     const [viewportSettings] = useSettings("viewport");
-    const styles = (0, import_element460.useMemo)(() => {
+    const styles = (0, import_element459.useMemo)(() => {
       const cssRules = [];
       const elementCSS = getElementCSSRules(
         blockElementStyles,
@@ -133834,7 +133765,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks124 = __toESM(require_blocks(), 1);
   var import_compose150 = __toESM(require_compose(), 1);
   var import_hooks30 = __toESM(require_hooks(), 1);
-  var import_element461 = __toESM(require_element(), 1);
+  var import_element460 = __toESM(require_element(), 1);
   var import_data196 = __toESM(require_data(), 1);
   var import_jsx_runtime703 = __toESM(require_jsx_runtime(), 1);
   var { getDuotoneFilter: getDuotoneFilter2, getDuotoneStylesheet: getDuotoneStylesheet2, getDuotoneUnsetStylesheet: getDuotoneUnsetStylesheet2 } = unlock(privateApis);
@@ -133848,7 +133779,7 @@ If there's a particular need for this, please submit a feature request at https:
       `${presetSetting}.theme`,
       `${presetSetting}.default`
     );
-    return (0, import_element461.useMemo)(
+    return (0, import_element460.useMemo)(
       () => [
         ...userPresets || EMPTY_ARRAY22,
         ...themePresets || EMPTY_ARRAY22,
@@ -134023,7 +133954,7 @@ If there's a particular need for this, please submit a feature request at https:
       } : void 0
     );
     const blockElement = useBlockElement(clientId);
-    (0, import_element461.useEffect)(() => {
+    (0, import_element460.useEffect)(() => {
       if (!isValidFilter) {
         return;
       }
@@ -134038,7 +133969,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DUOTONE_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps14({ clientId, name, style }) {
     const id = (0, import_compose150.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
-    const selector5 = (0, import_element461.useMemo)(() => {
+    const selector5 = (0, import_element460.useMemo)(() => {
       const blockType = (0, import_blocks124.getBlockType)(name);
       if (blockType) {
         const duotoneSupport = (0, import_blocks124.getBlockSupport)(
@@ -134141,7 +134072,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/custom-css.mjs
-  var import_element462 = __toESM(require_element(), 1);
+  var import_element461 = __toESM(require_element(), 1);
   var import_data197 = __toESM(require_data(), 1);
   var import_compose151 = __toESM(require_compose(), 1);
   var import_components285 = __toESM(require_components(), 1);
@@ -134273,7 +134204,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useBlockProps16({ style, clientId, name }) {
     const [viewportSettings] = useSettings("viewport");
-    const customCSSStateEntries = (0, import_element462.useMemo)(
+    const customCSSStateEntries = (0, import_element461.useMemo)(
       () => getCustomCSSStateEntries(style, name, viewportSettings),
       [style, name, viewportSettings]
     );
@@ -134283,7 +134214,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { createWarningNotice } = (0, import_data197.useDispatch)(import_notices13.store);
     const hasCustomCSS = customCSSStateEntries.length > 0;
-    (0, import_element462.useEffect)(() => {
+    (0, import_element461.useEffect)(() => {
       if (!canEditCSS && hasCustomCSS) {
         createWarningNotice(
           (0, import_i18n291.__)(
@@ -134301,7 +134232,7 @@ If there's a particular need for this, please submit a feature request at https:
       "wp-custom-css"
     );
     const customCSSSelector = `.${customCSSIdentifier}`;
-    const transformedCSS = (0, import_element462.useMemo)(
+    const transformedCSS = (0, import_element461.useMemo)(
       () => processCustomCSSStateEntries(
         customCSSStateEntries,
         customCSSSelector
@@ -134353,7 +134284,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/layout.mjs
   var import_compose152 = __toESM(require_compose(), 1);
   var import_hooks32 = __toESM(require_hooks(), 1);
-  var import_element463 = __toESM(require_element(), 1);
+  var import_element462 = __toESM(require_element(), 1);
   var import_blocks127 = __toESM(require_blocks(), 1);
   var import_data198 = __toESM(require_data(), 1);
   var import_components286 = __toESM(require_components(), 1);
@@ -134547,7 +134478,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const blockEditingMode = useBlockEditingMode();
     const isViewportLayoutState = hasViewportBlockStyleState(selectedState) && !hasPseudoBlockStyleState(selectedState);
-    const resetLayoutFilter = (0, import_element463.useCallback)(
+    const resetLayoutFilter = (0, import_element462.useCallback)(
       (...resetArgs) => {
         const attributes = resetArgs[0] || {};
         const context = resetArgs[1] || {};
@@ -134928,10 +134859,10 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/layout-child.mjs
   var import_compose156 = __toESM(require_compose(), 1);
   var import_data202 = __toESM(require_data(), 1);
-  var import_element467 = __toESM(require_element(), 1);
+  var import_element466 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.mjs
-  var import_element464 = __toESM(require_element(), 1);
+  var import_element463 = __toESM(require_element(), 1);
   var import_data199 = __toESM(require_data(), 1);
   var import_compose153 = __toESM(require_compose(), 1);
 
@@ -135102,20 +135033,20 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var GridVisualizerGrid = (0, import_element464.forwardRef)(
+  var GridVisualizerGrid = (0, import_element463.forwardRef)(
     ({ gridClientId, gridElement, isManualGrid, childGridClientId }, ref) => {
-      const [gridInfo, setGridInfo] = (0, import_element464.useState)(
+      const [gridInfo, setGridInfo] = (0, import_element463.useState)(
         () => getGridInfo(gridElement)
       );
-      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element464.useState)(false);
+      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element463.useState)(false);
       const childGridElement = useBlockElement(childGridClientId);
-      const childGridRect = (0, import_element464.useMemo)(() => {
+      const childGridRect = (0, import_element463.useMemo)(() => {
         if (!childGridElement) {
           return null;
         }
         return getGridItemRect(childGridElement);
       }, [childGridElement]);
-      (0, import_element464.useEffect)(() => {
+      (0, import_element463.useEffect)(() => {
         const resizeCallback = () => setGridInfo(getGridInfo(gridElement));
         const borderBoxSpy = new window.ResizeObserver(resizeCallback);
         borderBoxSpy.observe(gridElement, { box: "border-box" });
@@ -135129,7 +135060,7 @@ If there's a particular need for this, please submit a feature request at https:
           contentBoxSpy.disconnect();
         };
       }, [gridElement]);
-      (0, import_element464.useEffect)(() => {
+      (0, import_element463.useEffect)(() => {
         function onGlobalDrag() {
           setIsDroppingAllowed(true);
         }
@@ -135195,7 +135126,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ManualGridVisualizer({ gridClientId, gridInfo, childGridRect }) {
-    const [highlightedRect, setHighlightedRect] = (0, import_element464.useState)(null);
+    const [highlightedRect, setHighlightedRect] = (0, import_element463.useState)(null);
     const gridItemStyles = (0, import_data199.useSelect)(
       (select3) => {
         const { getBlockOrder: getBlockOrder2, getBlockStyles: getBlockStyles2 } = unlock(
@@ -135206,7 +135137,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [gridClientId]
     );
-    const occupiedRects = (0, import_element464.useMemo)(() => {
+    const occupiedRects = (0, import_element463.useMemo)(() => {
       const rects = [];
       for (const style of Object.values(gridItemStyles)) {
         const {
@@ -135463,7 +135394,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/grid/grid-item-resizer.mjs
   var import_components288 = __toESM(require_components(), 1);
-  var import_element465 = __toESM(require_element(), 1);
+  var import_element464 = __toESM(require_element(), 1);
   var import_jsx_runtime707 = __toESM(require_jsx_runtime(), 1);
   function GridItemResizer({
     clientId,
@@ -135497,14 +135428,14 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     isManualGrid
   }) {
-    const [resizeDirection, setResizeDirection] = (0, import_element465.useState)(null);
-    const [enableSide, setEnableSide] = (0, import_element465.useState)({
+    const [resizeDirection, setResizeDirection] = (0, import_element464.useState)(null);
+    const [enableSide, setEnableSide] = (0, import_element464.useState)({
       top: false,
       bottom: false,
       left: false,
       right: false
     });
-    (0, import_element465.useEffect)(() => {
+    (0, import_element464.useEffect)(() => {
       const observer = new window.ResizeObserver(() => {
         const blockClientRect = blockElement.getBoundingClientRect();
         const rootBlockClientRect = rootBlockElement.getBoundingClientRect();
@@ -135779,7 +135710,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/grid/use-grid-layout-sync.mjs
   var import_data201 = __toESM(require_data(), 1);
-  var import_element466 = __toESM(require_element(), 1);
+  var import_element465 = __toESM(require_element(), 1);
   var import_compose155 = __toESM(require_compose(), 1);
   function useGridLayoutSync({ clientId: gridClientId }) {
     const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data201.useSelect)(
@@ -135796,7 +135727,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { getBlockAttributes: getBlockAttributes3, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data201.useSelect)(store);
     const { updateBlockAttributes: updateBlockAttributes2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data201.useDispatch)(store);
-    const selectedBlockRect = (0, import_element466.useMemo)(
+    const selectedBlockRect = (0, import_element465.useMemo)(
       () => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null,
       [selectedBlockLayout]
     );
@@ -135805,7 +135736,7 @@ If there's a particular need for this, please submit a feature request at https:
       gridLayout.isManualPlacement
     );
     const previousBlockOrder = (0, import_compose155.usePrevious)(blockOrder);
-    (0, import_element466.useEffect)(() => {
+    (0, import_element465.useEffect)(() => {
       const updates = {};
       if (gridLayout.isManualPlacement) {
         const occupiedRects = [];
@@ -136323,7 +136254,7 @@ If there's a particular need for this, please submit a feature request at https:
       view: canvasView,
       viewportSettings
     });
-    const [resizerBounds, setResizerBounds] = (0, import_element467.useState)();
+    const [resizerBounds, setResizerBounds] = (0, import_element466.useState)();
     const childGridClientId = isChildBlockAGrid ? clientId : void 0;
     if (!isVisible2 || isParentBlockCurrentlyHidden || isAnyAncestorHidden) {
       return null;
@@ -136441,7 +136372,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/block-hooks.mjs
   var import_i18n294 = __toESM(require_i18n(), 1);
-  var import_element468 = __toESM(require_element(), 1);
+  var import_element467 = __toESM(require_element(), 1);
   var import_components290 = __toESM(require_components(), 1);
   var import_blocks129 = __toESM(require_blocks(), 1);
   var import_data203 = __toESM(require_data(), 1);
@@ -136456,7 +136387,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(import_blocks129.store).getBlockTypes(),
       []
     );
-    const hookedBlocksForCurrentBlock = (0, import_element468.useMemo)(
+    const hookedBlocksForCurrentBlock = (0, import_element467.useMemo)(
       () => blockTypes?.filter(
         ({ name: blockName, blockHooks }) => blockHooks && name in blockHooks || ignoredHookedBlocks.includes(blockName)
       ),
@@ -136573,7 +136504,7 @@ If there's a particular need for this, please submit a feature request at https:
             "Manage the inclusion of blocks added automatically by plugins."
           ) }),
           Object.keys(groupedHookedBlocks).map((vendor) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime710.jsxs)(import_element468.Fragment, { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime710.jsxs)(import_element467.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime710.jsx)("h3", { children: vendor }),
               groupedHookedBlocks[vendor].map((block) => {
                 const checked4 = block.name in hookedBlockClientIds;
@@ -136619,7 +136550,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks130 = __toESM(require_blocks(), 1);
   var import_components292 = __toESM(require_components(), 1);
   var import_data204 = __toESM(require_data(), 1);
-  var import_element469 = __toESM(require_element(), 1);
+  var import_element468 = __toESM(require_element(), 1);
   var import_compose157 = __toESM(require_compose(), 1);
   var import_jsx_runtime711 = __toESM(require_jsx_runtime(), 1);
   var useToolsPanelDropdownMenuProps2 = () => {
@@ -136636,7 +136567,7 @@ If there's a particular need for this, please submit a feature request at https:
     name: blockName,
     metadata
   }) => {
-    const blockContext = (0, import_element469.useContext)(block_context_default);
+    const blockContext = (0, import_element468.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
     const { bindableAttributes, hasCompatibleFields } = (0, import_data204.useSelect)(
@@ -136708,7 +136639,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components293 = __toESM(require_components(), 1);
   var import_data206 = __toESM(require_data(), 1);
   var import_blocks131 = __toESM(require_blocks(), 1);
-  var import_element470 = __toESM(require_element(), 1);
+  var import_element469 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/use-list-view-panel-state/index.mjs
   var import_data205 = __toESM(require_data(), 1);
@@ -136743,7 +136674,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_blocks131.hasBlockSupport)(nameOrType, LIST_VIEW_SUPPORT_KEY);
   }
   function ListViewPanel({ clientId, name }) {
-    const { isSelectionWithinCurrentSection } = (0, import_element470.useContext)(PrivateBlockContext);
+    const { isSelectionWithinCurrentSection } = (0, import_element469.useContext)(PrivateBlockContext);
     const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
     const { openListViewContentPanel: openListViewContentPanel2 } = unlock(
       (0, import_data206.useDispatch)(store)
@@ -136927,7 +136858,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks133 = __toESM(require_blocks(), 1);
   var import_components294 = __toESM(require_components(), 1);
   var import_data208 = __toESM(require_data(), 1);
-  var import_element471 = __toESM(require_element(), 1);
+  var import_element470 = __toESM(require_element(), 1);
   var import_i18n297 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/generate-fields-from-attributes.mjs
@@ -136989,7 +136920,7 @@ If there's a particular need for this, please submit a feature request at https:
     setAttributes
   }) {
     const blockEditingMode = useBlockEditingMode();
-    const blockContext = (0, import_element471.useContext)(block_context_default);
+    const blockContext = (0, import_element470.useContext)(block_context_default);
     const attributes = (0, import_data208.useSelect)(
       (select3) => {
         const _attributes = select3(store).getBlockAttributes(clientId);
@@ -137016,7 +136947,7 @@ If there's a particular need for this, please submit a feature request at https:
       [blockContext, clientId]
     );
     const blockType = (0, import_blocks133.getBlockType)(name);
-    const { fields, form } = (0, import_element471.useMemo)(() => {
+    const { fields, form } = (0, import_element470.useMemo)(() => {
       if (!blockType?.attributes) {
         return { fields: [], form: { fields: [] } };
       }
@@ -137109,7 +137040,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/hooks/use-color-props.mjs
-  var import_element472 = __toESM(require_element(), 1);
+  var import_element471 = __toESM(require_element(), 1);
   function getColorClassesAndStyles(attributes) {
     const { backgroundColor, textColor, gradient, style } = attributes;
     const backgroundClass = getColorClassName(
@@ -137150,7 +137081,7 @@ If there's a particular need for this, please submit a feature request at https:
       "color.gradients.theme",
       "color.gradients.default"
     );
-    const colors2 = (0, import_element472.useMemo)(
+    const colors2 = (0, import_element471.useMemo)(
       () => [
         ...userPalette || [],
         ...themePalette || [],
@@ -137158,7 +137089,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [userPalette, themePalette, defaultPalette]
     );
-    const gradients = (0, import_element472.useMemo)(
+    const gradients = (0, import_element471.useMemo)(
       () => [
         ...userGradients || [],
         ...themeGradients || [],
@@ -137225,10 +137156,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/hooks/use-cached-truthy.mjs
-  var import_element473 = __toESM(require_element(), 1);
+  var import_element472 = __toESM(require_element(), 1);
   function useCachedTruthy(value) {
-    const [cachedValue, setCachedValue] = (0, import_element473.useState)(value);
-    (0, import_element473.useEffect)(() => {
+    const [cachedValue, setCachedValue] = (0, import_element472.useState)(value);
+    (0, import_element472.useEffect)(() => {
       if (value) {
         setCachedValue(value);
       }
@@ -137304,7 +137235,7 @@ If there's a particular need for this, please submit a feature request at https:
   var get_px_from_css_unit_default = () => "";
 
   // packages/block-editor/build-module/components/rich-text/get-rich-text-values.mjs
-  var import_element474 = __toESM(require_element(), 1);
+  var import_element473 = __toESM(require_element(), 1);
   var import_blocks134 = __toESM(require_blocks(), 1);
   var import_rich_text24 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime715 = __toESM(require_jsx_runtime(), 1);
@@ -137322,10 +137253,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const { type, props } = element;
     switch (type) {
-      case import_element474.StrictMode:
-      case import_element474.Fragment:
+      case import_element473.StrictMode:
+      case import_element473.Fragment:
         return addValuesForElements(props.children, values, innerBlocks);
-      case import_element474.RawHTML:
+      case import_element473.RawHTML:
         return;
       case inner_blocks_default.Content:
         return addValuesForBlocks(values, innerBlocks);
@@ -137398,13 +137329,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.mjs
-  var import_element475 = __toESM(require_element(), 1);
+  var import_element474 = __toESM(require_element(), 1);
   var import_data209 = __toESM(require_data(), 1);
   var import_components296 = __toESM(require_components(), 1);
   var import_i18n298 = __toESM(require_i18n(), 1);
   var import_jsx_runtime717 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
-    const [confirmed, setConfirmed] = (0, import_element475.useState)(false);
+    const [confirmed, setConfirmed] = (0, import_element474.useState)(false);
     const { clientIds, selectPrevious, message: message2 } = (0, import_data209.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()
     );
@@ -137413,13 +137344,13 @@ If there's a particular need for this, please submit a feature request at https:
       setBlockRemovalRules: setBlockRemovalRules2,
       privateRemoveBlocks: privateRemoveBlocks2
     } = unlock((0, import_data209.useDispatch)(store));
-    (0, import_element475.useEffect)(() => {
+    (0, import_element474.useEffect)(() => {
       setBlockRemovalRules2(rules);
       return () => {
         setBlockRemovalRules2();
       };
     }, [rules, setBlockRemovalRules2]);
-    (0, import_element475.useEffect)(() => {
+    (0, import_element474.useEffect)(() => {
       setConfirmed(false);
     }, [clientIds]);
     if (!message2) {
@@ -137489,11 +137420,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/index.mjs
-  var import_element477 = __toESM(require_element(), 1);
+  var import_element476 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.mjs
   var import_components297 = __toESM(require_components(), 1);
-  var import_element476 = __toESM(require_element(), 1);
+  var import_element475 = __toESM(require_element(), 1);
   var import_i18n299 = __toESM(require_i18n(), 1);
   var import_jsx_runtime718 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCALE_OPTIONS = [
@@ -137536,7 +137467,7 @@ If there's a particular need for this, please submit a feature request at https:
     isShownByDefault = true
   }) {
     const displayValue = value ?? defaultValue2;
-    const scaleHelp = (0, import_element476.useMemo)(() => {
+    const scaleHelp = (0, import_element475.useMemo)(() => {
       return options.reduce(
         (acc, option) => {
           acc[option.value] = option.help;
@@ -137670,14 +137601,14 @@ If there's a particular need for this, please submit a feature request at https:
     const aspectRatio = value.aspectRatio === void 0 || value.aspectRatio === "auto" ? null : value.aspectRatio;
     const scale = value.scale === void 0 ? null : value.scale;
     const hasCustomAspectRatio = !!(width && height);
-    const lastScaleRef = (0, import_element477.useRef)(scale);
-    const lastAspectRatioRef = (0, import_element477.useRef)(aspectRatio);
-    (0, import_element477.useEffect)(() => {
+    const lastScaleRef = (0, import_element476.useRef)(scale);
+    const lastAspectRatioRef = (0, import_element476.useRef)(aspectRatio);
+    (0, import_element476.useEffect)(() => {
       if (scale) {
         lastScaleRef.current = scale;
       }
     }, [scale]);
-    (0, import_element477.useEffect)(() => {
+    (0, import_element476.useEffect)(() => {
       if (!hasCustomAspectRatio) {
         lastAspectRatioRef.current = aspectRatio;
       }
@@ -137931,7 +137862,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-picker/link-picker.mjs
   var import_components302 = __toESM(require_components(), 1);
-  var import_element478 = __toESM(require_element(), 1);
+  var import_element477 = __toESM(require_element(), 1);
   var import_i18n304 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
@@ -138003,11 +137934,11 @@ If there's a particular need for this, please submit a feature request at https:
     label,
     help
   }) {
-    const [isOpen, setIsOpen] = (0, import_element478.useState)(false);
-    const instanceId = (0, import_element478.useId)();
+    const [isOpen, setIsOpen] = (0, import_element477.useState)(false);
+    const instanceId = (0, import_element477.useId)();
     const dialogTitleId = `link-picker-title-${instanceId}`;
     const dialogDescriptionId = `link-picker-description-${instanceId}`;
-    const anchorRef = (0, import_element478.useRef)(null);
+    const anchorRef = (0, import_element477.useRef)(null);
     const { baseControlProps, controlProps } = (0, import_components302.useBaseControlProps)({
       help
     });
@@ -138095,7 +138026,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inner-content/index.mjs
-  var import_element479 = __toESM(require_element(), 1);
+  var import_element478 = __toESM(require_element(), 1);
   var import_data211 = __toESM(require_data(), 1);
   var import_dom82 = __toESM(require_dom(), 1);
   var import_jsx_runtime725 = __toESM(require_jsx_runtime(), 1);
@@ -138113,15 +138044,15 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId]
     );
-    const html = (0, import_element479.useMemo)(() => {
+    const html = (0, import_element478.useMemo)(() => {
       let slotIndex = 0;
       return (innerContent ?? []).map(
         (item) => item === null ? `<${SLOT_TAG_NAME} data-slot-index="${slotIndex++}" style="display: contents"></${SLOT_TAG_NAME}>` : item
       ).join("");
     }, [innerContent]);
-    const containerRef = (0, import_element479.useRef)();
-    const [slots, setSlots] = (0, import_element479.useState)([]);
-    (0, import_element479.useLayoutEffect)(() => {
+    const containerRef = (0, import_element478.useRef)();
+    const [slots, setSlots] = (0, import_element478.useState)([]);
+    (0, import_element478.useLayoutEffect)(() => {
       const container = containerRef.current;
       container.innerHTML = (0, import_dom82.safeHTML)(html);
       setSlots(
@@ -138140,7 +138071,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       order.map(
-        (childClientId, index3) => slots[index3] ? (0, import_element479.createPortal)(
+        (childClientId, index3) => slots[index3] ? (0, import_element478.createPortal)(
           // Render the selected block synchronously, as the block list does.
           /* @__PURE__ */ (0, import_jsx_runtime725.jsx)(
             import_data211.AsyncModeProvider,
