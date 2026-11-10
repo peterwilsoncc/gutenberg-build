@@ -93531,9 +93531,10 @@ If there's a particular need for this, please submit a feature request at https:
 			isRemoveLocked,
 			allowsEditLocking
 		]);
+		const canApplyTemplateLock = hasTemplateLock && !(lock$1.move && !lock$1.remove);
 		const isAllChecked = Object.values(lock$1).every(Boolean);
 		const isMixed = Object.values(lock$1).some(Boolean) && !isAllChecked;
-		const isDirty = lock$1.move !== isMoveLocked || lock$1.remove !== isRemoveLocked || allowsEditLocking && lock$1.edit !== isEditLocked || hasTemplateLock && applyTemplateLock !== !!templateLock;
+		const isDirty = lock$1.move !== isMoveLocked || lock$1.remove !== isRemoveLocked || allowsEditLocking && lock$1.edit !== isEditLocked || canApplyTemplateLock && applyTemplateLock !== !!templateLock;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
 			title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Lock %s"), blockInformation.title),
 			overlayClassName: "block-editor-block-lock-modal",
@@ -93545,7 +93546,7 @@ If there's a particular need for this, please submit a feature request at https:
 					if (!isDirty) return;
 					updateBlockAttributes([clientId], {
 						lock: lock$1,
-						templateLock: applyTemplateLock ? getTemplateLockValue(lock$1) : void 0
+						...canApplyTemplateLock && { templateLock: applyTemplateLock ? getTemplateLockValue(lock$1) : void 0 }
 					});
 					onClose();
 				},
@@ -93619,7 +93620,7 @@ If there's a particular need for this, please submit a feature request at https:
 							className: "block-editor-block-lock-modal__template-lock",
 							label: (0, _wordpress_i18n.__)("Apply to all blocks inside"),
 							checked: applyTemplateLock,
-							disabled: lock$1.move && !lock$1.remove,
+							disabled: !canApplyTemplateLock,
 							onChange: () => setApplyTemplateLock(!applyTemplateLock)
 						})
 					]
