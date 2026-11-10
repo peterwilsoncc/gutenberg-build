@@ -49598,6 +49598,54 @@ If there's a particular need for this, please submit a feature request at https:
 		return (0, _wordpress_element.useCallback)(() => invalidateAttachmentResolutions(registry), [registry]);
 	}
 
+// packages/media-utils/build-module/components/media-upload-modal/taxonomy-query.mjs
+/**
+	* Returns the REST query arguments for a view's filters on taxonomy fields.
+	*
+	* A taxonomy field is one whose ID is the taxonomy's REST base: the property
+	* that holds an item's term IDs in its REST record, and the query parameter
+	* that filters items by them. Filters on other fields are left for the caller.
+	*
+	* - `is` and `isAny` match items with any of the terms.
+	* - `isAll` matches items with every one of the terms.
+	* - `isNot` and `isNone` match items with none of the terms.
+	*
+	* A filter matches the chosen terms only, not their child terms, because the
+	* REST API's `include_children` defaults to false. A filter with no terms
+	* leaves the query alone.
+	*
+	* The post list route has a copy of this function, so change both together.
+	*
+	* @param filters    The view's filters.
+	* @param taxonomies The taxonomies of the entity, as `getTaxonomies()` returns them.
+	*
+	* @return The query arguments, such as `{ categories: [ 3, 4 ] }`.
+	*/
+	function getTaxonomyQueryArgs(filters = [], taxonomies = []) {
+		const bases = new Set(taxonomies.map((taxonomy) => taxonomy.rest_base || taxonomy.slug));
+		const args = {};
+		for (const filter of filters) {
+			if (!bases.has(filter.field)) continue;
+			const terms = (Array.isArray(filter.value) ? filter.value : [filter.value]).filter((term) => term !== void 0 && term !== null && term !== "");
+			if (!terms.length) continue;
+			switch (filter.operator) {
+				case "is":
+				case "isAny":
+					args[filter.field] = terms;
+					break;
+				case "isAll":
+					args[filter.field] = {
+						terms,
+						operator: "AND"
+					};
+					break;
+				case "isNot":
+				case "isNone": args[`${filter.field}_exclude`] = terms;
+			}
+		}
+		return args;
+	}
+
 // packages/media-utils/build-module/components/media-upload-modal/use-upload-status.mjs
 /**
 	* Hook for tracking media upload status with batch-scoped callbacks.
@@ -49773,6 +49821,10 @@ If there's a particular need for this, please submit a feature request at https:
 	function MediaUploadModal({ allowedTypes, multiple = false, value, onSelect, onClose, onUpload, title = (0, _wordpress_i18n.__)("Select Media"), isOpen, isDismissible = true, modalClass, search = true, searchLabel = (0, _wordpress_i18n.__)("Search media"), postId, postType }) {
 		const attachedToPostId = Number.isInteger(postId) ? postId : void 0;
 		const uploadedToLabel = (0, _wordpress_data.useSelect)((select) => attachedToPostId && postType ? select(_wordpress_core_data.store).getPostType(postType)?.labels?.uploaded_to_this_item : void 0, [attachedToPostId, postType]);
+		const taxonomies = (0, _wordpress_data.useSelect)((select) => {
+			const { getPostType, getTaxonomies } = select(_wordpress_core_data.store);
+			return getPostType("attachment")?.taxonomies?.length ? getTaxonomies({ type: "attachment" }) : void 0;
+		}, []);
 		const [selection, setSelection] = (0, _wordpress_element.useState)(() => getSelectionFromValue(value));
 		const { createSuccessNotice, removeAllNotices } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const invalidateAttachmentResolutions = useInvalidateAttachmentResolutions();
@@ -49848,12 +49900,14 @@ If there's a particular need for this, please submit a feature request at https:
 				orderby: view.sort?.field,
 				search: view.search,
 				_embed: "author,wp:attached-to",
+				...getTaxonomyQueryArgs(view.filters, taxonomies ?? []),
 				...filters
 			};
 		}, [
 			view,
 			allowedTypes,
-			attachedToPostId
+			attachedToPostId,
+			taxonomies
 		]);
 		const handleBatchComplete = (0, _wordpress_element.useCallback)((attachments) => {
 			const uploadedIds = attachments.map((attachment) => String(attachment.id)).filter(Boolean);

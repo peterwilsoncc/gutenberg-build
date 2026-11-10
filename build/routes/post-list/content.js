@@ -52112,6 +52112,55 @@ var require_editor = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 var import_editor = require_editor();
 const { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/routes");
 
+// routes/post-list/taxonomy-query.ts
+/**
+* Returns the REST query arguments for a view's filters on taxonomy fields.
+*
+* A taxonomy field is one whose ID is the taxonomy's REST base: the property
+* that holds an item's term IDs in its REST record, and the query parameter
+* that filters items by them. Filters on other fields are left for the caller.
+*
+* - `is` and `isAny` match items with any of the terms.
+* - `isAll` matches items with every one of the terms.
+* - `isNot` and `isNone` match items with none of the terms.
+*
+* A filter matches the chosen terms only, not their child terms, because the
+* REST API's `include_children` defaults to false. A filter with no terms
+* leaves the query alone.
+*
+* The media upload modal in `@wordpress/media-utils` has a copy of this
+* function, so change both together.
+*
+* @param filters    The view's filters.
+* @param taxonomies The taxonomies of the entity, as `getTaxonomies()` returns them.
+*
+* @return The query arguments, such as `{ categories: [ 3, 4 ] }`.
+*/
+function getTaxonomyQueryArgs(filters = [], taxonomies = []) {
+	const bases = new Set(taxonomies.map((taxonomy) => taxonomy.rest_base || taxonomy.slug));
+	const args = {};
+	for (const filter of filters) {
+		if (!bases.has(filter.field)) continue;
+		const terms = (Array.isArray(filter.value) ? filter.value : [filter.value]).filter((term) => term !== void 0 && term !== null && term !== "");
+		if (!terms.length) continue;
+		switch (filter.operator) {
+			case "is":
+			case "isAny":
+				args[filter.field] = terms;
+				break;
+			case "isAll":
+				args[filter.field] = {
+					terms,
+					operator: "AND"
+				};
+				break;
+			case "isNot":
+			case "isNone": args[`${filter.field}_exclude`] = terms;
+		}
+	}
+	return args;
+}
+
 // routes/post-list/view-utils.ts
 /**
 * Returns the view overrides of the entry in the view list matching the
@@ -52124,7 +52173,15 @@ const { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsO
 function getActiveViewOverrides(viewList, slug) {
 	return viewList?.find((v) => v.slug === slug)?.view ?? {};
 }
-function viewToQuery(view, postType) {
+/**
+* Returns the REST query arguments for a view of a post type's items.
+*
+* @param view       The view.
+* @param postType   The post type.
+* @param taxonomies The post type's taxonomies, so that filters on taxonomy
+*                   fields reach the query.
+*/
+function viewToQuery(view, postType, taxonomies = []) {
 	const result = { _embed: "author,wp:featuredmedia" };
 	if (void 0 !== view.perPage) result.per_page = view.perPage;
 	if (void 0 !== view.page) result.page = view.page;
@@ -52153,6 +52210,7 @@ function viewToQuery(view, postType) {
 		if (date.operator === "before") result.before = date.value;
 		else if (date.operator === "after") result.after = date.value;
 	}
+	Object.assign(result, getTaxonomyQueryArgs(view.filters, taxonomies));
 	if (postType === "attachment") result._embed = "author,wp:attached-to";
 	return result;
 }
@@ -52376,7 +52434,13 @@ function PostListView({ postType, slug, defaultView, defaultLayouts, viewList, a
 		updateView(newView);
 		if (newView.type !== view.type) invalidate();
 	};
-	const postTypeQuery = (0, import_element.useMemo)(() => viewToQuery(view, postType), [view, postType]);
+	const hasTaxonomies = !!postTypeObject?.taxonomies?.length;
+	const taxonomies = (0, import_data.useSelect)((select) => hasTaxonomies ? select(import_core_data.store).getTaxonomies({ type: postType }) : void 0, [hasTaxonomies, postType]);
+	const postTypeQuery = (0, import_element.useMemo)(() => viewToQuery(view, postType, taxonomies ?? []), [
+		view,
+		postType,
+		taxonomies
+	]);
 	const { records: posts, totalItems, totalPages, isResolving, hasResolved } = useEntityRecordsWithPermissions("postType", postType, postTypeQuery);
 	const allFields = usePostFields({ postType });
 	const fields = (0, import_element.useMemo)(() => {
