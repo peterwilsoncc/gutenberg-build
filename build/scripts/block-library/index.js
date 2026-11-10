@@ -44468,6 +44468,149 @@ Icon: ButtonIcon });
 		{
 			attributes: {
 				id: { type: "number" },
+				blob: {
+					type: "string",
+					role: "local"
+				},
+				href: {
+					type: "string",
+					role: "content"
+				},
+				fileId: {
+					type: "string",
+					source: "attribute",
+					selector: "a:not([download])",
+					attribute: "id"
+				},
+				fileName: {
+					type: "rich-text",
+					source: "rich-text",
+					selector: "a:not([download])",
+					role: "content"
+				},
+				textLinkHref: {
+					type: "string",
+					source: "attribute",
+					selector: "a:not([download])",
+					attribute: "href",
+					role: "content"
+				},
+				textLinkTarget: {
+					type: "string",
+					source: "attribute",
+					selector: "a:not([download])",
+					attribute: "target"
+				},
+				showDownloadButton: {
+					type: "boolean",
+					default: true
+				},
+				downloadButtonText: {
+					type: "rich-text",
+					source: "rich-text",
+					selector: "a[download]",
+					role: "content"
+				},
+				displayPreview: { type: "boolean" },
+				previewHeight: {
+					type: "number",
+					default: 600
+				}
+			},
+			supports: {
+				anchor: true,
+				align: true,
+				background: {
+					backgroundImage: true,
+					backgroundSize: true,
+					gradient: true,
+					__experimentalDefaultControls: {
+						backgroundImage: true,
+						gradient: true
+					}
+				},
+				spacing: {
+					margin: true,
+					padding: true
+				},
+				dimensions: {
+					minHeight: true,
+					minWidth: true
+				},
+				color: {
+					gradients: true,
+					link: true,
+					text: false,
+					__experimentalDefaultControls: {
+						background: true,
+						link: true
+					}
+				},
+				__experimentalBorder: {
+					radius: true,
+					color: true,
+					width: true,
+					style: true,
+					__experimentalDefaultControls: {
+						radius: true,
+						color: true,
+						width: true,
+						style: true
+					}
+				},
+				shadow: true,
+				typography: {
+					fontSize: true,
+					lineHeight: true,
+					__experimentalFontFamily: true,
+					__experimentalFontWeight: true,
+					__experimentalFontStyle: true,
+					__experimentalTextTransform: true,
+					__experimentalTextDecoration: true,
+					__experimentalLetterSpacing: true,
+					__experimentalDefaultControls: { fontSize: true }
+				},
+				interactivity: true
+			},
+			save({ attributes }) {
+				const { href, fileId, fileName, textLinkHref, textLinkTarget, showDownloadButton, downloadButtonText, displayPreview, previewHeight } = attributes;
+				const pdfEmbedLabel = _wordpress_block_editor.RichText.isEmpty(fileName) ? "PDF embed" : fileName.toString();
+				const hasFilename = !_wordpress_block_editor.RichText.isEmpty(fileName);
+				const describedById = hasFilename ? fileId : void 0;
+				return href && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+					..._wordpress_block_editor.useBlockProps.save(),
+					children: [
+						displayPreview && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("object", {
+							className: "wp-block-file__embed",
+							data: href,
+							type: "application/pdf",
+							style: {
+								width: "100%",
+								height: `${previewHeight}px`
+							},
+							"aria-label": pdfEmbedLabel
+						}) }),
+						hasFilename && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
+							id: describedById,
+							href: textLinkHref,
+							target: textLinkTarget,
+							rel: textLinkTarget ? "noreferrer noopener" : void 0,
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichText.Content, { value: fileName })
+						}),
+						showDownloadButton && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
+							href,
+							className: clsx("wp-block-file__button", (0, _wordpress_block_editor.__experimentalGetElementClassName)("button")),
+							download: true,
+							"aria-describedby": describedById,
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichText.Content, { value: downloadButtonText })
+						})
+					]
+				});
+			}
+		},
+		{
+			attributes: {
+				id: { type: "number" },
 				href: { type: "string" },
 				fileId: {
 					type: "string",
@@ -45164,7 +45307,6 @@ Icon: ButtonIcon });
 					id: describedById,
 					href: textLinkHref,
 					target: textLinkTarget,
-					rel: textLinkTarget ? "noreferrer noopener" : void 0,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichText.Content, { value: fileName })
 				}),
 				showDownloadButton && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
