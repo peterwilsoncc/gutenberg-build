@@ -4695,10 +4695,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 								setAttributes({ iconPosition: value });
 							},
 							children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
-								label: (0, _wordpress_i18n.__)("Left"),
+								label: (0, _wordpress_i18n._x)("Start", "Icon position option for Accordion block"),
 								value: "left"
 							}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
-								label: (0, _wordpress_i18n.__)("Right"),
+								label: (0, _wordpress_i18n._x)("End", "Icon position option for Accordion block"),
 								value: "right"
 							})]
 						})
