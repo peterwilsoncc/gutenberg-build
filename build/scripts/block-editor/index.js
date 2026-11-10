@@ -12958,7 +12958,7 @@ var wp;
   }
   var canHostEditableRoot = (0, import_data4.createSelector)(
     (state, clientId) => {
-      if (!clientId || getBlockEditingMode(state, clientId) !== "default" || // Not when the block is edited as HTML: there is no rich text to
+      if (!clientId || state.settings.isPreviewMode || getBlockEditingMode(state, clientId) !== "default" || // Not when the block is edited as HTML: there is no rich text to
       // host then, only a textarea, which the editing host would
       // interfere with.
       getBlockMode(state, clientId) !== "visual" || !(0, import_blocks5.getBlockType)(getBlockName(state, clientId))?.[editableRootKey]) {
@@ -12978,7 +12978,8 @@ var wp;
       state.blocks.byClientId,
       state.blocks.blockEditingModes,
       state.derivedBlockEditingModes,
-      state.blocksMode
+      state.blocksMode,
+      state.settings.isPreviewMode
     ]
   );
   function getListViewClientIdsTreeUnmemoized(state, rootClientId) {
