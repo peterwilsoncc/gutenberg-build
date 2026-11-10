@@ -22061,6 +22061,22 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		}, 0) / searchTokens.length * 10;
 	}
 	/**
+	* Whether a title is exactly what was typed.
+	*
+	* Compares words, not the strings typed, so punctuation does not count: for the search
+	* "coffee beans", "Coffee Beans" and "Coffee Beans." are both exact, and
+	* "Coffee Beans, Lightly Roasted" is not.
+	*
+	* @param title
+	* @param searchTokens
+	*
+	* @return Whether the title's words are the words typed, in the same order.
+	*/
+	function isExactTitle(title, searchTokens) {
+		const titleTokens = tokenize(title || "");
+		return titleTokens.length > 0 && titleTokens.join(" ") === searchTokens.join(" ");
+	}
+	/**
 	* Sort search results by relevance to the given query.
 	*
 	* Sorting is necessary as we're querying multiple endpoints and merging the results. For example
@@ -22074,9 +22090,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* 2. Ordering of the title matches. "The best coffee beans today" will match above "For the best
 	*    coffee, you need the best beans" because of the separation between words
 	* 3. Content Type: content > taxonomies > post formats > media
-	* 4. Starting with search: "Coffee beans, lightly roasted" will rank above "The freshest coffee
+	* 4. Exact title: "Coffee beans" and "“Coffee beans”" will rank above "Coffee beans, lightly
+	*    roasted"
+	* 5. Starting with search: "Coffee beans, lightly roasted" will rank above "The freshest coffee
 	*    beans"
-	* 5. Percentage of matched word: "cat" ranks the title "Cats" above the title "Caterpillar" since
+	* 6. Percentage of matched word: "cat" ranks the title "Cats" above the title "Caterpillar" since
 	*    cat is 75% of "Cats" and only 27% of "Caterpillar"
 	*
 	* @param options
@@ -22091,9 +22109,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			found: countWordsFound(result.title, searchTokens),
 			...getTitleMatch(result.title, search),
 			type: getTypeRank(result, preferTypes),
-			score: getCoverage(result.title, searchTokens)
+			score: getCoverage(result.title, searchTokens),
+			exact: isExactTitle(result.title, searchTokens)
 		}));
-		scored.sort((a, b) => b.found - a.found || Number(b.contains) - Number(a.contains) || b.type - a.type || Number(b.begins) - Number(a.begins) || b.score - a.score);
+		scored.sort((a, b) => b.found - a.found || Number(b.contains) - Number(a.contains) || b.type - a.type || Number(b.exact) - Number(a.exact) || Number(b.begins) - Number(a.begins) || b.score - a.score);
 		return scored.map(({ result }) => result);
 	}
 	/**
