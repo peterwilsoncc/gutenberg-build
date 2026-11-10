@@ -14156,10 +14156,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		};
 		if (type) format.attributes.type = type;
 		if (id) format.attributes.id = id;
-		if (opensInNewWindow) {
-			format.attributes.target = "_blank";
-			format.attributes.rel = format.attributes.rel ? format.attributes.rel + " noopener" : "noopener";
-		}
+		if (opensInNewWindow) format.attributes.target = "_blank";
 		if (nofollow) format.attributes.rel = format.attributes.rel ? format.attributes.rel + " nofollow" : "nofollow";
 		const trimmedCssClasses = cssClasses?.trim();
 		if (trimmedCssClasses?.length) format.attributes.class = trimmedCssClasses;
