@@ -72427,14 +72427,49 @@ var wp;
       isAncestorMultiSelected: isAncestorMultiSelected2,
       __unstableIsFullySelected: __unstableIsFullySelected2,
       canMoveBlocks: canMoveBlocks2,
-      getSelectedBlockClientIds: getSelectedBlockClientIds2
-    } = (0, import_data49.useSelect)(store);
+      getSelectedBlockClientIds: getSelectedBlockClientIds2,
+      canHostEditableRoot: canHostEditableRoot2
+    } = unlock((0, import_data49.useSelect)(store));
     return (0, import_compose47.useRefEffect)(
       (node) => {
         let pointerType;
         let clickCollapseClientId;
         function onPointerDown(event) {
           pointerType = event.pointerType;
+          if (node.contentEditable !== "true") {
+            return;
+          }
+          const clientId = getBlockClientId(event.target);
+          if (!clientId || canHostEditableRoot2(clientId)) {
+            return;
+          }
+          const field = getSelectionEditableElement(
+            // A mounted element's window has a selection.
+            node.ownerDocument.defaultView.getSelection(),
+            node
+          );
+          if (!field) {
+            return;
+          }
+          setContentEditableWrapper(node, false);
+          field.focus({ preventScroll: true });
+          if (pointerType !== "touch") {
+            return;
+          }
+          function onPointerCancel() {
+            setContentEditableWrapper(node, true);
+          }
+          node.addEventListener("pointercancel", onPointerCancel, {
+            once: true
+          });
+          node.addEventListener(
+            "pointerup",
+            () => node.removeEventListener(
+              "pointercancel",
+              onPointerCancel
+            ),
+            { once: true }
+          );
         }
         function onMouseDown(event) {
           clickCollapseClientId = void 0;
@@ -72534,7 +72569,8 @@ var wp;
         isAncestorMultiSelected2,
         __unstableIsFullySelected2,
         canMoveBlocks2,
-        getSelectedBlockClientIds2
+        getSelectedBlockClientIds2,
+        canHostEditableRoot2
       ]
     );
   }
