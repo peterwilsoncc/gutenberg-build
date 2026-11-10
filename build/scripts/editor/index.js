@@ -97631,198 +97631,6 @@ If there's a particular need for this, please submit a feature request at https:
 		return (0, _wordpress_element.useMemo)(() => computeTransformStyle(state, imageSize), [state, imageSize]);
 	}
 
-// packages/image-editor/build-module/core/source-region.mjs
-/**
-	* Get the selected image region in source-pixel coordinates.
-	*
-	* Converts the current crop state (normalized visual space) to the actual
-	* region of the original image that's selected. This is the bridge between
-	* the editor's internal coordinate system and external tools (image
-	* processing libraries, AI APIs, server-side processing) that work in
-	* source-pixel coordinates.
-	*
-	* The returned rectangle accounts for pan, zoom, and the crop rect position,
-	* but expresses the crop in the unrotated image's coordinate space. Rotation
-	* and flip are included as separate fields since they represent transforms,
-	* not a region.
-	*
-	* @param state     The current editor state.
-	* @param imageSize The natural dimensions of the source image.
-	* @return The selected region in source pixels plus rotation/flip metadata.
-	*/
-	function getSourceRegion(state, imageSize) {
-		const safeState = sanitizeImageEditorState(state);
-		if (!isValidSize(imageSize)) return {
-			x: 0,
-			y: 0,
-			width: 0,
-			height: 0,
-			rotation: safeState.rotation,
-			flip: { ...safeState.flip },
-			zoom: safeState.zoom
-		};
-		const syntheticContainer = {
-			width: 1e3,
-			height: 1e3
-		};
-		const camera = createCamera(safeState, syntheticContainer, imageSize);
-		const inv = create$2();
-		invert(inv, camera);
-		const baseCamera = createCamera({
-			...safeState,
-			pan: {
-				x: 0,
-				y: 0
-			},
-			zoom: 1
-		}, syntheticContainer, imageSize);
-		const visibleBounds = getVisibleBounds(baseCamera);
-		const cropRect = safeState.cropRect;
-		const cropCenterScreenX = visibleBounds.left + (cropRect.x + cropRect.width / 2) * visibleBounds.width;
-		const cropCenterScreenY = visibleBounds.top + (cropRect.y + cropRect.height / 2) * visibleBounds.height;
-		const srcCenter = create$1();
-		transformMat2d(srcCenter, [cropCenterScreenX, cropCenterScreenY], inv);
-		const snapRotation = Math.round(safeState.rotation / 90) * 90;
-		const { width: rotW, height: rotH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
-		const sourceW = cropRect.width * rotW / safeState.zoom;
-		const sourceH = cropRect.height * rotH / safeState.zoom;
-		return {
-			x: srcCenter[0] * imageSize.width - sourceW / 2,
-			y: srcCenter[1] * imageSize.height - sourceH / 2,
-			width: sourceW,
-			height: sourceH,
-			rotation: safeState.rotation,
-			flip: { ...safeState.flip },
-			zoom: safeState.zoom
-		};
-	}
-	/**
-	* Convert a source-pixel region back to the editor's normalized crop rect.
-	*
-	* The math intentionally mirrors `getSourceRegion`: map the requested source
-	* center through the current camera, then express that screen point inside the
-	* same base visible bounds used to position crop overlays.
-	*
-	* @param state     The current editor state.
-	* @param imageSize The natural dimensions of the source image.
-	* @param region    The source-pixel region to represent as a crop rect.
-	* @return The normalized crop rect, or null when inputs cannot be mapped.
-	*/
-	function getCropRectFromSourceRegion(state, imageSize, region) {
-		if (!isValidSize(imageSize) || region.width <= 0 || region.height <= 0) return null;
-		const safeState = sanitizeImageEditorState(state);
-		const syntheticContainer = {
-			width: 1e3,
-			height: 1e3
-		};
-		const baseCamera = createCamera({
-			...safeState,
-			pan: {
-				x: 0,
-				y: 0
-			},
-			zoom: 1
-		}, syntheticContainer, imageSize);
-		const visibleBounds = getVisibleBounds(baseCamera);
-		if (visibleBounds.width <= 0 || visibleBounds.height <= 0) return null;
-		const sourceCenter = fromValues((region.x + region.width / 2) / imageSize.width, (region.y + region.height / 2) / imageSize.height);
-		const screenCenter = create$1();
-		const camera = createCamera(safeState, syntheticContainer, imageSize);
-		transformMat2d(screenCenter, sourceCenter, camera);
-		const snapRotation = Math.round(safeState.rotation / 90) * 90;
-		const { width: rotW, height: rotH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
-		if (rotW <= 0 || rotH <= 0) return null;
-		const width = region.width * safeState.zoom / rotW;
-		const height = region.height * safeState.zoom / rotH;
-		const centerX = (screenCenter[0] - visibleBounds.left) / visibleBounds.width;
-		const centerY = (screenCenter[1] - visibleBounds.top) / visibleBounds.height;
-		return {
-			x: centerX - width / 2,
-			y: centerY - height / 2,
-			width,
-			height
-		};
-	}
-	const CARDINAL_ROTATION_EPSILON$1 = 1e-6;
-	/**
-	* Check whether a rotation is effectively at a 90-degree stop.
-	*
-	* @param rotation The rotation angle in degrees.
-	* @return Whether the rotation is close enough to a cardinal angle.
-	*/
-	function isCardinalRotation(rotation) {
-		const normalizedRotation = normalizeRotation(rotation);
-		const nearestCardinal = Math.round(normalizedRotation / 90) * 90;
-		return Math.abs(normalizedRotation - nearestCardinal) < CARDINAL_ROTATION_EPSILON$1;
-	}
-	/**
-	* Snap a crop rect so the selected source-region edges land on whole pixels.
-	*
-	* This is a display-time affordance for visible pixel grids; it does not alter
-	* pan/zoom/rotation. Callers decide when snapping is appropriate.
-	*
-	* @param state     The current editor state.
-	* @param imageSize The natural dimensions of the source image.
-	* @param cropRect  The candidate crop rect from resize math.
-	* @param handle    The active resize handle. Only edges moved by the handle snap.
-	* @return A crop rect whose selected source-region edges are whole pixels.
-	*/
-	function snapCropRectToSourcePixels(state, imageSize, cropRect, handle) {
-		const safeState = sanitizeImageEditorState(state);
-		if (!isCardinalRotation(safeState.rotation)) return cropRect;
-		return snapCropRectEdgesToSourcePixels(safeState, imageSize, cropRect, {
-			left: handle.includes("w"),
-			top: handle.includes("n"),
-			right: handle.includes("e"),
-			bottom: handle.includes("s")
-		});
-	}
-	/**
-	* Snap all source-region edges for a crop rect to the nearest whole pixels.
-	*
-	* @param state     The current editor state.
-	* @param imageSize The natural dimensions of the source image.
-	* @param cropRect  The crop rect to align to the source-pixel grid.
-	* @return A crop rect whose source-region edges are whole pixels.
-	*/
-	function snapCropRectToSourcePixelGrid(state, imageSize, cropRect) {
-		return snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, {
-			left: true,
-			top: true,
-			right: true,
-			bottom: true
-		});
-	}
-	function snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, edges) {
-		if (!isValidSize(imageSize)) return cropRect;
-		const stateWithCrop = sanitizeImageEditorState({
-			...state,
-			cropRect
-		});
-		const region = getSourceRegion(stateWithCrop, imageSize);
-		const shouldSnapX = edges.left || edges.right;
-		const shouldSnapY = edges.top || edges.bottom;
-		const left = edges.left ? Math.round(region.x) : region.x;
-		const top = edges.top ? Math.round(region.y) : region.y;
-		const right = edges.right ? Math.round(region.x + region.width) : region.x + region.width;
-		const bottom = edges.bottom ? Math.round(region.y + region.height) : region.y + region.height;
-		if (right <= left || bottom <= top) return cropRect;
-		const snappedCropRect = getCropRectFromSourceRegion(stateWithCrop, imageSize, {
-			...region,
-			x: left,
-			y: top,
-			width: right - left,
-			height: bottom - top
-		});
-		if (!snappedCropRect) return cropRect;
-		return {
-			x: shouldSnapX ? snappedCropRect.x : cropRect.x,
-			y: shouldSnapY ? snappedCropRect.y : cropRect.y,
-			width: shouldSnapX ? snappedCropRect.width : cropRect.width,
-			height: shouldSnapY ? snappedCropRect.height : cropRect.height
-		};
-	}
-
 // packages/image-editor/build-module/react/hooks/use-aria-announcer.mjs
 /** Debounce delay for ARIA live announcements (ms). */
 	const ARIA_DEBOUNCE_MS = 300;
@@ -97845,20 +97653,16 @@ If there's a particular need for this, please submit a feature request at https:
 		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Rotated %d degrees counterclockwise"), Math.abs(visualRotation));
 	}
 	function getCropAnnouncement(state, previousState) {
-		if (!state.image) return;
-		const imageSize = {
-			width: state.image.naturalWidth,
-			height: state.image.naturalHeight
-		};
-		const region = getSourceRegion(state, imageSize);
+		const size = getOutputSize(state);
+		if (!size) return;
 		if (previousState?.image) {
-			const previousRegion = getSourceRegion({
+			const previousSize = getOutputSize({
 				...state,
 				cropRect: previousState.cropRect
-			}, imageSize);
-			if (Math.round(previousRegion.width) === Math.round(region.width) && Math.round(previousRegion.height) === Math.round(region.height)) return;
+			});
+			if (previousSize && Math.round(previousSize.width) === Math.round(size.width) && Math.round(previousSize.height) === Math.round(size.height)) return;
 		}
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Crop %1$d by %2$d pixels"), Math.round(region.width), Math.round(region.height));
+		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Crop %1$d by %2$d pixels"), Math.round(size.width), Math.round(size.height));
 	}
 	function getZoomAnnouncement(state, previousState) {
 		if (previousState && Math.round(previousState.zoom * 100) === Math.round(state.zoom * 100)) return;
@@ -98499,6 +98303,205 @@ If there's a particular need for this, please submit a feature request at https:
 			"aria-hidden": "true",
 			children: `W: ${Math.round(outputWidth)}px H: ${Math.round(outputHeight)}px`
 		});
+	}
+
+// packages/image-editor/build-module/core/source-region.mjs
+/**
+	* The crop's size in source pixels, positioned at the point of the image
+	* that sits under the crop's centre.
+	*
+	* The width and height are measured along the view, which is the image
+	* turned to its nearest quarter turn. At 90 or 270 degrees they are
+	* therefore swapped relative to the image's own axes: a full-frame crop of
+	* a 1600x900 image at 90 degrees reports a width of 900 and a height of
+	* 1600. The centre is a real point of the image, so the rectangle as a
+	* whole is not an axis-aligned region of the image and can fall outside
+	* it.
+	*
+	* It exists for the snapping helpers below, which round the crop's edges
+	* to whole source pixels while a handle is dragged; the Debug story shows
+	* it too. It is wrong as a region to crop with: `mapEditToOriginal` gives
+	* that, and `getOutputSize` gives the size on its own.
+	*
+	* Rotation and flip come back as separate fields because they are
+	* transforms rather than part of a region.
+	*
+	* @param state     The current editor state.
+	* @param imageSize The natural dimensions of the source image.
+	* @return The crop size in source pixels, where its centre sits, and the
+	*         rotation and flip in force.
+	*/
+	function getSourceRegion(state, imageSize) {
+		const safeState = sanitizeImageEditorState(state);
+		if (!isValidSize(imageSize)) return {
+			x: 0,
+			y: 0,
+			width: 0,
+			height: 0,
+			rotation: safeState.rotation,
+			flip: { ...safeState.flip },
+			zoom: safeState.zoom
+		};
+		const syntheticContainer = {
+			width: 1e3,
+			height: 1e3
+		};
+		const camera = createCamera(safeState, syntheticContainer, imageSize);
+		const inv = create$2();
+		invert(inv, camera);
+		const baseCamera = createCamera({
+			...safeState,
+			pan: {
+				x: 0,
+				y: 0
+			},
+			zoom: 1
+		}, syntheticContainer, imageSize);
+		const visibleBounds = getVisibleBounds(baseCamera);
+		const cropRect = safeState.cropRect;
+		const cropCenterScreenX = visibleBounds.left + (cropRect.x + cropRect.width / 2) * visibleBounds.width;
+		const cropCenterScreenY = visibleBounds.top + (cropRect.y + cropRect.height / 2) * visibleBounds.height;
+		const srcCenter = create$1();
+		transformMat2d(srcCenter, [cropCenterScreenX, cropCenterScreenY], inv);
+		const snapRotation = Math.round(safeState.rotation / 90) * 90;
+		const { width: rotW, height: rotH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
+		const sourceW = cropRect.width * rotW / safeState.zoom;
+		const sourceH = cropRect.height * rotH / safeState.zoom;
+		return {
+			x: srcCenter[0] * imageSize.width - sourceW / 2,
+			y: srcCenter[1] * imageSize.height - sourceH / 2,
+			width: sourceW,
+			height: sourceH,
+			rotation: safeState.rotation,
+			flip: { ...safeState.flip },
+			zoom: safeState.zoom
+		};
+	}
+	/**
+	* Convert a source-pixel region back to the editor's normalized crop rect.
+	*
+	* The math intentionally mirrors `getSourceRegion`: map the requested source
+	* center through the current camera, then express that screen point inside the
+	* same base visible bounds used to position crop overlays.
+	*
+	* @param state     The current editor state.
+	* @param imageSize The natural dimensions of the source image.
+	* @param region    The source-pixel region to represent as a crop rect.
+	* @return The normalized crop rect, or null when inputs cannot be mapped.
+	*/
+	function getCropRectFromSourceRegion(state, imageSize, region) {
+		if (!isValidSize(imageSize) || region.width <= 0 || region.height <= 0) return null;
+		const safeState = sanitizeImageEditorState(state);
+		const syntheticContainer = {
+			width: 1e3,
+			height: 1e3
+		};
+		const baseCamera = createCamera({
+			...safeState,
+			pan: {
+				x: 0,
+				y: 0
+			},
+			zoom: 1
+		}, syntheticContainer, imageSize);
+		const visibleBounds = getVisibleBounds(baseCamera);
+		if (visibleBounds.width <= 0 || visibleBounds.height <= 0) return null;
+		const sourceCenter = fromValues((region.x + region.width / 2) / imageSize.width, (region.y + region.height / 2) / imageSize.height);
+		const screenCenter = create$1();
+		const camera = createCamera(safeState, syntheticContainer, imageSize);
+		transformMat2d(screenCenter, sourceCenter, camera);
+		const snapRotation = Math.round(safeState.rotation / 90) * 90;
+		const { width: rotW, height: rotH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
+		if (rotW <= 0 || rotH <= 0) return null;
+		const width = region.width * safeState.zoom / rotW;
+		const height = region.height * safeState.zoom / rotH;
+		const centerX = (screenCenter[0] - visibleBounds.left) / visibleBounds.width;
+		const centerY = (screenCenter[1] - visibleBounds.top) / visibleBounds.height;
+		return {
+			x: centerX - width / 2,
+			y: centerY - height / 2,
+			width,
+			height
+		};
+	}
+	const CARDINAL_ROTATION_EPSILON$1 = 1e-6;
+	/**
+	* Check whether a rotation is effectively at a 90-degree stop.
+	*
+	* @param rotation The rotation angle in degrees.
+	* @return Whether the rotation is close enough to a cardinal angle.
+	*/
+	function isCardinalRotation(rotation) {
+		const normalizedRotation = normalizeRotation(rotation);
+		const nearestCardinal = Math.round(normalizedRotation / 90) * 90;
+		return Math.abs(normalizedRotation - nearestCardinal) < CARDINAL_ROTATION_EPSILON$1;
+	}
+	/**
+	* Snap a crop rect so the selected source-region edges land on whole pixels.
+	*
+	* This is a display-time affordance for visible pixel grids; it does not alter
+	* pan/zoom/rotation. Callers decide when snapping is appropriate.
+	*
+	* @param state     The current editor state.
+	* @param imageSize The natural dimensions of the source image.
+	* @param cropRect  The candidate crop rect from resize math.
+	* @param handle    The active resize handle. Only edges moved by the handle snap.
+	* @return A crop rect whose selected source-region edges are whole pixels.
+	*/
+	function snapCropRectToSourcePixels(state, imageSize, cropRect, handle) {
+		const safeState = sanitizeImageEditorState(state);
+		if (!isCardinalRotation(safeState.rotation)) return cropRect;
+		return snapCropRectEdgesToSourcePixels(safeState, imageSize, cropRect, {
+			left: handle.includes("w"),
+			top: handle.includes("n"),
+			right: handle.includes("e"),
+			bottom: handle.includes("s")
+		});
+	}
+	/**
+	* Snap all source-region edges for a crop rect to the nearest whole pixels.
+	*
+	* @param state     The current editor state.
+	* @param imageSize The natural dimensions of the source image.
+	* @param cropRect  The crop rect to align to the source-pixel grid.
+	* @return A crop rect whose source-region edges are whole pixels.
+	*/
+	function snapCropRectToSourcePixelGrid(state, imageSize, cropRect) {
+		return snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, {
+			left: true,
+			top: true,
+			right: true,
+			bottom: true
+		});
+	}
+	function snapCropRectEdgesToSourcePixels(state, imageSize, cropRect, edges) {
+		if (!isValidSize(imageSize)) return cropRect;
+		const stateWithCrop = sanitizeImageEditorState({
+			...state,
+			cropRect
+		});
+		const region = getSourceRegion(stateWithCrop, imageSize);
+		const shouldSnapX = edges.left || edges.right;
+		const shouldSnapY = edges.top || edges.bottom;
+		const left = edges.left ? Math.round(region.x) : region.x;
+		const top = edges.top ? Math.round(region.y) : region.y;
+		const right = edges.right ? Math.round(region.x + region.width) : region.x + region.width;
+		const bottom = edges.bottom ? Math.round(region.y + region.height) : region.y + region.height;
+		if (right <= left || bottom <= top) return cropRect;
+		const snappedCropRect = getCropRectFromSourceRegion(stateWithCrop, imageSize, {
+			...region,
+			x: left,
+			y: top,
+			width: right - left,
+			height: bottom - top
+		});
+		if (!snappedCropRect) return cropRect;
+		return {
+			x: shouldSnapX ? snappedCropRect.x : cropRect.x,
+			y: shouldSnapY ? snappedCropRect.y : cropRect.y,
+			width: shouldSnapX ? snappedCropRect.width : cropRect.width,
+			height: shouldSnapY ? snappedCropRect.height : cropRect.height
+		};
 	}
 
 // packages/image-editor/build-module/core/viewport-state.mjs
