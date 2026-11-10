@@ -66411,7 +66411,10 @@ function WidgetInserter() {
 		onOpenChange: setInserterOpen,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popup$4, {
 			size: "full",
-			portal: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$4, { style: { "--wp-ui-dialog-z-index": 99999 } }),
+			portal: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$4, {
+				container: document.body,
+				style: { "--wp-ui-dialog-z-index": 99999 }
+			}),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Header$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Title$3, { children: (0, import_i18n.__)("Add widget") }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CloseIconButton$1, {})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content$1, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WidgetPicker, { onSelect: insertWidgets }) })]
 		})
 	});
