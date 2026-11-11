@@ -46353,6 +46353,20 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/image/utils.mjs
 /**
+	* Returns the site's default link destination for newly added images, from the
+	* `image_default_link_type` option.
+	*
+	* @return {string} Block link destination.
+	*/
+	function getDefaultLinkDestination() {
+		switch (window.wp?.media?.view?.settings?.defaultProps?.link) {
+			case "file": return LINK_DESTINATION_MEDIA$1;
+			case "post": return LINK_DESTINATION_ATTACHMENT$1;
+			case LINK_DESTINATION_CUSTOM: return LINK_DESTINATION_CUSTOM;
+			default: return LINK_DESTINATION_NONE$1;
+		}
+	}
+	/**
 	* Evaluates a CSS aspect-ratio property value as a number.
 	*
 	* Degenerate or invalid ratios behave as 'auto'. And 'auto' ratios return NaN.
@@ -48873,7 +48887,7 @@ Icon: ButtonIcon });
 	* that own them.
 	*
 	* @param {Object}   options
-	* @param {Object}   options.attributes    The gallery block attributes.
+	* @param {Object}   options.attributes    The gallery block attributes, with `linkTo` defaulted.
 	* @param {Function} options.setAttributes The block's `setAttributes`.
 	* @param {string}   options.clientId      The block client ID.
 	* @param {?number}  options.postId        The current post ID (from block context).
@@ -48933,7 +48947,10 @@ Icon: ButtonIcon });
 		]);
 		function enableDynamicMode() {
 			registry.batch(() => {
-				setAttributes({ dynamicContent: { source: ATTACHED_MEDIA } });
+				setAttributes({
+					dynamicContent: { source: ATTACHED_MEDIA },
+					linkTo: attributes.linkTo
+				});
 				__unstableMarkNextChangeAsNotPersistent();
 				replaceInnerBlocks(clientId, []);
 			});
@@ -48942,7 +48959,10 @@ Icon: ButtonIcon });
 			registry.batch(() => {
 				replaceInnerBlocks(clientId, buildImageBlocks(dynamicMedia, imageAttributes));
 				__unstableMarkNextChangeAsNotPersistent();
-				setAttributes({ dynamicContent: void 0 });
+				setAttributes({
+					dynamicContent: void 0,
+					linkTo: attributes.linkTo
+				});
 			});
 		}
 		function setSourceOrder(nextOrderby, nextOrder) {
@@ -49487,7 +49507,9 @@ Icon: ButtonIcon });
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
 		const [lightboxSetting, defaultRatios, themeRatios, showDefaultRatios] = (0, _wordpress_block_editor.useSettings)("blocks.core/image.lightbox", "dimensions.aspectRatios.default", "dimensions.aspectRatios.theme", "dimensions.defaultAspectRatios");
 		const linkOptions = !lightboxSetting?.allowEditing ? LINK_OPTIONS.filter((option) => option.value !== LINK_DESTINATION_LIGHTBOX) : LINK_OPTIONS;
-		const { align, navigationButtonType, columns, imageCrop, randomOrder, linkTarget, linkTo, sizeSlug, aspectRatio, layout } = attributes;
+		const { align, navigationButtonType, columns, imageCrop, randomOrder, linkTarget, sizeSlug, aspectRatio, layout } = attributes;
+		const isDynamic = !!attributes.dynamicContent;
+		const linkTo = attributes.linkTo ?? (isDynamic ? "none" : getDefaultLinkDestination());
 		const isFlexLayout = isGalleryFlexLayout(layout);
 		const previousLayoutRef = (0, _wordpress_element.useRef)(layout);
 		const { __unstableMarkNextChangeAsNotPersistent, replaceInnerBlocks, updateBlockAttributes, selectBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
@@ -49548,12 +49570,14 @@ Icon: ButtonIcon });
 		const imageData = useGetMedia(innerBlockImages);
 		const newImages = useGetNewImages(images, imageData);
 		const hasImages = !!images.length;
-		const isDynamic = !!attributes.dynamicContent;
 		const [appliedSort, setAppliedSort] = (0, _wordpress_element.useState)(null);
 		const currentOrder = appliedSort && appliedSort.clientIds.length === innerBlockImages.length && appliedSort.clientIds.every((id, index) => innerBlockImages[index].clientId === id) ? appliedSort.order : null;
 		const canSortImages = hasSortableImages(innerBlockImages, imageData);
 		const dynamic = useDynamicGallery({
-			attributes,
+			attributes: {
+				...attributes,
+				linkTo
+			},
 			setAttributes,
 			clientId,
 			postId,
@@ -49792,12 +49816,6 @@ Icon: ButtonIcon });
 				type: "snackbar"
 			});
 		}
-		(0, _wordpress_element.useEffect)(() => {
-			if (!linkTo) {
-				__unstableMarkNextChangeAsNotPersistent();
-				setAttributes({ linkTo: window?.wp?.media?.view?.settings?.defaultProps?.link || "none" });
-			}
-		}, [linkTo]);
 		const hasImageIds = hasImages && images.some((image) => !!image.id);
 		const mediaPlaceholderProps = {
 			addToGallery: false,
@@ -55248,21 +55266,7 @@ Icon: ButtonIcon });
 			}
 			let additionalAttributes;
 			if (!media.id || media.id !== id) additionalAttributes = { sizeSlug: newSize };
-			let linkDestination = attributes.linkDestination;
-			if (!linkDestination) switch (window?.wp?.media?.view?.settings?.defaultProps?.link || "none") {
-				case "file":
-				case LINK_DESTINATION_MEDIA$1:
-					linkDestination = LINK_DESTINATION_MEDIA$1;
-					break;
-				case "post":
-				case LINK_DESTINATION_ATTACHMENT$1:
-					linkDestination = LINK_DESTINATION_ATTACHMENT$1;
-					break;
-				case LINK_DESTINATION_CUSTOM:
-					linkDestination = LINK_DESTINATION_CUSTOM;
-					break;
-				case LINK_DESTINATION_NONE$1: linkDestination = LINK_DESTINATION_NONE$1;
-			}
+			const linkDestination = attributes.linkDestination || getDefaultLinkDestination();
 			let href;
 			switch (linkDestination) {
 				case LINK_DESTINATION_MEDIA$1:
@@ -59283,17 +59287,9 @@ Icon: ButtonIcon });
 			let newLinkDestination = linkDestination;
 			let newHref = href;
 			if (mediaType === "image") {
-				if (!newLinkDestination) switch (window?.wp?.media?.view?.settings?.defaultProps?.link || "none") {
-					case "file":
-					case LINK_DESTINATION_MEDIA:
-						newLinkDestination = LINK_DESTINATION_MEDIA;
-						break;
-					case "post":
-					case LINK_DESTINATION_ATTACHMENT:
-						newLinkDestination = LINK_DESTINATION_ATTACHMENT;
-						break;
-					case LINK_DESTINATION_NONE:
-					default: newLinkDestination = LINK_DESTINATION_NONE;
+				if (!newLinkDestination) {
+					const defaultDestination = getDefaultLinkDestination();
+					newLinkDestination = ["media", "attachment"].includes(defaultDestination) ? defaultDestination : LINK_DESTINATION_NONE;
 				}
 				switch (newLinkDestination) {
 					case LINK_DESTINATION_MEDIA:
