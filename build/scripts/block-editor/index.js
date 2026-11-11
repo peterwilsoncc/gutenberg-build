@@ -106703,13 +106703,8 @@ If there's a particular need for this, please submit a feature request at https:
 		const getUpdatedLinkTargetSettings = (value) => {
 			const newLinkTarget = value ? "_blank" : void 0;
 			let updatedRel;
-			if (newLinkTarget) {
-				const rels = (rel ?? "").split(" ");
-				NEW_TAB_REL.forEach((relVal) => {
-					if (!rels.includes(relVal)) rels.push(relVal);
-				});
-				updatedRel = rels.join(" ");
-			} else {
+			if (newLinkTarget) updatedRel = rel || void 0;
+			else {
 				const rels = (rel ?? "").split(" ").filter((relVal) => NEW_TAB_REL.includes(relVal) === false);
 				updatedRel = rels.length ? rels.join(" ") : void 0;
 			}
