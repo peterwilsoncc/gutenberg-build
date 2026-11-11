@@ -3847,11 +3847,11 @@ div.components-toolbar > div + div.has-left-divider::before {
   margin-left: 8px;
 }
 
-.components-validated-control__wrapper-with-error-delegate:has(input:invalid[data-validity-visible]) .components-validated-control__content-editable [role=textbox], .components-validated-control__wrapper-with-error-delegate:has(select:invalid[data-validity-visible]) .components-input-control__backdrop, .components-validated-control textarea:invalid[data-validity-visible], .components-validated-control:has(:is(input, select):invalid[data-validity-visible]) .components-input-control__backdrop {
+.components-validated-control__wrapper-with-error-delegate:has(input:invalid[data-validity-visible]) .components-validated-control__content-editable :has(> [role=textbox]), .components-validated-control__wrapper-with-error-delegate:has(select:invalid[data-validity-visible]) .components-input-control__backdrop, .components-validated-control textarea:invalid[data-validity-visible], .components-validated-control:has(:is(input, select):invalid[data-validity-visible]) .components-input-control__backdrop {
   --focus-color: var(--wpds-color-stroke-interactive-error, #cc1818);
 }
 
-.components-validated-control__wrapper-with-error-delegate:has(input:invalid[data-validity-visible]) .components-validated-control__content-editable [role=textbox], .components-validated-control__wrapper-with-error-delegate:has(select:invalid[data-validity-visible]) .components-input-control__backdrop, .components-validated-control textarea:invalid[data-validity-visible], .components-validated-control:has(:is(input, select):invalid[data-validity-visible]) .components-input-control__backdrop {
+.components-validated-control__wrapper-with-error-delegate:has(input:invalid[data-validity-visible]) .components-validated-control__content-editable :has(> [role=textbox]), .components-validated-control__wrapper-with-error-delegate:has(select:invalid[data-validity-visible]) .components-input-control__backdrop, .components-validated-control textarea:invalid[data-validity-visible], .components-validated-control:has(:is(input, select):invalid[data-validity-visible]) .components-input-control__backdrop {
   border-color: var(--wpds-color-stroke-interactive-error, #cc1818);
 }
 

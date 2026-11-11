@@ -78515,8 +78515,11 @@ The screen with id ${screen.id} will not be added.`);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle(targetDocument, hash, css);
 	}
-	registerStyle("d14313e065", "._8c0a4563923f1715__editable{background:var(--wp-components-color-background,var(--wpds-color-background-surface-neutral-strong,#fff));border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-interactive-neutral,#8b8b8b);border-radius:var(--wpds-border-radius-sm,2px);color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:16px;line-height:normal;padding:6px 8px;width:100%}@media (min-width:600px){._8c0a4563923f1715__editable{font-size:13px;line-height:normal}}._8c0a4563923f1715__editable:hover:not(:disabled,[aria-disabled=true]){border-color:var(--wpds-color-stroke-interactive-neutral-active,#6c6c6c)}._8c0a4563923f1715__editable:focus{border-color:var(--wpds-color-stroke-interactive-neutral,#8b8b8b);box-shadow:none;outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._8c0a4563923f1715__editable::placeholder{color:rgba(30,30,30,.62)}._8c0a4563923f1715__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._8c0a4563923f1715__editable{min-height:40px;padding:12px}._8c0a4563923f1715__editable[aria-disabled=true]{background:var(--wp-components-color-gray-100,var(--wpds-color-background-surface-neutral,#fcfcfc));border-color:var(--wp-components-color-gray-300,var(--wpds-color-stroke-surface-neutral,#dbdbdb));color:var(--wp-components-color-gray-700,var(--wpds-color-foreground-content-neutral-weak,#6e6e6e));cursor:default}");
-	var style_module_default = { "editable": "_8c0a4563923f1715__editable" };
+	registerStyle("061f8fad12", "._45ae40a3da2e4571__layout{font-size:max(var(--wpds-typography-font-size-md,13px),16px);height:auto;line-height:var(--wpds-typography-line-height-sm,20px);min-height:var(--wpds-dimension-size-lg,40px)}@media (min-width:600px){._45ae40a3da2e4571__layout{font-size:var(--wpds-typography-font-size-md,13px)}}._45ae40a3da2e4571__layout:focus-within{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._22ef1ced69919f79__editable{flex-grow:1;min-width:0;outline:none;padding-block:calc((var(--wpds-dimension-size-lg, 40px) - var(--wpds-typography-line-height-sm, 20px))/2 - var(--wpds-border-width-xs, 1px));padding-inline:var(--wpds-dimension-padding-md,12px)}._22ef1ced69919f79__editable[aria-placeholder]:empty:before{color:color-mix(in srgb,var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e)),transparent 38%);content:attr(aria-placeholder)}._22ef1ced69919f79__editable[aria-disabled=true]{cursor:default}._22ef1ced69919f79__editable[aria-disabled=true]:empty:before{color:inherit}");
+	var style_module_default = {
+		"layout": "_45ae40a3da2e4571__layout",
+		"editable": "_22ef1ced69919f79__editable"
+	};
 	function UnforwardedContentEditableControl({ label, id, className, help, hideLabelFromVision, disabled, required, placeholder, ...additionalProps }, forwardedRef) {
 		const { baseControlProps, controlProps } = useBaseControlProps({
 			id,
@@ -78532,21 +78535,25 @@ The screen with id ${screen.id} will not be added.`);
 				id: labelId,
 				onClick: () => editableRef.current?.focus(),
 				children: label
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				className: style_module_default.editable,
-				role: "textbox",
-				"aria-multiline": true,
-				"aria-label": hideLabelFromVision ? label : void 0,
-				"aria-labelledby": hideLabelFromVision ? void 0 : labelId,
-				"aria-placeholder": placeholder || void 0,
-				"aria-disabled": disabled || void 0,
-				"aria-required": required || void 0,
-				ref: mergedRefs,
-				contentEditable: !disabled,
-				tabIndex: disabled ? -1 : void 0,
-				suppressContentEditableWarning: true,
-				...additionalProps,
-				...controlProps
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout, {
+				className: style_module_default.layout,
+				visuallyDisabled: disabled,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: style_module_default.editable,
+					role: "textbox",
+					"aria-multiline": true,
+					"aria-label": hideLabelFromVision ? label : void 0,
+					"aria-labelledby": hideLabelFromVision ? void 0 : labelId,
+					"aria-placeholder": placeholder || void 0,
+					"aria-disabled": disabled || void 0,
+					"aria-required": required || void 0,
+					ref: mergedRefs,
+					contentEditable: !disabled,
+					tabIndex: disabled ? -1 : void 0,
+					suppressContentEditableWarning: true,
+					...additionalProps,
+					...controlProps
+				})
 			})]
 		});
 	}
