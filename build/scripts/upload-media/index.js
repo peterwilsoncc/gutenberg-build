@@ -1017,6 +1017,25 @@
 			return false;
 		}
 	}
+	/**
+	* Whether client-side media processing supports a file's format.
+	*
+	* Accepts any object with a name and type, such as a plupload file, so
+	* callers outside the store can decide which files to route to it. HEIC
+	* and HEIF are also matched by extension, since a browser without a HEIC
+	* codec may give them no type. This only checks the format; it does not
+	* read the file or check browser support.
+	*
+	* @param file      File, or an object describing one.
+	* @param file.name File name.
+	* @param file.type MIME type.
+	* @return Whether the file's format is supported client-side.
+	*/
+	function isClientSideSupportedFormat(file) {
+		const type = (file.type || "").toLowerCase();
+		if (CLIENT_SIDE_SUPPORTED_MIME_TYPES.includes(type) || HEIC_MIME_TYPES.includes(type)) return true;
+		return /\.hei[cf]$/i.test(file.name || "");
+	}
 
 // packages/upload-media/build-module/store/utils/index.mjs
 /**
@@ -3994,6 +4013,7 @@ exports.getErrorMessage = getErrorMessage;
 exports.getHeicConversionAdvice = getHeicConversionAdvice;
 exports.getHeicUnsupportedMessage = getHeicUnsupportedMessage;
 exports.isClientSideMediaSupported = isClientSideMediaSupported;
+exports.isClientSideSupportedFormat = isClientSideSupportedFormat;
 exports.isHeicCanvasSupported = isHeicCanvasSupported;
 exports.isHeicFile = isHeicFile;
 exports.store = store;
