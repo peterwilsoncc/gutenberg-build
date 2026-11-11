@@ -13956,7 +13956,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	function getAlignmentsInfo(layout) {
 		const { contentSize, wideSize, type = "default" } = layout;
 		const alignmentInfo = {};
-		const sizeRegex = /^(?!0)\d+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)?$/i;
+		const sizeRegex = /^(?!0)\d+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cqw|cqh|cqi|cqb|cqmin|cqmax)?$/i;
 		if (sizeRegex.test(contentSize) && type === "constrained") alignmentInfo.none = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Max %s wide"), contentSize);
 		if (sizeRegex.test(wideSize)) alignmentInfo.wide = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Max %s wide"), wideSize);
 		return alignmentInfo;
@@ -15386,7 +15386,13 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		vmax: 100,
 		svmax: 100,
 		lvmax: 100,
-		dvmax: 100
+		dvmax: 100,
+		cqw: 100,
+		cqh: 100,
+		cqi: 100,
+		cqb: 100,
+		cqmin: 100,
+		cqmax: 100
 	};
 	const units = [
 		{
@@ -99138,6 +99144,30 @@ If there's a particular need for this, please submit a feature request at https:
 		dvmax: {
 			max: 100,
 			steps: 1
+		},
+		cqw: {
+			max: 100,
+			steps: 1
+		},
+		cqh: {
+			max: 100,
+			steps: 1
+		},
+		cqi: {
+			max: 100,
+			steps: 1
+		},
+		cqb: {
+			max: 100,
+			steps: 1
+		},
+		cqmin: {
+			max: 100,
+			steps: 1
+		},
+		cqmax: {
+			max: 100,
+			steps: 1
 		}
 	};
 
@@ -100881,7 +100911,13 @@ If there's a particular need for this, please submit a feature request at https:
 				"vmax",
 				"svmax",
 				"lvmax",
-				"dvmax"
+				"dvmax",
+				"cqw",
+				"cqh",
+				"cqi",
+				"cqb",
+				"cqmin",
+				"cqmax"
 			].includes(newUnit) && currentValue > 100) onChange(100 + newUnit);
 			setSelectedUnit(newUnit);
 		};
@@ -101021,6 +101057,30 @@ If there's a particular need for this, please submit a feature request at https:
 		dvmax: {
 			max: 100,
 			step: 1
+		},
+		cqw: {
+			max: 100,
+			step: 1
+		},
+		cqh: {
+			max: 100,
+			step: 1
+		},
+		cqi: {
+			max: 100,
+			step: 1
+		},
+		cqb: {
+			max: 100,
+			step: 1
+		},
+		cqmin: {
+			max: 100,
+			step: 1
+		},
+		cqmax: {
+			max: 100,
+			step: 1
 		}
 	};
 	/**
@@ -101086,7 +101146,13 @@ If there's a particular need for this, please submit a feature request at https:
 				"vmax",
 				"svmax",
 				"lvmax",
-				"dvmax"
+				"dvmax",
+				"cqw",
+				"cqh",
+				"cqi",
+				"cqb",
+				"cqmin",
+				"cqmax"
 			].includes(newUnit) && currentValue > 100) onChange(100 + newUnit);
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", {

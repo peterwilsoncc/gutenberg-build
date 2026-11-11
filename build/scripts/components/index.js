@@ -53893,6 +53893,42 @@ VisualLabel });
 			label: "lvmax",
 			a11yLabel: (0, _wordpress_i18n.__)("Large viewport largest dimension (lvmax)"),
 			step: .1
+		},
+		cqw: {
+			value: "cqw",
+			label: "cqw",
+			a11yLabel: (0, _wordpress_i18n.__)("Container width (cqw)"),
+			step: .1
+		},
+		cqh: {
+			value: "cqh",
+			label: "cqh",
+			a11yLabel: (0, _wordpress_i18n.__)("Container height (cqh)"),
+			step: .1
+		},
+		cqi: {
+			value: "cqi",
+			label: "cqi",
+			a11yLabel: (0, _wordpress_i18n.__)("Container inline size (cqi)"),
+			step: .1
+		},
+		cqb: {
+			value: "cqb",
+			label: "cqb",
+			a11yLabel: (0, _wordpress_i18n.__)("Container block size (cqb)"),
+			step: .1
+		},
+		cqmin: {
+			value: "cqmin",
+			label: "cqmin",
+			a11yLabel: (0, _wordpress_i18n.__)("Container smallest dimension (cqmin)"),
+			step: .1
+		},
+		cqmax: {
+			value: "cqmax",
+			label: "cqmax",
+			a11yLabel: (0, _wordpress_i18n.__)("Container largest dimension (cqmax)"),
+			step: .1
 		}
 	};
 	/**
@@ -55416,7 +55452,7 @@ VisualLabel });
 	const ConnectedBorderBoxControlSplitControls = contextConnect(BorderBoxControlSplitControls, "BorderBoxControlSplitControls");
 
 // packages/components/build-module/utils/unit-values.mjs
-	const UNITED_VALUE_REGEX = /^([\d.\-+]*)\s*(fr|cm|mm|Q|in|pc|pt|px|em|ex|ch|rem|lh|vw|vh|vmin|vmax|%|cap|ic|rlh|vi|vb|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|svw|lvw|dvw|svh|lvh|dvh|svi|lvi|dvi|svb|lvb|dvb|svmin|lvmin|dvmin|svmax|lvmax|dvmax)?$/;
+	const UNITED_VALUE_REGEX = /^([\d.\-+]*)\s*(fr|cm|mm|Q|in|pc|pt|px|em|ex|ch|rem|lh|vw|vh|vmin|vmax|%|cap|ic|rlh|vi|vb|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|svw|lvw|dvw|svh|lvh|dvh|svi|lvi|dvi|svb|lvb|dvb|svmin|lvmin|dvmin|svmax|lvmax|dvmax|cqw|cqh|cqi|cqb|cqmin|cqmax)?$/;
 	/**
 	* Parses a number and unit from a value.
 	*
@@ -56053,6 +56089,30 @@ VisualLabel });
 			step: 1
 		},
 		dvmax: {
+			max: 100,
+			step: 1
+		},
+		cqw: {
+			max: 100,
+			step: 1
+		},
+		cqh: {
+			max: 100,
+			step: 1
+		},
+		cqi: {
+			max: 100,
+			step: 1
+		},
+		cqb: {
+			max: 100,
+			step: 1
+		},
+		cqmin: {
+			max: 100,
+			step: 1
+		},
+		cqmax: {
 			max: 100,
 			step: 1
 		}
@@ -67575,7 +67635,7 @@ VisualLabel });
 	* @return Whether the value is a simple css value.
 	*/
 	function isSimpleCssValue(value) {
-		return /^[\d\.]+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)?$/i.test(String(value));
+		return /^[\d\.]+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cqw|cqh|cqi|cqb|cqmin|cqmax)?$/i.test(String(value));
 	}
 	/**
 	* Generates hint text for a font size.
