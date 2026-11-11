@@ -93725,11 +93725,9 @@ If there's a particular need for this, please submit a feature request at https:
 	function BlockLockToolbar({ clientId }) {
 		const { canLock, isLocked } = useBlockLock(clientId);
 		const [isModalOpen, toggleModal] = (0, _wordpress_element.useReducer)((isActive) => !isActive, false);
-		const hasLockButtonShownRef = (0, _wordpress_element.useRef)(false);
-		(0, _wordpress_element.useEffect)(() => {
-			if (isLocked) hasLockButtonShownRef.current = true;
-		}, [isLocked]);
-		if (!isLocked && !hasLockButtonShownRef.current) return null;
+		const [hasLockButtonShown, setHasLockButtonShown] = (0, _wordpress_element.useState)(isLocked);
+		if (isLocked && !hasLockButtonShown) setHasLockButtonShown(true);
+		if (!hasLockButtonShown) return null;
 		let label = isLocked ? (0, _wordpress_i18n.__)("Unlock") : (0, _wordpress_i18n.__)("Lock");
 		if (!canLock && isLocked) label = (0, _wordpress_i18n.__)("Locked");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, {
@@ -94114,7 +94112,6 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/block-editor/build-module/components/block-visibility/viewport-toolbar.mjs
 	function BlockVisibilityViewportToolbar({ clientIds }) {
-		const hasBlockVisibilityButtonShownRef = (0, _wordpress_element.useRef)(false);
 		const [blockVisibility] = useSettings("blockVisibility.allowEditing");
 		const { canToggleBlockVisibility, areBlocksHiddenAnywhere } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlocksByClientId, getBlockName, isBlockHiddenAnywhere } = unlock$2(select(store));
@@ -94124,11 +94121,10 @@ If there's a particular need for this, please submit a feature request at https:
 			};
 		}, [clientIds]);
 		const blockEditorDispatch = (0, _wordpress_data.useDispatch)(store);
-		(0, _wordpress_element.useEffect)(() => {
-			if (areBlocksHiddenAnywhere) hasBlockVisibilityButtonShownRef.current = true;
-		}, [areBlocksHiddenAnywhere]);
+		const [hasButtonShown, setHasButtonShown] = (0, _wordpress_element.useState)(areBlocksHiddenAnywhere);
+		if (areBlocksHiddenAnywhere && !hasButtonShown) setHasButtonShown(true);
 		if (blockVisibility === false) return null;
-		if (!areBlocksHiddenAnywhere && !hasBlockVisibilityButtonShownRef.current) return null;
+		if (!hasButtonShown) return null;
 		const { showViewportModal } = unlock$2(blockEditorDispatch);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, {
 			className: "block-editor-block-visibility-toolbar",
