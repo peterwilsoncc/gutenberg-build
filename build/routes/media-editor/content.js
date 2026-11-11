@@ -40931,7 +40931,7 @@ function restrictPanZoom(state, imageSize, cropRect) {
 	};
 }
 
-// packages/image-editor/build-module/map-edit-to-original.mjs
+// packages/image-editor/build-module/get-image-edit.mjs
 /**
 * Tolerance (a fraction of the image) used to decide whether a crop rect
 * is effectively full-frame. Sub-pixel / float-ulp deltas below this
@@ -40940,21 +40940,15 @@ function restrictPanZoom(state, imageSize, cropRect) {
 */
 const CROP_TOLERANCE = .001;
 /**
-* Map the person's edit onto the full-size image loaded in `state.image`.
+* The person's edit, described against the image loaded in `state.image`.
 *
 * The editor's state describes what the canvas shows: where the image sits
 * under the crop, how far it is zoomed, and a crop area measured against
-* the view. An image processor needs operations on the loaded image
-* instead. This returns flip, rotate and crop edits in application order.
-* The loaded image may itself be a previously edited file; "original"
-* refers to that image for this call.
+* the view. Something that edits the image needs the edit described against
+* the image instead.
 *
-* Emits `[flip, rotate, crop]` in that order. Identity operations are
-* pruned — an absent flip, a rotation that normalizes to 0°, and a crop
-* rect that covers (within tolerance) the full post-rotate AABB each
-* produce no edit. An empty array means no image has loaded or there is
-* no flip, rotation or crop to apply. A locked ratio can produce a crop
-* edit even before the person edits anything.
+* A crop within `CROP_TOLERANCE` of the whole rotated image is omitted.
+* A locked ratio can produce a crop before the person edits anything.
 *
 * Frames and math:
 *
@@ -40962,7 +40956,7 @@ const CROP_TOLERANCE = .001;
 * bounding box (the stencil-reference frame — see `createCamera` /
 * `createExportCamera`). Pan is in that frame; zoom scales the image
 * beneath a fixed stencil. Two conversions are needed to reach the frame
-* the crop edit applies against:
+* the crop applies against:
 *
 *   1. Express the stencil rect in snap-AABB **pixels**:
 *      Image screen-normalized top-left with zoom/pan is
@@ -40975,7 +40969,7 @@ const CROP_TOLERANCE = .001;
 *      translated rect as fractions of the full AABB.
 *
 * Rotation sign: the editor composes `flip · R(θ)` on the source (see
-* `createExportCamera` — rotate then flip). The edits' `[flip, rotate]`
+* `createExportCamera` — rotate then flip). The edit's flip-then-rotate
 * order is the opposite: `R(θ') · flip`. For both to land on the
 * same pixels we invert the rotation sign when exactly one flip axis
 * is set (`flip_h · R(θ) = R(-θ) · flip_h`). Both-or-neither flips
@@ -40984,13 +40978,12 @@ const CROP_TOLERANCE = .001;
 *
 * @param state The editor state. The edit and the loaded image's natural
 *              size are both read from it.
-* @return Ordered edits; empty when nothing changes the original or no
-*         image has loaded.
+* @return The edit, or `null` when no image has loaded.
 */
-function mapEditToOriginal(state) {
-	const edits = [];
+function getImageEdit(state) {
+	const edit = {};
 	const { image } = state;
-	if (!image || image.naturalWidth === 0 || image.naturalHeight === 0) return edits;
+	if (!image || image.naturalWidth === 0 || image.naturalHeight === 0) return null;
 	const imageSize = {
 		width: image.naturalWidth,
 		height: image.naturalHeight
@@ -40998,17 +40991,13 @@ function mapEditToOriginal(state) {
 	const { cropRect, pan, zoom, flip } = state;
 	const hasFlipH = flip.horizontal;
 	const hasFlipV = flip.vertical;
-	if (hasFlipH || hasFlipV) edits.push({
-		type: "flip",
+	if (hasFlipH || hasFlipV) edit.flip = {
 		horizontal: hasFlipH,
 		vertical: hasFlipV
-	});
+	};
 	const rawAngle = (state.rotation % 360 + 360) % 360;
 	const signedAngle = hasFlipH !== hasFlipV ? (360 - rawAngle) % 360 : rawAngle;
-	if (signedAngle !== 0) edits.push({
-		type: "rotate",
-		angle: signedAngle
-	});
+	if (signedAngle !== 0) edit.rotation = signedAngle;
 	const snapRotation = Math.round(state.rotation / 90) * 90;
 	const { width: snapW, height: snapH } = getRotatedBBox(imageSize.width, imageSize.height, snapRotation);
 	const { width: fullW, height: fullH } = getRotatedBBox(imageSize.width, imageSize.height, state.rotation);
@@ -41026,22 +41015,21 @@ function mapEditToOriginal(state) {
 	const y = fullY / fullH;
 	const width = widthPx / fullW;
 	const height = heightPx / fullH;
-	if (!(x <= CROP_TOLERANCE && y <= CROP_TOLERANCE && width >= .999 && height >= .999)) edits.push({
-		type: "crop",
+	if (!(x <= CROP_TOLERANCE && y <= CROP_TOLERANCE && width >= .999 && height >= .999)) edit.crop = {
 		x,
 		y,
 		width,
 		height
-	});
-	return edits;
+	};
+	return edit;
 }
 
 // packages/image-editor/build-module/get-output-size.mjs
 /**
-* The dimensions that the edits from `mapEditToOriginal` would produce
-* on the image in `state.image`.
+* The dimensions that the edit from `getImageEdit` would produce on the
+* image in `state.image`.
 *
-* A nearly full crop that the mapper omits gives the full image size.
+* A nearly full crop that `getImageEdit` omits gives the full image size.
 * Use this for a size readout or a minimum-size check against the loaded
 * image. A processor that edits a different file or rounds pixels may
 * produce different dimensions.
@@ -41052,18 +41040,16 @@ function mapEditToOriginal(state) {
 function getOutputSize(state) {
 	const { image } = state;
 	if (!image || image.naturalWidth === 0 || image.naturalHeight === 0) return null;
-	let angle = 0;
-	let crop;
-	for (const edit of mapEditToOriginal(state)) if (edit.type === "rotate") angle = edit.angle;
-	else if (edit.type === "crop") crop = edit;
-	const rotated = getRotatedBBox(image.naturalWidth, image.naturalHeight, angle);
-	if (!crop) return {
+	const edit = getImageEdit(state);
+	if (!edit) return null;
+	const rotated = getRotatedBBox(image.naturalWidth, image.naturalHeight, edit.rotation ?? 0);
+	if (!edit.crop) return {
 		width: rotated.width,
 		height: rotated.height
 	};
 	return {
-		width: crop.width * rotated.width,
-		height: crop.height * rotated.height
+		width: edit.crop.width * rotated.width,
+		height: edit.crop.height * rotated.height
 	};
 }
 
@@ -42786,7 +42772,7 @@ function DimensionsOverlay({ cropRect, containerSize, imageSize, activeHandle, o
 *
 * It exists for the snapping helpers below, which round the crop's edges
 * to whole source pixels while a handle is dragged; the Debug story shows
-* it too. It is wrong as a region to crop with: `mapEditToOriginal` gives
+* it too. It is wrong as a region to crop with: `getImageEdit` gives
 * that, and `getOutputSize` gives the size on its own.
 *
 * Rotation and flip come back as separate fields because they are
@@ -45531,28 +45517,27 @@ const METADATA_EDIT_KEYS = [
 const MEDIA_EDITOR_NOTICES_CONTEXT = "media-editor";
 function getCropModifiers(session) {
 	if (!session.hasOutputEdits) return [];
-	return mapEditToOriginal(session.imageEditor.state).map((edit) => {
-		if (edit.type === "flip") return {
-			type: "flip",
-			args: { flip: {
-				horizontal: edit.horizontal,
-				vertical: edit.vertical
-			} }
-		};
-		if (edit.type === "rotate") return {
-			type: "rotate",
-			args: { angle: edit.angle }
-		};
-		return {
-			type: "crop",
-			args: {
-				left: edit.x * 100,
-				top: edit.y * 100,
-				width: edit.width * 100,
-				height: edit.height * 100
-			}
-		};
+	const edit = getImageEdit(session.imageEditor.state);
+	if (!edit) return [];
+	const modifiers = [];
+	if (edit.flip) modifiers.push({
+		type: "flip",
+		args: { flip: edit.flip }
 	});
+	if (edit.rotation !== void 0) modifiers.push({
+		type: "rotate",
+		args: { angle: edit.rotation }
+	});
+	if (edit.crop) modifiers.push({
+		type: "crop",
+		args: {
+			left: edit.crop.x * 100,
+			top: edit.crop.y * 100,
+			width: edit.crop.width * 100,
+			height: edit.crop.height * 100
+		}
+	});
+	return modifiers;
 }
 function getMetadataEdits(pendingEdits, media) {
 	const metadataEdits = {};
