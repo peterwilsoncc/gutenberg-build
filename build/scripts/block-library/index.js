@@ -33510,10 +33510,8 @@ Icon: ButtonIcon });
 	function getUpdatedLinkAttributes({ rel = "", url = "", opensInNewTab, nofollow }) {
 		let newLinkTarget;
 		let updatedRel = rel;
-		if (opensInNewTab) {
-			newLinkTarget = NEW_TAB_TARGET;
-			updatedRel = updatedRel?.includes("noopener") ? updatedRel : updatedRel + ` ${NEW_TAB_REL$1}`;
-		} else {
+		if (opensInNewTab) newLinkTarget = NEW_TAB_TARGET;
+		else {
 			const relRegex = new RegExp(`\\b${NEW_TAB_REL$1}\\s*`, "g");
 			updatedRel = updatedRel?.replace(relRegex, "").trim();
 		}
