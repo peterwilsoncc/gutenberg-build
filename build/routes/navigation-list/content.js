@@ -45482,6 +45482,7 @@ const UnforwardedValidatedFormTokenField = ({ required, customValidity, markWhen
 			required,
 			value: restProps.value && restProps.value.length > 0 ? "hasvalue" : "",
 			tabIndex: -1,
+			"aria-hidden": "true",
 			onChange: () => {},
 			onFocus: () => getInteractiveTarget()?.focus()
 		})]
@@ -45591,6 +45592,7 @@ const UnforwardedValidatedToggleGroupControl = ({ required, customValidity, mark
 			required,
 			checked: restProps.value !== void 0,
 			tabIndex: -1,
+			"aria-hidden": "true",
 			name: nameAttr,
 			onChange: () => {},
 			onFocus: (e) => {

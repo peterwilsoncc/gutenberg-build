@@ -78646,7 +78646,7 @@ The screen with id ${screen.id} will not be added.`);
 /**
 	* A `contentEditable` field does not participate in the Constraint Validation
 	* API, so — like `ValidatedToggleGroupControl` — the validity state lives on a
-	* visually hidden delegate input that mirrors whether the field has content.
+	* hidden delegate input that mirrors whether the field has content.
 	*/
 	const UnforwardedValidatedContentEditableControl = ({ required, customValidity, markWhenOptional, value, className, ...restProps }, forwardedRef) => {
 		const validityTargetRef = (0, _wordpress_element.useRef)(null);
@@ -78675,6 +78675,7 @@ The screen with id ${screen.id} will not be added.`);
 				required,
 				value: value?.trim() ?? "",
 				tabIndex: -1,
+				"aria-hidden": "true",
 				onChange: () => {},
 				onFocus: () => getInteractiveTarget()?.focus()
 			})]
