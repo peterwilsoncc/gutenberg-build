@@ -3515,8 +3515,9 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			* If there are old and new blocks that:
 			* - have the same `clientId`
 			* - have the `controlledInnerBlocks` flag
-			* - don't have any own, uncontrolled children
 			* then we preserve the `controlledInnerBlocks` flag and the controlled sub-trees.
+			* The controller owns the inner blocks, so any inner blocks the action
+			* gives such a block are replaced.
 			* Nested controllers (e.g., `post-content`, patterns) don't lose their
 			* controlled status and don't unnecessarily re-clone blocks.
 			*/
@@ -3529,8 +3530,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			if (state?.order) for (const clientId of preservedControlledInnerBlocks) {
 				if (!newState.byClientId.has(clientId)) continue;
 				newState.controlledInnerBlocks.add(clientId);
-				const oldOrder = state.order.get(clientId);
-				if (!oldOrder?.length) continue;
+				const oldOrder = state.order.get(clientId) ?? [];
 				newState.order.set(clientId, oldOrder);
 				const preserveBlock = (blockId, parentId) => {
 					const blockData = state.byClientId.get(blockId);
@@ -3547,7 +3547,6 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			const fixedClientIds = [];
 			for (const clientId of newState.controlledInnerBlocks) {
 				const controlledOrder = newState.order.get(clientId);
-				if (!controlledOrder?.length) continue;
 				const innerBlocks = controlledOrder.map((id) => state.tree.get(id));
 				const existingEntry = newState.tree.get(clientId);
 				if (existingEntry) {
