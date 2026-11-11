@@ -3064,7 +3064,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	const { lock: lock$2, unlock: unlock$2 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/block-editor");
 
 // packages/block-editor/build-module/store/reducer.mjs
-	const { isContentBlock: isContentBlock$2 } = unlock$2(_wordpress_blocks.privateApis);
+	const { isContentBlock: isContentBlock$3 } = unlock$2(_wordpress_blocks.privateApis);
 	const identity$1 = (x) => x;
 	/**
 	* Given an array of blocks, returns an object where each key is a nesting
@@ -4869,7 +4869,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			}
 			if (contentOnlyParents.length) {
 				if (!!findParentInClientIdsList(state, clientId, contentOnlyParents)) {
-					if (isContentBlock$2(blockName)) derivedBlockEditingModes.set(clientId, "contentOnly");
+					if (isContentBlock$3(blockName)) derivedBlockEditingModes.set(clientId, "contentOnly");
 					else derivedBlockEditingModes.set(clientId, "disabled");
 				}
 			}
@@ -7730,8 +7730,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	const { lock: lock$1, unlock: unlock$1 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$29 = {};
-	lock$1(privateApis$29, {
+	const privateApis$30 = {};
+	lock$1(privateApis$30, {
 		getResponsiveMediaQueries: getResponsiveMediaQueries$5,
 		getViewportBreakpoints: getViewportBreakpoints$4,
 		getViewportBreakpointValueInPixels,
@@ -7986,8 +7986,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		isZoomOut: () => isZoomOut,
 		shouldRenderBlockListView: () => shouldRenderBlockListView
 	}, 1);
-	const { isContentBlock: isContentBlock$1, editableRootKey: editableRootKey$1 } = unlock$2(_wordpress_blocks.privateApis);
-	const { getViewportBreakpoints: getViewportBreakpoints$3 } = unlock$2(privateApis$29);
+	const { isContentBlock: isContentBlock$2, editableRootKey: editableRootKey$1 } = unlock$2(_wordpress_blocks.privateApis);
+	const { getViewportBreakpoints: getViewportBreakpoints$3 } = unlock$2(privateApis$30);
 	function isViewportAvailable(state, viewport) {
 		if (viewport === BLOCK_VISIBILITY_VIEWPORTS.desktop.key) return true;
 		return getViewportBreakpoints$3(getSettings$7(state)?.__experimentalFeatures?.viewport)[viewport] !== void 0;
@@ -8038,9 +8038,9 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* @return Whether the container allows insertion.
 	*/
 	function isContainerInsertableToInContentOnlyMode(state, blockName, rootClientId) {
-		const isBlockContentBlock = isContentBlock$1(blockName);
+		const isBlockContentBlock = isContentBlock$2(blockName);
 		const rootBlockName = getBlockName(state, rootClientId);
-		const isContainerContentBlock = isContentBlock$1(rootBlockName);
+		const isContainerContentBlock = isContentBlock$2(rootBlockName);
 		return getSectionRootClientId(state) === rootClientId || isContainerContentBlock && isBlockContentBlock;
 	}
 	function getClientIdWithClientIdsTreeUnmemoized(state, clientId) {
@@ -8160,7 +8160,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			if (_state.editedContentOnlySection) {
 				if (isWithinEditedContentOnlySection(_state, clientId)) return false;
 				if (!getParentSectionBlock(_state, clientId)) return true;
-				if (isContentBlock$1(getBlockName(_state, clientId))) return true;
+				if (isContentBlock$2(getBlockName(_state, clientId))) return true;
 			}
 			return false;
 		});
@@ -9207,7 +9207,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		isValidTemplate: () => isValidTemplate,
 		wasBlockJustInserted: () => wasBlockJustInserted
 	}, 1);
-	const { isContentBlock } = unlock$2(_wordpress_blocks.privateApis);
+	const { isContentBlock: isContentBlock$1 } = unlock$2(_wordpress_blocks.privateApis);
 	/**
 	* A block selection object.
 	*
@@ -10427,7 +10427,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		if (blockEditingMode === "disabled" && (!isWithinSection || blockName !== (0, _wordpress_blocks.getDefaultBlockName)())) return false;
 		const parentBlockListSettings = getBlockListSettings(state, rootClientId);
 		if (rootClientId && parentBlockListSettings === void 0) return false;
-		const isContentRoleBlock = isContentBlock(blockName);
+		const isContentRoleBlock = isContentBlock$1(blockName);
 		if (isWithinSection && !isContentRoleBlock) return false;
 		if (isWithinSection && getBlockName(state, sectionClientId) === "core/block") return false;
 		if (isWithinSection && (isParentSectionBlock || blockEditingMode === "contentOnly" || blockEditingMode === "disabled") && !isContainerInsertableToInContentOnlyMode(state, blockName, rootClientId)) {
@@ -10526,7 +10526,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
 		const sectionClientId = isParentSectionBlock ? rootClientId : getParentSectionBlock(state, rootClientId);
 		const isWithinSection = !!sectionClientId;
-		const isContentRoleBlock = isContentBlock(getBlockName(state, clientId));
+		const isContentRoleBlock = isContentBlock$1(getBlockName(state, clientId));
 		if (isWithinSection && !isContentRoleBlock) return false;
 		if (isWithinSection && getBlockName(state, sectionClientId) === "core/block") return false;
 		const rootBlockEditingMode = getBlockEditingMode(state, rootClientId);
@@ -10569,7 +10569,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		const rootClientId = getBlockRootClientId(state, clientId);
 		if (getTemplateLock(state, rootClientId) === "all") return false;
 		const isBlockWithinSection = !!getParentSectionBlock(state, clientId);
-		const isContentRoleBlock = isContentBlock(getBlockName(state, clientId));
+		const isContentRoleBlock = isContentBlock$1(getBlockName(state, clientId));
 		if (isBlockWithinSection && !isContentRoleBlock) return false;
 		const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
 		const rootBlockEditingMode = getBlockEditingMode(state, rootClientId);
@@ -11517,6 +11517,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		stopDragging: () => stopDragging,
 		stopEditingContentOnlySection: () => stopEditingContentOnlySection
 	}, 1);
+	const { isContentBlock } = unlock$2(_wordpress_blocks.privateApis);
 	const castArray$1 = (maybeArray) => Array.isArray(maybeArray) ? maybeArray : [maybeArray];
 	/**
 	* A list of private/experimental block editor settings that
@@ -11780,19 +11781,37 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* Mark a contentOnly section as being edited.
 	*
 	* @param clientId The client id of the block.
+	* @return Thunk action.
 	*/
-	function editContentOnlySection(clientId) {
-		return {
+	const editContentOnlySection = (clientId) => ({ select, dispatch }) => {
+		if (!clientId) {
+			dispatch({
+				type: "EDIT_CONTENT_ONLY_SECTION",
+				clientId
+			});
+			return;
+		}
+		const sectionClientId = select.isSectionBlock(clientId) ? clientId : select.getParentSectionBlock(clientId) ?? clientId;
+		if (select.getSelectedBlockClientId() !== clientId) dispatch.selectBlock(clientId);
+		dispatch({
 			type: "EDIT_CONTENT_ONLY_SECTION",
-			clientId
-		};
-	}
+			clientId: sectionClientId
+		});
+	};
 	/**
 	* Action that stops editing a contentOnly section.
+	*
+	* @return Thunk action.
 	*/
-	function stopEditingContentOnlySection() {
-		return { type: "EDIT_CONTENT_ONLY_SECTION" };
-	}
+	const stopEditingContentOnlySection = () => ({ select, dispatch }) => {
+		const editedSectionClientId = select.getEditedContentOnlySection();
+		if (!editedSectionClientId) return;
+		const selectedClientId = select.getSelectedBlockClientId();
+		if (selectedClientId) {
+			if ((selectedClientId === editedSectionClientId || select.getBlockParents(selectedClientId).includes(editedSectionClientId)) && !isContentBlock(select.getBlockName(selectedClientId))) dispatch.selectBlock(editedSectionClientId);
+		}
+		dispatch({ type: "EDIT_CONTENT_ONLY_SECTION" });
+	};
 	/**
 	* Sets the zoom level.
 	*
@@ -61910,7 +61929,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-editor/build-module/components/block-visibility/use-block-visibility.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$2 } = unlock$2(privateApis$29);
+	const { getViewportBreakpoints: getViewportBreakpoints$2 } = unlock$2(privateApis$30);
 	/**
 	* Returns the viewport the block visibility rules apply to.
 	*
@@ -92013,7 +92032,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/position.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$4 } = unlock$2(privateApis$29);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$4 } = unlock$2(privateApis$30);
 	const POSITION_SUPPORT_KEY = "position";
 	const DEFAULT_OPTION = {
 		value: "__default",
@@ -93851,7 +93870,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/block-visibility/utils.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock$2(privateApis$29);
+	const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock$2(privateApis$30);
 	function getBlockVisibilityViewportEntries(viewportSettings) {
 		const breakpoints = getViewportBreakpoints$1(viewportSettings);
 		return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.filter(([viewport]) => (viewport !== BLOCK_VISIBILITY_VIEWPORTS.tablet.key || breakpoints.tablet !== void 0) && (viewport !== BLOCK_VISIBILITY_VIEWPORTS.mobile.key || breakpoints.mobile !== void 0));
@@ -94682,7 +94701,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/block-toolbar/switch-section-style.mjs
-	const { getVariationStyle: getVariationStyle$1 } = unlock$2(privateApis$29);
+	const { getVariationStyle: getVariationStyle$1 } = unlock$2(privateApis$30);
 	const styleIcon = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.SVG, {
 		viewBox: "0 0 24 24",
 		xmlns: "http://www.w3.org/2000/svg",
@@ -107098,15 +107117,9 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/block-editor/build-module/components/block-inspector/edit-contents.mjs
 	function InlineEditButton({ clientId, editedContentOnlySection, editContentOnlySection, stopEditingContentOnlySection }) {
-		const { selectBlock } = (0, _wordpress_data.useDispatch)(store);
 		const handleClick = () => {
-			if (!editedContentOnlySection) {
-				editContentOnlySection(clientId);
-				selectBlock(clientId);
-			} else {
-				stopEditingContentOnlySection();
-				selectBlock(clientId);
-			}
+			if (!editedContentOnlySection) editContentOnlySection(clientId);
+			else stopEditingContentOnlySection();
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
 			direction: "column",
@@ -108098,7 +108111,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/block-style-variation.mjs
-	const { getVariationStyle, transformToStylesWithTextClipBase } = unlock$2(privateApis$29);
+	const { getVariationStyle, transformToStylesWithTextClipBase } = unlock$2(privateApis$30);
 	const VARIATION_PREFIX$1 = "is-style-";
 	function getVariationMatches(className) {
 		if (!className) return [];
@@ -108253,7 +108266,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/block-editor/build-module/components/global-styles/inherited-value-context.mjs
-	const { resolveStyle } = unlock$2(privateApis$29);
+	const { resolveStyle } = unlock$2(privateApis$30);
 	/**
 	* Reads the Global Styles payload and returns it as a `GlobalStylesConfig`
 	* (`{ styles, _links }`), the shape `resolveStyle` expects. `_links` carries
@@ -112928,7 +112941,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/states.mjs
-	const { getViewportBreakpoints } = unlock$2(privateApis$29);
+	const { getViewportBreakpoints } = unlock$2(privateApis$30);
 	const PSEUDO_STATE_LABELS = {
 		":hover": (0, _wordpress_i18n._x)("Hover", "Name for the CSS pseudo-class selector"),
 		":focus": (0, _wordpress_i18n._x)("Focus", "Name for the CSS pseudo-class selector"),
@@ -117006,7 +117019,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/style.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$3 } = unlock$2(privateApis$29);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$3 } = unlock$2(privateApis$30);
 	const BORDER_SIDES = [
 		"Top",
 		"Right",
@@ -117728,7 +117741,7 @@ If there's a particular need for this, please submit a feature request at https:
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/settings/addAttribute", addAttribute$1);
 
 // packages/block-editor/build-module/hooks/duotone.mjs
-	const { getDuotoneFilter: getDuotoneFilter$1, getDuotoneStylesheet, getDuotoneUnsetStylesheet } = unlock$2(privateApis$29);
+	const { getDuotoneFilter: getDuotoneFilter$1, getDuotoneStylesheet, getDuotoneUnsetStylesheet } = unlock$2(privateApis$30);
 	const EMPTY_ARRAY = [];
 	const isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
 	D([e]);
@@ -117955,7 +117968,7 @@ If there's a particular need for this, please submit a feature request at https:
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/textShadow/addAttribute", addAttributes);
 
 // packages/block-editor/build-module/hooks/custom-css.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$2 } = unlock$2(privateApis$29);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$2 } = unlock$2(privateApis$30);
 	const CUSTOM_CSS_INSTANCE_REFERENCE = {};
 	const EMPTY_STYLE = {};
 	function hasCustomCSSString(node) {
@@ -118163,7 +118176,7 @@ If there's a particular need for this, please submit a feature request at https:
 		"rowStart",
 		"rowSpan"
 	];
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$2(privateApis$29);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$2(privateApis$30);
 	function getDefaultLayout(layoutBlockSupport = {}, blockVariation) {
 		const defaultBlockLayout = layoutBlockSupport?.default;
 		return blockVariation?.attributes?.layout ?? defaultBlockLayout;
@@ -119262,7 +119275,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/layout-child.mjs
-	const { getResponsiveMediaQueries } = unlock$2(privateApis$29);
+	const { getResponsiveMediaQueries } = unlock$2(privateApis$30);
 	const LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
 	const FLEX_CHILD_LAYOUT_VALUES = {
 		fit: "fit",
@@ -121020,7 +121033,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/private-apis.mjs
-	const { getDuotoneFilter } = unlock$2(privateApis$29);
+	const { getDuotoneFilter } = unlock$2(privateApis$30);
 	/**
 	* Private `@wordpress/block-editor` APIs.
 	*/
