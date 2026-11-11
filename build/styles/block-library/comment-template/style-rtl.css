@@ -8,7 +8,7 @@
 .wp-block-comment-template li {
   clear: both;
 }
-.wp-block-comment-template ol {
+.wp-block-comment-template ol:not(:where(.wp-block-comment-content ol)) {
   margin-bottom: 0;
   max-width: 100%;
   list-style: none;
