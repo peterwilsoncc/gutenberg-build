@@ -88216,7 +88216,7 @@ Icon: ButtonIcon });
 	};
 	const init$9 = () => {
 		(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/template-part", enhanceTemplatePartVariations);
-		const DISALLOWED_PARENTS = ["core/post-template", "core/post-content"];
+		const DISALLOWED_PARENTS = ["core/post-content"];
 		(0, _wordpress_hooks.addFilter)("blockEditor.__unstableCanInsertBlockType", "core/block-library/removeTemplatePartsFromPostTemplates", (canInsert, blockType, rootClientId, { getBlock, getBlockParentsByBlockName }) => {
 			if (blockType.name !== "core/template-part") return canInsert;
 			for (const disallowedParentType of DISALLOWED_PARENTS) if (getBlock(rootClientId)?.name === disallowedParentType || getBlockParentsByBlockName(rootClientId, disallowedParentType).length) return false;
