@@ -49829,9 +49829,10 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param props.searchLabel   Label for search input
 	* @param props.postId        ID of the post the modal was opened from
 	* @param props.postType      Slug of that post's type
+	* @param props.fields        Fields registered for attachments
 	* @return JSX element or null
 	*/
-	function MediaUploadModal({ allowedTypes, multiple = false, value, onSelect, onClose, onUpload, title = (0, _wordpress_i18n.__)("Select Media"), isOpen, isDismissible = true, modalClass, search = true, searchLabel = (0, _wordpress_i18n.__)("Search media"), postId, postType }) {
+	function MediaUploadModal({ allowedTypes, multiple = false, value, onSelect, onClose, onUpload, title = (0, _wordpress_i18n.__)("Select Media"), isOpen, isDismissible = true, modalClass, search = true, searchLabel = (0, _wordpress_i18n.__)("Search media"), postId, postType, fields: registeredFields }) {
 		const attachedToPostId = Number.isInteger(postId) ? postId : void 0;
 		const uploadedToLabel = (0, _wordpress_data.useSelect)((select) => attachedToPostId && postType ? select(_wordpress_core_data.store).getPostType(postType)?.labels?.uploaded_to_this_item : void 0, [attachedToPostId, postType]);
 		const taxonomies = (0, _wordpress_data.useSelect)((select) => {
@@ -49939,7 +49940,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if (!open) clearCompleted();
 		}, [clearCompleted]);
 		const { records: mediaRecords, isResolving: isLoading, totalItems, totalPages } = useEntityRecordsWithPermissions("postType", "attachment", queryArgs);
-		const fields = (0, _wordpress_element.useMemo)(() => [
+		const ownFields = (0, _wordpress_element.useMemo)(() => [
 			{
 				...mediaThumbnailField,
 				enableHiding: false
@@ -49974,6 +49975,11 @@ If there's a particular need for this, please submit a feature request at https:
 				filterBy: { operators: ["isAny"] }
 			}
 		], [attachedToPostId, uploadedToLabel]);
+		const fields = (0, _wordpress_element.useMemo)(() => {
+			if (!registeredFields?.length) return ownFields;
+			const ownIds = new Set(ownFields.map(({ id }) => id));
+			return [...ownFields, ...registeredFields.filter(({ id }) => !ownIds.has(id))];
+		}, [ownFields, registeredFields]);
 		const actions = (0, _wordpress_element.useMemo)(() => [{
 			id: "select",
 			label: (0, _wordpress_i18n.__)("Select"),

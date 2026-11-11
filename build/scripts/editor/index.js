@@ -104140,7 +104140,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/dataviews/fields-loader/index.mjs
-	const EMPTY_FIELDS = [];
+	const EMPTY_FIELDS$1 = [];
 	/**
 	* Turns a rejection into an `Error` a screen can show.
 	*
@@ -104187,12 +104187,12 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [kind, name]);
 		const normalizedError = (0, _wordpress_element.useMemo)(() => error ? toError$1(error) : void 0, [error]);
 		if (normalizedError) return {
-			fields: EMPTY_FIELDS,
+			fields: EMPTY_FIELDS$1,
 			isLoading: false,
 			error: normalizedError
 		};
 		if (isLoading) return {
-			fields: EMPTY_FIELDS,
+			fields: EMPTY_FIELDS$1,
 			isLoading: true
 		};
 		return {
@@ -104942,6 +104942,7 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/editor/build-module/hooks/media-upload.mjs
 	const { MediaUploadModal: MediaUploadModalComponent } = unlock$5(_wordpress_media_utils.privateApis);
+	const EMPTY_FIELDS = [];
 	/**
 	* Supplies the modal with the post it was opened from, so that its "Attached to"
 	* filter can offer media uploaded to that post, labelled with the post type's
@@ -104953,6 +104954,11 @@ If there's a particular need for this, please submit a feature request at https:
 	* the same reasoning, and the same `viewable` check, as attaching media on save.
 	* Their entity ID is a slug rather than a number besides, which the media query
 	* has no use for.
+	*
+	* It also supplies the fields registered for attachments on the server, so
+	* that a plugin's fields show in the modal as columns and filters. They are
+	* requested the first time the modal opens rather than wherever a media
+	* placeholder renders.
 	*
 	* @param {Object} props Props passed through to the modal.
 	*/
@@ -104968,10 +104974,12 @@ If there's a particular need for this, please submit a feature request at https:
 				postType: currentPostType
 			};
 		}, []);
+		const fields = (0, _wordpress_data.useSelect)((select) => props.isOpen ? unlock$5(select(store)).getEntityFields("postType", "attachment") : EMPTY_FIELDS, [props.isOpen]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaUploadModalComponent, {
 			...props,
 			postId,
-			postType
+			postType,
+			fields
 		});
 	}
 	/**
