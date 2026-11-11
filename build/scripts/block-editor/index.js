@@ -98861,7 +98861,7 @@ If there's a particular need for this, please submit a feature request at https:
 			const block = registry.select(store).getBlock(blockClientId);
 			const transformedBlocks = block && (0, _wordpress_blocks.switchToBlockType)(block, block.name, variationName);
 			if (transformedBlocks) {
-				replaceBlocks(blockClientId, transformedBlocks);
+				replaceBlocks(blockClientId, transformedBlocks, void 0, null);
 				return;
 			}
 			updateBlockAttributes(blockClientId, { ...variations.find(({ name }) => name === variationName).attributes });
