@@ -73327,6 +73327,10 @@ The screen with id ${screen.id} will not be added.`);
 			onDismiss?.();
 			onRemove?.();
 		}
+		function onKeyPress(event) {
+			if (event.target !== event.currentTarget) return;
+			dismissMe(event);
+		}
 		function onActionClick(event, onClick) {
 			event.stopPropagation();
 			onRemove?.();
@@ -73369,7 +73373,7 @@ The screen with id ${screen.id} will not be added.`);
 			onClick: !explicitDismiss ? dismissMe : void 0,
 			tabIndex: 0,
 			role: !explicitDismiss ? "button" : void 0,
-			onKeyPress: !explicitDismiss ? dismissMe : void 0,
+			onKeyPress: !explicitDismiss ? onKeyPress : void 0,
 			"aria-label": !explicitDismiss ? (0, _wordpress_i18n.__)("Dismiss this notice") : void 0,
 			"data-testid": "snackbar",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
