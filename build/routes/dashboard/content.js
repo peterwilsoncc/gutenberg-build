@@ -27079,6 +27079,11 @@ function Root$10({ children, open: openProp, onOpenChange, defaultOpen, onConfir
 	const onConfirmEvent = (0, import_compose.useEvent)(onConfirm);
 	const confirmIdRef = (0, import_element.useRef)(0);
 	(0, import_element.useEffect)(() => {
+		return () => {
+			confirmIdRef.current += 1;
+		};
+	}, []);
+	(0, import_element.useEffect)(() => {
 		if (openProp && lifecycleState.phase === "closing") lifecycle.update({
 			phase: "idle",
 			showSpinner: false
@@ -27128,12 +27133,12 @@ function Root$10({ children, open: openProp, onOpenChange, defaultOpen, onConfir
 				showSpinner: false
 			});
 		} catch (error) {
+			console.error(error);
 			if (confirmIdRef.current !== id) return;
 			lifecycle.update({
 				phase: "idle",
 				showSpinner: false
 			});
-			console.error(error);
 		}
 	}, [lifecycle, onConfirmEvent]);
 	const handleOpenChangeComplete = (0, import_element.useCallback)((open) => {
