@@ -136,8 +136,7 @@ return array(
 				'__experimentalDefaultControls' => array(
 					'padding' => true
 				),
-				'__experimentalSkipSerialization' => true,
-				'__experimentalSelector' => '.wp-block-accordion-heading__toggle'
+				'__experimentalSkipSerialization' => true
 			),
 			'__experimentalBorder' => array(
 				'color' => true,
@@ -5405,7 +5404,6 @@ return array(
 					'fontSize' => true
 				)
 			),
-			'__experimentalSelector' => 'p',
 			'__unstablePasteTextInline' => true,
 			'interactivity' => array(
 				'clientNavigation' => true
@@ -8132,7 +8130,6 @@ return array(
 			'interactivity' => true,
 			'typography' => array(
 				'__experimentalSkipSerialization' => true,
-				'__experimentalSelector' => '.wp-block-search__label, .wp-block-search__input, .wp-block-search__button',
 				'fontSize' => true,
 				'lineHeight' => true,
 				'__experimentalFontFamily' => true,

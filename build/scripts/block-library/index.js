@@ -5125,8 +5125,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			"spacing": {
 				"padding": true,
 				"__experimentalDefaultControls": { "padding": true },
-				"__experimentalSkipSerialization": true,
-				"__experimentalSelector": ".wp-block-accordion-heading__toggle"
+				"__experimentalSkipSerialization": true
 			},
 			"__experimentalBorder": {
 				"color": true,
@@ -66913,7 +66912,6 @@ Icon: ButtonIcon });
 				"fitText": true,
 				"__experimentalDefaultControls": { "fontSize": true }
 			},
-			"__experimentalSelector": "p",
 			"__unstablePasteTextInline": true,
 			"interactivity": { "clientNavigation": true }
 		},
@@ -80207,7 +80205,6 @@ Icon: ButtonIcon });
 			"interactivity": true,
 			"typography": {
 				"__experimentalSkipSerialization": true,
-				"__experimentalSelector": ".wp-block-search__label, .wp-block-search__input, .wp-block-search__button",
 				"fontSize": true,
 				"lineHeight": true,
 				"__experimentalFontFamily": true,
