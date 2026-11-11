@@ -79976,6 +79976,12 @@ Icon: ButtonIcon });
 	function RSSEdit({ attributes, setAttributes, name }) {
 		const [isEditing, setIsEditing] = (0, _wordpress_element.useState)(!attributes.feedURL);
 		const { blockLayout, columns, displayAuthor, displayDate, displayExcerpt, excerptLength, feedURL, itemsToShow, openInNewTab, rel } = attributes;
+		const [url, setURL] = (0, _wordpress_element.useState)(feedURL);
+		const [prevFeedURL, setPrevFeedURL] = (0, _wordpress_element.useState)(feedURL);
+		if (feedURL !== prevFeedURL) {
+			setPrevFeedURL(feedURL);
+			setURL(feedURL);
+		}
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 		function toggleAttribute(propName) {
 			return () => {
@@ -79985,8 +79991,8 @@ Icon: ButtonIcon });
 		}
 		function onSubmitURL(event) {
 			event.preventDefault();
-			if (feedURL) {
-				setAttributes({ feedURL: (0, _wordpress_url.prependHTTPS)(feedURL) });
+			if (url) {
+				setAttributes({ feedURL: (0, _wordpress_url.prependHTTPS)(url) });
 				setIsEditing(false);
 			}
 		}
@@ -80012,8 +80018,8 @@ Icon: ButtonIcon });
 						type: "url",
 						hideLabelFromVision: true,
 						placeholder: (0, _wordpress_i18n.__)("Enter URL here…"),
-						value: feedURL,
-						onChange: (value) => setAttributes({ feedURL: value }),
+						value: url,
+						onChange: (value) => setURL(value),
 						className: "wp-block-rss__placeholder-input"
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 						__next40pxDefaultSize: true,
