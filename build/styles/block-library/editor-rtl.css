@@ -2030,11 +2030,6 @@ body.editor-styles-wrapper .wp-block-navigation__responsive-container.is-menu-op
   opacity: 0;
 }
 
-html[dir=rtl] .has-drop-cap:not(:focus)::first-letter {
-  float: initial;
-  margin-right: 0.1em;
-}
-
 .wp-block-post-author__transform {
   background: #f0f0f0;
   border-radius: 2px;

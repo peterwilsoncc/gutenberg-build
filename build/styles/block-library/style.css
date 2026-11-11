@@ -3226,18 +3226,14 @@ html.has-modal-open {
 }
 
 .has-drop-cap:not(:focus)::first-letter {
-  float: left;
+  float: inline-start;
   font-size: 8.4em;
   line-height: 0.68;
   font-weight: 100;
-  margin: 0.05em 0.1em 0 0;
+  margin: 0.05em 0 0;
+  margin-inline-end: 0.1em;
   text-transform: uppercase;
   font-style: normal;
-}
-
-body.rtl .has-drop-cap:not(:focus)::first-letter {
-  float: initial;
-  margin-left: 0.1em;
 }
 
 p.has-drop-cap.has-background {
