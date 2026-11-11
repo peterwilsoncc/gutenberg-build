@@ -1806,10 +1806,10 @@ button.font-library__upload-area {
   padding: var(--wpds-dimension-padding-xs, 4px) var(--wpds-dimension-padding-md, 12px);
   cursor: default;
   min-height: var(--wpds-dimension-size-md, 32px);
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: var(--wpds-typography-font-family-body, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
   font-weight: var(--wpds-typography-font-weight-default, 400);
-  font-size: 13px;
-  line-height: 20px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
+  line-height: var(--wpds-typography-line-height-sm, 20px);
   color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
 }
 
@@ -4019,10 +4019,10 @@ div.dataviews-view-list {
 }
 
 .dataforms-layouts__wrapper {
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: var(--wpds-typography-font-family-body, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
   font-weight: var(--wpds-typography-font-weight-default, 400);
-  font-size: 13px;
-  line-height: 20px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
+  line-height: var(--wpds-typography-line-height-sm, 20px);
 }
 
 /**
@@ -6742,10 +6742,10 @@ mark.wp-note {
   width: 100%;
 }
 .editor-post-card-panel__title.editor-post-card-panel__title {
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: var(--wpds-typography-font-family-heading, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
-  font-size: 13px;
-  line-height: 20px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
+  line-height: var(--wpds-typography-line-height-sm, 20px);
   margin: 0;
   display: flex;
   align-items: center;

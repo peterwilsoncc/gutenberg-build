@@ -210,10 +210,10 @@
   padding: 0 16px;
   width: 100%;
   container-type: inline-size;
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: var(--wpds-typography-font-family-body, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
   font-weight: var(--wpds-typography-font-weight-default, 400);
-  font-size: 12px;
-  line-height: 16px;
+  font-size: var(--wpds-typography-font-size-sm, 12px);
+  line-height: var(--wpds-typography-line-height-xs, 16px);
 }
 
 .dataviews-media-field__media-thumbnail__filename__truncate {
