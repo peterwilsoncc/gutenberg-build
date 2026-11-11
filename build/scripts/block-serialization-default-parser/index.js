@@ -7,45 +7,46 @@
 	let output;
 	let stack;
 	/**
-	* Matches block comment delimiters
+	* Matches block comment delimiter candidates
 	*
-	* While most of this pattern is straightforward the attribute parsing
-	* incorporates a tricks to make sure we don't choke on specific input
+	* Sub-matches:
+	*  1. Leading “closer” solidus before `wp`
+	*  2. Namespace
+	*  3. Block name
 	*
-	*  - since JavaScript has no possessive quantifier or atomic grouping
-	*    we are emulating it with a trick
-	*
-	*    we want a possessive quantifier or atomic group to prevent backtracking
-	*    on the `}`s should we fail to match the remainder of the pattern
-	*
-	*    we can emulate this with a positive lookahead and back reference
-	*    (a++)*c === ((?=(a+))\1)*c
-	*
-	*    let's examine an example:
-	*      - /(a+)*c/.test('aaaaaaaaaaaaad') fails after over 49,000 steps
-	*      - /(a++)*c/.test('aaaaaaaaaaaaad') fails after 85 steps
-	*      - /(?>a+)*c/.test('aaaaaaaaaaaaad') fails after 126 steps
-	*
-	*    this is because the possessive `++` and the atomic group `(?>)`
-	*    tell the engine that all those `a`s belong together as a single group
-	*    and so it won't split it up when stepping backwards to try and match
-	*
-	*    if we use /((?=(a+))\1)*c/ then we get the same behavior as the atomic group
-	*    or possessive and prevent the backtracking because the `a+` is matched but
-	*    not captured. thus, we find the long string of `a`s and remember it, then
-	*    reference it as a whole unit inside our pattern
-	*
-	*    @see http://instanceof.me/post/52245507631/regex-emulate-atomic-grouping-with-lookahead
-	*    @see http://blog.stevenlevithan.com/archives/mimic-atomic-groups
-	*    @see https://javascript.info/regexp-infinite-backtracking-problem
-	*
-	*    once browsers reliably support atomic grouping or possessive
-	*    quantifiers natively we should remove this trick and simplify
-	*
-	* @since 3.8.0
-	* @since 4.6.1 added optimization to prevent backtracking on attribute parsing
+	* @since 24.4.0
 	*/
-	const tokenizer = /<!--[ \t\f\r\n]+(\/)?wp:([a-z][a-z0-9_-]*\/)?([a-z][a-z0-9_-]*)[ \t\f\r\n]+({(?:(?=([^}]+|}+(?=})|(?!}[ \t\f\r\n]+\/?-->)[^])*)\5|[^]*?)}[ \t\f\r\n]+)?(\/)?-->/g;
+	const delimiterPrefixPattern = /[ \t\f\r\n]+(\/)?wp:([a-z][a-z0-9_-]*\/)?([a-z][a-z0-9_-]*)[ \t\f\r\n]+/y;
+	/**
+	* Matches the end of a block delimiter’s JSON attribute area.
+	*
+	* @since 24.4.0
+	*/
+	const attributeAreaClosingPattern = /}[ \t\f\r\n]+$/g;
+	/**
+	* Matches the start of an HTML comment.
+	*
+	* @since 24.4.0
+	*/
+	const commentStartPattern = /<!--/g;
+	/**
+	* Matches abrupt closings of empty comments, and comments consisting
+	* only of a sequence of dashes.
+	*
+	* Example:
+	*     `<!-->`, `<!------>`
+	*
+	* @see https://html.spec.whatwg.org/#parse-error-abrupt-closing-of-empty-comment
+	*
+	* @since 24.4.0
+	*/
+	const onlyDashesCommentEndPattern = /-*>/y;
+	/**
+	* Matches the end of an open HTML comment.
+	*
+	* @since 24.4.0
+	*/
+	const commentEndPattern = /--!?>/g;
 	/**
 	* Constructs a block object.
 	*
@@ -176,7 +177,7 @@
 		offset = 0;
 		output = [];
 		stack = [];
-		tokenizer.lastIndex = 0;
+		commentStartPattern.lastIndex = 0;
 		do;
 		while (proceed());
 		return output;
@@ -260,43 +261,87 @@
 	* @return The next matched token.
 	*/
 	function nextToken() {
-		const matches = tokenizer.exec(document);
-		if (null === matches) return [
+		while (commentStartPattern.lastIndex < document.length) {
+			const nextComment = commentStartPattern.exec(document);
+			if (null === nextComment) {
+				commentStartPattern.lastIndex = document.length;
+				break;
+			}
+			onlyDashesCommentEndPattern.lastIndex = commentStartPattern.lastIndex;
+			if (null !== onlyDashesCommentEndPattern.exec(document)) {
+				commentStartPattern.lastIndex = onlyDashesCommentEndPattern.lastIndex;
+				continue;
+			}
+			commentEndPattern.lastIndex = commentStartPattern.lastIndex;
+			const commentEnd = commentEndPattern.exec(document);
+			if (null === commentEnd) {
+				commentStartPattern.lastIndex = document.length;
+				break;
+			}
+			if ("!" === document[commentEndPattern.lastIndex - 2]) {
+				commentStartPattern.lastIndex = commentEndPattern.lastIndex;
+				continue;
+			}
+			if (commentEnd.index < commentStartPattern.lastIndex + 6) {
+				commentStartPattern.lastIndex = commentEndPattern.lastIndex;
+				continue;
+			}
+			delimiterPrefixPattern.lastIndex = commentStartPattern.lastIndex;
+			const delimiterPrefix = delimiterPrefixPattern.exec(document);
+			if (null === delimiterPrefix) {
+				commentStartPattern.lastIndex = commentEndPattern.lastIndex;
+				continue;
+			}
+			const isVoid = "/" === document[commentEnd.index - 1];
+			const voidBackup = isVoid ? 1 : 0;
+			const hasAttrs = commentEnd.index - voidBackup - delimiterPrefixPattern.lastIndex > 0;
+			if (hasAttrs && "{" !== document[delimiterPrefixPattern.lastIndex]) {
+				commentStartPattern.lastIndex = commentEndPattern.lastIndex;
+				continue;
+			}
+			const attributeArea = document.slice(delimiterPrefixPattern.lastIndex, commentEnd.index - voidBackup);
+			attributeAreaClosingPattern.lastIndex = 1;
+			const attributeClosing = hasAttrs ? attributeAreaClosingPattern.exec(attributeArea) : null;
+			if (hasAttrs && null === attributeClosing) {
+				commentStartPattern.lastIndex = commentEndPattern.lastIndex;
+				continue;
+			}
+			const jsonAttributes = attributeClosing ? attributeArea.slice(0, attributeClosing.index + 1) : null;
+			const startedAt = nextComment.index;
+			commentStartPattern.lastIndex = commentEndPattern.lastIndex;
+			const length = commentEndPattern.lastIndex - nextComment.index;
+			const isCloser = "/" === delimiterPrefix[1];
+			const name = (delimiterPrefix[2] || "core/") + delimiterPrefix[3];
+			const attrs = jsonAttributes ? parseJSON(jsonAttributes) : {};
+			if (isCloser && (isVoid || hasAttrs)) {}
+			if (isVoid) return [
+				"void-block",
+				name,
+				attrs,
+				startedAt,
+				length
+			];
+			if (isCloser) return [
+				"block-closer",
+				name,
+				null,
+				startedAt,
+				length
+			];
+			return [
+				"block-opener",
+				name,
+				attrs,
+				startedAt,
+				length
+			];
+		}
+		return [
 			"no-more-tokens",
 			"",
 			null,
 			0,
 			0
-		];
-		const startedAt = matches.index;
-		const [match, closerMatch, namespaceMatch, nameMatch, attrsMatch, , voidMatch] = matches;
-		const length = match.length;
-		const isCloser = !!closerMatch;
-		const isVoid = !!voidMatch;
-		const name = (namespaceMatch || "core/") + nameMatch;
-		const hasAttrs = !!attrsMatch;
-		const attrs = hasAttrs ? parseJSON(attrsMatch) : {};
-		if (isCloser && (isVoid || hasAttrs)) {}
-		if (isVoid) return [
-			"void-block",
-			name,
-			attrs,
-			startedAt,
-			length
-		];
-		if (isCloser) return [
-			"block-closer",
-			name,
-			null,
-			startedAt,
-			length
-		];
-		return [
-			"block-opener",
-			name,
-			attrs,
-			startedAt,
-			length
 		];
 	}
 	/**
