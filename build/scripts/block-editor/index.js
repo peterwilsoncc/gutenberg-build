@@ -89290,15 +89290,15 @@ If there's a particular need for this, please submit a feature request at https:
 			onInsertBlocks(blocks, meta, shouldForceFocusBlock, _rootClientId);
 			onSelect(blocks);
 			maybeCloseInserter();
-			window.requestAnimationFrame(() => {
-				if (!shouldFocusBlock && !blockTypesTabRef.current?.contains(ref.current.ownerDocument.activeElement)) blockTypesTabRef.current?.querySelector("button").focus();
+			if (!shouldFocusBlock) window.requestAnimationFrame(() => {
+				const tab = blockTypesTabRef.current;
+				if (tab && tab.ownerDocument.activeElement === tab.ownerDocument.body) tab.querySelector("button").focus();
 			});
 		}, [
 			hideInsertionPoint,
 			onInsertBlocks,
 			maybeCloseInserter,
 			onSelect,
-			ref,
 			shouldFocusBlock
 		]);
 		const onInsertPattern = (0, _wordpress_element.useCallback)((blocks, patternName, ...args) => {
