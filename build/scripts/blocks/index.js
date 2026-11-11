@@ -6119,6 +6119,17 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			name = "core/comments";
 			newAttributes.legacy = true;
 		}
+		if (name === "core/cover" && attributes.minHeight) {
+			const coverStyle = newAttributes.style ?? {};
+			const dimensions = coverStyle.dimensions ?? {};
+			if (!dimensions.minHeight) newAttributes.style = {
+				...coverStyle,
+				dimensions: {
+					...dimensions,
+					minHeight: `${attributes.minHeight}${attributes.minHeightUnit || "px"}`
+				}
+			};
+		}
 		const layout = attributes.layout;
 		if (layout?.type === "grid" && typeof layout?.columnCount === "string") newAttributes.layout = {
 			...newAttributes.layout,

@@ -2432,12 +2432,6 @@ return array(
 			'focalPoint' => array(
 				'type' => 'object'
 			),
-			'minHeight' => array(
-				'type' => 'number'
-			),
-			'minHeightUnit' => array(
-				'type' => 'string'
-			),
 			'gradient' => array(
 				'type' => 'string'
 			),
@@ -2535,7 +2529,11 @@ return array(
 			),
 			'dimensions' => array(
 				'aspectRatio' => true,
-				'minWidth' => true
+				'minHeight' => true,
+				'minWidth' => true,
+				'__experimentalDefaultControls' => array(
+					'minHeight' => true
+				)
 			),
 			'typography' => array(
 				'fontSize' => true,

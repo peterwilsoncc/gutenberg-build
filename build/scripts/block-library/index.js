@@ -39264,6 +39264,30 @@ Icon: ButtonIcon });
 		};
 		return { ...attributes };
 	}
+	/**
+	* Moves the `minHeight`/`minHeightUnit` attribute pair to the `dimensions`
+	* block support, which stores a single CSS value and can hold a preset
+	* reference such as `var:preset|dimension|full`.
+	*
+	* Used in deprecations: v4-v15.
+	*
+	* @param {Object} attributes Block attributes.
+	* @return {Object} Migrated block attributes.
+	*/
+	function migrateMinHeight(attributes) {
+		const { minHeight, minHeightUnit, ...newAttributes } = attributes;
+		if (!minHeight) return newAttributes;
+		return {
+			...newAttributes,
+			style: {
+				...newAttributes.style,
+				dimensions: {
+					...newAttributes.style?.dimensions,
+					minHeight: `${minHeight}${minHeightUnit || "px"}`
+				}
+			}
+		};
+	}
 	const blockAttributes$5 = {
 		url: { type: "string" },
 		id: { type: "number" },
@@ -39409,15 +39433,148 @@ Icon: ButtonIcon });
 		},
 		layout: { allowJustification: false }
 	};
+	const v14BlockSupports = {
+		...v12BlockSupports,
+		shadow: true,
+		dimensions: { aspectRatio: true },
+		interactivity: { clientNavigation: true }
+	};
 	var deprecated_default$30 = [
 		{
-			attributes: v14BlockAttributes,
-			supports: {
-				...v12BlockSupports,
-				shadow: true,
-				dimensions: { aspectRatio: true },
-				interactivity: { clientNavigation: true }
+			attributes: {
+				...v14BlockAttributes,
+				templateLock: {
+					type: ["string", "boolean"],
+					enum: [
+						"all",
+						"insert",
+						"contentOnly",
+						false
+					]
+				},
+				poster: {
+					type: "string",
+					source: "attribute",
+					selector: "video",
+					attribute: "poster"
+				},
+				allowedVideoProviders: {
+					type: "array",
+					default: [
+						"youtube",
+						"vimeo",
+						"videopress",
+						"animoto",
+						"tiktok",
+						"wordpress-tv"
+					]
+				}
 			},
+			supports: {
+				...v14BlockSupports,
+				__experimentalOnEnter: true,
+				color: {
+					heading: true,
+					text: true,
+					background: false,
+					__experimentalSkipSerialization: ["gradients"],
+					enableContrastChecker: false
+				},
+				filter: { duotone: true },
+				allowedBlocks: true
+			},
+			isEligible({ minHeight, minHeightUnit }) {
+				return minHeight !== void 0 || minHeightUnit !== void 0;
+			},
+			migrate: migrateMinHeight,
+			save({ attributes }) {
+				const { backgroundType, gradient, contentPosition, customGradient, customOverlayColor, dimRatio, focalPoint, useFeaturedImage, hasParallax, isDark, isRepeated, overlayColor, url, alt, id, minHeight: minHeightProp, minHeightUnit, tagName: Tag, sizeSlug, poster } = attributes;
+				const overlayColorClass = (0, _wordpress_block_editor.getColorClassName)("background-color", overlayColor);
+				const gradientClass = (0, _wordpress_block_editor.__experimentalGetGradientClass)(gradient);
+				const minHeight = minHeightProp && minHeightUnit ? `${minHeightProp}${minHeightUnit}` : minHeightProp;
+				const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
+				const isVideoBackground = VIDEO_BACKGROUND_TYPE === backgroundType;
+				const isEmbedVideoBackground = EMBED_VIDEO_BACKGROUND_TYPE === backgroundType;
+				const isImgElement = !(hasParallax || isRepeated);
+				const style = { minHeight: minHeight || void 0 };
+				const bgStyle = {
+					backgroundColor: !overlayColorClass ? customOverlayColor : void 0,
+					background: customGradient ? customGradient : void 0
+				};
+				const objectPosition = focalPoint && isImgElement ? mediaPosition$1(focalPoint) : void 0;
+				const backgroundImage = url ? `url(${url})` : void 0;
+				const backgroundPosition = mediaPosition$1(focalPoint);
+				const classes = clsx({
+					"is-light": !isDark,
+					"has-parallax": hasParallax,
+					"is-repeated": isRepeated,
+					"has-custom-content-position": !isContentPositionCenter(contentPosition)
+				}, getPositionClassName(contentPosition));
+				const imgClasses = clsx("wp-block-cover__image-background", id ? `wp-image-${id}` : null, {
+					[`size-${sizeSlug}`]: sizeSlug,
+					"has-parallax": hasParallax,
+					"is-repeated": isRepeated
+				});
+				const gradientValue = gradient || customGradient;
+				return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tag, {
+					..._wordpress_block_editor.useBlockProps.save({
+						className: classes,
+						style
+					}),
+					children: [
+						!useFeaturedImage && isImageBackground && url && (isImgElement ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
+							className: imgClasses,
+							alt,
+							src: url,
+							style: { objectPosition },
+							"data-object-fit": "cover",
+							"data-object-position": objectPosition
+						}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+							role: alt ? "img" : void 0,
+							"aria-label": alt ? alt : void 0,
+							className: imgClasses,
+							style: {
+								backgroundPosition,
+								backgroundImage
+							}
+						})),
+						isVideoBackground && url && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("video", {
+							className: clsx("wp-block-cover__video-background", "intrinsic-ignore"),
+							autoPlay: true,
+							muted: true,
+							loop: true,
+							playsInline: true,
+							src: url,
+							poster,
+							style: { objectPosition },
+							"data-object-fit": "cover",
+							"data-object-position": objectPosition
+						}),
+						isEmbedVideoBackground && url && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("figure", {
+							className: clsx("wp-block-cover__video-background", "wp-block-cover__embed-background", "wp-block-embed"),
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+								className: "wp-block-embed__wrapper",
+								children: url
+							})
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+							"aria-hidden": "true",
+							className: clsx("wp-block-cover__background", overlayColorClass, dimRatioToClass$1(dimRatio), {
+								"has-background-dim": dimRatio !== void 0,
+								"wp-block-cover__gradient-background": url && gradientValue && dimRatio !== 0,
+								"has-background-gradient": gradientValue,
+								[gradientClass]: gradientClass
+							}),
+							style: bgStyle
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ..._wordpress_block_editor.useInnerBlocksProps.save({ className: "wp-block-cover__inner-container" }) })
+					]
+				});
+			}
+		},
+		{
+			attributes: v14BlockAttributes,
+			supports: v14BlockSupports,
 			save({ attributes }) {
 				const { backgroundType, gradient, contentPosition, customGradient, customOverlayColor, dimRatio, focalPoint, useFeaturedImage, hasParallax, isDark, isRepeated, overlayColor, url, alt, id, minHeight: minHeightProp, minHeightUnit, tagName: Tag, sizeSlug } = attributes;
 				const overlayColorClass = (0, _wordpress_block_editor.getColorClassName)("background-color", overlayColor);
@@ -39492,7 +39649,8 @@ Icon: ButtonIcon });
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ..._wordpress_block_editor.useInnerBlocksProps.save({ className: "wp-block-cover__inner-container" }) })
 					]
 				});
-			}
+			},
+			migrate: migrateMinHeight
 		},
 		{
 			attributes: v12toV13BlockAttributes,
@@ -39569,7 +39727,8 @@ Icon: ButtonIcon });
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ..._wordpress_block_editor.useInnerBlocksProps.save({ className: "wp-block-cover__inner-container" }) })
 					]
 				});
-			}
+			},
+			migrate: migrateMinHeight
 		},
 		{
 			attributes: v12toV13BlockAttributes,
@@ -39577,12 +39736,10 @@ Icon: ButtonIcon });
 			isEligible(attributes) {
 				return (attributes.customOverlayColor !== void 0 || attributes.overlayColor !== void 0) && attributes.isUserOverlayColor === void 0;
 			},
-			migrate(attributes) {
-				return {
-					...attributes,
-					isUserOverlayColor: true
-				};
-			},
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, (attributes) => ({
+				...attributes,
+				isUserOverlayColor: true
+			})),
 			save({ attributes }) {
 				const { backgroundType, gradient, contentPosition, customGradient, customOverlayColor, dimRatio, focalPoint, useFeaturedImage, hasParallax, isDark, isRepeated, overlayColor, url, alt, id, minHeight: minHeightProp, minHeightUnit, tagName: Tag } = attributes;
 				const overlayColorClass = (0, _wordpress_block_editor.getColorClassName)("background-color", overlayColor);
@@ -39733,7 +39890,7 @@ Icon: ButtonIcon });
 					]
 				});
 			},
-			migrate: migrateTag
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, migrateTag)
 		},
 		{
 			attributes: v8ToV11BlockAttributes,
@@ -39801,7 +39958,7 @@ Icon: ButtonIcon });
 					]
 				});
 			},
-			migrate: migrateTag
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, migrateTag)
 		},
 		{
 			attributes: v8ToV11BlockAttributes,
@@ -39869,7 +40026,7 @@ Icon: ButtonIcon });
 					]
 				});
 			},
-			migrate: migrateTag
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, migrateTag)
 		},
 		{
 			attributes: v8ToV11BlockAttributes,
@@ -39935,7 +40092,7 @@ Icon: ButtonIcon });
 					]
 				});
 			},
-			migrate: migrateTag
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, migrateTag)
 		},
 		{
 			attributes: {
@@ -40018,7 +40175,7 @@ Icon: ButtonIcon });
 					]
 				});
 			},
-			migrate: (0, _wordpress_compose.compose)(migrateDimRatio, migrateTag)
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, migrateDimRatio, migrateTag)
 		},
 		{
 			attributes: {
@@ -40087,7 +40244,7 @@ Icon: ButtonIcon });
 					]
 				});
 			},
-			migrate: (0, _wordpress_compose.compose)(migrateDimRatio, migrateTag)
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, migrateDimRatio, migrateTag)
 		},
 		{
 			attributes: {
@@ -40135,7 +40292,7 @@ Icon: ButtonIcon });
 					]
 				});
 			},
-			migrate: (0, _wordpress_compose.compose)(migrateDimRatio, migrateTag)
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, migrateDimRatio, migrateTag)
 		},
 		{
 			attributes: {
@@ -40183,7 +40340,7 @@ Icon: ButtonIcon });
 					]
 				});
 			},
-			migrate: (0, _wordpress_compose.compose)(migrateDimRatio, migrateTag)
+			migrate: (0, _wordpress_compose.compose)(migrateMinHeight, migrateDimRatio, migrateTag)
 		},
 		{
 			attributes: {
@@ -40335,68 +40492,6 @@ Icon: ButtonIcon });
 			}
 		}
 	];
-
-// packages/block-library/build-module/utils/style-state.mjs
-	const { cleanEmptyObject: cleanEmptyObject$5 } = unlock$1(_wordpress_block_editor.privateApis);
-	function getStateStyle(style, selectedState) {
-		return (0, _wordpress_block_editor.getStyleForState)(style, selectedState) || {};
-	}
-	function getMappedDimensions(dimensions, dimensionKeyMap = {}) {
-		return Object.fromEntries(Object.entries(dimensions).map(([key, value]) => [dimensionKeyMap[key] || key, value]));
-	}
-	function getControlledDimensions(dimensions, dimensionKeys) {
-		if (!dimensionKeys) return dimensions;
-		return Object.fromEntries(dimensionKeys.map((key) => [key, dimensions[key]]));
-	}
-	function getStyleStateKey(selectedState) {
-		return [selectedState?.viewport || "default", selectedState?.pseudo || "default"].join(":");
-	}
-	function getStateDimensions(style, selectedState) {
-		return getStateStyle(style, selectedState)?.dimensions || {};
-	}
-	function getActiveDimensionValue(options = {}) {
-		const { attributes = {}, style = attributes?.style, selectedState, hasSelectedStyleState, attributeKey, styleKey = attributeKey, rootValue } = options;
-		if (hasSelectedStyleState) return getStateDimensions(style, selectedState)?.[styleKey];
-		if (Object.hasOwn(options, "rootValue")) return rootValue;
-		return attributes?.[attributeKey];
-	}
-	function setStateDimensions(style, selectedState, nextDimensions) {
-		const stateStyle = getStateStyle(style, selectedState);
-		return (0, _wordpress_block_editor.setStyleForState)(style, selectedState, cleanEmptyObject$5({
-			...stateStyle,
-			dimensions: cleanEmptyObject$5({
-				...stateStyle?.dimensions,
-				...nextDimensions
-			})
-		}));
-	}
-	function getDimensionUpdateAttributes({ style, selectedState, hasSelectedStyleState, nextDimensions, dimensionKeyMap, dimensionKeys }) {
-		const controlledDimensions = getControlledDimensions(nextDimensions, dimensionKeys);
-		if (!hasSelectedStyleState) return controlledDimensions;
-		return { style: setStateDimensions(style, selectedState, getMappedDimensions(controlledDimensions, dimensionKeyMap)) };
-	}
-	function resetDimensions(style, keys) {
-		const dimensionsReset = Object.fromEntries(keys.map((key) => [key, void 0]));
-		return cleanEmptyObject$5({
-			...style,
-			dimensions: cleanEmptyObject$5({
-				...style?.dimensions,
-				...dimensionsReset
-			})
-		});
-	}
-	function resetStateDimensions(style, selectedState, keys) {
-		return (0, _wordpress_block_editor.setStyleForState)(style, selectedState, resetDimensions(getStateStyle(style, selectedState), keys));
-	}
-	function getDimensionResetAttributes({ attributes = {}, style = attributes?.style, selectedState, hasSelectedStyleState, keys, defaultAttributes = {} }) {
-		return {
-			...hasSelectedStyleState ? {} : {
-				...attributes,
-				...defaultAttributes
-			},
-			style: hasSelectedStyleState ? resetStateDimensions(style, selectedState, keys) : resetDimensions(style, keys)
-		};
-	}
 
 // packages/block-library/build-module/cover/constants.mjs
 	const DEFAULT_MEDIA_SIZE_SLUG$4 = "full";
@@ -40619,81 +40714,19 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/cover/edit/inspector-controls.mjs
-	const { cleanEmptyObject: cleanEmptyObject$4, ResolutionTool: ResolutionTool$3, HTMLElementControl: HTMLElementControl$5 } = unlock$1(_wordpress_block_editor.privateApis);
-	function CoverHeightInput({ onChange, onUnitChange, unit = "px", value = "" }) {
-		const inputId = `block-cover-height-input-${(0, _wordpress_compose.useInstanceId)(_wordpress_components.__experimentalUnitControl)}`;
-		const isPx = unit === "px";
-		const [availableUnits] = (0, _wordpress_block_editor.useSettings)("spacing.units");
-		const units = (0, _wordpress_components.__experimentalUseCustomUnits)({
-			availableUnits: availableUnits || [
-				"px",
-				"em",
-				"rem",
-				"vw",
-				"vh"
-			],
-			defaultValues: {
-				px: 430,
-				"%": 20,
-				em: 20,
-				rem: 20,
-				vw: 20,
-				vh: 50
-			}
-		});
-		const handleOnChange = (unprocessedValue) => {
-			const inputValue = unprocessedValue !== "" ? parseFloat(unprocessedValue) : void 0;
-			if (isNaN(inputValue) && inputValue !== void 0) return;
-			onChange(inputValue);
-		};
-		const computedValue = (0, _wordpress_element.useMemo)(() => {
-			const [parsedQuantity] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(value);
-			return [parsedQuantity, unit].join("");
-		}, [unit, value]);
-		const min = isPx ? 50 : 0;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalUnitControl, {
-			label: (0, _wordpress_i18n.__)("Minimum height"),
-			id: inputId,
-			isResetValueOnUnitChange: true,
-			min,
-			onChange: handleOnChange,
-			onUnitChange,
-			units,
-			value: computedValue
-		});
-	}
+	const { ResolutionTool: ResolutionTool$3, HTMLElementControl: HTMLElementControl$5 } = unlock$1(_wordpress_block_editor.privateApis);
 	function CoverInspectorControls({ attributes, setAttributes, clientId, setOverlayColor, coverRef, currentSettings, onSelectMedia, onUploadError, toggleUseFeaturedImage, updateDimRatio, onClearMedia, featuredImage, isSelected }) {
-		const { useFeaturedImage, id, dimRatio, focalPoint, hasParallax, isRepeated, minHeight, minHeightUnit, alt, tagName, poster } = attributes;
+		const { useFeaturedImage, id, dimRatio, focalPoint, hasParallax, isRepeated, alt, tagName, poster } = attributes;
 		const { isVideoBackground, isImageBackground, mediaElement, url, overlayColor } = currentSettings;
 		const sizeSlug = attributes.sizeSlug || "full";
 		const { gradientValue, setGradient } = (0, _wordpress_block_editor.__experimentalUseGradient)();
-		const { imageSizes, selectedStyleState, hasSelectedStyleState } = (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings, getSelectedBlockStyleState, hasSelectedBlockStyleState } = select(_wordpress_block_editor.store);
+		const { imageSizes, hasSelectedStyleState } = (0, _wordpress_data.useSelect)((select) => {
+			const { getSettings, hasSelectedBlockStyleState } = select(_wordpress_block_editor.store);
 			return {
 				imageSizes: getSettings()?.imageSizes,
-				selectedStyleState: getSelectedBlockStyleState(clientId),
 				hasSelectedStyleState: hasSelectedBlockStyleState(clientId)
 			};
 		}, [clientId]);
-		const selectedStyleStateKey = getStyleStateKey(selectedStyleState);
-		const stateMinHeight = getActiveDimensionValue({
-			attributes,
-			selectedState: selectedStyleState,
-			hasSelectedStyleState,
-			attributeKey: "minHeight",
-			styleKey: "minHeight",
-			rootValue: void 0
-		});
-		const [stateMinHeightValue, stateMinHeightUnit] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(stateMinHeight || "");
-		const activeMinHeight = hasSelectedStyleState ? stateMinHeightValue : minHeight;
-		const activeMinHeightUnit = hasSelectedStyleState ? stateMinHeightUnit || minHeightUnit : minHeightUnit;
-		const activeAspectRatio = getActiveDimensionValue({
-			attributes,
-			selectedState: selectedStyleState,
-			hasSelectedStyleState,
-			attributeKey: "aspectRatio",
-			rootValue: attributes?.style?.dimensions?.aspectRatio
-		});
 		const image = (0, _wordpress_data.useSelect)((select) => id && isImageBackground ? select(_wordpress_core_data.store).getEntityRecord("postType", "attachment", id, { context: "view" }) : null, [id, isImageBackground]);
 		const currentBackgroundImage = useFeaturedImage ? featuredImage : image;
 		function updateImage(newSizeSlug) {
@@ -40725,42 +40758,6 @@ Icon: ButtonIcon });
 		};
 		const colorGradientSettings = (0, _wordpress_block_editor.__experimentalUseMultipleOriginColorsAndGradients)();
 		const showOverlayControls = colorGradientSettings.hasColorsOrGradients && !hasSelectedStyleState;
-		const setMinHeightAttributes = (nextMinHeight, nextUnit) => {
-			if (hasSelectedStyleState) {
-				setAttributes(getDimensionUpdateAttributes({
-					style: attributes.style,
-					selectedState: selectedStyleState,
-					hasSelectedStyleState,
-					nextDimensions: {
-						minHeight: nextMinHeight === void 0 ? void 0 : `${nextMinHeight}${nextUnit || activeMinHeightUnit || "px"}`,
-						aspectRatio: void 0
-					}
-				}));
-				return;
-			}
-			setAttributes({
-				minHeight: nextMinHeight,
-				style: cleanEmptyObject$4({
-					...attributes?.style,
-					dimensions: {
-						...attributes?.style?.dimensions,
-						aspectRatio: void 0
-					}
-				})
-			});
-		};
-		const getResetMinHeightAttributes = (attrs = attributes) => {
-			return getDimensionResetAttributes({
-				style: attrs.style,
-				selectedState: selectedStyleState,
-				hasSelectedStyleState,
-				keys: ["minHeight"],
-				defaultAttributes: {
-					minHeight: void 0,
-					minHeightUnit: void 0
-				}
-			});
-		};
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 		const mediaInspectorPanel = isSelected ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, {
 			group: "content",
@@ -40915,30 +40912,6 @@ Icon: ButtonIcon });
 						required: true
 					})
 				})]
-			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, {
-				group: "dimensions",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-					className: "single-column",
-					hasValue: () => !!activeMinHeight,
-					label: (0, _wordpress_i18n.__)("Minimum height"),
-					onDeselect: () => setAttributes(getResetMinHeightAttributes()),
-					resetAllFilter: getResetMinHeightAttributes,
-					isShownByDefault: true,
-					panelId: clientId,
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CoverHeightInput, {
-						value: activeAspectRatio ? "" : activeMinHeight,
-						unit: activeMinHeightUnit,
-						onChange: (newMinHeight) => setMinHeightAttributes(newMinHeight),
-						onUnitChange: (nextUnit) => {
-							if (hasSelectedStyleState) {
-								if (activeMinHeight !== void 0) setMinHeightAttributes(activeMinHeight, nextUnit);
-								return;
-							}
-							setAttributes({ minHeightUnit: nextUnit });
-						}
-					})
-				}, selectedStyleStateKey)
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, {
 				group: "advanced",
@@ -41153,41 +41126,31 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/cover/edit/block-controls.mjs
-	const { cleanEmptyObject: cleanEmptyObject$3 } = unlock$1(_wordpress_block_editor.privateApis);
+	const { cleanEmptyObject: cleanEmptyObject$5 } = unlock$1(_wordpress_block_editor.privateApis);
+	const FULL_HEIGHT = "100vh";
 	function CoverBlockControls({ attributes, setAttributes, onSelectMedia, currentSettings, toggleUseFeaturedImage, onClearMedia, onSelectEmbedUrl, onEditMedia, editMediaButtonRef, showEditMediaButton, isEditMediaDisabled, blockEditingMode }) {
-		const { contentPosition, id, useFeaturedImage, minHeight, minHeightUnit, backgroundType, allowedVideoProviders } = attributes;
+		const { contentPosition, id, useFeaturedImage, style, backgroundType, allowedVideoProviders } = attributes;
 		const { hasInnerBlocks, url } = currentSettings;
 		const filteredVideoProviders = getAllowedVideoProviders(allowedVideoProviders);
 		const hasAllowedVideoProviders = filteredVideoProviders.length > 0;
-		const [prevMinHeightValue, setPrevMinHeightValue] = (0, _wordpress_element.useState)(minHeight);
-		const [prevMinHeightUnit, setPrevMinHeightUnit] = (0, _wordpress_element.useState)(minHeightUnit);
+		const [isMinHeightEnabled] = (0, _wordpress_block_editor.useSettings)("dimensions.minHeight");
+		const minHeight = style?.dimensions?.minHeight;
+		const [prevMinHeight, setPrevMinHeight] = (0, _wordpress_element.useState)(minHeight);
 		const [isEmbedUrlInputOpen, setIsEmbedUrlInputOpen] = (0, _wordpress_element.useState)(false);
-		const isMinFullHeight = minHeightUnit === "vh" && minHeight === 100 && !attributes?.style?.dimensions?.aspectRatio;
+		const isMinFullHeight = minHeight === FULL_HEIGHT && !style?.dimensions?.aspectRatio;
 		const isContentOnlyMode = blockEditingMode === "contentOnly";
-		const toggleMinFullHeight = () => {
-			if (isMinFullHeight) {
-				if (prevMinHeightUnit === "vh" && prevMinHeightValue === 100) return setAttributes({
-					minHeight: void 0,
-					minHeightUnit: void 0
-				});
-				return setAttributes({
-					minHeight: prevMinHeightValue,
-					minHeightUnit: prevMinHeightUnit
-				});
+		const setMinHeight = (nextMinHeight) => setAttributes({ style: cleanEmptyObject$5({
+			...style,
+			dimensions: {
+				...style?.dimensions,
+				minHeight: nextMinHeight,
+				aspectRatio: void 0
 			}
-			setPrevMinHeightValue(minHeight);
-			setPrevMinHeightUnit(minHeightUnit);
-			return setAttributes({
-				minHeight: 100,
-				minHeightUnit: "vh",
-				style: cleanEmptyObject$3({
-					...attributes?.style,
-					dimensions: {
-						...attributes?.style?.dimensions,
-						aspectRatio: void 0
-					}
-				})
-			});
+		}) });
+		const toggleMinFullHeight = () => {
+			if (isMinFullHeight) return setMinHeight(prevMinHeight === FULL_HEIGHT ? void 0 : prevMinHeight);
+			setPrevMinHeight(minHeight);
+			return setMinHeight(FULL_HEIGHT);
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			!isContentOnlyMode && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_block_editor.BlockControls, {
@@ -41199,7 +41162,7 @@ Icon: ButtonIcon });
 						onChange: (nextPosition) => setAttributes({ contentPosition: nextPosition }),
 						isDisabled: !hasInnerBlocks
 					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.__experimentalBlockFullHeightAligmentControl, {
+					isMinHeightEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.__experimentalBlockFullHeightAligmentControl, {
 						isActive: isMinFullHeight,
 						onToggle: toggleMinFullHeight,
 						isDisabled: !hasInnerBlocks
@@ -42308,7 +42271,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/cover/edit/index.mjs
-	const { openMediaEditorModalKey: openMediaEditorModalKey$2 } = unlock$1(_wordpress_block_editor.privateApis);
+	const { openMediaEditorModalKey: openMediaEditorModalKey$2, cleanEmptyObject: cleanEmptyObject$4 } = unlock$1(_wordpress_block_editor.privateApis);
 	function getInnerBlocksTemplate(attributes) {
 		return [["core/paragraph", {
 			style: { typography: { textAlign: "center" } },
@@ -42327,7 +42290,7 @@ Icon: ButtonIcon });
 	*/
 	const isTemporaryMedia = (id, url) => !id && (0, _wordpress_blob.isBlobURL)(url);
 	function CoverEdit({ attributes, clientId, isSelected, overlayColor, setAttributes, setOverlayColor, toggleSelection, context: { postId, postType } }) {
-		const { contentPosition, id, url: originalUrl, backgroundType: originalBackgroundType, useFeaturedImage, dimRatio, focalPoint, hasParallax, isDark, isRepeated, minHeight, minHeightUnit, alt, allowedBlocks, templateLock, tagName: TagName = "div", isUserOverlayColor, sizeSlug, poster } = attributes;
+		const { contentPosition, id, url: originalUrl, backgroundType: originalBackgroundType, useFeaturedImage, dimRatio, focalPoint, hasParallax, isDark, isRepeated, style, alt, allowedBlocks, templateLock, tagName: TagName = "div", isUserOverlayColor, sizeSlug, poster } = attributes;
 		const [featuredImage] = (0, _wordpress_core_data.useEntityProp)("postType", postType, "featured_media", postId);
 		const { getSettings } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const openMediaEditorModal = (0, _wordpress_data.useSelect)((select) => select(_wordpress_block_editor.store).getSettings()[openMediaEditorModalKey$2], []);
@@ -42496,15 +42459,16 @@ Icon: ButtonIcon });
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
 		const hasNonContentControls = blockEditingMode === "default";
 		const [resizeListener, { height, width }] = (0, _wordpress_compose.useResizeObserver)();
+		const [isMinHeightEnabled] = (0, _wordpress_block_editor.useSettings)("dimensions.minHeight");
+		const minHeight = style?.dimensions?.minHeight;
 		const resizableBoxDimensions = (0, _wordpress_element.useMemo)(() => {
+			const [quantity, unit] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(minHeight ?? "");
 			return {
-				height: minHeightUnit === "px" && minHeight ? minHeight : "auto",
+				height: unit === "px" && quantity ? quantity : "auto",
 				width: "auto"
 			};
-		}, [minHeight, minHeightUnit]);
-		const minHeightWithUnit = minHeight && minHeightUnit ? `${minHeight}${minHeightUnit}` : minHeight;
+		}, [minHeight]);
 		const isImgElement = !(hasParallax || isRepeated);
-		const style = { minHeight: minHeightWithUnit || void 0 };
 		const backgroundImage = url ? `url(${url})` : void 0;
 		const backgroundPosition = mediaPosition$1(focalPoint);
 		const bgStyle = { backgroundColor: overlayColor.color };
@@ -42639,37 +42603,39 @@ Icon: ButtonIcon });
 			featuredImage: media,
 			isSelected
 		});
+		const setMinHeight = (value) => {
+			setAttributes({ style: cleanEmptyObject$4({
+				...style,
+				dimensions: {
+					...style?.dimensions,
+					minHeight: value === void 0 ? void 0 : `${value}px`
+				}
+			}) });
+		};
 		const resizableCoverProps = {
 			className: "block-library-cover__resize-container",
 			clientId,
 			height,
-			minHeight: minHeightWithUnit,
+			minHeight,
 			onResizeStart: () => {
-				setAttributes({ minHeightUnit: "px" });
 				toggleSelection(false);
 			},
-			onResize: (value) => {
-				setAttributes({ minHeight: value });
-			},
+			onResize: setMinHeight,
 			onResizeStop: (newMinHeight) => {
 				toggleSelection(true);
-				setAttributes({ minHeight: newMinHeight });
+				setMinHeight(newMinHeight);
 			},
-			showHandle: !attributes.style?.dimensions?.aspectRatio,
+			showHandle: !style?.dimensions?.aspectRatio,
 			size: resizableBoxDimensions,
 			width
 		};
 		if (!useFeaturedImage && !hasInnerBlocks && !hasBackground) return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			blockControls,
 			inspectorControls,
-			hasNonContentControls && isSelected && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ResizableCoverPopover, { ...resizableCoverProps }),
+			hasNonContentControls && isSelected && isMinHeightEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ResizableCoverPopover, { ...resizableCoverProps }),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(TagName, {
 				...blockProps,
 				className: clsx("is-placeholder", blockProps.className),
-				style: {
-					...blockProps.style,
-					minHeight: minHeightWithUnit || void 0
-				},
 				children: [resizeListener, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CoverPlaceholder, {
 					onSelectMedia,
 					onError: onUploadError,
@@ -42703,10 +42669,6 @@ Icon: ButtonIcon });
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(TagName, {
 				...blockProps,
 				className: clsx(classes, blockProps.className),
-				style: {
-					...style,
-					...blockProps.style
-				},
 				"data-url": url,
 				children: [
 					resizeListener,
@@ -42778,7 +42740,7 @@ Icon: ButtonIcon });
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ...innerBlocksProps })
 				]
 			}),
-			hasNonContentControls && isSelected && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ResizableCoverPopover, { ...resizableCoverProps })
+			hasNonContentControls && isSelected && isMinHeightEnabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ResizableCoverPopover, { ...resizableCoverProps })
 		] });
 	}
 	var edit_default$2 = (0, _wordpress_compose.compose)([(0, _wordpress_block_editor.withColors)({ overlayColor: "background-color" })])(CoverEdit);
@@ -42826,8 +42788,6 @@ Icon: ButtonIcon });
 				"default": "image"
 			},
 			"focalPoint": { "type": "object" },
-			"minHeight": { "type": "number" },
-			"minHeightUnit": { "type": "string" },
 			"gradient": { "type": "string" },
 			"customGradient": { "type": "string" },
 			"contentPosition": { "type": "string" },
@@ -42906,7 +42866,9 @@ Icon: ButtonIcon });
 			},
 			"dimensions": {
 				"aspectRatio": true,
-				"minWidth": true
+				"minHeight": true,
+				"minWidth": true,
+				"__experimentalDefaultControls": { "minHeight": true }
 			},
 			"typography": {
 				"fontSize": true,
@@ -42934,15 +42896,13 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/cover/save.mjs
 	function save$38({ attributes }) {
-		const { backgroundType, gradient, contentPosition, customGradient, customOverlayColor, dimRatio, focalPoint, useFeaturedImage, hasParallax, isDark, isRepeated, overlayColor, url, alt, id, minHeight: minHeightProp, minHeightUnit, tagName: Tag, sizeSlug, poster } = attributes;
+		const { backgroundType, gradient, contentPosition, customGradient, customOverlayColor, dimRatio, focalPoint, useFeaturedImage, hasParallax, isDark, isRepeated, overlayColor, url, alt, id, tagName: Tag, sizeSlug, poster } = attributes;
 		const overlayColorClass = (0, _wordpress_block_editor.getColorClassName)("background-color", overlayColor);
 		const gradientClass = (0, _wordpress_block_editor.__experimentalGetGradientClass)(gradient);
-		const minHeight = minHeightProp && minHeightUnit ? `${minHeightProp}${minHeightUnit}` : minHeightProp;
 		const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
 		const isVideoBackground = VIDEO_BACKGROUND_TYPE === backgroundType;
 		const isEmbedVideoBackground = EMBED_VIDEO_BACKGROUND_TYPE === backgroundType;
 		const isImgElement = !(hasParallax || isRepeated);
-		const style = { minHeight: minHeight || void 0 };
 		const bgStyle = {
 			backgroundColor: !overlayColorClass ? customOverlayColor : void 0,
 			background: customGradient ? customGradient : void 0
@@ -42963,10 +42923,7 @@ Icon: ButtonIcon });
 		});
 		const gradientValue = gradient || customGradient;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tag, {
-			..._wordpress_block_editor.useBlockProps.save({
-				className: classes,
-				style
-			}),
+			..._wordpress_block_editor.useBlockProps.save({ className: classes }),
 			children: [
 				!useFeaturedImage && isImageBackground && url && (isImgElement ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
 					className: imgClasses,
@@ -43019,7 +42976,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/cover/transforms.mjs
-	const { cleanEmptyObject: cleanEmptyObject$2 } = unlock$1(_wordpress_block_editor.privateApis);
+	const { cleanEmptyObject: cleanEmptyObject$3 } = unlock$1(_wordpress_block_editor.privateApis);
 	const transforms$33 = {
 		from: [
 			{
@@ -43074,7 +43031,7 @@ Icon: ButtonIcon });
 						...attributes,
 						backgroundColor: void 0,
 						gradient: void 0,
-						style: cleanEmptyObject$2({
+						style: cleanEmptyObject$3({
 							...attributes?.style,
 							color: style?.color ? {
 								...style?.color,
@@ -43131,7 +43088,7 @@ Icon: ButtonIcon });
 					const transformedColorAttributes = {
 						backgroundColor: attributes?.overlayColor,
 						gradient: attributes?.gradient,
-						style: cleanEmptyObject$2({
+						style: cleanEmptyObject$3({
 							...attributes?.style,
 							color: attributes?.customOverlayColor || attributes?.customGradient || attributes?.style?.color ? {
 								background: attributes?.customOverlayColor,
@@ -43141,12 +43098,12 @@ Icon: ButtonIcon });
 						})
 					};
 					if (innerBlocks?.length === 1 && innerBlocks[0]?.name === "core/group") {
-						const groupAttributes = cleanEmptyObject$2(innerBlocks[0].attributes || {});
+						const groupAttributes = cleanEmptyObject$3(innerBlocks[0].attributes || {});
 						if (groupAttributes?.backgroundColor || groupAttributes?.gradient || groupAttributes?.style?.color?.background || groupAttributes?.style?.color?.gradient) return (0, _wordpress_blocks.createBlock)("core/group", groupAttributes, innerBlocks[0]?.innerBlocks);
 						return (0, _wordpress_blocks.createBlock)("core/group", {
 							...transformedColorAttributes,
 							...groupAttributes,
-							style: cleanEmptyObject$2({
+							style: cleanEmptyObject$3({
 								...groupAttributes?.style,
 								color: transformedColorAttributes?.style?.color || groupAttributes?.style?.color ? {
 									...transformedColorAttributes?.style?.color,
@@ -48337,7 +48294,7 @@ Icon: ButtonIcon });
 		if (isDefaultBlockStyleState(selectedState)) return [];
 		return [selectedState.viewport, selectedState.pseudoState].filter((state) => !!state && state !== DEFAULT_STATE_VALUE);
 	}
-	function getStyleForState(style, selectedState) {
+	function getStyleForState$1(style, selectedState) {
 		const path = getStyleStatePath(selectedState);
 		if (!path.length) return style;
 		return getValueFromObjectPath$1(style, path);
@@ -48454,7 +48411,7 @@ Icon: ButtonIcon });
 	}
 	function getStateSlice(layerObject, selectedState) {
 		if (!layerObject) return null;
-		const slice = getStyleForState(layerObject, selectedState);
+		const slice = getStyleForState$1(layerObject, selectedState);
 		return slice && typeof slice === "object" && !Array.isArray(slice) ? slice : null;
 	}
 	/**
@@ -48592,8 +48549,8 @@ Icon: ButtonIcon });
 	const { lock, unlock } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$38 = {};
-	lock(privateApis$38, {
+	const privateApis$39 = {};
+	lock(privateApis$39, {
 		getResponsiveMediaQueries: getResponsiveMediaQueries$2,
 		getViewportBreakpoints,
 		getViewportBreakpointValueInPixels,
@@ -48710,7 +48667,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/gallery/gallery-styles.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$1(privateApis$38);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$1(privateApis$39);
 	const { globalStylesDataKey } = unlock$1(_wordpress_block_editor.privateApis);
 	const GALLERY_BLOCK_NAME = "core/gallery";
 	const FALLBACK_VALUE = `var( --wp--style--gallery-gap-default, var( --gallery-block--gutter-size, var( --wp--style--block-gap, 0.5em ) ) )`;
@@ -54077,6 +54034,68 @@ Icon: ButtonIcon });
 			}
 		}
 	];
+
+// packages/block-library/build-module/utils/style-state.mjs
+	const { cleanEmptyObject: cleanEmptyObject$2 } = unlock$1(_wordpress_block_editor.privateApis);
+	function getStateStyle(style, selectedState) {
+		return (0, _wordpress_block_editor.getStyleForState)(style, selectedState) || {};
+	}
+	function getMappedDimensions(dimensions, dimensionKeyMap = {}) {
+		return Object.fromEntries(Object.entries(dimensions).map(([key, value]) => [dimensionKeyMap[key] || key, value]));
+	}
+	function getControlledDimensions(dimensions, dimensionKeys) {
+		if (!dimensionKeys) return dimensions;
+		return Object.fromEntries(dimensionKeys.map((key) => [key, dimensions[key]]));
+	}
+	function getStyleStateKey(selectedState) {
+		return [selectedState?.viewport || "default", selectedState?.pseudo || "default"].join(":");
+	}
+	function getStateDimensions(style, selectedState) {
+		return getStateStyle(style, selectedState)?.dimensions || {};
+	}
+	function getActiveDimensionValue(options = {}) {
+		const { attributes = {}, style = attributes?.style, selectedState, hasSelectedStyleState, attributeKey, styleKey = attributeKey, rootValue } = options;
+		if (hasSelectedStyleState) return getStateDimensions(style, selectedState)?.[styleKey];
+		if (Object.hasOwn(options, "rootValue")) return rootValue;
+		return attributes?.[attributeKey];
+	}
+	function setStateDimensions(style, selectedState, nextDimensions) {
+		const stateStyle = getStateStyle(style, selectedState);
+		return (0, _wordpress_block_editor.setStyleForState)(style, selectedState, cleanEmptyObject$2({
+			...stateStyle,
+			dimensions: cleanEmptyObject$2({
+				...stateStyle?.dimensions,
+				...nextDimensions
+			})
+		}));
+	}
+	function getDimensionUpdateAttributes({ style, selectedState, hasSelectedStyleState, nextDimensions, dimensionKeyMap, dimensionKeys }) {
+		const controlledDimensions = getControlledDimensions(nextDimensions, dimensionKeys);
+		if (!hasSelectedStyleState) return controlledDimensions;
+		return { style: setStateDimensions(style, selectedState, getMappedDimensions(controlledDimensions, dimensionKeyMap)) };
+	}
+	function resetDimensions(style, keys) {
+		const dimensionsReset = Object.fromEntries(keys.map((key) => [key, void 0]));
+		return cleanEmptyObject$2({
+			...style,
+			dimensions: cleanEmptyObject$2({
+				...style?.dimensions,
+				...dimensionsReset
+			})
+		});
+	}
+	function resetStateDimensions(style, selectedState, keys) {
+		return (0, _wordpress_block_editor.setStyleForState)(style, selectedState, resetDimensions(getStateStyle(style, selectedState), keys));
+	}
+	function getDimensionResetAttributes({ attributes = {}, style = attributes?.style, selectedState, hasSelectedStyleState, keys, defaultAttributes = {} }) {
+		return {
+			...hasSelectedStyleState ? {} : {
+				...attributes,
+				...defaultAttributes
+			},
+			style: hasSelectedStyleState ? resetStateDimensions(style, selectedState, keys) : resetDimensions(style, keys)
+		};
+	}
 
 // packages/block-library/build-module/image/use-open-image-media-editor-modal.mjs
 	function normalizeImageBlockCaption(caption) {
@@ -63267,7 +63286,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/navigation/edit/use-layout-custom-properties.mjs
-	const { getResponsiveMediaQueries } = unlock$1(privateApis$38);
+	const { getResponsiveMediaQueries } = unlock$1(privateApis$39);
 	const JUSTIFICATION_VALUES = {
 		left: "flex-start",
 		center: "center",
