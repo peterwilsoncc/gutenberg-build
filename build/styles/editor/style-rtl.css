@@ -4768,6 +4768,23 @@ div.dataviews-view-list {
   padding-inline: 2px 0;
 }
 
+.media-editor-crop-panel__aspect-ratio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.media-editor-crop-panel__aspect-ratio-option svg {
+  flex-shrink: 0;
+}
+
+.media-editor-crop-panel__aspect-ratio-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .media-editor-keyboard-shortcuts-modal {
   min-width: 280px;
 }
