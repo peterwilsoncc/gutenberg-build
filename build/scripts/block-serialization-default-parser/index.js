@@ -72,13 +72,7 @@ var wp;
           addFreeform();
           return false;
         }
-        if (1 === stackDepth) {
-          addBlockFromStack();
-          return false;
-        }
-        while (0 < stack.length) {
-          addBlockFromStack();
-        }
+        implicitlyCloseAllOpenBlocks();
         return false;
       case "void-block":
         if (0 === stackDepth) {
@@ -130,8 +124,10 @@ var wp;
           stackTop.prevOffset,
           startOffset - stackTop.prevOffset
         );
-        stackTop.block.innerHTML += html;
-        stackTop.block.innerContent.push(html);
+        if (html) {
+          stackTop.block.innerHTML += html;
+          stackTop.block.innerContent.push(html);
+        }
         stackTop.prevOffset = startOffset + tokenLength;
         addInnerBlock(
           stackTop.block,
@@ -224,6 +220,42 @@ var wp;
       );
     }
     output.push(block);
+  }
+  function implicitlyCloseAllOpenBlocks() {
+    let implicitlyClosed = null;
+    let lastFreeform = null;
+    while (stack.length > 0) {
+      const stackTop = stack.pop();
+      let html;
+      if (lastFreeform !== null) {
+        html = document.substr(
+          stackTop.prevOffset,
+          lastFreeform[1] - stackTop.prevOffset
+        );
+      } else {
+        html = document.substr(stackTop.prevOffset);
+      }
+      if (html) {
+        stackTop.block.innerHTML += html;
+        stackTop.block.innerContent.push(html);
+      }
+      lastFreeform = [stackTop.leadingHtmlStart ?? 0, stackTop.tokenStart];
+      if (implicitlyClosed !== null) {
+        stackTop.block.innerContent.push(null);
+        stackTop.block.innerBlocks.push(implicitlyClosed);
+      }
+      implicitlyClosed = stackTop.block;
+    }
+    if (lastFreeform !== null && lastFreeform[1] > lastFreeform[0]) {
+      const html = document.substr(
+        lastFreeform[0],
+        lastFreeform[1] - lastFreeform[0]
+      );
+      output.push(Freeform(html));
+    }
+    if (implicitlyClosed !== null) {
+      output.push(implicitlyClosed);
+    }
   }
   return __toCommonJS(index_exports);
 })();
