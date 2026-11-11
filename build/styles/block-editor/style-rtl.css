@@ -4171,6 +4171,12 @@ div.block-editor-bindings__panel button:hover .block-editor-bindings__item span 
     width: 630px;
   }
 }
+.block-editor-inserter__menu.has-single-tab .block-editor-tabbed-sidebar__tablist {
+  display: none;
+}
+.block-editor-inserter__menu.has-single-tab .block-editor-tabbed-sidebar__tablist-and-close-button {
+  justify-content: flex-end;
+}
 
 .block-editor-inserter__inline-elements {
   margin-top: -1px;

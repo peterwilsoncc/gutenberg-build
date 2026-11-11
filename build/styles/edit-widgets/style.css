@@ -865,15 +865,10 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
 }
 
 .edit-widgets-layout__inserter-panel-content {
-  height: calc(100% - 36px - 8px);
+  height: 100%;
 }
-.edit-widgets-layout__inserter-panel-content .block-editor-inserter__tablist-and-close {
+.edit-widgets-layout__inserter-panel-content .block-editor-inserter__menu.has-single-tab .block-editor-tabbed-sidebar__tablist-and-close-button {
   display: none;
-}
-@media (min-width: 782px) {
-  .edit-widgets-layout__inserter-panel-content {
-    height: 100%;
-  }
 }
 
 .components-popover.more-menu-dropdown__content {

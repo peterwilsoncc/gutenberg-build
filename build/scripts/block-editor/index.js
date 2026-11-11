@@ -89262,11 +89262,14 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/block-editor/build-module/components/inserter/menu.mjs
 	const NOOP = () => {};
 	function InserterMenu({ rootClientId, clientId, isAppender, __experimentalInsertionIndex, onSelect, showInserterHelpPanel, showMostUsedBlocks, __experimentalFilterValue = "", shouldFocusBlock = true, onPatternCategorySelection, onClose, __experimentalInitialTab, __experimentalInitialCategory }, ref) {
-		const { isZoomOutMode, hasSectionRootClientId } = (0, _wordpress_data.useSelect)((select) => {
-			const { isZoomOut, getSectionRootClientId } = unlock$2(select(store));
+		const { isZoomOutMode, hasSectionRootClientId, hasPatternSource, hasMediaCategories } = (0, _wordpress_data.useSelect)((select) => {
+			const { isZoomOut, getSectionRootClientId, getSettings, getInserterMediaCategories } = unlock$2(select(store));
+			const settings = getSettings();
 			return {
 				isZoomOutMode: isZoomOut(),
-				hasSectionRootClientId: !!getSectionRootClientId()
+				hasSectionRootClientId: !!getSectionRootClientId(),
+				hasPatternSource: !!settings[selectBlockPatternsKey] || !!settings[reusableBlocksSelectKey] || !!settings.__experimentalBlockPatterns?.length || !!settings.__experimentalReusableBlocks?.length,
+				hasMediaCategories: !!getInserterMediaCategories()?.length
 			};
 		}, []);
 		const [filterValue, setFilterValue, delayedFilterValue] = (0, _wordpress_compose.useDebouncedInput)(__experimentalFilterValue);
@@ -89441,18 +89444,24 @@ If there's a particular need for this, please submit a feature request at https:
 			if (value !== "patterns") setSelectedPatternCategory(null);
 			setSelectedTab(value);
 		};
+		const hasSingleTab = !hasPatternSource && !hasMediaCategories;
 		const tabsRef = (0, _wordpress_element.useRef)(null);
 		(0, _wordpress_element.useLayoutEffect)(() => {
 			if (!tabsRef.current) return;
 			const frame = window.requestAnimationFrame(() => {
+				if (hasSingleTab) {
+					tabsRef.current?.closest(".block-editor-tabbed-sidebar")?.querySelector(".block-editor-inserter__search input")?.focus();
+					return;
+				}
 				tabsRef.current?.querySelector("[role=\"tab\"][aria-selected=\"true\"]")?.focus();
 			});
 			return () => window.cancelAnimationFrame(frame);
-		}, []);
+		}, [hasSingleTab]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: clsx("block-editor-inserter__menu", {
 				"show-panel": showPatternPanel,
-				"is-zoom-out": isZoomOutMode
+				"is-zoom-out": isZoomOutMode,
+				"has-single-tab": hasSingleTab
 			}),
 			ref,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
@@ -89470,18 +89479,18 @@ If there's a particular need for this, please submit a feature request at https:
 							panelRef: blocksPanelRef,
 							panel: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [inserterSearch, selectedTab === "blocks" && !delayedFilterValue && blocksTab] })
 						},
-						{
+						...hasPatternSource ? [{
 							name: "patterns",
 							title: (0, _wordpress_i18n.__)("Patterns"),
 							panelRef: patternsPanelRef,
 							panel: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [inserterSearch, selectedTab === "patterns" && !delayedFilterValue && patternsTab] })
-						},
-						{
+						}] : [],
+						...hasMediaCategories ? [{
 							name: "media",
 							title: (0, _wordpress_i18n.__)("Media"),
 							panelRef: mediaPanelRef,
 							panel: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [inserterSearch, mediaTab] })
-						}
+						}] : []
 					]
 				})
 			}), showInserterHelpPanel && hoveredItem && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Popover, {
