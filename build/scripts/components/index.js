@@ -78593,7 +78593,7 @@ The screen with id ${screen.id} will not be added.`);
 		"layout": "_83648679616c4717__layout",
 		"editable": "_0a7bd9b37b72e74a__editable"
 	};
-	function UnforwardedContentEditableControl({ label, id, className, help, hideLabelFromVision, disabled, required, placeholder, ...additionalProps }, forwardedRef) {
+	function UnforwardedContentEditableControl({ label, id, className, help, hideLabelFromVision, disabled, required, placeholder, onMouseDown, ...additionalProps }, forwardedRef) {
 		const { baseControlProps, controlProps } = useBaseControlProps({
 			id,
 			className,
@@ -78606,7 +78606,9 @@ The screen with id ${screen.id} will not be added.`);
 			...baseControlProps,
 			children: [!hideLabelFromVision && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
 				id: labelId,
-				onClick: () => editableRef.current?.focus(),
+				onClick: () => {
+					if (!disabled) editableRef.current?.focus();
+				},
 				children: label
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout, {
 				className: style_module_default.layout,
@@ -78623,6 +78625,10 @@ The screen with id ${screen.id} will not be added.`);
 					ref: mergedRefs,
 					contentEditable: !disabled,
 					tabIndex: disabled ? -1 : void 0,
+					onMouseDown: (event) => {
+						onMouseDown?.(event);
+						if (disabled) event.preventDefault();
+					},
 					suppressContentEditableWarning: true,
 					...additionalProps,
 					...controlProps
