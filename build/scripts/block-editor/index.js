@@ -8020,7 +8020,6 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		getStyleStateViewport: () => getStyleStateViewport,
 		getViewportModalClientIds: () => getViewportModalClientIds,
 		getZoomLevel: () => getZoomLevel,
-		hasAllowedPatterns: () => hasAllowedPatterns,
 		hasBlockSpotlight: () => hasBlockSpotlight,
 		isBlockHiddenAnywhere: () => isBlockHiddenAnywhere,
 		isBlockHiddenAtViewport: () => isBlockHiddenAtViewport,
@@ -8360,26 +8359,6 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		state.settings.enableOpenverseMediaCategory,
 		state.registeredInserterMediaCategories
 	]);
-	/**
-	* Returns whether there is at least one allowed pattern for inner blocks children.
-	* This is useful for deferring the parsing of all patterns until needed.
-	*
-	* @param state               Editor state.
-	* @param [rootClientId=null] Target root client ID.
-	*
-	* @return If there is at least one allowed pattern.
-	*/
-	const hasAllowedPatterns = (0, _wordpress_data.createRegistrySelector)((select) => (0, _wordpress_data.createSelector)((state, rootClientId = null) => {
-		const { getAllPatterns } = unlock$2(select(STORE_NAME));
-		const patterns = getAllPatterns();
-		const { allowedBlockTypes } = getSettings$7(state);
-		return patterns.some((pattern) => {
-			const { inserter = true } = pattern;
-			if (!inserter) return false;
-			const grammar = getGrammar(pattern);
-			return checkAllowListRecursive(grammar, allowedBlockTypes) && grammar.every(({ name: blockName }) => canInsertBlockType(state, blockName, rootClientId));
-		});
-	}, (state, rootClientId) => [...getAllPatternsDependants(select)(state), ...getInsertBlockTypeDependants(select)(state, rootClientId)]));
 	const getPatternBySlug = (0, _wordpress_data.createRegistrySelector)((select) => (0, _wordpress_data.createSelector)((state, patternName) => {
 		if (patternName?.startsWith("core/block/")) {
 			const _id = parseInt(patternName.slice(11), 10);
