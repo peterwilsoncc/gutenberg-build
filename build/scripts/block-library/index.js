@@ -66473,7 +66473,7 @@ Icon: ButtonIcon });
 			}
 		};
 	};
-	const { style: style$45, ...restBlockAttributes } = blockAttributes$2;
+	const { style: style$46, ...restBlockAttributes } = blockAttributes$2;
 	const deprecated$8 = [
 		{
 			supports: {
@@ -78001,8 +78001,25 @@ Icon: ButtonIcon });
 				"__experimentalLetterSpacing": true,
 				"__experimentalDefaultControls": { "fontSize": true }
 			},
-			"interactivity": { "clientNavigation": true }
-		}
+			"interactivity": { "clientNavigation": true },
+			"spacing": {
+				"padding": true,
+				"__experimentalDefaultControls": { "padding": false }
+			},
+			"__experimentalBorder": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true,
+				"__experimentalDefaultControls": {
+					"color": false,
+					"radius": false,
+					"style": false,
+					"width": false
+				}
+			}
+		},
+		style: "wp-block-query-pagination-next"
 	};
 
 // packages/block-library/build-module/query-pagination-next/edit.mjs
