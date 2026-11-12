@@ -51597,7 +51597,7 @@ Icon: ButtonIcon });
 	const getTextWithoutMarkup = (text) => {
 		const dummyElement = document.createElement("div");
 		dummyElement.innerHTML = text;
-		dummyElement.querySelectorAll("annotation").forEach((annotation) => annotation.remove());
+		dummyElement.querySelectorAll("annotation, sup[data-fn]").forEach((element) => element.remove());
 		return dummyElement.innerText;
 	};
 	/**
@@ -86432,7 +86432,7 @@ Icon: ButtonIcon });
 				if (maxLevel && headingAttributes.level > maxLevel) continue;
 				const canBeLinked = typeof headingPageLink === "string" && typeof headingAttributes.anchor === "string" && headingAttributes.anchor !== "";
 				latestHeadings.push({
-					content: (0, _wordpress_dom.__unstableStripHTML)(headingAttributes.content.replace(/(<br *\/?>)+/g, " ").replace(/<annotation(\s[^>]*)?>[\s\S]*?<\/annotation>/g, "")),
+					content: (0, _wordpress_dom.__unstableStripHTML)(headingAttributes.content.replace(/(<br *\/?>)+/g, " ").replace(/<annotation(\s[^>]*)?>[\s\S]*?<\/annotation>/g, "").replace(/<sup\s[^>]*\bdata-fn=[^>]*>[\s\S]*?<\/sup>/g, "")),
 					level: headingAttributes.level,
 					link: canBeLinked ? `${headingPageLink}#${headingAttributes.anchor}` : null
 				});
