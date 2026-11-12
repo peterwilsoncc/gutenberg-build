@@ -67761,55 +67761,60 @@ VisualLabel });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$29(targetDocument, hash, css);
 	}
-	registerStyle$29("293740e7c5", "._2ed57ffb244f325e__container{border:0;display:contents;margin:0;padding:0}._5ef48741171f30af__header{height:16px}._5db6c178d25830e5__header-toggle{margin-top:-4px}._5bf8035152cafa47__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._54fda1090db45021__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
+	registerStyle$29("952e1e22a0", "._4cbb9d9cf799070b__container{border:0;display:contents;margin:0;padding:0}._4a475cc9c22c345d__header{height:16px}._1da87365df749bc1__header-toggle{margin-top:-4px}._23b2b093bcf2cbaf__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._3d3bf3b09dddc213__selected-hint{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);margin-inline-start:8px}");
 	var style_module_default$29 = {
-		"container": "_2ed57ffb244f325e__container",
-		"header": "_5ef48741171f30af__header",
-		"header-toggle": "_5db6c178d25830e5__header-toggle",
-		"header-label": "_5bf8035152cafa47__header-label",
-		"select": "_54fda1090db45021__select"
+		"container": "_4cbb9d9cf799070b__container",
+		"header": "_4a475cc9c22c345d__header",
+		"header-toggle": "_1da87365df749bc1__header-toggle",
+		"header-label": "_23b2b093bcf2cbaf__header-label",
+		"selected-hint": "_3d3bf3b09dddc213__selected-hint"
 	};
 	const DEFAULT_OPTION = {
-		key: "default",
-		name: (0, _wordpress_i18n.__)("Default"),
-		value: void 0
+		value: null,
+		label: (0, _wordpress_i18n.__)("Default")
 	};
 	const FontSizePickerSelect = (props) => {
 		const { fontSizes, value, valueMode = "literal", onChange } = props;
-		const options = [DEFAULT_OPTION, ...fontSizes.map((fontSize) => {
-			const hint = generateFontSizeHint(fontSize);
-			return {
-				key: fontSize.slug,
-				name: fontSize.name || fontSize.slug,
-				value: fontSize.size,
-				hint
-			};
-		})];
-		const selectedOption = (0, _wordpress_element.useMemo)(() => {
+		useEnableWpCompatOverlaySlot();
+		const descriptionId = (0, _wordpress_compose.useInstanceId)(FontSizePickerSelect, "font-size-picker__description");
+		const options = [DEFAULT_OPTION, ...fontSizes.map((fontSize) => ({
+			value: fontSize.slug,
+			label: fontSize.name || fontSize.slug,
+			size: fontSize.size,
+			description: generateFontSizeHint(fontSize)
+		}))];
+		const selectedOption = (() => {
 			if (value === void 0) return DEFAULT_OPTION;
 			if (valueMode === "slug") {
-				const optionBySlug = options.find((option) => option.key === value);
+				const optionBySlug = options.find((option) => option.value === value);
 				if (optionBySlug) return optionBySlug;
 			}
-			return options.find((option) => option.value === value) ?? DEFAULT_OPTION;
-		}, [
-			value,
-			valueMode,
-			options
-		]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CustomSelectControl, {
-			className: clsx("components-font-size-picker__select", style_module_default$29.select),
+			return options.find((option) => option.size === value) ?? DEFAULT_OPTION;
+		})();
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
+			className: "components-font-size-picker__select",
 			label: (0, _wordpress_i18n.__)("Font size"),
 			hideLabelFromVision: true,
-			describedBy: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Currently selected font size: %s"), selectedOption.name),
-			options,
+			items: options,
 			value: selectedOption,
-			showSelectedHint: true,
-			onChange: ({ selectedItem }) => {
-				const matchingFontSize = selectedItem.key === "default" ? void 0 : fontSizes.find((fontSize) => fontSize.slug === selectedItem.key);
-				onChange(selectedItem.value, matchingFontSize);
+			popupWidth: "anchor",
+			trigger: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Trigger, {
+				"aria-describedby": descriptionId,
+				children: (item) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [item.label, item.description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: style_module_default$29["selected-hint"],
+					"aria-hidden": "true",
+					children: item.description
+				})] })
+			}),
+			onValueChange: (item) => {
+				if (item?.value === selectedOption.value && (item?.value !== null || value === void 0)) return;
+				const matchingFontSize = fontSizes.find((fontSize) => fontSize.slug === item?.value);
+				onChange(matchingFontSize?.size, matchingFontSize);
 			}
-		});
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+			id: descriptionId,
+			children: selectedOption.description
+		})] });
 	};
 
 // packages/components/build-module/font-size-picker/constants.mjs
@@ -67972,13 +67977,13 @@ VisualLabel });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$28(targetDocument, hash, css);
 	}
-	registerStyle$28("293740e7c5", "._2ed57ffb244f325e__container{border:0;display:contents;margin:0;padding:0}._5ef48741171f30af__header{height:16px}._5db6c178d25830e5__header-toggle{margin-top:-4px}._5bf8035152cafa47__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._54fda1090db45021__select .components-custom-select-control__item .components-custom-select-control__item-hint{width:100%}");
+	registerStyle$28("952e1e22a0", "._4cbb9d9cf799070b__container{border:0;display:contents;margin:0;padding:0}._4a475cc9c22c345d__header{height:16px}._1da87365df749bc1__header-toggle{margin-top:-4px}._23b2b093bcf2cbaf__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._3d3bf3b09dddc213__selected-hint{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);margin-inline-start:8px}");
 	var style_module_default$28 = {
-		"container": "_2ed57ffb244f325e__container",
-		"header": "_5ef48741171f30af__header",
-		"header-toggle": "_5db6c178d25830e5__header-toggle",
-		"header-label": "_5bf8035152cafa47__header-label",
-		"select": "_54fda1090db45021__select"
+		"container": "_4cbb9d9cf799070b__container",
+		"header": "_4a475cc9c22c345d__header",
+		"header-toggle": "_1da87365df749bc1__header-toggle",
+		"header-label": "_23b2b093bcf2cbaf__header-label",
+		"selected-hint": "_3d3bf3b09dddc213__selected-hint"
 	};
 	const DEFAULT_UNITS = [
 		"px",
