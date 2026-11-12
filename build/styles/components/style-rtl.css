@@ -3485,7 +3485,7 @@ body.lockscroll {
 .components-text-control__input[type=email]::placeholder,
 .components-text-control__input[type=month]::placeholder,
 .components-text-control__input[type=number]::placeholder {
-  color: color-mix(in srgb, var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e)), transparent 38%);
+  color: var(--wpds-color-foreground-interactive-neutral-weak, #6e6e6e);
 }
 .components-text-control__input:disabled, .components-text-control__input[aria-disabled=true],
 .components-text-control__input[type=text]:disabled,
