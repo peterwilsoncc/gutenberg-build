@@ -56883,7 +56883,7 @@ Icon: ButtonIcon });
 		const { category, search } = filters;
 		let filteredFonts = fonts || [];
 		if (category && category !== "all") filteredFonts = filteredFonts.filter((font) => font.categories && font.categories.indexOf(category) !== -1);
-		if (search) filteredFonts = filteredFonts.filter((font) => font.font_family_settings && font.font_family_settings.name.toLowerCase().includes(search.toLowerCase()));
+		if (search) filteredFonts = filteredFonts.filter((font) => font.font_family_settings && font.font_family_settings.name.toLowerCase().includes(search.trim().toLowerCase()));
 		return filteredFonts;
 	}
 
