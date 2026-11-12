@@ -113428,7 +113428,8 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 				const removed = removeInlineNote(attributes, "new");
 				if (removed) newAttributes[removed.attributeKey] = removed.value;
 				const range = ranges.get(clientId);
-				if (range) {
+				const bindings = attributes.metadata?.bindings;
+				if (range && !bindings?.[range.attributeKey] && !bindings?.__default) {
 					const { attributeKey, start, end } = range;
 					const value = newAttributes[attributeKey] ?? attributes[attributeKey];
 					const wrapped = start < end && wrapInlineNote(value, "new", start, end);
