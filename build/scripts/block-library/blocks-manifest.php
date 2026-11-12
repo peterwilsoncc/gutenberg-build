@@ -7605,8 +7605,27 @@ return array(
 			),
 			'interactivity' => array(
 				'clientNavigation' => true
+			),
+			'spacing' => array(
+				'padding' => true,
+				'__experimentalDefaultControls' => array(
+					'padding' => false
+				)
+			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true,
+				'__experimentalDefaultControls' => array(
+					'color' => false,
+					'radius' => false,
+					'style' => false,
+					'width' => false
+				)
 			)
-		)
+		),
+		'style' => 'wp-block-query-pagination-previous'
 	),
 	'query-title' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
