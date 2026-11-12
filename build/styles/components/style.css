@@ -253,8 +253,7 @@
 .components-button-group .components-button {
   border-radius: 0;
   display: inline-flex;
-  color: #1e1e1e;
-  border-color: #1e1e1e;
+  border-color: var(--wpds-color-stroke-interactive-neutral, #8b8b8b);
 }
 .components-button-group .components-button + .components-button {
   margin-left: -1px;
@@ -276,6 +275,22 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/test/storybook-playwright/README.md
  */
+.components-button {
+  --_wp-components-button-foreground: var(--wpds-color-foreground-interactive-brand, var(--wp-admin-theme-color, #3858e9));
+  --_wp-components-button-foreground-active: var(--wpds-color-foreground-interactive-brand-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 52%, black));
+  --_wp-components-button-foreground-strong: var(--wpds-color-foreground-interactive-brand-strong, #fff);
+  --_wp-components-button-foreground-strong-active: var(--wpds-color-foreground-interactive-brand-strong-active, #fff);
+  --_wp-components-button-foreground-strong-disabled: var(--wpds-color-foreground-interactive-brand-strong-disabled, #8b8b8b);
+  --_wp-components-button-background-strong: var(--wpds-color-background-interactive-brand-strong, var(--wp-admin-theme-color, #3858e9));
+  --_wp-components-button-background-strong-active: var(--wpds-color-background-interactive-brand-strong-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 93%, black));
+  --_wp-components-button-background-strong-disabled: var(--wpds-color-background-interactive-brand-strong-disabled, #e5e5e5);
+  --_wp-components-button-background-weak: var(--wpds-color-background-interactive-neutral-weak, #0000);
+  --_wp-components-button-background-weak-active: var(--wpds-color-background-interactive-neutral-weak-active, #ececec);
+  --_wp-components-button-background-on-active: var(--_wp-components-button-background-weak-active);
+  --_wp-components-button-stroke: var(--wpds-color-stroke-interactive-brand, var(--wp-admin-theme-color, #3858e9));
+  --_wp-components-button-stroke-active: var(--wpds-color-stroke-interactive-brand-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 84%, black));
+  --_wp-components-button-foreground-busy: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
+}
 .components-button:focus:is(a) {
   box-shadow: none;
 }
@@ -301,14 +316,14 @@
   box-sizing: border-box;
   padding: 4px 12px;
   border-radius: 2px;
-  color: var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e));
+  color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
   border: 1px solid transparent;
 }
 .components-button.is-next-40px-default-size {
   height: 40px;
 }
 .components-button[aria-expanded=true], .components-button:hover:not(:disabled, [aria-disabled=true], [role^=menuitem], [role=option]) {
-  color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+  color: var(--_wp-components-button-foreground);
 }
 .components-button {
   /**
@@ -317,34 +332,40 @@
 }
 .components-button.is-primary {
   white-space: nowrap;
-  background: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
-  color: var(--wp-components-color-accent-inverted, var(--wpds-color-foreground-interactive-brand-strong, #fff));
+  background: var(--_wp-components-button-background-strong);
+  color: var(--_wp-components-button-foreground-strong);
   text-decoration: none;
   text-shadow: none;
 }
 .components-button.is-primary:hover:not(:disabled) {
-  background: var(--wp-components-color-accent-darker-10, var(--wp-admin-theme-color-darker-10, #2145e6));
-  color: var(--wp-components-color-accent-inverted, var(--wpds-color-foreground-interactive-brand-strong, #fff));
+  background-color: var(--_wp-components-button-background-strong-active);
+  color: var(--_wp-components-button-foreground-strong-active);
 }
 .components-button.is-primary:active:not(:disabled) {
-  background: var(--wp-components-color-accent-darker-20, var(--wp-admin-theme-color-darker-20, #183ad6));
-  color: var(--wp-components-color-accent-inverted, var(--wpds-color-foreground-interactive-brand-strong, #fff));
+  background-color: var(--_wp-components-button-background-strong-active);
+  color: var(--_wp-components-button-foreground-strong-active);
 }
 .components-button.is-primary:disabled, .components-button.is-primary:disabled:active:enabled, .components-button.is-primary[aria-disabled=true], .components-button.is-primary[aria-disabled=true]:enabled, .components-button.is-primary[aria-disabled=true]:active:enabled {
-  color: var(--wpds-color-foreground-interactive-brand-strong-disabled, #8b8b8b);
-  background: var(--wpds-color-background-interactive-brand-strong-disabled, #e5e5e5);
+  color: var(--_wp-components-button-foreground-strong-disabled);
+  background: var(--_wp-components-button-background-strong-disabled);
 }
 .components-button.is-primary.is-busy, .components-button.is-primary.is-busy:disabled, .components-button.is-primary.is-busy[aria-disabled=true] {
-  color: var(--wp-components-color-accent-inverted, var(--wpds-color-foreground-interactive-brand-strong, #fff));
+  color: var(--_wp-components-button-foreground-strong);
   background-size: 100px 100%;
   /* stylelint-disable -- Disable reason: This function call looks nicer when each argument is on its own line. */
-  background-image: linear-gradient(-45deg, var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) 33%, var(--wp-components-color-accent-darker-20, var(--wp-admin-theme-color-darker-20, #183ad6)) 33%, var(--wp-components-color-accent-darker-20, var(--wp-admin-theme-color-darker-20, #183ad6)) 70%, var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) 70%);
+  background-image: linear-gradient(-45deg, var(--_wp-components-button-background-strong) 33%, var(--_wp-components-button-background-strong-active) 33%, var(--_wp-components-button-background-strong-active) 70%, var(--_wp-components-button-background-strong) 70%);
   /* stylelint-enable */
 }
 .components-button {
   /**
    * Secondary and tertiary buttons.
    */
+}
+.components-button.is-secondary, .components-button.is-tertiary {
+  --_wp-components-button-background-weak: var(--wpds-color-background-interactive-brand-weak, #0000);
+  --_wp-components-button-background-weak-active: var(--wpds-color-background-interactive-brand-weak-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 13%, white));
+  --_wp-components-button-foreground-on-active: var(--_wp-components-button-foreground-active);
+  --_wp-components-button-foreground-busy: var(--_wp-components-button-foreground-active);
 }
 .components-button.is-secondary:disabled, .components-button.is-secondary[aria-disabled=true], .components-button.is-secondary[aria-disabled=true]:hover, .components-button.is-tertiary:disabled, .components-button.is-tertiary[aria-disabled=true], .components-button.is-tertiary[aria-disabled=true]:hover {
   color: var(--wpds-color-foreground-interactive-brand-disabled, #8b8b8b);
@@ -362,21 +383,21 @@
   }
 }
 .components-button.is-secondary {
-  border-color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+  border-color: var(--_wp-components-button-stroke);
   white-space: nowrap;
-  color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
-  background: transparent;
+  color: var(--_wp-components-button-foreground);
+  background: var(--_wp-components-button-background-weak);
 }
 .components-button.is-secondary:active:not(:disabled) {
   border-color: transparent;
 }
 .components-button.is-secondary:hover:not(:disabled, [aria-disabled=true], .is-pressed) {
-  border-color: var(--wp-components-color-accent-darker-20, var(--wp-admin-theme-color-darker-20, #183ad6));
-  color: var(--wp-components-color-accent-darker-20, var(--wp-admin-theme-color-darker-20, #183ad6));
-  background: color-mix(in srgb, var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) 4%, transparent);
+  border-color: var(--_wp-components-button-stroke-active);
+  color: var(--_wp-components-button-foreground-active);
+  background-color: var(--_wp-components-button-background-on-active);
 }
 .components-button.is-secondary:focus:not(:active) {
-  border-color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+  border-color: var(--_wp-components-button-stroke);
 }
 .components-button.is-secondary:disabled:not(:focus), .components-button.is-secondary[aria-disabled=true]:not(:focus), .components-button.is-secondary[aria-disabled=true]:hover:not(:focus) {
   border-color: var(--wpds-color-stroke-interactive-neutral-disabled, #dbdbdb);
@@ -388,15 +409,15 @@
 }
 .components-button.is-tertiary {
   white-space: nowrap;
-  color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
-  background: transparent;
+  color: var(--_wp-components-button-foreground);
+  background: var(--_wp-components-button-background-weak);
 }
 .components-button.is-tertiary:hover:not(:disabled, [aria-disabled=true], .is-pressed) {
-  background: color-mix(in srgb, var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) 4%, transparent);
-  color: var(--wp-components-color-accent-darker-20, var(--wp-admin-theme-color-darker-20, #183ad6));
+  background-color: var(--_wp-components-button-background-on-active);
+  color: var(--_wp-components-button-foreground-active);
 }
-.components-button.is-tertiary:active:not(:disabled, [aria-disabled=true]) {
-  background: color-mix(in srgb, var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) 8%, transparent);
+.components-button.is-tertiary:active:not(:disabled, [aria-disabled=true], .is-pressed) {
+  background-color: var(--_wp-components-button-background-on-active);
 }
 p + .components-button.is-tertiary {
   margin-left: -6px;
@@ -407,27 +428,36 @@ p + .components-button.is-tertiary {
    */
 }
 .components-button.is-destructive {
-  --wp-components-color-accent: #cc1818;
-  --wp-components-color-accent-darker-10: rgb(158.3684210526, 18.6315789474, 18.6315789474);
-  --wp-components-color-accent-darker-20: rgb(112.7368421053, 13.2631578947, 13.2631578947);
+  --_wp-components-button-foreground: var(--wpds-color-foreground-interactive-error, #cc1818);
+  --_wp-components-button-foreground-active: var(--wpds-color-foreground-interactive-error-active, #470000);
+  --_wp-components-button-foreground-strong: var(--wpds-color-foreground-interactive-error-strong, #f2efef);
+  --_wp-components-button-foreground-strong-active: var(--wpds-color-foreground-interactive-error-strong-active, #f2efef);
+  --_wp-components-button-foreground-strong-disabled: var(--wpds-color-foreground-interactive-error-strong-disabled, #8b8b8b);
+  --_wp-components-button-background-strong: var(--wpds-color-background-interactive-error-strong, #cc1818);
+  --_wp-components-button-background-strong-active: var(--wpds-color-background-interactive-error-strong-active, #b80000);
+  --_wp-components-button-background-strong-disabled: var(--wpds-color-background-interactive-error-strong-disabled, #e5e5e5);
+  --_wp-components-button-background-weak: var(--wpds-color-background-interactive-error-weak, #0000);
+  --_wp-components-button-background-weak-active: var(--wpds-color-background-interactive-error-weak-active, #fae4e0);
+  --_wp-components-button-stroke: var(--wpds-color-stroke-interactive-error, #cc1818);
+  --_wp-components-button-stroke-active: var(--wpds-color-stroke-interactive-error-active, #9c0000);
+  --_wp-components-button-foreground-on-active: var(--_wp-components-button-foreground-active);
+  --_wp-components-button-foreground-busy: var(--_wp-components-button-foreground-active);
 }
-.components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link) {
-  color: #cc1818;
+.components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link):not(.is-pressed) {
+  color: var(--_wp-components-button-foreground);
 }
-.components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link):hover:not(:disabled, [aria-disabled=true]) {
-  color: rgb(112.7368421053, 13.2631578947, 13.2631578947);
+.components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link):not(.is-pressed):hover:not(:disabled, [aria-disabled=true]) {
+  color: var(--_wp-components-button-foreground-active);
 }
-.components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link):active:not(:disabled, [aria-disabled=true]) {
-  background: #ccc;
+.components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link):not(.is-pressed):active:not(:disabled, [aria-disabled=true]) {
+  background-color: var(--wpds-color-background-interactive-error-active, #fff6f5);
+  color: var(--_wp-components-button-foreground-active);
 }
-.components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link):disabled, .components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link)[aria-disabled=true] {
+.components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link):not(.is-pressed):disabled, .components-button.is-destructive:not(.is-primary):not(.is-secondary):not(.is-tertiary):not(.is-link):not(.is-pressed)[aria-disabled=true] {
   color: var(--wpds-color-foreground-interactive-neutral-disabled, #8b8b8b);
 }
-.components-button.is-destructive.is-tertiary:hover:not(:disabled, [aria-disabled=true]), .components-button.is-destructive.is-secondary:hover:not(:disabled, [aria-disabled=true]) {
-  background: rgba(204, 24, 24, 0.04);
-}
-.components-button.is-destructive.is-tertiary:active:not(:disabled, [aria-disabled=true]), .components-button.is-destructive.is-secondary:active:not(:disabled, [aria-disabled=true]) {
-  background: rgba(204, 24, 24, 0.08);
+.components-button.is-destructive.is-secondary:active:not(:disabled, [aria-disabled=true], .is-pressed) {
+  background-color: var(--_wp-components-button-background-on-active);
 }
 .components-button {
   /**
@@ -435,6 +465,7 @@ p + .components-button.is-tertiary {
    */
 }
 .components-button.is-link {
+  --_wp-components-button-foreground-busy: var(--_wp-components-button-foreground-active);
   margin: 0;
   padding: 0;
   border: 0;
@@ -443,7 +474,7 @@ p + .components-button.is-tertiary {
   outline: none;
   text-align: left;
   font-weight: var(--wpds-typography-font-weight-default, 400);
-  color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+  color: var(--_wp-components-button-foreground);
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-thickness: from-font;
@@ -465,12 +496,18 @@ p + .components-button.is-tertiary {
 .components-button.is-link:disabled, .components-button.is-link[aria-disabled=true] {
   color: var(--wpds-color-foreground-interactive-brand-disabled, #8b8b8b);
 }
-.components-button:not(:disabled, [aria-disabled=true]):active {
-  color: var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e));
+.components-button:not(:disabled, [aria-disabled=true], .is-pressed):active {
+  color: var(--_wp-components-button-foreground-on-active, var(--wpds-color-foreground-interactive-neutral-active, #1e1e1e));
 }
 .components-button:disabled, .components-button[aria-disabled=true] {
   cursor: default;
   color: var(--wpds-color-foreground-interactive-neutral-disabled, #8b8b8b);
+}
+.components-button.is-busy, .components-button.is-secondary.is-busy, .components-button.is-secondary.is-busy:disabled, .components-button.is-secondary.is-busy[aria-disabled=true] {
+  --_wp-components-button-background-on-active: var(--_wp-components-button-background-weak);
+}
+.components-button.is-busy:not(.is-primary, .is-pressed), .components-button.is-secondary.is-busy:not(.is-primary, .is-pressed), .components-button.is-secondary.is-busy:disabled:not(.is-primary, .is-pressed), .components-button.is-secondary.is-busy[aria-disabled=true]:not(.is-primary, .is-pressed) {
+  color: var(--_wp-components-button-foreground-busy);
 }
 @media not (prefers-reduced-motion) {
   .components-button.is-busy, .components-button.is-secondary.is-busy, .components-button.is-secondary.is-busy:disabled, .components-button.is-secondary.is-busy[aria-disabled=true] {
@@ -480,7 +517,7 @@ p + .components-button.is-tertiary {
 .components-button.is-busy, .components-button.is-secondary.is-busy, .components-button.is-secondary.is-busy:disabled, .components-button.is-secondary.is-busy[aria-disabled=true] {
   background-size: 100px 100%;
   /* stylelint-disable -- Disable reason: This function call looks nicer when each argument is on its own line. */
-  background-image: linear-gradient(-45deg, rgb(249.9, 249.9, 249.9) 33%, rgb(224.4, 224.4, 224.4) 33%, rgb(224.4, 224.4, 224.4) 70%, rgb(249.9, 249.9, 249.9) 70%);
+  background-image: linear-gradient(-45deg, var(--_wp-components-button-background-weak) 33%, var(--_wp-components-button-background-weak-active) 33%, var(--_wp-components-button-background-weak-active) 70%, var(--_wp-components-button-background-weak) 70%);
   /* stylelint-enable */
 }
 .components-button.is-compact {
