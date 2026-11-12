@@ -40858,6 +40858,7 @@ Icon: ButtonIcon });
 		const showMobileSiteHub = !!areas.mobileContent;
 		const hasMobileAreas = areas.mobileSidebar || areas.mobileContent || areas.preview;
 		const isMobileViewport = (0, _wordpress_compose.useViewportMatch)("medium", "<");
+		const showCanvas = !!areas.preview && (!isMobileViewport || canvas === "edit");
 		const mobileToggleRef = (0, _wordpress_element.useRef)();
 		const sidebarRegionRef = (0, _wordpress_element.useRef)();
 		const navigateRegionsProps = (0, _wordpress_components.__unstableUseNavigateRegions)();
@@ -40914,9 +40915,9 @@ Icon: ButtonIcon });
 						}),
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_notices.SnackbarNotices, { className: "edit-site-layout__snackbar" }),
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(UploadProgressSnackbar, {}),
-						isMobileViewport && hasMobileAreas && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						isMobileViewport && hasMobileAreas && canvas !== "edit" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 							className: "edit-site-layout__mobile",
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SidebarNavigationProvider, { children: canvas !== "edit" ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(SidebarNavigationProvider, { children: [
 								showMobileSiteHub && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SiteHubMobile, { ref: mobileToggleRef }),
 								areas.mobileContent ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_theme.ThemeProvider, {
 									color: CONTENT_COLOR,
@@ -40933,10 +40934,7 @@ Icon: ButtonIcon });
 								}),
 								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SaveHub, {}),
 								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SavePanel, {})
-							] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_theme.ThemeProvider, {
-								color: CONTENT_COLOR,
-								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_editor.ErrorBoundary, { children: areas.preview })
-							}) })
+							] })
 						}),
 						!isMobileViewport && areas.content && canvas !== "edit" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 							className: "edit-site-layout__area",
@@ -40954,7 +40952,7 @@ Icon: ButtonIcon });
 								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_editor.ErrorBoundary, { children: areas.edit })
 							})
 						}),
-						!isMobileViewport && areas.preview && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+						showCanvas && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 							className: "edit-site-layout__canvas-container",
 							children: [canvasResizer, !!canvasSize.width && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 								className: clsx("edit-site-layout__canvas", { "is-right-aligned": isResizableFrameOversized }),
