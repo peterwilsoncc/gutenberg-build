@@ -119051,7 +119051,7 @@ If there's a particular need for this, please submit a feature request at https:
 			isManualGrid: isManualPlacement && window.__experimentalEnableGridInteractivity
 		});
 	}
-	function GridItemResizerInner({ clientId, bounds, blockElement, rootBlockElement, onChange, isManualGrid }) {
+	function GridItemResizerInner({ clientId, bounds, blockElement, rootBlockElement, onChange, isManualGrid = false }) {
 		const [resizeDirection, setResizeDirection] = (0, _wordpress_element.useState)(null);
 		const [enableSide, setEnableSide] = (0, _wordpress_element.useState)({
 			top: false,
@@ -119092,11 +119092,19 @@ If there's a particular need for this, please submit a feature request at https:
 		]);
 		const justification = {
 			right: "left",
-			left: "right"
+			left: "right",
+			topRight: "left",
+			bottomRight: "left",
+			topLeft: "right",
+			bottomLeft: "right"
 		};
 		const alignment = {
 			top: "flex-end",
-			bottom: "flex-start"
+			bottom: "flex-start",
+			topRight: "flex-end",
+			topLeft: "flex-end",
+			bottomRight: "flex-start",
+			bottomLeft: "flex-start"
 		};
 		const styles = {
 			display: "flex",
@@ -119118,13 +119126,13 @@ If there's a particular need for this, please submit a feature request at https:
 				},
 				enable: {
 					bottom: enableSide.bottom,
-					bottomLeft: false,
-					bottomRight: false,
+					bottomLeft: enableSide.left && enableSide.bottom,
+					bottomRight: enableSide.bottom && enableSide.right,
 					left: enableSide.left,
 					right: enableSide.right,
 					top: enableSide.top,
-					topLeft: false,
-					topRight: false
+					topLeft: enableSide.top && enableSide.left,
+					topRight: enableSide.top && enableSide.right
 				},
 				bounds,
 				boundsByDirection: true,
