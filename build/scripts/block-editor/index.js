@@ -15581,6 +15581,9 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		getOrientation() {
 			return "horizontal";
 		},
+		capturesToolbars(layout) {
+			return !!layout?.isManualPlacement && !!window.__experimentalEnableGridInteractivity;
+		},
 		getAlignments() {
 			return [];
 		}
@@ -90575,9 +90578,10 @@ If there's a particular need for this, please submit a feature request at https:
 				prioritizedInserterBlocks: _prioritizedInserterBlocks,
 				templateLock: _templateLock
 			};
-			if (captureToolbars !== void 0) newSettings.__experimentalCaptureToolbars = captureToolbars;
+			const layoutType = getLayoutType(layout?.type);
+			if (captureToolbars !== void 0) newSettings.__experimentalCaptureToolbars = captureToolbars || !!layoutType?.capturesToolbars?.(layout ?? void 0);
 			if (orientation !== void 0) newSettings.orientation = orientation;
-			else newSettings.orientation = getLayoutType(layout?.type).getOrientation(layout);
+			else newSettings.orientation = layoutType.getOrientation(layout);
 			if (__experimentalDefaultBlock !== void 0) {
 				(0, _wordpress_deprecated.default)("__experimentalDefaultBlock", {
 					alternative: "defaultBlock",
