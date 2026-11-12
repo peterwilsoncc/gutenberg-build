@@ -3552,7 +3552,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				if (existingEntry) {
 					newState.tree.set(clientId, {
 						...existingEntry,
-						innerBlocks
+						innerBlocks: []
 					});
 					fixedClientIds.push(clientId);
 				}
