@@ -53611,8 +53611,8 @@ createStates() {
 			}
 		})] });
 	}
-	function MediaPreview({ attachment }) {
-		const url = attachment.source_url;
+	function MediaPreview({ attachment, getPreviewUrl }) {
+		const url = getPreviewUrl && !(0, _wordpress_blob.isBlobURL)(attachment.source_url) ? getPreviewUrl(attachment) : attachment.source_url;
 		const mimeType = attachment.mime_type || "";
 		if (mimeType.startsWith("image")) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
 			className: "media-edit__thumbnail",
@@ -53634,7 +53634,7 @@ createStates() {
 	function getItemsKey(items) {
 		return (items ?? []).map((item) => String(item.id)).sort().join(",");
 	}
-	function ExpandedMediaEditAttachments({ allItems, addButtonLabel, multiple, removeItem, moveItem, open, onFilesDrop, isUploading, setTargetItemId }) {
+	function ExpandedMediaEditAttachments({ allItems, addButtonLabel, multiple, removeItem, moveItem, open, onFilesDrop, isUploading, setTargetItemId, getPreviewUrl }) {
 		const itemsKey = getItemsKey(allItems);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: clsx("media-edit__expanded", {
@@ -53667,7 +53667,10 @@ createStates() {
 								alignment: "center",
 								justify: "center",
 								className: "media-edit__expanded-preview-stack",
-								children: (!isBlob || hasPreviewImage) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreview, { attachment })
+								children: (!isBlob || hasPreviewImage) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreview, {
+									attachment,
+									getPreviewUrl
+								})
 							})
 						})
 					}), !isBlob && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
@@ -53711,7 +53714,7 @@ createStates() {
 			})]
 		});
 	}
-	function CompactMediaEditAttachments({ allItems, addButtonLabel, multiple, removeItem, moveItem, open, onFilesDrop, isUploading, setTargetItemId }) {
+	function CompactMediaEditAttachments({ allItems, addButtonLabel, multiple, removeItem, moveItem, open, onFilesDrop, isUploading, setTargetItemId, getPreviewUrl }) {
 		const itemsKey = getItemsKey(allItems);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [!!allItems?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: clsx("media-edit__compact-group", { "is-single": allItems.length === 1 }),
@@ -53735,7 +53738,10 @@ createStates() {
 							onFilesDrop,
 							attachment,
 							isUploading,
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreview, { attachment }), !isBlob && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaTitle, { attachment })] })
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreview, {
+								attachment,
+								getPreviewUrl
+							}), !isBlob && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaTitle, { attachment })] })
 						}), !isBlob && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
 							className: "media-edit__compact-movers",
 							spacing: 0,
@@ -53820,7 +53826,7 @@ createStates() {
 	function MediaEdit(props) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditControl, { ...props });
 	}
-	function MediaEditControl({ data, field, onChange, hideLabelFromVision, allowedTypes = ["image"], multiple, isExpanded, validity, isPickerFiltered, featuredImageFlow, pickerTitle }) {
+	function MediaEditControl({ data, field, onChange, hideLabelFromVision, allowedTypes = ["image"], multiple, isExpanded, validity, isPickerFiltered, featuredImageFlow, pickerTitle, getPreviewUrl }) {
 		const MediaUploadComponent = isPickerFiltered ? FilteredMediaUpload : ConditionalMediaUpload;
 		const value = field.getValue({ item: data });
 		const canUpload = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).canUser("create", {
@@ -54037,7 +54043,8 @@ createStates() {
 										open: () => setPendingOpen(true),
 										onFilesDrop,
 										isUploading: !!blobs.length,
-										setTargetItemId
+										setTargetItemId,
+										getPreviewUrl
 									}),
 									field.description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, {
 										variant: "muted",

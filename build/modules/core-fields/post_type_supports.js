@@ -15774,33 +15774,54 @@ const fieldExtensions$13 = {
 	}
 };
 
+// \0wp-global:@wordpress/hooks
+var require_hooks = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.hooks;
+}));
+
 // \0wp-global:@wordpress/media-utils
 var require_media_utils = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.mediaUtils;
 }));
 
 // packages/core-fields/build-module/lock-unlock.mjs
+var import_hooks = require_hooks();
 var import_media_utils = require_media_utils();
 var import_private_apis = require_private_apis();
 const { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/core-fields");
 
 // packages/core-fields/build-module/post_type_supports/featured_media/edit.mjs
 const { MediaEditControl } = unlock(import_media_utils.privateApis);
+/**
+* The URL the preview loads in the post editor: the size the
+* `editor.PostFeaturedImage.imageSize` filter picks, `large` by default, or
+* the full size when the image has no such size.
+*
+* @param attachment The featured image.
+* @param postId     The post being edited.
+* @return The URL of the image file to load.
+*/
+function getPreviewUrl(attachment, postId) {
+	const size = (0, import_hooks.applyFilters)("editor.PostFeaturedImage.imageSize", "large", attachment.id, postId);
+	return attachment.media_details?.sizes?.[size]?.source_url ?? attachment.source_url;
+}
 const FilteredMediaEdit = (0, import_components.withFilters)("editor.PostFeaturedImage")(function PostFeaturedImage(props) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditControl, {
 		...props,
 		isExpanded: true,
 		isPickerFiltered: true,
 		featuredImageFlow: true,
-		pickerTitle: props.postType?.labels?.featured_image || props.field.label
+		pickerTitle: props.postType?.labels?.featured_image || props.field.label,
+		getPreviewUrl: (attachment) => getPreviewUrl(attachment, props.data.id)
 	});
 });
 /**
 * The control resolved through the `editor.PostFeaturedImage` filter, with
 * the read-only facts the classic panel passed to it, `currentPostId`,
 * `featuredImageId`, `media` and `postType`, and its `onRemoveImage` handler;
-* its picker resolves through the `editor.MediaUpload` filter, as the classic
-* panel's does. Callbacks of either filter may read the props to render their
+* its picker resolves through the `editor.MediaUpload` filter and its preview
+* size through `editor.PostFeaturedImage.imageSize`, as the classic panel's
+* do. Callbacks of either filter may read the props to render their
 * own controls next to the picker and may act through the editor store
 * (`editPost`, `useEntityProp`), which is why this only renders where that
 * store's current post is the item (see `FeaturedImageEdit`).
@@ -15833,8 +15854,9 @@ function FilteredFeaturedImageEdit(props) {
 * Edit control of the featured image field.
 *
 * In the post editor, where the item is the post in the surrounding entity
-* context, the control goes through the `editor.PostFeaturedImage` filter and
-* its picker through `editor.MediaUpload`, so plugins that extend the classic
+* context, the control goes through the `editor.PostFeaturedImage` filter, its
+* picker through `editor.MediaUpload` and its preview size through
+* `editor.PostFeaturedImage.imageSize`, so plugins that extend the classic
 * featured image panel or its media picker keep working. Elsewhere, such as
 * Quick Edit, it renders the media control directly, with the plain picker.
 *
