@@ -84874,10 +84874,11 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!origin || !slug || !fontSize) return null;
 		const isFluid = fontSize.fluid !== void 0 ? !!fontSize.fluid : !!globalFluid;
 		const isCustomFluid = typeof fontSize.fluid === "object";
-		const set = (key, value) => setPresets(presets.map((p) => p.slug === slug ? {
+		const update = (changes) => setPresets(presets.map((p) => p.slug === slug ? {
 			...fontSize,
-			[key]: value
+			...changes
 		} : p));
+		const set = (key, value) => update({ [key]: value });
 		const handleCustomFluidValues = (value) => {
 			if (value) set("fluid", {
 				min: fontSize.size,
@@ -84894,9 +84895,12 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		const handleMaxChange = (value) => {
 			const fluid = typeof fontSize.fluid === "object" ? fontSize.fluid : {};
-			set("fluid", {
-				...fluid,
-				max: value
+			update({
+				fluid: {
+					...fluid,
+					max: value
+				},
+				...value ? { size: value } : {}
 			});
 		};
 		const menuItems = origin === "custom" ? [{
