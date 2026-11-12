@@ -14155,6 +14155,21 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		if (trimmedHref.startsWith("#") && !(0, _wordpress_url.isValidFragment)(trimmedHref)) return false;
 		return true;
 	}
+	function getRelTokens(rel) {
+		return rel?.match(/[^ \t\n\f\r]+/g) ?? [];
+	}
+	function isNofollowToken(token) {
+		return token.toLowerCase() === "nofollow";
+	}
+	/**
+	* Check whether the link's rel contains the nofollow token.
+	*
+	* @param rel The link's rel attribute.
+	* @return Whether the link has the nofollow relationship.
+	*/
+	function hasNofollow(rel) {
+		return getRelTokens(rel).some(isNofollowToken);
+	}
 	/**
 	* Generates the format object that will be applied to the link text.
 	*
@@ -14165,17 +14180,25 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	* @param options.opensInNewWindow Whether this link will open in a new window.
 	* @param options.nofollow         Whether this link is marked as no follow relationship.
 	* @param options.cssClasses       The CSS classes to apply to the link.
+	* @param currentFormat            The existing link format whose other attributes should be retained.
 	* @return The final format object.
 	*/
-	function createLinkFormat({ url, type, id, opensInNewWindow, nofollow, cssClasses }) {
+	function createLinkFormat({ url, type, id, opensInNewWindow, nofollow, cssClasses }, currentFormat) {
 		const format = {
 			type: "core/link",
 			attributes: { url }
 		};
+		if (currentFormat?.attributes?._id !== void 0) format.attributes._id = currentFormat.attributes._id;
+		if (currentFormat?.unregisteredAttributes) format.unregisteredAttributes = currentFormat.unregisteredAttributes;
 		if (type) format.attributes.type = type;
 		if (id) format.attributes.id = id;
 		if (opensInNewWindow) format.attributes.target = "_blank";
-		if (nofollow) format.attributes.rel = format.attributes.rel ? format.attributes.rel + " nofollow" : "nofollow";
+		let rel = currentFormat?.attributes?.rel;
+		if (nofollow !== void 0 && nofollow !== hasNofollow(rel)) {
+			const tokens = getRelTokens(rel);
+			rel = nofollow ? [...tokens, "nofollow"].join(" ") : tokens.filter((token) => !isNofollowToken(token)).join(" ");
+		}
+		if (rel) format.attributes.rel = rel;
 		const trimmedCssClasses = cssClasses?.trim();
 		if (trimmedCssClasses?.length) format.attributes.class = trimmedCssClasses;
 		return format;
@@ -14321,7 +14344,9 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		}
 	];
 	function InlineLinkUI({ isActive, activeAttributes, value, onChange, onFocusOutside, stopAddingLink, contentRef, focusOnMount }) {
-		const richTextText = getRichTextValueFromSelection(value, isActive).text;
+		const richLinkTextValue = getRichTextValueFromSelection(value, isActive);
+		const currentFormat = (0, _wordpress_rich_text.getActiveFormat)(value, "core/link");
+		const richTextText = richLinkTextValue.text;
 		const { selectionChange } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { createPageEntity, userCanCreatePages, selectionStart } = (0, _wordpress_data.useSelect)((select) => {
 			const { getSettings, getSelectionStart } = select(_wordpress_block_editor.store);
@@ -14337,7 +14362,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			type: activeAttributes.type,
 			id: activeAttributes.id,
 			opensInNewTab: activeAttributes.target === "_blank",
-			nofollow: activeAttributes.rel?.includes("nofollow"),
+			nofollow: hasNofollow(activeAttributes.rel),
 			title: richTextText,
 			cssClasses: activeAttributes.class
 		}), [
@@ -14368,7 +14393,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				opensInNewWindow: nextValue.opensInNewTab,
 				nofollow: nextValue.nofollow,
 				cssClasses: nextValue.cssClasses
-			});
+			}, currentFormat);
 			const newText = nextValue.title || newUrl;
 			let newValue;
 			if ((0, _wordpress_rich_text.isCollapsed)(value) && value.start !== void 0 && !isActive) {
