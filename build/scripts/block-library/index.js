@@ -79183,7 +79183,7 @@ Icon: ButtonIcon });
 		name: "core/quote",
 		title: "Quote",
 		category: "text",
-		description: "Give quoted text visual emphasis. \"In quoting others, we cite ourselves.\" — Julio Cortázar",
+		description: "Give quoted text visual emphasis.",
 		keywords: ["blockquote", "cite"],
 		textdomain: "default",
 		attributes: {
