@@ -46510,38 +46510,6 @@ Icon: ButtonIcon });
 		}
 	}
 
-// packages/block-library/build-module/gallery/use-get-new-images.mjs
-/**
-	* Keeps track of images already in the gallery to allow new innerBlocks to be identified. This
-	* is required so default gallery attributes can be applied without overwriting any custom
-	* attributes applied to existing images.
-	*
-	* @param {Array} images    Basic image block data taken from current gallery innerBlock
-	* @param {Array} imageData The related image data for each of the current gallery images.
-	*
-	* @return {Array} An array of any new images that have been added to the gallery.
-	*/
-	function useGetNewImages(images, imageData) {
-		const [currentImages, setCurrentImages] = (0, _wordpress_element.useState)([]);
-		return (0, _wordpress_element.useMemo)(() => getNewImages(), [images, imageData]);
-		function getNewImages() {
-			let imagesUpdated = false;
-			const newCurrentImages = currentImages.filter((currentImg) => images.find((img) => {
-				return currentImg.clientId === img.clientId;
-			}));
-			if (newCurrentImages.length < currentImages.length) imagesUpdated = true;
-			images.forEach((image) => {
-				if (image.fromSavedContent && !newCurrentImages.find((currentImage) => currentImage.id === image.id)) {
-					imagesUpdated = true;
-					newCurrentImages.push(image);
-				}
-			});
-			const newImages = images.filter((image) => !newCurrentImages.find((currentImage) => image.clientId && currentImage.clientId === image.clientId) && imageData?.find((img) => img.id === image.id) && !image.fromSavedContent);
-			if (imagesUpdated || newImages?.length > 0) setCurrentImages([...newCurrentImages, ...newImages]);
-			return newImages.length > 0 ? newImages : null;
-		}
-	}
-
 // packages/block-library/build-module/gallery/use-get-media.mjs
 	const EMPTY_IMAGE_MEDIA = [];
 	/**
@@ -46561,6 +46529,54 @@ Icon: ButtonIcon });
 				per_page: -1
 			}) ?? EMPTY_IMAGE_MEDIA;
 		}, [innerBlockImages]);
+	}
+
+// packages/block-library/build-module/gallery/use-apply-gallery-settings.mjs
+/**
+	* Applies the gallery settings to images added to the gallery.
+	*
+	* An image block uploads its own file and sets its own size and link, so the
+	* gallery settings can only be applied once the attachment loads.
+	*
+	* @param images               The gallery's image blocks.
+	* @param mediaById            The loaded attachments, by id.
+	* @param buildImageAttributes Returns the attributes to set on an image block.
+	*/
+	function useApplyGallerySettings(images, mediaById, buildImageAttributes) {
+		const { __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
+		const handledImagesRef = (0, _wordpress_element.useRef)(/* @__PURE__ */ new Set());
+		const applyGallerySettings = (0, _wordpress_compose.useEvent)((blocks) => {
+			const changedAttributes = Object.fromEntries(blocks.map((block) => [block.clientId, {
+				...buildImageAttributes(block.attributes),
+				id: block.attributes.id,
+				align: void 0
+			}]));
+			__unstableMarkNextChangeAsNotPersistent();
+			updateBlockAttributes(blocks.map((block) => block.clientId), changedAttributes, { uniqueByBlock: true });
+		});
+		(0, _wordpress_element.useEffect)(() => {
+			const handledImages = handledImagesRef.current;
+			const clientIds = new Set(images.map((block) => block.clientId));
+			handledImages.forEach((clientId) => {
+				if (!clientIds.has(clientId)) handledImages.delete(clientId);
+			});
+			const newImages = [];
+			images.forEach((block) => {
+				if (handledImages.has(block.clientId)) return;
+				if (block.originalContent) {
+					handledImages.add(block.clientId);
+					return;
+				}
+				if (!mediaById.has(block.attributes.id)) return;
+				handledImages.add(block.clientId);
+				newImages.push(block);
+			});
+			if (newImages.length > 0) applyGallerySettings(newImages);
+		}, [
+			images,
+			mediaById,
+			applyGallerySettings
+		]);
 	}
 
 // packages/global-styles-engine/build-module/utils/object.mjs
@@ -49560,16 +49576,9 @@ Icon: ButtonIcon });
 		const activeColumns = hasViewportColumns ? viewportStyle.columns : baseColumns;
 		const activeImageCrop = hasViewportImageCrop ? viewportStyle.imageCrop : baseImageCrop;
 		const activeAspectRatio = hasViewportAspectRatio ? viewportStyle.aspectRatio : baseAspectRatio;
-		const images = (0, _wordpress_element.useMemo)(() => innerBlockImages?.map((block) => ({
-			clientId: block.clientId,
-			id: block.attributes.id,
-			url: block.attributes.url,
-			attributes: block.attributes,
-			fromSavedContent: Boolean(block.originalContent)
-		})), [innerBlockImages]);
 		const imageData = useGetMedia(innerBlockImages);
-		const newImages = useGetNewImages(images, imageData);
-		const hasImages = !!images.length;
+		const mediaById = (0, _wordpress_element.useMemo)(() => new Map(imageData.map((media) => [media.id, media])), [imageData]);
+		const hasImages = !!innerBlockImages.length;
 		const [appliedSort, setAppliedSort] = (0, _wordpress_element.useState)(null);
 		const currentOrder = appliedSort && appliedSort.clientIds.length === innerBlockImages.length && appliedSort.clientIds.every((id, index) => innerBlockImages[index].clientId === id) ? appliedSort.order : null;
 		const canSortImages = hasSortableImages(innerBlockImages, imageData);
@@ -49583,11 +49592,11 @@ Icon: ButtonIcon });
 			postId,
 			postType
 		});
-		const displayedImageCount = isDynamic ? dynamic.dynamicMedia.length : images.length;
+		const displayedImageCount = isDynamic ? dynamic.dynamicMedia.length : innerBlockImages.length;
 		let hasLightboxImages;
 		if (isDynamic) hasLightboxImages = linkTo === LINK_DESTINATION_LIGHTBOX;
-		else if (lightboxSetting?.enabled) hasLightboxImages = images.filter((image) => image.attributes?.lightbox?.enabled === void 0 || image.attributes?.lightbox?.enabled === true).length > 0;
-		else hasLightboxImages = images.filter((image) => image.attributes.lightbox?.enabled).length > 0;
+		else if (lightboxSetting?.enabled) hasLightboxImages = innerBlockImages.filter((block) => block.attributes?.lightbox?.enabled === void 0 || block.attributes?.lightbox?.enabled === true).length > 0;
+		else hasLightboxImages = innerBlockImages.filter((block) => block.attributes.lightbox?.enabled).length > 0;
 		const themeOptions = themeRatios?.map(({ name, ratio }) => ({
 			label: name,
 			value: ratio
@@ -49604,16 +49613,6 @@ Icon: ButtonIcon });
 			...showDefaultRatios ? defaultOptions || [] : [],
 			...themeOptions || []
 		];
-		(0, _wordpress_element.useEffect)(() => {
-			newImages?.forEach((newImage) => {
-				__unstableMarkNextChangeAsNotPersistent();
-				updateBlockAttributes(newImage.clientId, {
-					...buildImageAttributes(newImage.attributes),
-					id: newImage.id,
-					align: void 0
-				});
-			});
-		}, [newImages]);
 		const imageSizeOptions = useImageSizes(isDynamic ? dynamic.dynamicMedia : imageData, isSelected, getSettings);
 		/**
 		* Determines the image attributes that should be applied to an image block
@@ -49628,7 +49627,7 @@ Icon: ButtonIcon });
 		* @return {Object}                Attributes to set on the new image block.
 		*/
 		function buildImageAttributes(imageAttributes) {
-			const image = imageAttributes.id ? imageData.find(({ id }) => id === imageAttributes.id) : null;
+			const image = mediaById.get(imageAttributes.id);
 			let newClassName;
 			if (imageAttributes.className && imageAttributes.className !== "") newClassName = imageAttributes.className;
 			let newLinkTarget;
@@ -49649,6 +49648,7 @@ Icon: ButtonIcon });
 				scale: aspectRatio && aspectRatio !== "auto" ? "cover" : void 0
 			};
 		}
+		useApplyGallerySettings(innerBlockImages, mediaById, buildImageAttributes);
 		function isValidFileType(file) {
 			const mediaTypeSelector = file.type;
 			return ALLOWED_MEDIA_TYPES$6.some((mediaType) => mediaTypeSelector?.indexOf(mediaType) === 0) || file.blob;
@@ -49816,10 +49816,10 @@ Icon: ButtonIcon });
 				type: "snackbar"
 			});
 		}
-		const hasImageIds = hasImages && images.some((image) => !!image.id);
+		const hasImageIds = hasImages && innerBlockImages.some((block) => !!block.attributes.id);
 		const mediaPlaceholderProps = {
 			addToGallery: false,
-			disableMediaButtons: images.some((img) => !img.id && img.url?.indexOf("blob:") === 0),
+			disableMediaButtons: innerBlockImages.some((block) => !block.attributes.id && block.attributes.url?.indexOf("blob:") === 0),
 			value: {}
 		};
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)({ className: clsx(className, "has-nested-images", `wp-block-gallery-${clientId}`, isDynamic && [
@@ -50045,7 +50045,7 @@ Icon: ButtonIcon });
 					onSelect: updateImages,
 					name: (0, _wordpress_i18n.__)("Add"),
 					multiple: true,
-					mediaIds: images.filter((image) => image.id).map((image) => image.id),
+					mediaIds: innerBlockImages.filter((block) => block.attributes.id).map((block) => block.attributes.id),
 					addToGallery: hasImageIds,
 					variant: "toolbar"
 				})
@@ -50063,7 +50063,6 @@ Icon: ButtonIcon });
 			}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Gallery, {
 				...props,
 				isContentLocked,
-				images,
 				blockProps: innerBlocksProps,
 				insertBlocksAfter,
 				multiGallerySelection
