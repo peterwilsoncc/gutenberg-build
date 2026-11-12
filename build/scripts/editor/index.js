@@ -89395,7 +89395,7 @@ If there's a particular need for this, please submit a feature request at https:
 				(0, _wordpress_blocks.createBlock)("core/group", { tagName: "main" }, [(0, _wordpress_blocks.createBlock)("core/group", { layout: { inherit: true } }, [(0, _wordpress_blocks.createBlock)("core/post-title")]), (0, _wordpress_blocks.createBlock)("core/post-content", { layout: { inherit: true } })])
 			]);
 			const newTemplate = await createTemplate({
-				slug: paramCase(title || DEFAULT_TITLE) || "wp-custom-template",
+				slug: (0, _wordpress_url.cleanForSlug)(title || DEFAULT_TITLE).replace(/[^\w-]+/g, "") || "wp-custom-template",
 				content: newTemplateContent,
 				title: title || DEFAULT_TITLE,
 				status: "publish"

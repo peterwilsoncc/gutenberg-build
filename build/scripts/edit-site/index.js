@@ -75340,7 +75340,7 @@ If there's a particular need for this, please submit a feature request at https:
 			setIsBusy(true);
 			try {
 				await createTemplate({
-					slug: paramCase(title || defaultTitle) || "wp-custom-template",
+					slug: (0, _wordpress_url.cleanForSlug)(title || defaultTitle).replace(/[^\w-]+/g, "") || "wp-custom-template",
 					title: title || defaultTitle
 				}, false);
 			} finally {

@@ -60953,7 +60953,7 @@ Icon: ButtonIcon });
 	* @return {string} A valid template part slug.
 	*/
 	const getCleanTemplatePartSlug = (title) => {
-		return paramCase(title).replace(/[^\w-]+/g, "") || "wp-custom-part";
+		return (0, _wordpress_url.cleanForSlug)(title).replace(/[^\w-]+/g, "") || "wp-custom-part";
 	};
 
 // packages/block-library/build-module/navigation/edit/use-create-overlay.mjs
@@ -87542,7 +87542,7 @@ Icon: ButtonIcon });
 		return async (blocks = [], title = (0, _wordpress_i18n.__)("Untitled Template Part")) => {
 			const record = {
 				title,
-				slug: paramCase(title).replace(/[^\w-]+/g, "") || "wp-custom-part",
+				slug: (0, _wordpress_url.cleanForSlug)(title).replace(/[^\w-]+/g, "") || "wp-custom-part",
 				content: (0, _wordpress_blocks.serialize)(blocks),
 				area
 			};
