@@ -99759,9 +99759,8 @@ If there's a particular need for this, please submit a feature request at https:
 		}));
 	}
 	/**
-	* Controller for the image editor: the state, the named setters and the
-	* export helpers. It keeps no undo history; keep the state yourself
-	* (`state` and `onChange`) to add one.
+	* The hook behind `useImageEditor`. Leave out `state` and `onChange` and
+	* it keeps its own state, which the package's tests and debug story use.
 	*
 	* @param options Starting state, or the state and change handler when
 	*                you keep the state yourself.
