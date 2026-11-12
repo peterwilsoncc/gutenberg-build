@@ -102537,16 +102537,24 @@ If there's a particular need for this, please submit a feature request at https:
 	* pattern. Every pattern the user can edit, they can also read.
 	*
 	* @param {(store: Object) => Object} select Registry select.
-	* @return {?Object[]} Pattern records, or null while loading.
+	* @return {Object[]|null|undefined} Pattern records, undefined while loading,
+	*                                    or null if the request failed.
 	*/
 	function __experimentalReusableBlocksSelect(select) {
 		const { RECEIVE_INTERMEDIATE_RESULTS } = unlock$5(_wordpress_core_data.privateApis);
-		const { getEntityRecords } = select(_wordpress_core_data.store);
-		return getEntityRecords("postType", "wp_block", {
+		const { getEntityRecords, hasFinishedResolution } = select(_wordpress_core_data.store);
+		const query = {
 			per_page: -1,
 			context: "view",
 			[RECEIVE_INTERMEDIATE_RESULTS]: true
-		});
+		};
+		const records = getEntityRecords("postType", "wp_block", query);
+		if (records) return records;
+		return hasFinishedResolution("getEntityRecords", [
+			"postType",
+			"wp_block",
+			query
+		]) ? null : void 0;
 	}
 	function __experimentalUserPatternCategoriesSelect(select) {
 		return select(_wordpress_core_data.store).getUserPatternCategories();

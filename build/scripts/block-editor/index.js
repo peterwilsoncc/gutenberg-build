@@ -8036,6 +8036,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		isLockedBlock: () => isLockedBlock,
 		isMoveLockedBlock: () => isMoveLockedBlock,
 		isRemoveLockedBlock: () => isRemoveLockedBlock,
+		isResolvingPatterns: () => isResolvingPatterns,
 		isResponsiveEditing: () => isResponsiveEditing,
 		isSectionBlock: () => isSectionBlock,
 		isSelectedBlockStyleStateShownOnCanvas: () => isSelectedBlockStyleStateShownOnCanvas,
@@ -8379,6 +8380,20 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			...state.settings[selectBlockPatternsKey]?.(select) ?? []
 		].filter((x, index, arr) => index === arr.findIndex((y) => x.name === y.name));
 	}, getAllPatternsDependants(select)));
+	/**
+	* Returns whether the patterns are being resolved.
+	* This is used to determine if the patterns are still being fetched
+	* from the server or if they are already available in the store.
+	*
+	* @param state Block editor state.
+	*
+	* @return Whether the patterns are being resolved.
+	*/
+	const isResolvingPatterns = (0, _wordpress_data.createRegistrySelector)((select) => (state) => {
+		const blockPatternsSelect = state.settings[selectBlockPatternsKey];
+		const reusableBlocksSelect = state.settings[reusableBlocksSelectKey];
+		return (blockPatternsSelect ? blockPatternsSelect(select) === void 0 : false) || (reusableBlocksSelect ? reusableBlocksSelect(select) === void 0 : false);
+	});
 	const EMPTY_ARRAY$21 = [];
 	const getReusableBlocks = (0, _wordpress_data.createRegistrySelector)((select) => (state) => {
 		const reusableBlocksSelect = state.settings[reusableBlocksSelectKey];
@@ -72407,7 +72422,11 @@ Icon: ButtonIcon });
 		const [showPatternsExplorer, setShowPatternsExplorer] = (0, _wordpress_element.useState)(false);
 		const categories = usePatternCategories(rootClientId);
 		const isMobile = (0, _wordpress_compose.useViewportMatch)("medium", "<");
-		if (!categories.length) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InserterNoResults, {});
+		const isResolvingPatterns = (0, _wordpress_data.useSelect)((select) => unlock$2(select(store)).isResolvingPatterns(), []);
+		if (!categories.length) return isResolvingPatterns ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			className: "block-editor-inserter__patterns-loading",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$20, {})
+		}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InserterNoResults, {});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			!isMobile && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: "block-editor-inserter__block-patterns-tabs-container",
