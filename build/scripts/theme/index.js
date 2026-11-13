@@ -4981,33 +4981,32 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const radiusDark = options.radiusDark ?? .2;
 		const kLight = options.kLight ?? .85;
 		const kDark = options.kDark ?? .85;
-		const achromaEpsilon = options.achromaEpsilon ?? .005;
 		const cSeed = Math.max(0, get(seed, [oklch_default, "c"]));
-		let hSeed = get(seed, [oklch_default, "h"]);
-		if (cSeed < achromaEpsilon || hSeed === null || !Number.isFinite(hSeed)) {
-			if (typeof options.hueFallback === "number") hSeed = normalizeHue(options.hueFallback);
-			else return (lTarget) => ({
-				space: oklch_default,
-				coords: [
-					clamp01(lTarget),
-					0,
-					0
-				],
-				alpha: 1
-			});
-		}
+		const hSeed = get(seed, [oklch_default, "h"]);
+		if (hSeed === null || !Number.isFinite(hSeed) || !options.preserveNearGrayTint && cSeed < .005) return (lTarget) => ({
+			space: oklch_default,
+			coords: [
+				clamp01(lTarget),
+				0,
+				0
+			],
+			alpha: 1
+		});
 		const lSeed = clamp01(get(seed, [oklch_default, "l"]));
 		const cmaxSeed = getMaxChromaAtLH(lSeed, hSeed, gamut);
 		const seedRelative = clamp01(cSeed / (cmaxSeed > 0 ? cmaxSeed : 1e-6));
 		const seedCarry = Math.pow(seedRelative, clamp01(carry));
+		const cCap = options.preserveNearGrayTint ? cSeed * (1 + (cSeed / .02) ** 2) : Infinity;
 		return (lTarget) => {
 			const cmaxTarget = getMaxChromaAtLH(clamp01(lTarget), hSeed, gamut);
-			const cPlanned = alpha * cmaxTarget * seedCarry * continuousTaper(lSeed, lTarget, {
+			const cWithCarry = alpha * cmaxTarget * seedCarry;
+			const t = continuousTaper(lSeed, lTarget, {
 				radiusLight,
 				radiusDark,
 				kLight,
 				kDark
 			});
+			const cPlanned = Math.min(cWithCarry * t, cCap);
 			return {
 				l: clamp01(lTarget),
 				c: cPlanned
@@ -5336,7 +5335,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		lightness: lightnessConstraintForegroundHighContrast,
 		taperChromaOptions: FG_TAPER_CHROMA
 	};
-	const BG_RAMP_CONFIG = {
+	const BASE_RAMP_CONFIG = {
 		surface1: {
 			contrast: {
 				reference: "surface2",
@@ -5504,35 +5503,43 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			taperChromaOptions: FG_TAPER_CHROMA
 		}
 	};
+	const withNearGrayChromaLimit = (step) => step.taperChromaOptions ? {
+		...step,
+		taperChromaOptions: {
+			...step.taperChromaOptions,
+			preserveNearGrayTint: true
+		}
+	} : step;
+	const BG_RAMP_CONFIG = Object.fromEntries(Object.entries(BASE_RAMP_CONFIG).map(([stepName, step]) => [stepName, withNearGrayChromaLimit(step)]));
 	const ACCENT_RAMP_CONFIG = {
-		...BG_RAMP_CONFIG,
+		...BASE_RAMP_CONFIG,
 		surface1: {
-			...BG_RAMP_CONFIG.surface1,
+			...BASE_RAMP_CONFIG.surface1,
 			taperChromaOptions: ACCENT_SURFACE_TAPER_CHROMA
 		},
 		surface2: {
 			contrast: {
 				reference: "bgFill1",
 				followDirection: "opposite",
-				target: BG_RAMP_CONFIG.bgFill1.contrast.target,
+				target: BASE_RAMP_CONFIG.bgFill1.contrast.target,
 				ignoreWhenAdjustingSeed: true
 			},
 			taperChromaOptions: ACCENT_SURFACE_TAPER_CHROMA
 		},
 		surface3: {
-			...BG_RAMP_CONFIG.surface3,
+			...BASE_RAMP_CONFIG.surface3,
 			taperChromaOptions: ACCENT_SURFACE_TAPER_CHROMA
 		},
 		surface4: {
-			...BG_RAMP_CONFIG.surface4,
+			...BASE_RAMP_CONFIG.surface4,
 			taperChromaOptions: ACCENT_SURFACE_TAPER_CHROMA
 		},
 		surface5: {
-			...BG_RAMP_CONFIG.surface5,
+			...BASE_RAMP_CONFIG.surface5,
 			taperChromaOptions: ACCENT_SURFACE_TAPER_CHROMA
 		},
 		surface6: {
-			...BG_RAMP_CONFIG.surface6,
+			...BASE_RAMP_CONFIG.surface6,
 			taperChromaOptions: ACCENT_SURFACE_TAPER_CHROMA
 		},
 		bgFill1: { contrast: {
@@ -5540,32 +5547,32 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			followDirection: "main",
 			target: 1
 		} },
-		stroke1: { ...BG_RAMP_CONFIG.stroke1 },
-		stroke2: { ...BG_RAMP_CONFIG.stroke2 },
+		stroke1: { ...BASE_RAMP_CONFIG.stroke1 },
+		stroke2: { ...BASE_RAMP_CONFIG.stroke2 },
 		stroke3: {
-			...BG_RAMP_CONFIG.stroke3,
+			...BASE_RAMP_CONFIG.stroke3,
 			sameAsIfPossible: "fgSurface3",
 			taperChromaOptions: void 0
 		},
 		stroke4: {
-			...BG_RAMP_CONFIG.stroke4,
+			...BASE_RAMP_CONFIG.stroke4,
 			taperChromaOptions: void 0
 		},
 		fgSurface1: {
-			...BG_RAMP_CONFIG.fgSurface1,
+			...BASE_RAMP_CONFIG.fgSurface1,
 			taperChromaOptions: void 0
 		},
 		fgSurface2: {
-			...BG_RAMP_CONFIG.fgSurface2,
+			...BASE_RAMP_CONFIG.fgSurface2,
 			taperChromaOptions: void 0
 		},
 		fgSurface3: {
-			...BG_RAMP_CONFIG.fgSurface3,
+			...BASE_RAMP_CONFIG.fgSurface3,
 			taperChromaOptions: void 0,
 			sameAsIfPossible: "bgFill1"
 		},
 		fgSurface4: {
-			...BG_RAMP_CONFIG.fgSurface4,
+			...BASE_RAMP_CONFIG.fgSurface4,
 			taperChromaOptions: void 0
 		}
 	};
