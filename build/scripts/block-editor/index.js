@@ -72007,7 +72007,10 @@ Icon: ButtonIcon });
 			rootClientId,
 			shouldFocusBlock: true
 		});
-		const [patterns, , onClickPattern] = usePatternsState(onInsertBlocks, destinationRootClientId, selectedCategory);
+		const onInsertPattern = (0, _wordpress_element.useCallback)((blocks, patternName, shouldForceFocusBlock, _rootClientId) => {
+			onInsertBlocks(blocks, { patternName }, shouldForceFocusBlock, _rootClientId);
+		}, [onInsertBlocks]);
+		const [patterns, , onClickPattern] = usePatternsState(onInsertPattern, destinationRootClientId, selectedCategory);
 		const registeredPatternCategories = (0, _wordpress_element.useMemo)(() => patternCategories.map((patternCategory) => patternCategory.name), [patternCategories]);
 		const filteredBlockPatterns = (0, _wordpress_element.useMemo)(() => {
 			const filteredPatterns = patterns.filter((pattern) => {
@@ -89124,7 +89127,8 @@ If there's a particular need for this, please submit a feature request at https:
 			selectBlockOnInsert
 		});
 		const [blockTypes, blockTypeCategories, blockTypeCollections, onSelectBlockType] = useBlockTypesState(destinationRootClientId, onInsertBlocks, isQuick);
-		const [patterns, , onClickPattern] = usePatternsState(onInsertBlocks, destinationRootClientId, void 0, isQuick);
+		const onInsertPattern = (0, _wordpress_element.useCallback)((blocks, patternName, ...args) => onInsertBlocks(blocks, { patternName }, ...args), [onInsertBlocks]);
+		const [patterns, , onClickPattern] = usePatternsState(onInsertPattern, destinationRootClientId, void 0, isQuick);
 		const filteredBlockPatterns = (0, _wordpress_element.useMemo)(() => {
 			if (maxBlockPatterns === 0) return [];
 			const results = searchItems(patterns, filterValue);
