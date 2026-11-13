@@ -5841,6 +5841,14 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			foreground: "foreground.content.neutral-weak"
 		},
 		{
+			background: "background.surface.neutral-weak",
+			foreground: "foreground.content.neutral-weak"
+		},
+		{
+			background: "background.surface.neutral-strong",
+			foreground: "foreground.content.neutral-weak"
+		},
+		{
 			background: "background.surface.info",
 			foreground: "foreground.content.info"
 		},
