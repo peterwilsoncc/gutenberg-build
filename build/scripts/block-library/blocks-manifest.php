@@ -3787,6 +3787,7 @@ return array(
 			'__experimentalBorder' => array(
 				'color' => true,
 				'radius' => true,
+				'style' => true,
 				'width' => true,
 				'__experimentalSkipSerialization' => true,
 				'__experimentalDefaultControls' => array(
