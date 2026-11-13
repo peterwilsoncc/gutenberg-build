@@ -16535,6 +16535,54 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		});
 	}
 	/**
+	* Check whether the parser would build different blocks from the post content
+	* today than the blocks stored in a persisted CRDT document.
+	*
+	* A persisted CRDT document stores the blocks the editor had at the time. The
+	* loader decides whether to keep that document by serializing its blocks and
+	* comparing the result to the saved content. Two kinds of block serialize back
+	* to the markup they were loaded from, so that comparison cannot see that the
+	* parser would now treat them differently:
+	*
+	* - A missing block, stored while its block type was unavailable (for example,
+	*   its plugin was deactivated). Once the type is registered again, the parser
+	*   would build the real block.
+	* - An invalid block, stored while its markup did not match its block type's
+	*   save output (for example, after a plugin update). Once the block type or a
+	*   deprecation accepts the markup again, the parser would build a valid block.
+	*
+	* The reverse of the first case also applies: a block whose type is no longer
+	* registered cannot be edited or serialized by this client.
+	*
+	* @param blocks Blocks as stored in the CRDT document, as plain objects.
+	* @return True when at least one block should be re-parsed from the content.
+	*/
+	function shouldReparseBlocks(blocks) {
+		const missingBlockName = (0, _wordpress_blocks.getUnregisteredTypeHandlerName)();
+		return blocks.some((block) => {
+			if (block.name === missingBlockName) {
+				const { originalName } = block.attributes ?? {};
+				if ("string" === typeof originalName && (0, _wordpress_blocks.getBlockType)(originalName)) return true;
+			} else if (!(0, _wordpress_blocks.getBlockType)(block.name)) return true;
+			else if (false === block.isValid && isBlockValidNow(block)) return true;
+			return shouldReparseBlocks(block.innerBlocks ?? []);
+		});
+	}
+	/**
+	* Check whether a block stored as invalid would parse as valid now.
+	*
+	* An invalid block serializes back to the markup it was loaded from, so
+	* parsing that markup again asks the same question the editor asked when it
+	* loaded the post, including any deprecations added since.
+	*
+	* @param block A block stored with `isValid: false`.
+	* @return True when the parser would now build a valid block from its markup.
+	*/
+	function isBlockValidNow(block) {
+		const [reparsedBlock] = (0, _wordpress_blocks.parse)((0, _wordpress_blocks.serialize)([block]));
+		return true === reparsedBlock?.isValid;
+	}
+	/**
 	* @param {any}   gblock
 	* @param {Y.Map} yblock
 	*/
@@ -17308,6 +17356,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				case "blocks":
 					if (ydoc.meta?.get("fromPersistence") && editedRecord.content) {
 						const blocksJson = ymap.get("blocks")?.toJSON() ?? [];
+						if (shouldReparseBlocks(blocksJson)) return true;
 						return (0, _wordpress_blocks.__unstableSerializeAndClean)(blocksJson).trim() !== getRawValue(editedRecord.content);
 					}
 					return true;
