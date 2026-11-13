@@ -9051,7 +9051,6 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			state.settings.__experimentalReusableBlocks,
 			state.settings[selectBlockPatternsKey]?.(select),
 			state.settings[currentUserIdSelectKey]?.(select),
-			state.blockPatterns,
 			unlock$2(select(STORE_NAME)).getReusableBlocks()
 		];
 	};
