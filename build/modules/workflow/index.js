@@ -7103,9 +7103,15 @@ const Input$2 = (0, import_element.forwardRef)(function UnforwardedInput({ class
 	});
 });
 
+// packages/ui/build-module/form/primitives/autocomplete/context.mjs
+const AutocompleteGridContext = (0, import_element.createContext)(false);
+const AutocompletePopupContext = (0, import_element.createContext)(false);
+const useAutocompletePopupContext = () => (0, import_element.useContext)(AutocompletePopupContext);
+
 // packages/ui/build-module/form/primitives/autocomplete/input.mjs
 const DEFAULT_RENDER = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input$2, { ...props });
 const Input = (0, import_element.forwardRef)(function UnforwardedInput({ render = DEFAULT_RENDER, ...restProps }, ref) {
+	if (useAutocompletePopupContext()) throw new Error("Autocomplete.Input: Cannot be rendered inside Autocomplete.Popup, which is the suggestion list for an input outside it. For a searchable picker that opens from a button, render <Autocomplete.Root inline open> inside a standalone Popover component instead.");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComboboxInput, {
 		ref,
 		render,
@@ -7889,9 +7895,6 @@ const ListBody = (0, import_element.forwardRef)(function UnforwardedListBody({ r
 	});
 });
 
-// packages/ui/build-module/form/primitives/autocomplete/context.mjs
-const AutocompleteGridContext = (0, import_element.createContext)(false);
-
 // packages/ui/build-module/form/primitives/autocomplete/root.mjs
 /**
 * Low-level primitive for an autocomplete input that suggests options as
@@ -7905,7 +7908,10 @@ const AutocompleteGridContext = (0, import_element.createContext)(false);
 const Root = function Root(props) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompleteGridContext.Provider, {
 		value: Boolean(props.grid),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompleteRoot, { ...props }) })
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompletePopupContext.Provider, {
+			value: false,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompleteRoot, { ...props }) })
+		})
 	});
 };
 

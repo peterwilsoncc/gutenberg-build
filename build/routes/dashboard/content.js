@@ -42258,9 +42258,15 @@ const Input$2 = (0, import_element.forwardRef)(function UnforwardedInput({ class
 	});
 });
 
+// packages/ui/build-module/form/primitives/autocomplete/context.mjs
+const AutocompleteGridContext = (0, import_element.createContext)(false);
+const AutocompletePopupContext = (0, import_element.createContext)(false);
+const useAutocompletePopupContext = () => (0, import_element.useContext)(AutocompletePopupContext);
+
 // packages/ui/build-module/form/primitives/autocomplete/input.mjs
 const DEFAULT_RENDER$3 = (props) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input$2, { ...props });
 const Input = (0, import_element.forwardRef)(function UnforwardedInput({ render = DEFAULT_RENDER$3, ...restProps }, ref) {
+	if (useAutocompletePopupContext()) throw new Error("Autocomplete.Input: Cannot be rendered inside Autocomplete.Popup, which is the suggestion list for an input outside it. For a searchable picker that opens from a button, render <Autocomplete.Root inline open> inside a standalone Popover component instead.");
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComboboxInput, {
 		ref,
 		render,
@@ -43310,18 +43316,26 @@ var item_popup_module_default$8 = {
 	"empty": "_88cfae8cc829b0b7__empty",
 	"loading-spinner": "d4260ae2d8e6aef0__loading-spinner"
 };
+/**
+* The suggestion list for an `Autocomplete.Input` rendered outside it.
+*
+* Do not render `Autocomplete.Input` inside `Autocomplete.Popup`. For a
+* searchable picker that opens from a button, render
+* `<Autocomplete.Root inline open>` inside a standalone `Popover` component
+* instead.
+*/
 const Popup$1 = (0, import_element.forwardRef)(function UnforwardedPopup({ className, portal, positioner, width, ...restProps }, ref) {
-	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComboboxPopup, {
-		ref,
-		className: clsx(item_popup_module_default$8.popup, item_popup_module_default$8["fixed-width-presets"], getItemPopupWidthClassName(width), className),
-		...restProps
+	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompletePopupContext.Provider, {
+		value: true,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComboboxPopup, {
+			ref,
+			className: clsx(item_popup_module_default$8.popup, item_popup_module_default$8["fixed-width-presets"], getItemPopupWidthClassName(width), className),
+			...restProps
+		})
 	});
 	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner$1, {}), popupContent);
 	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$1, {}), positionedPopup);
 });
-
-// packages/ui/build-module/form/primitives/autocomplete/context.mjs
-const AutocompleteGridContext = (0, import_element.createContext)(false);
 
 // packages/ui/build-module/form/primitives/autocomplete/root.mjs
 /**
@@ -43336,7 +43350,10 @@ const AutocompleteGridContext = (0, import_element.createContext)(false);
 const Root$2 = function Root(props) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompleteGridContext.Provider, {
 		value: Boolean(props.grid),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompleteRoot, { ...props }) })
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompletePopupContext.Provider, {
+			value: false,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AutocompleteRoot, { ...props }) })
+		})
 	});
 };
 
