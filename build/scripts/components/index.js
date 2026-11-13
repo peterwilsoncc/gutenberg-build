@@ -72322,6 +72322,9 @@ The screen with id ${screen.id} will not be added.`);
 		const heightRef = (0, _wordpress_element.useRef)(height);
 		const widthRef = (0, _wordpress_element.useRef)(width);
 		const moveTimeoutRef = (0, _wordpress_element.useRef)(void 0);
+		(0, _wordpress_element.useEffect)(() => {
+			return () => window.clearTimeout(moveTimeoutRef.current);
+		}, []);
 		const debounceUnsetMoveXY = (0, _wordpress_element.useCallback)(() => {
 			const unsetMoveXY = () => {
 				if (isAxisControlled) return;
