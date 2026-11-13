@@ -11661,9 +11661,12 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	* validity state is read from the element returned by `getValidityTarget`.
 	* The validation message describes the element returned by
 	* `getInteractiveTarget`, or the validity target by default.
-	* Validation messages become visible once the control has been touched
-	* (blurred at least once), when the enclosing form is submitted, or when an
-	* `invalid` event is dispatched on the validity target.
+	*
+	* Validation messages become visible once the control has been touched, when
+	* the enclosing form is submitted, or when an `invalid` event is dispatched on
+	* the validity target. A blur counts as a touch unless it leaves a required
+	* control empty, so tabbing or clicking through a form doesn't report missing
+	* values before the user has entered anything.
 	*/
 	const ControlWithError = (0, _wordpress_element.forwardRef)(function UnforwardedControlWithError({ required, markWhenOptional, customValidity, getValidityTarget, getInteractiveTarget, children, render = DEFAULT_RENDER$1, ...restProps }, forwardedRef) {
 		const [validity, setValidity] = (0, _wordpress_element.useState)();
@@ -11719,11 +11722,13 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		]);
 		const onBlur = (event) => {
 			if (event.relatedTarget && event.currentTarget.contains(event.relatedTarget)) return;
-			if (!isTouched) {
-				setIsTouched(true);
-				getValidityTarget()?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
-			}
 			const validityTarget = getValidityTarget();
+			const targetValidity = validityTarget?.validity;
+			const isLeftEmpty = targetValidity?.valueMissing && !targetValidity.badInput;
+			if (!isTouched && !isLeftEmpty) {
+				setIsTouched(true);
+				validityTarget?.setAttribute(VALIDITY_VISIBLE_ATTRIBUTE, "");
+			}
 			const isValidating = customValidity?.type === "validating";
 			window.queueMicrotask(() => {
 				if (!isValidating) setValidity(getValidity(customValidity, validityTarget));
@@ -13924,8 +13929,10 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 	*
 	* Native constraint violations (e.g. `required`, `pattern`) and custom
 	* validity messages passed through the `customValidity` prop are reported
-	* inline once the control has been touched (blurred at least once) or the
-	* enclosing form is submitted.
+	* inline once focus leaves the control, or when the enclosing form is
+	* submitted or `reportValidity()` is called. Focus leaving an empty required
+	* control doesn't reveal its messages, unless the user has left it with a
+	* value before.
 	*/
 	const ValidatedInputControl = (0, _wordpress_element.forwardRef)(function UnforwardedValidatedInputControl({ required, markWhenOptional, customValidity, ...restProps }, forwardedRef) {
 		const validityTargetRef = (0, _wordpress_element.useRef)(null);
