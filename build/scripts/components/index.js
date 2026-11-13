@@ -71079,7 +71079,7 @@ The screen with id ${screen.id} will not be added.`);
 				className: style_module_default$23["progress-element"],
 				max: 100,
 				value,
-				"aria-label": (0, _wordpress_i18n.__)("Loading …"),
+				"aria-label": (0, _wordpress_i18n.__)("Loading…"),
 				ref,
 				...progressProps
 			})]
