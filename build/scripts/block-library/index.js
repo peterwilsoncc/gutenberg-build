@@ -46507,46 +46507,6 @@ Icon: ButtonIcon });
 		});
 	}
 
-// packages/block-library/build-module/gallery/use-image-sizes.mjs
-/**
-	* Calculates the image sizes that are available for the current gallery images in order to
-	* populate the 'Resolution' selector.
-	*
-	* @param {Array}    images      Basic image block data taken from current gallery innerBlock.
-	* @param {boolean}  isSelected  Is the block currently selected in the editor.
-	* @param {Function} getSettings Block editor store selector.
-	*
-	* @return {Array} An array of image size options.
-	*/
-	function useImageSizes(images, isSelected, getSettings) {
-		return (0, _wordpress_element.useMemo)(() => getImageSizing(), [images, isSelected]);
-		function getImageSizing() {
-			if (!images || images.length === 0) return;
-			const { imageSizes } = getSettings();
-			let resizedImages = {};
-			if (isSelected) resizedImages = images.reduce((currentResizedImages, img) => {
-				if (!img.id) return currentResizedImages;
-				const sizes = imageSizes.reduce((currentSizes, size) => {
-					const defaultUrl = img.sizes?.[size.slug]?.url;
-					const mediaDetailsUrl = img.media_details?.sizes?.[size.slug]?.source_url;
-					return {
-						...currentSizes,
-						[size.slug]: defaultUrl || mediaDetailsUrl
-					};
-				}, {});
-				return {
-					...currentResizedImages,
-					[parseInt(img.id, 10)]: sizes
-				};
-			}, {});
-			const resizedImageSizes = Object.values(resizedImages);
-			return imageSizes.filter(({ slug }) => resizedImageSizes.some((sizes) => sizes[slug])).map(({ name, slug }) => ({
-				value: slug,
-				label: name
-			}));
-		}
-	}
-
 // packages/block-library/build-module/gallery/use-get-media.mjs
 	const EMPTY_IMAGE_MEDIA = [];
 	/**
@@ -48809,6 +48769,163 @@ Icon: ButtonIcon });
 		return null;
 	}
 
+// packages/block-library/build-module/gallery/order-options.mjs
+/**
+	* The composite `"orderby/order"` select value for an order. A select needs one
+	* string per option, so this format exists only at the select boundary; the
+	* rest of the feature passes `Order` objects.
+	*
+	* @param order The order.
+	* @return The select value.
+	*/
+	function toOrderValue(order) {
+		return `${order.orderby}/${order.order}`;
+	}
+	/**
+	* Parses a composite `"orderby/order"` select value back into an order.
+	*
+	* @param value The select value.
+	* @return The order.
+	*/
+	function parseOrderValue(value) {
+		const [orderby, order] = value.split("/");
+		return {
+			orderby,
+			order
+		};
+	}
+	/**
+	* Ordering options offered for gallery images. Each value is a composite
+	* `orderby/order` string. The two modes share values and labels but differ
+	* in their comparison logic:
+	*
+	* - A dynamic gallery passes `orderby/order` to the REST API in the editor (the
+	*   `/wp/v2/media` collection params; see `dynamic-source.js`) and to a
+	*   `WP_Query` on the front end (see `index.php`). Either way the database
+	*   orders by post date or post title.
+	* - A static gallery orders its inner image blocks client-side from the same
+	*   attachment fields (see `order-images.js`). Dates compare the same way.
+	*   Titles use a natural, case-insensitive compare, so `IMG_2` sorts before
+	*   `IMG_10` where the database would put it after. The two title orders can
+	*   therefore differ for numbered titles.
+	*
+	* `menu_order` is deliberately omitted — it isn't a valid REST `orderby`
+	* value, so the editor preview couldn't reproduce it (see `dynamic-source.js`).
+	*/
+	const ORDER_OPTIONS = [
+		{
+			label: (0, _wordpress_i18n.__)("Newest to oldest"),
+			value: "date/desc"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Oldest to newest"),
+			value: "date/asc"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("A → Z"),
+			value: "title/asc"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Z → A"),
+			value: "title/desc"
+		}
+	];
+	/**
+	* The "Random" order. Unlike the orders above it isn't an `orderby`: it is the
+	* gallery's `randomOrder` attribute, applied only on the front end by shuffling
+	* the rendered images (see `index.php`), so the editor keeps showing the
+	* underlying order. Offered as the last option of both modes' "Order by"
+	* control, since it overrides whatever other order is in place.
+	*/
+	const RANDOM_ORDER = "random";
+	const RANDOM_OPTION = {
+		label: (0, _wordpress_i18n.__)("Random"),
+		value: RANDOM_ORDER
+	};
+
+// packages/block-library/build-module/gallery/order-controls.mjs
+	function getOrderHelp(isRandom) {
+		return isRandom ? (0, _wordpress_i18n.__)("Images are shown in a random order each time the page loads.") : void 0;
+	}
+	const SOURCE_ORDER_OPTIONS = [...ORDER_OPTIONS, RANDOM_OPTION];
+	/**
+	* Ordering control for a dynamic gallery, shown in the Settings panel. The
+	* chosen order is a *setting*: it's stored in the source's query and re-applied
+	* every time the source resolves. "Random" is stored separately (the
+	* `randomOrder` attribute) and overrides the query order on the front end, so
+	* while it's set the control shows it instead of the query order.
+	*/
+	function SourceOrderControl({ order, isRandom, onChange, onSelectRandom }) {
+		const value = isRandom ? RANDOM_ORDER : toOrderValue(order);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
+			label: (0, _wordpress_i18n.__)("Order by"),
+			value: SOURCE_ORDER_OPTIONS.find((option) => option.value === value) ?? null,
+			items: SOURCE_ORDER_OPTIONS,
+			description: getOrderHelp(isRandom),
+			onValueChange: (item) => {
+				if (!item || item.value === null || item.value === value) return;
+				const nextValue = item.value;
+				if (nextValue === "random") {
+					onSelectRandom();
+					return;
+				}
+				onChange(parseOrderValue(nextValue));
+			}
+		});
+	}
+	const CUSTOM_ORDER = "custom";
+	/**
+	* Ordering control for a static gallery, shown in the Settings panel.
+	*
+	* The date and title orders are one-off *actions*: choosing one reorders the
+	* inner image blocks once, and the user can drag them into any other order
+	* afterwards. Nothing is stored for them, so the caller passes back the last
+	* sort it applied for as long as the images remain in that sequence, and
+	* `null` ("Custom") otherwise. "Custom" means the order arranged in the
+	* editor, and is choosable only while "Random" is on: picking it turns
+	* "Random" off without reordering anything.
+	*
+	* "Random" is the one stored value (the `randomOrder` attribute). It applies
+	* on the front end only, leaving the editor order as it is, and choosing any
+	* other option clears it.
+	*/
+	function SortImagesControl({ currentOrder, isRandom, canSort, onSort, onSelectCustom, onSelectRandom }) {
+		const options = [
+			{
+				label: (0, _wordpress_i18n.__)("Custom"),
+				value: CUSTOM_ORDER,
+				disabled: !isRandom
+			},
+			...ORDER_OPTIONS.map((option) => ({
+				...option,
+				disabled: !canSort
+			})),
+			RANDOM_OPTION
+		];
+		let value = CUSTOM_ORDER;
+		if (isRandom) value = RANDOM_ORDER;
+		else if (currentOrder) value = toOrderValue(currentOrder);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
+			label: (0, _wordpress_i18n.__)("Order by"),
+			value: options.find((option) => option.value === value) ?? null,
+			items: options,
+			description: getOrderHelp(isRandom),
+			onValueChange: (item) => {
+				if (!item || item.value === null || item.value === value) return;
+				const nextValue = item.value;
+				if (nextValue === "random") {
+					onSelectRandom();
+					return;
+				}
+				if (nextValue === CUSTOM_ORDER) {
+					onSelectCustom();
+					return;
+				}
+				onSort(parseOrderValue(nextValue));
+			}
+		});
+	}
+
 // packages/block-library/build-module/gallery/dynamic-source.mjs
 /**
 	* Source discriminator for "images attached to the post" — the only dynamic
@@ -48884,6 +49001,407 @@ Icon: ButtonIcon });
 				};
 		}
 		return null;
+	}
+
+// packages/block-library/build-module/gallery/order-images.mjs
+/**
+	* Returns the value an image block is ordered by, or `undefined` when it has no
+	* resolved attachment record to take it from.
+	*
+	* @param {Object} block     A `core/image` inner block.
+	* @param {Map}    mediaById Attachment records for the gallery's images, by id.
+	* @param {string} orderby   `date` or `title`.
+	* @return {?string} The sort key.
+	*/
+	function getSortKey(block, mediaById, orderby) {
+		const record = mediaById.get(block.attributes.id);
+		if (!record) return;
+		if (orderby === "title") return record.title?.raw ?? record.title?.rendered ?? "";
+		return record.date ?? "";
+	}
+	/**
+	* Whether there's anything to sort: at least two image blocks with a resolved
+	* attachment record. With fewer, sorting is a no-op, so the sort options are
+	* disabled.
+	*
+	* @param {Array} blocks    The gallery's `core/image` inner blocks.
+	* @param {Map}   mediaById Attachment records for the gallery's images, by id.
+	* @return {boolean} Whether the images can be sorted.
+	*/
+	function hasSortableImages(blocks, mediaById) {
+		let sortableCount = 0;
+		for (const block of blocks) {
+			if (!mediaById.has(block.attributes.id)) continue;
+			sortableCount++;
+			if (sortableCount > 1) return true;
+		}
+		return false;
+	}
+	/**
+	* Compares two sort keys for the given field. Titles use a natural,
+	* case-insensitive comparison so `IMG_2` sorts before `IMG_10`; dates are ISO
+	* 8601 strings, so a plain string comparison orders them chronologically.
+	*
+	* @param {string} a       First key.
+	* @param {string} b       Second key.
+	* @param {string} orderby `date` or `title`.
+	* @return {number} Negative when `a` sorts first, positive when `b` does.
+	*/
+	function compareKeys(a, b, orderby) {
+		if (orderby === "title") return a.localeCompare(b, void 0, {
+			numeric: true,
+			sensitivity: "base"
+		});
+		if (a === b) return 0;
+		return a < b ? -1 : 1;
+	}
+	/**
+	* Sorts a static gallery's image blocks by an attachment field.
+	*
+	* Blocks without an `id`, or whose attachment record isn't in `mediaById` (still
+	* loading, or deleted from the library), can't be placed, so they keep their
+	* relative order and move to the end. Blocks with equal keys likewise keep
+	* their relative order (`Array.prototype.sort` is stable), so re-applying the
+	* current order is a no-op.
+	*
+	* @param {Array}  blocks        The gallery's `core/image` inner blocks.
+	* @param {Map}    mediaById     Attachment records for the gallery's images, by id.
+	* @param {Object} order         The order to apply.
+	* @param {string} order.orderby `date` or `title`.
+	* @param {string} order.order   `asc` or `desc`.
+	* @return {Array} A new array holding the same block objects, sorted.
+	*/
+	function sortImageBlocks(blocks, mediaById, { orderby, order }) {
+		const direction = order === "desc" ? -1 : 1;
+		const keys = new Map(blocks.map((block) => [block, getSortKey(block, mediaById, orderby)]));
+		return blocks.toSorted((a, b) => {
+			const keyA = keys.get(a);
+			const keyB = keys.get(b);
+			if (keyA === void 0 || keyB === void 0) {
+				if (keyA === keyB) return 0;
+				return keyA === void 0 ? 1 : -1;
+			}
+			return compareKeys(keyA, keyB, orderby) * direction;
+		});
+	}
+
+// packages/block-library/build-module/gallery/controls.mjs
+	const NAVIGATION_BUTTON_TYPE_OPTIONS = [
+		{
+			label: (0, _wordpress_i18n.__)("Icon"),
+			value: "icon"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Text"),
+			value: "text"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Both"),
+			value: "both"
+		}
+	];
+	/**
+	* Returns the 'Resolution' options: the image sizes at least one image has.
+	*
+	* @param {Array} media      Media items of the gallery images.
+	* @param {Array} imageSizes Image sizes from the block editor settings.
+	*
+	* @return {Array} Image size options.
+	*/
+	function getImageSizeOptions(media, imageSizes) {
+		return imageSizes.reduce((options, { name, slug }) => {
+			if (media.some((image) => image.id && (image.sizes?.[slug]?.url || image.media_details?.sizes?.[slug]?.source_url))) options.push({
+				value: slug,
+				label: name
+			});
+			return options;
+		}, []);
+	}
+	function GalleryControls({ attributes, setAttributes, clientId, viewport, innerBlockImages, mediaById, dynamic, updateInnerImages, appliedSort, setAppliedSort }) {
+		const { navigationButtonType, columns, imageCrop, randomOrder, linkTarget, linkTo, sizeSlug, aspectRatio, layout } = attributes;
+		const isDynamic = !!attributes.dynamicContent;
+		const isFlexLayout = isGalleryFlexLayout(layout);
+		const isViewportStyleState = !!viewport;
+		const [lightboxSetting, defaultRatios, themeRatios, showDefaultRatios] = (0, _wordpress_block_editor.useSettings)("blocks.core/image.lightbox", "dimensions.aspectRatios.default", "dimensions.aspectRatios.theme", "dimensions.defaultAspectRatios");
+		const imageSizes = (0, _wordpress_data.useSelect)((select) => select(_wordpress_block_editor.store).getSettings().imageSizes, []);
+		const { getBlocks } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
+		const { __unstableMarkNextChangeAsNotPersistent, replaceInnerBlocks } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
+		const { createSuccessNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
+		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+		const themeOptions = themeRatios?.map(({ name, ratio }) => ({
+			label: name,
+			value: ratio
+		}));
+		const defaultOptions = defaultRatios?.map(({ name, ratio }) => ({
+			label: name,
+			value: ratio
+		}));
+		const aspectRatioOptions = [
+			{
+				label: (0, _wordpress_i18n._x)("Original", "Aspect ratio option for dimensions control"),
+				value: "auto"
+			},
+			...showDefaultRatios ? defaultOptions || [] : [],
+			...themeOptions || []
+		];
+		const hasViewportSettings = isFlexLayout || aspectRatioOptions.length > 1;
+		if (isViewportStyleState && !hasViewportSettings) return null;
+		const viewportStyle = isViewportStyleState ? getViewportGalleryStyle(attributes.style, viewport) : {};
+		const baseColumns = isValidGalleryColumns(columns) ? columns : void 0;
+		const baseImageCrop = typeof imageCrop === "boolean" ? imageCrop : true;
+		const baseAspectRatio = aspectRatio || "auto";
+		const hasViewportColumns = isViewportStyleState && Object.hasOwn(viewportStyle, "columns") && isValidGalleryColumns(viewportStyle.columns);
+		const hasViewportImageCrop = isViewportStyleState && Object.hasOwn(viewportStyle, "imageCrop") && typeof viewportStyle.imageCrop === "boolean";
+		const hasViewportAspectRatio = isViewportStyleState && Object.hasOwn(viewportStyle, "aspectRatio") && typeof viewportStyle.aspectRatio === "string" && !!viewportStyle.aspectRatio;
+		const activeColumns = hasViewportColumns ? viewportStyle.columns : baseColumns;
+		const activeImageCrop = hasViewportImageCrop ? viewportStyle.imageCrop : baseImageCrop;
+		const activeAspectRatio = hasViewportAspectRatio ? viewportStyle.aspectRatio : baseAspectRatio;
+		const currentOrder = appliedSort && appliedSort.clientIds.length === innerBlockImages.length && appliedSort.clientIds.every((id, index) => innerBlockImages[index].clientId === id) ? appliedSort.order : null;
+		const canSortImages = hasSortableImages(innerBlockImages, mediaById);
+		const displayedImageCount = isDynamic ? dynamic.dynamicMedia.length : innerBlockImages.length;
+		let hasLightboxImages;
+		if (isDynamic) hasLightboxImages = linkTo === LINK_DESTINATION_LIGHTBOX;
+		else if (lightboxSetting?.enabled) hasLightboxImages = innerBlockImages.some((block) => block.attributes?.lightbox?.enabled === void 0 || block.attributes?.lightbox?.enabled === true);
+		else hasLightboxImages = innerBlockImages.some((block) => block.attributes.lightbox?.enabled);
+		const imageSizeOptions = getImageSizeOptions(isDynamic ? dynamic.dynamicMedia : Array.from(mediaById.values()), imageSizes);
+		function selectRandomOrder() {
+			setAttributes({ randomOrder: true });
+		}
+		function clearRandomOrderAfterEdit() {
+			if (randomOrder) {
+				__unstableMarkNextChangeAsNotPersistent();
+				setAttributes({ randomOrder: false });
+			}
+		}
+		function sortImages(order) {
+			const sortedBlocks = sortImageBlocks(getBlocks(clientId), mediaById, order);
+			replaceInnerBlocks(clientId, sortedBlocks);
+			clearRandomOrderAfterEdit();
+			setAppliedSort({
+				order,
+				clientIds: sortedBlocks.map((block) => block.clientId)
+			});
+		}
+		function selectCustomOrder() {
+			setAttributes({ randomOrder: false });
+			setAppliedSort(null);
+		}
+		function changeSourceOrder({ orderby, order }) {
+			dynamic.setSourceOrder(orderby, order);
+			clearRandomOrderAfterEdit();
+		}
+		function setGallerySettings(settings) {
+			if (!isViewportStyleState) {
+				setAttributes(settings);
+				return;
+			}
+			setAttributes({ style: getUpdatedGalleryStyle({
+				style: attributes.style,
+				viewport,
+				baseSettings: {
+					columns: baseColumns,
+					imageCrop: baseImageCrop,
+					aspectRatio: baseAspectRatio
+				},
+				settings
+			}) });
+		}
+		function setColumnsNumber(value) {
+			setGallerySettings({ columns: value });
+		}
+		function toggleImageCrop() {
+			setGallerySettings({ imageCrop: !activeImageCrop });
+		}
+		function toggleOpenInNewTab(openInNewTab) {
+			const newLinkTarget = openInNewTab ? "_blank" : void 0;
+			setAttributes({ linkTarget: newLinkTarget });
+			updateInnerImages((block) => getUpdatedLinkTargetSettings(newLinkTarget, block.attributes));
+			const noticeText = openInNewTab ? (0, _wordpress_i18n.__)("All gallery images updated to open in new tab") : (0, _wordpress_i18n.__)("All gallery images updated to not open in new tab");
+			createSuccessNotice(noticeText, {
+				id: "gallery-attributes-openInNewTab",
+				type: "snackbar"
+			});
+		}
+		function updateImagesSize(newSizeSlug) {
+			setAttributes({ sizeSlug: newSizeSlug });
+			updateInnerImages((block, media) => getImageSizeAttributes(media, newSizeSlug));
+			const imageSize = imageSizeOptions.find((size) => size.value === newSizeSlug);
+			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery image sizes updated to: %s"), imageSize?.label ?? newSizeSlug), {
+				id: "gallery-attributes-sizeSlug",
+				type: "snackbar"
+			});
+		}
+		/**
+		* Sets the Gallery's aspect ratio.
+		*
+		* The base value is added to the img element as an inline
+		* style. A viewport value is instead rendered
+		* from the Gallery's responsive CSS, which overrides that inline style.
+		*
+		* @param {string|undefined} value Aspect ratio to set. In a viewport state
+		*                                 `'auto'` is an override that cancels the
+		*                                 base ratio, while `undefined` removes the
+		*                                 override so the base value applies again.
+		*/
+		function setAspectRatio(value) {
+			if (isViewportStyleState) setGallerySettings({ aspectRatio: value });
+			else {
+				setAttributes({ aspectRatio: value ?? "auto" });
+				updateInnerImages(() => getAspectRatioAttributes(value));
+			}
+			const noticeValue = value ?? baseAspectRatio;
+			const aspectRatioText = aspectRatioOptions.find((option) => option.value === noticeValue);
+			const noticeText = isViewportStyleState ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Gallery images in the %1$s viewport updated to aspect ratio: %2$s"), viewport.replace("@", ""), aspectRatioText?.label || noticeValue) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery images updated to aspect ratio: %s"), aspectRatioText?.label || noticeValue);
+			createSuccessNotice(noticeText, {
+				id: "gallery-attributes-aspectRatio",
+				type: "snackbar"
+			});
+		}
+		function resetAll() {
+			if (isViewportStyleState) {
+				setGallerySettings({
+					columns: void 0,
+					imageCrop: void 0,
+					aspectRatio: void 0
+				});
+				return;
+			}
+			setAttributes({
+				navigationButtonType: "icon",
+				randomOrder: false,
+				...isFlexLayout && {
+					columns: void 0,
+					imageCrop: true
+				}
+			});
+			setAspectRatio("auto");
+			if (isDynamic) dynamic.setSourceOrder(void 0, void 0);
+			if (sizeSlug !== "large") updateImagesSize(DEFAULT_MEDIA_SIZE_SLUG$3);
+			if (linkTarget) toggleOpenInNewTab(false);
+		}
+		const hasLinkTo = linkTo && linkTo !== "none";
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanel, {
+			label: (0, _wordpress_i18n.__)("Settings"),
+			resetAll,
+			dropdownMenuProps,
+			children: [
+				isFlexLayout && displayedImageCount > 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					isShownByDefault: true,
+					label: (0, _wordpress_i18n.__)("Columns"),
+					hasValue: () => isViewportStyleState ? hasViewportColumns : !!activeColumns && activeColumns !== displayedImageCount,
+					onDeselect: () => setColumnsNumber(void 0),
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.RangeControl, {
+						label: (0, _wordpress_i18n.__)("Columns"),
+						value: activeColumns ? activeColumns : defaultColumnsNumber(displayedImageCount),
+						onChange: setColumnsNumber,
+						min: 1,
+						max: Math.min(8, displayedImageCount),
+						required: true
+					})
+				}),
+				!isViewportStyleState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					isShownByDefault: true,
+					label: (0, _wordpress_i18n.__)("Order by"),
+					hasValue: () => !!randomOrder || isDynamic && (dynamic.sourceOrderby !== "date" || dynamic.sourceOrder !== "desc"),
+					onDeselect: () => {
+						if (isDynamic) {
+							dynamic.setSourceOrder(void 0, void 0);
+							clearRandomOrderAfterEdit();
+						} else selectCustomOrder();
+					},
+					children: isDynamic ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SourceOrderControl, {
+						order: {
+							orderby: dynamic.sourceOrderby,
+							order: dynamic.sourceOrder
+						},
+						isRandom: !!randomOrder,
+						onChange: changeSourceOrder,
+						onSelectRandom: selectRandomOrder
+					}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SortImagesControl, {
+						currentOrder,
+						isRandom: !!randomOrder,
+						canSort: canSortImages,
+						onSort: sortImages,
+						onSelectCustom: selectCustomOrder,
+						onSelectRandom: selectRandomOrder
+					})
+				}),
+				!isViewportStyleState && imageSizeOptions.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					isShownByDefault: true,
+					label: (0, _wordpress_i18n.__)("Resolution"),
+					hasValue: () => sizeSlug !== "large",
+					onDeselect: () => updateImagesSize("large"),
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
+						label: (0, _wordpress_i18n.__)("Resolution"),
+						description: (0, _wordpress_i18n.__)("Select the size of the source images."),
+						value: imageSizeOptions.find((item) => item.value === sizeSlug) ?? imageSizeOptions[0],
+						items: imageSizeOptions,
+						onValueChange: (item) => {
+							if (item && item.value !== sizeSlug) updateImagesSize(item.value);
+						}
+					})
+				}),
+				!isViewportStyleState && hasLinkTo && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					isShownByDefault: true,
+					label: (0, _wordpress_i18n.__)("Open images in new tab"),
+					hasValue: () => !!linkTarget,
+					onDeselect: () => toggleOpenInNewTab(false),
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
+						label: (0, _wordpress_i18n.__)("Open images in new tab"),
+						checked: linkTarget === "_blank",
+						onChange: toggleOpenInNewTab
+					})
+				}),
+				aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					hasValue: () => isViewportStyleState ? hasViewportAspectRatio : activeAspectRatio !== "auto",
+					label: (0, _wordpress_i18n.__)("Aspect ratio"),
+					onDeselect: () => setAspectRatio(isViewportStyleState ? void 0 : "auto"),
+					isShownByDefault: true,
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
+						label: (0, _wordpress_i18n.__)("Aspect ratio"),
+						description: (0, _wordpress_i18n.__)("Set a consistent aspect ratio for all images in the gallery."),
+						value: aspectRatioOptions.find((item) => item.value === activeAspectRatio) ?? aspectRatioOptions[0],
+						items: aspectRatioOptions,
+						onValueChange: (item) => {
+							if (item && item.value !== activeAspectRatio) setAspectRatio(item.value);
+						},
+						children: aspectRatioOptions.map((item, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl.Item, {
+							value: item,
+							label: item.label,
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl.ItemLabel, { children: item.label })
+						}, `${item.value}-${index}`))
+					})
+				}),
+				isFlexLayout && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					isShownByDefault: true,
+					label: (0, _wordpress_i18n.__)("Crop images to fit"),
+					hasValue: () => isViewportStyleState ? hasViewportImageCrop : !activeImageCrop,
+					onDeselect: () => setGallerySettings({ imageCrop: isViewportStyleState ? void 0 : true }),
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
+						label: (0, _wordpress_i18n.__)("Crop images to fit"),
+						checked: activeImageCrop,
+						onChange: toggleImageCrop
+					})
+				}),
+				!isViewportStyleState && lightboxSetting?.allowEditing && hasLightboxImages && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					label: (0, _wordpress_i18n.__)("Navigation button type"),
+					isShownByDefault: true,
+					hasValue: () => navigationButtonType !== "icon",
+					onDeselect: () => setAttributes({ navigationButtonType: "icon" }),
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControl, {
+						label: (0, _wordpress_i18n.__)("Navigation button type"),
+						value: navigationButtonType,
+						onChange: (value) => setAttributes({ navigationButtonType: value }),
+						isBlock: true,
+						help: (0, _wordpress_i18n.__)("Adjust the appearance of buttons in the lightbox."),
+						children: NAVIGATION_BUTTON_TYPE_OPTIONS.map((option) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
+							value: option.value,
+							label: option.label
+						}, option.value))
+					})
+				})
+			]
+		});
 	}
 
 // packages/block-library/build-module/gallery/use-dynamic-gallery.mjs
@@ -49265,245 +49783,6 @@ Icon: ButtonIcon });
 		] });
 	}
 
-// packages/block-library/build-module/gallery/order-options.mjs
-/**
-	* The composite `"orderby/order"` select value for an order. A select needs one
-	* string per option, so this format exists only at the select boundary; the
-	* rest of the feature passes `Order` objects.
-	*
-	* @param order The order.
-	* @return The select value.
-	*/
-	function toOrderValue(order) {
-		return `${order.orderby}/${order.order}`;
-	}
-	/**
-	* Parses a composite `"orderby/order"` select value back into an order.
-	*
-	* @param value The select value.
-	* @return The order.
-	*/
-	function parseOrderValue(value) {
-		const [orderby, order] = value.split("/");
-		return {
-			orderby,
-			order
-		};
-	}
-	/**
-	* Ordering options offered for gallery images. Each value is a composite
-	* `orderby/order` string. The two modes share values and labels but differ
-	* in their comparison logic:
-	*
-	* - A dynamic gallery passes `orderby/order` to the REST API in the editor (the
-	*   `/wp/v2/media` collection params; see `dynamic-source.js`) and to a
-	*   `WP_Query` on the front end (see `index.php`). Either way the database
-	*   orders by post date or post title.
-	* - A static gallery orders its inner image blocks client-side from the same
-	*   attachment fields (see `order-images.js`). Dates compare the same way.
-	*   Titles use a natural, case-insensitive compare, so `IMG_2` sorts before
-	*   `IMG_10` where the database would put it after. The two title orders can
-	*   therefore differ for numbered titles.
-	*
-	* `menu_order` is deliberately omitted — it isn't a valid REST `orderby`
-	* value, so the editor preview couldn't reproduce it (see `dynamic-source.js`).
-	*/
-	const ORDER_OPTIONS = [
-		{
-			label: (0, _wordpress_i18n.__)("Newest to oldest"),
-			value: "date/desc"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Oldest to newest"),
-			value: "date/asc"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("A → Z"),
-			value: "title/asc"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Z → A"),
-			value: "title/desc"
-		}
-	];
-	/**
-	* The "Random" order. Unlike the orders above it isn't an `orderby`: it is the
-	* gallery's `randomOrder` attribute, applied only on the front end by shuffling
-	* the rendered images (see `index.php`), so the editor keeps showing the
-	* underlying order. Offered as the last option of both modes' "Order by"
-	* control, since it overrides whatever other order is in place.
-	*/
-	const RANDOM_ORDER = "random";
-	const RANDOM_OPTION = {
-		label: (0, _wordpress_i18n.__)("Random"),
-		value: RANDOM_ORDER
-	};
-
-// packages/block-library/build-module/gallery/order-controls.mjs
-	function getOrderHelp(isRandom) {
-		return isRandom ? (0, _wordpress_i18n.__)("Images are shown in a random order each time the page loads.") : void 0;
-	}
-	const SOURCE_ORDER_OPTIONS = [...ORDER_OPTIONS, RANDOM_OPTION];
-	/**
-	* Ordering control for a dynamic gallery, shown in the Settings panel. The
-	* chosen order is a *setting*: it's stored in the source's query and re-applied
-	* every time the source resolves. "Random" is stored separately (the
-	* `randomOrder` attribute) and overrides the query order on the front end, so
-	* while it's set the control shows it instead of the query order.
-	*/
-	function SourceOrderControl({ order, isRandom, onChange, onSelectRandom }) {
-		const value = isRandom ? RANDOM_ORDER : toOrderValue(order);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
-			label: (0, _wordpress_i18n.__)("Order by"),
-			value: SOURCE_ORDER_OPTIONS.find((option) => option.value === value) ?? null,
-			items: SOURCE_ORDER_OPTIONS,
-			description: getOrderHelp(isRandom),
-			onValueChange: (item) => {
-				if (!item || item.value === null || item.value === value) return;
-				const nextValue = item.value;
-				if (nextValue === "random") {
-					onSelectRandom();
-					return;
-				}
-				onChange(parseOrderValue(nextValue));
-			}
-		});
-	}
-	const CUSTOM_ORDER = "custom";
-	/**
-	* Ordering control for a static gallery, shown in the Settings panel.
-	*
-	* The date and title orders are one-off *actions*: choosing one reorders the
-	* inner image blocks once, and the user can drag them into any other order
-	* afterwards. Nothing is stored for them, so the caller passes back the last
-	* sort it applied for as long as the images remain in that sequence, and
-	* `null` ("Custom") otherwise. "Custom" means the order arranged in the
-	* editor, and is choosable only while "Random" is on: picking it turns
-	* "Random" off without reordering anything.
-	*
-	* "Random" is the one stored value (the `randomOrder` attribute). It applies
-	* on the front end only, leaving the editor order as it is, and choosing any
-	* other option clears it.
-	*/
-	function SortImagesControl({ currentOrder, isRandom, canSort, onSort, onSelectCustom, onSelectRandom }) {
-		const options = [
-			{
-				label: (0, _wordpress_i18n.__)("Custom"),
-				value: CUSTOM_ORDER,
-				disabled: !isRandom
-			},
-			...ORDER_OPTIONS.map((option) => ({
-				...option,
-				disabled: !canSort
-			})),
-			RANDOM_OPTION
-		];
-		let value = CUSTOM_ORDER;
-		if (isRandom) value = RANDOM_ORDER;
-		else if (currentOrder) value = toOrderValue(currentOrder);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
-			label: (0, _wordpress_i18n.__)("Order by"),
-			value: options.find((option) => option.value === value) ?? null,
-			items: options,
-			description: getOrderHelp(isRandom),
-			onValueChange: (item) => {
-				if (!item || item.value === null || item.value === value) return;
-				const nextValue = item.value;
-				if (nextValue === "random") {
-					onSelectRandom();
-					return;
-				}
-				if (nextValue === CUSTOM_ORDER) {
-					onSelectCustom();
-					return;
-				}
-				onSort(parseOrderValue(nextValue));
-			}
-		});
-	}
-
-// packages/block-library/build-module/gallery/order-images.mjs
-/**
-	* Returns the value an image block is ordered by, or `undefined` when it has no
-	* resolved attachment record to take it from.
-	*
-	* @param {Object} block     A `core/image` inner block.
-	* @param {Map}    mediaById Attachment records for the gallery's images, by id.
-	* @param {string} orderby   `date` or `title`.
-	* @return {?string} The sort key.
-	*/
-	function getSortKey(block, mediaById, orderby) {
-		const record = mediaById.get(block.attributes.id);
-		if (!record) return;
-		if (orderby === "title") return record.title?.raw ?? record.title?.rendered ?? "";
-		return record.date ?? "";
-	}
-	/**
-	* Whether there's anything to sort: at least two image blocks with a resolved
-	* attachment record. With fewer, sorting is a no-op, so the sort options are
-	* disabled.
-	*
-	* @param {Array} blocks    The gallery's `core/image` inner blocks.
-	* @param {Map}   mediaById Attachment records for the gallery's images, by id.
-	* @return {boolean} Whether the images can be sorted.
-	*/
-	function hasSortableImages(blocks, mediaById) {
-		let sortableCount = 0;
-		for (const block of blocks) {
-			if (!mediaById.has(block.attributes.id)) continue;
-			sortableCount++;
-			if (sortableCount > 1) return true;
-		}
-		return false;
-	}
-	/**
-	* Compares two sort keys for the given field. Titles use a natural,
-	* case-insensitive comparison so `IMG_2` sorts before `IMG_10`; dates are ISO
-	* 8601 strings, so a plain string comparison orders them chronologically.
-	*
-	* @param {string} a       First key.
-	* @param {string} b       Second key.
-	* @param {string} orderby `date` or `title`.
-	* @return {number} Negative when `a` sorts first, positive when `b` does.
-	*/
-	function compareKeys(a, b, orderby) {
-		if (orderby === "title") return a.localeCompare(b, void 0, {
-			numeric: true,
-			sensitivity: "base"
-		});
-		if (a === b) return 0;
-		return a < b ? -1 : 1;
-	}
-	/**
-	* Sorts a static gallery's image blocks by an attachment field.
-	*
-	* Blocks without an `id`, or whose attachment record isn't in `mediaById` (still
-	* loading, or deleted from the library), can't be placed, so they keep their
-	* relative order and move to the end. Blocks with equal keys likewise keep
-	* their relative order (`Array.prototype.sort` is stable), so re-applying the
-	* current order is a no-op.
-	*
-	* @param {Array}  blocks        The gallery's `core/image` inner blocks.
-	* @param {Map}    mediaById     Attachment records for the gallery's images, by id.
-	* @param {Object} order         The order to apply.
-	* @param {string} order.orderby `date` or `title`.
-	* @param {string} order.order   `asc` or `desc`.
-	* @return {Array} A new array holding the same block objects, sorted.
-	*/
-	function sortImageBlocks(blocks, mediaById, { orderby, order }) {
-		const direction = order === "desc" ? -1 : 1;
-		const keys = new Map(blocks.map((block) => [block, getSortKey(block, mediaById, orderby)]));
-		return blocks.toSorted((a, b) => {
-			const keyA = keys.get(a);
-			const keyB = keys.get(b);
-			if (keyA === void 0 || keyB === void 0) {
-				if (keyA === keyB) return 0;
-				return keyA === void 0 ? 1 : -1;
-			}
-			return compareKeys(keyA, keyB, orderby) * direction;
-		});
-	}
-
 // packages/block-library/build-module/gallery/edit.mjs
 	const LINK_OPTIONS = [
 		{
@@ -49532,32 +49811,18 @@ Icon: ButtonIcon });
 			noticeText: (0, _wordpress_i18n.__)("None")
 		}
 	];
-	const NAVIGATION_BUTTON_TYPE_OPTIONS = [
-		{
-			label: (0, _wordpress_i18n.__)("Icon"),
-			value: "icon"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Text"),
-			value: "text"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Both"),
-			value: "both"
-		}
-	];
 	const ALLOWED_MEDIA_TYPES$6 = ["image"];
 	const PLACEHOLDER_TEXT = (0, _wordpress_i18n.__)("Drag and drop images, upload, or choose from your library.");
 	const DEFAULT_BLOCK$3 = { name: "core/image" };
 	const EMPTY_ARRAY$10 = [];
 	function GalleryEdit(props) {
-		const { setAttributes, attributes, className, clientId, isSelected, insertBlocksAfter, isContentLocked, context, __unstableLayoutClassNames: layoutClassNames } = props;
+		const { setAttributes, attributes, className, clientId, insertBlocksAfter, isContentLocked, context, __unstableLayoutClassNames: layoutClassNames } = props;
 		const postId = context?.postId;
 		const postType = context?.postType;
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
-		const [lightboxSetting, defaultRatios, themeRatios, showDefaultRatios] = (0, _wordpress_block_editor.useSettings)("blocks.core/image.lightbox", "dimensions.aspectRatios.default", "dimensions.aspectRatios.theme", "dimensions.defaultAspectRatios");
+		const [lightboxSetting] = (0, _wordpress_block_editor.useSettings)("blocks.core/image.lightbox");
 		const linkOptions = !lightboxSetting?.allowEditing ? LINK_OPTIONS.filter((option) => option.value !== LINK_DESTINATION_LIGHTBOX) : LINK_OPTIONS;
-		const { align, navigationButtonType, columns, imageCrop, randomOrder, linkTarget, sizeSlug, aspectRatio, layout } = attributes;
+		const { align, columns, imageCrop, layout } = attributes;
 		const isDynamic = !!attributes.dynamicContent;
 		const linkTo = attributes.linkTo ?? (isDynamic ? "none" : getDefaultLinkDestination());
 		const galleryAttributes = {
@@ -49566,7 +49831,7 @@ Icon: ButtonIcon });
 		};
 		const isFlexLayout = isGalleryFlexLayout(layout);
 		const previousLayoutRef = (0, _wordpress_element.useRef)(layout);
-		const { getBlocks, getSettings } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
+		const { getBlocks } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const { __unstableMarkNextChangeAsNotPersistent, replaceInnerBlocks, updateBlockAttributes, selectBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { createSuccessNotice, createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		(0, _wordpress_element.useEffect)(() => {
@@ -49603,22 +49868,10 @@ Icon: ButtonIcon });
 			};
 		}, [clientId]);
 		const isViewportStyleState = selectedStyleState?.viewport && selectedStyleState.viewport !== "default";
-		const viewportStyle = isViewportStyleState ? getViewportGalleryStyle(attributes.style, selectedStyleState.viewport) : {};
-		const baseColumns = isValidGalleryColumns(columns) ? columns : void 0;
-		const baseImageCrop = typeof imageCrop === "boolean" ? imageCrop : true;
-		const baseAspectRatio = aspectRatio || "auto";
-		const hasViewportColumns = isViewportStyleState && Object.hasOwn(viewportStyle, "columns") && isValidGalleryColumns(viewportStyle.columns);
-		const hasViewportImageCrop = isViewportStyleState && Object.hasOwn(viewportStyle, "imageCrop") && typeof viewportStyle.imageCrop === "boolean";
-		const hasViewportAspectRatio = isViewportStyleState && Object.hasOwn(viewportStyle, "aspectRatio") && typeof viewportStyle.aspectRatio === "string" && !!viewportStyle.aspectRatio;
-		const activeColumns = hasViewportColumns ? viewportStyle.columns : baseColumns;
-		const activeImageCrop = hasViewportImageCrop ? viewportStyle.imageCrop : baseImageCrop;
-		const activeAspectRatio = hasViewportAspectRatio ? viewportStyle.aspectRatio : baseAspectRatio;
 		const imageData = useGetMedia(innerBlockImages);
 		const mediaById = (0, _wordpress_element.useMemo)(() => new Map(imageData.map((media) => [media.id, media])), [imageData]);
 		const hasImages = !!innerBlockImages.length;
 		const [appliedSort, setAppliedSort] = (0, _wordpress_element.useState)(null);
-		const currentOrder = appliedSort && appliedSort.clientIds.length === innerBlockImages.length && appliedSort.clientIds.every((id, index) => innerBlockImages[index].clientId === id) ? appliedSort.order : null;
-		const canSortImages = hasSortableImages(innerBlockImages, mediaById);
 		const dynamic = useDynamicGallery({
 			attributes: galleryAttributes,
 			setAttributes,
@@ -49626,28 +49879,6 @@ Icon: ButtonIcon });
 			postId,
 			postType
 		});
-		const displayedImageCount = isDynamic ? dynamic.dynamicMedia.length : innerBlockImages.length;
-		let hasLightboxImages;
-		if (isDynamic) hasLightboxImages = linkTo === LINK_DESTINATION_LIGHTBOX;
-		else if (lightboxSetting?.enabled) hasLightboxImages = innerBlockImages.some((block) => block.attributes?.lightbox?.enabled === void 0 || block.attributes?.lightbox?.enabled === true);
-		else hasLightboxImages = innerBlockImages.some((block) => block.attributes.lightbox?.enabled);
-		const themeOptions = themeRatios?.map(({ name, ratio }) => ({
-			label: name,
-			value: ratio
-		}));
-		const defaultOptions = defaultRatios?.map(({ name, ratio }) => ({
-			label: name,
-			value: ratio
-		}));
-		const aspectRatioOptions = [
-			{
-				label: (0, _wordpress_i18n._x)("Original", "Aspect ratio option for dimensions control"),
-				value: "auto"
-			},
-			...showDefaultRatios ? defaultOptions || [] : [],
-			...themeOptions || []
-		];
-		const imageSizeOptions = useImageSizes(isDynamic ? dynamic.dynamicMedia : imageData, isSelected, getSettings);
 		useApplyGallerySettings(innerBlockImages, mediaById, (imageAttributes) => getImageAttributes(galleryAttributes, imageAttributes, mediaById.get(imageAttributes.id)));
 		function isValidFileType(file) {
 			const mediaTypeSelector = file.type;
@@ -49677,32 +49908,6 @@ Icon: ButtonIcon });
 			replaceInnerBlocks(clientId, existingImageBlocks.concat(newBlocks).sort((a, b) => newOrderMap[a.attributes.id] - newOrderMap[b.attributes.id]));
 			if (newBlocks?.length > 0) selectBlock(newBlocks[0].clientId);
 		}
-		function selectRandomOrder() {
-			setAttributes({ randomOrder: true });
-		}
-		function clearRandomOrderAfterEdit() {
-			if (randomOrder) {
-				__unstableMarkNextChangeAsNotPersistent();
-				setAttributes({ randomOrder: false });
-			}
-		}
-		function sortImages(order) {
-			const sortedBlocks = sortImageBlocks(getBlocks(clientId), mediaById, order);
-			replaceInnerBlocks(clientId, sortedBlocks);
-			clearRandomOrderAfterEdit();
-			setAppliedSort({
-				order,
-				clientIds: sortedBlocks.map((block) => block.clientId)
-			});
-		}
-		function selectCustomOrder() {
-			setAttributes({ randomOrder: false });
-			setAppliedSort(null);
-		}
-		function changeSourceOrder({ orderby, order }) {
-			dynamic.setSourceOrder(orderby, order);
-			clearRandomOrderAfterEdit();
-		}
 		function onUploadError(message) {
 			createErrorNotice(message, { type: "snackbar" });
 		}
@@ -49716,73 +49921,6 @@ Icon: ButtonIcon });
 			const linkToText = [...linkOptions].find((linkType) => linkType.value === value);
 			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery image links updated to: %s"), linkToText.noticeText), {
 				id: "gallery-attributes-linkTo",
-				type: "snackbar"
-			});
-		}
-		function setGallerySettings(settings) {
-			if (!isViewportStyleState) {
-				setAttributes(settings);
-				return;
-			}
-			setAttributes({ style: getUpdatedGalleryStyle({
-				style: attributes.style,
-				viewport: selectedStyleState.viewport,
-				baseSettings: {
-					columns: baseColumns,
-					imageCrop: baseImageCrop,
-					aspectRatio: baseAspectRatio
-				},
-				settings
-			}) });
-		}
-		function setColumnsNumber(value) {
-			setGallerySettings({ columns: value });
-		}
-		function toggleImageCrop() {
-			setGallerySettings({ imageCrop: !activeImageCrop });
-		}
-		function toggleOpenInNewTab(openInNewTab) {
-			const newLinkTarget = openInNewTab ? "_blank" : void 0;
-			setAttributes({ linkTarget: newLinkTarget });
-			updateInnerImages((block) => getUpdatedLinkTargetSettings(newLinkTarget, block.attributes));
-			const noticeText = openInNewTab ? (0, _wordpress_i18n.__)("All gallery images updated to open in new tab") : (0, _wordpress_i18n.__)("All gallery images updated to not open in new tab");
-			createSuccessNotice(noticeText, {
-				id: "gallery-attributes-openInNewTab",
-				type: "snackbar"
-			});
-		}
-		function updateImagesSize(newSizeSlug) {
-			setAttributes({ sizeSlug: newSizeSlug });
-			updateInnerImages((block, media) => getImageSizeAttributes(media, newSizeSlug));
-			const imageSize = imageSizeOptions.find((size) => size.value === newSizeSlug);
-			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery image sizes updated to: %s"), imageSize?.label ?? newSizeSlug), {
-				id: "gallery-attributes-sizeSlug",
-				type: "snackbar"
-			});
-		}
-		/**
-		* Sets the Gallery's aspect ratio.
-		*
-		* The base value is added to the img element as an inline
-		* style. A viewport value is instead rendered
-		* from the Gallery's responsive CSS, which overrides that inline style.
-		*
-		* @param {string|undefined} value Aspect ratio to set. In a viewport state
-		*                                 `'auto'` is an override that cancels the
-		*                                 base ratio, while `undefined` removes the
-		*                                 override so the base value applies again.
-		*/
-		function setAspectRatio(value) {
-			if (isViewportStyleState) setGallerySettings({ aspectRatio: value });
-			else {
-				setAttributes({ aspectRatio: value ?? "auto" });
-				updateInnerImages(() => getAspectRatioAttributes(value));
-			}
-			const noticeValue = value ?? baseAspectRatio;
-			const aspectRatioText = aspectRatioOptions.find((option) => option.value === noticeValue);
-			const noticeText = isViewportStyleState ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Gallery images in the %1$s viewport updated to aspect ratio: %2$s"), selectedStyleState.viewport.replace("@", ""), aspectRatioText?.label || noticeValue) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery images updated to aspect ratio: %s"), aspectRatioText?.label || noticeValue);
-			createSuccessNotice(noticeText, {
-				id: "gallery-attributes-aspectRatio",
 				type: "snackbar"
 			});
 		}
@@ -49809,7 +49947,6 @@ Icon: ButtonIcon });
 			renderAppender: false,
 			allowedBlocks: isDynamic ? EMPTY_ARRAY$10 : void 0
 		});
-		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 		if (!hasImages && !isDynamic) return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			...innerBlocksProps,
 			children: [innerBlocksProps.children, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.MediaPlaceholder, {
@@ -49832,156 +49969,23 @@ Icon: ButtonIcon });
 				})
 			})]
 		});
-		const hasLinkTo = linkTo && linkTo !== "none";
-		const hasViewportSettings = isFlexLayout || aspectRatioOptions.length > 1;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_block_editor.InspectorControls, {
-				group: isViewportStyleState && hasViewportSettings ? "style-state" : "default",
+				group: isViewportStyleState ? "style-state" : "default",
 				children: [!isViewportStyleState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GallerySourcePanel, {
 					dynamic,
 					hasImages
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanel, {
-					label: (0, _wordpress_i18n.__)("Settings"),
-					resetAll: () => {
-						if (isViewportStyleState) {
-							setGallerySettings({
-								columns: void 0,
-								imageCrop: void 0,
-								aspectRatio: void 0
-							});
-							return;
-						}
-						setAttributes({
-							navigationButtonType: "icon",
-							randomOrder: false,
-							...isFlexLayout && {
-								columns: void 0,
-								imageCrop: true
-							}
-						});
-						setAspectRatio("auto");
-						if (isDynamic) dynamic.setSourceOrder(void 0, void 0);
-						if (sizeSlug !== "large") updateImagesSize(DEFAULT_MEDIA_SIZE_SLUG$3);
-						if (linkTarget) toggleOpenInNewTab(false);
-					},
-					dropdownMenuProps,
-					children: [
-						isFlexLayout && displayedImageCount > 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-							isShownByDefault: true,
-							label: (0, _wordpress_i18n.__)("Columns"),
-							hasValue: () => isViewportStyleState ? hasViewportColumns : !!activeColumns && activeColumns !== displayedImageCount,
-							onDeselect: () => setColumnsNumber(void 0),
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.RangeControl, {
-								label: (0, _wordpress_i18n.__)("Columns"),
-								value: activeColumns ? activeColumns : defaultColumnsNumber(displayedImageCount),
-								onChange: setColumnsNumber,
-								min: 1,
-								max: Math.min(8, displayedImageCount),
-								required: true
-							})
-						}),
-						!isViewportStyleState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-							isShownByDefault: true,
-							label: (0, _wordpress_i18n.__)("Order by"),
-							hasValue: () => !!randomOrder || isDynamic && (dynamic.sourceOrderby !== "date" || dynamic.sourceOrder !== "desc"),
-							onDeselect: () => {
-								if (isDynamic) {
-									dynamic.setSourceOrder(void 0, void 0);
-									clearRandomOrderAfterEdit();
-								} else selectCustomOrder();
-							},
-							children: isDynamic ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SourceOrderControl, {
-								order: {
-									orderby: dynamic.sourceOrderby,
-									order: dynamic.sourceOrder
-								},
-								isRandom: !!randomOrder,
-								onChange: changeSourceOrder,
-								onSelectRandom: selectRandomOrder
-							}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SortImagesControl, {
-								currentOrder,
-								isRandom: !!randomOrder,
-								canSort: canSortImages,
-								onSort: sortImages,
-								onSelectCustom: selectCustomOrder,
-								onSelectRandom: selectRandomOrder
-							})
-						}),
-						!isViewportStyleState && imageSizeOptions?.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-							isShownByDefault: true,
-							label: (0, _wordpress_i18n.__)("Resolution"),
-							hasValue: () => sizeSlug !== "large",
-							onDeselect: () => updateImagesSize("large"),
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
-								label: (0, _wordpress_i18n.__)("Resolution"),
-								description: (0, _wordpress_i18n.__)("Select the size of the source images."),
-								value: imageSizeOptions.find((item) => item.value === sizeSlug) ?? imageSizeOptions[0],
-								items: imageSizeOptions,
-								onValueChange: (item) => {
-									if (item && item.value !== sizeSlug) updateImagesSize(item.value);
-								}
-							})
-						}),
-						!isViewportStyleState && hasLinkTo && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-							isShownByDefault: true,
-							label: (0, _wordpress_i18n.__)("Open images in new tab"),
-							hasValue: () => !!linkTarget,
-							onDeselect: () => toggleOpenInNewTab(false),
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
-								label: (0, _wordpress_i18n.__)("Open images in new tab"),
-								checked: linkTarget === "_blank",
-								onChange: toggleOpenInNewTab
-							})
-						}),
-						aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-							hasValue: () => isViewportStyleState ? hasViewportAspectRatio : activeAspectRatio !== "auto",
-							label: (0, _wordpress_i18n.__)("Aspect ratio"),
-							onDeselect: () => setAspectRatio(isViewportStyleState ? void 0 : "auto"),
-							isShownByDefault: true,
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
-								label: (0, _wordpress_i18n.__)("Aspect ratio"),
-								description: (0, _wordpress_i18n.__)("Set a consistent aspect ratio for all images in the gallery."),
-								value: aspectRatioOptions.find((item) => item.value === activeAspectRatio) ?? aspectRatioOptions[0],
-								items: aspectRatioOptions,
-								onValueChange: (item) => {
-									if (item && item.value !== activeAspectRatio) setAspectRatio(item.value);
-								},
-								children: aspectRatioOptions.map((item, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl.Item, {
-									value: item,
-									label: item.label,
-									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl.ItemLabel, { children: item.label })
-								}, `${item.value}-${index}`))
-							})
-						}),
-						isFlexLayout && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-							isShownByDefault: true,
-							label: (0, _wordpress_i18n.__)("Crop images to fit"),
-							hasValue: () => isViewportStyleState ? hasViewportImageCrop : !activeImageCrop,
-							onDeselect: () => setGallerySettings({ imageCrop: isViewportStyleState ? void 0 : true }),
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
-								label: (0, _wordpress_i18n.__)("Crop images to fit"),
-								checked: activeImageCrop,
-								onChange: toggleImageCrop
-							})
-						}),
-						!isViewportStyleState && lightboxSetting?.allowEditing && hasLightboxImages && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-							label: (0, _wordpress_i18n.__)("Navigation button type"),
-							isShownByDefault: true,
-							hasValue: () => navigationButtonType !== "icon",
-							onDeselect: () => setAttributes({ navigationButtonType: "icon" }),
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControl, {
-								label: (0, _wordpress_i18n.__)("Navigation button type"),
-								value: navigationButtonType,
-								onChange: (value) => setAttributes({ navigationButtonType: value }),
-								isBlock: true,
-								help: (0, _wordpress_i18n.__)("Adjust the appearance of buttons in the lightbox."),
-								children: NAVIGATION_BUTTON_TYPE_OPTIONS.map((option) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
-									value: option.value,
-									label: option.label
-								}, option.value))
-							})
-						})
-					]
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GalleryControls, {
+					attributes: galleryAttributes,
+					setAttributes,
+					clientId,
+					viewport: isViewportStyleState ? selectedStyleState.viewport : void 0,
+					innerBlockImages,
+					mediaById,
+					dynamic,
+					updateInnerImages,
+					appliedSort,
+					setAppliedSort
 				})]
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
