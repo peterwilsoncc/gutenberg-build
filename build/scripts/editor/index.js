@@ -66378,6 +66378,12 @@ Icon: ButtonIcon });
 				reader.onerror = reject;
 			});
 		}
+		/**
+		* Reads the family, style, and weight metadata from an uploaded font.
+		*
+		* @param fontFile The font file to parse.
+		* @return The font face metadata and the uploaded file.
+		*/
 		const getFontFaceMetadata = async (fontFile) => {
 			const buffer = await readFileAsArrayBuffer(fontFile);
 			const fontObj = new Font("Uploaded Font");
@@ -66388,7 +66394,7 @@ Icon: ButtonIcon });
 			if (!fontName) throw new Error((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s cannot be installed because it does not include a font family name. Try a different version of this font, for example one downloaded from the font's official source."), fontFile.name));
 			const isItalic = (name.get(2) || "").toLowerCase().includes("italic");
 			const fontWeight = font.opentype.tables["OS/2"].usWeightClass || "normal";
-			const weightAxis = !!font.opentype.tables.fvar && font.opentype.tables.fvar.axes.find(({ tag }) => tag === "wght");
+			const weightAxis = font.opentype.tables.fvar?.axes.find(({ tag }) => tag === "wght");
 			const weightRange = weightAxis ? `${weightAxis.minValue} ${weightAxis.maxValue}` : null;
 			return {
 				file: fontFile,
