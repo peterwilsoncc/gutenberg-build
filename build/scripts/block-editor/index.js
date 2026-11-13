@@ -95340,8 +95340,13 @@ If there's a particular need for this, please submit a feature request at https:
 		function onBlockVariationTransform(name) {
 			const newBlocks = (0, _wordpress_blocks.switchToBlockType)(blocks[0], blocks[0].name, name);
 			if (newBlocks) {
-				replaceBlocks(clientIds, newBlocks);
-				selectForMultipleBlocks(newBlocks);
+				const [newBlock, ...rest] = newBlocks;
+				const replacements = newBlock.name === blocks[0].name ? [{
+					...newBlock,
+					clientId: blocks[0].clientId
+				}, ...rest] : newBlocks;
+				replaceBlocks(clientIds, replacements);
+				selectForMultipleBlocks(replacements);
 				return;
 			}
 			updateBlockAttributes(blocks[0].clientId, { ...blockVariationTransformations.find(({ name: variationName }) => variationName === name).attributes });
@@ -98948,7 +98953,12 @@ If there's a particular need for this, please submit a feature request at https:
 			const block = registry.select(store).getBlock(blockClientId);
 			const transformedBlocks = block && (0, _wordpress_blocks.switchToBlockType)(block, block.name, variationName);
 			if (transformedBlocks) {
-				replaceBlocks(blockClientId, transformedBlocks, void 0, null);
+				const [transformedBlock, ...rest] = transformedBlocks;
+				const replacements = transformedBlock.name === block.name ? [{
+					...transformedBlock,
+					clientId: blockClientId
+				}, ...rest] : transformedBlocks;
+				replaceBlocks(blockClientId, replacements, void 0, null);
 				return;
 			}
 			updateBlockAttributes(blockClientId, { ...variations.find(({ name }) => name === variationName).attributes });
