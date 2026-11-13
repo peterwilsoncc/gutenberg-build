@@ -383,7 +383,7 @@ const trashPost = {
 		const { deleteEntityRecord } = (0, import_data.useDispatch)(import_core_data.store);
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, {
 			spacing: "5",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: items.length === 1 ? (0, import_i18n.sprintf)((0, import_i18n.__)("Are you sure you want to move \"%s\" to the trash?"), getItemTitle(items[0])) : (0, import_i18n.sprintf)((0, import_i18n._n)("Are you sure you want to move %d item to the trash ?", "Are you sure you want to move %d items to the trash ?", items.length), items.length) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: items.length === 1 ? (0, import_i18n.sprintf)((0, import_i18n.__)("Are you sure you want to move \"%s\" to the trash?"), getItemTitle(items[0])) : (0, import_i18n.sprintf)((0, import_i18n._n)("Are you sure you want to move %d item to the trash?", "Are you sure you want to move %d items to the trash?", items.length), items.length) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
 				justify: "right",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 					__next40pxDefaultSize: true,
