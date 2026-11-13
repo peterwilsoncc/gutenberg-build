@@ -83424,7 +83424,11 @@ Icon: ButtonIcon });
 				columnIndex
 			}));
 		}
-		if (!isSingleSelected && selectedCell) setSelectedCell();
+		const [prevIsSingleSelected, setPrevIsSingleSelected] = (0, _wordpress_element.useState)(isSingleSelected);
+		if (isSingleSelected !== prevIsSingleSelected) {
+			setPrevIsSingleSelected(isSingleSelected);
+			if (!isSingleSelected) setSelectedCell();
+		}
 		(0, _wordpress_element.useEffect)(() => {
 			if (hasTableCreated) {
 				tableRef?.current?.querySelector("td div[contentEditable=\"true\"]")?.focus();
