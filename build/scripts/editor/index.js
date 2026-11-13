@@ -88586,14 +88586,12 @@ If there's a particular need for this, please submit a feature request at https:
 			return select(_wordpress_block_editor.store).isValidTemplate();
 		}, []);
 		const { setTemplateValidity, synchronizeTemplate } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
-		const message = (0, _wordpress_i18n.__)("The content of your post doesn’t match the template assigned to your post type.");
-		(0, _wordpress_element.useEffect)(() => {
-			if (!isValid) (0, _wordpress_a11y.speak)(message);
-		}, [isValid, message]);
 		if (isValid) return null;
+		const message = (0, _wordpress_i18n.__)("The content of your post doesn’t match the template assigned to your post type.");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$7, {
 			className: "editor-template-validation-notice",
 			intent: "warning",
+			spokenMessage: message,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Description$1, { children: message }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Actions, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionButton$1, {
 				variant: "outline",
 				onClick: () => setTemplateValidity(true),
