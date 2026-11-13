@@ -8689,6 +8689,11 @@ var style_module_default = {
 	"content": "_164a4cfa881f76f7__content",
 	"has-padding": "_2859463eef17c76b__has-padding"
 };
+/**
+* A standard layout for admin screens. It includes a header with support for
+* a title or breadcrumbs, badges, actions such as a Save button, and tab-style
+* links to the sections of the screen. The page content shows below the header.
+*/
 function Page({ headingLevel, breadcrumbs, badges, visual, title, subTitle, children, className, actions, navigation, components, ariaLabel, hasPadding = false, showSidebarToggle = true }) {
 	const classes = clsx(style_module_default.page, className);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(NavigableRegion, {

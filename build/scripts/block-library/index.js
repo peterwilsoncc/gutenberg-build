@@ -24099,6 +24099,8 @@ Icon: ButtonIcon });
 	*
 	* `Tabs` is a collection of React components that combine to render
 	* an [ARIA-compliant tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
+	*
+	* Each tab shows its panel in place, without a change of URL.
 	*/
 	const Root$3 = (0, _wordpress_element.forwardRef)(function TabsRoot$1({ ...otherProps }, forwardedRef) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsValidationProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TabsRoot, {
