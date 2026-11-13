@@ -31005,10 +31005,11 @@ VisualLabel });
 		return (filterValue) => {
 			const [items, setItems] = (0, _wordpress_element.useState)([]);
 			(0, _wordpress_element.useLayoutEffect)(() => {
+				let isCanceled = false;
 				const { options, isDebounced } = autocompleter;
 				const loadOptions = (0, _wordpress_compose.debounce)(() => {
-					const promise = Promise.resolve(typeof options === "function" ? options(filterValue) : options).then((optionsData) => {
-						if (promise.canceled) return;
+					return Promise.resolve(typeof options === "function" ? options(filterValue) : options).then((optionsData) => {
+						if (isCanceled) return;
 						const keyedOptions = optionsData.map((optionData, optionIndex) => ({
 							key: `${autocompleter.name}-${optionIndex}`,
 							value: optionData,
@@ -31019,12 +31020,11 @@ VisualLabel });
 						const search = new RegExp("(?:\\b|\\s|^)" + escapeRegExp(filterValue), "i");
 						setItems(filterOptions(search, keyedOptions));
 					});
-					return promise;
 				}, isDebounced ? 250 : 0);
-				const promise = loadOptions();
+				loadOptions();
 				return () => {
+					isCanceled = true;
 					loadOptions.cancel();
-					if (promise) promise.canceled = true;
 				};
 			}, [filterValue]);
 			return [items];
