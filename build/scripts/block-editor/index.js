@@ -11459,7 +11459,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		const { getGroupingBlockName } = select(_wordpress_blocks.store);
 		const block = getBlock(state, _clientId);
 		const groupingBlockName = getGroupingBlockName();
-		return block && (block.name === groupingBlockName || ((0, _wordpress_blocks.getBlockType)(block.name)?.transforms)?.ungroup) && !!block.innerBlocks.length && canRemoveBlock(state, _clientId);
+		return block && (block.name === groupingBlockName || (0, _wordpress_blocks.getBlockType)(block.name)?.transforms?.ungroup) && !!block.innerBlocks.length && canRemoveBlock(state, _clientId);
 	});
 	/**
 	* Indicates if the provided blocks(by client ids) are groupable.
