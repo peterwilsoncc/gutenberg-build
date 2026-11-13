@@ -38832,6 +38832,7 @@ Icon: ButtonIcon });
 		const [menuOpen, setMenuOpen] = (0, _wordpress_element.useState)(false);
 		const [pinnedItemKey, setPinnedItemKey] = (0, _wordpress_element.useState)(null);
 		const [isOverflowTriggerFocused, setIsOverflowTriggerFocused] = (0, _wordpress_element.useState)(false);
+		const [frozenItems, setFrozenItems] = (0, _wordpress_element.useState)(items);
 		const mergedRootRef = (0, _wordpress_compose.useMergeRefs)([forwardedRef, setRootElement]);
 		const visibleListRef = (0, _wordpress_element.useRef)(null);
 		const intrinsicRowRef = (0, _wordpress_element.useRef)(null);
@@ -38843,11 +38844,10 @@ Icon: ButtonIcon });
 		const currentItemRef = (0, _wordpress_element.useRef)(null);
 		const focusedElementRef = (0, _wordpress_element.useRef)(null);
 		const overflowTriggerRef = (0, _wordpress_element.useRef)(null);
-		const frozenItemsRef = (0, _wordpress_element.useRef)(items);
 		const pendingStateRef = (0, _wordpress_element.useRef)(null);
 		const focusOverflowAfterLayoutRef = (0, _wordpress_element.useRef)(false);
 		const menuOpenRef = (0, _wordpress_element.useRef)(false);
-		const selectionChanged = (variant === "selection" || frozenItemsRef.current.some((item) => item.kind === "button")) && !itemKeysAreEqual(frozenItemsRef.current, items);
+		const selectionChanged = (variant === "selection" || frozenItems.some((item) => item.kind === "button")) && !itemKeysAreEqual(frozenItems, items);
 		const focusCurrentItem = (0, _wordpress_element.useCallback)(() => {
 			const current = currentItemRef.current;
 			if (current) {
@@ -38860,24 +38860,24 @@ Icon: ButtonIcon });
 				setMenuOpen(false);
 				menuOpenRef.current = false;
 				setIsOverflowTriggerFocused(false);
-				frozenItemsRef.current = items;
+				setFrozenItems(items);
 			}
 			const focused = focusedElementRef.current;
 			if (focused && !focused.isConnected && focused.ownerDocument.activeElement === focused.ownerDocument.body) focusCurrentItem();
 		});
-		if (!menuOpen && !isOverflowTriggerFocused) frozenItemsRef.current = items;
 		const applyResponsiveState = (0, _wordpress_element.useCallback)((next) => {
 			if (menuOpen && !selectionChanged) {
 				pendingStateRef.current = next;
 				return;
 			}
-			if (isOverflowTriggerFocused && !selectionChanged && (next.collapsedKeys.length === 0 || !itemKeysAreEqual(frozenItemsRef.current, items))) {
+			if (isOverflowTriggerFocused && !selectionChanged && (next.collapsedKeys.length === 0 || !itemKeysAreEqual(frozenItems, items))) {
 				pendingStateRef.current = next;
 				return;
 			}
 			pendingStateRef.current = null;
 			setResponsiveState((current) => responsiveStatesAreEqual(current, next) ? current : next);
 		}, [
+			frozenItems,
 			isOverflowTriggerFocused,
 			items,
 			menuOpen,
@@ -38978,7 +38978,7 @@ Icon: ButtonIcon });
 				});
 			}
 			if (open) {
-				frozenItemsRef.current = items;
+				setFrozenItems(items);
 				activationFocusRef.current = null;
 			} else if (eventDetails.reason !== "escape-key" && eventDetails.reason !== "trigger-press") {
 				setIsOverflowTriggerFocused(false);
@@ -38997,7 +38997,7 @@ Icon: ButtonIcon });
 			setIsOverflowTriggerFocused(false);
 			applyPendingResponsiveState();
 		}, [applyPendingResponsiveState]);
-		const displayedItems = variant !== "selection" && !selectionChanged && (menuOpen || isOverflowTriggerFocused) ? frozenItemsRef.current : items;
+		const displayedItems = variant !== "selection" && !selectionChanged && (menuOpen || isOverflowTriggerFocused) ? frozenItems : items;
 		const displayedAncestors = displayedItems.filter((item) => item.kind !== "current");
 		const displayedCurrentItem = displayedItems.find((item) => item.kind === "current");
 		const collapsedKeySet = new Set(responsiveState.collapsedKeys);
@@ -39036,7 +39036,10 @@ Icon: ButtonIcon });
 						ref: overflowTriggerRef,
 						"aria-label": overflowLabel,
 						onBlur: handleOverflowTriggerBlur,
-						onFocus: () => setIsOverflowTriggerFocused(true),
+						onFocus: () => {
+							if (!menuOpen && !isOverflowTriggerFocused) setFrozenItems(items);
+							setIsOverflowTriggerFocused(true);
+						},
 						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(OverflowTriggerButton, {}) }),
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 							"aria-hidden": "true",
