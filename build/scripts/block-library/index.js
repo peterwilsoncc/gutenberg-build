@@ -46252,45 +46252,6 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/gallery/shared-icon.mjs
 	const sharedIcon = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockIcon, { icon: gallery_default });
 
-// packages/block-library/build-module/gallery/shared.mjs
-	function defaultColumnsNumber(imageCount) {
-		return imageCount ? Math.min(3, imageCount) : 3;
-	}
-	/**
-	* Whether a value is a plain object (and not an array).
-	*
-	* @param {*} value The value to check.
-	* @return {boolean} Whether the value is a plain object.
-	*/
-	function isObject$2(value) {
-		return !!value && typeof value === "object" && !Array.isArray(value);
-	}
-	/**
-	* Whether the Gallery should use its default Flex layout behavior.
-	*
-	* Gallery blocks created before layout variations existed do not have an
-	* explicit layout attribute. Treat missing and malformed layout data as Flex
-	* so existing galleries keep their current appearance.
-	*
-	* @param {*} layout The Gallery layout attribute.
-	* @return {boolean} Whether the Gallery uses its Flex layout.
-	*/
-	function isGalleryFlexLayout(layout) {
-		const layoutType = isObject$2(layout) ? layout.type : void 0;
-		return typeof layoutType !== "string" || layoutType === "" || layoutType === "flex";
-	}
-	const pickRelevantMediaFiles$1 = (image, sizeSlug = "large") => {
-		const imageProps = Object.fromEntries(Object.entries(image ?? {}).filter(([key]) => [
-			"alt",
-			"id",
-			"link"
-		].includes(key)));
-		imageProps.url = image?.sizes?.[sizeSlug]?.url || image?.media_details?.sizes?.[sizeSlug]?.source_url || image?.url || image?.source_url;
-		const fullUrl = image?.sizes?.full?.url || image?.media_details?.sizes?.full?.source_url;
-		if (fullUrl) imageProps.fullUrl = fullUrl;
-		return imageProps;
-	};
-
 // packages/block-library/build-module/image/constants.mjs
 	const LINK_DESTINATION_NONE$1 = "none";
 	const LINK_DESTINATION_MEDIA$1 = "media";
@@ -46300,56 +46261,6 @@ Icon: ButtonIcon });
 	const ALLOWED_MEDIA_TYPES$7 = ["image"];
 	const SIZED_LAYOUTS = ["flex", "grid"];
 	const DEFAULT_MEDIA_SIZE_SLUG$2 = "full";
-
-// packages/block-library/build-module/gallery/utils.mjs
-/**
-	* Determines new href and linkDestination values for an Image block from the
-	* supplied Gallery link destination, or falls back to the Image blocks link.
-	*
-	* @param {Object} image              Gallery image.
-	* @param {string} galleryDestination Gallery's selected link destination.
-	* @param {Object} imageDestination   Image block link destination attribute.
-	* @param {Object} attributes         Block attributes.
-	* @param {Object} lightboxSetting    Lightbox setting.
-	*
-	* @return {Object}            New attributes to assign to image block.
-	*/
-	function getHrefAndDestination(image, galleryDestination, imageDestination, attributes, lightboxSetting) {
-		switch (imageDestination ? imageDestination : galleryDestination) {
-			case LINK_DESTINATION_MEDIA_WP_CORE:
-			case LINK_DESTINATION_MEDIA$2: return {
-				href: image?.source_url || image?.url,
-				linkDestination: LINK_DESTINATION_MEDIA$1,
-				lightbox: lightboxSetting?.enabled ? {
-					...attributes?.lightbox,
-					enabled: false
-				} : void 0
-			};
-			case LINK_DESTINATION_ATTACHMENT_WP_CORE:
-			case LINK_DESTINATION_ATTACHMENT$2: return {
-				href: image?.link,
-				linkDestination: LINK_DESTINATION_ATTACHMENT$1,
-				lightbox: lightboxSetting?.enabled ? {
-					...attributes?.lightbox,
-					enabled: false
-				} : void 0
-			};
-			case LINK_DESTINATION_LIGHTBOX: return {
-				href: void 0,
-				lightbox: !lightboxSetting?.enabled ? {
-					...attributes?.lightbox,
-					enabled: true
-				} : void 0,
-				linkDestination: LINK_DESTINATION_NONE$1
-			};
-			case LINK_DESTINATION_NONE$2: return {
-				href: void 0,
-				linkDestination: LINK_DESTINATION_NONE$1,
-				lightbox: void 0
-			};
-		}
-		return {};
-	}
 
 // packages/block-library/build-module/image/utils.mjs
 /**
@@ -46442,6 +46353,132 @@ Icon: ButtonIcon });
 		y: .5
 	}) {
 		return `${Math.round(x * 100)}% ${Math.round(y * 100)}%`;
+	}
+
+// packages/block-library/build-module/gallery/utils.mjs
+/**
+	* Determines new href and linkDestination values for an Image block from the
+	* supplied Gallery link destination, or falls back to the Image blocks link.
+	*
+	* @param {Object} image              Gallery image.
+	* @param {string} galleryDestination Gallery's selected link destination.
+	* @param {Object} imageDestination   Image block link destination attribute.
+	* @param {Object} attributes         Block attributes.
+	* @param {Object} lightboxSetting    Lightbox setting.
+	*
+	* @return {Object}            New attributes to assign to image block.
+	*/
+	function getHrefAndDestination(image, galleryDestination, imageDestination, attributes, lightboxSetting) {
+		switch (imageDestination ? imageDestination : galleryDestination) {
+			case LINK_DESTINATION_MEDIA_WP_CORE:
+			case LINK_DESTINATION_MEDIA$2: return {
+				href: image?.source_url || image?.url,
+				linkDestination: LINK_DESTINATION_MEDIA$1,
+				lightbox: lightboxSetting?.enabled ? {
+					...attributes?.lightbox,
+					enabled: false
+				} : void 0
+			};
+			case LINK_DESTINATION_ATTACHMENT_WP_CORE:
+			case LINK_DESTINATION_ATTACHMENT$2: return {
+				href: image?.link,
+				linkDestination: LINK_DESTINATION_ATTACHMENT$1,
+				lightbox: lightboxSetting?.enabled ? {
+					...attributes?.lightbox,
+					enabled: false
+				} : void 0
+			};
+			case LINK_DESTINATION_LIGHTBOX: return {
+				href: void 0,
+				lightbox: !lightboxSetting?.enabled ? {
+					...attributes?.lightbox,
+					enabled: true
+				} : void 0,
+				linkDestination: LINK_DESTINATION_NONE$1
+			};
+			case LINK_DESTINATION_NONE$2: return {
+				href: void 0,
+				linkDestination: LINK_DESTINATION_NONE$1,
+				lightbox: void 0
+			};
+		}
+		return {};
+	}
+
+// packages/block-library/build-module/gallery/shared.mjs
+	function defaultColumnsNumber(imageCount) {
+		return imageCount ? Math.min(3, imageCount) : 3;
+	}
+	/**
+	* Whether a value is a plain object (and not an array).
+	*
+	* @param {*} value The value to check.
+	* @return {boolean} Whether the value is a plain object.
+	*/
+	function isObject$2(value) {
+		return !!value && typeof value === "object" && !Array.isArray(value);
+	}
+	/**
+	* Whether the Gallery should use its default Flex layout behavior.
+	*
+	* Gallery blocks created before layout variations existed do not have an
+	* explicit layout attribute. Treat missing and malformed layout data as Flex
+	* so existing galleries keep their current appearance.
+	*
+	* @param {*} layout The Gallery layout attribute.
+	* @return {boolean} Whether the Gallery uses its Flex layout.
+	*/
+	function isGalleryFlexLayout(layout) {
+		const layoutType = isObject$2(layout) ? layout.type : void 0;
+		return typeof layoutType !== "string" || layoutType === "" || layoutType === "flex";
+	}
+	const pickRelevantMediaFiles$1 = (image, sizeSlug = "large") => {
+		const imageProps = Object.fromEntries(Object.entries(image ?? {}).filter(([key]) => [
+			"alt",
+			"id",
+			"link"
+		].includes(key)));
+		imageProps.url = image?.sizes?.[sizeSlug]?.url || image?.media_details?.sizes?.[sizeSlug]?.source_url || image?.url || image?.source_url;
+		const fullUrl = image?.sizes?.full?.url || image?.media_details?.sizes?.full?.source_url;
+		if (fullUrl) imageProps.fullUrl = fullUrl;
+		return imageProps;
+	};
+	/**
+	* Returns the image attributes for a gallery aspect ratio.
+	*
+	* @param {string} aspectRatio The gallery aspect ratio.
+	* @return {Object} The `aspectRatio` and `scale` attributes.
+	*/
+	function getAspectRatioAttributes(aspectRatio) {
+		const hasAspectRatio = !!aspectRatio && aspectRatio !== "auto";
+		return {
+			aspectRatio: hasAspectRatio ? aspectRatio : void 0,
+			scale: hasAspectRatio ? "cover" : void 0
+		};
+	}
+	/**
+	* Returns the attributes that apply the gallery settings to an added image.
+	*
+	* @param {Object} gallery    The gallery attributes, with the resolved `linkTo`.
+	* @param {Object} attributes The image block attributes.
+	* @param {Object} media      The image attachment.
+	* @return {Object} The attributes to set on the image block.
+	*/
+	function getImageAttributes(gallery, attributes, media) {
+		const linkTargetAttributes = attributes.linkTarget || attributes.rel ? {
+			linkTarget: attributes.linkTarget,
+			rel: attributes.rel
+		} : getUpdatedLinkTargetSettings(gallery.linkTarget, gallery);
+		return {
+			...pickRelevantMediaFiles$1(media, gallery.sizeSlug),
+			...getHrefAndDestination(media, gallery.linkTo, attributes.linkDestination),
+			...linkTargetAttributes,
+			className: attributes.className || void 0,
+			sizeSlug: gallery.sizeSlug,
+			caption: attributes.caption.length > 0 ? attributes.caption : media.caption?.raw,
+			alt: attributes.alt || media.alt_text,
+			...getAspectRatioAttributes(gallery.aspectRatio)
+		};
 	}
 
 // packages/block-library/build-module/gallery/gallery.mjs
@@ -49390,15 +49427,13 @@ Icon: ButtonIcon });
 	* Returns the value an image block is ordered by, or `undefined` when it has no
 	* resolved attachment record to take it from.
 	*
-	* @param {Object} block   A `core/image` inner block.
-	* @param {Array}  media   Attachment records for the gallery's images.
-	* @param {string} orderby `date` or `title`.
+	* @param {Object} block     A `core/image` inner block.
+	* @param {Map}    mediaById Attachment records for the gallery's images, by id.
+	* @param {string} orderby   `date` or `title`.
 	* @return {?string} The sort key.
 	*/
-	function getSortKey(block, media, orderby) {
-		const { id } = block.attributes;
-		if (id === void 0) return;
-		const record = media.find((item) => item.id === id);
+	function getSortKey(block, mediaById, orderby) {
+		const record = mediaById.get(block.attributes.id);
 		if (!record) return;
 		if (orderby === "title") return record.title?.raw ?? record.title?.rendered ?? "";
 		return record.date ?? "";
@@ -49408,15 +49443,14 @@ Icon: ButtonIcon });
 	* attachment record. With fewer, sorting is a no-op, so the sort options are
 	* disabled.
 	*
-	* @param {Array} blocks The gallery's `core/image` inner blocks.
-	* @param {Array} media  Attachment records for the gallery's images.
+	* @param {Array} blocks    The gallery's `core/image` inner blocks.
+	* @param {Map}   mediaById Attachment records for the gallery's images, by id.
 	* @return {boolean} Whether the images can be sorted.
 	*/
-	function hasSortableImages(blocks, media) {
-		const mediaIds = new Set(media.map((item) => item.id));
+	function hasSortableImages(blocks, mediaById) {
 		let sortableCount = 0;
 		for (const block of blocks) {
-			if (!mediaIds.has(block.attributes.id)) continue;
+			if (!mediaById.has(block.attributes.id)) continue;
 			sortableCount++;
 			if (sortableCount > 1) return true;
 		}
@@ -49443,22 +49477,22 @@ Icon: ButtonIcon });
 	/**
 	* Sorts a static gallery's image blocks by an attachment field.
 	*
-	* Blocks without an `id`, or whose attachment record isn't in `media` (still
+	* Blocks without an `id`, or whose attachment record isn't in `mediaById` (still
 	* loading, or deleted from the library), can't be placed, so they keep their
 	* relative order and move to the end. Blocks with equal keys likewise keep
 	* their relative order (`Array.prototype.sort` is stable), so re-applying the
 	* current order is a no-op.
 	*
 	* @param {Array}  blocks        The gallery's `core/image` inner blocks.
-	* @param {Array}  media         Attachment records for the gallery's images.
+	* @param {Map}    mediaById     Attachment records for the gallery's images, by id.
 	* @param {Object} order         The order to apply.
 	* @param {string} order.orderby `date` or `title`.
 	* @param {string} order.order   `asc` or `desc`.
 	* @return {Array} A new array holding the same block objects, sorted.
 	*/
-	function sortImageBlocks(blocks, media, { orderby, order }) {
+	function sortImageBlocks(blocks, mediaById, { orderby, order }) {
 		const direction = order === "desc" ? -1 : 1;
-		const keys = new Map(blocks.map((block) => [block, getSortKey(block, media, orderby)]));
+		const keys = new Map(blocks.map((block) => [block, getSortKey(block, mediaById, orderby)]));
 		return blocks.toSorted((a, b) => {
 			const keyA = keys.get(a);
 			const keyB = keys.get(b);
@@ -49526,8 +49560,13 @@ Icon: ButtonIcon });
 		const { align, navigationButtonType, columns, imageCrop, randomOrder, linkTarget, sizeSlug, aspectRatio, layout } = attributes;
 		const isDynamic = !!attributes.dynamicContent;
 		const linkTo = attributes.linkTo ?? (isDynamic ? "none" : getDefaultLinkDestination());
+		const galleryAttributes = {
+			...attributes,
+			linkTo
+		};
 		const isFlexLayout = isGalleryFlexLayout(layout);
 		const previousLayoutRef = (0, _wordpress_element.useRef)(layout);
+		const { getBlocks, getSettings } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const { __unstableMarkNextChangeAsNotPersistent, replaceInnerBlocks, updateBlockAttributes, selectBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { createSuccessNotice, createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		(0, _wordpress_element.useEffect)(() => {
@@ -49554,13 +49593,11 @@ Icon: ButtonIcon });
 			setAttributes,
 			__unstableMarkNextChangeAsNotPersistent
 		]);
-		const { getBlock, getSettings, innerBlockImages, multiGallerySelection, selectedStyleState } = (0, _wordpress_data.useSelect)((select) => {
-			const { getBlockName, getMultiSelectedBlockClientIds, getSettings: _getSettings, getBlock: _getBlock, getSelectedBlockStyleState } = select(_wordpress_block_editor.store);
+		const { innerBlockImages, multiGallerySelection, selectedStyleState } = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlockName, getMultiSelectedBlockClientIds, getBlocks: _getBlocks, getSelectedBlockStyleState } = select(_wordpress_block_editor.store);
 			const multiSelectedClientIds = getMultiSelectedBlockClientIds();
 			return {
-				getBlock: _getBlock,
-				getSettings: _getSettings,
-				innerBlockImages: _getBlock(clientId)?.innerBlocks ?? EMPTY_ARRAY$10,
+				innerBlockImages: _getBlocks(clientId),
 				multiGallerySelection: multiSelectedClientIds.length && multiSelectedClientIds.every((_clientId) => getBlockName(_clientId) === "core/gallery"),
 				selectedStyleState: getSelectedBlockStyleState(clientId)
 			};
@@ -49581,12 +49618,9 @@ Icon: ButtonIcon });
 		const hasImages = !!innerBlockImages.length;
 		const [appliedSort, setAppliedSort] = (0, _wordpress_element.useState)(null);
 		const currentOrder = appliedSort && appliedSort.clientIds.length === innerBlockImages.length && appliedSort.clientIds.every((id, index) => innerBlockImages[index].clientId === id) ? appliedSort.order : null;
-		const canSortImages = hasSortableImages(innerBlockImages, imageData);
+		const canSortImages = hasSortableImages(innerBlockImages, mediaById);
 		const dynamic = useDynamicGallery({
-			attributes: {
-				...attributes,
-				linkTo
-			},
+			attributes: galleryAttributes,
 			setAttributes,
 			clientId,
 			postId,
@@ -49595,8 +49629,8 @@ Icon: ButtonIcon });
 		const displayedImageCount = isDynamic ? dynamic.dynamicMedia.length : innerBlockImages.length;
 		let hasLightboxImages;
 		if (isDynamic) hasLightboxImages = linkTo === LINK_DESTINATION_LIGHTBOX;
-		else if (lightboxSetting?.enabled) hasLightboxImages = innerBlockImages.filter((block) => block.attributes?.lightbox?.enabled === void 0 || block.attributes?.lightbox?.enabled === true).length > 0;
-		else hasLightboxImages = innerBlockImages.filter((block) => block.attributes.lightbox?.enabled).length > 0;
+		else if (lightboxSetting?.enabled) hasLightboxImages = innerBlockImages.some((block) => block.attributes?.lightbox?.enabled === void 0 || block.attributes?.lightbox?.enabled === true);
+		else hasLightboxImages = innerBlockImages.some((block) => block.attributes.lightbox?.enabled);
 		const themeOptions = themeRatios?.map(({ name, ratio }) => ({
 			label: name,
 			value: ratio
@@ -49614,62 +49648,24 @@ Icon: ButtonIcon });
 			...themeOptions || []
 		];
 		const imageSizeOptions = useImageSizes(isDynamic ? dynamic.dynamicMedia : imageData, isSelected, getSettings);
-		/**
-		* Determines the image attributes that should be applied to an image block
-		* after the gallery updates.
-		*
-		* The gallery will receive the full collection of images when a new image
-		* is added. As a result we need to reapply the image's original settings if
-		* it already existed in the gallery. If the image is in fact new, we need
-		* to apply the gallery's current settings to the image.
-		*
-		* @param {Object} imageAttributes Media object for the actual image.
-		* @return {Object}                Attributes to set on the new image block.
-		*/
-		function buildImageAttributes(imageAttributes) {
-			const image = mediaById.get(imageAttributes.id);
-			let newClassName;
-			if (imageAttributes.className && imageAttributes.className !== "") newClassName = imageAttributes.className;
-			let newLinkTarget;
-			if (imageAttributes.linkTarget || imageAttributes.rel) newLinkTarget = {
-				linkTarget: imageAttributes.linkTarget,
-				rel: imageAttributes.rel
-			};
-			else newLinkTarget = getUpdatedLinkTargetSettings(linkTarget, attributes);
-			return {
-				...pickRelevantMediaFiles$1(image, sizeSlug),
-				...getHrefAndDestination(image, linkTo, imageAttributes?.linkDestination),
-				...newLinkTarget,
-				className: newClassName,
-				sizeSlug,
-				caption: imageAttributes.caption.length > 0 ? imageAttributes.caption : image.caption?.raw,
-				alt: imageAttributes.alt || image.alt_text,
-				aspectRatio: aspectRatio === "auto" ? void 0 : aspectRatio,
-				scale: aspectRatio && aspectRatio !== "auto" ? "cover" : void 0
-			};
-		}
-		useApplyGallerySettings(innerBlockImages, mediaById, buildImageAttributes);
+		useApplyGallerySettings(innerBlockImages, mediaById, (imageAttributes) => getImageAttributes(galleryAttributes, imageAttributes, mediaById.get(imageAttributes.id)));
 		function isValidFileType(file) {
 			const mediaTypeSelector = file.type;
 			return ALLOWED_MEDIA_TYPES$6.some((mediaType) => mediaTypeSelector?.indexOf(mediaType) === 0) || file.blob;
 		}
 		function updateImages(selectedImages) {
 			const newFileUploads = Object.prototype.toString.call(selectedImages) === "[object FileList]";
-			const imageArray = newFileUploads ? Array.from(selectedImages).map((file) => {
-				if (!file.url) return { blob: (0, _wordpress_blob.createBlobURL)(file) };
-				return file;
-			}) : selectedImages;
+			const imageArray = Array.from(selectedImages, (file) => file.url || !newFileUploads && !isValidFileType(file) ? file : { blob: file.blob || (0, _wordpress_blob.createBlobURL)(file) });
 			if (!imageArray.every(isValidFileType)) createErrorNotice((0, _wordpress_i18n.__)("If uploading to a gallery all files need to be image formats"), {
 				id: "gallery-upload-invalid-file",
 				type: "snackbar"
 			});
-			const processedImages = imageArray.filter((file) => file.url || isValidFileType(file)).map((file) => {
-				if (!file.url) return { blob: file.blob || (0, _wordpress_blob.createBlobURL)(file) };
-				return file;
-			});
+			const processedImages = imageArray.filter((file) => file.url || isValidFileType(file));
 			const newOrderMap = processedImages.reduce((result, image, index) => (result[image.id] = index, result), {});
-			const existingImageBlocks = !newFileUploads ? innerBlockImages.filter((block) => processedImages.find((img) => img.id === block.attributes.id)) : innerBlockImages;
-			const newBlocks = processedImages.filter((img) => !existingImageBlocks.find((existingImg) => img.id === existingImg.attributes.id)).map((image) => {
+			const selectedIds = new Set(processedImages.map((img) => img.id));
+			const existingImageBlocks = !newFileUploads ? innerBlockImages.filter((block) => selectedIds.has(block.attributes.id)) : innerBlockImages;
+			const existingIds = new Set(existingImageBlocks.map((block) => block.attributes.id));
+			const newBlocks = processedImages.filter((img) => !existingIds.has(img.id)).map((image) => {
 				return (0, _wordpress_blocks.createBlock)("core/image", {
 					id: image.id,
 					blob: image.blob,
@@ -49691,7 +49687,7 @@ Icon: ButtonIcon });
 			}
 		}
 		function sortImages(order) {
-			const sortedBlocks = sortImageBlocks(getBlock(clientId).innerBlocks, imageData, order);
+			const sortedBlocks = sortImageBlocks(getBlocks(clientId), mediaById, order);
 			replaceInnerBlocks(clientId, sortedBlocks);
 			clearRandomOrderAfterEdit();
 			setAppliedSort({
@@ -49710,16 +49706,13 @@ Icon: ButtonIcon });
 		function onUploadError(message) {
 			createErrorNotice(message, { type: "snackbar" });
 		}
+		function updateInnerImages(getAttributes) {
+			const images = getBlocks(clientId);
+			updateBlockAttributes(images.map((block) => block.clientId), Object.fromEntries(images.map((block) => [block.clientId, getAttributes(block, mediaById.get(block.attributes.id))])), { uniqueByBlock: true });
+		}
 		function setLinkTo(value) {
 			setAttributes({ linkTo: value });
-			const changedAttributes = {};
-			const blocks = [];
-			getBlock(clientId).innerBlocks.forEach((block) => {
-				blocks.push(block.clientId);
-				const image = block.attributes.id ? imageData.find(({ id }) => id === block.attributes.id) : null;
-				changedAttributes[block.clientId] = getHrefAndDestination(image, value, false, block.attributes, lightboxSetting);
-			});
-			updateBlockAttributes(blocks, changedAttributes, { uniqueByBlock: true });
+			updateInnerImages((block, media) => getHrefAndDestination(media, value, false, block.attributes, lightboxSetting));
 			const linkToText = [...linkOptions].find((linkType) => linkType.value === value);
 			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery image links updated to: %s"), linkToText.noticeText), {
 				id: "gallery-attributes-linkTo",
@@ -49751,13 +49744,7 @@ Icon: ButtonIcon });
 		function toggleOpenInNewTab(openInNewTab) {
 			const newLinkTarget = openInNewTab ? "_blank" : void 0;
 			setAttributes({ linkTarget: newLinkTarget });
-			const changedAttributes = {};
-			const blocks = [];
-			getBlock(clientId).innerBlocks.forEach((block) => {
-				blocks.push(block.clientId);
-				changedAttributes[block.clientId] = getUpdatedLinkTargetSettings(newLinkTarget, block.attributes);
-			});
-			updateBlockAttributes(blocks, changedAttributes, { uniqueByBlock: true });
+			updateInnerImages((block) => getUpdatedLinkTargetSettings(newLinkTarget, block.attributes));
 			const noticeText = openInNewTab ? (0, _wordpress_i18n.__)("All gallery images updated to open in new tab") : (0, _wordpress_i18n.__)("All gallery images updated to not open in new tab");
 			createSuccessNotice(noticeText, {
 				id: "gallery-attributes-openInNewTab",
@@ -49766,14 +49753,7 @@ Icon: ButtonIcon });
 		}
 		function updateImagesSize(newSizeSlug) {
 			setAttributes({ sizeSlug: newSizeSlug });
-			const changedAttributes = {};
-			const blocks = [];
-			getBlock(clientId).innerBlocks.forEach((block) => {
-				blocks.push(block.clientId);
-				const image = block.attributes.id ? imageData.find(({ id }) => id === block.attributes.id) : null;
-				changedAttributes[block.clientId] = getImageSizeAttributes(image, newSizeSlug);
-			});
-			updateBlockAttributes(blocks, changedAttributes, { uniqueByBlock: true });
+			updateInnerImages((block, media) => getImageSizeAttributes(media, newSizeSlug));
 			const imageSize = imageSizeOptions.find((size) => size.value === newSizeSlug);
 			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery image sizes updated to: %s"), imageSize?.label ?? newSizeSlug), {
 				id: "gallery-attributes-sizeSlug",
@@ -49795,18 +49775,8 @@ Icon: ButtonIcon });
 		function setAspectRatio(value) {
 			if (isViewportStyleState) setGallerySettings({ aspectRatio: value });
 			else {
-				const cleanValue = !value || value === "auto" ? void 0 : value;
 				setAttributes({ aspectRatio: value ?? "auto" });
-				const changedAttributes = {};
-				const blocks = [];
-				getBlock(clientId).innerBlocks.forEach((block) => {
-					blocks.push(block.clientId);
-					changedAttributes[block.clientId] = {
-						aspectRatio: cleanValue,
-						scale: cleanValue ? "cover" : void 0
-					};
-				});
-				updateBlockAttributes(blocks, changedAttributes, true);
+				updateInnerImages(() => getAspectRatioAttributes(value));
 			}
 			const noticeValue = value ?? baseAspectRatio;
 			const aspectRatioText = aspectRatioOptions.find((option) => option.value === noticeValue);
@@ -50037,7 +50007,7 @@ Icon: ButtonIcon });
 					}) })
 				})
 			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [!multiGallerySelection && !isDynamic && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
+			!multiGallerySelection && !isDynamic && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
 				group: "other",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.MediaReplaceFlow, {
 					allowedTypes: ALLOWED_MEDIA_TYPES$6,
@@ -50049,11 +50019,12 @@ Icon: ButtonIcon });
 					addToGallery: hasImageIds,
 					variant: "toolbar"
 				})
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GalleryStyles, {
+			}),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(GalleryStyles, {
 				style: attributes.style,
 				clientId,
 				isFlexLayout
-			})] }),
+			}),
 			isDynamic ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GalleryDynamicView, {
 				...props,
 				dynamic,
