@@ -62163,6 +62163,7 @@ VisualLabel });
 		const { value, isExpanded, instanceId, selectedSuggestionIndex, className, onChange, onFocus, onBlur, "aria-describedby": ariaDescribedBy, ...restProps } = props;
 		const [hasFocus, setHasFocus] = (0, _wordpress_element.useState)(false);
 		const size = value ? value.length + 1 : 0;
+		const suggestionsId = `components-form-token-suggestions-${instanceId}`;
 		const onChangeHandler = (event) => {
 			if (onChange) onChange({ value: event.target.value });
 		};
@@ -62189,8 +62190,8 @@ VisualLabel });
 			role: "combobox",
 			"aria-expanded": isExpanded,
 			"aria-autocomplete": "list",
-			"aria-owns": isExpanded ? `components-form-token-suggestions-${instanceId}` : void 0,
-			"aria-activedescendant": hasFocus && selectedSuggestionIndex !== -1 && isExpanded ? `components-form-token-suggestions-${instanceId}-${selectedSuggestionIndex}` : void 0,
+			"aria-controls": isExpanded ? suggestionsId : void 0,
+			"aria-activedescendant": hasFocus && selectedSuggestionIndex !== -1 && isExpanded ? `${suggestionsId}-${selectedSuggestionIndex}` : void 0,
 			"aria-describedby": ariaDescribedBy
 		});
 	}
@@ -62680,6 +62681,7 @@ VisualLabel });
 				(0, _wordpress_a11y.speak)(message, "polite");
 			}
 		}, [matchingSuggestions, isExpanded]);
+		const isSuggestionsListVisible = isExpanded && !isLoading;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DetectOutside, {
 			onFocusOutside,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl, {
@@ -62704,7 +62706,7 @@ VisualLabel });
 								onFocus,
 								onBlur,
 								onClick,
-								isExpanded,
+								isExpanded: isSuggestionsListVisible,
 								selectedSuggestionIndex: getIndexOfMatchingSuggestion(selectedSuggestion, matchingSuggestions),
 								onChange: onInputChange,
 								"aria-describedby": help ? `components-form-token-input-${instanceId}__help` : void 0
@@ -62718,7 +62720,7 @@ VisualLabel });
 								label: (0, _wordpress_i18n.__)("Reset")
 							})
 						]
-					}), isExpanded && !isLoading && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SuggestionsList, {
+					}), isSuggestionsListVisible && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SuggestionsList, {
 						instanceId,
 						match: {
 							label: inputValue,
