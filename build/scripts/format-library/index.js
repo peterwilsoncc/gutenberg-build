@@ -14535,7 +14535,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			}));
 			else if (!isActive && text && (0, _wordpress_url.isPhoneNumber)(text)) onChange((0, _wordpress_rich_text.applyFormat)(value, {
 				type: name$10,
-				attributes: { url: `tel:${text.replace(/\D/g, "")}` }
+				attributes: { url: `tel:${text.replace(/[^\d+]/g, "")}` }
 			}));
 			else {
 				if (target) setOpenedBy({
