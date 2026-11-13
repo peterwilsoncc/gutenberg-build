@@ -18232,6 +18232,7 @@ function DirectionProvider({ children }) {
 }
 
 // packages/ui/build-module/menu/root.mjs
+const ROOT_CONTEXT_VALUE = { isSubmenu: false };
 /**
 * Groups all parts of a menu.
 *
@@ -18264,7 +18265,7 @@ function Root$5(props) {
 		if (!nextOpen && eventDetails.reason === "item-press" && !eventDetails.isCanceled && TriggerElement && trigger instanceof TriggerElement && menuElement?.contains(activeElementBeforeOpenChange ?? null) && trigger.ownerDocument.activeElement === activeElementBeforeOpenChange) trigger.focus();
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuContext.Provider, {
-		value: { isSubmenu: false },
+		value: ROOT_CONTEXT_VALUE,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroupContext.Provider, {
 			value: null,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuRoot, {
@@ -18423,11 +18424,12 @@ const Separator$1 = (0, import_element.forwardRef)(function MenuSeparator({ clas
 */
 function SubmenuRoot(props) {
 	const submenuTriggerRef = (0, import_element.useRef)(null);
+	const contextValue = (0, import_element.useMemo)(() => ({
+		isSubmenu: true,
+		submenuTriggerRef
+	}), [submenuTriggerRef]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuContext.Provider, {
-		value: {
-			isSubmenu: true,
-			submenuTriggerRef
-		},
+		value: contextValue,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuGroupContext.Provider, {
 			value: null,
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MenuSubmenuRoot, { ...props })
