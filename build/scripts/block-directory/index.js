@@ -9230,9 +9230,9 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		if (!errorNotice) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "block-directory-downloadable-block-notice",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				className: "block-directory-downloadable-block-notice__content",
-				children: [errorNotice.message, errorNotice.isFatal ? " " + (0, _wordpress_i18n.__)("Try reloading the page.") : null]
+				children: errorNotice.message
 			})
 		});
 	};
