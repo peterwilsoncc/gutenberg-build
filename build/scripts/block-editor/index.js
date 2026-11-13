@@ -15567,7 +15567,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				const baseHasContainerType = !layout?.columnCount || layout?.columnCount && layout?.minimumColumnWidth;
 				if ((!columnCount || minimumColumnWidth) && (!hasViewportOverrides || !baseHasContainerType)) rules.push("container-type: inline-size");
 			}
-			if (shouldOutputGridRows) rules.push(`grid-template-rows: repeat(${rowCount}, minmax(1rem, auto))`);
+			if (shouldOutputGridRows) rules.push(`grid-template-rows: repeat(${rowCount}, minmax(1rem, 1fr))`, `aspect-ratio: ${columnCount} / ${rowCount}`);
 			if (rules.length) output = `${appendSelectors(selector)} { ${rules.join("; ")}; }`;
 			if (hasBlockGapSupport && hasBlockGapOverride && blockGapValue) output += getBlockGapCSS(selector, layoutDefinitions, "grid", blockGapValue);
 			return output;
@@ -118719,6 +118719,38 @@ If there's a particular need for this, please submit a feature request at https:
 			return this.columnStart <= rect.columnEnd && this.columnEnd >= rect.columnStart && this.rowStart <= rect.rowEnd && this.rowEnd >= rect.rowStart;
 		}
 	};
+	/**
+	* Reads an item's grid placement, defaulting omitted spans to one. Callers
+	* validate the values according to their placement requirements.
+	*
+	* @param layout The item's layout attributes.
+	*
+	* @return Placement fields with defaults for omitted spans.
+	*/
+	function getGridItemPlacement(layout) {
+		const { columnStart, rowStart, columnSpan = 1, rowSpan = 1 } = layout ?? {};
+		return {
+			columnStart,
+			rowStart,
+			columnSpan,
+			rowSpan
+		};
+	}
+	/**
+	* Gets the row count needed to contain a set of rectangles, respecting the
+	* caller's minimum. The minimum can be the current count to only grow rows,
+	* or a baseline to also allow automatically added rows to shrink.
+	*
+	* @param rects           Grid item rectangles.
+	* @param minimumRowCount Minimum number of rows to retain.
+	*
+	* @return Required row count.
+	*/
+	function getRequiredGridRowCount(rects, minimumRowCount) {
+		let bottomMostRow = -Infinity;
+		for (const rect of rects) bottomMostRow = Math.max(bottomMostRow, rect.rowEnd);
+		return Math.max(minimumRowCount, bottomMostRow);
+	}
 	function getComputedCSS(element, property) {
 		return element.ownerDocument.defaultView.getComputedStyle(element).getPropertyValue(property);
 	}
@@ -119276,25 +119308,20 @@ If there's a particular need for this, please submit a feature request at https:
 				const rowCount = gridLayout.rowCount ?? 3;
 				const occupiedRects = [];
 				for (const clientId of blockOrder) {
-					const { columnStart, rowStart, columnSpan = 1, rowSpan = 1 } = getBlockAttributes(clientId).style?.layout ?? {};
-					if (!columnStart || !rowStart) continue;
-					occupiedRects.push(new GridRect({
-						columnStart,
-						rowStart,
-						columnSpan,
-						rowSpan
-					}));
+					const placement = getGridItemPlacement(getBlockAttributes(clientId).style?.layout);
+					if (!placement.columnStart || !placement.rowStart) continue;
+					occupiedRects.push(new GridRect(placement));
 				}
 				for (const clientId of blockOrder) {
 					const attributes = getBlockAttributes(clientId);
-					const { columnStart, rowStart, columnSpan = 1, rowSpan = 1 } = attributes.style?.layout ?? {};
-					if (columnStart && rowStart) continue;
-					const [newColumnStart, newRowStart] = placeBlock(occupiedRects, columnCount, columnSpan, rowSpan, previouslySelectedBlockRect?.columnEnd, previouslySelectedBlockRect?.rowEnd);
+					const itemLayout = attributes.style?.layout;
+					if (itemLayout?.columnStart && itemLayout.rowStart) continue;
+					const placement = getGridItemPlacement(itemLayout);
+					const [newColumnStart, newRowStart] = placeBlock(occupiedRects, columnCount, placement.columnSpan, placement.rowSpan, previouslySelectedBlockRect?.columnEnd, previouslySelectedBlockRect?.rowEnd);
 					occupiedRects.push(new GridRect({
+						...placement,
 						columnStart: newColumnStart,
-						rowStart: newRowStart,
-						columnSpan,
-						rowSpan
+						rowStart: newRowStart
 					}));
 					updates[clientId] = { style: {
 						...attributes.style,
@@ -119305,8 +119332,7 @@ If there's a particular need for this, please submit a feature request at https:
 						}
 					} };
 				}
-				const bottomMostRow = Math.max(...occupiedRects.map((r) => r.rowEnd));
-				const newRowCount = Math.max(rowCount, bottomMostRow);
+				const newRowCount = getRequiredGridRowCount(occupiedRects, rowCount);
 				if (gridLayout.columnCount !== columnCount || gridLayout.rowCount !== newRowCount) updates[gridClientId] = { layout: {
 					...gridLayout,
 					columnCount,
@@ -119372,6 +119398,507 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 			if (!occupiedRects.some((r) => r.intersectsRect(candidateRect))) return [column, row];
 		}
+	}
+
+// packages/block-editor/build-module/components/grid/use-grid-auto-span.mjs
+	const autoSpanStates = /* @__PURE__ */ new Map();
+	const LAYOUT_STYLE_KEY = /* @__PURE__ */ new Set(["layout"]);
+	const GRID_PLACEMENT_KEYS = /* @__PURE__ */ new Set([
+		"columnStart",
+		"rowStart",
+		"columnSpan",
+		"rowSpan"
+	]);
+	/**
+	* Checks whether two objects are shallowly equal, ignoring selected keys.
+	*
+	* @param first       First object.
+	* @param second      Second object.
+	* @param ignoredKeys Keys to ignore.
+	*
+	* @return Whether the remaining values are equal.
+	*/
+	function areObjectsEqualExcept(first, second, ignoredKeys) {
+		if (first === second) return true;
+		const firstKeys = Object.keys(first ?? {}).filter((key) => !ignoredKeys.has(key));
+		const secondKeys = Object.keys(second ?? {}).filter((key) => !ignoredKeys.has(key));
+		return firstKeys.length === secondKeys.length && firstKeys.every((key) => Object.hasOwn(second ?? {}, key) && Object.is(first?.[key], second?.[key]));
+	}
+	/**
+	* Checks whether the content attributes of a block are unchanged.
+	*
+	* @param first                First set of block attributes.
+	* @param second               Second set of block attributes.
+	* @param contentAttributeKeys Names of attributes with the content role.
+	*
+	* @return Whether the content attributes are equal.
+	*/
+	function areContentAttributesEqual(first, second, contentAttributeKeys) {
+		return contentAttributeKeys.every((key) => Object.is(first[key], second[key]));
+	}
+	/**
+	* Checks whether user-controlled attributes other than content and grid
+	* placement are unchanged.
+	*
+	* @param first                First set of block attributes.
+	* @param second               Second set of block attributes.
+	* @param contentAttributeKeys Names of attributes with the content role.
+	*
+	* @return Whether the user-controlled attributes are equal.
+	*/
+	function areUserControlledAttributesEqual(first, second, contentAttributeKeys) {
+		return areObjectsEqualExcept(first, second, /* @__PURE__ */ new Set(["style", ...contentAttributeKeys])) && areObjectsEqualExcept(first.style, second.style, LAYOUT_STYLE_KEY) && areObjectsEqualExcept(first.style?.layout, second.style?.layout, GRID_PLACEMENT_KEYS);
+	}
+	/**
+	* Checks whether a value is a positive integer.
+	*
+	* @param value Value to check.
+	*
+	* @return Whether the value is a positive integer.
+	*/
+	function isPositiveInteger(value) {
+		return typeof value === "number" && Number.isInteger(value) && value > 0;
+	}
+	/**
+	* Parses a computed CSS length, falling back to zero for a nonnumeric value.
+	*
+	* @param value Computed CSS length.
+	*
+	* @return Parsed pixel value.
+	*/
+	function getCSSPixelValue(value) {
+		const number = parseFloat(value);
+		return Number.isFinite(number) ? number : 0;
+	}
+	/**
+	* Checks whether two grid rectangles have the same position and size.
+	*
+	* @param first  First grid rectangle.
+	* @param second Second grid rectangle.
+	*
+	* @return Whether the rectangles are equal.
+	*/
+	function areGridRectsEqual(first, second) {
+		return first.columnStart === second.columnStart && first.rowStart === second.rowStart && first.columnSpan === second.columnSpan && first.rowSpan === second.rowSpan;
+	}
+	/**
+	* Measures a grid item while it occupies a particular grid rectangle. The
+	* temporary inline styles are restored before the browser paints.
+	*
+	* @param element   Grid item element.
+	* @param rect      Grid rectangle to measure.
+	* @param rowHeight Height of a grid row in pixels.
+	*
+	* @return Grid item dimensions at the requested size.
+	*/
+	function measureElementAtRect(element, rect, rowHeight) {
+		const gridStyle = element.parentElement.style;
+		const restoreStyles = [
+			[
+				element.style,
+				"grid-column",
+				`${rect.columnStart} / span ${rect.columnSpan}`
+			],
+			[
+				element.style,
+				"grid-row",
+				`${rect.rowStart} / span ${rect.rowSpan}`
+			],
+			[
+				gridStyle,
+				"grid-template-rows",
+				`repeat(${rect.rowEnd}, ${rowHeight}px)`
+			],
+			[
+				gridStyle,
+				"grid-auto-rows",
+				`${rowHeight}px`
+			]
+		].map(([style, property, value]) => {
+			const previousValue = style.getPropertyValue(property);
+			const previousPriority = style.getPropertyPriority(property);
+			style.setProperty(property, value);
+			return () => {
+				if (previousValue) style.setProperty(property, previousValue, previousPriority);
+				else style.removeProperty(property);
+			};
+		});
+		let dimensions;
+		try {
+			dimensions = {
+				offsetWidth: element.offsetWidth,
+				offsetHeight: element.offsetHeight,
+				scrollWidth: element.scrollWidth,
+				scrollHeight: element.scrollHeight
+			};
+		} finally {
+			restoreStyles.forEach((restore) => restore());
+		}
+		return dimensions;
+	}
+	/**
+	* Expands an item's column span, preferring a collision-free placement that
+	* stays as close as possible to its current position.
+	*
+	* @param childId     Grid item's client ID.
+	* @param rect        Grid item's current rectangle.
+	* @param neededSpan  Minimum column span needed by the item.
+	* @param columnCount Number of columns in the grid.
+	* @param rects       Rectangles occupied by grid items, keyed by client ID.
+	*
+	* @return Expanded grid item rectangle.
+	*/
+	function getExpandedColumnRect(childId, rect, neededSpan, columnCount, rects) {
+		const columnSpan = Math.min(Math.max(rect.columnSpan, neededSpan), columnCount);
+		const maxGridStart = columnCount - columnSpan + 1;
+		const preferredStart = Math.max(1, Math.min(rect.columnStart, maxGridStart));
+		const minStart = Math.max(1, rect.columnEnd - columnSpan + 1);
+		const preferredRect = new GridRect({
+			columnStart: preferredStart,
+			rowStart: rect.rowStart,
+			columnSpan,
+			rowSpan: rect.rowSpan
+		});
+		if (preferredStart <= minStart) return preferredRect;
+		for (let columnStart = preferredStart; columnStart >= minStart; columnStart--) {
+			const candidate = new GridRect({
+				columnStart,
+				rowStart: rect.rowStart,
+				columnSpan,
+				rowSpan: rect.rowSpan
+			});
+			let intersectsOtherItem = false;
+			for (const [otherId, otherRect] of rects) if (otherId !== childId && otherRect.intersectsRect(candidate)) {
+				intersectsOtherItem = true;
+				break;
+			}
+			if (!intersectsOtherItem) return candidate;
+		}
+		return preferredRect;
+	}
+	/**
+	* In a manual grid, adjusts column and row spans to fit each item's content,
+	* while retaining any extra spans added by the user. Automatically added
+	* spans may overlap other items. Column spans are capped at the column count
+	* and may shift left to stay within the grid, while growing past the last row
+	* adds rows.
+	*
+	* @param options
+	* @param options.clientId The grid block's client ID.
+	*/
+	function useGridAutoSpan({ clientId }) {
+		const isManualPlacement = (0, _wordpress_data.useSelect)((select) => !!select(store).getBlockAttributes(clientId)?.layout?.isManualPlacement, [clientId]);
+		const gridElement = useBlockElement(clientId);
+		const childBlocks = (0, _wordpress_data.useSelect)((select) => select(store).getBlocks(clientId), [clientId]);
+		const { getBlockAttributes, getBlockName, getBlockOrder, getBlocks } = (0, _wordpress_data.useSelect)(store);
+		const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(store);
+		const refreshRef = (0, _wordpress_element.useRef)(void 0);
+		(0, _wordpress_element.useEffect)(() => {
+			let autoSpanState = autoSpanStates.get(clientId);
+			if (!autoSpanState) {
+				autoSpanState = { items: /* @__PURE__ */ new Map() };
+				autoSpanStates.set(clientId, autoSpanState);
+			}
+			if (!isManualPlacement || !gridElement) {
+				if (!isManualPlacement) autoSpanStates.delete(clientId);
+				return;
+			}
+			const view = gridElement.ownerDocument.defaultView;
+			if (!view) return;
+			/**
+			* Returns the grid's direct block element children.
+			*
+			* @return Grid item elements.
+			*/
+			const getItemElements = () => Array.from(gridElement.children).filter((child) => child instanceof view.HTMLElement && child.hasAttribute("data-block"));
+			const resizeDimensions = /* @__PURE__ */ new Map();
+			/**
+			* Adjusts automatic spans to the current content and grid size.
+			*
+			* @param allowShrink Whether content changed since the previous check.
+			*
+			* @return Whether another check is needed after a span change.
+			*/
+			const adjustItemSpans = (allowShrink) => {
+				const { rowCount: rawRowCount } = getBlockAttributes(clientId)?.layout ?? {};
+				if (!isPositiveInteger(rawRowCount)) return false;
+				const rowCount = rawRowCount;
+				const computedStyle = view.getComputedStyle(gridElement);
+				const gridWidth = gridElement.clientWidth - getCSSPixelValue(computedStyle.paddingLeft) - getCSSPixelValue(computedStyle.paddingRight);
+				if (gridWidth <= 0) return false;
+				const rowGap = getCSSPixelValue(computedStyle.rowGap);
+				const columnGap = getCSSPixelValue(computedStyle.columnGap);
+				const gridRowTracks = getGridTracks(computedStyle.gridTemplateRows, rowGap);
+				const gridColumnTracks = getGridTracks(computedStyle.gridTemplateColumns, columnGap);
+				const rowHeight = gridRowTracks[0].end - gridRowTracks[0].start;
+				const columnWidth = gridColumnTracks[0].end - gridColumnTracks[0].start;
+				if (!Number.isFinite(rowHeight) || !Number.isFinite(columnWidth) || rowHeight <= 0 || columnWidth <= 0) return false;
+				const columnCount = gridColumnTracks.length;
+				const rowPitch = rowHeight + rowGap;
+				const columnPitch = columnWidth + columnGap;
+				const rects = /* @__PURE__ */ new Map();
+				const itemLayouts = /* @__PURE__ */ new Map();
+				for (const childId of getBlockOrder(clientId)) {
+					const attributes = getBlockAttributes(childId);
+					const placement = getGridItemPlacement(attributes?.style?.layout);
+					if (isPositiveInteger(placement.columnStart) && isPositiveInteger(placement.rowStart)) {
+						if (!isPositiveInteger(placement.columnSpan)) placement.columnSpan = 1;
+						if (!isPositiveInteger(placement.rowSpan)) placement.rowSpan = 1;
+						rects.set(childId, new GridRect(placement));
+						itemLayouts.set(childId, attributes);
+					}
+				}
+				for (const childId of autoSpanState.items.keys()) if (!rects.has(childId)) autoSpanState.items.delete(childId);
+				let autoSpanRows = autoSpanState.rows;
+				if (!autoSpanRows || autoSpanRows.applied !== rowCount) {
+					autoSpanRows = {
+						base: rowCount,
+						applied: rowCount
+					};
+					autoSpanState.rows = autoSpanRows;
+				}
+				const updates = {};
+				let needsFollowUpCheck = false;
+				for (const element of getItemElements()) {
+					const childId = element.getAttribute("data-block");
+					if (!childId) continue;
+					const rect = rects.get(childId);
+					const attributes = itemLayouts.get(childId);
+					if (!rect || !attributes) continue;
+					const itemLayout = attributes.style?.layout ?? {};
+					const innerBlocks = getBlocks(childId);
+					let itemState = autoSpanState.items.get(childId);
+					let renderedAttributesChanged = false;
+					if (itemState && itemState.attributes !== attributes) {
+						const blockName = getBlockName(childId);
+						const contentAttributeKeys = blockName ? (0, _wordpress_blocks.getBlockAttributesNamesByRole)(blockName, "content") : [];
+						renderedAttributesChanged = !areContentAttributesEqual(itemState.attributes, attributes, contentAttributeKeys) || !areUserControlledAttributesEqual(itemState.attributes, attributes, contentAttributeKeys);
+					}
+					renderedAttributesChanged ||= !!itemState && itemState.innerBlocks !== innerBlocks;
+					const canShrink = allowShrink || renderedAttributesChanged;
+					let columnSpanChanged = false;
+					let rowSpanChanged = false;
+					if (itemState && !areGridRectsEqual(rect, itemState.appliedRect)) {
+						columnSpanChanged = rect.columnSpan !== itemState.appliedRect.columnSpan;
+						rowSpanChanged = rect.rowSpan !== itemState.appliedRect.rowSpan;
+						itemState.userColumnStart = rect.columnStart;
+						itemState.userRowStart = rect.rowStart;
+						if (columnSpanChanged) itemState.columnSpanWasImplicit = !isPositiveInteger(itemLayout.columnSpan);
+						if (rowSpanChanged) itemState.rowSpanWasImplicit = !isPositiveInteger(itemLayout.rowSpan);
+					}
+					const userColumnStart = itemState?.userColumnStart ?? rect.columnStart;
+					const userRowStart = itemState?.userRowStart ?? rect.rowStart;
+					const oneCellRect = new GridRect({
+						columnStart: userColumnStart,
+						rowStart: userRowStart,
+						columnSpan: 1,
+						rowSpan: 1
+					});
+					const oneCellDimensions = measureElementAtRect(element, oneCellRect, rowHeight);
+					const capturedDimensions = resizeDimensions.get(childId);
+					const dimensionsBeforeResponsiveReflow = capturedDimensions?.attributes === attributes ? capturedDimensions : void 0;
+					resizeDimensions.delete(childId);
+					const contentWidth = Math.max(oneCellDimensions.offsetWidth, oneCellDimensions.scrollWidth, rect.columnSpan === 1 ? dimensionsBeforeResponsiveReflow?.scrollWidth ?? 0 : 0);
+					const measuredAutoColumnSpan = Math.min(columnCount, contentWidth > columnWidth + 1 ? Math.ceil((contentWidth + columnGap) / columnPitch) : 1);
+					const gridSizeChanged = itemState && (Math.abs(itemState.gridWidth - gridWidth) > 1 || Math.abs(itemState.columnWidth - columnWidth) > 1 || Math.abs(itemState.rowHeight - rowHeight) > 1);
+					let preserveInitialColumnSpan = itemState?.preserveInitialColumnSpan ?? isPositiveInteger(itemLayout.columnSpan);
+					let preserveInitialRowSpan = itemState?.preserveInitialRowSpan ?? isPositiveInteger(itemLayout.rowSpan);
+					let hasUserColumnSpanOverride = itemState?.hasUserColumnSpanOverride ?? false;
+					let hasUserRowSpanOverride = itemState?.hasUserRowSpanOverride ?? false;
+					let preserveUserResize = itemState?.preserveUserResize ?? false;
+					hasUserColumnSpanOverride ||= columnSpanChanged;
+					hasUserRowSpanOverride ||= rowSpanChanged;
+					preserveUserResize ||= columnSpanChanged || rowSpanChanged;
+					if (renderedAttributesChanged) {
+						hasUserColumnSpanOverride = false;
+						hasUserRowSpanOverride = false;
+					}
+					if (renderedAttributesChanged || gridSizeChanged) {
+						preserveInitialColumnSpan = false;
+						preserveInitialRowSpan = false;
+						preserveUserResize = false;
+					} else if (allowShrink) preserveUserResize = false;
+					const preserveColumnSpan = hasUserColumnSpanOverride || preserveInitialColumnSpan || preserveUserResize;
+					const preserveRowSpan = hasUserRowSpanOverride || preserveInitialRowSpan || preserveUserResize;
+					const autoColumnSpan = itemState && !canShrink && !gridSizeChanged ? Math.max(itemState.autoColumnSpan, measuredAutoColumnSpan) : measuredAutoColumnSpan;
+					const extraColumnSpan = columnSpanChanged ? Math.max(0, rect.columnSpan - autoColumnSpan) : itemState?.extraColumnSpan ?? Math.max(0, rect.columnSpan - autoColumnSpan);
+					const desiredColumnSpan = Math.min(columnCount, autoColumnSpan + extraColumnSpan);
+					const desiredWidthRect = preserveColumnSpan ? new GridRect({
+						columnStart: rect.columnStart,
+						rowStart: userRowStart,
+						columnSpan: rect.columnSpan,
+						rowSpan: 1
+					}) : getExpandedColumnRect(childId, oneCellRect, desiredColumnSpan, columnCount, rects);
+					const desiredWidthDimensions = areGridRectsEqual(oneCellRect, desiredWidthRect) ? oneCellDimensions : measureElementAtRect(element, desiredWidthRect, rowHeight);
+					const contentHeight = Math.max(desiredWidthDimensions.offsetHeight, desiredWidthDimensions.scrollHeight, rect.columnSpan === desiredWidthRect.columnSpan && rect.rowSpan === 1 ? dimensionsBeforeResponsiveReflow?.scrollHeight ?? 0 : 0);
+					let measuredAutoRowSpan = contentHeight > rowHeight + 1 ? Math.ceil((contentHeight + rowGap) / rowPitch) : 1;
+					if (measuredAutoRowSpan > 1) {
+						const expandedDimensions = measureElementAtRect(element, new GridRect({
+							columnStart: desiredWidthRect.columnStart,
+							rowStart: userRowStart,
+							columnSpan: desiredWidthRect.columnSpan,
+							rowSpan: measuredAutoRowSpan
+						}), rowHeight);
+						const expandedOverflow = Math.max(expandedDimensions.offsetHeight, expandedDimensions.scrollHeight) - (measuredAutoRowSpan * rowPitch - rowGap);
+						if (expandedOverflow > 1 && expandedOverflow >= contentHeight - rowHeight - 1) measuredAutoRowSpan = 1;
+					}
+					const autoRowSpan = itemState && !canShrink && !gridSizeChanged && desiredWidthRect.columnSpan === itemState.appliedRect.columnSpan ? Math.max(itemState.autoRowSpan, measuredAutoRowSpan) : measuredAutoRowSpan;
+					const extraRowSpan = rowSpanChanged ? Math.max(0, rect.rowSpan - autoRowSpan) : itemState?.extraRowSpan ?? Math.max(0, rect.rowSpan - autoRowSpan);
+					const desiredRect = new GridRect({
+						columnStart: desiredWidthRect.columnStart,
+						rowStart: userRowStart,
+						columnSpan: desiredWidthRect.columnSpan,
+						rowSpan: preserveRowSpan ? rect.rowSpan : autoRowSpan + extraRowSpan
+					});
+					if (!itemState) {
+						itemState = {
+							appliedRect: rect,
+							attributes,
+							innerBlocks,
+							userColumnStart,
+							userRowStart,
+							extraColumnSpan,
+							extraRowSpan,
+							autoColumnSpan,
+							autoRowSpan,
+							gridWidth,
+							columnWidth,
+							rowHeight,
+							hasUserColumnSpanOverride: preserveInitialColumnSpan && contentWidth > rect.columnSpan * columnPitch - columnGap + 1,
+							hasUserRowSpanOverride: preserveInitialRowSpan && rect.rowSpan < measuredAutoRowSpan,
+							preserveInitialColumnSpan,
+							preserveInitialRowSpan,
+							preserveUserResize,
+							columnSpanWasImplicit: !isPositiveInteger(itemLayout.columnSpan),
+							rowSpanWasImplicit: !isPositiveInteger(itemLayout.rowSpan)
+						};
+						autoSpanState.items.set(childId, itemState);
+					} else {
+						itemState.attributes = attributes;
+						itemState.innerBlocks = innerBlocks;
+						itemState.extraColumnSpan = extraColumnSpan;
+						itemState.extraRowSpan = extraRowSpan;
+						itemState.autoColumnSpan = autoColumnSpan;
+						itemState.autoRowSpan = autoRowSpan;
+						itemState.gridWidth = gridWidth;
+						itemState.columnWidth = columnWidth;
+						itemState.rowHeight = rowHeight;
+						itemState.hasUserColumnSpanOverride = hasUserColumnSpanOverride;
+						itemState.hasUserRowSpanOverride = hasUserRowSpanOverride;
+						itemState.preserveInitialColumnSpan = preserveInitialColumnSpan;
+						itemState.preserveInitialRowSpan = preserveInitialRowSpan;
+						itemState.preserveUserResize = preserveUserResize;
+					}
+					if (areGridRectsEqual(desiredRect, rect)) {
+						itemState.appliedRect = rect;
+						continue;
+					}
+					rects.set(childId, desiredRect);
+					itemState.appliedRect = desiredRect;
+					needsFollowUpCheck = true;
+					updates[childId] = { style: {
+						...attributes.style,
+						layout: {
+							...attributes.style?.layout,
+							columnStart: desiredRect.columnStart,
+							columnSpan: desiredRect.columnSpan === 1 && itemState.columnSpanWasImplicit ? void 0 : desiredRect.columnSpan,
+							rowSpan: desiredRect.rowSpan === 1 && itemState.rowSpanWasImplicit ? void 0 : desiredRect.rowSpan
+						}
+					} };
+				}
+				const desiredRowCount = getRequiredGridRowCount(rects.values(), autoSpanRows.base);
+				if (desiredRowCount !== rowCount) {
+					updates[clientId] = { layout: {
+						...getBlockAttributes(clientId).layout,
+						rowCount: desiredRowCount
+					} };
+					autoSpanRows.applied = desiredRowCount;
+					needsFollowUpCheck = true;
+				}
+				const updatedIds = Object.keys(updates);
+				if (updatedIds.length) {
+					__unstableMarkNextChangeAsNotPersistent();
+					updateBlockAttributes(updatedIds, updates, true);
+				}
+				return needsFollowUpCheck;
+			};
+			let frame;
+			let shouldAllowShrink = false;
+			/**
+			* Schedules one overflow check for the next animation frame.
+			*
+			* @param allowShrink Whether the check may shrink automatic spans.
+			*/
+			const scheduleCheck = (allowShrink = false) => {
+				shouldAllowShrink ||= allowShrink;
+				if (frame === void 0) frame = view.requestAnimationFrame(() => {
+					frame = void 0;
+					const allowScheduledShrink = shouldAllowShrink;
+					shouldAllowShrink = false;
+					if (adjustItemSpans(allowScheduledShrink)) scheduleCheck();
+				});
+			};
+			const mutationObserver = new view.MutationObserver(() => scheduleCheck(true));
+			mutationObserver.observe(gridElement, {
+				childList: true,
+				characterData: true,
+				subtree: true
+			});
+			const handleImageLoad = (event) => {
+				if (event.target instanceof view.HTMLImageElement) scheduleCheck(true);
+			};
+			gridElement.addEventListener("load", handleImageLoad, true);
+			const resizeObserver = new view.ResizeObserver((entries) => {
+				for (const { target } of entries) {
+					if (!(target instanceof view.HTMLElement) || target.parentElement !== gridElement) continue;
+					const childId = target.getAttribute("data-block");
+					if (childId) resizeDimensions.set(childId, {
+						attributes: getBlockAttributes(childId),
+						scrollWidth: target.scrollWidth,
+						scrollHeight: target.scrollHeight
+					});
+				}
+				scheduleCheck();
+			});
+			resizeObserver.observe(gridElement);
+			const observedItems = /* @__PURE__ */ new Set();
+			const refresh = () => {
+				const itemElements = new Set(getItemElements());
+				for (const element of observedItems) if (!itemElements.has(element)) {
+					resizeObserver.unobserve(element);
+					observedItems.delete(element);
+					const childId = element.getAttribute("data-block");
+					if (childId) resizeDimensions.delete(childId);
+				}
+				for (const element of itemElements) if (!observedItems.has(element)) {
+					resizeObserver.observe(element);
+					observedItems.add(element);
+				}
+				scheduleCheck();
+			};
+			refreshRef.current = refresh;
+			refresh();
+			return () => {
+				refreshRef.current = void 0;
+				mutationObserver.disconnect();
+				resizeObserver.disconnect();
+				gridElement.removeEventListener("load", handleImageLoad, true);
+				if (frame !== void 0) view.cancelAnimationFrame(frame);
+			};
+		}, [
+			clientId,
+			gridElement,
+			isManualPlacement,
+			getBlockAttributes,
+			getBlockName,
+			getBlockOrder,
+			getBlocks,
+			updateBlockAttributes,
+			__unstableMarkNextChangeAsNotPersistent
+		]);
+		(0, _wordpress_element.useEffect)(() => {
+			refreshRef.current?.();
+		}, [childBlocks]);
 	}
 
 // packages/block-editor/build-module/hooks/layout-child.mjs
@@ -120029,6 +120556,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/block-editor/build-module/hooks/grid-visualizer.mjs
 	function GridLayoutSync(props) {
 		useGridLayoutSync(props);
+		useGridAutoSpan(props);
 	}
 	function GridTools({ clientId, layout }) {
 		const { isVisible, blockVisibility, deviceType, viewportSettings } = (0, _wordpress_data.useSelect)((select) => {
