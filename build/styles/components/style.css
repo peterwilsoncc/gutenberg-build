@@ -337,15 +337,15 @@
   text-decoration: none;
   text-shadow: none;
 }
-.components-button.is-primary:hover:not(:disabled) {
+.components-button.is-primary:hover:not(:disabled, [aria-disabled=true], .is-pressed) {
   background-color: var(--_wp-components-button-background-strong-active);
   color: var(--_wp-components-button-foreground-strong-active);
 }
-.components-button.is-primary:active:not(:disabled) {
+.components-button.is-primary:active:not(:disabled, [aria-disabled=true], .is-pressed) {
   background-color: var(--_wp-components-button-background-strong-active);
   color: var(--_wp-components-button-foreground-strong-active);
 }
-.components-button.is-primary:disabled, .components-button.is-primary:disabled:active:enabled, .components-button.is-primary[aria-disabled=true], .components-button.is-primary[aria-disabled=true]:enabled, .components-button.is-primary[aria-disabled=true]:active:enabled {
+.components-button.is-primary:disabled, .components-button.is-primary[aria-disabled=true] {
   color: var(--_wp-components-button-foreground-strong-disabled);
   background: var(--_wp-components-button-background-strong-disabled);
 }
@@ -367,7 +367,7 @@
   --_wp-components-button-foreground-on-active: var(--_wp-components-button-foreground-active);
   --_wp-components-button-foreground-busy: var(--_wp-components-button-foreground-active);
 }
-.components-button.is-secondary:disabled, .components-button.is-secondary[aria-disabled=true], .components-button.is-secondary[aria-disabled=true]:hover, .components-button.is-tertiary:disabled, .components-button.is-tertiary[aria-disabled=true], .components-button.is-tertiary[aria-disabled=true]:hover {
+.components-button.is-secondary:disabled, .components-button.is-secondary[aria-disabled=true], .components-button.is-tertiary:disabled, .components-button.is-tertiary[aria-disabled=true] {
   color: var(--wpds-color-foreground-interactive-brand-disabled, #8b8b8b);
   background: transparent;
   transform: none;
@@ -399,7 +399,7 @@
 .components-button.is-secondary:focus:not(:active) {
   border-color: var(--_wp-components-button-stroke);
 }
-.components-button.is-secondary:disabled:not(:focus), .components-button.is-secondary[aria-disabled=true]:not(:focus), .components-button.is-secondary[aria-disabled=true]:hover:not(:focus) {
+.components-button.is-secondary:disabled:not(:focus), .components-button.is-secondary[aria-disabled=true]:not(:focus) {
   border-color: var(--wpds-color-stroke-interactive-neutral-disabled, #dbdbdb);
 }
 .components-button {
@@ -566,18 +566,27 @@ p + .components-button.is-tertiary {
 .components-button.has-icon:not(.has-text) .dashicon {
   margin-inline: -1px;
 }
-.components-button.is-pressed, .components-button.is-pressed:hover {
-  color: var(--wp-components-color-foreground-inverted, var(--wpds-color-background-surface-neutral, #fcfcfc));
+.components-button.is-pressed {
+  --_wp-components-button-pressed-background: var(--wpds-color-background-interactive-neutral-strong-active, #1e1e1e);
 }
-.components-button.is-pressed:not(:disabled, [aria-disabled=true]), .components-button.is-pressed:hover:not(:disabled, [aria-disabled=true]) {
-  background: var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e));
+.components-button.is-pressed, .components-button.is-pressed:hover, .components-button.is-pressed.is-busy {
+  color: var(--wpds-color-foreground-interactive-neutral-strong-active, #f0f0f0);
+  background: var(--_wp-components-button-pressed-background);
 }
-.components-button.is-pressed:disabled, .components-button.is-pressed[aria-disabled=true] {
-  color: #949494;
+.components-button.is-pressed.is-secondary:not(:disabled, [aria-disabled=true]) {
+  border-color: var(--wpds-color-stroke-interactive-neutral-active, #6c6c6c);
 }
-.components-button.is-pressed:disabled:not(.is-primary):not(.is-secondary):not(.is-tertiary), .components-button.is-pressed[aria-disabled=true]:not(.is-primary):not(.is-secondary):not(.is-tertiary) {
-  color: var(--wp-components-color-foreground-inverted, var(--wpds-color-background-surface-neutral, #fcfcfc));
-  background: #949494;
+.components-button.is-pressed:is(:disabled, [aria-disabled=true]) {
+  --_wp-components-button-pressed-background: var(--wpds-color-background-interactive-neutral-strong-disabled, #e5e5e5);
+}
+.components-button.is-pressed:is(:disabled, [aria-disabled=true]), .components-button.is-pressed:is(:disabled, [aria-disabled=true]).is-busy {
+  color: var(--wpds-color-foreground-interactive-neutral-strong-disabled, #8b8b8b);
+  background: var(--_wp-components-button-pressed-background);
+}
+.components-button.is-pressed:is(:disabled, [aria-disabled=true]).is-busy {
+  --_wp-components-button-pressed-background:
+  	linear-gradient(-45deg, transparent 33%, var(--wpds-color-background-interactive-neutral-disabled, #fff) 33% 70%, transparent 70%)
+  	0 0 / 100px 100% var(--wpds-color-background-interactive-neutral-strong-disabled, #e5e5e5);
 }
 @media (forced-colors: active) {
   .components-button.is-pressed {
@@ -3721,17 +3730,15 @@ body.lockscroll {
   margin-left: auto;
   margin-right: auto;
 }
-.components-accessible-toolbar .components-button.is-pressed,
-.components-toolbar .components-button.is-pressed {
-  background: transparent;
-}
-.components-accessible-toolbar .components-button.is-pressed:hover,
-.components-toolbar .components-button.is-pressed:hover {
+.components-accessible-toolbar .components-button.is-pressed, .components-accessible-toolbar .components-button.is-pressed:is(:disabled, [aria-disabled=true]),
+.components-toolbar .components-button.is-pressed,
+.components-toolbar .components-button.is-pressed:is(:disabled, [aria-disabled=true]) {
   background: transparent;
 }
 .components-accessible-toolbar .components-button.is-pressed::before,
 .components-toolbar .components-button.is-pressed::before {
-  background: var(--wp-components-color-foreground, var(--wpds-color-foreground-content-neutral, #1e1e1e));
+  background: var(--_wp-components-button-pressed-background);
+  background-position: inherit;
 }
 @media (forced-colors: active) {
   .components-accessible-toolbar .components-button.is-pressed,
@@ -3788,14 +3795,6 @@ body.lockscroll {
   position: absolute;
   right: 8px;
   bottom: 10px;
-}
-.components-toolbar__control.components-button:not(:disabled).is-pressed[data-subscript]::after {
-  color: #fff;
-}
-@media (forced-colors: active) {
-  .components-toolbar__control.components-button:not(:disabled).is-pressed[data-subscript]::after {
-    color: inherit;
-  }
 }
 
 .components-toolbar-group {

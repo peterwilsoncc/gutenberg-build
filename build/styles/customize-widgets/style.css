@@ -195,12 +195,21 @@ body.admin-color-fresh {
 }
 .customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed,
 .customize-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed {
-  background: #1e1e1e;
+  background: var(--wpds-color-background-interactive-neutral-strong-active, #1e1e1e);
+}
+.customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed:is(:disabled, [aria-disabled=true]),
+.customize-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed:is(:disabled, [aria-disabled=true]) {
+  background: var(--wpds-color-background-interactive-neutral-strong-disabled, #e5e5e5);
 }
 @media (forced-colors: active) {
   .customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed,
   .customize-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed {
     background: SelectedItem !important;
+  }
+  .customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed:disabled, .customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed[aria-disabled=true],
+  .customize-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed:disabled,
+  .customize-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed[aria-disabled=true] {
+    background: GrayText !important;
   }
 }
 .customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon:focus:not(:active),
@@ -214,7 +223,6 @@ body.admin-color-fresh {
 }
 .customize-widgets-header-toolbar .customize-widgets-header-toolbar__inserter-toggle.components-button.has-icon {
   border-radius: 2px;
-  color: #fff;
   margin: 12px 0 12px auto;
 }
 @media not (prefers-reduced-motion) {

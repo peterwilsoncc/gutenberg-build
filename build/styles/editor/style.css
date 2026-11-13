@@ -6041,7 +6041,11 @@ mark.wp-note {
 }
 .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed,
 .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed {
-  background: #1e1e1e;
+  background: var(--wpds-color-background-interactive-neutral-strong-active, #1e1e1e);
+}
+.editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed:is(:disabled, [aria-disabled=true]),
+.editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed:is(:disabled, [aria-disabled=true]) {
+  background: var(--wpds-color-background-interactive-neutral-strong-disabled, #e5e5e5);
 }
 @media (forced-colors: active) {
   .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed,

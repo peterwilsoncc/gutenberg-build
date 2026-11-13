@@ -716,7 +716,11 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
 }
 .edit-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed,
 .edit-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed {
-  background: #1e1e1e;
+  background: var(--wpds-color-background-interactive-neutral-strong-active, #1e1e1e);
+}
+.edit-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed:is(:disabled, [aria-disabled=true]),
+.edit-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed:is(:disabled, [aria-disabled=true]) {
+  background: var(--wpds-color-background-interactive-neutral-strong-disabled, #e5e5e5);
 }
 @media (forced-colors: active) {
   .edit-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed,
