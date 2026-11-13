@@ -3063,7 +3063,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 }
 
 .components-resizable-box__corner-handle {
-  z-index: 2;
+  z-index: 3;
 }
 
 .components-resizable-box__side-handle.components-resizable-box__handle-top,

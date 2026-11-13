@@ -72710,7 +72710,8 @@ The screen with id ${screen.id} will not be added.`);
 		top: void 0,
 		right: void 0,
 		bottom: void 0,
-		left: void 0
+		left: void 0,
+		zIndex: void 0
 	};
 	const HANDLE_STYLES = {
 		top: HANDLE_STYLES_OVERRIDES,
