@@ -121050,7 +121050,7 @@ If there's a particular need for this, please submit a feature request at https:
 						label: block.title,
 						onChange: () => {
 							if (!checked) {
-								const relativePosition = block.blockHooks[name];
+								const relativePosition = block.blockHooks?.[name];
 								insertBlockIntoDesignatedLocation((0, _wordpress_blocks.createBlock)(block.name), relativePosition);
 								return;
 							}
