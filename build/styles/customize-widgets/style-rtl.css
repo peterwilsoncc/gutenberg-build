@@ -174,8 +174,8 @@ body.admin-color-fresh {
   display: flex;
   justify-content: flex-end;
   margin: -15px -12px 0 -12px;
-  background: #f0f0f1;
-  border-bottom: 1px solid #e0e0e0;
+  background: var(--wpds-color-background-surface-neutral, #fcfcfc);
+  border-bottom: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
   z-index: 8;
 }
 

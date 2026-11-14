@@ -621,7 +621,7 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
   justify-content: space-between;
   height: 64px;
   overflow: auto;
-  background: #fff;
+  background: var(--wpds-color-background-surface-neutral-strong, #fff);
 }
 @media (min-width: 600px) {
   .edit-widgets-header {
@@ -654,7 +654,7 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
   content: "";
   width: 1px;
   height: 24px;
-  background-color: #ddd;
+  background-color: var(--wpds-color-stroke-surface-neutral, #dbdbdb);
   margin-top: 4px;
   margin-left: 8px;
 }
