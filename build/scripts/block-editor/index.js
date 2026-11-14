@@ -13961,6 +13961,16 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 
 // packages/block-editor/build-module/layouts/utils.mjs
 /**
+	* Returns a block's layout support settings, including the legacy support key.
+	*
+	* @param blockName The block type name.
+	* @return The layout support settings, if available.
+	*/
+	function getLayoutBlockSupport(blockName) {
+		if (!blockName) return;
+		return (0, _wordpress_blocks.getBlockSupport)(blockName, "layout") || (0, _wordpress_blocks.getBlockSupport)(blockName, "__experimentalLayout");
+	}
+	/**
 	* Utility to generate the proper CSS selector for layout styles.
 	*
 	* @param selectors CSS selector, also supports multiple comma-separated selectors.
@@ -23864,7 +23874,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			}
 		};
 	};
-	function isRTL$24(element) {
+	function isRTL$25(element) {
 		return getComputedStyle$1(element).direction === "rtl";
 	}
 	const platform = {
@@ -23877,9 +23887,9 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		getDimensions,
 		getScale: getScale$1,
 		isElement: isElement$1,
-		isRTL: isRTL$24
+		isRTL: isRTL$25
 	};
-	function rectsAreEqual(a, b) {
+	function rectsAreEqual$1(a, b) {
 		return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 	}
 	function observeMove(element, onMove, ancestorResize) {
@@ -23911,7 +23921,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			let isFirstUpdate = true;
 			function handleObserve(entries) {
 				const ratio = entries[0].intersectionRatio;
-				if (!rectsAreEqual(elementRectForRootMargin, element.getBoundingClientRect())) return refresh();
+				if (!rectsAreEqual$1(elementRectForRootMargin, element.getBoundingClientRect())) return refresh();
 				if (ratio !== threshold) {
 					if (!isFirstUpdate) return refresh();
 					if (!ratio) timeoutId = setTimeout(() => {
@@ -23981,7 +23991,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		if (animationFrame) frameLoop();
 		function frameLoop() {
 			const nextRefRect = getBoundingClientRect(reference);
-			if (prevRefRect && !rectsAreEqual(prevRefRect, nextRefRect)) update();
+			if (prevRefRect && !rectsAreEqual$1(prevRefRect, nextRefRect)) update();
 			prevRefRect = nextRefRect;
 			frameId = requestAnimationFrame(frameLoop);
 		}
@@ -90734,6 +90744,479 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [clientId]);
 	}
 
+// packages/block-editor/build-module/hooks/block-style-state.mjs
+	const DEFAULT_STATE_VALUE$2 = "default";
+	const DEFAULT_BLOCK_STYLE_STATE = {
+		viewport: DEFAULT_STATE_VALUE$2,
+		pseudo: DEFAULT_STATE_VALUE$2
+	};
+	const BlockStyleStateContext = (0, _wordpress_element.createContext)(DEFAULT_BLOCK_STYLE_STATE);
+	const BlockStyleStateProvider = BlockStyleStateContext.Provider;
+	/**
+	* Returns the current block style state.
+	*
+	* @return The current block style state.
+	*/
+	function useBlockStyleState() {
+		return (0, _wordpress_element.useContext)(BlockStyleStateContext);
+	}
+	/**
+	* Returns true when a viewport style state is selected.
+	*
+	* @param selectedState Selected block style state.
+	* @return Whether a viewport state is selected.
+	*/
+	function hasViewportBlockStyleState(selectedState) {
+		return !!selectedState?.viewport && selectedState.viewport !== DEFAULT_STATE_VALUE$2;
+	}
+	/**
+	* Returns true when a pseudo style state is selected.
+	*
+	* @param selectedState Selected block style state.
+	* @return Whether a pseudo state is selected.
+	*/
+	function hasPseudoBlockStyleState(selectedState) {
+		return !!selectedState?.pseudo && selectedState.pseudo !== DEFAULT_STATE_VALUE$2;
+	}
+	/**
+	* Returns true when the default style state is selected.
+	*
+	* @param selectedState Selected block style state.
+	* @return Whether the default style state is selected.
+	*/
+	function isDefaultBlockStyleState(selectedState) {
+		return !hasViewportBlockStyleState(selectedState) && !hasPseudoBlockStyleState(selectedState);
+	}
+	/**
+	* Returns the style object path for the selected block style state.
+	*
+	* @param selectedState Selected block style state.
+	* @return Object path for the selected state styles.
+	*/
+	function getStyleStatePath(selectedState) {
+		if (isDefaultBlockStyleState(selectedState)) return [];
+		return [selectedState.viewport, selectedState.pseudo].filter((state) => state && state !== DEFAULT_STATE_VALUE$2);
+	}
+	/**
+	* Returns the style object for the selected block style state.
+	*
+	* @param {Object} style         The block style object.
+	* @param {Object} selectedState Selected block style state.
+	* @return {Object} The style object for the selected state, if found.
+	*
+	* @example
+	* ```js
+	* const state = { viewport: '@mobile' };
+	* const stateStyle = getStyleForState( attributes.style, state ) || {};
+	* ```
+	*/
+	function getStyleForState(style, selectedState) {
+		const path = getStyleStatePath(selectedState);
+		if (!path.length) return style;
+		return getValueFromObjectPath(style, path);
+	}
+	/**
+	* Returns a style object with the selected block style state updated.
+	*
+	* @param {Object} style         The block style object.
+	* @param {Object} selectedState Selected block style state.
+	* @param {Object} newStyle      New style for the selected state.
+	* @return {Object} The updated style object.
+	*
+	* @example
+	* ```js
+	* const state = { viewport: '@mobile' };
+	* const stateStyle = getStyleForState( attributes.style, state ) || {};
+	* setAttributes( {
+	* 	style: setStyleForState( attributes.style, state, {
+	* 		...stateStyle,
+	* 		dimensions: { ...stateStyle.dimensions, minHeight: '50vh' },
+	* 	} ),
+	* } );
+	* ```
+	*/
+	function setStyleForState(style, selectedState, newStyle) {
+		const path = getStyleStatePath(selectedState);
+		if (!path.length) return cleanEmptyObject(newStyle);
+		return cleanEmptyObject(setImmutably(style, path, newStyle));
+	}
+	function scopeResetAllFilterToState(selectedState, resetAllFilter) {
+		if (!resetAllFilter || isDefaultBlockStyleState(selectedState)) return resetAllFilter;
+		return (attributes) => {
+			const updatedStateAttributes = resetAllFilter({ style: getStyleForState(attributes?.style, selectedState) || {} });
+			const updatedStateStyle = updatedStateAttributes && typeof updatedStateAttributes === "object" && !Array.isArray(updatedStateAttributes) && Object.prototype.hasOwnProperty.call(updatedStateAttributes, "style") ? updatedStateAttributes.style : updatedStateAttributes;
+			return { style: setStyleForState(attributes?.style, selectedState, updatedStateStyle) };
+		};
+	}
+
+// packages/block-editor/build-module/hooks/layout-child-utils.mjs
+/**
+	* Merges child layout changes into the active layout style state.
+	*
+	* @param style         Block style attributes.
+	* @param layout        Child layout changes.
+	* @param selectedState Selected block style state.
+	* @return Updated block style attributes.
+	*/
+	function getUpdatedChildLayoutStyle(style, layout, selectedState) {
+		if (!hasViewportBlockStyleState(selectedState)) return {
+			...style,
+			layout: {
+				...style?.layout,
+				...layout
+			}
+		};
+		const layoutState = {
+			viewport: selectedState.viewport,
+			pseudo: DEFAULT_BLOCK_STYLE_STATE.pseudo
+		};
+		const stateStyle = getStyleForState(style, layoutState);
+		return setStyleForState(style, layoutState, {
+			...stateStyle,
+			layout: {
+				...stateStyle?.layout,
+				...layout
+			}
+		});
+	}
+
+// packages/block-editor/build-module/components/grid/utils.mjs
+/**
+	* Checks whether a grid item has an explicit column or row start.
+	*
+	* @param layout             Grid item placement.
+	* @param layout.columnStart The item's column start.
+	* @param layout.rowStart    The item's row start.
+	* @return Whether a column or row start is set.
+	*/
+	function hasExplicitGridPlacement(layout) {
+		return layout.columnStart !== void 0 && layout.columnStart !== null || layout.rowStart !== void 0 && layout.rowStart !== null;
+	}
+	function range(start, length) {
+		return Array.from({ length }, (_, i) => start + i);
+	}
+	var GridRect = class {
+		constructor({ columnStart, rowStart, columnEnd, rowEnd, columnSpan, rowSpan } = {}) {
+			this.columnStart = columnStart ?? 1;
+			this.rowStart = rowStart ?? 1;
+			if (columnSpan !== void 0) this.columnEnd = this.columnStart + columnSpan - 1;
+			else this.columnEnd = columnEnd ?? this.columnStart;
+			if (rowSpan !== void 0) this.rowEnd = this.rowStart + rowSpan - 1;
+			else this.rowEnd = rowEnd ?? this.rowStart;
+		}
+		get columnSpan() {
+			return this.columnEnd - this.columnStart + 1;
+		}
+		get rowSpan() {
+			return this.rowEnd - this.rowStart + 1;
+		}
+		contains(column, row) {
+			return column >= this.columnStart && column <= this.columnEnd && row >= this.rowStart && row <= this.rowEnd;
+		}
+		containsRect(rect) {
+			return this.contains(rect.columnStart, rect.rowStart) && this.contains(rect.columnEnd, rect.rowEnd);
+		}
+		intersectsRect(rect) {
+			return this.columnStart <= rect.columnEnd && this.columnEnd >= rect.columnStart && this.rowStart <= rect.rowEnd && this.rowEnd >= rect.rowStart;
+		}
+	};
+	/**
+	* Reads an item's grid placement, defaulting omitted spans to one. Callers
+	* validate the values according to their placement requirements.
+	*
+	* @param layout The item's layout attributes.
+	*
+	* @return Placement fields with defaults for omitted spans.
+	*/
+	function getGridItemPlacement(layout) {
+		const { columnStart, rowStart, columnSpan = 1, rowSpan = 1 } = layout ?? {};
+		return {
+			columnStart,
+			rowStart,
+			columnSpan,
+			rowSpan
+		};
+	}
+	/**
+	* Gets the row count needed to contain a set of rectangles, respecting the
+	* caller's minimum. The minimum can be the current count to only grow rows,
+	* or a baseline to also allow automatically added rows to shrink.
+	*
+	* @param rects           Grid item rectangles.
+	* @param minimumRowCount Minimum number of rows to retain.
+	*
+	* @return Required row count.
+	*/
+	function getRequiredGridRowCount(rects, minimumRowCount) {
+		let bottomMostRow = -Infinity;
+		for (const rect of rects) bottomMostRow = Math.max(bottomMostRow, rect.rowEnd);
+		return Math.max(minimumRowCount, bottomMostRow);
+	}
+	function getComputedCSS$1(element, property) {
+		return element.ownerDocument.defaultView.getComputedStyle(element).getPropertyValue(property);
+	}
+	/**
+	* Converts a computed `column-gap` or `row-gap` value to pixels. Lengths
+	* compute to pixels, but percentages are preserved and `normal` is 0 in grids.
+	*
+	* @param gap         The computed gap value.
+	* @param contentSize The size in pixels of the grid's content box along the
+	*                    gap's axis, which percentages resolve against.
+	*
+	* @return The gap in pixels.
+	*/
+	function getGapInPixels(gap, contentSize) {
+		const value = parseFloat(gap);
+		if (!Number.isFinite(value)) return 0;
+		return gap.trim().endsWith("%") ? value * contentSize / 100 : value;
+	}
+	/**
+	* Gets the start and end position in pixels of each track of a grid element
+	* along one axis, from its computed grid-template-columns or
+	* grid-template-rows and column-gap or row-gap.
+	*
+	* https://css-tricks.com/snippets/css/complete-guide-grid/#aa-grid-track
+	*
+	* @param gridElement                 The grid element.
+	* @param axis                        Either 'column' or 'row'.
+	* @param options                     Options.
+	* @param options.collapseEmptyTracks Whether auto-fit gutters collapse.
+	* @param options.computedStyle       A previously read style declaration.
+	*
+	* @return An array of objects with the start and end
+	*         position in pixels of each grid track.
+	*/
+	function getGridTracks(gridElement, axis, options = {}) {
+		const isColumn = axis === "column";
+		const computedStyle = options.computedStyle ?? gridElement.ownerDocument.defaultView.getComputedStyle(gridElement);
+		const padding = (isColumn ? ["left", "right"] : ["top", "bottom"]).map((side) => parseFloat(computedStyle.getPropertyValue(`padding-${side}`))).reduce((total, value) => total + value, 0);
+		const contentSize = (isColumn ? gridElement.clientWidth : gridElement.clientHeight) - padding;
+		const gapInPixels = getGapInPixels(computedStyle.getPropertyValue(`${axis}-gap`), contentSize);
+		const sizes = computedStyle.getPropertyValue(isColumn ? "grid-template-columns" : "grid-template-rows").split(" ").map((size) => parseFloat(size));
+		const tracks = [];
+		let hasNonEmptyTrack = false;
+		for (const size of sizes) {
+			const previousTrack = tracks[tracks.length - 1];
+			const isGapCollapsed = options.collapseEmptyTracks && (size === 0 || !hasNonEmptyTrack);
+			const start = previousTrack ? previousTrack.end + (isGapCollapsed ? 0 : gapInPixels) : 0;
+			const end = start + size;
+			tracks.push({
+				start,
+				end
+			});
+			hasNonEmptyTrack ||= size > 0;
+		}
+		return tracks;
+	}
+	/**
+	* Measures the grid values shared while locating each of its children.
+	*
+	* @param gridElement             The grid element.
+	* @param collapseEmptyColumnGaps Whether zero-width auto-fit columns have
+	*                                collapsed gutters.
+	*
+	* @return The measurement, or undefined when the grid can't be measured.
+	*/
+	function getGridMeasurement(gridElement, collapseEmptyColumnGaps = false) {
+		if (!gridElement.offsetWidth || !gridElement.offsetHeight) return;
+		const bounds = gridElement.getBoundingClientRect();
+		const scaleX = bounds.width / gridElement.offsetWidth;
+		const scaleY = bounds.height / gridElement.offsetHeight;
+		if (!scaleX || !scaleY) return;
+		const computedStyle = gridElement.ownerDocument.defaultView.getComputedStyle(gridElement);
+		const inset = (side) => parseFloat(computedStyle.getPropertyValue(`border-${side}-width`)) + parseFloat(computedStyle.getPropertyValue(`padding-${side}`));
+		const isRightToLeft = computedStyle.direction === "rtl";
+		return {
+			columns: getGridTracks(gridElement, "column", {
+				collapseEmptyTracks: collapseEmptyColumnGaps,
+				computedStyle
+			}),
+			rows: getGridTracks(gridElement, "row", { computedStyle }),
+			bounds,
+			scaleX,
+			scaleY,
+			isRightToLeft,
+			inlineOffset: inset(isRightToLeft ? "right" : "left"),
+			topOffset: inset("top")
+		};
+	}
+	/**
+	* Given an array of grid tracks and a position in pixels, gets the index of the closest track to
+	* that position.
+	*
+	* https://css-tricks.com/snippets/css/complete-guide-grid/#aa-grid-track
+	*
+	* @param tracks   An array of objects with the start and end
+	*                 position in pixels of each grid track.
+	* @param position The position in pixels.
+	* @param edge     The edge of the track to compare the
+	*                 position to. Either 'start' or 'end'.
+	*
+	* @return The index of the closest track to the position. 0-based, unlike CSS grid which
+	*         is 1-based.
+	*/
+	function getClosestTrack(tracks, position, edge = "start") {
+		return tracks.reduce((closest, track, index) => {
+			const closestTrack = tracks[closest];
+			const distance = Math.abs(track[edge] - position);
+			const closestDistance = Math.abs(closestTrack[edge] - position);
+			return distance < closestDistance || distance === closestDistance && track.end > track.start && closestTrack.end === closestTrack.start ? index : closest;
+		}, 0);
+	}
+	/**
+	* Gets the position in pixels of the track range covered by the given start
+	* and end positions, as 1-based inclusive track indexes. Unlike
+	* `getClosestTrack`, it includes every track the range overlaps.
+	*
+	* @param tracks An array of objects with the start and end
+	*               position in pixels of each grid track.
+	* @param start  The start position in pixels.
+	* @param end    The end position in pixels.
+	*
+	* @return The first and last overlapped tracks, or undefined if none.
+	*/
+	function getTrackRange(tracks, start, end) {
+		const first = tracks.findIndex((track) => track.end > start + .1);
+		let last = tracks.length - 1;
+		while (last >= 0 && tracks[last].start >= end - .1) last--;
+		if (first < 0 || last < first) return;
+		return [first + 1, last + 1];
+	}
+	/**
+	* Gets the bounds of a grid item relative to the start of its grid's tracks,
+	* that is, inside the grid's border and padding. Accounts for CSS scaling and
+	* right-to-left direction, so `left` is the inline start edge.
+	*
+	* @param gridElement The grid element.
+	* @param element     The grid item element.
+	* @param measurement A previously read grid measurement.
+	*
+	* @return The item's bounds, or undefined if the grid can't be measured.
+	*/
+	function getRectInGrid(gridElement, element, measurement = getGridMeasurement(gridElement)) {
+		if (!measurement) return;
+		const bounds = element.getBoundingClientRect();
+		return {
+			left: (measurement.isRightToLeft ? measurement.bounds.right - bounds.right : bounds.left - measurement.bounds.left) / measurement.scaleX - measurement.inlineOffset,
+			right: (measurement.isRightToLeft ? measurement.bounds.right - bounds.left : bounds.right - measurement.bounds.left) / measurement.scaleX - measurement.inlineOffset,
+			top: (bounds.top - measurement.bounds.top) / measurement.scaleY - measurement.topOffset,
+			bottom: (bounds.bottom - measurement.bounds.top) / measurement.scaleY - measurement.topOffset
+		};
+	}
+	function getGridRect(gridElement, rect) {
+		const gridColumnTracks = getGridTracks(gridElement, "column");
+		const gridRowTracks = getGridTracks(gridElement, "row");
+		const columnStart = getClosestTrack(gridColumnTracks, rect.left) + 1;
+		const rowStart = getClosestTrack(gridRowTracks, rect.top) + 1;
+		return new GridRect({
+			columnStart,
+			columnEnd: getClosestTrack(gridColumnTracks, rect.right, "end") + 1,
+			rowStart,
+			rowEnd: getClosestTrack(gridRowTracks, rect.bottom, "end") + 1
+		});
+	}
+	function getGridItemRect(gridItemElement) {
+		return getGridRect(gridItemElement.parentElement, new window.DOMRect(gridItemElement.offsetLeft, gridItemElement.offsetTop, gridItemElement.offsetWidth, gridItemElement.offsetHeight));
+	}
+	function getGridInfo(gridElement) {
+		const gridTemplateColumns = getComputedCSS$1(gridElement, "grid-template-columns");
+		const gridTemplateRows = getComputedCSS$1(gridElement, "grid-template-rows");
+		const borderTopWidth = getComputedCSS$1(gridElement, "border-top-width");
+		const borderRightWidth = getComputedCSS$1(gridElement, "border-right-width");
+		const borderBottomWidth = getComputedCSS$1(gridElement, "border-bottom-width");
+		const borderLeftWidth = getComputedCSS$1(gridElement, "border-left-width");
+		const paddingTop = getComputedCSS$1(gridElement, "padding-top");
+		const paddingRight = getComputedCSS$1(gridElement, "padding-right");
+		const paddingBottom = getComputedCSS$1(gridElement, "padding-bottom");
+		const paddingLeft = getComputedCSS$1(gridElement, "padding-left");
+		const numColumns = gridTemplateColumns.split(" ").length;
+		const numRows = gridTemplateRows.split(" ").length;
+		return {
+			numColumns,
+			numRows,
+			numItems: numColumns * numRows,
+			currentColor: getComputedCSS$1(gridElement, "color"),
+			style: {
+				gridTemplateColumns,
+				gridTemplateRows,
+				gap: getComputedCSS$1(gridElement, "gap"),
+				inset: `
+				calc(${paddingTop} + ${borderTopWidth})
+				calc(${paddingRight} + ${borderRightWidth})
+				calc(${paddingBottom} + ${borderBottomWidth})
+				calc(${paddingLeft} + ${borderLeftWidth})
+			`
+			}
+		};
+	}
+
+// packages/block-editor/build-module/components/grid/auto-grid-drop.mjs
+/**
+	* Returns the style change that makes an explicitly placed child of an auto
+	* grid participate in auto-placement again.
+	*
+	* @param parentLayout  The parent block's resolved layout.
+	* @param style         Block style attributes.
+	* @param selectedState Selected block style state.
+	*
+	* @return The updated style and whether it should be applied.
+	*/
+	function getAutoGridItemStyleAfterDrop(parentLayout, style, selectedState) {
+		if (!isPlainObject(parentLayout) || parentLayout.type !== "grid" || parentLayout.isManualPlacement || !isPlainObject(style)) return { shouldReset: false };
+		const stateStyle = getStyleForState(style, {
+			...selectedState,
+			pseudo: DEFAULT_BLOCK_STYLE_STATE.pseudo
+		});
+		const baseLayout = isPlainObject(style.layout) ? style.layout : {};
+		const stateLayout = isPlainObject(stateStyle?.layout) ? stateStyle.layout : {};
+		if (!hasExplicitGridPlacement({
+			...baseLayout,
+			...stateLayout
+		})) return { shouldReset: false };
+		const automaticStart = hasViewportBlockStyleState(selectedState) ? null : void 0;
+		return {
+			style: getUpdatedChildLayoutStyle(style, {
+				columnStart: automaticStart,
+				rowStart: automaticStart
+			}, selectedState),
+			shouldReset: true
+		};
+	}
+
+// packages/block-editor/build-module/components/grid/use-auto-grid-drop.mjs
+/**
+	* Provides auto-grid behavior to generic block drop hooks.
+	*
+	* @return Auto-grid drop behavior callbacks.
+	*/
+	function useAutoGridDrop() {
+		const { getBlockAttributes, getBlockName, getBlockStyles, getSelectedBlockStyleState } = unlock$2((0, _wordpress_data.useSelect)(store));
+		const { updateBlockAttributes } = (0, _wordpress_data.useDispatch)(store);
+		return { onBlocksDrop: (0, _wordpress_element.useCallback)((sourceClientIds, sourceRootClientId) => {
+			if (!sourceRootClientId) return;
+			const parentName = getBlockName(sourceRootClientId);
+			const parentAttributes = getBlockAttributes(sourceRootClientId);
+			const attributeLayout = isPlainObject(parentAttributes?.layout) ? parentAttributes.layout : void 0;
+			const layoutSupport = getLayoutBlockSupport(parentName);
+			const parentLayout = normalizeLegacyLayout(attributeLayout) || layoutSupport?.default;
+			const blockStyles = getBlockStyles(sourceClientIds);
+			const updates = {};
+			for (const clientId of sourceClientIds) {
+				const result = getAutoGridItemStyleAfterDrop(parentLayout, blockStyles[clientId], getSelectedBlockStyleState(clientId));
+				if (result.shouldReset) updates[clientId] = { style: result.style };
+			}
+			const clientIdsToUpdate = Object.keys(updates);
+			if (!clientIdsToUpdate.length) return;
+			updateBlockAttributes(clientIdsToUpdate, updates, { uniqueByBlock: true });
+		}, [
+			getBlockAttributes,
+			getBlockName,
+			getBlockStyles,
+			getSelectedBlockStyleState,
+			updateBlockAttributes
+		]) };
+	}
+
 // packages/block-editor/build-module/components/use-on-block-drop/index.mjs
 /**
 	* Retrieve the data for a block drop event.
@@ -90770,9 +91253,10 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param clearSelectedBlock        A function that clears block selection.
 	* @param operation                 The type of operation to perform on drop. Could be `insert` or `replace` or `group`.
 	* @param getBlock                  A function that returns a block given its client id.
+	* @param onSameOrderDrop           Runs custom behavior for insertion drops that keep the block order.
 	* @return The event handler for a block drop event.
 	*/
-	function onBlockDrop(targetRootClientId, targetBlockIndex, getBlockIndex, getClientIdsOfDescendants, moveBlocks, insertOrReplaceBlocks, clearSelectedBlock, operation, getBlock) {
+	function onBlockDrop(targetRootClientId, targetBlockIndex, getBlockIndex, getClientIdsOfDescendants, moveBlocks, insertOrReplaceBlocks, clearSelectedBlock, operation, getBlock, onSameOrderDrop) {
 		return (event) => {
 			const { srcRootClientId: sourceRootClientId, srcClientIds: sourceClientIds, type: dropType, blocks } = parseDropEvent(event);
 			if (dropType === "inserter") {
@@ -90781,8 +91265,11 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 			if (dropType === "block") {
 				const sourceBlockIndex = getBlockIndex(sourceClientIds[0]);
-				const lastSamePositionIndex = operation === "insert" ? sourceBlockIndex + sourceClientIds.length : sourceBlockIndex;
-				if (sourceRootClientId === targetRootClientId && targetBlockIndex >= sourceBlockIndex && targetBlockIndex <= lastSamePositionIndex) return;
+				const lastSameOrderIndex = operation === "insert" ? sourceBlockIndex + sourceClientIds.length : sourceBlockIndex;
+				if (sourceRootClientId === targetRootClientId && targetBlockIndex >= sourceBlockIndex && targetBlockIndex <= lastSameOrderIndex) {
+					if (operation !== "replace" && operation !== "group") onSameOrderDrop?.(sourceClientIds, sourceRootClientId);
+					return;
+				}
 				if (sourceClientIds.includes(targetRootClientId) || getClientIdsOfDescendants(sourceClientIds).some((id) => id === targetRootClientId)) return;
 				if (operation === "group") {
 					insertOrReplaceBlocks(sourceClientIds.map((clientId) => getBlock(clientId)), true, null, sourceClientIds);
@@ -90831,16 +91318,17 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* A React hook for handling block drop events.
 	*
-	* @param targetRootClientId  The root client id where the block(s) will be inserted.
-	* @param targetBlockIndex    The index where the block(s) will be inserted.
-	* @param options             The optional options.
-	* @param options.operation   The type of operation to perform on drop. Could be `insert`, `replace` or `group`.
-	* @param options.nearestSide The side of the target block a grouped block is placed on.
+	* @param targetRootClientId   The root client id where the block(s) will be inserted.
+	* @param targetBlockIndex     The index where the block(s) will be inserted.
+	* @param options              The optional options.
+	* @param options.operation    The type of operation to perform on drop. Could be `insert`, `replace` or `group`.
+	* @param options.nearestSide  The side of the target block a grouped block is placed on.
+	* @param options.onBlocksDrop Runs custom behavior when blocks are dropped.
 	*
 	* @return A function to be passed to the onDrop handler.
 	*/
 	function useOnBlockDrop(targetRootClientId, targetBlockIndex, options = {}) {
-		const { operation = "insert", nearestSide = "right" } = options;
+		const { operation = "insert", nearestSide = "right", onBlocksDrop } = options;
 		const { canInsertBlockType, getBlockIndex, getClientIdsOfDescendants, getBlockOrder, getBlocksByClientId, getSettings, getBlock } = (0, _wordpress_data.useSelect)(store);
 		const { getGroupingBlockName } = (0, _wordpress_data.useSelect)(_wordpress_blocks.store);
 		const { insertBlocks, moveBlocksToPosition, updateBlockAttributes, clearSelectedBlock, replaceBlocks, removeBlocks } = (0, _wordpress_data.useDispatch)(store);
@@ -90878,24 +91366,29 @@ If there's a particular need for this, please submit a feature request at https:
 		]);
 		const _onDrop = onBlockDrop(targetRootClientId, targetBlockIndex, getBlockIndex, getClientIdsOfDescendants, (0, _wordpress_element.useCallback)((sourceClientIds, sourceRootClientId, insertIndex) => {
 			if (operation === "replace") {
-				const sourceBlocks = getBlocksByClientId(sourceClientIds);
 				const targetBlockClientId = getBlockOrder(targetRootClientId)[targetBlockIndex];
 				registry.batch(() => {
+					onBlocksDrop?.(sourceClientIds, sourceRootClientId);
+					const sourceBlocks = getBlocksByClientId(sourceClientIds);
 					removeBlocks(sourceClientIds, false);
 					replaceBlocks(targetBlockClientId, sourceBlocks, void 0, 0);
 				});
-			} else moveBlocksToPosition(sourceClientIds, sourceRootClientId, targetRootClientId, insertIndex);
+			} else registry.batch(() => {
+				onBlocksDrop?.(sourceClientIds, sourceRootClientId);
+				moveBlocksToPosition(sourceClientIds, sourceRootClientId, targetRootClientId, insertIndex);
+			});
 		}, [
 			operation,
 			getBlockOrder,
 			getBlocksByClientId,
 			moveBlocksToPosition,
+			onBlocksDrop,
 			registry,
 			removeBlocks,
 			replaceBlocks,
 			targetBlockIndex,
 			targetRootClientId
-		]), insertOrReplaceBlocks, clearSelectedBlock, operation, getBlock);
+		]), insertOrReplaceBlocks, clearSelectedBlock, operation, getBlock, onBlocksDrop);
 		const _onFilesDrop = onFilesDrop(targetRootClientId, getSettings, updateBlockAttributes, canInsertBlockType, insertOrReplaceBlocks);
 		const _onHTMLDrop = onHTMLDrop(insertOrReplaceBlocks);
 		return (event) => {
@@ -91105,10 +91598,11 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param dropZoneConfig.dropZoneElement Optional element to be used as the drop zone.
 	* @param dropZoneConfig.rootClientId    The root client id for the block list.
 	* @param dropZoneConfig.parentClientId  The client id of the parent block.
+	* @param dropZoneConfig.onBlocksDrop    Runs custom behavior when blocks are dropped.
 	* @param dropZoneConfig.isDisabled      Whether the drop zone is disabled.
 	* @return Ref callback for the drop zone element.
 	*/
-	function useBlockDropZone({ dropZoneElement, rootClientId: targetRootClientId = "", parentClientId: parentBlockClientId = "", isDisabled = false } = {}) {
+	function useBlockDropZone({ dropZoneElement, rootClientId: targetRootClientId = "", parentClientId: parentBlockClientId = "", onBlocksDrop, isDisabled = false } = {}) {
 		const registry = (0, _wordpress_data.useRegistry)();
 		const [dropTarget, setDropTarget] = (0, _wordpress_element.useState)({
 			index: null,
@@ -91119,7 +91613,8 @@ If there's a particular need for this, please submit a feature request at https:
 		const { showInsertionPoint, hideInsertionPoint, startDragging, stopDragging } = unlock$2((0, _wordpress_data.useDispatch)(store));
 		const onBlockDrop = useOnBlockDrop(dropTarget.operation === "before" || dropTarget.operation === "after" ? parentBlockClientId : targetRootClientId, dropTarget.index, {
 			operation: dropTarget.operation,
-			nearestSide: dropTarget.nearestSide
+			nearestSide: dropTarget.nearestSide,
+			onBlocksDrop
 		});
 		const throttled = (0, _wordpress_compose.useThrottle)((0, _wordpress_element.useCallback)((event, ownerDocument) => {
 			if (!isDragging()) startDragging();
@@ -91351,10 +91846,12 @@ If there's a particular need for this, please submit a feature request at https:
 				defaultLayout
 			};
 		}, [clientId]);
+		const autoGridDrop = useAutoGridDrop();
 		const blockDropZoneRef = useBlockDropZone({
 			dropZoneElement,
 			rootClientId: clientId,
-			parentClientId
+			parentClientId,
+			...autoGridDrop
 		});
 		const ref = (0, _wordpress_compose.useMergeRefs)([props.ref, __unstableDisableDropZone || isDropZoneDisabled || layout?.isManualPlacement && window.__experimentalEnableGridInteractivity ? null : blockDropZoneRef]);
 		const innerBlocksProps = {
@@ -91648,111 +92145,6 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 	const PrivateInspectorControlsAllowedBlocks = (0, _wordpress_components.createSlotFill)(Symbol("PrivateInspectorControlsAllowedBlocks"));
 	const PrivateInspectorControlsStyleStateAdvanced = (0, _wordpress_components.createSlotFill)(Symbol("PrivateInspectorControlsStyleStateAdvanced"));
-
-// packages/block-editor/build-module/hooks/block-style-state.mjs
-	const DEFAULT_STATE_VALUE$2 = "default";
-	const DEFAULT_BLOCK_STYLE_STATE = {
-		viewport: DEFAULT_STATE_VALUE$2,
-		pseudo: DEFAULT_STATE_VALUE$2
-	};
-	const BlockStyleStateContext = (0, _wordpress_element.createContext)(DEFAULT_BLOCK_STYLE_STATE);
-	const BlockStyleStateProvider = BlockStyleStateContext.Provider;
-	/**
-	* Returns the current block style state.
-	*
-	* @return The current block style state.
-	*/
-	function useBlockStyleState() {
-		return (0, _wordpress_element.useContext)(BlockStyleStateContext);
-	}
-	/**
-	* Returns true when a viewport style state is selected.
-	*
-	* @param selectedState Selected block style state.
-	* @return Whether a viewport state is selected.
-	*/
-	function hasViewportBlockStyleState(selectedState) {
-		return !!selectedState?.viewport && selectedState.viewport !== DEFAULT_STATE_VALUE$2;
-	}
-	/**
-	* Returns true when a pseudo style state is selected.
-	*
-	* @param selectedState Selected block style state.
-	* @return Whether a pseudo state is selected.
-	*/
-	function hasPseudoBlockStyleState(selectedState) {
-		return !!selectedState?.pseudo && selectedState.pseudo !== DEFAULT_STATE_VALUE$2;
-	}
-	/**
-	* Returns true when the default style state is selected.
-	*
-	* @param selectedState Selected block style state.
-	* @return Whether the default style state is selected.
-	*/
-	function isDefaultBlockStyleState(selectedState) {
-		return !hasViewportBlockStyleState(selectedState) && !hasPseudoBlockStyleState(selectedState);
-	}
-	/**
-	* Returns the style object path for the selected block style state.
-	*
-	* @param selectedState Selected block style state.
-	* @return Object path for the selected state styles.
-	*/
-	function getStyleStatePath(selectedState) {
-		if (isDefaultBlockStyleState(selectedState)) return [];
-		return [selectedState.viewport, selectedState.pseudo].filter((state) => state && state !== DEFAULT_STATE_VALUE$2);
-	}
-	/**
-	* Returns the style object for the selected block style state.
-	*
-	* @param {Object} style         The block style object.
-	* @param {Object} selectedState Selected block style state.
-	* @return {Object} The style object for the selected state, if found.
-	*
-	* @example
-	* ```js
-	* const state = { viewport: '@mobile' };
-	* const stateStyle = getStyleForState( attributes.style, state ) || {};
-	* ```
-	*/
-	function getStyleForState(style, selectedState) {
-		const path = getStyleStatePath(selectedState);
-		if (!path.length) return style;
-		return getValueFromObjectPath(style, path);
-	}
-	/**
-	* Returns a style object with the selected block style state updated.
-	*
-	* @param {Object} style         The block style object.
-	* @param {Object} selectedState Selected block style state.
-	* @param {Object} newStyle      New style for the selected state.
-	* @return {Object} The updated style object.
-	*
-	* @example
-	* ```js
-	* const state = { viewport: '@mobile' };
-	* const stateStyle = getStyleForState( attributes.style, state ) || {};
-	* setAttributes( {
-	* 	style: setStyleForState( attributes.style, state, {
-	* 		...stateStyle,
-	* 		dimensions: { ...stateStyle.dimensions, minHeight: '50vh' },
-	* 	} ),
-	* } );
-	* ```
-	*/
-	function setStyleForState(style, selectedState, newStyle) {
-		const path = getStyleStatePath(selectedState);
-		if (!path.length) return cleanEmptyObject(newStyle);
-		return cleanEmptyObject(setImmutably(style, path, newStyle));
-	}
-	function scopeResetAllFilterToState(selectedState, resetAllFilter) {
-		if (!resetAllFilter || isDefaultBlockStyleState(selectedState)) return resetAllFilter;
-		return (attributes) => {
-			const updatedStateAttributes = resetAllFilter({ style: getStyleForState(attributes?.style, selectedState) || {} });
-			const updatedStateStyle = updatedStateAttributes && typeof updatedStateAttributes === "object" && !Array.isArray(updatedStateAttributes) && Object.prototype.hasOwnProperty.call(updatedStateAttributes, "style") ? updatedStateAttributes.style : updatedStateAttributes;
-			return { style: setStyleForState(attributes?.style, selectedState, updatedStateStyle) };
-		};
-	}
 
 // packages/block-editor/build-module/components/inspector-controls/list-view-content-popover.mjs
 	const LIST_VIEW_CONTENT_PANEL_SLOT = Symbol("ListViewContentPopover");
@@ -92897,27 +93289,537 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	});
 
+// packages/block-editor/build-module/components/grid/use-get-number-of-blocks-before-cell.mjs
+	function useGetNumberOfBlocksBeforeCell(gridClientId, numColumns) {
+		const { getBlockOrder, getBlockAttributes } = (0, _wordpress_data.useSelect)(store);
+		const getNumberOfBlocksBeforeCell = (column, row) => {
+			const targetIndex = (row - 1) * numColumns + column - 1;
+			let count = 0;
+			for (const clientId of getBlockOrder(gridClientId)) {
+				const { columnStart, rowStart } = getBlockAttributes(clientId).style?.layout ?? {};
+				if ((rowStart - 1) * numColumns + columnStart - 1 < targetIndex) count++;
+			}
+			return count;
+		};
+		return getNumberOfBlocksBeforeCell;
+	}
+
+// packages/block-editor/build-module/components/grid/grid-item-movers.mjs
+	function GridItemMovers({ layout, parentLayout, onChange, gridClientId, blockClientId }) {
+		const { moveBlocksToPosition, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(store);
+		const columnStart = layout?.columnStart ?? 1;
+		const rowStart = layout?.rowStart ?? 1;
+		const columnSpan = layout?.columnSpan ?? 1;
+		const rowSpan = layout?.rowSpan ?? 1;
+		const columnEnd = columnStart + columnSpan - 1;
+		const rowEnd = rowStart + rowSpan - 1;
+		const columnCount = parentLayout?.columnCount;
+		const rowCount = parentLayout?.rowCount;
+		const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, columnCount);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockControls, {
+			group: "parent",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.ToolbarGroup, {
+				className: "block-editor-grid-item-mover__move-button-container",
+				children: [
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "block-editor-grid-item-mover__move-horizontal-button-container is-left",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
+							icon: (0, _wordpress_i18n.isRTL)() ? chevron_right_default : chevron_left_default,
+							label: (0, _wordpress_i18n.__)("Move left"),
+							description: (0, _wordpress_i18n.__)("Move left"),
+							isDisabled: columnStart <= 1,
+							onClick: () => {
+								onChange({ columnStart: columnStart - 1 });
+								__unstableMarkNextChangeAsNotPersistent();
+								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart - 1, rowStart));
+							}
+						})
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+						className: "block-editor-grid-item-mover__move-vertical-button-container",
+						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
+							className: "is-up-button",
+							icon: chevron_up_default,
+							label: (0, _wordpress_i18n.__)("Move up"),
+							description: (0, _wordpress_i18n.__)("Move up"),
+							isDisabled: rowStart <= 1,
+							onClick: () => {
+								onChange({ rowStart: rowStart - 1 });
+								__unstableMarkNextChangeAsNotPersistent();
+								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart - 1));
+							}
+						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
+							className: "is-down-button",
+							icon: chevron_down_default,
+							label: (0, _wordpress_i18n.__)("Move down"),
+							description: (0, _wordpress_i18n.__)("Move down"),
+							isDisabled: rowCount && rowEnd >= rowCount,
+							onClick: () => {
+								onChange({ rowStart: rowStart + 1 });
+								__unstableMarkNextChangeAsNotPersistent();
+								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart + 1));
+							}
+						})]
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "block-editor-grid-item-mover__move-horizontal-button-container is-right",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
+							icon: (0, _wordpress_i18n.isRTL)() ? chevron_left_default : chevron_right_default,
+							label: (0, _wordpress_i18n.__)("Move right"),
+							description: (0, _wordpress_i18n.__)("Move right"),
+							isDisabled: columnCount && columnEnd >= columnCount,
+							onClick: () => {
+								onChange({ columnStart: columnStart + 1 });
+								__unstableMarkNextChangeAsNotPersistent();
+								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart + 1, rowStart));
+							}
+						})
+					})
+				]
+			})
+		});
+	}
+	function GridItemMover({ className, icon, label, isDisabled, onClick, description }) {
+		const descriptionId = `block-editor-grid-item-mover-button__description-${(0, _wordpress_compose.useInstanceId)(GridItemMover)}`;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
+			className: clsx("block-editor-grid-item-mover-button", className),
+			icon,
+			label,
+			"aria-describedby": descriptionId,
+			onClick: isDisabled ? null : onClick,
+			disabled: isDisabled,
+			accessibleWhenDisabled: true
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+			id: descriptionId,
+			children: description
+		})] });
+	}
+
+// packages/block-editor/build-module/components/grid/auto-grid-placement.mjs
+/**
+	* Creates a rectangle at the given position while preserving an item's
+	* measured spans.
+	*
+	* @param item        The grid item being placed.
+	* @param columnStart The item's column start.
+	* @param rowStart    The item's row start.
+	*
+	* @return The positioned rectangle.
+	*/
+	function getPlacedRect(item, columnStart, rowStart) {
+		return new GridRect({
+			columnStart,
+			rowStart,
+			columnSpan: item.rect.columnSpan,
+			rowSpan: item.rect.rowSpan
+		});
+	}
+	/**
+	* Checks whether any cell in a rectangle is already occupied.
+	*
+	* @param rect     The rectangle to check.
+	* @param occupied The occupied cells, keyed as `column:row`.
+	*
+	* @return Whether the rectangle overlaps an occupied cell.
+	*/
+	function occupiesCells(rect, occupied) {
+		for (let row = rect.rowStart; row <= rect.rowEnd; row++) for (let column = rect.columnStart; column <= rect.columnEnd; column++) if (occupied.has(`${column}:${row}`)) return true;
+		return false;
+	}
+	/**
+	* Adds every cell in a rectangle to the set of occupied cells.
+	*
+	* @param rect     The rectangle to occupy.
+	* @param occupied The occupied cells, keyed as `column:row`.
+	*/
+	function occupyCells(rect, occupied) {
+		for (let row = rect.rowStart; row <= rect.rowEnd; row++) for (let column = rect.columnStart; column <= rect.columnEnd; column++) occupied.add(`${column}:${row}`);
+	}
+	/**
+	* Finds the next available rectangle for an item from the auto-placement
+	* cursor. The occupied cells are read but not modified.
+	*
+	* @param item         The grid item being placed.
+	* @param columnCount  The number of columns in the measured grid.
+	* @param occupied     The occupied cells, keyed as `column:row`.
+	* @param cursorColumn The current auto-placement cursor column.
+	* @param cursorRow    The current auto-placement cursor row.
+	*
+	* @return The item's rectangle and the resulting cursor position.
+	*/
+	function getNextAutoPlacedRect(item, columnCount, occupied, cursorColumn, cursorRow) {
+		if (item.columnStart !== void 0) {
+			const previousColumn = cursorColumn;
+			cursorColumn = item.columnStart;
+			if (cursorColumn < previousColumn) cursorRow++;
+			let rect = getPlacedRect(item, cursorColumn, cursorRow);
+			while (occupiesCells(rect, occupied)) {
+				cursorRow++;
+				rect = getPlacedRect(item, cursorColumn, cursorRow);
+			}
+			return {
+				rect,
+				cursorColumn,
+				cursorRow
+			};
+		}
+		while (true) {
+			const rect = getPlacedRect(item, cursorColumn, cursorRow);
+			if (rect.columnEnd > columnCount) {
+				cursorColumn = 1;
+				cursorRow++;
+				continue;
+			}
+			if (!occupiesCells(rect, occupied)) return {
+				rect,
+				cursorColumn,
+				cursorRow
+			};
+			cursorColumn++;
+		}
+	}
+	/**
+	* Simulates the sparse, row-wise CSS grid auto-placement algorithm once and
+	* records where the selected item would land at each position in the shared
+	* auto-placement sequence. Items after the selected item can't affect its
+	* placement, so this avoids rebuilding the whole grid for every block index.
+	*
+	* @param items        The grid items in block order.
+	* @param selectedItem The auto-placed item being moved.
+	* @param columnCount  The number of columns in the measured grid.
+	*
+	* @return The selected item's rectangle at each sequence position and the IDs
+	*         of the other items in that sequence.
+	*/
+	function getAutoPlacementCandidates(items, selectedItem, columnCount) {
+		const placed = /* @__PURE__ */ new Set();
+		const occupied = /* @__PURE__ */ new Set();
+		/**
+		* Marks an item as placed and adds its rectangle to the occupied cells.
+		*
+		* @param item The item being placed.
+		* @param rect The item's positioned rectangle.
+		*/
+		function place(item, rect) {
+			placed.add(item.clientId);
+			occupyCells(rect, occupied);
+		}
+		for (const item of items) if (item.columnStart !== void 0 && item.rowStart !== void 0) place(item, getPlacedRect(item, item.columnStart, item.rowStart));
+		const rowLockedEnds = /* @__PURE__ */ new Map();
+		for (const item of items) {
+			if (placed.has(item.clientId) || item.rowStart === void 0 || item.columnStart !== void 0) continue;
+			let columnStart = 1;
+			for (let row = item.rowStart; row < item.rowStart + item.rect.rowSpan; row++) columnStart = Math.max(columnStart, (rowLockedEnds.get(row) ?? 0) + 1);
+			let rect = getPlacedRect(item, columnStart, item.rowStart);
+			while (occupiesCells(rect, occupied)) {
+				columnStart++;
+				rect = getPlacedRect(item, columnStart, item.rowStart);
+			}
+			place(item, rect);
+			for (let row = rect.rowStart; row <= rect.rowEnd; row++) rowLockedEnds.set(row, rect.columnEnd);
+		}
+		const otherAutoPlacedItems = items.filter((item) => !placed.has(item.clientId) && item.rowStart === void 0).filter((item) => item.clientId !== selectedItem.clientId);
+		const placements = [];
+		let cursorColumn = 1;
+		let cursorRow = 1;
+		for (const item of otherAutoPlacedItems) {
+			placements.push(getNextAutoPlacedRect(selectedItem, columnCount, occupied, cursorColumn, cursorRow).rect);
+			const placedItem = getNextAutoPlacedRect(item, columnCount, occupied, cursorColumn, cursorRow);
+			place(item, placedItem.rect);
+			({cursorColumn, cursorRow} = placedItem);
+		}
+		placements.push(getNextAutoPlacedRect(selectedItem, columnCount, occupied, cursorColumn, cursorRow).rect);
+		return {
+			placements,
+			autoPlacedClientIds: new Set(otherAutoPlacedItems.map((item) => item.clientId))
+		};
+	}
+	/**
+	* Checks whether two rectangles have the same grid bounds.
+	*
+	* @param first  The simulated rectangle, if the item was placed.
+	* @param second The rectangle to compare it with.
+	*
+	* @return Whether both rectangles have the same bounds.
+	*/
+	function rectsAreEqual(first, second) {
+		return first?.columnStart === second.columnStart && first.columnEnd === second.columnEnd && first.rowStart === second.rowStart && first.rowEnd === second.rowEnd;
+	}
+	/**
+	* Checks whether a simulated placement moved along the requested axis while
+	* keeping its position on the other axis.
+	*
+	* @param placed    The simulated rectangle, if the item was placed.
+	* @param current   The item's current rectangle.
+	* @param direction The requested move direction.
+	*
+	* @return Whether the simulated rectangle moved in the requested direction.
+	*/
+	function movesInDirection(placed, current, direction) {
+		if (!placed) return false;
+		if (direction === "left" || direction === "right") return placed.rowStart === current.rowStart && (direction === "left" ? placed.columnStart < current.columnStart : placed.columnStart > current.columnStart);
+		return placed.columnStart === current.columnStart && (direction === "up" ? placed.rowStart < current.rowStart : placed.rowStart > current.rowStart);
+	}
+	/**
+	* Finds a block-order position that auto-places an item at a target rectangle.
+	* If spans prevent an exact one-track move, it returns the nearest position
+	* that moves in the requested direction without changing the other axis.
+	* Explicitly placed items remain positioned and participate as occupied cells
+	* in the simulation.
+	*
+	* @param snapshot      The measured grid state.
+	* @param blockOrder    The grid's child block order.
+	* @param blockClientId The item being moved.
+	* @param target        The requested grid rectangle.
+	* @param direction     The requested move direction.
+	*
+	* @return The block-order index, or undefined when reordering cannot move in
+	*         the requested direction.
+	*/
+	function findAutoGridReorderIndex(snapshot, blockOrder, blockClientId, target, direction) {
+		const item = snapshot.items.find((candidate) => candidate.clientId === blockClientId);
+		if (!item || hasExplicitGridPlacement(item)) return;
+		if (!Number.isInteger(snapshot.columnCount) || snapshot.columnCount < 1) return;
+		const itemsByClientId = new Map(snapshot.items.map((candidate) => [candidate.clientId, candidate]));
+		const currentIndex = blockOrder.indexOf(blockClientId);
+		if (currentIndex < 0) return;
+		const { placements, autoPlacedClientIds } = getAutoPlacementCandidates(blockOrder.map((clientId) => itemsByClientId.get(clientId)).filter((candidate) => !!candidate), item, snapshot.columnCount);
+		const orderWithoutItem = blockOrder.filter((clientId) => clientId !== blockClientId);
+		const placementIndexes = [0];
+		for (const clientId of orderWithoutItem) placementIndexes.push(placementIndexes[placementIndexes.length - 1] + (autoPlacedClientIds.has(clientId) ? 1 : 0));
+		const step = direction === "right" || direction === "down" ? 1 : -1;
+		let directionalIndex;
+		for (let targetIndex = currentIndex + step; targetIndex >= 0 && targetIndex < blockOrder.length; targetIndex += step) {
+			const placedItem = placements[placementIndexes[targetIndex]];
+			if (rectsAreEqual(placedItem, target)) return targetIndex;
+			if (directionalIndex === void 0 && movesInDirection(placedItem, item.rect, direction)) directionalIndex = targetIndex;
+		}
+		return directionalIndex;
+	}
+
+// packages/block-editor/build-module/components/grid/auto-grid-item-movers.mjs
+	const DIRECTION_OFFSETS = {
+		left: [-1, 0],
+		right: [1, 0],
+		up: [0, -1],
+		down: [0, 1]
+	};
+	function hasAppliedGridStart(computedStyle, axis) {
+		const computedStart = computedStyle.getPropertyValue(`grid-${axis}-start`).trim();
+		return computedStart !== "auto" && !computedStart.startsWith("span ");
+	}
+	/**
+	* Reads where each child of an auto grid is rendered, as column and row
+	* ranges, and whether it has an explicit position.
+	*
+	* @param gridElement The grid element.
+	* @param blockOrder  The client IDs of the grid's children.
+	* @param getElement  Gets the element of a block by client ID.
+	* @param isAutoFit   Whether empty auto-fit column tracks collapse.
+	*
+	* @return The grid's track counts and items, or undefined if the grid can't
+	*         be measured.
+	*/
+	function getGridSnapshot(gridElement, blockOrder, getElement, isAutoFit) {
+		const measurement = getGridMeasurement(gridElement, isAutoFit);
+		if (!measurement) return;
+		const { columns, rows } = measurement;
+		if ([...columns, ...rows].some(({ end }) => !Number.isFinite(end))) return;
+		const items = [];
+		for (const clientId of blockOrder) {
+			const element = getElement(clientId);
+			if (!element || element.parentElement !== gridElement || !element.getClientRects().length) continue;
+			const bounds = getRectInGrid(gridElement, element, measurement);
+			if (!bounds) continue;
+			const columnRange = getTrackRange(columns, bounds.left, bounds.right);
+			const rowRange = getTrackRange(rows, bounds.top, bounds.bottom);
+			if (!columnRange || !rowRange) continue;
+			const computedStyle = element.ownerDocument.defaultView.getComputedStyle(element);
+			items.push({
+				clientId,
+				rect: new GridRect({
+					columnStart: columnRange[0],
+					columnEnd: columnRange[1],
+					rowStart: rowRange[0],
+					rowEnd: rowRange[1]
+				}),
+				columnStart: hasAppliedGridStart(computedStyle, "column") ? columnRange[0] : void 0,
+				rowStart: hasAppliedGridStart(computedStyle, "row") ? rowRange[0] : void 0
+			});
+		}
+		return {
+			columnCount: columns.length,
+			rowCount: rows.length,
+			items
+		};
+	}
+	/**
+	* Directional movers for a child of an auto grid. Each move reorders the block
+	* if it can be auto-placed in that direction, and otherwise pins it to the
+	* target cell with an explicit column and row start.
+	*
+	* @param props
+	* @param props.blockClientId The client ID of the child block.
+	* @param props.gridClientId  The client ID of the grid block.
+	* @param props.isAutoFit     Whether the grid collapses empty column tracks.
+	*/
+	function AutoGridItemMovers({ blockClientId, gridClientId, isAutoFit }) {
+		const { refsMap } = (0, _wordpress_element.useContext)(BlockRefs);
+		const blockElement = useBlockElement(blockClientId);
+		const { blockOrder, blockStyle, styleState } = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlockOrder, getBlockStyles, getSelectedBlockStyleState } = unlock$2(select(store));
+			return {
+				blockOrder: getBlockOrder(gridClientId),
+				blockStyle: getBlockStyles([blockClientId])[blockClientId],
+				styleState: getSelectedBlockStyleState(blockClientId)
+			};
+		}, [blockClientId, gridClientId]);
+		const { moveBlocksToPosition, updateBlockAttributes } = (0, _wordpress_data.useDispatch)(store);
+		const [snapshot, setSnapshot] = (0, _wordpress_element.useState)();
+		const readSnapshot = (0, _wordpress_element.useCallback)(() => {
+			const gridElement = blockElement?.parentElement;
+			if (!gridElement) return;
+			return getGridSnapshot(gridElement, blockOrder, (clientId) => refsMap.get(clientId), isAutoFit);
+		}, [
+			blockElement,
+			blockOrder,
+			isAutoFit,
+			refsMap
+		]);
+		(0, _wordpress_element.useEffect)(() => {
+			const gridElement = blockElement?.parentElement;
+			if (!gridElement) {
+				setSnapshot(void 0);
+				return;
+			}
+			const update = () => setSnapshot(readSnapshot());
+			update();
+			let frame = requestAnimationFrame(() => {
+				update();
+				frame = requestAnimationFrame(update);
+			});
+			const observer = new ResizeObserver(update);
+			observer.observe(gridElement);
+			for (const clientId of blockOrder) {
+				const element = refsMap.get(clientId);
+				if (element) observer.observe(element);
+			}
+			const movementObserver = new MutationObserver(() => {
+				if (!blockElement.style.transform) update();
+			});
+			movementObserver.observe(blockElement, {
+				attributes: true,
+				attributeFilter: ["style"]
+			});
+			return () => {
+				cancelAnimationFrame(frame);
+				observer.disconnect();
+				movementObserver.disconnect();
+			};
+		}, [
+			blockElement,
+			blockOrder,
+			blockStyle,
+			refsMap,
+			readSnapshot,
+			styleState
+		]);
+		const selected = snapshot?.items.find((item) => item.clientId === blockClientId);
+		function move(direction) {
+			const current = readSnapshot();
+			const item = current?.items.find((candidate) => candidate.clientId === blockClientId);
+			if (!current || !item) return;
+			const [columnOffset, rowOffset] = DIRECTION_OFFSETS[direction];
+			const target = new GridRect({
+				columnStart: item.rect.columnStart + columnOffset,
+				columnEnd: item.rect.columnEnd + columnOffset,
+				rowStart: item.rect.rowStart + rowOffset,
+				rowEnd: item.rect.rowEnd + rowOffset
+			});
+			if (target.columnStart < 1 || target.columnEnd > current.columnCount || target.rowStart < 1 || target.rowEnd > current.rowCount) return;
+			const targetIndex = findAutoGridReorderIndex(current, blockOrder, blockClientId, target, direction);
+			if (targetIndex !== void 0) {
+				moveBlocksToPosition([blockClientId], gridClientId, gridClientId, targetIndex);
+				return;
+			}
+			const style = isPlainObject(blockStyle) ? blockStyle : void 0;
+			updateBlockAttributes(blockClientId, { style: getUpdatedChildLayoutStyle(style, {
+				columnStart: target.columnStart,
+				rowStart: target.rowStart
+			}, styleState) });
+		}
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+			className: "block-editor-grid-item-mover__move-button-container",
+			children: [
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: "block-editor-grid-item-mover__move-horizontal-button-container is-left",
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
+						icon: (0, _wordpress_i18n.isRTL)() ? chevron_right_default : chevron_left_default,
+						label: (0, _wordpress_i18n.isRTL)() ? (0, _wordpress_i18n.__)("Move right") : (0, _wordpress_i18n.__)("Move left"),
+						description: (0, _wordpress_i18n.isRTL)() ? (0, _wordpress_i18n.__)("Move right") : (0, _wordpress_i18n.__)("Move left"),
+						isDisabled: !selected || selected.rect.columnStart <= 1,
+						onClick: () => move("left")
+					})
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+					className: "block-editor-grid-item-mover__move-vertical-button-container",
+					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
+						className: "is-up-button",
+						icon: chevron_up_default,
+						label: (0, _wordpress_i18n.__)("Move up"),
+						description: (0, _wordpress_i18n.__)("Move up"),
+						isDisabled: !selected || selected.rect.rowStart <= 1,
+						onClick: () => move("up")
+					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
+						className: "is-down-button",
+						icon: chevron_down_default,
+						label: (0, _wordpress_i18n.__)("Move down"),
+						description: (0, _wordpress_i18n.__)("Move down"),
+						isDisabled: !selected || !snapshot || selected.rect.rowEnd >= snapshot.rowCount,
+						onClick: () => move("down")
+					})]
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: "block-editor-grid-item-mover__move-horizontal-button-container is-right",
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
+						icon: (0, _wordpress_i18n.isRTL)() ? chevron_left_default : chevron_right_default,
+						label: (0, _wordpress_i18n.isRTL)() ? (0, _wordpress_i18n.__)("Move left") : (0, _wordpress_i18n.__)("Move right"),
+						description: (0, _wordpress_i18n.isRTL)() ? (0, _wordpress_i18n.__)("Move left") : (0, _wordpress_i18n.__)("Move right"),
+						isDisabled: !selected || !snapshot || selected.rect.columnEnd >= snapshot.columnCount,
+						onClick: () => move("right")
+					})
+				})
+			]
+		});
+	}
+
 // packages/block-editor/build-module/components/block-mover/index.mjs
 	function BlockMover({ clientIds, hideDragHandle }) {
-		const { canMove, rootClientId, isFirst, isLast, orientation, isManualGrid } = (0, _wordpress_data.useSelect)((select) => {
-			const { getBlockIndex, getBlockListSettings, canMoveBlocks, getBlockOrder, getBlockRootClientId, getBlockAttributes } = select(store);
+		const { canMove, rootClientId, isFirst, isLast, orientation, isManualGrid, isAutoGrid, isAutoFit } = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlockIndex, getBlockListSettings, canMoveBlocks, getBlockOrder, getBlockRootClientId, getBlockAttributes, getBlockName } = select(store);
 			const normalizedClientIds = Array.isArray(clientIds) ? clientIds : [clientIds];
 			const firstClientId = normalizedClientIds[0];
 			const _rootClientId = getBlockRootClientId(firstClientId);
 			const firstIndex = getBlockIndex(firstClientId);
 			const lastIndex = getBlockIndex(normalizedClientIds[normalizedClientIds.length - 1]);
 			const blockOrder = getBlockOrder(_rootClientId);
-			const { layout = {} } = getBlockAttributes(_rootClientId) ?? {};
+			const { layout } = getBlockAttributes(_rootClientId) ?? {};
+			const parentName = getBlockName(_rootClientId);
+			const layoutSupport = getLayoutBlockSupport(parentName);
+			const parentLayout = normalizeLegacyLayout(layout) || layoutSupport?.default;
 			return {
 				canMove: canMoveBlocks(clientIds),
 				rootClientId: _rootClientId,
 				isFirst: firstIndex === 0,
 				isLast: lastIndex === blockOrder.length - 1,
 				orientation: getBlockListSettings(_rootClientId)?.orientation,
-				isManualGrid: layout.type === "grid" && layout.isManualPlacement && window.__experimentalEnableGridInteractivity
+				isManualGrid: parentLayout?.type === "grid" && parentLayout.isManualPlacement && window.__experimentalEnableGridInteractivity,
+				isAutoGrid: normalizedClientIds.length === 1 && parentLayout?.type === "grid" && !parentLayout.isManualPlacement && !!layoutSupport?.allowSizingOnChildren,
+				isAutoFit: parentLayout?.autoFit === true
 			};
 		}, [clientIds]);
-		if ((!Array.isArray(clientIds) || clientIds.length > 0) && (!canMove || isFirst && isLast && !rootClientId || hideDragHandle && isManualGrid)) return null;
+		const hasBlocks = !Array.isArray(clientIds) || clientIds.length > 0;
+		if (hasBlocks && (!canMove || isFirst && isLast && !rootClientId || hideDragHandle && isManualGrid)) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.ToolbarGroup, {
 			className: clsx("block-editor-block-mover", { "is-horizontal": orientation === "horizontal" }),
 			children: [!hideDragHandle && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockDraggable, {
@@ -92931,7 +93833,11 @@ If there's a particular need for this, please submit a feature request at https:
 					tabIndex: "-1",
 					...draggableProps
 				})
-			}), !isManualGrid && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+			}), isAutoGrid && rootClientId && hasBlocks ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AutoGridItemMovers, {
+				blockClientId: Array.isArray(clientIds) ? clientIds[0] : clientIds,
+				gridClientId: rootClientId,
+				isAutoFit
+			}) : !isManualGrid && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: "block-editor-block-mover__move-button-container",
 				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, { children: (itemProps) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockMoverUpButton, {
 					clientIds,
@@ -97993,8 +98899,9 @@ If there's a particular need for this, please submit a feature request at https:
 	function useListViewDropZone({ dropZoneElement, updateExpansion }) {
 		const { getBlockRootClientId, getBlockIndex, getBlockCount, getDraggedBlockClientIds, canInsertBlocks } = (0, _wordpress_data.useSelect)(store);
 		const [target, setTarget] = (0, _wordpress_element.useState)();
+		const { onBlocksDrop } = useAutoGridDrop();
 		const { rootClientId: targetRootClientId, blockIndex: targetBlockIndex } = target || {};
-		const onBlockDrop = useOnBlockDrop(targetRootClientId, targetBlockIndex);
+		const onBlockDrop = useOnBlockDrop(targetRootClientId, targetBlockIndex, { onBlocksDrop });
 		const rtl = (0, _wordpress_i18n.isRTL)();
 		const previousRootClientId = (0, _wordpress_compose.usePrevious)(targetRootClientId);
 		const maybeExpandBlock = (0, _wordpress_element.useCallback)((_target) => {
@@ -114946,21 +115853,6 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	(0, _wordpress_hooks.addFilter)("blocks.getSaveContent.extraProps", "core/generated-class-name/save-props", addGeneratedClassName);
 
-// packages/block-editor/build-module/components/grid/use-get-number-of-blocks-before-cell.mjs
-	function useGetNumberOfBlocksBeforeCell(gridClientId, numColumns) {
-		const { getBlockOrder, getBlockAttributes } = (0, _wordpress_data.useSelect)(store);
-		const getNumberOfBlocksBeforeCell = (column, row) => {
-			const targetIndex = (row - 1) * numColumns + column - 1;
-			let count = 0;
-			for (const clientId of getBlockOrder(gridClientId)) {
-				const { columnStart, rowStart } = getBlockAttributes(clientId).style?.layout ?? {};
-				if ((rowStart - 1) * numColumns + columnStart - 1 < targetIndex) count++;
-			}
-			return count;
-		};
-		return getNumberOfBlocksBeforeCell;
-	}
-
 // packages/block-editor/build-module/components/child-layout-control/index.mjs
 	const FLEX_CHILD_LAYOUT_VALUES$1 = {
 		fit: "fit",
@@ -114990,19 +115882,24 @@ If there's a particular need for this, please submit a feature request at https:
 	*
 	* @param props                      Props.
 	* @param props.value                The child layout value.
+	* @param props.inheritedValue       The default child layout inherited by the selected viewport.
 	* @param props.onChange             Function to update the child layout value.
 	* @param props.parentLayout         The parent layout value.
 	*
 	* @param props.isShownByDefault     Whether the control is shown by default.
 	* @param props.panelId              The panel ID.
 	* @param props.showGridSpanDefaults Whether unset grid span controls should show default values.
+	* @param props.isViewportState      Whether the controls edit a viewport style state.
 	* @return child layout edit element.
 	*/
-	function ChildLayoutControl({ value: childLayout = {}, onChange, parentLayout, isShownByDefault, panelId, showGridSpanDefaults = true }) {
+	function ChildLayoutControl({ value: childLayout = {}, inheritedValue, onChange, parentLayout, isShownByDefault, panelId, showGridSpanDefaults = true, isViewportState = false }) {
 		const { type: parentType, default: { type: defaultParentType = "default" } = {} } = parentLayout ?? {};
 		const parentLayoutType = parentType || defaultParentType;
 		if (parentLayoutType === "flex") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FlexControls, {
-			childLayout,
+			childLayout: {
+				...inheritedValue,
+				...childLayout
+			},
 			onChange,
 			parentLayout,
 			isShownByDefault,
@@ -115010,11 +115907,13 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		else if (parentLayoutType === "grid") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridControls, {
 			childLayout,
+			inheritedValue,
 			onChange,
 			parentLayout,
 			isShownByDefault,
 			panelId,
-			showGridSpanDefaults
+			showGridSpanDefaults,
+			isViewportState
 		});
 		return null;
 	}
@@ -115102,14 +116001,36 @@ If there's a particular need for this, please submit a feature request at https:
 		const { orientation = "horizontal" } = parentLayout ?? {};
 		return orientation === "horizontal" ? (0, _wordpress_i18n.__)("Width") : (0, _wordpress_i18n.__)("Height");
 	}
-	function GridControls({ childLayout, onChange, parentLayout, isShownByDefault, panelId, showGridSpanDefaults }) {
-		const { columnStart, rowStart, columnSpan, rowSpan } = childLayout;
+	/**
+	* Parses the value of a column or row start input. Clearing the input resets
+	* the item to automatic placement, except in manual grids, where every item
+	* needs a position and the start falls back to 1.
+	*
+	* @param value             The input value.
+	* @param isManualPlacement Whether the parent grid uses manual placement.
+	* @param isViewportState   Whether a viewport style state is selected.
+	*
+	* @return The start position, or null/undefined for automatic placement.
+	*/
+	function parseGridStartValue(value, isManualPlacement, isViewportState) {
+		if (value === "") {
+			if (isManualPlacement) return 1;
+			return isViewportState ? null : void 0;
+		}
+		return parseInt(value, 10);
+	}
+	function GridControls({ childLayout, inheritedValue, onChange, parentLayout, isShownByDefault, panelId, showGridSpanDefaults, isViewportState }) {
+		const { columnStart, rowStart, columnSpan, rowSpan } = {
+			...inheritedValue,
+			...childLayout
+		};
 		const { columnCount, rowCount } = parentLayout ?? {};
+		const isManualPlacement = parentLayout?.isManualPlacement ?? parentLayout?.default?.isManualPlacement;
 		const rootClientId = (0, _wordpress_data.useSelect)((select) => select(store).getBlockRootClientId(panelId));
 		const { moveBlocksToPosition, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(store);
 		const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(rootClientId, columnCount || 3);
-		const hasStartValue = () => !!columnStart || !!rowStart;
-		const hasSpanValue = () => !!columnSpan || !!rowSpan;
+		const hasStartValue = () => childLayout.columnStart !== void 0 || childLayout.rowStart !== void 0;
+		const hasSpanValue = () => !!childLayout.columnSpan || !!childLayout.rowSpan;
 		const resetGridStarts = () => {
 			onChange({
 				columnStart: void 0,
@@ -115126,94 +116047,99 @@ If there's a particular need for this, please submit a feature request at https:
 		const maxRowSpan = window.__experimentalEnableGridInteractivity && rowCount ? rowCount - (rowStart ?? 1) + 1 : void 0;
 		const columnSpanValue = columnSpan ?? (showGridSpanDefaults ? 1 : void 0);
 		const rowSpanValue = rowSpan ?? (showGridSpanDefaults ? 1 : void 0);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Flex, {
-			as: _wordpress_components.__experimentalToolsPanelItem,
-			hasValue: hasSpanValue,
-			label: (0, _wordpress_i18n.__)("Grid span"),
-			onDeselect: resetGridSpans,
-			isShownByDefault,
-			panelId,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, {
-				style: { width: "50%" },
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalInputControl, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+				hasValue: hasSpanValue,
+				label: (0, _wordpress_i18n.__)("Grid span"),
+				onDeselect: resetGridSpans,
+				isShownByDefault,
+				panelId
+			}),
+			direction: "row",
+			gap: "sm",
+			align: "center",
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				style: {
+					width: "50%",
+					minWidth: 0
+				},
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputControl, {
 					label: (0, _wordpress_i18n.__)("Column span"),
 					type: "number",
-					onChange: (value) => {
+					onValueChange: (value) => {
 						const newColumnSpan = value === "" ? 1 : parseInt(value, 10);
-						onChange({
-							columnStart,
-							rowStart,
-							rowSpan,
-							columnSpan: maxColumnSpan ? Math.min(newColumnSpan, maxColumnSpan) : newColumnSpan
-						});
+						onChange({ columnSpan: maxColumnSpan ? Math.min(newColumnSpan, maxColumnSpan) : newColumnSpan });
 					},
-					value: columnSpanValue,
+					value: columnSpanValue === void 0 ? "" : String(columnSpanValue),
 					min: 1,
 					max: maxColumnSpan
 				})
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, {
-				style: { width: "50%" },
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalInputControl, {
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				style: {
+					width: "50%",
+					minWidth: 0
+				},
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputControl, {
 					label: (0, _wordpress_i18n.__)("Row span"),
 					type: "number",
-					onChange: (value) => {
+					onValueChange: (value) => {
 						const newRowSpan = value === "" ? 1 : parseInt(value, 10);
-						onChange({
-							columnStart,
-							rowStart,
-							columnSpan,
-							rowSpan: maxRowSpan ? Math.min(newRowSpan, maxRowSpan) : newRowSpan
-						});
+						onChange({ rowSpan: maxRowSpan ? Math.min(newRowSpan, maxRowSpan) : newRowSpan });
 					},
-					value: rowSpanValue,
+					value: rowSpanValue === void 0 ? "" : String(rowSpanValue),
 					min: 1,
 					max: maxRowSpan
 				})
 			})]
-		}), window.__experimentalEnableGridInteractivity && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Flex, {
-			as: _wordpress_components.__experimentalToolsPanelItem,
-			hasValue: hasStartValue,
-			label: (0, _wordpress_i18n.__)("Grid placement"),
-			onDeselect: resetGridStarts,
-			isShownByDefault: false,
-			panelId,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, {
-				style: { width: "50%" },
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalInputControl, {
-					label: (0, _wordpress_i18n.__)("Column"),
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+				hasValue: hasStartValue,
+				label: (0, _wordpress_i18n.__)("Grid placement"),
+				onDeselect: resetGridStarts,
+				isShownByDefault: false,
+				defaultShown: !!inheritedValue?.columnStart || !!inheritedValue?.rowStart,
+				panelId
+			}),
+			direction: "row",
+			gap: "sm",
+			align: "center",
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				style: {
+					width: "50%",
+					minWidth: 0
+				},
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputControl, {
+					label: (0, _wordpress_i18n.__)("Column start"),
 					type: "number",
-					onChange: (value) => {
-						const newColumnStart = value === "" ? 1 : parseInt(value, 10);
-						onChange({
-							columnStart: newColumnStart,
-							rowStart,
-							columnSpan,
-							rowSpan
-						});
-						__unstableMarkNextChangeAsNotPersistent();
-						moveBlocksToPosition([panelId], rootClientId, rootClientId, getNumberOfBlocksBeforeCell(newColumnStart, rowStart));
+					onValueChange: (value) => {
+						const newColumnStart = parseGridStartValue(value, isManualPlacement, isViewportState);
+						onChange({ columnStart: newColumnStart });
+						if (isManualPlacement && typeof newColumnStart === "number") {
+							__unstableMarkNextChangeAsNotPersistent();
+							moveBlocksToPosition([panelId], rootClientId, rootClientId, getNumberOfBlocksBeforeCell(newColumnStart, rowStart));
+						}
 					},
-					value: columnStart ?? 1,
+					value: columnStart === void 0 || columnStart === null ? "" : String(columnStart),
 					min: 1,
 					max: columnCount ? columnCount - (columnSpan ?? 1) + 1 : void 0
 				})
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, {
-				style: { width: "50%" },
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalInputControl, {
-					label: (0, _wordpress_i18n.__)("Row"),
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				style: {
+					width: "50%",
+					minWidth: 0
+				},
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputControl, {
+					label: (0, _wordpress_i18n.__)("Row start"),
 					type: "number",
-					onChange: (value) => {
-						const newRowStart = value === "" ? 1 : parseInt(value, 10);
-						onChange({
-							columnStart,
-							rowStart: newRowStart,
-							columnSpan,
-							rowSpan
-						});
-						__unstableMarkNextChangeAsNotPersistent();
-						moveBlocksToPosition([panelId], rootClientId, rootClientId, getNumberOfBlocksBeforeCell(columnStart, newRowStart));
+					onValueChange: (value) => {
+						const newRowStart = parseGridStartValue(value, isManualPlacement, isViewportState);
+						onChange({ rowStart: newRowStart });
+						if (isManualPlacement && typeof newRowStart === "number") {
+							__unstableMarkNextChangeAsNotPersistent();
+							moveBlocksToPosition([panelId], rootClientId, rootClientId, getNumberOfBlocksBeforeCell(columnStart, newRowStart));
+						}
 					},
-					value: rowStart ?? 1,
+					value: rowStart === void 0 || rowStart === null ? "" : String(rowStart),
 					min: 1,
 					max: rowCount ? rowCount - (rowSpan ?? 1) + 1 : void 0
 				})
@@ -115514,7 +116440,7 @@ If there's a particular need for this, please submit a feature request at https:
 		aspectRatio: true,
 		childLayout: true
 	};
-	function DimensionsPanel$1({ as: Wrapper = DimensionsToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$2, onVisualize = () => {}, includeLayoutControls = false, allowAxialBlockGap = true, styleState = DEFAULT_BLOCK_STYLE_STATE }) {
+	function DimensionsPanel$1({ as: Wrapper = DimensionsToolsPanel, value, onChange, inheritedValue = value, inheritedChildLayout, settings, panelId, defaultControls = DEFAULT_CONTROLS$2, onVisualize = () => {}, includeLayoutControls = false, allowAxialBlockGap = true, styleState = DEFAULT_BLOCK_STYLE_STATE }) {
 		const { dimensions, spacing } = settings;
 		const decodeValue = (rawValue) => {
 			if (rawValue && typeof rawValue === "object") return Object.keys(rawValue).reduce((acc, key) => {
@@ -115866,10 +116792,12 @@ If there's a particular need for this, please submit a feature request at https:
 				}),
 				showChildLayoutControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ChildLayoutControl, {
 					value: childLayout,
+					inheritedValue: inheritedChildLayout,
 					onChange: setChildLayout,
 					parentLayout: settings?.parentLayout,
 					panelId,
 					showGridSpanDefaults: !hasViewportBlockStyleState(styleState),
+					isViewportState: hasViewportBlockStyleState(styleState),
 					isShownByDefault: defaultControls.childLayout ?? DEFAULT_CONTROLS$2.childLayout
 				}),
 				showMinHeightControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
@@ -116901,7 +117829,7 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		});
 	}
-	function getComputedCSS$1(element, property) {
+	function getComputedCSS(element, property) {
 		return element.ownerDocument.defaultView.getComputedStyle(element).getPropertyValue(property);
 	}
 	function MarginVisualizer({ clientId, value, forceShow }) {
@@ -116909,10 +117837,10 @@ If there's a particular need for this, please submit a feature request at https:
 			clientId,
 			value: value?.spacing?.margin,
 			computeStyle: (blockElement) => {
-				const top = getComputedCSS$1(blockElement, "margin-top");
-				const right = getComputedCSS$1(blockElement, "margin-right");
-				const bottom = getComputedCSS$1(blockElement, "margin-bottom");
-				const left = getComputedCSS$1(blockElement, "margin-left");
+				const top = getComputedCSS(blockElement, "margin-top");
+				const right = getComputedCSS(blockElement, "margin-right");
+				const bottom = getComputedCSS(blockElement, "margin-bottom");
+				const left = getComputedCSS(blockElement, "margin-left");
 				return {
 					borderTopWidth: top,
 					borderRightWidth: right,
@@ -116932,10 +117860,10 @@ If there's a particular need for this, please submit a feature request at https:
 			clientId,
 			value: value?.spacing?.padding,
 			computeStyle: (blockElement) => ({
-				borderTopWidth: getComputedCSS$1(blockElement, "padding-top"),
-				borderRightWidth: getComputedCSS$1(blockElement, "padding-right"),
-				borderBottomWidth: getComputedCSS$1(blockElement, "padding-bottom"),
-				borderLeftWidth: getComputedCSS$1(blockElement, "padding-left")
+				borderTopWidth: getComputedCSS(blockElement, "padding-top"),
+				borderRightWidth: getComputedCSS(blockElement, "padding-right"),
+				borderBottomWidth: getComputedCSS(blockElement, "padding-bottom"),
+				borderLeftWidth: getComputedCSS(blockElement, "padding-left")
 			}),
 			forceShow
 		});
@@ -117014,7 +117942,8 @@ If there's a particular need for this, please submit a feature request at https:
 				defaultControls,
 				styleState: selectedState,
 				onVisualize: isStateSelected ? void 0 : setVisualizedProperty,
-				inheritedValue
+				inheritedValue,
+				inheritedChildLayout: hasViewportBlockStyleState(selectedState) ? style?.layout : void 0
 			}),
 			!isStateSelected && !!settings?.spacing?.padding && visualizedProperty === "padding" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PaddingVisualizer, {
 				forceShow: visualizedProperty === "padding",
@@ -118720,163 +119649,6 @@ If there's a particular need for this, please submit a feature request at https:
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/layout/addAttribute", addAttribute);
 	(0, _wordpress_hooks.addFilter)("editor.BlockListBlock", "core/editor/layout/with-layout-styles", withLayoutStyles);
 
-// packages/block-editor/build-module/components/grid/utils.mjs
-	function range(start, length) {
-		return Array.from({ length }, (_, i) => start + i);
-	}
-	var GridRect = class {
-		constructor({ columnStart, rowStart, columnEnd, rowEnd, columnSpan, rowSpan } = {}) {
-			this.columnStart = columnStart ?? 1;
-			this.rowStart = rowStart ?? 1;
-			if (columnSpan !== void 0) this.columnEnd = this.columnStart + columnSpan - 1;
-			else this.columnEnd = columnEnd ?? this.columnStart;
-			if (rowSpan !== void 0) this.rowEnd = this.rowStart + rowSpan - 1;
-			else this.rowEnd = rowEnd ?? this.rowStart;
-		}
-		get columnSpan() {
-			return this.columnEnd - this.columnStart + 1;
-		}
-		get rowSpan() {
-			return this.rowEnd - this.rowStart + 1;
-		}
-		contains(column, row) {
-			return column >= this.columnStart && column <= this.columnEnd && row >= this.rowStart && row <= this.rowEnd;
-		}
-		containsRect(rect) {
-			return this.contains(rect.columnStart, rect.rowStart) && this.contains(rect.columnEnd, rect.rowEnd);
-		}
-		intersectsRect(rect) {
-			return this.columnStart <= rect.columnEnd && this.columnEnd >= rect.columnStart && this.rowStart <= rect.rowEnd && this.rowEnd >= rect.rowStart;
-		}
-	};
-	/**
-	* Reads an item's grid placement, defaulting omitted spans to one. Callers
-	* validate the values according to their placement requirements.
-	*
-	* @param layout The item's layout attributes.
-	*
-	* @return Placement fields with defaults for omitted spans.
-	*/
-	function getGridItemPlacement(layout) {
-		const { columnStart, rowStart, columnSpan = 1, rowSpan = 1 } = layout ?? {};
-		return {
-			columnStart,
-			rowStart,
-			columnSpan,
-			rowSpan
-		};
-	}
-	/**
-	* Gets the row count needed to contain a set of rectangles, respecting the
-	* caller's minimum. The minimum can be the current count to only grow rows,
-	* or a baseline to also allow automatically added rows to shrink.
-	*
-	* @param rects           Grid item rectangles.
-	* @param minimumRowCount Minimum number of rows to retain.
-	*
-	* @return Required row count.
-	*/
-	function getRequiredGridRowCount(rects, minimumRowCount) {
-		let bottomMostRow = -Infinity;
-		for (const rect of rects) bottomMostRow = Math.max(bottomMostRow, rect.rowEnd);
-		return Math.max(minimumRowCount, bottomMostRow);
-	}
-	function getComputedCSS(element, property) {
-		return element.ownerDocument.defaultView.getComputedStyle(element).getPropertyValue(property);
-	}
-	/**
-	* Given a grid-template-columns or grid-template-rows CSS property value, gets the start and end
-	* position in pixels of each grid track.
-	*
-	* https://css-tricks.com/snippets/css/complete-guide-grid/#aa-grid-track
-	*
-	* @param template The grid-template-columns or grid-template-rows CSS property value.
-	*                 Only supports fixed sizes in pixels.
-	* @param gap      The gap between grid tracks in pixels.
-	*
-	* @return An array of objects with the start and end
-	*         position in pixels of each grid track.
-	*/
-	function getGridTracks(template, gap) {
-		const tracks = [];
-		for (const size of template.split(" ")) {
-			const previousTrack = tracks[tracks.length - 1];
-			const start = previousTrack ? previousTrack.end + gap : 0;
-			const end = start + parseFloat(size);
-			tracks.push({
-				start,
-				end
-			});
-		}
-		return tracks;
-	}
-	/**
-	* Given an array of grid tracks and a position in pixels, gets the index of the closest track to
-	* that position.
-	*
-	* https://css-tricks.com/snippets/css/complete-guide-grid/#aa-grid-track
-	*
-	* @param tracks   An array of objects with the start and end
-	*                 position in pixels of each grid track.
-	* @param position The position in pixels.
-	* @param edge     The edge of the track to compare the
-	*                 position to. Either 'start' or 'end'.
-	*
-	* @return The index of the closest track to the position. 0-based, unlike CSS grid which
-	*         is 1-based.
-	*/
-	function getClosestTrack(tracks, position, edge = "start") {
-		return tracks.reduce((closest, track, index) => Math.abs(track[edge] - position) < Math.abs(tracks[closest][edge] - position) ? index : closest, 0);
-	}
-	function getGridRect(gridElement, rect) {
-		const columnGap = parseFloat(getComputedCSS(gridElement, "column-gap"));
-		const rowGap = parseFloat(getComputedCSS(gridElement, "row-gap"));
-		const gridColumnTracks = getGridTracks(getComputedCSS(gridElement, "grid-template-columns"), columnGap);
-		const gridRowTracks = getGridTracks(getComputedCSS(gridElement, "grid-template-rows"), rowGap);
-		const columnStart = getClosestTrack(gridColumnTracks, rect.left) + 1;
-		const rowStart = getClosestTrack(gridRowTracks, rect.top) + 1;
-		return new GridRect({
-			columnStart,
-			columnEnd: getClosestTrack(gridColumnTracks, rect.right, "end") + 1,
-			rowStart,
-			rowEnd: getClosestTrack(gridRowTracks, rect.bottom, "end") + 1
-		});
-	}
-	function getGridItemRect(gridItemElement) {
-		return getGridRect(gridItemElement.parentElement, new window.DOMRect(gridItemElement.offsetLeft, gridItemElement.offsetTop, gridItemElement.offsetWidth, gridItemElement.offsetHeight));
-	}
-	function getGridInfo(gridElement) {
-		const gridTemplateColumns = getComputedCSS(gridElement, "grid-template-columns");
-		const gridTemplateRows = getComputedCSS(gridElement, "grid-template-rows");
-		const borderTopWidth = getComputedCSS(gridElement, "border-top-width");
-		const borderRightWidth = getComputedCSS(gridElement, "border-right-width");
-		const borderBottomWidth = getComputedCSS(gridElement, "border-bottom-width");
-		const borderLeftWidth = getComputedCSS(gridElement, "border-left-width");
-		const paddingTop = getComputedCSS(gridElement, "padding-top");
-		const paddingRight = getComputedCSS(gridElement, "padding-right");
-		const paddingBottom = getComputedCSS(gridElement, "padding-bottom");
-		const paddingLeft = getComputedCSS(gridElement, "padding-left");
-		const numColumns = gridTemplateColumns.split(" ").length;
-		const numRows = gridTemplateRows.split(" ").length;
-		return {
-			numColumns,
-			numRows,
-			numItems: numColumns * numRows,
-			currentColor: getComputedCSS(gridElement, "color"),
-			style: {
-				gridTemplateColumns,
-				gridTemplateRows,
-				gap: getComputedCSS(gridElement, "gap"),
-				inset: `
-				calc(${paddingTop} + ${borderTopWidth})
-				calc(${paddingRight} + ${borderRightWidth})
-				calc(${paddingBottom} + ${borderBottomWidth})
-				calc(${paddingLeft} + ${borderLeftWidth})
-			`
-			}
-		};
-	}
-
 // packages/block-editor/build-module/components/grid/grid-visualizer.mjs
 	function GridVisualizer({ clientId, contentRef, parentLayout, childGridClientId }) {
 		const isDistractionFree = (0, _wordpress_data.useSelect)((select) => select(store).getSettings().isDistractionFree, []);
@@ -119100,7 +119872,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function GridItemResizer({ clientId, bounds, onChange, parentLayout }) {
 		const blockElement = useBlockElement(clientId);
 		const rootBlockElement = blockElement?.parentElement;
-		const { isManualPlacement } = parentLayout;
+		const { autoFit, isManualPlacement } = parentLayout;
 		if (!blockElement || !rootBlockElement) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemResizerInner, {
 			clientId,
@@ -119108,10 +119880,11 @@ If there's a particular need for this, please submit a feature request at https:
 			blockElement,
 			rootBlockElement,
 			onChange,
-			isManualGrid: isManualPlacement && window.__experimentalEnableGridInteractivity
+			isManualGrid: isManualPlacement && window.__experimentalEnableGridInteractivity,
+			collapseEmptyColumnGaps: autoFit === true
 		});
 	}
-	function GridItemResizerInner({ clientId, bounds, blockElement, rootBlockElement, onChange, isManualGrid = false }) {
+	function GridItemResizerInner({ clientId, bounds, blockElement, rootBlockElement, onChange, isManualGrid = false, collapseEmptyColumnGaps }) {
 		const [resizeDirection, setResizeDirection] = (0, _wordpress_element.useState)(null);
 		const [enableSide, setEnableSide] = (0, _wordpress_element.useState)({
 			top: false,
@@ -119203,10 +119976,9 @@ If there's a particular need for this, please submit a feature request at https:
 					setResizeDirection(direction);
 				},
 				onResizeStop: (event, direction, boxElement) => {
-					const columnGap = parseFloat(getComputedCSS(rootBlockElement, "column-gap"));
-					const rowGap = parseFloat(getComputedCSS(rootBlockElement, "row-gap"));
-					const gridColumnTracks = getGridTracks(getComputedCSS(rootBlockElement, "grid-template-columns"), columnGap);
-					const gridRowTracks = getGridTracks(getComputedCSS(rootBlockElement, "grid-template-rows"), rowGap);
+					const measurement = getGridMeasurement(rootBlockElement, collapseEmptyColumnGaps);
+					if (!measurement) return;
+					const { columns: gridColumnTracks, rows: gridRowTracks } = measurement;
 					const rect = new window.DOMRect(blockElement.offsetLeft + boxElement.offsetLeft, blockElement.offsetTop + boxElement.offsetTop, boxElement.offsetWidth, boxElement.offsetHeight);
 					const columnStart = getClosestTrack(gridColumnTracks, rect.left) + 1;
 					const rowStart = getClosestTrack(gridRowTracks, rect.top) + 1;
@@ -119215,103 +119987,14 @@ If there's a particular need for this, please submit a feature request at https:
 					onChange({
 						columnSpan: columnEnd - columnStart + 1,
 						rowSpan: rowEnd - rowStart + 1,
-						columnStart: isManualGrid ? columnStart : void 0,
-						rowStart: isManualGrid ? rowStart : void 0
+						...isManualGrid && {
+							columnStart,
+							rowStart
+						}
 					});
 				}
 			})
 		});
-	}
-
-// packages/block-editor/build-module/components/grid/grid-item-movers.mjs
-	function GridItemMovers({ layout, parentLayout, onChange, gridClientId, blockClientId }) {
-		const { moveBlocksToPosition, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(store);
-		const columnStart = layout?.columnStart ?? 1;
-		const rowStart = layout?.rowStart ?? 1;
-		const columnSpan = layout?.columnSpan ?? 1;
-		const rowSpan = layout?.rowSpan ?? 1;
-		const columnEnd = columnStart + columnSpan - 1;
-		const rowEnd = rowStart + rowSpan - 1;
-		const columnCount = parentLayout?.columnCount;
-		const rowCount = parentLayout?.rowCount;
-		const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, columnCount);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockControls, {
-			group: "parent",
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.ToolbarGroup, {
-				className: "block-editor-grid-item-mover__move-button-container",
-				children: [
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-						className: "block-editor-grid-item-mover__move-horizontal-button-container is-left",
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
-							icon: (0, _wordpress_i18n.isRTL)() ? chevron_right_default : chevron_left_default,
-							label: (0, _wordpress_i18n.__)("Move left"),
-							description: (0, _wordpress_i18n.__)("Move left"),
-							isDisabled: columnStart <= 1,
-							onClick: () => {
-								onChange({ columnStart: columnStart - 1 });
-								__unstableMarkNextChangeAsNotPersistent();
-								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart - 1, rowStart));
-							}
-						})
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-						className: "block-editor-grid-item-mover__move-vertical-button-container",
-						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
-							className: "is-up-button",
-							icon: chevron_up_default,
-							label: (0, _wordpress_i18n.__)("Move up"),
-							description: (0, _wordpress_i18n.__)("Move up"),
-							isDisabled: rowStart <= 1,
-							onClick: () => {
-								onChange({ rowStart: rowStart - 1 });
-								__unstableMarkNextChangeAsNotPersistent();
-								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart - 1));
-							}
-						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
-							className: "is-down-button",
-							icon: chevron_down_default,
-							label: (0, _wordpress_i18n.__)("Move down"),
-							description: (0, _wordpress_i18n.__)("Move down"),
-							isDisabled: rowCount && rowEnd >= rowCount,
-							onClick: () => {
-								onChange({ rowStart: rowStart + 1 });
-								__unstableMarkNextChangeAsNotPersistent();
-								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart + 1));
-							}
-						})]
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-						className: "block-editor-grid-item-mover__move-horizontal-button-container is-right",
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
-							icon: (0, _wordpress_i18n.isRTL)() ? chevron_left_default : chevron_right_default,
-							label: (0, _wordpress_i18n.__)("Move right"),
-							description: (0, _wordpress_i18n.__)("Move right"),
-							isDisabled: columnCount && columnEnd >= columnCount,
-							onClick: () => {
-								onChange({ columnStart: columnStart + 1 });
-								__unstableMarkNextChangeAsNotPersistent();
-								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart + 1, rowStart));
-							}
-						})
-					})
-				]
-			})
-		});
-	}
-	function GridItemMover({ className, icon, label, isDisabled, onClick, description }) {
-		const descriptionId = `block-editor-grid-item-mover-button__description-${(0, _wordpress_compose.useInstanceId)(GridItemMover)}`;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
-			className: clsx("block-editor-grid-item-mover-button", className),
-			icon,
-			label,
-			"aria-describedby": descriptionId,
-			onClick: isDisabled ? null : onClick,
-			disabled: isDisabled,
-			accessibleWhenDisabled: true
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-			id: descriptionId,
-			children: description
-		})] });
 	}
 
 // packages/block-editor/build-module/components/grid/use-grid-layout-sync.mjs
@@ -119634,7 +120317,7 @@ If there's a particular need for this, please submit a feature request at https:
 				return;
 			}
 			const view = gridElement.ownerDocument.defaultView;
-			if (!view) return;
+			if (!view || !(gridElement instanceof view.HTMLElement)) return;
 			/**
 			* Returns the grid's direct block element children.
 			*
@@ -119656,13 +120339,13 @@ If there's a particular need for this, please submit a feature request at https:
 				const computedStyle = view.getComputedStyle(gridElement);
 				const gridWidth = gridElement.clientWidth - getCSSPixelValue(computedStyle.paddingLeft) - getCSSPixelValue(computedStyle.paddingRight);
 				if (gridWidth <= 0) return false;
-				const rowGap = getCSSPixelValue(computedStyle.rowGap);
-				const columnGap = getCSSPixelValue(computedStyle.columnGap);
-				const gridRowTracks = getGridTracks(computedStyle.gridTemplateRows, rowGap);
-				const gridColumnTracks = getGridTracks(computedStyle.gridTemplateColumns, columnGap);
+				const gridRowTracks = getGridTracks(gridElement, "row", { computedStyle });
+				const gridColumnTracks = getGridTracks(gridElement, "column", { computedStyle });
 				const rowHeight = gridRowTracks[0].end - gridRowTracks[0].start;
 				const columnWidth = gridColumnTracks[0].end - gridColumnTracks[0].start;
 				if (!Number.isFinite(rowHeight) || !Number.isFinite(columnWidth) || rowHeight <= 0 || columnWidth <= 0) return false;
+				const rowGap = getCSSPixelValue(computedStyle.rowGap);
+				const columnGap = getCSSPixelValue(computedStyle.columnGap);
 				const columnCount = gridColumnTracks.length;
 				const rowPitch = rowHeight + rowGap;
 				const columnPitch = columnWidth + columnGap;
@@ -119977,11 +120660,13 @@ If there's a particular need for this, please submit a feature request at https:
 			if (columnStart && columnSpan) declarations["grid-column"] = `${columnStart} / span ${columnSpan}`;
 			else if (columnStart) declarations["grid-column"] = `${columnStart}`;
 			else if (columnSpan) declarations["grid-column"] = `span ${columnSpan}`;
+			else if (hasViewportOverride("columnStart") && columnStart === null) declarations["grid-column"] = "auto";
 		}
 		if (!hasViewportOverrides || hasViewportOverride("rowStart") || hasViewportOverride("rowSpan")) {
 			if (rowStart && rowSpan) declarations["grid-row"] = `${rowStart} / span ${rowSpan}`;
 			else if (rowStart) declarations["grid-row"] = `${rowStart}`;
 			else if (rowSpan) declarations["grid-row"] = `span ${rowSpan}`;
+			else if (hasViewportOverride("rowStart") && rowStart === null) declarations["grid-row"] = "auto";
 		}
 		if (Object.keys(declarations).length) rules.push({
 			selector,
@@ -120060,35 +120745,6 @@ If there's a particular need for this, please submit a feature request at https:
 			}).map(serializeRule).join("");
 			return css ? `${mediaQuery}{${css}}` : "";
 		}).filter(Boolean).join("");
-	}
-	/**
-	* Merges child layout changes into the active layout style state.
-	*
-	* @param style         Block style attributes.
-	* @param layout        Child layout changes.
-	* @param selectedState Selected block style state.
-	* @return Updated block style attributes.
-	*/
-	function getUpdatedChildLayoutStyle(style, layout, selectedState) {
-		if (!hasViewportBlockStyleState(selectedState)) return {
-			...style,
-			layout: {
-				...style?.layout,
-				...layout
-			}
-		};
-		const layoutState = {
-			viewport: selectedState.viewport,
-			pseudo: DEFAULT_BLOCK_STYLE_STATE.pseudo
-		};
-		const stateStyle = getStyleForState(style, layoutState);
-		return setStyleForState(style, layoutState, {
-			...stateStyle,
-			layout: {
-				...stateStyle?.layout,
-				...layout
-			}
-		});
 	}
 	function useBlockPropsChildLayoutStyles({ style }) {
 		const { shouldRenderChildLayoutStyles, viewportSettings } = (0, _wordpress_data.useSelect)((select) => {
