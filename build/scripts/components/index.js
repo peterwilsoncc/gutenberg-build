@@ -64877,7 +64877,7 @@ VisualLabel });
 		if (Number(timezone.offset) === userTimezoneOffset) return null;
 		const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
 		const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
-		const prettyTimezoneString = timezone.string.replace("_", " ");
+		const prettyTimezoneString = timezone.string.replaceAll("_", " ");
 		const timezoneDetail = "UTC" === timezone.string ? (0, _wordpress_i18n.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
 		return prettyTimezoneString.trim().length === 0 ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: clsx("components-datetime__timezone", style_module_default$40["time-zone"]),
