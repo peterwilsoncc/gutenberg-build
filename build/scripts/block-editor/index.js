@@ -113612,13 +113612,14 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	function BlockQuickNavigationItem({ clientId, onSelect, onSwitchToListView, hasListViewTab }) {
 		const blockInformation = useBlockDisplayInformation(clientId);
-		const { isSelected, childBlocks, shouldRenderListView, blockName } = (0, _wordpress_data.useSelect)((select) => {
-			const { isBlockSelected, hasSelectedInnerBlock, getBlockOrder, getBlockName, shouldRenderBlockListView } = unlock$2(select(store));
+		const { isSelected, childBlocks, shouldRenderListView, isNestedListView, blockName } = (0, _wordpress_data.useSelect)((select) => {
+			const { isBlockSelected, hasSelectedInnerBlock, getBlockOrder, getBlockName, getBlockParents, shouldRenderBlockListView } = unlock$2(select(store));
 			const _blockName = getBlockName(clientId);
 			return {
 				isSelected: isBlockSelected(clientId) || hasSelectedInnerBlock(clientId, true),
 				childBlocks: getBlockOrder(clientId),
 				shouldRenderListView: shouldRenderBlockListView(clientId),
+				isNestedListView: getBlockParents(clientId, false).some((parentId) => shouldRenderBlockListView(parentId)),
 				blockName: _blockName
 			};
 		}, [clientId]);
@@ -113633,7 +113634,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const clearBlockHighlight = (0, _wordpress_compose.useEvent)(() => debouncedToggleBlockHighlight(clientId, false));
 		const clearBlockHighlightOnUnmount = (0, _wordpress_compose.useEvent)(() => toggleBlockHighlight(clientId, false));
 		(0, _wordpress_element.useEffect)(() => (() => clearBlockHighlightOnUnmount()), [clearBlockHighlightOnUnmount]);
-		const canNavigateToListView = childBlocks && childBlocks.length > 0 && hasListViewTab && shouldRenderListView;
+		const canNavigateToListView = childBlocks && childBlocks.length > 0 && hasListViewTab && shouldRenderListView && !isNestedListView;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 			__next40pxDefaultSize: true,
 			className: "block-editor-block-quick-navigation__item",
