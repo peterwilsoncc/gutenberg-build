@@ -1023,7 +1023,6 @@ iframe[name=editor-canvas] {
   .block-editor-block-mover__drag-handle {
     width: 24px;
     min-width: 0 !important;
-    overflow: hidden;
   }
   .block-editor-block-mover .block-editor-block-mover__drag-handle.has-icon.has-icon {
     padding-left: 0;
@@ -1049,6 +1048,9 @@ iframe[name=editor-canvas] {
     animation: components-button__appear-animation 0.1s ease;
     animation-fill-mode: forwards;
   }
+}
+.components-button.block-editor-block-mover-button:focus::before {
+  outline-offset: 0;
 }
 
 .block-editor-block-navigation__container {
