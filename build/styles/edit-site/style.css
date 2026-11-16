@@ -4761,20 +4761,23 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
 
 .edit-site-sidebar-navigation-screen__main {
   flex-grow: 1;
-  margin-bottom: 16px;
+  margin-bottom: var(--wpds-dimension-gap-lg, 16px);
 }
 .edit-site-sidebar-navigation-screen__main.has-footer {
   margin-bottom: 0;
 }
 
 .edit-site-sidebar-navigation-screen__content {
-  padding: 0 16px;
+  padding: 0 var(--wpds-dimension-gap-lg, 16px);
 }
 .edit-site-sidebar-navigation-screen__content .components-text {
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
 }
 .edit-site-sidebar-navigation-screen__content .components-heading {
-  margin-bottom: 8px;
+  margin-bottom: var(--wpds-dimension-gap-sm, 8px);
+}
+.edit-site-sidebar-navigation-screen__content .edit-site-sidebar-navigation-screen__preview-badge {
+  margin-bottom: var(--wpds-dimension-gap-md, 12px);
 }
 
 .edit-site-sidebar-navigation-screen__title-icon {
@@ -4782,8 +4785,8 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   top: 0;
   background: var(--wpds-color-background-surface-neutral-weak, #f3f3f3);
   padding-top: 32px;
-  margin-bottom: 8px;
-  padding-bottom: 8px;
+  margin-bottom: var(--wpds-dimension-gap-sm, 8px);
+  padding-bottom: var(--wpds-dimension-gap-sm, 8px);
   z-index: 1;
 }
 
@@ -4824,13 +4827,13 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   bottom: 0;
   background-color: var(--wpds-color-background-surface-neutral-weak, #f3f3f3);
   gap: 0;
-  padding: 8px 16px;
-  margin: 16px 0 0;
+  padding: var(--wpds-dimension-gap-sm, 8px) var(--wpds-dimension-gap-lg, 16px);
+  margin: var(--wpds-dimension-gap-lg, 16px) 0 0;
   border-top: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
 }
 .edit-site-sidebar-navigation-screen__footer .edit-site-sidebar-navigation-screen-details-footer {
-  margin-left: -16px;
-  margin-right: -16px;
+  margin-left: -var(--wpds-dimension-gap-lg);
+  margin-right: -var(--wpds-dimension-gap-lg);
 }
 
 /* In general style overrides are discouraged.

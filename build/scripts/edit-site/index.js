@@ -41161,7 +41161,7 @@ Icon: ButtonIcon });
 			return {
 				dashboardLink: getSettings().__experimentalDashboardLink,
 				dashboardLinkText: getSettings().__experimentalDashboardLinkText,
-				previewingThemeName: currentlyPreviewingThemeId ? select(_wordpress_core_data.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered : void 0
+				previewingThemeName: currentlyPreviewingThemeId ? (0, _wordpress_html_entities.decodeEntities)(select(_wordpress_core_data.store).getTheme(currentlyPreviewingThemeId)?.name?.rendered ?? "") : void 0
 			};
 		}, []);
 		const location = useLocation$20();
@@ -41196,7 +41196,7 @@ Icon: ButtonIcon });
 						className: "edit-site-sidebar-navigation-screen__title",
 						level: 1,
 						size: 20,
-						children: !isPreviewingTheme() ? title : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Previewing %1$s: %2$s"), previewingThemeName, title)
+						children: title
 					}),
 					actions && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 						className: "edit-site-sidebar-navigation-screen__actions",
@@ -41205,10 +41205,20 @@ Icon: ButtonIcon });
 				]
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: "edit-site-sidebar-navigation-screen__content",
-				children: [description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "edit-site-sidebar-navigation-screen__description",
-					children: description
-				}), content]
+				children: [
+					previewingThemeName && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
+						className: "edit-site-sidebar-navigation-screen__preview-badge",
+						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Badge, {
+							intent: "informational",
+							children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Previewing %s"), previewingThemeName)
+						})
+					}),
+					description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+						className: "edit-site-sidebar-navigation-screen__description",
+						children: description
+					}),
+					content
+				]
 			})]
 		}), footer && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("footer", {
 			className: "edit-site-sidebar-navigation-screen__footer",
