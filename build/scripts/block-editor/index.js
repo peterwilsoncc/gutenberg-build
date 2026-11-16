@@ -93305,8 +93305,17 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/grid/grid-item-movers.mjs
-	function GridItemMovers({ layout, parentLayout, onChange, gridClientId, blockClientId }) {
+	function GridItemMovers({ style, selectedState, isResponsiveEditing, parentLayout, onChange, gridClientId, blockClientId }) {
 		const { moveBlocksToPosition, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(store);
+		const hasViewportState = hasViewportBlockStyleState(selectedState);
+		const viewportStyle = hasViewportState ? getStyleForState(style, {
+			viewport: selectedState?.viewport,
+			pseudo: DEFAULT_BLOCK_STYLE_STATE.pseudo
+		}) : void 0;
+		const layout = {
+			...isPlainObject(style?.layout) ? style.layout : {},
+			...isPlainObject(viewportStyle?.layout) ? viewportStyle.layout : {}
+		};
 		const columnStart = layout?.columnStart ?? 1;
 		const rowStart = layout?.rowStart ?? 1;
 		const columnSpan = layout?.columnSpan ?? 1;
@@ -93316,8 +93325,13 @@ If there's a particular need for this, please submit a feature request at https:
 		const columnCount = parentLayout?.columnCount;
 		const rowCount = parentLayout?.rowCount;
 		const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, columnCount);
+		function moveToCell(column, row) {
+			if (hasViewportState) return;
+			__unstableMarkNextChangeAsNotPersistent();
+			moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(column, row));
+		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockControls, {
-			group: "parent",
+			group: isResponsiveEditing && hasViewportState ? "style-state" : "parent",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.ToolbarGroup, {
 				className: "block-editor-grid-item-mover__move-button-container",
 				children: [
@@ -93330,8 +93344,7 @@ If there's a particular need for this, please submit a feature request at https:
 							isDisabled: columnStart <= 1,
 							onClick: () => {
 								onChange({ columnStart: columnStart - 1 });
-								__unstableMarkNextChangeAsNotPersistent();
-								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart - 1, rowStart));
+								moveToCell(columnStart - 1, rowStart);
 							}
 						})
 					}),
@@ -93345,8 +93358,7 @@ If there's a particular need for this, please submit a feature request at https:
 							isDisabled: rowStart <= 1,
 							onClick: () => {
 								onChange({ rowStart: rowStart - 1 });
-								__unstableMarkNextChangeAsNotPersistent();
-								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart - 1));
+								moveToCell(columnStart, rowStart - 1);
 							}
 						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMover, {
 							className: "is-down-button",
@@ -93356,8 +93368,7 @@ If there's a particular need for this, please submit a feature request at https:
 							isDisabled: rowCount && rowEnd >= rowCount,
 							onClick: () => {
 								onChange({ rowStart: rowStart + 1 });
-								__unstableMarkNextChangeAsNotPersistent();
-								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart + 1));
+								moveToCell(columnStart, rowStart + 1);
 							}
 						})]
 					}),
@@ -93370,8 +93381,7 @@ If there's a particular need for this, please submit a feature request at https:
 							isDisabled: columnCount && columnEnd >= columnCount,
 							onClick: () => {
 								onChange({ columnStart: columnStart + 1 });
-								__unstableMarkNextChangeAsNotPersistent();
-								moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart + 1, rowStart));
+								moveToCell(columnStart + 1, rowStart);
 							}
 						})
 					})
@@ -120793,8 +120803,8 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 	function GridTools$1({ clientId, style, setAttributes, allowSizingOnChildren, isManualPlacement, parentLayout }) {
-		const { rootClientId, isVisible, parentBlockVisibility, blockBlockVisibility, deviceType, viewportSettings, isChildBlockAGrid, selectedState } = (0, _wordpress_data.useSelect)((select) => {
-			const { getBlockRootClientId, getBlockEditingMode, getTemplateLock, getBlockAttributes, getSettings, getSelectedBlockStyleState } = unlock$2(select(store));
+		const { rootClientId, isVisible, parentBlockVisibility, blockBlockVisibility, deviceType, viewportSettings, isChildBlockAGrid, selectedState, isResponsiveEditing } = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlockRootClientId, getBlockEditingMode, getTemplateLock, getBlockAttributes, getSettings, getSelectedBlockStyleState, isResponsiveEditing: getIsResponsiveEditing } = unlock$2(select(store));
 			const _rootClientId = getBlockRootClientId(clientId);
 			if (getTemplateLock(_rootClientId) || getBlockEditingMode(_rootClientId) !== "default") return {
 				rootClientId: _rootClientId,
@@ -120812,7 +120822,8 @@ If there's a particular need for this, please submit a feature request at https:
 				deviceType: currentDeviceType,
 				viewportSettings: settings?.__experimentalFeatures?.viewport,
 				isChildBlockAGrid: blockAttributes?.layout?.type === "grid",
-				selectedState: getSelectedBlockStyleState(clientId)
+				selectedState: getSelectedBlockStyleState(clientId),
+				isResponsiveEditing: getIsResponsiveEditing()
 			};
 		}, [clientId]);
 		const rawCanvasView = useBlockElement(clientId)?.ownerDocument?.defaultView;
@@ -120855,7 +120866,9 @@ If there's a particular need for this, please submit a feature request at https:
 				parentLayout
 			}),
 			isManualPlacement && window.__experimentalEnableGridInteractivity && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GridItemMovers, {
-				layout: style?.layout,
+				style,
+				selectedState,
+				isResponsiveEditing,
 				parentLayout,
 				onChange: updateLayout,
 				gridClientId: rootClientId,
