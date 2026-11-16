@@ -29962,6 +29962,12 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			hasClosePart: closePartCount > 0
 		};
 	}
+	function useClosePartRegistration() {
+		const context = react$1.useContext(ClosePartContext);
+		useIsoLayoutEffect(() => {
+			return context?.register();
+		}, [context]);
+	}
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/popover/popup/PopoverPopup.mjs
 /**
@@ -30157,6 +30163,35 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		});
 	});
 	PopoverDescription.displayName = "PopoverDescription";
+
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/popover/close/PopoverClose.mjs
+/**
+	* A button that closes the popover.
+	* Renders a `<button>` element.
+	*
+	* Documentation: [Base UI Popover](https://base-ui.com/react/components/popover)
+	*/
+	const PopoverClose = /*#__PURE__*/ react$1.forwardRef(function PopoverClose(componentProps, forwardedRef) {
+		const { render, className, style, disabled = false, nativeButton = true, ...elementProps } = componentProps;
+		const { buttonRef, getButtonProps } = useButton({
+			disabled,
+			focusableWhenDisabled: false,
+			native: nativeButton
+		});
+		const store = usePopoverRootContext();
+		useClosePartRegistration();
+		return useRenderElement("button", componentProps, {
+			ref: [forwardedRef, buttonRef],
+			props: [
+				{ onClick(event) {
+					store.setOpen(false, createChangeEventDetails(closePress, event.nativeEvent));
+				} },
+				elementProps,
+				getButtonProps
+			]
+		});
+	});
+	PopoverClose.displayName = "PopoverClose";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/utils/FloatingPortalLite.mjs
 /**
@@ -41455,6 +41490,22 @@ Icon: ButtonIcon });
 		});
 	});
 
+// packages/ui/build-module/popover/close.mjs
+/**
+	* Renders a button that closes the popover when clicked.
+	*
+	* When the popover opens, initial focus skips this button in favor of
+	* the first interactive element inside the popup (unless `initialFocus`
+	* on `Popover.Popup` overrides this behavior).
+	*/
+	const Close = (0, _wordpress_element.forwardRef)(function PopoverClose$1(props, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PopoverClose, {
+			ref,
+			"data-wp-ui-popover-close": "",
+			...props
+		});
+	});
+
 // packages/ui/build-module/popover/description.mjs
 /**
 	* Renders an optional paragraph that describes the popover content.
@@ -41973,6 +42024,19 @@ Icon: ButtonIcon });
 			...props
 		});
 	});
+
+// packages/ui/build-module/popover/index.mjs
+	var popover_exports = /* @__PURE__ */ __exportAll$1({
+		Arrow: () => Arrow,
+		Close: () => Close,
+		Description: () => Description$1,
+		Popup: () => Popup$1,
+		Portal: () => Portal$1,
+		Positioner: () => Positioner$1,
+		Root: () => Root$6,
+		Title: () => Title,
+		Trigger: () => Trigger$2
+	}, 1);
 
 // packages/ui/build-module/tabs/list.mjs
 	const STYLE_HASH_ATTRIBUTE$29 = "data-wp-hash";
@@ -114176,55 +114240,41 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/global-styles/state-control-badges.mjs
-	function getSummaryDescription(selectedViewport, selectedPseudoState) {
-		if (selectedViewport && selectedPseudoState) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Style changes apply to the %1$s viewport and the %2$s state."), selectedViewport.label, selectedPseudoState.label);
-		if (selectedViewport) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Style changes apply to the %s viewport."), selectedViewport.label);
-		if (selectedPseudoState) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Style changes apply to the %s state."), selectedPseudoState.label);
-		return "";
-	}
 	function StateControlBadges({ viewportStates = [], pseudoStates = [], viewportValue = "default", pseudoStateValue = "default", className = "block-editor-global-styles-state-control__badges" }) {
 		const activeStates = [];
 		const selectedViewport = viewportStates.find((state) => state.value === viewportValue);
 		const selectedPseudoState = pseudoStates.find((state) => state.value === pseudoStateValue);
 		if (selectedViewport) activeStates.push({
 			key: `viewport-${selectedViewport.value}`,
-			label: selectedViewport.label
+			label: selectedViewport.label,
+			description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Style changes apply to the %s viewport."), selectedViewport.label)
 		});
 		if (selectedPseudoState) activeStates.push({
 			key: `pseudo-${selectedPseudoState.value}`,
-			label: selectedPseudoState.label
+			label: selectedPseudoState.label,
+			description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Style changes apply to the %s state."), selectedPseudoState.label)
 		});
 		if (!activeStates.length) return null;
-		const summaryDescription = getSummaryDescription(selectedViewport, selectedPseudoState);
-		const moreInfoLabel = activeStates.length === 1 ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("More information about %s"), activeStates[0].label) : (0, _wordpress_i18n.__)("More information about style states");
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
 			className,
 			direction: "row",
 			justify: "flex-start",
 			align: "center",
 			gap: "xs",
 			wrap: "wrap",
-			children: [activeStates.map((state) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Badge, { children: state.label }, state.key)), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$6, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$2, {
-				openOnHover: true,
-				delay: 200,
-				closeDelay: 200,
-				"aria-label": moreInfoLabel,
-				className: "block-editor-global-styles-state-control__badge-infotip",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$13, {
-					icon: info_default,
-					size: 20
-				})
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Popup$1, {
-				className: "block-editor-global-styles-state-control__badge-infotip-popup",
-				children: [
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Arrow, {}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-						render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Title, {}),
-						children: moreInfoLabel
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Description$1, { children: summaryDescription })
-				]
-			})] })]
+			children: activeStates.map((state) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Badge, {
+				infotip: {
+					popover: popover_exports,
+					popup: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Popup$1, {
+						className: "block-editor-global-styles-state-control__badge-infotip-popup",
+						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+							render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Title, {}),
+							children: state.label
+						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Description$1, { children: state.description })]
+					})
+				},
+				children: state.label
+			}, state.key))
 		});
 	}
 
