@@ -7121,9 +7121,12 @@ Icon: ButtonIcon });
 	function Header() {
 		const isLargeViewport = (0, _wordpress_compose.useViewportMatch)("medium");
 		const blockToolbarRef = (0, _wordpress_element.useRef)();
-		const { hasFixedToolbar } = (0, _wordpress_data.useSelect)((select) => ({ hasFixedToolbar: !!select(_wordpress_preferences.store).get("core/edit-widgets", "fixedToolbar") }), []);
+		const { hasFixedToolbar, showIconLabels } = (0, _wordpress_data.useSelect)((select) => ({
+			hasFixedToolbar: !!select(_wordpress_preferences.store).get("core/edit-widgets", "fixedToolbar"),
+			showIconLabels: select(_wordpress_preferences.store).get("core", "showIconLabels")
+		}), []);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: "edit-widgets-header",
+			className: clsx("edit-widgets-header", { "has-icon-labels": showIconLabels }),
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: "edit-widgets-header__navigable-toolbar-wrapper",
 				children: [

@@ -704,6 +704,17 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
   gap: 8px;
 }
 
+.edit-widgets-header.has-icon-labels .interface-pinned-items .components-button.has-icon {
+  padding: 0 12px;
+}
+.edit-widgets-header.has-icon-labels .interface-pinned-items .components-button.has-icon svg {
+  display: none;
+}
+.edit-widgets-header.has-icon-labels .interface-pinned-items .components-button.has-icon::after {
+  content: attr(aria-label);
+  white-space: nowrap;
+}
+
 .edit-widgets-header-toolbar {
   gap: 8px;
   margin-left: 8px;
