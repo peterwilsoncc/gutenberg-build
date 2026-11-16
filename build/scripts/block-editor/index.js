@@ -61352,8 +61352,16 @@ Icon: ButtonIcon });
 			*/
 			function onFocus(event) {
 				const target = event.target;
+				function removeCaretElsewhere() {
+					const selection = node.ownerDocument.defaultView.getSelection();
+					const caretClientId = selection.anchorNode && getBlockClientId(selection.anchorNode);
+					if (caretClientId && caretClientId !== clientId) selection.removeAllRanges();
+				}
 				if (isBlockSelected(clientId)) {
-					if (!target.isContentEditable) selectionChange(clientId);
+					if (!target.isContentEditable) {
+						removeCaretElsewhere();
+						selectionChange(clientId);
+					}
 					return;
 				}
 				if (isMultiSelecting()) return;
@@ -61363,6 +61371,7 @@ Icon: ButtonIcon });
 					selectBlock(clientId, null);
 					return;
 				}
+				removeCaretElsewhere();
 				selectBlock(clientId);
 			}
 			return subscribeDelegatedListener$4(node, "focusin", onFocus);
@@ -64611,7 +64620,7 @@ Icon: ButtonIcon });
 	*/
 	function useSelectionObserver() {
 		const { multiSelect, selectBlock, selectionChange, startMultiSelect, stopMultiSelect } = (0, _wordpress_data.useDispatch)(store);
-		const { getBlockParents, getBlockSelectionStart, isDraggingBlocks, isMultiSelecting, getSelectionStart, getSelectionEnd, getSelectedBlockClientId, canHostEditableRoot } = unlock$2((0, _wordpress_data.useSelect)(store));
+		const { getBlockParents, getBlockSelectionStart, isDraggingBlocks, isMultiSelecting, getSelectionStart, getSelectionEnd, canHostEditableRoot } = unlock$2((0, _wordpress_data.useSelect)(store));
 		return (0, _wordpress_compose.useRefEffect)((node) => {
 			const { ownerDocument } = node;
 			const { defaultView } = ownerDocument;
@@ -64632,8 +64641,8 @@ Icon: ButtonIcon });
 				if (!node.contains(startNode) || !node.contains(endNode)) return;
 				const isClickShift = event.shiftKey && event.type === "mouseup";
 				if (selection.isCollapsed && !isClickShift) {
-					const collapsedClientId = getBlockClientId(startNode);
-					if (!isMultiSelecting() && collapsedClientId && collapsedClientId === getSelectedBlockClientId() && canHostEditableRoot(collapsedClientId)) {
+					const collapsedClientId = getBlockClientId(selection.anchorNode);
+					if (!isMultiSelecting() && collapsedClientId && canHostEditableRoot(collapsedClientId)) {
 						setContentEditableWrapper(node, true);
 						const { activeElement } = ownerDocument;
 						if (activeElement !== node && activeElement?.isContentEditable && node.contains(activeElement) && getBlockClientId(activeElement) === collapsedClientId) node.focus();
