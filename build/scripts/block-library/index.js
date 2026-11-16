@@ -46500,7 +46500,7 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/gallery/gallery.mjs
 	function Gallery(props) {
-		const { attributes, isSelected, setAttributes, insertBlocksAfter, blockProps, __unstableLayoutClassNames: layoutClassNames, isContentLocked, multiGallerySelection } = props;
+		const { attributes, isSelected, setAttributes, insertBlocksAfter, blockProps, __unstableLayoutClassNames: layoutClassNames, multiGallerySelection, children } = props;
 		const { align, columns, imageCrop, layout } = attributes;
 		const isFlexLayout = isGalleryFlexLayout(layout);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("figure", {
@@ -46511,12 +46511,12 @@ Icon: ButtonIcon });
 				[`columns-default`]: isFlexLayout && columns === void 0,
 				"is-cropped": isFlexLayout && imageCrop
 			}),
-			children: [blockProps.children, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Caption, {
+			children: [children, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Caption, {
 				attributes,
 				setAttributes,
 				isSelected,
 				insertBlocksAfter,
-				showToolbarButton: !multiGallerySelection && !isContentLocked,
+				showToolbarButton: !multiGallerySelection,
 				className: "blocks-gallery-caption",
 				label: (0, _wordpress_i18n.__)("Gallery caption text"),
 				placeholder: (0, _wordpress_i18n.__)("Add gallery caption")
@@ -49728,27 +49728,20 @@ Icon: ButtonIcon });
 	*
 	* - a block-toolbar control to detach the gallery from its source, confirmed in
 	*   a dialog;
-	* - the gallery `<figure>` wrapper holding a non-editable preview of the
-	*   resolved media (or a placeholder while resolving / when nothing is found),
-	*   with the gallery's provided context so the previewed images inherit
-	*   gallery-wide settings;
-	* - an editable gallery-level caption, alongside the read-only preview;
+	* - the gallery `<figure>` and caption (see `gallery.jsx`) holding a
+	*   non-editable preview of the resolved media (or a placeholder while
+	*   resolving / when nothing is found), with the gallery's provided context so
+	*   the previewed images inherit gallery-wide settings;
 	* - the (empty) inner blocks kept mounted so the container's `allowedBlocks: []`
 	*   keeps syncing to block list settings (which blocks insertion and hides the
 	*   List View).
 	*
-	* @param {Object}   props
-	* @param {Object}   props.dynamic               The `useDynamicGallery` result.
-	* @param {Object}   props.blockProps            The gallery's `useBlockProps()` result.
-	* @param {Object}   props.innerBlocksProps      The gallery's `useInnerBlocksProps()` result.
-	* @param {Object}   props.attributes            The gallery block attributes.
-	* @param {Function} props.setAttributes         The block's `setAttributes`.
-	* @param {boolean}  props.isSelected            Whether the gallery block is selected.
-	* @param {Function} props.insertBlocksAfter     Inserts blocks after the gallery.
-	* @param {boolean}  props.isContentLocked       Whether the gallery is content-locked.
-	* @param {boolean}  props.multiGallerySelection Whether multiple galleries are selected.
+	* @param {Object} props
+	* @param {Object} props.dynamic          The `useDynamicGallery` result.
+	* @param {Object} props.innerBlocksProps The gallery's `useInnerBlocksProps()` result.
 	*/
-	function GalleryDynamicView({ dynamic, blockProps, innerBlocksProps, attributes, setAttributes, isSelected, insertBlocksAfter, isContentLocked, multiGallerySelection }) {
+	function GalleryDynamicView({ dynamic, innerBlocksProps, ...galleryProps }) {
+		const { attributes } = galleryProps;
 		const { sourceDescriptor, dynamicImageBlocks, galleryContext, isResolvingDynamic, convertToStatic } = dynamic;
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
 		const [isConfirmingDetach, setIsConfirmingDetach] = (0, _wordpress_element.useState)(false);
@@ -49772,9 +49765,9 @@ Icon: ButtonIcon });
 				},
 				onCancel: () => setIsConfirmingDetach(false)
 			})] }),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("figure", {
-				...blockProps,
-				children: [dynamicImageBlocks.length ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockContextProvider, {
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Gallery, {
+				...galleryProps,
+				children: dynamicImageBlocks.length ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockContextProvider, {
 					value: galleryContext,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GalleryImagesPreview, {
 						imageBlocks: dynamicImageBlocks,
@@ -49785,16 +49778,7 @@ Icon: ButtonIcon });
 					label: (0, _wordpress_i18n.__)("Gallery"),
 					instructions: emptyInstructions,
 					children: isResolvingDynamic && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Caption, {
-					attributes,
-					setAttributes,
-					isSelected,
-					insertBlocksAfter,
-					showToolbarButton: !multiGallerySelection && !isContentLocked,
-					className: "blocks-gallery-caption",
-					label: (0, _wordpress_i18n.__)("Gallery caption text"),
-					placeholder: (0, _wordpress_i18n.__)("Add gallery caption")
-				})]
+				})
 			}),
 			innerBlocksProps.children
 		] });
@@ -49833,13 +49817,13 @@ Icon: ButtonIcon });
 	const DEFAULT_BLOCK$3 = { name: "core/image" };
 	const EMPTY_ARRAY$10 = [];
 	function GalleryEdit(props) {
-		const { setAttributes, attributes, className, clientId, insertBlocksAfter, isContentLocked, context, __unstableLayoutClassNames: layoutClassNames } = props;
+		const { setAttributes, attributes, className, clientId, insertBlocksAfter, context } = props;
 		const postId = context?.postId;
 		const postType = context?.postType;
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
 		const [lightboxSetting] = (0, _wordpress_block_editor.useSettings)("blocks.core/image.lightbox");
 		const linkOptions = !lightboxSetting?.allowEditing ? LINK_OPTIONS.filter((option) => option.value !== LINK_DESTINATION_LIGHTBOX) : LINK_OPTIONS;
-		const { align, columns, imageCrop, layout } = attributes;
+		const { layout } = attributes;
 		const isDynamic = !!attributes.dynamicContent;
 		const linkTo = attributes.linkTo ?? (isDynamic ? "none" : getDefaultLinkDestination());
 		const galleryAttributes = {
@@ -49947,16 +49931,7 @@ Icon: ButtonIcon });
 			disableMediaButtons: innerBlockImages.some((block) => !block.attributes.id && block.attributes.url?.indexOf("blob:") === 0),
 			value: {}
 		};
-		const blockProps = (0, _wordpress_block_editor.useBlockProps)({ className: clsx(className, "has-nested-images", `wp-block-gallery-${clientId}`, isDynamic && [
-			layoutClassNames,
-			"blocks-gallery-grid",
-			{
-				[`align${align}`]: align,
-				[`columns-${columns}`]: isFlexLayout && columns !== void 0,
-				"columns-default": isFlexLayout && columns === void 0,
-				"is-cropped": isFlexLayout && imageCrop
-			}
-		]) });
+		const blockProps = (0, _wordpress_block_editor.useBlockProps)({ className: clsx(className, "has-nested-images", `wp-block-gallery-${clientId}`) });
 		const innerBlocksProps = (0, _wordpress_block_editor.useInnerBlocksProps)(blockProps, {
 			defaultBlock: DEFAULT_BLOCK$3,
 			directInsert: true,
@@ -50054,10 +50029,10 @@ Icon: ButtonIcon });
 				multiGallerySelection
 			}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Gallery, {
 				...props,
-				isContentLocked,
 				blockProps: innerBlocksProps,
 				insertBlocksAfter,
-				multiGallerySelection
+				multiGallerySelection,
+				children: innerBlocksProps.children
 			})
 		] });
 	}
