@@ -3259,6 +3259,13 @@ body.lockscroll {
   color: #fff;
   flex-shrink: 0;
   --focus-color: #fff;
+  position: relative;
+}
+.components-snackbar__action.components-button::after,
+.components-snackbar__action.components-external-link::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
 }
 .components-snackbar__action.components-button:hover,
 .components-snackbar__action.components-external-link:hover {
