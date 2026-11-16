@@ -71819,7 +71819,7 @@ Icon: ButtonIcon });
 		}
 	];
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/button/utils.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/button/utils.js
 	function withDefaultButtonType(props) {
 		const { render, type } = props;
 		if (render || type !== void 0) return props;
@@ -71829,7 +71829,7 @@ Icon: ButtonIcon });
 		};
 	}
 
-// node_modules/.store/@ariakit/utils@0.2.2-pGTZG_8OyOn9imlarPyF4g/node_modules/@ariakit/utils/dist/index.js
+// node_modules/.store/@ariakit/utils@0.2.3-jeutzd9HpwVEM2HBUtYYiA/node_modules/@ariakit/utils/dist/index.js
 /**
 	* Array helpers used by Ariakit packages.
 	* @module Array utilities
@@ -72651,50 +72651,7 @@ Icon: ButtonIcon });
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/C4_D9PgF.js
-	const accessibleWhenDisabledSymbol = Symbol("accessibleWhenDisabled");
-	function accessibleWhenDisabledFromProps(props) {
-		return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
-	}
-	const trulyDisabledAttribute = "data-truly-disabled";
-	/**
-	* Returns the exact disabled result stamped by an active Focusable, or
-	* undefined when no active Focusable resolved the element.
-	*/
-	function resolvedTrulyDisabledFromElement(element) {
-		const value = element.getAttribute(trulyDisabledAttribute);
-		if (value === "true") return true;
-		if (value === "false") return false;
-	}
-	function isCompositeMoveKey(key) {
-		return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
-	}
-	function isShadowRoot(node) {
-		return node.nodeType === node.DOCUMENT_FRAGMENT_NODE && "host" in node;
-	}
-	/**
-	* Returns the focused element as seen from the tree that contains `node`.
-	* Inside a shadow tree, the document reports the shadow host as its active
-	* element, so only the shadow root knows which element in it has focus. Focus
-	* outside that tree, such as in a portal, is still read from the document.
-	*/
-	function getTreeActiveElement(node) {
-		const root = node?.getRootNode();
-		if (root && isShadowRoot(root) && root.activeElement) return root.activeElement;
-		return getActiveElement(node);
-	}
-	/**
-	* Like `hasFocus`, but also sees focus on `element` when it is inside a shadow
-	* tree.
-	*/
-	function hasTreeFocus(element) {
-		return hasFocus(element) || getTreeActiveElement(element) === element;
-	}
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
-	const FocusableContext = (0, react.createContext)(true);
-
-// node_modules/.store/@ariakit/react-utils@0.2.8-duN40eWASGERw9i-DIMDVw/node_modules/@ariakit/react-utils/dist/index.js
+// node_modules/.store/@ariakit/react-utils@0.2.9-FgxjCHWHhJvYbh92msiAfQ/node_modules/@ariakit/react-utils/dist/index.js
 /**
 	* Helpers for working with refs, elements, and props.
 	* @module General utilities
@@ -73120,8 +73077,134 @@ Icon: ButtonIcon });
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/focusable/focusable.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/collection/collection-context.js
+	const ctx$6 = createStoreContext();
+	/**
+	* Returns the collection store from the nearest collection container.
+	* @example
+	* function CollectionItem() {
+	*   const store = useCollectionContext();
+	*
+	*   if (!store) {
+	*     throw new Error("CollectionItem must be wrapped in CollectionProvider");
+	*   }
+	*
+	*   // Use the store...
+	* }
+	*/
+	const useCollectionContext = ctx$6.useContext;
+	const useCollectionScopedContext = ctx$6.useScopedContext;
+	const useCollectionProviderContext = ctx$6.useProviderContext;
+	const CollectionContextProvider = ctx$6.ContextProvider;
+	const CollectionScopedContextProvider = ctx$6.ScopedContextProvider;
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/collection/collection-item.js
 	const TagName$11 = "div";
+	/**
+	* Returns props to create a `CollectionItem` component. This hook will register
+	* the item in the collection store. If this hook is used in a component that is
+	* wrapped by `Collection` or a component that implements `useCollection`,
+	* there's no need to explicitly pass the `store` prop.
+	* @see https://ariakit.com/components/collection
+	* @example
+	* ```jsx
+	* const store = useCollectionStore();
+	* const props = useCollectionItem({ store });
+	* <Role {...props}>Item</Role>
+	* ```
+	*/
+	const useCollectionItem = createHook(function useCollectionItem({ store, shouldRegisterItem = true, getItem = identity$1, element, ...props }) {
+		const context = useCollectionContext();
+		store = store || context;
+		const id = useId$4(props.id);
+		const ref = (0, react.useRef)(element);
+		(0, react.useEffect)(() => {
+			const element = ref.current;
+			if (!id) return;
+			if (!element) return;
+			if (!shouldRegisterItem) return;
+			const item = getItem({
+				id,
+				element
+			});
+			return store?.renderItem(item);
+		}, [
+			id,
+			shouldRegisterItem,
+			getItem,
+			store
+		]);
+		props = {
+			...props,
+			ref: useMergeRefs$16(ref, props.ref)
+		};
+		return props;
+	});
+	/**
+	* Renders an item in a collection. The collection store can be passed
+	* explicitly through the
+	* [`store`](https://ariakit.com/reference/collection-item#store) prop or
+	* implicitly through the parent
+	* [`Collection`](https://ariakit.com/reference/collection) component.
+	* @see https://ariakit.com/components/collection
+	* @example
+	* ```jsx
+	* const store = useCollectionStore();
+	* <CollectionItem store={store}>Item 1</CollectionItem>
+	* <CollectionItem store={store}>Item 2</CollectionItem>
+	* <CollectionItem store={store}>Item 3</CollectionItem>
+	* ```
+	*/
+	const CollectionItem = forwardRef$21(function CollectionItem(props) {
+		const htmlProps = useCollectionItem(props);
+		return createElement$2(TagName$11, htmlProps);
+	});
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/J8A8SkE3.js
+	const accessibleWhenDisabledSymbol = Symbol("accessibleWhenDisabled");
+	function accessibleWhenDisabledFromProps(props) {
+		return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
+	}
+	const trulyDisabledAttribute = "data-truly-disabled";
+	/**
+	* Returns the exact disabled result stamped by an active Focusable, or
+	* undefined when no active Focusable resolved the element.
+	*/
+	function resolvedTrulyDisabledFromElement(element) {
+		const value = element.getAttribute(trulyDisabledAttribute);
+		if (value === "true") return true;
+		if (value === "false") return false;
+	}
+	function isCompositeMoveKey(key) {
+		return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
+	}
+	function isShadowRoot(node) {
+		return node.nodeType === node.DOCUMENT_FRAGMENT_NODE && "host" in node;
+	}
+	/**
+	* Returns the focused element as seen from the tree that contains `node`.
+	* Inside a shadow tree, the document reports the shadow host as its active
+	* element, so only the shadow root knows which element in it has focus. Focus
+	* outside that tree, such as in a portal, is still read from the document.
+	*/
+	function getTreeActiveElement(node) {
+		const root = node?.getRootNode();
+		if (root && isShadowRoot(root) && root.activeElement) return root.activeElement;
+		return getActiveElement(node);
+	}
+	/**
+	* Like `hasFocus`, but also sees focus on `element` when it is inside a shadow
+	* tree.
+	*/
+	function hasTreeFocus(element) {
+		return hasFocus(element) || getTreeActiveElement(element) === element;
+	}
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
+	const FocusableContext = (0, react.createContext)(true);
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/focusable/focusable.js
+	const TagName$10 = "div";
 	const isSafariBrowser = isSafari();
 	const nativeTabbableMask = 1;
 	const supportsDisabledMask = 2;
@@ -73430,11 +73513,11 @@ Icon: ButtonIcon });
 	*/
 	const Focusable = forwardRef$21(function Focusable(props) {
 		const htmlProps = useFocusable(props);
-		return createElement$2(TagName$11, htmlProps);
+		return createElement$2(TagName$10, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/command/command.js
-	const TagName$10 = "button";
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/command/command.js
+	const TagName$9 = "button";
 	function isNativeClick(event) {
 		if (!event.isTrusted) return false;
 		// istanbul ignore next: can't test trusted events yet
@@ -73570,93 +73653,10 @@ Icon: ButtonIcon });
 	*/
 	const Command = forwardRef$21(function Command(props) {
 		const htmlProps = useCommand(withDefaultButtonType(props));
-		return createElement$2(TagName$10, htmlProps);
-	});
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-context.js
-	const ctx$6 = createStoreContext();
-	/**
-	* Returns the collection store from the nearest collection container.
-	* @example
-	* function CollectionItem() {
-	*   const store = useCollectionContext();
-	*
-	*   if (!store) {
-	*     throw new Error("CollectionItem must be wrapped in CollectionProvider");
-	*   }
-	*
-	*   // Use the store...
-	* }
-	*/
-	const useCollectionContext = ctx$6.useContext;
-	const useCollectionScopedContext = ctx$6.useScopedContext;
-	const useCollectionProviderContext = ctx$6.useProviderContext;
-	const CollectionContextProvider = ctx$6.ContextProvider;
-	const CollectionScopedContextProvider = ctx$6.ScopedContextProvider;
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-item.js
-	const TagName$9 = "div";
-	/**
-	* Returns props to create a `CollectionItem` component. This hook will register
-	* the item in the collection store. If this hook is used in a component that is
-	* wrapped by `Collection` or a component that implements `useCollection`,
-	* there's no need to explicitly pass the `store` prop.
-	* @see https://ariakit.com/components/collection
-	* @example
-	* ```jsx
-	* const store = useCollectionStore();
-	* const props = useCollectionItem({ store });
-	* <Role {...props}>Item</Role>
-	* ```
-	*/
-	const useCollectionItem = createHook(function useCollectionItem({ store, shouldRegisterItem = true, getItem = identity$1, element, ...props }) {
-		const context = useCollectionContext();
-		store = store || context;
-		const id = useId$4(props.id);
-		const ref = (0, react.useRef)(element);
-		(0, react.useEffect)(() => {
-			const element = ref.current;
-			if (!id) return;
-			if (!element) return;
-			if (!shouldRegisterItem) return;
-			const item = getItem({
-				id,
-				element
-			});
-			return store?.renderItem(item);
-		}, [
-			id,
-			shouldRegisterItem,
-			getItem,
-			store
-		]);
-		props = {
-			...props,
-			ref: useMergeRefs$16(ref, props.ref)
-		};
-		return props;
-	});
-	/**
-	* Renders an item in a collection. The collection store can be passed
-	* explicitly through the
-	* [`store`](https://ariakit.com/reference/collection-item#store) prop or
-	* implicitly through the parent
-	* [`Collection`](https://ariakit.com/reference/collection) component.
-	* @see https://ariakit.com/components/collection
-	* @example
-	* ```jsx
-	* const store = useCollectionStore();
-	* <CollectionItem store={store}>Item 1</CollectionItem>
-	* <CollectionItem store={store}>Item 2</CollectionItem>
-	* <CollectionItem store={store}>Item 3</CollectionItem>
-	* ```
-	*/
-	const CollectionItem = forwardRef$21(function CollectionItem(props) {
-		const htmlProps = useCollectionItem(props);
 		return createElement$2(TagName$9, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-context.js
 	const ctx$5 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
 	/**
 	* Returns the composite store from the nearest composite container.
@@ -73679,7 +73679,7 @@ Icon: ButtonIcon });
 	const CompositeItemContext = (0, react.createContext)(void 0);
 	const CompositeRowContext = (0, react.createContext)(void 0);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/DJQz4DCk.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/BQXs5KP6.js
 	const listeners$1 = /* @__PURE__ */ new WeakMap();
 	/** Notifies every containing renderer before a composite presents an item. */
 	function prepareScrollIntoView(request) {
@@ -73695,7 +73695,7 @@ Icon: ButtonIcon });
 		};
 	}
 
-// node_modules/.store/@ariakit/store@0.1.11-R6p47bgYcFWqOHfW2C0v-A/node_modules/@ariakit/store/dist/index.js
+// node_modules/.store/@ariakit/store@0.1.12-eIWWlfJPA6K0CLbC-kCrmw/node_modules/@ariakit/store/dist/index.js
 	function getInternal(store, key) {
 		const internals = store.__unstableInternals;
 		invariant(internals, "Invalid store");
@@ -74150,21 +74150,21 @@ Icon: ButtonIcon });
 	* Register a callback function that's called when the store is initialized.
 	*/
 	function setup(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$4;
 		return getInternal(store, "setup")(...args);
 	}
 	/**
 	* Function that should be called when the store is initialized.
 	*/
 	function init(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$4;
 		return getInternal(store, "init")(...args);
 	}
 	/**
 	* Registers a listener function that's called after state changes in the store.
 	*/
 	function subscribe$2(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$4;
 		return getInternal(store, "subscribe")(...args);
 	}
 	/**
@@ -74172,7 +74172,7 @@ Icon: ButtonIcon });
 	* whenever the store state changes.
 	*/
 	function sync(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$4;
 		return getInternal(store, "sync")(...args);
 	}
 	/**
@@ -74180,7 +74180,7 @@ Icon: ButtonIcon });
 	* state changes in the store.
 	*/
 	function batch(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$4;
 		return getInternal(store, "batch")(...args);
 	}
 	/**
@@ -74240,7 +74240,7 @@ If there's a particular need for this, please submit a feature request at https:
 `);
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/collection/collection-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/collection/collection-store.js
 	function getCommonParent(items) {
 		const firstItem = items.find((item) => !!item.element);
 		const lastElement = [...items].reverse().find((item) => !!item.element)?.element;
@@ -74251,6 +74251,19 @@ If there's a particular need for this, please submit a feature request at https:
 			parentElement = parentElement.parentElement;
 		}
 		return getDocument(parentElement).body;
+	}
+	function observeMovedElements(root, onMove) {
+		const { MutationObserver } = getWindow(root);
+		if (typeof MutationObserver !== "function") return;
+		const observer = new MutationObserver((records) => {
+			if (!records.some((record) => Array.from(record.addedNodes).some(isElement))) return;
+			onMove();
+		});
+		observer.observe(root, {
+			childList: true,
+			subtree: true
+		});
+		return () => observer.disconnect();
 	}
 	function getPrivateStore(store) {
 		return store?.__unstablePrivateStore;
@@ -74353,7 +74366,12 @@ If there's a particular need for this, please submit a feature request at https:
 		setup(privateStore, () => {
 			return batch(privateStore, ["renderedItems"], (state) => {
 				if (state.renderedItems !== collection.getState().renderedItems) sortItems(state.renderedItems);
-				if (typeof IntersectionObserver !== "function") return;
+				if (!state.renderedItems.some((item) => item.element)) return;
+				const root = getCommonParent(state.renderedItems);
+				const stopObservingMoves = observeMovedElements(root, () => {
+					sortItems(privateStore.getState().renderedItems);
+				});
+				if (typeof IntersectionObserver !== "function") return stopObservingMoves;
 				let firstRun = true;
 				let raf = 0;
 				const ioCallback = () => {
@@ -74364,7 +74382,6 @@ If there's a particular need for this, please submit a feature request at https:
 					cancelAnimationFrame(raf);
 					raf = requestAnimationFrame(() => sortItems(state.renderedItems));
 				};
-				const root = getCommonParent(state.renderedItems);
 				const observer = new IntersectionObserver(ioCallback, { root });
 				for (const item of state.renderedItems) {
 					if (!item.element) continue;
@@ -74373,6 +74390,7 @@ If there's a particular need for this, please submit a feature request at https:
 				return () => {
 					cancelAnimationFrame(raf);
 					observer.disconnect();
+					stopObservingMoves?.();
 				};
 			});
 		});
@@ -74443,7 +74461,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/composite/composite-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/composite/composite-store.js
 	const NULL_ITEM = { id: null };
 	/**
 	* Finds the first enabled item.
@@ -74722,7 +74740,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/utils.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/utils.js
 	const findFirstEnabledItem = findFirstEnabledItem$1;
 	const groupItemsByRows = groupItemsByRows$1;
 	const unmountingItems = /* @__PURE__ */ new WeakSet();
@@ -75015,7 +75033,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return true;
 	}
 
-// node_modules/.store/@ariakit/react-store@0.1.13-C6ZWls7CuvAmgvZYqqkd5Q/node_modules/@ariakit/react-store/dist/index.js
+// node_modules/.store/@ariakit/react-store@0.1.14-zWumvQeLklV5IZpGeXO1ew/node_modules/@ariakit/react-store/dist/index.js
 	const noopSubscribe = () => () => {};
 	function isStoreKeyArray(value) {
 		return Array.isArray(value);
@@ -75081,6 +75099,12 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 		return keys;
 	}
+	function getStoreStateObjectValue(state, keyOrSelector) {
+		if (typeof keyOrSelector === "function") return keyOrSelector(state);
+		if (!state) return;
+		if (!hasOwnProperty(state, keyOrSelector)) return;
+		return state[keyOrSelector];
+	}
 	function useStoreStateObject(store, objectOrKeys, object) {
 		const stateObject = isStoreKeyArray(objectOrKeys) ? object ?? {} : objectOrKeys;
 		const selectorKeys = isStoreKeyArray(objectOrKeys) ? objectOrKeys : void 0;
@@ -75093,27 +75117,35 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [store, subscriptionKeys]);
 		const getSnapshot = () => {
 			const state = store?.getState();
-			let updated = false;
-			const obj = objRef.current;
+			const previous = objRef.current;
+			let next = previous;
+			let selectedCount = 0;
+			const getWritableNext = () => {
+				if (next === previous) next = { ...previous };
+				return next;
+			};
 			for (const prop in stateObject) {
 				const keyOrSelector = stateObject[prop];
 				if (keyOrSelector === void 0) continue;
-				if (typeof keyOrSelector === "function") {
-					const value = keyOrSelector(state);
-					if (!Object.is(value, obj[prop])) {
-						obj[prop] = value;
-						updated = true;
-					}
+				selectedCount += 1;
+				const value = getStoreStateObjectValue(state, keyOrSelector);
+				if (hasOwnProperty(next, prop) && Object.is(value, next[prop])) continue;
+				getWritableNext()[prop] = value;
+			}
+			if (Object.keys(next).length > selectedCount) {
+				const selectedProps = /* @__PURE__ */ new Set();
+				for (const prop in stateObject) {
+					if (stateObject[prop] === void 0) continue;
+					selectedProps.add(prop);
 				}
-				if (typeof keyOrSelector === "function") continue;
-				const value = state && hasOwnProperty(state, keyOrSelector) ? state[keyOrSelector] : void 0;
-				if (!Object.is(value, obj[prop])) {
-					obj[prop] = value;
-					updated = true;
+				const writableNext = getWritableNext();
+				for (const prop of Object.keys(writableNext)) {
+					if (selectedProps.has(prop)) continue;
+					delete writableNext[prop];
 				}
 			}
-			if (updated) objRef.current = { ...obj };
-			return objRef.current;
+			objRef.current = next;
+			return next;
 		};
 		return (0, import_shim.useSyncExternalStore)(storeSubscribe, getSnapshot, getSnapshot);
 	}
@@ -75178,7 +75210,7 @@ If there's a particular need for this, please submit a feature request at https:
 		})];
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-item.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-item.js
 	const TagName$8 = "button";
 	function isEditableElement(element) {
 		if (isTextbox(element)) return true;
@@ -75447,10 +75479,10 @@ If there's a particular need for this, please submit a feature request at https:
 			if (action) {
 				if (isTextbox(currentTarget)) {
 					const selection = getTextboxSelection(currentTarget);
-					const isLeft = isHorizontal && event.key === "ArrowLeft";
-					const isRight = isHorizontal && event.key === "ArrowRight";
-					const isUp = isVertical && event.key === "ArrowUp";
-					const isDown = isVertical && event.key === "ArrowDown";
+					const isLeft = event.key === "ArrowLeft";
+					const isRight = event.key === "ArrowRight";
+					const isUp = event.key === "ArrowUp";
+					const isDown = event.key === "ArrowDown";
 					if (isRight || isDown) {
 						const { length: valueLength } = getTextboxValue(currentTarget);
 						if (selection.end !== valueLength) return;
@@ -75524,7 +75556,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$2(TagName$8, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/CDh2UhnG.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/iBcgpDqT.js
 	const sourceEvents = /* @__PURE__ */ new WeakMap();
 	/**
 	* Dispatches a copy of a keyboard event on an element and records the event it
@@ -75545,7 +75577,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return sourceEvents.get(event) ?? event;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/xFYjARz5.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/D-AamQTr.js
 	const cancelled = Symbol("cancelled");
 	/**
 	* Tracks the current move per store. This has to outlive the component: `moves`
@@ -75579,7 +75611,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return request;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite.js
 	const TagName$7 = "div";
 	function isGrid(items) {
 		return items.some((item) => !!item.rowId);
@@ -75960,7 +75992,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$2(TagName$7, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
 	const ctx$4 = createStoreContext();
 	/**
 	* Returns the disclosure store from the nearest disclosure container.
@@ -75981,7 +76013,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const DisclosureContextProvider = ctx$4.ContextProvider;
 	const DisclosureScopedContextProvider = ctx$4.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
 	const ctx$3 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
 	/**
 	* Returns the dialog store from the nearest dialog container.
@@ -76004,7 +76036,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const DialogHeadingContext = (0, react.createContext)(void 0);
 	const DialogDescriptionContext = (0, react.createContext)(void 0);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
 	const TagName$6 = "div";
 	function afterTimeout(timeoutMs, cb) {
 		const timeoutId = setTimeout(cb, timeoutMs);
@@ -76179,7 +76211,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DisclosureContentImpl, { ...props });
 	});
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
 	function getParentHideRequest(store) {
 		const onHideRequest = store?.unstable_onHideRequest;
 		const requestHide = store?.unstable_requestHide;
@@ -76274,7 +76306,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
 	function useDisclosureStoreProps(store, update, props) {
 		useUpdateEffect(update, [
 			props.store,
@@ -76287,7 +76319,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return Object.assign(store, { disclosure: props.disclosure });
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/popover/popover-context.js
 	const ctx$2 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
 	/**
 	* Returns the popover store from the nearest popover container.
@@ -76308,7 +76340,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const PopoverContextProvider = ctx$2.ContextProvider;
 	const PopoverScopedContextProvider = ctx$2.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
 	const ComboboxListRoleContext = (0, react.createContext)(null);
 	const ctx$1 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
 	/**
@@ -76333,18 +76365,29 @@ If there's a particular need for this, please submit a feature request at https:
 	const ComboboxItemCheckedContext = (0, react.createContext)(false);
 	const ComboboxHeadingContext = (0, react.createContext)(null);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/collection/collection-store.js
 	function useCollectionStoreProps(store, update, props) {
 		useUpdateEffect(update, [props.store, update]);
 		useStoreProps(store, props, "items", "setItems");
 		return store;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-store.js
-	function useCompositeStoreOptions(props) {
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-store.js
+/**
+	* Supplies a React-generated store ID when neither the props nor the stores
+	* that the core store synchronizes with provide one. Otherwise, the core store
+	* falls back to a random ID during render, which breaks prerendering and
+	* hydration.
+	* @param syncStores The stores, besides `props.store`, whose state the core
+	*   store merges.
+	*/
+	function useCompositeStoreOptions(props, ...syncStores) {
+		const id = useId$4();
+		if (props.id !== void 0) return props;
+		if ([props.store, ...syncStores].some((store) => store?.getState().id != null)) return props;
 		return {
-			id: useId$4(props.id),
-			...props
+			...props,
+			id
 		};
 	}
 	function useCompositeStoreProps(store, update, props) {
@@ -76362,7 +76405,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return store;
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/dialog/dialog-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/dialog/dialog-store.js
 /**
 	* Creates a dialog store.
 	*/
@@ -76370,12 +76413,12 @@ If there's a particular need for this, please submit a feature request at https:
 		return createDisclosureStore(props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
 	function useDialogStoreProps(store, update, props) {
 		return useDisclosureStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/popover/popover-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/popover/popover-store.js
 /**
 	* Creates a popover store.
 	*/
@@ -76426,14 +76469,14 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/popover/popover-store.js
 	function usePopoverStoreProps(store, update, props) {
 		useUpdateEffect(update, [props.popover, update]);
 		useStoreProps(store, props, "placement");
 		return useDialogStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
 	const TagName$5 = "div";
 	function hoveringInside(event) {
 		const nextElement = event.relatedTarget;
@@ -76536,7 +76579,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$2(TagName$5, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/HXejjTMM.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/CYZnYGh3.js
 	const openingMovesBySelect = /* @__PURE__ */ new WeakMap();
 	const scrollItemIntoViewByStore = /* @__PURE__ */ new WeakMap();
 	function scrollIntoViewNearest(element) {
@@ -76609,7 +76652,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return scrollItemIntoView;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox.js
 	const TagName$4 = "input";
 	function isFirstItemAutoSelected(items, activeValue, autoSelect) {
 		if (!autoSelect) return false;
@@ -77073,7 +77116,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$2(TagName$4, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-item.js
 	const TagName$3 = "div";
 	function isSelected(storeValue, itemValue) {
 		if (itemValue == null) return;
@@ -77262,7 +77305,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$2(TagName$3, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
 	const TagName$2 = "span";
 	function normalizeValue(value) {
 		return normalizeString(value).toLowerCase();
@@ -77439,7 +77482,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$2(TagName$2, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-label.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-label.js
 	const TagName$1 = "label";
 	/**
 	* Returns props to create a `ComboboxLabel` component.
@@ -77490,7 +77533,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$2(TagName$1, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-list.js
 	const TagName = "div";
 	/**
 	* Returns props to create a `ComboboxList` component.
@@ -77627,7 +77670,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$2(TagName, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tag/tag-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tag/tag-context.js
 	const TagValueContext = (0, react.createContext)(null);
 	const TagRemoveIdContext = (0, react.createContext)(null);
 	const ctx = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
@@ -77650,7 +77693,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const TagContextProvider = ctx.ContextProvider;
 	const TagScopedContextProvider = ctx.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/combobox/combobox-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/combobox/combobox-store.js
 	const isTouchSafari = isSafari() && isTouchDevice();
 	function createComboboxStore({ tag, ...props } = {}) {
 		const store = mergeStore(props.store, pick(tag, ["value", "rtl"]));
@@ -77865,7 +77908,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-store.js
 	function useComboboxStoreOptions(props) {
 		const tag = useTagContext();
 		props = {
@@ -77893,7 +77936,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return useComboboxStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-provider.js
 	function ComboboxProvider(props = {}) {
 		const store = useComboboxStore(props);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ComboboxContextProvider, {

@@ -49,7 +49,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return n;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/button/utils.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/button/utils.js
 	function withDefaultButtonType(props) {
 		const { render, type } = props;
 		if (render || type !== void 0) return props;
@@ -59,7 +59,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		};
 	}
 
-// node_modules/.store/@ariakit/utils@0.2.2-pGTZG_8OyOn9imlarPyF4g/node_modules/@ariakit/utils/dist/index.js
+// node_modules/.store/@ariakit/utils@0.2.3-jeutzd9HpwVEM2HBUtYYiA/node_modules/@ariakit/utils/dist/index.js
 /**
 	* Array helpers used by Ariakit packages.
 	* @module Array utilities
@@ -104,6 +104,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* @example
 	* shallowEqual({ a: "a" }, {}); // false
 	* shallowEqual({ a: "a" }, { b: "b" }); // false
+	* shallowEqual({ a: undefined }, { b: undefined }); // false
 	* shallowEqual({ a: "a" }, { a: "a" }); // true
 	* shallowEqual({ a: "a" }, { a: "a", b: "b" }); // false
 	*/
@@ -117,7 +118,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const bKeys = Object.keys(b);
 		const { length } = aKeys;
 		if (bKeys.length !== length) return false;
-		for (const key of aKeys) if (a[key] !== b[key]) return false;
+		let index = 0;
+		for (const key of aKeys) {
+			if (key !== bKeys[index++] && !Object.prototype.propertyIsEnumerable.call(b, key)) return false;
+			if (a[key] !== b[key]) return false;
+		}
 		return true;
 	}
 	/**
@@ -1028,6 +1033,13 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		};
 		if (container.hasAttribute("data-tabindex")) restoreTabIndex(container);
 		for (const element of elements) restoreTabIndex(element);
+		const frames = Array.from(container.querySelectorAll("iframe"));
+		if (isFrame(container)) frames.unshift(container);
+		for (const frame of frames) {
+			const frameBody = frame.contentDocument?.body;
+			if (!frameBody) continue;
+			restoreFocusIn(frameBody);
+		}
 	}
 	function createUndoCallback(callback) {
 		return async () => {
@@ -1089,57 +1101,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/C4_D9PgF.js
-	const accessibleWhenDisabledSymbol = Symbol("accessibleWhenDisabled");
-	function accessibleWhenDisabledFromProps(props) {
-		return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
-	}
-	const trulyDisabledAttribute = "data-truly-disabled";
-	/**
-	* Checks whether Focusable resolved this element as disabled and not keyboard
-	* accessible, based on the exact boolean value it stamps on the element.
-	*/
-	function trulyDisabledFromElement(element) {
-		return element.getAttribute(trulyDisabledAttribute) === "true";
-	}
-	/**
-	* Returns the exact disabled result stamped by an active Focusable, or
-	* undefined when no active Focusable resolved the element.
-	*/
-	function resolvedTrulyDisabledFromElement(element) {
-		const value = element.getAttribute(trulyDisabledAttribute);
-		if (value === "true") return true;
-		if (value === "false") return false;
-	}
-	function isCompositeMoveKey(key) {
-		return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
-	}
-	function isShadowRoot$1(node) {
-		return node.nodeType === node.DOCUMENT_FRAGMENT_NODE && "host" in node;
-	}
-	/**
-	* Returns the focused element as seen from the tree that contains `node`.
-	* Inside a shadow tree, the document reports the shadow host as its active
-	* element, so only the shadow root knows which element in it has focus. Focus
-	* outside that tree, such as in a portal, is still read from the document.
-	*/
-	function getTreeActiveElement(node) {
-		const root = node?.getRootNode();
-		if (root && isShadowRoot$1(root) && root.activeElement) return root.activeElement;
-		return getActiveElement(node);
-	}
-	/**
-	* Like `hasFocus`, but also sees focus on `element` when it is inside a shadow
-	* tree.
-	*/
-	function hasTreeFocus(element) {
-		return hasFocus(element) || getTreeActiveElement(element) === element;
-	}
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
-	const FocusableContext = (0, react$1.createContext)(true);
-
-// node_modules/.store/@ariakit/react-utils@0.2.8-duN40eWASGERw9i-DIMDVw/node_modules/@ariakit/react-utils/dist/index.js
+// node_modules/.store/@ariakit/react-utils@0.2.9-FgxjCHWHhJvYbh92msiAfQ/node_modules/@ariakit/react-utils/dist/index.js
 /**
 	* Helpers for working with refs, elements, and props.
 	* @module General utilities
@@ -1585,8 +1547,141 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/focusable/focusable.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/collection/collection-context.js
+	const ctx$12 = createStoreContext();
+	/**
+	* Returns the collection store from the nearest collection container.
+	* @example
+	* function CollectionItem() {
+	*   const store = useCollectionContext();
+	*
+	*   if (!store) {
+	*     throw new Error("CollectionItem must be wrapped in CollectionProvider");
+	*   }
+	*
+	*   // Use the store...
+	* }
+	*/
+	const useCollectionContext = ctx$12.useContext;
+	const useCollectionScopedContext = ctx$12.useScopedContext;
+	const useCollectionProviderContext = ctx$12.useProviderContext;
+	const CollectionContextProvider = ctx$12.ContextProvider;
+	const CollectionScopedContextProvider = ctx$12.ScopedContextProvider;
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/collection/collection-item.js
 	const TagName$56 = "div";
+	/**
+	* Returns props to create a `CollectionItem` component. This hook will register
+	* the item in the collection store. If this hook is used in a component that is
+	* wrapped by `Collection` or a component that implements `useCollection`,
+	* there's no need to explicitly pass the `store` prop.
+	* @see https://ariakit.com/components/collection
+	* @example
+	* ```jsx
+	* const store = useCollectionStore();
+	* const props = useCollectionItem({ store });
+	* <Role {...props}>Item</Role>
+	* ```
+	*/
+	const useCollectionItem = createHook(function useCollectionItem({ store, shouldRegisterItem = true, getItem = identity$2, element, ...props }) {
+		const context = useCollectionContext();
+		store = store || context;
+		const id = useId$8(props.id);
+		const ref = (0, react$1.useRef)(element);
+		(0, react$1.useEffect)(() => {
+			const element = ref.current;
+			if (!id) return;
+			if (!element) return;
+			if (!shouldRegisterItem) return;
+			const item = getItem({
+				id,
+				element
+			});
+			return store?.renderItem(item);
+		}, [
+			id,
+			shouldRegisterItem,
+			getItem,
+			store
+		]);
+		props = {
+			...props,
+			ref: useMergeRefs$26(ref, props.ref)
+		};
+		return props;
+	});
+	/**
+	* Renders an item in a collection. The collection store can be passed
+	* explicitly through the
+	* [`store`](https://ariakit.com/reference/collection-item#store) prop or
+	* implicitly through the parent
+	* [`Collection`](https://ariakit.com/reference/collection) component.
+	* @see https://ariakit.com/components/collection
+	* @example
+	* ```jsx
+	* const store = useCollectionStore();
+	* <CollectionItem store={store}>Item 1</CollectionItem>
+	* <CollectionItem store={store}>Item 2</CollectionItem>
+	* <CollectionItem store={store}>Item 3</CollectionItem>
+	* ```
+	*/
+	const CollectionItem = forwardRef$130(function CollectionItem(props) {
+		const htmlProps = useCollectionItem(props);
+		return createElement$5(TagName$56, htmlProps);
+	});
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/J8A8SkE3.js
+	const accessibleWhenDisabledSymbol = Symbol("accessibleWhenDisabled");
+	function accessibleWhenDisabledFromProps(props) {
+		return props.accessibleWhenDisabled ?? props.onLoadedMetadataCapture?.[accessibleWhenDisabledSymbol];
+	}
+	const trulyDisabledAttribute = "data-truly-disabled";
+	/**
+	* Checks whether Focusable resolved this element as disabled and not keyboard
+	* accessible, based on the exact boolean value it stamps on the element.
+	*/
+	function trulyDisabledFromElement(element) {
+		return element.getAttribute(trulyDisabledAttribute) === "true";
+	}
+	/**
+	* Returns the exact disabled result stamped by an active Focusable, or
+	* undefined when no active Focusable resolved the element.
+	*/
+	function resolvedTrulyDisabledFromElement(element) {
+		const value = element.getAttribute(trulyDisabledAttribute);
+		if (value === "true") return true;
+		if (value === "false") return false;
+	}
+	function isCompositeMoveKey(key) {
+		return key === "ArrowUp" || key === "ArrowRight" || key === "ArrowDown" || key === "ArrowLeft" || key === "Home" || key === "End" || key === "PageUp" || key === "PageDown";
+	}
+	function isShadowRoot$1(node) {
+		return node.nodeType === node.DOCUMENT_FRAGMENT_NODE && "host" in node;
+	}
+	/**
+	* Returns the focused element as seen from the tree that contains `node`.
+	* Inside a shadow tree, the document reports the shadow host as its active
+	* element, so only the shadow root knows which element in it has focus. Focus
+	* outside that tree, such as in a portal, is still read from the document.
+	*/
+	function getTreeActiveElement(node) {
+		const root = node?.getRootNode();
+		if (root && isShadowRoot$1(root) && root.activeElement) return root.activeElement;
+		return getActiveElement(node);
+	}
+	/**
+	* Like `hasFocus`, but also sees focus on `element` when it is inside a shadow
+	* tree.
+	*/
+	function hasTreeFocus(element) {
+		return hasFocus(element) || getTreeActiveElement(element) === element;
+	}
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/focusable/focusable-context.js
+	const FocusableContext = (0, react$1.createContext)(true);
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/focusable/focusable.js
+	const TagName$55 = "div";
 	const isSafariBrowser$1 = isSafari();
 	const nativeTabbableMask = 1;
 	const supportsDisabledMask = 2;
@@ -1895,11 +1990,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	const Focusable = forwardRef$130(function Focusable(props) {
 		const htmlProps = useFocusable(props);
-		return createElement$5(TagName$56, htmlProps);
+		return createElement$5(TagName$55, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/command/command.js
-	const TagName$55 = "button";
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/command/command.js
+	const TagName$54 = "button";
 	function isNativeClick(event) {
 		if (!event.isTrusted) return false;
 		// istanbul ignore next: can't test trusted events yet
@@ -2035,93 +2130,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	const Command = forwardRef$130(function Command(props) {
 		const htmlProps = useCommand(withDefaultButtonType(props));
-		return createElement$5(TagName$55, htmlProps);
-	});
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-context.js
-	const ctx$12 = createStoreContext();
-	/**
-	* Returns the collection store from the nearest collection container.
-	* @example
-	* function CollectionItem() {
-	*   const store = useCollectionContext();
-	*
-	*   if (!store) {
-	*     throw new Error("CollectionItem must be wrapped in CollectionProvider");
-	*   }
-	*
-	*   // Use the store...
-	* }
-	*/
-	const useCollectionContext = ctx$12.useContext;
-	const useCollectionScopedContext = ctx$12.useScopedContext;
-	const useCollectionProviderContext = ctx$12.useProviderContext;
-	const CollectionContextProvider = ctx$12.ContextProvider;
-	const CollectionScopedContextProvider = ctx$12.ScopedContextProvider;
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-item.js
-	const TagName$54 = "div";
-	/**
-	* Returns props to create a `CollectionItem` component. This hook will register
-	* the item in the collection store. If this hook is used in a component that is
-	* wrapped by `Collection` or a component that implements `useCollection`,
-	* there's no need to explicitly pass the `store` prop.
-	* @see https://ariakit.com/components/collection
-	* @example
-	* ```jsx
-	* const store = useCollectionStore();
-	* const props = useCollectionItem({ store });
-	* <Role {...props}>Item</Role>
-	* ```
-	*/
-	const useCollectionItem = createHook(function useCollectionItem({ store, shouldRegisterItem = true, getItem = identity$2, element, ...props }) {
-		const context = useCollectionContext();
-		store = store || context;
-		const id = useId$8(props.id);
-		const ref = (0, react$1.useRef)(element);
-		(0, react$1.useEffect)(() => {
-			const element = ref.current;
-			if (!id) return;
-			if (!element) return;
-			if (!shouldRegisterItem) return;
-			const item = getItem({
-				id,
-				element
-			});
-			return store?.renderItem(item);
-		}, [
-			id,
-			shouldRegisterItem,
-			getItem,
-			store
-		]);
-		props = {
-			...props,
-			ref: useMergeRefs$26(ref, props.ref)
-		};
-		return props;
-	});
-	/**
-	* Renders an item in a collection. The collection store can be passed
-	* explicitly through the
-	* [`store`](https://ariakit.com/reference/collection-item#store) prop or
-	* implicitly through the parent
-	* [`Collection`](https://ariakit.com/reference/collection) component.
-	* @see https://ariakit.com/components/collection
-	* @example
-	* ```jsx
-	* const store = useCollectionStore();
-	* <CollectionItem store={store}>Item 1</CollectionItem>
-	* <CollectionItem store={store}>Item 2</CollectionItem>
-	* <CollectionItem store={store}>Item 3</CollectionItem>
-	* ```
-	*/
-	const CollectionItem = forwardRef$130(function CollectionItem(props) {
-		const htmlProps = useCollectionItem(props);
 		return createElement$5(TagName$54, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-context.js
 	const ctx$11 = createStoreContext([CollectionContextProvider], [CollectionScopedContextProvider]);
 	/**
 	* Returns the composite store from the nearest composite container.
@@ -2144,7 +2156,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const CompositeItemContext = (0, react$1.createContext)(void 0);
 	const CompositeRowContext = (0, react$1.createContext)(void 0);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/DJQz4DCk.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/BQXs5KP6.js
 	const listeners = /* @__PURE__ */ new WeakMap();
 	/** Notifies every containing renderer before a composite presents an item. */
 	function prepareScrollIntoView(request) {
@@ -2160,7 +2172,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		};
 	}
 
-// node_modules/.store/@ariakit/store@0.1.11-R6p47bgYcFWqOHfW2C0v-A/node_modules/@ariakit/store/dist/index.js
+// node_modules/.store/@ariakit/store@0.1.12-eIWWlfJPA6K0CLbC-kCrmw/node_modules/@ariakit/store/dist/index.js
 	function getInternal(store, key) {
 		const internals = store.__unstableInternals;
 		invariant$1(internals, "Invalid store");
@@ -2615,21 +2627,21 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* Register a callback function that's called when the store is initialized.
 	*/
 	function setup(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$23;
 		return getInternal(store, "setup")(...args);
 	}
 	/**
 	* Function that should be called when the store is initialized.
 	*/
 	function init(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$23;
 		return getInternal(store, "init")(...args);
 	}
 	/**
 	* Registers a listener function that's called after state changes in the store.
 	*/
 	function subscribe(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$23;
 		return getInternal(store, "subscribe")(...args);
 	}
 	/**
@@ -2637,7 +2649,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* whenever the store state changes.
 	*/
 	function sync(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$23;
 		return getInternal(store, "sync")(...args);
 	}
 	/**
@@ -2645,7 +2657,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* state changes in the store.
 	*/
 	function batch(store, ...args) {
-		if (!store) return;
+		if (!store) return noop$23;
 		return getInternal(store, "batch")(...args);
 	}
 	/**
@@ -2705,7 +2717,7 @@ If there's a particular need for this, please submit a feature request at https:
 `);
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/collection/collection-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/collection/collection-store.js
 	function getCommonParent(items) {
 		const firstItem = items.find((item) => !!item.element);
 		const lastElement = [...items].reverse().find((item) => !!item.element)?.element;
@@ -2716,6 +2728,19 @@ If there's a particular need for this, please submit a feature request at https:
 			parentElement = parentElement.parentElement;
 		}
 		return getDocument(parentElement).body;
+	}
+	function observeMovedElements(root, onMove) {
+		const { MutationObserver } = getWindow$1(root);
+		if (typeof MutationObserver !== "function") return;
+		const observer = new MutationObserver((records) => {
+			if (!records.some((record) => Array.from(record.addedNodes).some(isElement$1))) return;
+			onMove();
+		});
+		observer.observe(root, {
+			childList: true,
+			subtree: true
+		});
+		return () => observer.disconnect();
 	}
 	function getPrivateStore(store) {
 		return store?.__unstablePrivateStore;
@@ -2818,7 +2843,12 @@ If there's a particular need for this, please submit a feature request at https:
 		setup(privateStore, () => {
 			return batch(privateStore, ["renderedItems"], (state) => {
 				if (state.renderedItems !== collection.getState().renderedItems) sortItems(state.renderedItems);
-				if (typeof IntersectionObserver !== "function") return;
+				if (!state.renderedItems.some((item) => item.element)) return;
+				const root = getCommonParent(state.renderedItems);
+				const stopObservingMoves = observeMovedElements(root, () => {
+					sortItems(privateStore.getState().renderedItems);
+				});
+				if (typeof IntersectionObserver !== "function") return stopObservingMoves;
 				let firstRun = true;
 				let raf = 0;
 				const ioCallback = () => {
@@ -2829,7 +2859,6 @@ If there's a particular need for this, please submit a feature request at https:
 					cancelAnimationFrame(raf);
 					raf = requestAnimationFrame(() => sortItems(state.renderedItems));
 				};
-				const root = getCommonParent(state.renderedItems);
 				const observer = new IntersectionObserver(ioCallback, { root });
 				for (const item of state.renderedItems) {
 					if (!item.element) continue;
@@ -2838,6 +2867,7 @@ If there's a particular need for this, please submit a feature request at https:
 				return () => {
 					cancelAnimationFrame(raf);
 					observer.disconnect();
+					stopObservingMoves?.();
 				};
 			});
 		});
@@ -2908,7 +2938,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/composite/composite-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/composite/composite-store.js
 	const NULL_ITEM = { id: null };
 	/**
 	* Finds the first enabled item.
@@ -3187,7 +3217,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/utils.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/utils.js
 	const flipItems = flipItems$1;
 	const findFirstEnabledItem = findFirstEnabledItem$1;
 	const groupItemsByRows = groupItemsByRows$1;
@@ -3556,7 +3586,7 @@ If there's a particular need for this, please submit a feature request at https:
 		module.exports = require_use_sync_external_store_shim_development();
 	}));
 
-// node_modules/.store/@ariakit/react-store@0.1.13-C6ZWls7CuvAmgvZYqqkd5Q/node_modules/@ariakit/react-store/dist/index.js
+// node_modules/.store/@ariakit/react-store@0.1.14-zWumvQeLklV5IZpGeXO1ew/node_modules/@ariakit/react-store/dist/index.js
 	var import_shim = require_shim();
 	const noopSubscribe = () => () => {};
 	function isStoreKeyArray(value) {
@@ -3623,6 +3653,12 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 		return keys;
 	}
+	function getStoreStateObjectValue(state, keyOrSelector) {
+		if (typeof keyOrSelector === "function") return keyOrSelector(state);
+		if (!state) return;
+		if (!hasOwnProperty(state, keyOrSelector)) return;
+		return state[keyOrSelector];
+	}
 	function useStoreStateObject(store, objectOrKeys, object) {
 		const stateObject = isStoreKeyArray(objectOrKeys) ? object ?? {} : objectOrKeys;
 		const selectorKeys = isStoreKeyArray(objectOrKeys) ? objectOrKeys : void 0;
@@ -3635,27 +3671,35 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [store, subscriptionKeys]);
 		const getSnapshot = () => {
 			const state = store?.getState();
-			let updated = false;
-			const obj = objRef.current;
+			const previous = objRef.current;
+			let next = previous;
+			let selectedCount = 0;
+			const getWritableNext = () => {
+				if (next === previous) next = { ...previous };
+				return next;
+			};
 			for (const prop in stateObject) {
 				const keyOrSelector = stateObject[prop];
 				if (keyOrSelector === void 0) continue;
-				if (typeof keyOrSelector === "function") {
-					const value = keyOrSelector(state);
-					if (!Object.is(value, obj[prop])) {
-						obj[prop] = value;
-						updated = true;
-					}
+				selectedCount += 1;
+				const value = getStoreStateObjectValue(state, keyOrSelector);
+				if (hasOwnProperty(next, prop) && Object.is(value, next[prop])) continue;
+				getWritableNext()[prop] = value;
+			}
+			if (Object.keys(next).length > selectedCount) {
+				const selectedProps = /* @__PURE__ */ new Set();
+				for (const prop in stateObject) {
+					if (stateObject[prop] === void 0) continue;
+					selectedProps.add(prop);
 				}
-				if (typeof keyOrSelector === "function") continue;
-				const value = state && hasOwnProperty(state, keyOrSelector) ? state[keyOrSelector] : void 0;
-				if (!Object.is(value, obj[prop])) {
-					obj[prop] = value;
-					updated = true;
+				const writableNext = getWritableNext();
+				for (const prop of Object.keys(writableNext)) {
+					if (selectedProps.has(prop)) continue;
+					delete writableNext[prop];
 				}
 			}
-			if (updated) objRef.current = { ...obj };
-			return objRef.current;
+			objRef.current = next;
+			return next;
 		};
 		return (0, import_shim.useSyncExternalStore)(storeSubscribe, getSnapshot, getSnapshot);
 	}
@@ -3720,7 +3764,7 @@ If there's a particular need for this, please submit a feature request at https:
 		})];
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-item.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-item.js
 	const TagName$53 = "button";
 	function isEditableElement(element) {
 		if (isTextbox(element)) return true;
@@ -3989,10 +4033,10 @@ If there's a particular need for this, please submit a feature request at https:
 			if (action) {
 				if (isTextbox(currentTarget)) {
 					const selection = getTextboxSelection(currentTarget);
-					const isLeft = isHorizontal && event.key === "ArrowLeft";
-					const isRight = isHorizontal && event.key === "ArrowRight";
-					const isUp = isVertical && event.key === "ArrowUp";
-					const isDown = isVertical && event.key === "ArrowDown";
+					const isLeft = event.key === "ArrowLeft";
+					const isRight = event.key === "ArrowRight";
+					const isUp = event.key === "ArrowUp";
+					const isDown = event.key === "ArrowDown";
 					if (isRight || isDown) {
 						const { length: valueLength } = getTextboxValue(currentTarget);
 						if (selection.end !== valueLength) return;
@@ -4066,7 +4110,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$53, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tab/tab-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tab/tab-context.js
 	const ctx$10 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
 	/**
 	* Returns the tab store from the nearest tab container.
@@ -4087,7 +4131,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const TabContextProvider = ctx$10.ContextProvider;
 	const TabScopedContextProvider = ctx$10.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tab/tab.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tab/tab.js
 	const TagName$52 = "button";
 	/**
 	* Returns props to create a `Tab` component.
@@ -4200,7 +4244,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$52, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/CDh2UhnG.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/iBcgpDqT.js
 	const sourceEvents = /* @__PURE__ */ new WeakMap();
 	/**
 	* Dispatches a copy of a keyboard event on an element and records the event it
@@ -4221,7 +4265,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return sourceEvents.get(event) ?? event;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/xFYjARz5.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/D-AamQTr.js
 	const cancelled = Symbol("cancelled");
 	/**
 	* Tracks the current move per store. This has to outlive the component: `moves`
@@ -4255,7 +4299,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return request;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite.js
 	const TagName$51 = "div";
 	function isGrid(items) {
 		return items.some((item) => !!item.rowId);
@@ -4636,7 +4680,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$51, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tab/tab-list.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tab/tab-list.js
 	const TagName$50 = "div";
 	/**
 	* Returns props to create a `TabList` component.
@@ -4698,7 +4742,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$50, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/disclosure/disclosure-context.js
 	const ctx$9 = createStoreContext();
 	/**
 	* Returns the disclosure store from the nearest disclosure container.
@@ -4719,7 +4763,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const DisclosureContextProvider = ctx$9.ContextProvider;
 	const DisclosureScopedContextProvider = ctx$9.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/dialog-context.js
 	const ctx$8 = createStoreContext([DisclosureContextProvider], [DisclosureScopedContextProvider]);
 	/**
 	* Returns the dialog store from the nearest dialog container.
@@ -4742,7 +4786,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const DialogHeadingContext = (0, react$1.createContext)(void 0);
 	const DialogDescriptionContext = (0, react$1.createContext)(void 0);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/disclosure/disclosure-content.js
 	const TagName$49 = "div";
 	function afterTimeout(timeoutMs, cb) {
 		const timeoutId = setTimeout(cb, timeoutMs);
@@ -4917,7 +4961,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DisclosureContentImpl, { ...props });
 	});
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/disclosure/disclosure-store.js
 	function getParentHideRequest(store) {
 		const onHideRequest = store?.unstable_onHideRequest;
 		const requestHide = store?.unstable_requestHide;
@@ -5012,7 +5056,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/disclosure/disclosure-store.js
 	function useDisclosureStoreProps(store, update, props) {
 		useUpdateEffect$1(update, [
 			props.store,
@@ -5041,7 +5085,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return useDisclosureStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tab/tab-panel.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tab/tab-panel.js
 	const TagName$48 = "div";
 	/**
 	* Returns props to create a `TabPanel` component.
@@ -5202,7 +5246,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$48, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/popover/popover-context.js
 	const ctx$7 = createStoreContext([DialogContextProvider], [DialogScopedContextProvider]);
 	/**
 	* Returns the popover store from the nearest popover container.
@@ -5223,7 +5267,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const PopoverContextProvider = ctx$7.ContextProvider;
 	const PopoverScopedContextProvider = ctx$7.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-context.js
 	const ComboboxListRoleContext = (0, react$1.createContext)(null);
 	const ctx$6 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
 	/**
@@ -5248,18 +5292,29 @@ If there's a particular need for this, please submit a feature request at https:
 	const ComboboxItemCheckedContext = (0, react$1.createContext)(false);
 	const ComboboxHeadingContext = (0, react$1.createContext)(null);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/collection/collection-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/collection/collection-store.js
 	function useCollectionStoreProps(store, update, props) {
 		useUpdateEffect$1(update, [props.store, update]);
 		useStoreProps(store, props, "items", "setItems");
 		return store;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-store.js
-	function useCompositeStoreOptions(props) {
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-store.js
+/**
+	* Supplies a React-generated store ID when neither the props nor the stores
+	* that the core store synchronizes with provide one. Otherwise, the core store
+	* falls back to a random ID during render, which breaks prerendering and
+	* hydration.
+	* @param syncStores The stores, besides `props.store`, whose state the core
+	*   store merges.
+	*/
+	function useCompositeStoreOptions(props, ...syncStores) {
+		const id = useId$8();
+		if (props.id !== void 0) return props;
+		if ([props.store, ...syncStores].some((store) => store?.getState().id != null)) return props;
 		return {
-			id: useId$8(props.id),
-			...props
+			...props,
+			id
 		};
 	}
 	function useCompositeStoreProps(store, update, props) {
@@ -5282,7 +5337,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return useCompositeStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select-context.js
 	const ctx$5 = createStoreContext([PopoverContextProvider, CompositeContextProvider], [PopoverScopedContextProvider, CompositeScopedContextProvider]);
 	/**
 	* Returns the select store from the nearest select container.
@@ -5314,7 +5369,7 @@ If there's a particular need for this, please submit a feature request at https:
 	/** @deprecated Use `ComboboxHeadingContext` instead. */
 	const SelectHeadingContext = (0, react$1.createContext)(null);
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/tab/tab-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/tab/tab-store.js
 	function getFocusedTab(items) {
 		const element = items[0]?.element;
 		if (!element) return;
@@ -5471,7 +5526,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tab/tab-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tab/tab-store.js
 	function useTabStoreProps(store, update, props) {
 		useUpdateEffect$1(update, [
 			props.composite,
@@ -5510,16 +5565,18 @@ If there's a particular need for this, please submit a feature request at https:
 	function useTabStore(props = {}) {
 		const combobox = useComboboxContext();
 		const composite = useSelectContext() || combobox;
-		const storeProps = {
+		const syncComposite = props.composite !== void 0 ? props.composite : composite;
+		const syncCombobox = props.combobox !== void 0 ? props.combobox : combobox;
+		const storeProps = useCompositeStoreOptions({
 			...props,
-			composite: props.composite !== void 0 ? props.composite : composite,
-			combobox: props.combobox !== void 0 ? props.combobox : combobox
-		};
+			composite: syncComposite,
+			combobox: syncCombobox
+		}, syncComposite, syncCombobox);
 		const [store, update] = useStore$1(createTabStore, storeProps);
 		return useTabStoreProps(store, update, storeProps);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/toolbar/toolbar-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/toolbar/toolbar-context.js
 	const ctx$4 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
 	/**
 	* Returns the toolbar store from the nearest toolbar container.
@@ -5540,7 +5597,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const ToolbarContextProvider = ctx$4.ContextProvider;
 	const ToolbarScopedContextProvider = ctx$4.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/toolbar/toolbar-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/toolbar/toolbar-store.js
 /**
 	* Creates a toolbar store.
 	*/
@@ -5553,7 +5610,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/toolbar/toolbar-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/toolbar/toolbar-store.js
 	function useToolbarStoreProps(store, update, props) {
 		return useCompositeStoreProps(store, update, props);
 	}
@@ -5573,11 +5630,12 @@ If there's a particular need for this, please submit a feature request at https:
 	* ```
 	*/
 	function useToolbarStore(props = {}) {
+		props = useCompositeStoreOptions(props);
 		const [store, update] = useStore$1(createToolbarStore, props);
 		return useToolbarStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/toolbar/toolbar.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/toolbar/toolbar.js
 	const TagName$47 = "div";
 	/**
 	* Returns props to create a `Toolbar` component.
@@ -5634,7 +5692,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$47, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/toolbar/toolbar-item.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/toolbar/toolbar-item.js
 	const TagName$46 = "button";
 	/**
 	* Returns props to create a `ToolbarItem` component.
@@ -5673,7 +5731,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$46, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/separator/separator.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/separator/separator.js
 	const TagName$45 = "hr";
 	/**
 	* Returns props to create a `Separator` component.
@@ -5705,7 +5763,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$45, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-separator.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-separator.js
 	const TagName$44 = "hr";
 	/**
 	* Returns props to create a `CompositeSeparator` component.
@@ -5752,7 +5810,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$44, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/focusable/focusable-container.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/focusable/focusable-container.js
 	const TagName$43 = "div";
 	/**
 	* Returns props to create a `FocusableContainer` component.
@@ -5787,10 +5845,10 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$43, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/heading/heading-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/heading/heading-context.js
 	const HeadingContext = (0, react$1.createContext)(0);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/heading/heading-level.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/heading/heading-level.js
 /**
 	* A component that sets the heading level for its children. It doesn't render
 	* any HTML element, just sets the
@@ -5816,7 +5874,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/visually-hidden/visually-hidden.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/visually-hidden/visually-hidden.js
 	const TagName$42 = "span";
 	/**
 	* Returns styles to visually hide an element while keeping it accessible to
@@ -5872,7 +5930,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$42, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/focus-trap/focus-trap.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/focus-trap/focus-trap.js
 	const TagName$41 = "span";
 	/**
 	* Returns props to create a `FocusTrap` component.
@@ -5912,7 +5970,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$41, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/portal/portal-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/portal/portal-context.js
 /**
 	* Stores the element that will contain the portal. By default, it will be the
 	* body of the document.
@@ -5931,7 +5989,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const PortalContext$1 = (0, react$1.createContext)(null);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/portal/portal.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/portal/portal.js
 	const TagName$40 = "div";
 	function getRootElement(element, parentPortalNode) {
 		const doc = getDocument(element);
@@ -5970,6 +6028,13 @@ If there's a particular need for this, please submit a feature request at https:
 			element?.focus();
 		});
 	}
+	function isFocusEventOutsidePortal(event, portalNode, fallbackRelatedTarget) {
+		const relatedTarget = event.relatedTarget ?? fallbackRelatedTarget;
+		return isFocusEventOutside({
+			currentTarget: event.currentTarget,
+			relatedTarget
+		}, portalNode);
+	}
 	function attachPortalRef(ref, node) {
 		return {
 			ref,
@@ -6000,6 +6065,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const innerBeforeRef = (0, react$1.useRef)(null);
 		const innerAfterRef = (0, react$1.useRef)(null);
 		const outerAfterRef = (0, react$1.useRef)(null);
+		const blurredActiveElementRef = (0, react$1.useRef)(null);
 		const portalRefProp = useLiveRef(portalRef);
 		const attachedPortalRefRef = (0, react$1.useRef)(null);
 		useSafeLayoutEffect(() => {
@@ -6061,9 +6127,14 @@ If there's a particular need for this, please submit a feature request at https:
 		(0, react$1.useEffect)(() => {
 			if (!portalNode) return;
 			if (!preserveTabOrder) return;
+			const doc = getDocument(portalNode);
+			const win = getWindow$1(portalNode);
 			let raf = 0;
+			let clearBlurredRaf = 0;
+			const isInPortal = (element) => !!element && contains$1(portalNode, element);
 			const onFocus = (event) => {
-				if (!isFocusEventOutside(event)) return;
+				const blurredActiveElement = blurredActiveElementRef.current;
+				if (!isFocusEventOutsidePortal(event, portalNode, blurredActiveElement)) return;
 				const focusing = event.type === "focusin";
 				cancelAnimationFrame(raf);
 				if (focusing) return restoreFocusIn(portalNode);
@@ -6071,12 +6142,35 @@ If there's a particular need for this, please submit a feature request at https:
 					disableFocusIn(portalNode, true);
 				});
 			};
+			const onWindowBlur = () => {
+				cancelAnimationFrame(clearBlurredRaf);
+				const activeElement = doc.activeElement;
+				blurredActiveElementRef.current = activeElement;
+				if (!isInPortal(activeElement)) return;
+				cancelAnimationFrame(raf);
+				restoreFocusIn(portalNode);
+			};
+			const onWindowFocus = () => {
+				clearBlurredRaf = requestAnimationFrame(() => {
+					const blurredActiveElement = blurredActiveElementRef.current;
+					blurredActiveElementRef.current = null;
+					if (!isInPortal(blurredActiveElement)) return;
+					if (isInPortal(doc.activeElement)) return;
+					disableFocusIn(portalNode, true);
+				});
+			};
 			portalNode.addEventListener("focusin", onFocus, true);
 			portalNode.addEventListener("focusout", onFocus, true);
+			win.addEventListener("blur", onWindowBlur);
+			win.addEventListener("focus", onWindowFocus);
 			return () => {
 				cancelAnimationFrame(raf);
+				cancelAnimationFrame(clearBlurredRaf);
+				blurredActiveElementRef.current = null;
 				portalNode.removeEventListener("focusin", onFocus, true);
 				portalNode.removeEventListener("focusout", onFocus, true);
+				win.removeEventListener("blur", onWindowBlur);
+				win.removeEventListener("focus", onWindowFocus);
 			};
 		}, [portalNode, preserveTabOrder]);
 		props = useWrapElement(props, (element) => {
@@ -6091,13 +6185,14 @@ If there's a particular need for this, please submit a feature request at https:
 				style: { position: "fixed" },
 				hidden: true
 			});
+			const isFocusOutside = (event) => isFocusEventOutsidePortal(event, portalNode, blurredActiveElementRef.current);
 			element = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 				preserveTabOrder && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FocusTrap, {
 					ref: innerBeforeRef,
 					"data-focus-trap": props.id,
 					className: "__focus-trap-inner-before",
 					onFocus: (event) => {
-						if (isFocusEventOutside(event, portalNode)) queueFocus(getNextTabbable$1());
+						if (isFocusOutside(event)) queueFocus(getNextTabbable$1());
 						else queueFocus(outerBeforeRef.current);
 					}
 				}),
@@ -6107,7 +6202,7 @@ If there's a particular need for this, please submit a feature request at https:
 					"data-focus-trap": props.id,
 					className: "__focus-trap-inner-after",
 					onFocus: (event) => {
-						if (isFocusEventOutside(event, portalNode)) queueFocus(getPreviousTabbable$1());
+						if (isFocusOutside(event)) queueFocus(getPreviousTabbable$1());
 						else queueFocus(outerAfterRef.current);
 					}
 				})
@@ -6119,7 +6214,7 @@ If there's a particular need for this, please submit a feature request at https:
 					"data-focus-trap": props.id,
 					className: "__focus-trap-outer-before",
 					onFocus: (event) => {
-						if (!(event.relatedTarget === outerAfterRef.current) && isFocusEventOutside(event, portalNode)) queueFocus(innerBeforeRef.current);
+						if (!(event.relatedTarget === outerAfterRef.current) && isFocusOutside(event)) queueFocus(innerBeforeRef.current);
 						else queueFocus(getPreviousTabbable$1());
 					}
 				}),
@@ -6132,7 +6227,7 @@ If there's a particular need for this, please submit a feature request at https:
 					"data-focus-trap": props.id,
 					className: "__focus-trap-outer-after",
 					onFocus: (event) => {
-						if (isFocusEventOutside(event, portalNode)) queueFocus(innerAfterRef.current);
+						if (isFocusOutside(event)) queueFocus(innerAfterRef.current);
 						else {
 							const nextTabbable = getNextTabbable$1();
 							if (nextTabbable === innerBeforeRef.current) {
@@ -6187,327 +6282,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$40, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/is-backdrop.js
-	function isBackdrop(element, ...ids) {
-		if (!element) return false;
-		const backdrop = element.getAttribute("data-backdrop");
-		if (backdrop == null) return false;
-		if (backdrop === "") return true;
-		if (backdrop === "true") return true;
-		if (!ids.length) return true;
-		return ids.some((id) => backdrop === id);
-	}
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/orchestrate.js
-	const cleanups = /* @__PURE__ */ new WeakMap();
-	function flushCleanupStack(elementCleanups, key, stack) {
-		while (stack.length) {
-			const entry = stack[stack.length - 1];
-			if (!entry) {
-				elementCleanups.delete(key);
-				return;
-			}
-			if (!entry.disposed) return;
-			stack.pop();
-			entry.cleanup();
-		}
-		elementCleanups.delete(key);
-	}
-	function orchestrate(element, key, setup) {
-		let elementCleanups = cleanups.get(element);
-		if (!elementCleanups) {
-			elementCleanups = /* @__PURE__ */ new Map();
-			cleanups.set(element, elementCleanups);
-		}
-		const stack = elementCleanups.get(key) ?? [];
-		const entry = {
-			cleanup: setup(),
-			disposed: false
-		};
-		if (!stack.length) elementCleanups.set(key, stack);
-		stack.push(entry);
-		return () => {
-			if (!stack.includes(entry)) return;
-			entry.disposed = true;
-			flushCleanupStack(elementCleanups, key, stack);
-		};
-	}
-	function setAttribute(element, attr, value) {
-		const setup = () => {
-			const previousValue = element.getAttribute(attr);
-			element.setAttribute(attr, value);
-			return () => {
-				if (previousValue == null) element.removeAttribute(attr);
-				else element.setAttribute(attr, previousValue);
-			};
-		};
-		return orchestrate(element, attr, setup);
-	}
-	function setProperty(element, property, value) {
-		const setup = () => {
-			const exists = property in element;
-			const previousValue = element[property];
-			element[property] = value;
-			return () => {
-				if (!exists) delete element[property];
-				else element[property] = previousValue;
-			};
-		};
-		return orchestrate(element, property, setup);
-	}
-	function assignStyle(element, style) {
-		if (!element) return () => {};
-		const setup = () => {
-			const prevStyle = element.style.cssText;
-			Object.assign(element.style, style);
-			return () => {
-				element.style.cssText = prevStyle;
-			};
-		};
-		return orchestrate(element, "style", setup);
-	}
-	function setCSSProperty(element, property, value) {
-		if (!element) return () => {};
-		const setup = () => {
-			const previousValue = element.style.getPropertyValue(property);
-			const previousPriority = element.style.getPropertyPriority(property);
-			element.style.setProperty(property, value);
-			return () => {
-				if (previousValue) element.style.setProperty(property, previousValue, previousPriority);
-				else element.style.removeProperty(property);
-			};
-		};
-		return orchestrate(element, property, setup);
-	}
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/tree-cleanup.js
-/**
-	* Finds marks in the owning dialog's current walk. IDs cannot identify their
-	* owner because dialogs in different roots can share an ID.
-	* https://github.com/ariakit/ariakit/issues/7726
-	*/
-	function isElementMarkedBy(element, cleanups) {
-		if (!cleanups) return false;
-		if (cleanups.get(element)?.has("ancestorMark")) return true;
-		do {
-			if (cleanups.get(element)?.has("mark")) return true;
-			if (!element.parentElement) return false;
-			element = element.parentElement;
-		} while (true);
-	}
-	const insideElements = /* @__PURE__ */ new WeakMap();
-	function getPropertyName(id = "", kind = "outside") {
-		return `__ariakit-dialog-${kind}${id ? `-${id}` : ""}`;
-	}
-	function markElement(element, id = "") {
-		return chain$1(setProperty(element, getPropertyName(), true), setProperty(element, getPropertyName(id), true));
-	}
-	function markAncestor(element, id = "") {
-		return chain$1(setProperty(element, getPropertyName("", "ancestor"), true), setProperty(element, getPropertyName(id, "ancestor"), true));
-	}
-	/**
-	* Marks elements the dialog knows about at open time (the dialog itself,
-	* persistent elements, and nested dialogs), so outside event listeners can
-	* recognize them as inside before the dialog has been focused.
-	* @see https://github.com/ariakit/ariakit/issues/6344
-	*/
-	function markTreeInside(dialog, elements) {
-		const marker = /* @__PURE__ */ new WeakSet();
-		insideElements.set(dialog, marker);
-		for (const element of elements) if (element) marker.add(element);
-		return () => {
-			if (insideElements.get(dialog) !== marker) return;
-			insideElements.delete(dialog);
-		};
-	}
-	function isElementInside(element, dialog) {
-		const marker = insideElements.get(dialog);
-		if (!marker) return false;
-		do {
-			if (marker.has(element)) return true;
-			if (!element.parentElement) return false;
-			element = element.parentElement;
-		} while (true);
-	}
-	function isElementMarked(element, id) {
-		const ancestorProperty = getPropertyName(id, "ancestor");
-		if (element[ancestorProperty]) return true;
-		const elementProperty = getPropertyName(id);
-		do {
-			if (element[elementProperty]) return true;
-			if (!element.parentElement) return false;
-			element = element.parentElement;
-		} while (true);
-	}
-	function startCleanupWalk(previousCleanups) {
-		return {
-			cleanups: /* @__PURE__ */ new Map(),
-			previousCleanups
-		};
-	}
-	/**
-	* Adds the cleanup of an element to the walk. If the previous walk has a
-	* cleanup for the same element and kind, the function moves that cleanup and
-	* does not call `setup`.
-	*/
-	function addCleanup({ walk, element, kind, setup }) {
-		const elementCleanups = walk.cleanups.get(element) ?? /* @__PURE__ */ new Map();
-		if (elementCleanups.has(kind)) return;
-		walk.cleanups.set(element, elementCleanups);
-		const previousElementCleanups = walk.previousCleanups?.get(element);
-		const previousCleanup = previousElementCleanups?.get(kind);
-		previousElementCleanups?.delete(kind);
-		elementCleanups.set(kind, previousCleanup ?? setup());
-	}
-	/**
-	* Restores the cleanups that the walk did not keep from the previous walk. They
-	* belong to elements that are no longer part of the walk.
-	*/
-	function finishCleanupWalk(walk) {
-		if (walk.previousCleanups) restoreCleanups(walk.previousCleanups);
-		return walk.cleanups;
-	}
-	function addElementMarkCleanup({ walk, element, id, ids }) {
-		if (isBackdrop(element, ...ids)) return;
-		addCleanup({
-			walk,
-			element,
-			kind: "mark",
-			setup: () => markElement(element, id)
-		});
-	}
-	function addAncestorMarkCleanup({ walk, ancestor, element, id }) {
-		if (element.hasAttribute("data-dialog") && element.id !== id) return;
-		addCleanup({
-			walk,
-			element: ancestor,
-			kind: "ancestorMark",
-			setup: () => markAncestor(ancestor, id)
-		});
-	}
-	function restoreCleanups(cleanups) {
-		for (const elementCleanups of cleanups.values()) for (const cleanup of elementCleanups.values()) cleanup();
-		cleanups.clear();
-	}
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/swj3d1r-.js
-	function getSnapshotPropertyName(id) {
-		return `__ariakit-dialog-snapshot-${id}`;
-	}
-	function getSnapshotAncestorPropertyName(id) {
-		return `__ariakit-dialog-snapshotAncestor-${id}`;
-	}
-	/**
-	* Adds elements to the snapshot of the dialog. The snapshot takes every element
-	* outside the dialog, so the list can be long. React can also replace the
-	* element of another dialog that was already open when the snapshot was taken,
-	* and the new element isn't in the snapshot.
-	*/
-	function addToWalkTreeSnapshot(id, elements) {
-		return setSnapshotProperty(getSnapshotPropertyName(id), elements);
-	}
-	/**
-	* Records the elements that contain the dialog when its snapshot is taken. They
-	* were in the page at that time, but the snapshot has only the elements outside
-	* the dialog, so it has their other children and not them.
-	*/
-	function addAncestorsToWalkTreeSnapshot(id, ancestors) {
-		return setSnapshotProperty(getSnapshotAncestorPropertyName(id), ancestors);
-	}
-	function setSnapshotProperty(propertyName, elements) {
-		const cleanups = [];
-		for (const element of elements) cleanups.push(setProperty(element, propertyName, true));
-		return () => {
-			for (const cleanup of cleanups) cleanup();
-		};
-	}
-	const ignoreTags = ["SCRIPT", "STYLE"];
-	function inSnapshot(id, element) {
-		const doc = getDocument(element);
-		const propertyName = getSnapshotPropertyName(id);
-		if (!doc.body[propertyName]) return true;
-		do {
-			if (element === doc.body) return false;
-			if (element[propertyName]) return true;
-			if (!element.parentElement) return false;
-			element = element.parentElement;
-		} while (true);
-	}
-	function containsSomeElement(element, elements) {
-		return elements.some((enabledElement) => enabledElement && contains$1(element, enabledElement));
-	}
-	function shouldWalkElement(id, element, ignoredElements) {
-		if (ignoreTags.includes(element.tagName)) return false;
-		if (!inSnapshot(id, element)) return false;
-		return !containsSomeElement(element, ignoredElements);
-	}
-	function isFormerAncestor(id, element, ignoredElements) {
-		if (!element[getSnapshotAncestorPropertyName(id)]) return false;
-		return !containsSomeElement(element, ignoredElements);
-	}
-	function walkTreeOutside(id, elements, callback, ancestorCallback) {
-		for (let element of elements) {
-			if (!element?.isConnected) continue;
-			const hasAncestorAlready = elements.some((maybeAncestor) => {
-				if (!maybeAncestor) return false;
-				if (maybeAncestor === element) return false;
-				return maybeAncestor.contains(element);
-			});
-			const doc = getDocument(element);
-			const originalElement = element;
-			const walkChildren = (parent) => {
-				for (const child of parent.children) {
-					if (shouldWalkElement(id, child, elements)) {
-						callback(child, originalElement);
-						continue;
-					}
-					if (!isFormerAncestor(id, child, elements)) continue;
-					ancestorCallback?.(child, originalElement);
-					walkChildren(child);
-				}
-			};
-			while (element.parentElement && element !== doc.body) {
-				ancestorCallback?.(element.parentElement, originalElement);
-				if (!hasAncestorAlready) walkChildren(element.parentElement);
-				element = element.parentElement;
-			}
-		}
-	}
-	function createWalkTreeSnapshot(id, elements) {
-		const { body } = getDocument(elements[0]);
-		const snapshotElements = [];
-		const ancestors = [];
-		walkTreeOutside(id, elements, (element) => {
-			snapshotElements.push(element);
-		}, (ancestor) => {
-			ancestors.push(ancestor);
-		});
-		return chain$1(setProperty(body, getSnapshotPropertyName(id), true), addToWalkTreeSnapshot(id, snapshotElements), addAncestorsToWalkTreeSnapshot(id, ancestors));
-	}
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/mark-tree-outside.js
-	function markTreeOutside(id, elements, previousCleanups) {
-		const walk = startCleanupWalk(previousCleanups);
-		const ids = elements.map((el) => el?.id);
-		walkTreeOutside(id, elements, (element) => {
-			addElementMarkCleanup({
-				walk,
-				element,
-				id,
-				ids
-			});
-		}, (ancestor, element) => {
-			addAncestorMarkCleanup({
-				walk,
-				ancestor,
-				element,
-				id
-			});
-		});
-		return finishCleanupWalk(walk);
-	}
-
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/role/role.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/role/role.js
 /**
 	* Standard, non-obsolete HTML tags supported by React and Solid, plus svg.
 	* Excludes platform-specific intrinsic tags.
@@ -6627,7 +6402,7 @@ If there's a particular need for this, please submit a feature request at https:
 		"svg"
 	];
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/role/role.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/role/role.js
 	const TagName$39 = "div";
 	/**
 	* Returns props to create a `Role` component.
@@ -6661,7 +6436,210 @@ If there's a particular need for this, please submit a feature request at https:
 		return acc;
 	}, {}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/dialog-backdrop.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/is-backdrop.js
+	function isBackdrop(element, ...ids) {
+		if (!element) return false;
+		const backdrop = element.getAttribute("data-backdrop");
+		if (backdrop == null) return false;
+		if (backdrop === "") return true;
+		if (backdrop === "true") return true;
+		if (!ids.length) return true;
+		return ids.some((id) => backdrop === id);
+	}
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/orchestrate.js
+	const cleanups = /* @__PURE__ */ new WeakMap();
+	function flushCleanupStack(elementCleanups, key, stack) {
+		while (stack.length) {
+			const entry = stack[stack.length - 1];
+			if (!entry) {
+				elementCleanups.delete(key);
+				return;
+			}
+			if (!entry.disposed) return;
+			stack.pop();
+			entry.cleanup();
+		}
+		elementCleanups.delete(key);
+	}
+	function orchestrate(element, key, setup) {
+		let elementCleanups = cleanups.get(element);
+		if (!elementCleanups) {
+			elementCleanups = /* @__PURE__ */ new Map();
+			cleanups.set(element, elementCleanups);
+		}
+		const stack = elementCleanups.get(key) ?? [];
+		const entry = {
+			cleanup: setup(),
+			disposed: false
+		};
+		if (!stack.length) elementCleanups.set(key, stack);
+		stack.push(entry);
+		return () => {
+			if (!stack.includes(entry)) return;
+			entry.disposed = true;
+			flushCleanupStack(elementCleanups, key, stack);
+		};
+	}
+	function setAttribute(element, attr, value) {
+		const setup = () => {
+			const previousValue = element.getAttribute(attr);
+			element.setAttribute(attr, value);
+			return () => {
+				if (previousValue == null) element.removeAttribute(attr);
+				else element.setAttribute(attr, previousValue);
+			};
+		};
+		return orchestrate(element, attr, setup);
+	}
+	function setProperty(element, property, value) {
+		const setup = () => {
+			const exists = property in element;
+			const previousValue = element[property];
+			element[property] = value;
+			return () => {
+				if (!exists) delete element[property];
+				else element[property] = previousValue;
+			};
+		};
+		return orchestrate(element, property, setup);
+	}
+	function assignStyle(element, style) {
+		if (!element) return () => {};
+		const setup = () => {
+			const prevStyle = element.style.cssText;
+			Object.assign(element.style, style);
+			return () => {
+				element.style.cssText = prevStyle;
+			};
+		};
+		return orchestrate(element, "style", setup);
+	}
+	function setCSSProperty(element, property, value) {
+		if (!element) return () => {};
+		const setup = () => {
+			const previousValue = element.style.getPropertyValue(property);
+			const previousPriority = element.style.getPropertyPriority(property);
+			element.style.setProperty(property, value);
+			return () => {
+				if (previousValue) element.style.setProperty(property, previousValue, previousPriority);
+				else element.style.removeProperty(property);
+			};
+		};
+		return orchestrate(element, property, setup);
+	}
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/tree-cleanup.js
+/**
+	* Finds marks in the owning dialog's current walk. IDs cannot identify their
+	* owner because dialogs in different roots can share an ID.
+	* https://github.com/ariakit/ariakit/issues/7726
+	*/
+	function isElementMarkedBy(element, cleanups) {
+		if (!cleanups) return false;
+		if (cleanups.get(element)?.has("ancestorMark")) return true;
+		do {
+			if (cleanups.get(element)?.has("mark")) return true;
+			if (!element.parentElement) return false;
+			element = element.parentElement;
+		} while (true);
+	}
+	const insideElements = /* @__PURE__ */ new WeakMap();
+	function getPropertyName(id = "", kind = "outside") {
+		return `__ariakit-dialog-${kind}${id ? `-${id}` : ""}`;
+	}
+	function markElement(element, id = "") {
+		return chain$1(setProperty(element, getPropertyName(), true), setProperty(element, getPropertyName(id), true));
+	}
+	function markAncestor(element, id = "") {
+		return chain$1(setProperty(element, getPropertyName("", "ancestor"), true), setProperty(element, getPropertyName(id, "ancestor"), true));
+	}
+	/**
+	* Marks elements the dialog knows about at open time (the dialog itself,
+	* persistent elements, and nested dialogs), so outside event listeners can
+	* recognize them as inside before the dialog has been focused.
+	* @see https://github.com/ariakit/ariakit/issues/6344
+	*/
+	function markTreeInside(dialog, elements) {
+		const marker = /* @__PURE__ */ new WeakSet();
+		insideElements.set(dialog, marker);
+		for (const element of elements) if (element) marker.add(element);
+		return () => {
+			if (insideElements.get(dialog) !== marker) return;
+			insideElements.delete(dialog);
+		};
+	}
+	function isElementInside(element, dialog) {
+		const marker = insideElements.get(dialog);
+		if (!marker) return false;
+		do {
+			if (marker.has(element)) return true;
+			if (!element.parentElement) return false;
+			element = element.parentElement;
+		} while (true);
+	}
+	function isElementMarked(element, id) {
+		const ancestorProperty = getPropertyName(id, "ancestor");
+		if (element[ancestorProperty]) return true;
+		const elementProperty = getPropertyName(id);
+		do {
+			if (element[elementProperty]) return true;
+			if (!element.parentElement) return false;
+			element = element.parentElement;
+		} while (true);
+	}
+	function startCleanupWalk(previousCleanups) {
+		return {
+			cleanups: /* @__PURE__ */ new Map(),
+			previousCleanups
+		};
+	}
+	/**
+	* Adds the cleanup of an element to the walk. If the previous walk has a
+	* cleanup for the same element and kind, the function moves that cleanup and
+	* does not call `setup`.
+	*/
+	function addCleanup({ walk, element, kind, setup }) {
+		const elementCleanups = walk.cleanups.get(element) ?? /* @__PURE__ */ new Map();
+		if (elementCleanups.has(kind)) return;
+		walk.cleanups.set(element, elementCleanups);
+		const previousElementCleanups = walk.previousCleanups?.get(element);
+		const previousCleanup = previousElementCleanups?.get(kind);
+		previousElementCleanups?.delete(kind);
+		elementCleanups.set(kind, previousCleanup ?? setup());
+	}
+	/**
+	* Restores the cleanups that the walk did not keep from the previous walk. They
+	* belong to elements that are no longer part of the walk.
+	*/
+	function finishCleanupWalk(walk) {
+		if (walk.previousCleanups) restoreCleanups(walk.previousCleanups);
+		return walk.cleanups;
+	}
+	function addElementMarkCleanup({ walk, element, id, ids }) {
+		if (isBackdrop(element, ...ids)) return;
+		addCleanup({
+			walk,
+			element,
+			kind: "mark",
+			setup: () => markElement(element, id)
+		});
+	}
+	function addAncestorMarkCleanup({ walk, ancestor, element, id }) {
+		if (element.hasAttribute("data-dialog") && element.id !== id) return;
+		addCleanup({
+			walk,
+			element: ancestor,
+			kind: "ancestorMark",
+			setup: () => markAncestor(ancestor, id)
+		});
+	}
+	function restoreCleanups(cleanups) {
+		for (const elementCleanups of cleanups.values()) for (const cleanup of elementCleanups.values()) cleanup();
+		cleanups.clear();
+	}
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/dialog-backdrop.js
 	function DialogBackdrop({ store, backdrop, backdropRef, onElementChange, alwaysVisible, hidden }) {
 		const [backdropElement, setBackdropElement] = (0, react$1.useState)(null);
 		const disclosure = useDisclosureStore({ disclosure: store });
@@ -6710,7 +6688,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/dialog/dialog-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/dialog/dialog-store.js
 /**
 	* Creates a dialog store.
 	*/
@@ -6718,7 +6696,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createDisclosureStore(props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/dialog-store.js
 	function useDialogStoreProps(store, update, props) {
 		return useDisclosureStoreProps(store, update, props);
 	}
@@ -6739,7 +6717,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return useDialogStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/DztuoDGI.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/CqjMKeIW.js
 	function isHiddenDismiss(element, ...ids) {
 		if (!element) return false;
 		const dismiss = element.getAttribute("data-dialog-hidden-dismiss");
@@ -6749,17 +6727,107 @@ If there's a particular need for this, please submit a feature request at https:
 		return ids.some((id) => dismiss === id);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/supports-inert.js
-	function supportsInert() {
-		return "inert" in HTMLElement.prototype;
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/DG2x0p-x.js
+	function getSnapshotPropertyName(id) {
+		return `__ariakit-dialog-snapshot-${id}`;
+	}
+	function getSnapshotAncestorPropertyName(id) {
+		return `__ariakit-dialog-snapshotAncestor-${id}`;
+	}
+	/**
+	* Adds elements to the snapshot of the dialog. The snapshot takes every element
+	* outside the dialog, so the list can be long. React can also replace the
+	* element of another dialog that was already open when the snapshot was taken,
+	* and the new element isn't in the snapshot.
+	*/
+	function addToWalkTreeSnapshot(id, elements) {
+		return setSnapshotProperty(getSnapshotPropertyName(id), elements);
+	}
+	/**
+	* Records the elements that contain the dialog when its snapshot is taken. They
+	* were in the page at that time, but the snapshot has only the elements outside
+	* the dialog, so it has their other children and not them.
+	*/
+	function addAncestorsToWalkTreeSnapshot(id, ancestors) {
+		return setSnapshotProperty(getSnapshotAncestorPropertyName(id), ancestors);
+	}
+	function setSnapshotProperty(propertyName, elements) {
+		const cleanups = [];
+		for (const element of elements) cleanups.push(setProperty(element, propertyName, true));
+		return () => {
+			for (const cleanup of cleanups) cleanup();
+		};
+	}
+	const ignoreTags = ["SCRIPT", "STYLE"];
+	function inSnapshot(id, element) {
+		const doc = getDocument(element);
+		const propertyName = getSnapshotPropertyName(id);
+		if (!doc.body[propertyName]) return true;
+		do {
+			if (element === doc.body) return false;
+			if (element[propertyName]) return true;
+			if (!element.parentElement) return false;
+			element = element.parentElement;
+		} while (true);
+	}
+	function containsSomeElement(element, elements) {
+		return elements.some((enabledElement) => enabledElement && contains$1(element, enabledElement));
+	}
+	function shouldWalkElement(id, element, ignoredElements) {
+		if (ignoreTags.includes(element.tagName)) return false;
+		if (!inSnapshot(id, element)) return false;
+		return !containsSomeElement(element, ignoredElements);
+	}
+	function isFormerAncestor(id, element, ignoredElements) {
+		if (!element[getSnapshotAncestorPropertyName(id)]) return false;
+		return !containsSomeElement(element, ignoredElements);
+	}
+	function walkTreeOutside(id, elements, callback, ancestorCallback) {
+		for (let element of elements) {
+			if (!element?.isConnected) continue;
+			const hasAncestorAlready = elements.some((maybeAncestor) => {
+				if (!maybeAncestor) return false;
+				if (maybeAncestor === element) return false;
+				return maybeAncestor.contains(element);
+			});
+			const doc = getDocument(element);
+			const originalElement = element;
+			const walkChildren = (parent) => {
+				for (const child of parent.children) {
+					if (shouldWalkElement(id, child, elements)) {
+						callback(child, originalElement);
+						continue;
+					}
+					if (!isFormerAncestor(id, child, elements)) continue;
+					ancestorCallback?.(child, originalElement);
+					walkChildren(child);
+				}
+			};
+			while (element.parentElement && element !== doc.body) {
+				ancestorCallback?.(element.parentElement, originalElement);
+				if (!hasAncestorAlready) walkChildren(element.parentElement);
+				element = element.parentElement;
+			}
+		}
+	}
+	function createWalkTreeSnapshot(id, elements) {
+		const { body } = getDocument(elements[0]);
+		const snapshotElements = [];
+		const ancestors = [];
+		walkTreeOutside(id, elements, (element) => {
+			snapshotElements.push(element);
+		}, (ancestor) => {
+			ancestors.push(ancestor);
+		});
+		return chain$1(setProperty(body, getSnapshotPropertyName(id), true), addToWalkTreeSnapshot(id, snapshotElements), addAncestorsToWalkTreeSnapshot(id, ancestors));
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/disable-accessibility-tree-outside.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/disable-accessibility-tree-outside.js
 	function hideElementFromAccessibilityTree(element) {
 		return setAttribute(element, "aria-hidden", "true");
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/is-focus-trap.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/is-focus-trap.js
 	function isFocusTrap(element, ...ids) {
 		if (!element) return false;
 		const attr = element.getAttribute("data-focus-trap");
@@ -6769,7 +6837,12 @@ If there's a particular need for this, please submit a feature request at https:
 		return ids.some((id) => attr === id);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/disable-tree.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/supports-inert.js
+	function supportsInert() {
+		return "inert" in HTMLElement.prototype;
+	}
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/disable-tree.js
 	function disableTree(element, ignoredElements) {
 		if (!("style" in element)) return noop$23;
 		if (supportsInert()) return setProperty(element, "inert", true);
@@ -6839,7 +6912,29 @@ If there's a particular need for this, please submit a feature request at https:
 		return finishCleanupWalk(walk);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/use-previous-mouse-down-ref.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/mark-tree-outside.js
+	function markTreeOutside(id, elements, previousCleanups) {
+		const walk = startCleanupWalk(previousCleanups);
+		const ids = elements.map((el) => el?.id);
+		walkTreeOutside(id, elements, (element) => {
+			addElementMarkCleanup({
+				walk,
+				element,
+				id,
+				ids
+			});
+		}, (ancestor, element) => {
+			addAncestorMarkCleanup({
+				walk,
+				ancestor,
+				element,
+				id
+			});
+		});
+		return finishCleanupWalk(walk);
+	}
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/use-previous-mouse-down-ref.js
 /**
 	* Returns an element followed by its iframe hosts up to the highest readable
 	* document.
@@ -6899,7 +6994,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return previousMouseDownRef;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/use-hide-on-interact-outside.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/use-hide-on-interact-outside.js
 	function getHighestReadableWindow(element) {
 		const highestElement = getFrameChain(element).at(-1);
 		return getWindow$1(highestElement ?? element);
@@ -7052,7 +7147,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/use-nested-dialogs.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/use-nested-dialogs.js
 	const NestedDialogsContext = (0, react$1.createContext)({});
 	function useNestedDialogs(store) {
 		const context = (0, react$1.useContext)(NestedDialogsContext);
@@ -7083,7 +7178,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/use-root-dialog.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/use-root-dialog.js
 	function useRootDialog({ attribute, contentId, contentElement, enabled }) {
 		const [updated, retry] = useForceUpdate();
 		const isRootDialog = (0, react$1.useCallback)(() => {
@@ -7123,7 +7218,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return isRootDialog;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/utils/use-prevent-body-scroll.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/utils/use-prevent-body-scroll.js
 	const isIOS = isApple() && !isMac();
 	const useLockEffect = isIOS ? react$1.useEffect : useSafeLayoutEffect;
 	function supportsScrollbarGutter(win) {
@@ -7196,7 +7291,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [isRootDialog, contentElement]);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/CEV0PLZp.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/RfhabEWE.js
 	const capturedDisclosures = /* @__PURE__ */ new WeakSet();
 	function captureDisclosure(element) {
 		capturedDisclosures.add(element);
@@ -8057,7 +8152,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DialogWithInternalStore, { ...props });
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/B3k5_R1L.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/d-mbi-QE.js
 	function getBasePlacement(placement) {
 		return placement.split("-")[0];
 	}
@@ -9313,7 +9408,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	};
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/popover/popover.js
 	const TagName$37 = "div";
 	/**
 	* How many mounted popovers are currently asserting `unstable_placing` on each
@@ -9322,6 +9417,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* does anyone still own it once the deferred reset runs?
 	*/
 	const placingWriters = /* @__PURE__ */ new WeakMap();
+	const minArrowPadding = 4;
 	function createDOMRect(x = 0, y = 0, width = 0, height = 0) {
 		if (typeof DOMRect === "function") return new DOMRect(x, y, width, height);
 		const rect = {
@@ -9415,12 +9511,69 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 	}
-	function getArrowMiddleware(arrowElement, props) {
+	function getRadiusLength(value, reference) {
+		const length = Number.parseFloat(value);
+		if (Number.isNaN(length)) return 0;
+		if (value.endsWith("%")) return length * reference / 100;
+		return length;
+	}
+	function getCornerRadius(value, width, height) {
+		const [x = "", y = x] = value.split(" ");
+		return {
+			x: getRadiusLength(x, width),
+			y: getRadiusLength(y, height)
+		};
+	}
+	function getRadiusScale(length, start, end) {
+		const sum = start + end;
+		if (sum <= length) return 1;
+		return length / sum;
+	}
+	/**
+	* Returns the arrow padding that keeps the arrow off the rounded corners of the
+	* element on the side where the arrow renders. Each end of that side gets its
+	* own padding of at least 4px.
+	*/
+	function getCornerArrowPadding(element, placement) {
+		const style = getWindow$1(element).getComputedStyle(element);
+		const width = element.offsetWidth;
+		const height = element.offsetHeight;
+		const getRadius = (property) => getCornerRadius(style.getPropertyValue(property), width, height);
+		const topLeft = getRadius("border-top-left-radius");
+		const topRight = getRadius("border-top-right-radius");
+		const bottomRight = getRadius("border-bottom-right-radius");
+		const bottomLeft = getRadius("border-bottom-left-radius");
+		const scale = Math.min(getRadiusScale(width, topLeft.x, topRight.x), getRadiusScale(width, bottomLeft.x, bottomRight.x), getRadiusScale(height, topLeft.y, bottomLeft.y), getRadiusScale(height, topRight.y, bottomRight.y));
+		const getPadding = (radius) => Math.max(minArrowPadding, radius * scale);
+		switch (getBasePlacement(placement)) {
+			case "top": return {
+				left: getPadding(bottomLeft.x),
+				right: getPadding(bottomRight.x)
+			};
+			case "bottom": return {
+				left: getPadding(topLeft.x),
+				right: getPadding(topRight.x)
+			};
+			case "left": return {
+				top: getPadding(topRight.y),
+				bottom: getPadding(bottomRight.y)
+			};
+			case "right": return {
+				top: getPadding(topLeft.y),
+				bottom: getPadding(bottomLeft.y)
+			};
+		}
+	}
+	function getArrowMiddleware(arrowElement, props, cornerElement) {
 		if (!arrowElement) return;
-		return arrow$2({
+		if (props.arrowPadding != null || !cornerElement) return arrow$2({
 			element: arrowElement,
-			padding: props.arrowPadding
+			padding: props.arrowPadding ?? minArrowPadding
 		});
+		return arrow$2(({ placement }) => ({
+			element: arrowElement,
+			padding: getCornerArrowPadding(cornerElement, placement)
+		}));
 	}
 	/**
 	* Returns props to create a `Popover` component.
@@ -9432,7 +9585,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* <Role {...props}>Popover</Role>
 	* ```
 	*/
-	const usePopover = createHook(function usePopover({ store, modal = false, portal = modal, preserveTabOrder = true, autoFocusOnShow = true, wrapperProps, fixed = false, flip = true, shift = 0, slide = true, overlap = false, sameWidth = false, fitViewport = false, gutter, arrowPadding = 4, overflowPadding = 8, getAnchorRect, updatePosition, ...props }) {
+	const usePopover = createHook(function usePopover({ store, modal = false, portal = modal, preserveTabOrder = true, autoFocusOnShow = true, wrapperProps, fixed = false, flip = true, shift = 0, slide = true, overlap = false, sameWidth = false, fitViewport = false, gutter, arrowPadding, overflowPadding = 8, getAnchorRect, updatePosition, ...props }) {
 		const context = usePopoverProviderContext();
 		store = store || context;
 		invariant$1(store, "Popover must receive a `store` prop or be wrapped in a PopoverProvider component.");
@@ -9509,7 +9662,7 @@ If there's a particular need for this, please submit a feature request at https:
 						overlap,
 						overflowPadding: positioningPadding
 					}),
-					getArrowMiddleware(arrow, { arrowPadding }),
+					getArrowMiddleware(arrow, { arrowPadding }, arrowElement && store?.getState().contentElement),
 					getSizeMiddleware({
 						sameWidth,
 						fitViewport,
@@ -9691,7 +9844,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$37, htmlProps);
 	}), usePopoverProviderContext);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/hovercard/hovercard-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/hovercard/hovercard-context.js
 	const ctx$3 = createStoreContext([PopoverContextProvider], [PopoverScopedContextProvider]);
 	/**
 	* Returns the hovercard store from the nearest hovercard container.
@@ -9712,7 +9865,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const HovercardContextProvider = ctx$3.ContextProvider;
 	const HovercardScopedContextProvider = ctx$3.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/hovercard/utils/polygon.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/hovercard/utils/polygon.js
 	function getEventPoint(event) {
 		return [event.clientX, event.clientY];
 	}
@@ -9782,7 +9935,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return polygon;
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/C0hvEg6i.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/PFajdLJA.js
 /**
 	* Wraps the `hideOnEscape` and `onClose` props of a dialog to call
 	* `onEscapeClose` once a close that Escape requested goes through. The
@@ -9893,16 +10046,24 @@ If there's a particular need for this, please submit a feature request at https:
 			hideTimeoutRef.current = 0;
 		}, []);
 		(0, react$1.useEffect)(() => {
+			return sync(store, ["open"], (state) => {
+				if (!state.open) return;
+				clearHideTimeout();
+			});
+		}, [store, clearHideTimeout]);
+		(0, react$1.useEffect)(() => {
 			if (!domReady) return;
 			if (!mounted) return;
 			if (!mayHideOnHoverOutside && !mayDisablePointerEvents) return;
 			const element = ref.current;
 			if (!element) return;
+			let lastPath = [];
 			const onMouseMove = (event) => {
 				if (!store) return;
+				const path = event.composedPath();
+				lastPath = path;
 				if (!isMouseMoving()) return;
 				const { anchorElement, disclosureElement, hideTimeout, timeout } = store.getState();
-				const path = event.composedPath();
 				const hoverElements = [anchorElement, disclosureElement];
 				const hoveredElement = hoverElements.find((element) => element && path.includes(element));
 				if (isMovingOnHovercard(path, element, hoverElements, nestedHovercardsRef.current)) {
@@ -9921,7 +10082,11 @@ If there's a particular need for this, please submit a feature request at https:
 				if (!hideOnHoverOutsideProp(event)) return;
 				hideTimeoutRef.current = window.setTimeout(() => {
 					hideTimeoutRef.current = 0;
-					store?.hide();
+					if (!store) return;
+					const { anchorElement, disclosureElement } = store.getState();
+					if (anchorElement && lastPath.includes(anchorElement)) return;
+					if (disclosureElement && lastPath.includes(disclosureElement)) return;
+					store.hide();
 				}, hideTimeout ?? timeout);
 			};
 			return chain$1(addGlobalEventListener("mousemove", onMouseMove, true), clearHideTimeout);
@@ -10058,7 +10223,32 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$36, htmlProps);
 	}), useHovercardProviderContext);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tooltip/tooltip-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/BnJidWJ9.js
+	const globalStore = createStore({
+		activeStore: null,
+		instantVersion: 0
+	});
+	const instantStores = /* @__PURE__ */ new WeakSet();
+	const hidingStores = /* @__PURE__ */ new WeakSet();
+	/**
+	* Returns whether the tooltip store shows or hides at once because of the skip
+	* window.
+	*/
+	function isInstant(store) {
+		return instantStores.has(store);
+	}
+	/**
+	* Sets whether the tooltip store shows or hides at once because of the skip
+	* window.
+	*/
+	function setInstant(store, instant) {
+		if (instantStores.has(store) === instant) return;
+		if (instant) instantStores.add(store);
+		else instantStores.delete(store);
+		globalStore.setState("instantVersion", (version) => version + 1);
+	}
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tooltip/tooltip-context.js
 	const ctx$2 = createStoreContext([HovercardContextProvider], [HovercardScopedContextProvider]);
 	/**
 	* Returns the tooltip store from the nearest tooltip container.
@@ -10079,7 +10269,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const TooltipContextProvider = ctx$2.ContextProvider;
 	const TooltipScopedContextProvider = ctx$2.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tooltip/tooltip.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tooltip/tooltip.js
 	const TagName$35 = "div";
 	/**
 	* Returns props to create a `Tooltip` component.
@@ -10100,8 +10290,23 @@ If there's a particular need for this, please submit a feature request at https:
 			value: store,
 			children: element
 		}), [store]);
+		const role = useStoreState(store, ["type"], (state) => state.type === "description" ? "tooltip" : "none");
+		const instant = useStoreState(globalStore, ["instantVersion"], () => store ? isInstant(store) : false);
+		(0, react$1.useEffect)(() => {
+			return sync(store, ["open", "mounted"], (state) => {
+				if (!store) return;
+				if (state.open) {
+					if (globalStore.getState().activeStore) return;
+					setInstant(store, false);
+					return;
+				}
+				if (state.mounted && hidingStores.has(store)) return;
+				setInstant(store, false);
+			});
+		}, [store]);
 		props = {
-			role: useStoreState(store, ["type"], (state) => state.type === "description" ? "tooltip" : "none"),
+			role,
+			"data-instant": instant || void 0,
 			...props
 		};
 		props = useHovercard({
@@ -10150,7 +10355,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$35, htmlProps);
 	}), useTooltipProviderContext);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/Dv0S4FLv.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/D1DUjBLS.js
 /**
 	* Returns props that add hovercard trigger behavior to an element.
 	* @see https://ariakit.com/components/hovercard
@@ -10230,7 +10435,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return props;
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/hovercard/hovercard-anchor.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/hovercard/hovercard-anchor.js
 	const TagName$34 = "a";
 	/**
 	* Returns props to create a `HovercardAnchor` component.
@@ -10271,16 +10476,30 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$34, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tooltip/tooltip-anchor.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tooltip/tooltip-anchor.js
 	const TagName$33 = "div";
-	const globalStore = createStore({ activeStore: null });
-	const hidingStores = /* @__PURE__ */ new WeakSet();
 	function createRemoveStoreCallback(store) {
 		return () => {
 			const { activeStore } = globalStore.getState();
 			if (activeStore !== store) return;
 			globalStore.setState("activeStore", null);
 		};
+	}
+	function activateStore(store) {
+		const { activeStore } = globalStore.getState();
+		if (activeStore !== store) {
+			if (hidingStores.has(store)) return;
+			setInstant(store, false);
+			hideStore(activeStore);
+		}
+		globalStore.setState("activeStore", store);
+	}
+	function showStore(store) {
+		const { open, mounted } = store.getState();
+		store.show();
+		if (open) return false;
+		if (mounted) activateStore(store);
+		return true;
 	}
 	function isEscapeKeyEvent(event) {
 		if (!("key" in event)) return false;
@@ -10290,7 +10509,12 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!store) return;
 		hidingStores.add(store);
 		store.hide();
-		queueMicrotask(() => hidingStores.delete(store));
+		if (store.getState().mounted) setInstant(store, true);
+		queueMicrotask(() => {
+			hidingStores.delete(store);
+			if (!store.getState().open) return;
+			setInstant(store, false);
+		});
 	}
 	/**
 	* Returns props to create a `TooltipAnchor` component.
@@ -10342,12 +10566,8 @@ If there's a particular need for this, please submit a feature request at https:
 			return chain$1(removeStore, sync(store, ["mounted"], (state) => {
 				if (!store) return;
 				if (state.mounted) {
-					const { activeStore } = globalStore.getState();
-					if (activeStore !== store) {
-						if (hidingStores.has(store)) return;
-						hideStore(activeStore);
-					}
-					return globalStore.setState("activeStore", store);
+					activateStore(store);
+					return;
 				}
 				const id = setTimeout(removeStore, store.getState().skipTimeout);
 				return () => clearTimeout(id);
@@ -10364,8 +10584,9 @@ If there's a particular need for this, please submit a feature request at https:
 			if (event.defaultPrevented) return;
 			if (isEscapeKeyEvent(event.nativeEvent)) return;
 			if (event.nativeEvent === returnedFocusRef.current) return;
-			store?.setAnchorElement(event.currentTarget);
-			store?.show();
+			if (!store) return;
+			store.setAnchorElement(event.currentTarget);
+			showStore(store);
 		});
 		const onBlurProp = props.onBlur;
 		const onBlur = useEvent$6((event) => {
@@ -10391,9 +10612,11 @@ If there's a particular need for this, please submit a feature request at https:
 			showOnHover(event) {
 				if (!canShowOnHoverRef.current) return false;
 				if (isFalsyBooleanCallback(showOnHover, event)) return false;
+				if (!store) return false;
 				const { activeStore } = globalStore.getState();
 				if (!activeStore) return true;
-				store?.show();
+				store.setAnchorElement(event.currentTarget);
+				if (showStore(store)) setInstant(store, true);
 				return false;
 			},
 			...props
@@ -10423,7 +10646,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$33, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/popover/popover-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/popover/popover-store.js
 /**
 	* Creates a popover store.
 	*/
@@ -10474,14 +10697,14 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/popover/popover-store.js
 	function usePopoverStoreProps(store, update, props) {
 		useUpdateEffect$1(update, [props.popover, update]);
 		useStoreProps(store, props, "placement");
 		return useDialogStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/hovercard/hovercard-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/hovercard/hovercard-store.js
 /**
 	* Creates a hovercard store.
 	*/
@@ -10507,7 +10730,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/hovercard/hovercard-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/hovercard/hovercard-store.js
 	function useHovercardStoreProps(store, update, props) {
 		useStoreProps(store, props, "timeout");
 		useStoreProps(store, props, "showTimeout");
@@ -10515,7 +10738,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return usePopoverStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/tooltip/tooltip-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/tooltip/tooltip-store.js
 /**
 	* Creates a tooltip store.
 	*/
@@ -10539,7 +10762,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/tooltip/tooltip-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/tooltip/tooltip-store.js
 	function useTooltipStoreProps(store, update, props) {
 		useStoreProps(store, props, "type");
 		useStoreProps(store, props, "skipTimeout");
@@ -10562,7 +10785,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return useTooltipStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menubar/menubar-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menubar/menubar-context.js
 	const menubar = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
 	/**
 	* Returns the menubar store from the nearest menubar container.
@@ -10583,7 +10806,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const MenubarContextProvider = menubar.ContextProvider;
 	const MenubarScopedContextProvider = menubar.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/button/button.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/button/button.js
 	const TagName$32 = "button";
 	/**
 	* Returns props to create a `Button` component. If the element is not a native
@@ -10629,9 +10852,10 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$32, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/disclosure/disclosure.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/disclosure/disclosure.js
 	const TagName$31 = "button";
 	const symbol$1 = Symbol("disclosure");
+	const releasedElements = /* @__PURE__ */ new WeakMap();
 	/**
 	* Returns props to create a `Disclosure` component.
 	* @see https://ariakit.com/components/disclosure
@@ -10655,15 +10879,22 @@ If there's a particular need for this, please submit a feature request at https:
 			const previousElement = ref.current;
 			ref.current = element;
 			if (element) {
-				if (!(store?.getState().disclosureElement)?.isConnected) store.setDisclosureElement(element);
+				if ((store?.getState().disclosureElement)?.isConnected) return;
+				const releasedElement = releasedElements.get(store);
+				if (releasedElement !== element && releasedElement?.isConnected) return;
+				releasedElements.delete(store);
+				store.setDisclosureElement(element);
 				return;
 			}
+			if (!previousElement) return;
 			if (store?.getState().disclosureElement !== previousElement) return;
+			releasedElements.set(store, previousElement);
 			store.setDisclosureElement(null);
 		}, [store]);
 		(0, react$1.useEffect)(() => {
 			let isCurrentDisclosure = disclosureElement === ref.current;
 			if (!disclosureElement?.isConnected) {
+				releasedElements.delete(store);
 				store?.setDisclosureElement(ref.current);
 				isCurrentDisclosure = true;
 			}
@@ -10713,7 +10944,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$31, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/dialog/dialog-disclosure.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/dialog/dialog-disclosure.js
 	const TagName$30 = "button";
 	/**
 	* Returns props to create a `DialogDisclosure` component.
@@ -10758,7 +10989,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$30, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover-disclosure.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/popover/popover-disclosure.js
 	const TagName$29 = "button";
 	/**
 	* Returns props to create a `PopoverDisclosure` component.
@@ -10802,7 +11033,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$29, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/popover/popover-disclosure-arrow.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/popover/popover-disclosure-arrow.js
 	const TagName$28 = "span";
 	const pointsMap = {
 		top: "4,10 8,6 12,10",
@@ -10876,7 +11107,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$28, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/radio/radio-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/radio/radio-context.js
 	const ctx$1 = createStoreContext([CompositeContextProvider], [CompositeScopedContextProvider]);
 	/**
 	* Returns the radio store from the nearest radio container.
@@ -10898,7 +11129,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const RadioScopedContextProvider = ctx$1.ScopedContextProvider;
 	const RadioGroupDisabledContext = (0, react$1.createContext)(false);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/radio/radio.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/radio/radio.js
 	const TagName$27 = "input";
 	function getIsChecked(value, storeValue) {
 		if (storeValue === void 0) return;
@@ -10964,7 +11195,7 @@ If there's a particular need for this, please submit a feature request at https:
 				event.stopPropagation();
 				return;
 			}
-			if (store?.getState().value === value) return;
+			if (store?.getState().value === value && checked !== false) return;
 			if (!nativeRadio) {
 				event.currentTarget.checked = true;
 				schedulePropertyUpdate();
@@ -11036,8 +11267,50 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$27, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/radio/radio-group.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/group/group-label-context.js
+	const GroupLabelContext = (0, react$1.createContext)(void 0);
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/group/group.js
 	const TagName$26 = "div";
+	/**
+	* Returns props to create a `Group` component.
+	* @see https://ariakit.com/components/group
+	* @example
+	* ```jsx
+	* const props = useGroup();
+	* <Role {...props}>Group</Role>
+	* ```
+	*/
+	const useGroup = createHook(function useGroup(props) {
+		const [labelId, setLabelId] = (0, react$1.useState)();
+		props = useWrapElement(props, (element) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GroupLabelContext.Provider, {
+			value: setLabelId,
+			children: element
+		}), []);
+		props = {
+			role: "group",
+			"aria-labelledby": props["aria-label"] != null ? void 0 : labelId,
+			...props
+		};
+		return props;
+	});
+	/**
+	* Renders a group element. Optionally, a
+	* [`GroupLabel`](https://ariakit.com/reference/group-label) can be rendered as
+	* a child to provide a label for the group.
+	* @see https://ariakit.com/components/group
+	* @example
+	* ```jsx
+	* <Group>Group</Group>
+	* ```
+	*/
+	const Group$2 = forwardRef$130(function Group(props) {
+		const htmlProps = useGroup(props);
+		return createElement$5(TagName$26, htmlProps);
+	});
+
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/radio/radio-group.js
+	const TagName$25 = "div";
 	function isCheckedRadio(element) {
 		if (!element) return false;
 		if (element.tagName === "INPUT") {
@@ -11059,6 +11332,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* const store = useRadioStore();
 	* const props = useRadioGroup({ store });
 	* <Role {...props}>
+	*   <RadioGroupLabel>Fruit</RadioGroupLabel>
 	*   <Radio value="Apple" />
 	*   <Radio value="Orange" />
 	* </Role>
@@ -11091,6 +11365,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"aria-disabled": disabled || void 0,
 			onBlurCapture
 		};
+		props = useGroup(props);
 		props = useComposite({
 			store,
 			...props
@@ -11100,11 +11375,15 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* Renders a [`radiogroup`](https://w3c.github.io/aria/#radiogroup) element that
 	* manages a group of [`Radio`](https://ariakit.com/reference/radio) elements.
+	* The [`RadioGroupLabel`](https://ariakit.com/reference/radio-group-label)
+	* component can be used inside this component so the `aria-labelledby` prop is
+	* properly set on the radio group element.
 	* @see https://ariakit.com/components/radio
 	* @example
-	* ```jsx
+	* ```jsx {3}
 	* <RadioProvider>
 	*   <RadioGroup>
+	*     <RadioGroupLabel>Fruit</RadioGroupLabel>
 	*     <Radio value="Apple" />
 	*     <Radio value="Orange" />
 	*   </RadioGroup>
@@ -11113,10 +11392,55 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const RadioGroup$1 = forwardRef$130(function RadioGroup(props) {
 		const htmlProps = useRadioGroup(props);
-		return createElement$5(TagName$26, htmlProps);
+		return createElement$5(TagName$25, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/radio/radio-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/group/group-label.js
+	const TagName$24 = "div";
+	/**
+	* Returns props to create a `GroupLabel` component. This hook must be used in a
+	* component that's wrapped with `Group` so the `aria-labelledby` prop is
+	* properly set on the group element.
+	* @see https://ariakit.com/components/group
+	* @example
+	* ```jsx
+	* // This component must be wrapped with Group
+	* const props = useGroupLabel();
+	* <Role {...props}>Label</Role>
+	* ```
+	*/
+	const useGroupLabel = createHook(function useGroupLabel(props) {
+		const setLabelId = (0, react$1.useContext)(GroupLabelContext);
+		const id = useId$8(props.id);
+		useSafeLayoutEffect(() => {
+			setLabelId?.(id);
+			return () => setLabelId?.(void 0);
+		}, [setLabelId, id]);
+		props = {
+			"aria-hidden": true,
+			...props,
+			id
+		};
+		return props;
+	});
+	/**
+	* Renders a label in a group. This component should be wrapped with a
+	* [`Group`](https://ariakit.com/reference/group) so the `aria-labelledby` prop
+	* is correctly set on the group element.
+	* @see https://ariakit.com/components/group
+	* @example
+	* ```jsx
+	* <Group>
+	*   <GroupLabel>Label</GroupLabel>
+	* </Group>
+	* ```
+	*/
+	const GroupLabel$2 = forwardRef$130(function GroupLabel(props) {
+		const htmlProps = useGroupLabel(props);
+		return createElement$5(TagName$24, htmlProps);
+	});
+
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/radio/radio-store.js
 /**
 	* Creates a radio store.
 	*/
@@ -11138,7 +11462,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/radio/radio-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/radio/radio-store.js
 	function useRadioStoreProps(store, update, props) {
 		store = useCompositeStoreProps(store, update, props);
 		useStoreProps(store, props, "value", "setValue");
@@ -11164,8 +11488,8 @@ If there's a particular need for this, please submit a feature request at https:
 		return useRadioStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-typeahead.js
-	const TagName$25 = "div";
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-typeahead.js
+	const TagName$23 = "div";
 	const typeaheadStates = /* @__PURE__ */ new WeakMap();
 	function getTypeaheadState(store) {
 		let typeaheadState = typeaheadStates.get(store);
@@ -11284,11 +11608,11 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const CompositeTypeahead$1 = forwardRef$130(function CompositeTypeahead(props) {
 		const htmlProps = useCompositeTypeahead(props);
-		return createElement$5(TagName$25, htmlProps);
+		return createElement$5(TagName$23, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select-arrow.js
-	const TagName$24 = "span";
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select-arrow.js
+	const TagName$22 = "span";
 	/**
 	* Returns props to create a `SelectArrow` component.
 	* @deprecated Use `useComboboxSelectArrow` instead.
@@ -11298,8 +11622,8 @@ If there's a particular need for this, please submit a feature request at https:
 	* const store = useSelectStore();
 	* const props = useSelectArrow({ store });
 	* <Select store={store}>
-	*   {store.value}
-	*   <Role {...props} />
+	*   <SelectValue store={store} />
+	*   <Role.span {...props} />
 	* </Select>
 	* <SelectPopover store={store}>
 	*   <SelectItem value="Apple" />
@@ -11328,7 +11652,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* ```jsx {4}
 	* <SelectProvider>
 	*   <Select>
-	*     {select.value}
+	*     <SelectValue />
 	*     <SelectArrow />
 	*   </Select>
 	*   <SelectPopover>
@@ -11340,11 +11664,11 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const SelectArrow = forwardRef$130(function SelectArrow(props) {
 		const htmlProps = useSelectArrow(props);
-		return createElement$5(TagName$24, htmlProps);
+		return createElement$5(TagName$22, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select.js
-	const TagName$23 = "button";
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select.js
+	const TagName$21 = "button";
 	function getSelectedValues(select) {
 		return Array.from(select.selectedOptions).map((option) => option.value);
 	}
@@ -11532,53 +11856,11 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const Select = forwardRef$130(function Select(props) {
 		const htmlProps = useSelect(withDefaultButtonType(props));
-		return createElement$5(TagName$23, htmlProps);
+		return createElement$5(TagName$21, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/group/group-label-context.js
-	const GroupLabelContext = (0, react$1.createContext)(void 0);
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/group/group.js
-	const TagName$22 = "div";
-	/**
-	* Returns props to create a `Group` component.
-	* @see https://ariakit.com/components/group
-	* @example
-	* ```jsx
-	* const props = useGroup();
-	* <Role {...props}>Group</Role>
-	* ```
-	*/
-	const useGroup = createHook(function useGroup(props) {
-		const [labelId, setLabelId] = (0, react$1.useState)();
-		props = useWrapElement(props, (element) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GroupLabelContext.Provider, {
-			value: setLabelId,
-			children: element
-		}), []);
-		props = {
-			role: "group",
-			"aria-labelledby": props["aria-label"] != null ? void 0 : labelId,
-			...props
-		};
-		return props;
-	});
-	/**
-	* Renders a group element. Optionally, a
-	* [`GroupLabel`](https://ariakit.com/reference/group-label) can be rendered as
-	* a child to provide a label for the group.
-	* @see https://ariakit.com/components/group
-	* @example
-	* ```jsx
-	* <Group>Group</Group>
-	* ```
-	*/
-	const Group$2 = forwardRef$130(function Group(props) {
-		const htmlProps = useGroup(props);
-		return createElement$5(TagName$22, htmlProps);
-	});
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-group.js
-	const TagName$21 = "div";
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-group.js
+	const TagName$20 = "div";
 	/**
 	* Returns props to create a `CompositeGroup` component.
 	* @see https://ariakit.com/components/composite
@@ -11620,55 +11902,10 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const CompositeGroup$2 = forwardRef$130(function CompositeGroup(props) {
 		const htmlProps = useCompositeGroup(props);
-		return createElement$5(TagName$21, htmlProps);
-	});
-
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/group/group-label.js
-	const TagName$20 = "div";
-	/**
-	* Returns props to create a `GroupLabel` component. This hook must be used in a
-	* component that's wrapped with `Group` so the `aria-labelledby` prop is
-	* properly set on the group element.
-	* @see https://ariakit.com/components/group
-	* @example
-	* ```jsx
-	* // This component must be wrapped with Group
-	* const props = useGroupLabel();
-	* <Role {...props}>Label</Role>
-	* ```
-	*/
-	const useGroupLabel = createHook(function useGroupLabel(props) {
-		const setLabelId = (0, react$1.useContext)(GroupLabelContext);
-		const id = useId$8(props.id);
-		useSafeLayoutEffect(() => {
-			setLabelId?.(id);
-			return () => setLabelId?.(void 0);
-		}, [setLabelId, id]);
-		props = {
-			"aria-hidden": true,
-			...props,
-			id
-		};
-		return props;
-	});
-	/**
-	* Renders a label in a group. This component should be wrapped with a
-	* [`Group`](https://ariakit.com/reference/group) so the `aria-labelledby` prop
-	* is correctly set on the group element.
-	* @see https://ariakit.com/components/group
-	* @example
-	* ```jsx
-	* <Group>
-	*   <GroupLabel>Label</GroupLabel>
-	* </Group>
-	* ```
-	*/
-	const GroupLabel$2 = forwardRef$130(function GroupLabel(props) {
-		const htmlProps = useGroupLabel(props);
 		return createElement$5(TagName$20, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-group-label.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-group-label.js
 	const TagName$19 = "div";
 	/**
 	* Returns props to create a `CompositeGroupLabel` component. This hook must be
@@ -11709,7 +11946,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$19, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-hover.js
 	const TagName$18 = "div";
 	function hoveringInside(event) {
 		const nextElement = event.relatedTarget;
@@ -11812,7 +12049,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$18, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select-item.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select-item.js
 	const TagName$17 = "div";
 	function isSelected(storeValue, itemValue) {
 		if (itemValue == null) return;
@@ -11952,10 +12189,10 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$17, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/checkbox/checkbox-checked-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/checkbox/checkbox-checked-context.js
 	const CheckboxCheckedContext = (0, react$1.createContext)(false);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/checkbox/checkbox-check.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/checkbox/checkbox-check.js
 	const TagName$16 = "span";
 	const checkmark = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
 		display: "block",
@@ -12023,7 +12260,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$16, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select-item-check.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select-item-check.js
 	const TagName$15 = "span";
 	/**
 	* Returns props to create a `SelectItemCheck` component. This hook must be used
@@ -12081,7 +12318,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$15, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select-label.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select-label.js
 	const TagName$14 = "div";
 	/**
 	* Returns props to create a `SelectLabel` component. Since it's not a native
@@ -12149,7 +12386,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$14, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select-list.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select-list.js
 	const TagName$13 = "div";
 	const SelectListContext = (0, react$1.createContext)(null);
 	/**
@@ -12283,7 +12520,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$13, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select-popover.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select-popover.js
 	const TagName$12 = "div";
 	/**
 	* Returns props to create a `SelectPopover` component.
@@ -12338,7 +12575,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$12, htmlProps);
 	}), useSelectProviderContext);
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/select/select-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/select/select-store.js
 	function createSelectStore({ combobox, ...props } = {}) {
 		const store = mergeStore(props.store, omit(combobox, [
 			"value",
@@ -12433,7 +12670,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/select/select-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/select/select-store.js
 /** @deprecated Use `useComboboxStoreOptions` instead. */
 	function useSelectStoreOptions(props) {
 		const combobox = useComboboxProviderContext();
@@ -12441,7 +12678,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...props,
 			combobox: props.combobox !== void 0 ? props.combobox : combobox
 		};
-		return useCompositeStoreOptions(props);
+		return useCompositeStoreOptions(props, props.combobox);
 	}
 	/** @deprecated Use `useComboboxStoreProps` instead. */
 	function useSelectStoreProps(store, update, props) {
@@ -12456,7 +12693,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return useSelectStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/composite/composite-row.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/composite/composite-row.js
 	const TagName$11 = "div";
 	/**
 	* Returns props to create a `CompositeRow` component. Wrapping `CompositeItem`
@@ -12533,7 +12770,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$11, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/checkbox/checkbox-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/checkbox/checkbox-store.js
 	function createCheckboxStore(props = {}) {
 		throwOnConflictingProps(props, props.store);
 		const syncState = props.store?.getState();
@@ -12545,7 +12782,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/checkbox/checkbox-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/checkbox/checkbox-store.js
 	function useCheckboxStoreProps(store, update, props) {
 		useUpdateEffect$1(update, [props.store, update]);
 		useStoreProps(store, props, "value", "setValue");
@@ -12556,7 +12793,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return useCheckboxStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/checkbox/checkbox-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/checkbox/checkbox-context.js
 	const ctx = createStoreContext();
 	/**
 	* Returns the checkbox store from the nearest checkbox container.
@@ -12577,7 +12814,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const CheckboxContextProvider = ctx.ContextProvider;
 	const CheckboxScopedContextProvider = ctx.ScopedContextProvider;
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/__chunks/DjvJNLSl.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/__chunks/BfmEgX8I.js
 	function getPrimitiveValue(value) {
 		if (Array.isArray(value)) return value.toString();
 		return value;
@@ -12714,7 +12951,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$10, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-context.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-context.js
 	const menu = createStoreContext([CompositeContextProvider, HovercardContextProvider], [CompositeScopedContextProvider, HovercardScopedContextProvider]);
 	/**
 	* Returns the menu store from the nearest menu container.
@@ -12743,7 +12980,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const MenuListHiddenContext = (0, react$1.createContext)(false);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-list.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-list.js
 	const TagName$9 = "div";
 	function useAriaLabelledBy({ store, ...props }) {
 		const [id, setId] = (0, react$1.useState)(void 0);
@@ -12911,7 +13148,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$9, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu.js
 	const TagName$8 = "div";
 	/**
 	* Checks if the user is on something inside the menu that they can stay on: an
@@ -13117,7 +13354,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$8, htmlProps);
 	}), useMenuProviderContext);
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-button.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-button.js
 	const TagName$7 = "button";
 	function getInitialFocus(event, dir) {
 		return {
@@ -13290,7 +13527,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$7, withDefaultButtonType(htmlProps));
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-group.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-group.js
 	const TagName$6 = "div";
 	/**
 	* Returns props to create a `MenuGroup` component.
@@ -13338,7 +13575,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$6, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-group-label.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-group-label.js
 	const TagName$5 = "div";
 	/**
 	* Returns props to create a `MenuGroupLabel` component. This hook must be used
@@ -13380,7 +13617,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$5, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-item.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-item.js
 	const TagName$4 = "div";
 	function menuHasFocus(compositeElement, items, currentTarget) {
 		if (!compositeElement) return false;
@@ -13494,7 +13731,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$4, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-item-check.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-item-check.js
 	const TagName$3 = "span";
 	/**
 	* Returns props to create a `MenuItemCheck` component.
@@ -13547,7 +13784,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$3, htmlProps);
 	});
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-item-checkbox.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-item-checkbox.js
 	const TagName$2 = "div";
 	function getValue$1(storeValue, value, checked) {
 		if (value === void 0) {
@@ -13683,7 +13920,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$2, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-item-radio.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-item-radio.js
 	const TagName$1 = "div";
 	function getValue(prevValue, value, checked) {
 		if (checked === void 0) return prevValue;
@@ -13793,7 +14030,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return createElement$5(TagName$1, htmlProps);
 	}));
 
-// node_modules/.store/@ariakit/components@0.1.15-b4ubwzeFfstoGvOR7daROQ/node_modules/@ariakit/components/dist/menu/menu-store.js
+// node_modules/.store/@ariakit/components@0.1.16-zCuSt5Gi3ktUm1CY73HjCg/node_modules/@ariakit/components/dist/menu/menu-store.js
 	function createMenuStore({ combobox, parent, menubar, ...props } = {}) {
 		const parentIsMenubar = !!menubar && !parent;
 		const store = mergeStore(props.store, pick(parent, ["values"]), omit(combobox, [
@@ -13862,7 +14099,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-store.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-store.js
 	function useMenuStoreProps(store, update, props) {
 		useUpdateEffect$1(update, [
 			props.combobox,
@@ -13887,11 +14124,12 @@ If there's a particular need for this, please submit a feature request at https:
 			menubar: props.menubar !== void 0 ? props.menubar : menubar,
 			combobox: props.combobox !== void 0 ? props.combobox : combobox
 		};
+		props = useCompositeStoreOptions(props, props.combobox);
 		const [store, update] = useStore$1(createMenuStore, props);
 		return useMenuStoreProps(store, update, props);
 	}
 
-// node_modules/.store/@ariakit/react-components@0.7.1-aGG7Eicir0X5jH9sMy0tHA/node_modules/@ariakit/react-components/dist/menu/menu-separator.js
+// node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/menu/menu-separator.js
 	const TagName = "hr";
 	/**
 	* Returns props to create a `MenuSeparator` component.
