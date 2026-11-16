@@ -21672,127 +21672,64 @@ function addMonths(date, amount, options) {
 	}
 }
 
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/_lib/defaultOptions.js
-let defaultOptions = {};
-function getDefaultOptions$1() {
-	return defaultOptions;
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfWeek.js
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/addWeeks.js
 /**
-* The {@link startOfWeek} function options.
+* The {@link addWeeks} function options.
 */
 /**
-* @name startOfWeek
+* @name addWeeks
 * @category Week Helpers
-* @summary Return the start of a week for the given date.
+* @summary Add the specified number of weeks to the given date.
 *
 * @description
-* Return the start of a week for the given date.
-* The result will be in the local timezone.
+* Add the specified number of weeks to the given date.
 *
 * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
 * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
 *
-* @param date - The original date
+* @param date - The date to be changed
+* @param amount - The amount of weeks to be added.
 * @param options - An object with options
 *
-* @returns The start of a week
+* @returns The new date with the weeks added
 *
 * @example
-* // The start of a week for 2 September 2014 11:55:00:
-* const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
-* //=> Sun Aug 31 2014 00:00:00
-*
-* @example
-* // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
-* const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
-* //=> Mon Sep 01 2014 00:00:00
+* // Add 4 weeks to 1 September 2014:
+* const result = addWeeks(new Date(2014, 8, 1), 4)
+* //=> Mon Sep 29 2014 00:00:00
 */
-function startOfWeek(date, options) {
-	const defaultOptions = getDefaultOptions$1();
-	const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions.weekStartsOn ?? defaultOptions.locale?.options?.weekStartsOn ?? 0;
-	const _date = toDate(date, options?.in);
-	const day = _date.getDay();
-	const diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
-	_date.setDate(_date.getDate() - diff);
-	_date.setHours(0, 0, 0, 0);
-	return _date;
+function addWeeks(date, amount, options) {
+	return addDays(date, amount * 7, options);
 }
 
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfISOWeek.js
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/addYears.js
 /**
-* The {@link startOfISOWeek} function options.
+* The {@link addYears} function options.
 */
 /**
-* @name startOfISOWeek
-* @category ISO Week Helpers
-* @summary Return the start of an ISO week for the given date.
+* @name addYears
+* @category Year Helpers
+* @summary Add the specified number of years to the given date.
 *
 * @description
-* Return the start of an ISO week for the given date.
-* The result will be in the local timezone.
-*
-* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+* Add the specified number of years to the given date.
 *
 * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+* @typeParam ResultDate - The result `Date` type.
 *
-* @param date - The original date
-* @param options - An object with options
+* @param date - The date to be changed
+* @param amount - The amount of years to be added.
+* @param options - The options
 *
-* @returns The start of an ISO week
-*
-* @example
-* // The start of an ISO week for 2 September 2014 11:55:00:
-* const result = startOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
-* //=> Mon Sep 01 2014 00:00:00
-*/
-function startOfISOWeek(date, options) {
-	return startOfWeek(date, {
-		...options,
-		weekStartsOn: 1
-	});
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getISOWeekYear.js
-/**
-* The {@link getISOWeekYear} function options.
-*/
-/**
-* @name getISOWeekYear
-* @category ISO Week-Numbering Year Helpers
-* @summary Get the ISO week-numbering year of the given date.
-*
-* @description
-* Get the ISO week-numbering year of the given date,
-* which always starts 3 days before the year's first Thursday.
-*
-* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
-*
-* @param date - The given date
-*
-* @returns The ISO week-numbering year
+* @returns The new date with the years added
 *
 * @example
-* // Which ISO-week numbering year is 2 January 2005?
-* const result = getISOWeekYear(new Date(2005, 0, 2))
-* //=> 2004
+* // Add 5 years to 1 September 2014:
+* const result = addYears(new Date(2014, 8, 1), 5)
+* //=> Sun Sep 01 2019 00:00:00
 */
-function getISOWeekYear(date, options) {
-	const _date = toDate(date, options?.in);
-	const year = _date.getFullYear();
-	const fourthOfJanuaryOfNextYear = constructFrom(_date, 0);
-	fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
-	fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
-	const startOfNextYear = startOfISOWeek(fourthOfJanuaryOfNextYear);
-	const fourthOfJanuaryOfThisYear = constructFrom(_date, 0);
-	fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4);
-	fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0);
-	const startOfThisYear = startOfISOWeek(fourthOfJanuaryOfThisYear);
-	if (_date.getTime() >= startOfNextYear.getTime()) return year + 1;
-	else if (_date.getTime() >= startOfThisYear.getTime()) return year;
-	else return year - 1;
+function addYears(date, amount, options) {
+	return addMonths(date, amount * 12, options);
 }
 
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/_lib/getTimezoneOffsetInMilliseconds.js
@@ -21896,352 +21833,6 @@ function differenceInCalendarDays(laterDate, earlierDate, options) {
 	return Math.round((laterTimestamp - earlierTimestamp) / millisecondsInDay);
 }
 
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfISOWeekYear.js
-/**
-* The {@link startOfISOWeekYear} function options.
-*/
-/**
-* @name startOfISOWeekYear
-* @category ISO Week-Numbering Year Helpers
-* @summary Return the start of an ISO week-numbering year for the given date.
-*
-* @description
-* Return the start of an ISO week-numbering year,
-* which always starts 3 days before the year's first Thursday.
-* The result will be in the local timezone.
-*
-* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param date - The original date
-* @param options - An object with options
-*
-* @returns The start of an ISO week-numbering year
-*
-* @example
-* // The start of an ISO week-numbering year for 2 July 2005:
-* const result = startOfISOWeekYear(new Date(2005, 6, 2))
-* //=> Mon Jan 03 2005 00:00:00
-*/
-function startOfISOWeekYear(date, options) {
-	const year = getISOWeekYear(date, options);
-	const fourthOfJanuary = constructFrom(options?.in || date, 0);
-	fourthOfJanuary.setFullYear(year, 0, 4);
-	fourthOfJanuary.setHours(0, 0, 0, 0);
-	return startOfISOWeek(fourthOfJanuary);
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/addWeeks.js
-/**
-* The {@link addWeeks} function options.
-*/
-/**
-* @name addWeeks
-* @category Week Helpers
-* @summary Add the specified number of weeks to the given date.
-*
-* @description
-* Add the specified number of weeks to the given date.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param date - The date to be changed
-* @param amount - The amount of weeks to be added.
-* @param options - An object with options
-*
-* @returns The new date with the weeks added
-*
-* @example
-* // Add 4 weeks to 1 September 2014:
-* const result = addWeeks(new Date(2014, 8, 1), 4)
-* //=> Mon Sep 29 2014 00:00:00
-*/
-function addWeeks(date, amount, options) {
-	return addDays(date, amount * 7, options);
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/addYears.js
-/**
-* The {@link addYears} function options.
-*/
-/**
-* @name addYears
-* @category Year Helpers
-* @summary Add the specified number of years to the given date.
-*
-* @description
-* Add the specified number of years to the given date.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type.
-*
-* @param date - The date to be changed
-* @param amount - The amount of years to be added.
-* @param options - The options
-*
-* @returns The new date with the years added
-*
-* @example
-* // Add 5 years to 1 September 2014:
-* const result = addYears(new Date(2014, 8, 1), 5)
-* //=> Sun Sep 01 2019 00:00:00
-*/
-function addYears(date, amount, options) {
-	return addMonths(date, amount * 12, options);
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/areIntervalsOverlapping.js
-/**
-* The {@link areIntervalsOverlapping} function options.
-*/
-/**
-* @name areIntervalsOverlapping
-* @category Interval Helpers
-* @summary Is the given time interval overlapping with another time interval?
-*
-* @description
-* Is the given time interval overlapping with another time interval? Adjacent intervals do not count as overlapping unless `inclusive` is set to `true`.
-*
-* @param intervalLeft - The first interval to compare.
-* @param intervalRight - The second interval to compare.
-* @param options - The object with options
-*
-* @returns Whether the time intervals are overlapping
-*
-* @example
-* // For overlapping time intervals:
-* areIntervalsOverlapping(
-*   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
-*   { start: new Date(2014, 0, 17), end: new Date(2014, 0, 21) }
-* )
-* //=> true
-*
-* @example
-* // For non-overlapping time intervals:
-* areIntervalsOverlapping(
-*   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
-*   { start: new Date(2014, 0, 21), end: new Date(2014, 0, 22) }
-* )
-* //=> false
-*
-* @example
-* // For adjacent time intervals:
-* areIntervalsOverlapping(
-*   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
-*   { start: new Date(2014, 0, 20), end: new Date(2014, 0, 30) }
-* )
-* //=> false
-*
-* @example
-* // Using the inclusive option:
-* areIntervalsOverlapping(
-*   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
-*   { start: new Date(2014, 0, 20), end: new Date(2014, 0, 24) },
-*   { inclusive: true }
-* )
-* //=> true
-*/
-function areIntervalsOverlapping(intervalLeft, intervalRight, options) {
-	const [leftStartTime, leftEndTime] = [+toDate(intervalLeft.start, options?.in), +toDate(intervalLeft.end, options?.in)].sort((a, b) => a - b);
-	const [rightStartTime, rightEndTime] = [+toDate(intervalRight.start, options?.in), +toDate(intervalRight.end, options?.in)].sort((a, b) => a - b);
-	if (options?.inclusive) return leftStartTime <= rightEndTime && rightStartTime <= leftEndTime;
-	return leftStartTime < rightEndTime && rightStartTime < leftEndTime;
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/max.js
-/**
-* The {@link max} function options.
-*/
-/**
-* @name max
-* @category Common Helpers
-* @summary Return the latest of the given dates.
-*
-* @description
-* Return the latest of the given dates.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param dates - The dates to compare
-*
-* @returns The latest of the dates
-*
-* @example
-* // Which of these dates is the latest?
-* const result = max([
-*   new Date(1989, 6, 10),
-*   new Date(1987, 1, 11),
-*   new Date(1995, 6, 2),
-*   new Date(1990, 0, 1)
-* ])
-* //=> Sun Jul 02 1995 00:00:00
-*/
-function max(dates, options) {
-	let result;
-	let context = options?.in;
-	dates.forEach((date) => {
-		if (!context && typeof date === "object") context = constructFrom.bind(null, date);
-		const date_ = toDate(date, context);
-		if (!result || result < date_ || isNaN(+date_)) result = date_;
-	});
-	return constructFrom(context, result || NaN);
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/min.js
-/**
-* The {@link min} function options.
-*/
-/**
-* @name min
-* @category Common Helpers
-* @summary Returns the earliest of the given dates.
-*
-* @description
-* Returns the earliest of the given dates.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param dates - The dates to compare
-*
-* @returns The earliest of the dates
-*
-* @example
-* // Which of these dates is the earliest?
-* const result = min([
-*   new Date(1989, 6, 10),
-*   new Date(1987, 1, 11),
-*   new Date(1995, 6, 2),
-*   new Date(1990, 0, 1)
-* ])
-* //=> Wed Feb 11 1987 00:00:00
-*/
-function min(dates, options) {
-	let result;
-	let context = options?.in;
-	dates.forEach((date) => {
-		if (!context && typeof date === "object") context = constructFrom.bind(null, date);
-		const date_ = toDate(date, context);
-		if (!result || result > date_ || isNaN(+date_)) result = date_;
-	});
-	return constructFrom(context, result || NaN);
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isSameDay.js
-/**
-* The {@link isSameDay} function options.
-*/
-/**
-* @name isSameDay
-* @category Day Helpers
-* @summary Are the given dates in the same day (and year and month)?
-*
-* @description
-* Are the given dates in the same day (and year and month)?
-*
-* @param laterDate - The first date to check
-* @param earlierDate - The second date to check
-* @param options - An object with options
-*
-* @returns The dates are in the same day (and year and month)
-*
-* @example
-* // Are 4 September 06:00:00 and 4 September 18:00:00 in the same day?
-* const result = isSameDay(new Date(2014, 8, 4, 6, 0), new Date(2014, 8, 4, 18, 0))
-* //=> true
-*
-* @example
-* // Are 4 September and 4 October in the same day?
-* const result = isSameDay(new Date(2014, 8, 4), new Date(2014, 9, 4))
-* //=> false
-*
-* @example
-* // Are 4 September, 2014 and 4 September, 2015 in the same day?
-* const result = isSameDay(new Date(2014, 8, 4), new Date(2015, 8, 4))
-* //=> false
-*/
-function isSameDay(laterDate, earlierDate, options) {
-	const [dateLeft_, dateRight_] = normalizeDates(options?.in, laterDate, earlierDate);
-	return +startOfDay(dateLeft_) === +startOfDay(dateRight_);
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isDate.js
-/**
-* @name isDate
-* @category Common Helpers
-* @summary Is the given value a date?
-*
-* @description
-* Returns true if the given value is an instance of Date. The function works for dates transferred across iframes.
-*
-* @param value - The value to check
-*
-* @returns True if the given value is a date
-*
-* @example
-* // For a valid date:
-* const result = isDate(new Date())
-* //=> true
-*
-* @example
-* // For an invalid date:
-* const result = isDate(new Date(NaN))
-* //=> true
-*
-* @example
-* // For some value:
-* const result = isDate('2014-02-31')
-* //=> false
-*
-* @example
-* // For an object:
-* const result = isDate({})
-* //=> false
-*/
-function isDate(value) {
-	return value instanceof Date || typeof value === "object" && Object.prototype.toString.call(value) === "[object Date]";
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isValid.js
-/**
-* @name isValid
-* @category Common Helpers
-* @summary Is the given date valid?
-*
-* @description
-* Returns false if argument is Invalid Date and true otherwise.
-* Argument is converted to Date using `toDate`. See [toDate](https://date-fns.org/docs/toDate)
-* Invalid Date is a Date, whose time value is NaN.
-*
-* Time value of Date: http://es5.github.io/#x15.9.1.1
-*
-* @param date - The date to check
-*
-* @returns The date is valid
-*
-* @example
-* // For the valid date:
-* const result = isValid(new Date(2014, 1, 31))
-* //=> true
-*
-* @example
-* // For the value, convertible into a date:
-* const result = isValid(1393804800000)
-* //=> true
-*
-* @example
-* // For the invalid date:
-* const result = isValid(new Date(''))
-* //=> false
-*/
-function isValid(date) {
-	return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
-}
-
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/differenceInCalendarMonths.js
 /**
 * The {@link differenceInCalendarMonths} function options.
@@ -22273,40 +21864,6 @@ function differenceInCalendarMonths(laterDate, earlierDate, options) {
 	const yearsDiff = laterDate_.getFullYear() - earlierDate_.getFullYear();
 	const monthsDiff = laterDate_.getMonth() - earlierDate_.getMonth();
 	return yearsDiff * 12 + monthsDiff;
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/endOfMonth.js
-/**
-* The {@link endOfMonth} function options.
-*/
-/**
-* @name endOfMonth
-* @category Month Helpers
-* @summary Return the end of a month for the given date.
-*
-* @description
-* Return the end of a month for the given date.
-* The result will be in the local timezone.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param date - The original date
-* @param options - An object with options
-*
-* @returns The end of a month
-*
-* @example
-* // The end of a month for 2 September 2014 11:55:00:
-* const result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
-* //=> Tue Sep 30 2014 23:59:59.999
-*/
-function endOfMonth(date, options) {
-	const _date = toDate(date, options?.in);
-	const month = _date.getMonth();
-	_date.setFullYear(_date.getFullYear(), month + 1, 0);
-	_date.setHours(23, 59, 59, 999);
-	return _date;
 }
 
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/_lib/normalizeInterval.js
@@ -22378,107 +21935,6 @@ function eachMonthOfInterval(interval, options) {
 	return reversed ? dates.reverse() : dates;
 }
 
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfMonth.js
-/**
-* The {@link startOfMonth} function options.
-*/
-/**
-* @name startOfMonth
-* @category Month Helpers
-* @summary Return the start of a month for the given date.
-*
-* @description
-* Return the start of a month for the given date. The result will be in the local timezone.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments.
-* Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed,
-* or inferred from the arguments.
-*
-* @param date - The original date
-* @param options - An object with options
-*
-* @returns The start of a month
-*
-* @example
-* // The start of a month for 2 September 2014 11:55:00:
-* const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
-* //=> Mon Sep 01 2014 00:00:00
-*/
-function startOfMonth(date, options) {
-	const _date = toDate(date, options?.in);
-	_date.setDate(1);
-	_date.setHours(0, 0, 0, 0);
-	return _date;
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/endOfYear.js
-/**
-* The {@link endOfYear} function options.
-*/
-/**
-* @name endOfYear
-* @category Year Helpers
-* @summary Return the end of a year for the given date.
-*
-* @description
-* Return the end of a year for the given date.
-* The result will be in the local timezone.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param date - The original date
-* @param options - The options
-*
-* @returns The end of a year
-*
-* @example
-* // The end of a year for 2 September 2014 11:55:00:
-* const result = endOfYear(new Date(2014, 8, 2, 11, 55, 0))
-* //=> Wed Dec 31 2014 23:59:59.999
-*/
-function endOfYear(date, options) {
-	const _date = toDate(date, options?.in);
-	const year = _date.getFullYear();
-	_date.setFullYear(year + 1, 0, 0);
-	_date.setHours(23, 59, 59, 999);
-	return _date;
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfYear.js
-/**
-* The {@link startOfYear} function options.
-*/
-/**
-* @name startOfYear
-* @category Year Helpers
-* @summary Return the start of a year for the given date.
-*
-* @description
-* Return the start of a year for the given date.
-* The result will be in the local timezone.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param date - The original date
-* @param options - The options
-*
-* @returns The start of a year
-*
-* @example
-* // The start of a year for 2 September 2014 11:55:00:
-* const result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
-* //=> Wed Jan 01 2014 00:00:00
-*/
-function startOfYear(date, options) {
-	const date_ = toDate(date, options?.in);
-	date_.setFullYear(date_.getFullYear(), 0, 1);
-	date_.setHours(0, 0, 0, 0);
-	return date_;
-}
-
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/eachYearOfInterval.js
 /**
 * The {@link eachYearOfInterval} function options.
@@ -22537,6 +21993,12 @@ function eachYearOfInterval(interval, options) {
 		date.setFullYear(date.getFullYear() + step);
 	}
 	return reversed ? dates.reverse() : dates;
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/_lib/defaultOptions.js
+let defaultOptions = {};
+function getDefaultOptions$1() {
+	return defaultOptions;
 }
 
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/endOfWeek.js
@@ -22614,6 +22076,74 @@ function endOfISOWeek(date, options) {
 		...options,
 		weekStartsOn: 1
 	});
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/endOfMonth.js
+/**
+* The {@link endOfMonth} function options.
+*/
+/**
+* @name endOfMonth
+* @category Month Helpers
+* @summary Return the end of a month for the given date.
+*
+* @description
+* Return the end of a month for the given date.
+* The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The end of a month
+*
+* @example
+* // The end of a month for 2 September 2014 11:55:00:
+* const result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Tue Sep 30 2014 23:59:59.999
+*/
+function endOfMonth(date, options) {
+	const _date = toDate(date, options?.in);
+	const month = _date.getMonth();
+	_date.setFullYear(_date.getFullYear(), month + 1, 0);
+	_date.setHours(23, 59, 59, 999);
+	return _date;
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/endOfYear.js
+/**
+* The {@link endOfYear} function options.
+*/
+/**
+* @name endOfYear
+* @category Year Helpers
+* @summary Return the end of a year for the given date.
+*
+* @description
+* Return the end of a year for the given date.
+* The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - The options
+*
+* @returns The end of a year
+*
+* @example
+* // The end of a year for 2 September 2014 11:55:00:
+* const result = endOfYear(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Wed Dec 31 2014 23:59:59.999
+*/
+function endOfYear(date, options) {
+	const _date = toDate(date, options?.in);
+	const year = _date.getFullYear();
+	_date.setFullYear(year + 1, 0, 0);
+	_date.setHours(23, 59, 59, 999);
+	return _date;
 }
 
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/locale/en-US/_lib/formatDistance.js
@@ -23206,6 +22736,39 @@ const enUS$1 = {
 	}
 };
 
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfYear.js
+/**
+* The {@link startOfYear} function options.
+*/
+/**
+* @name startOfYear
+* @category Year Helpers
+* @summary Return the start of a year for the given date.
+*
+* @description
+* Return the start of a year for the given date.
+* The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - The options
+*
+* @returns The start of a year
+*
+* @example
+* // The start of a year for 2 September 2014 11:55:00:
+* const result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
+* //=> Wed Jan 01 2014 00:00:00
+*/
+function startOfYear(date, options) {
+	const date_ = toDate(date, options?.in);
+	date_.setFullYear(date_.getFullYear(), 0, 1);
+	date_.setHours(0, 0, 0, 0);
+	return date_;
+}
+
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getDayOfYear.js
 /**
 * The {@link getDayOfYear} function options.
@@ -23231,6 +22794,160 @@ const enUS$1 = {
 function getDayOfYear(date, options) {
 	const _date = toDate(date, options?.in);
 	return differenceInCalendarDays(_date, startOfYear(_date)) + 1;
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfWeek.js
+/**
+* The {@link startOfWeek} function options.
+*/
+/**
+* @name startOfWeek
+* @category Week Helpers
+* @summary Return the start of a week for the given date.
+*
+* @description
+* Return the start of a week for the given date.
+* The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The start of a week
+*
+* @example
+* // The start of a week for 2 September 2014 11:55:00:
+* const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Sun Aug 31 2014 00:00:00
+*
+* @example
+* // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
+* const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
+* //=> Mon Sep 01 2014 00:00:00
+*/
+function startOfWeek(date, options) {
+	const defaultOptions = getDefaultOptions$1();
+	const weekStartsOn = options?.weekStartsOn ?? options?.locale?.options?.weekStartsOn ?? defaultOptions.weekStartsOn ?? defaultOptions.locale?.options?.weekStartsOn ?? 0;
+	const _date = toDate(date, options?.in);
+	const day = _date.getDay();
+	const diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+	_date.setDate(_date.getDate() - diff);
+	_date.setHours(0, 0, 0, 0);
+	return _date;
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfISOWeek.js
+/**
+* The {@link startOfISOWeek} function options.
+*/
+/**
+* @name startOfISOWeek
+* @category ISO Week Helpers
+* @summary Return the start of an ISO week for the given date.
+*
+* @description
+* Return the start of an ISO week for the given date.
+* The result will be in the local timezone.
+*
+* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The start of an ISO week
+*
+* @example
+* // The start of an ISO week for 2 September 2014 11:55:00:
+* const result = startOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Mon Sep 01 2014 00:00:00
+*/
+function startOfISOWeek(date, options) {
+	return startOfWeek(date, {
+		...options,
+		weekStartsOn: 1
+	});
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getISOWeekYear.js
+/**
+* The {@link getISOWeekYear} function options.
+*/
+/**
+* @name getISOWeekYear
+* @category ISO Week-Numbering Year Helpers
+* @summary Get the ISO week-numbering year of the given date.
+*
+* @description
+* Get the ISO week-numbering year of the given date,
+* which always starts 3 days before the year's first Thursday.
+*
+* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+*
+* @param date - The given date
+*
+* @returns The ISO week-numbering year
+*
+* @example
+* // Which ISO-week numbering year is 2 January 2005?
+* const result = getISOWeekYear(new Date(2005, 0, 2))
+* //=> 2004
+*/
+function getISOWeekYear(date, options) {
+	const _date = toDate(date, options?.in);
+	const year = _date.getFullYear();
+	const fourthOfJanuaryOfNextYear = constructFrom(_date, 0);
+	fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
+	fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
+	const startOfNextYear = startOfISOWeek(fourthOfJanuaryOfNextYear);
+	const fourthOfJanuaryOfThisYear = constructFrom(_date, 0);
+	fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4);
+	fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0);
+	const startOfThisYear = startOfISOWeek(fourthOfJanuaryOfThisYear);
+	if (_date.getTime() >= startOfNextYear.getTime()) return year + 1;
+	else if (_date.getTime() >= startOfThisYear.getTime()) return year;
+	else return year - 1;
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfISOWeekYear.js
+/**
+* The {@link startOfISOWeekYear} function options.
+*/
+/**
+* @name startOfISOWeekYear
+* @category ISO Week-Numbering Year Helpers
+* @summary Return the start of an ISO week-numbering year for the given date.
+*
+* @description
+* Return the start of an ISO week-numbering year,
+* which always starts 3 days before the year's first Thursday.
+* The result will be in the local timezone.
+*
+* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The start of an ISO week-numbering year
+*
+* @example
+* // The start of an ISO week-numbering year for 2 July 2005:
+* const result = startOfISOWeekYear(new Date(2005, 6, 2))
+* //=> Mon Jan 03 2005 00:00:00
+*/
+function startOfISOWeekYear(date, options) {
+	const year = getISOWeekYear(date, options);
+	const fourthOfJanuary = constructFrom(options?.in || date, 0);
+	fourthOfJanuary.setFullYear(year, 0, 4);
+	fourthOfJanuary.setHours(0, 0, 0, 0);
+	return startOfISOWeek(fourthOfJanuary);
 }
 
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getISOWeek.js
@@ -23946,6 +23663,79 @@ function message(token, format, input) {
 	return `Use \`${token.toLowerCase()}\` instead of \`${token}\` (in \`${format}\`) for formatting ${subject} to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
 }
 
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isDate.js
+/**
+* @name isDate
+* @category Common Helpers
+* @summary Is the given value a date?
+*
+* @description
+* Returns true if the given value is an instance of Date. The function works for dates transferred across iframes.
+*
+* @param value - The value to check
+*
+* @returns True if the given value is a date
+*
+* @example
+* // For a valid date:
+* const result = isDate(new Date())
+* //=> true
+*
+* @example
+* // For an invalid date:
+* const result = isDate(new Date(NaN))
+* //=> true
+*
+* @example
+* // For some value:
+* const result = isDate('2014-02-31')
+* //=> false
+*
+* @example
+* // For an object:
+* const result = isDate({})
+* //=> false
+*/
+function isDate(value) {
+	return value instanceof Date || typeof value === "object" && Object.prototype.toString.call(value) === "[object Date]";
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isValid.js
+/**
+* @name isValid
+* @category Common Helpers
+* @summary Is the given date valid?
+*
+* @description
+* Returns false if argument is Invalid Date and true otherwise.
+* Argument is converted to Date using `toDate`. See [toDate](https://date-fns.org/docs/toDate)
+* Invalid Date is a Date, whose time value is NaN.
+*
+* Time value of Date: http://es5.github.io/#x15.9.1.1
+*
+* @param date - The date to check
+*
+* @returns The date is valid
+*
+* @example
+* // For the valid date:
+* const result = isValid(new Date(2014, 1, 31))
+* //=> true
+*
+* @example
+* // For the value, convertible into a date:
+* const result = isValid(1393804800000)
+* //=> true
+*
+* @example
+* // For the invalid date:
+* const result = isValid(new Date(''))
+* //=> false
+*/
+function isValid(date) {
+	return !(!isDate(date) && typeof date !== "number" || isNaN(+toDate(date)));
+}
+
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/format.js
 const formattingTokensRegExp$1 = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
 const longFormattingTokensRegExp$1 = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
@@ -24293,97 +24083,6 @@ function cleanEscapedString$1(input) {
 	return matched[1].replace(doubleQuoteRegExp$1, "'");
 }
 
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getDaysInMonth.js
-/**
-* The {@link getDaysInMonth} function options.
-*/
-/**
-* @name getDaysInMonth
-* @category Month Helpers
-* @summary Get the number of days in a month of the given date.
-*
-* @description
-* Get the number of days in a month of the given date, considering the context if provided.
-*
-* @param date - The given date
-* @param options - An object with options
-*
-* @returns The number of days in a month
-*
-* @example
-* // How many days are in February 2000?
-* const result = getDaysInMonth(new Date(2000, 1))
-* //=> 29
-*/
-function getDaysInMonth(date, options) {
-	const _date = toDate(date, options?.in);
-	const year = _date.getFullYear();
-	const monthIndex = _date.getMonth();
-	const lastDayOfMonth = constructFrom(_date, 0);
-	lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
-	lastDayOfMonth.setHours(0, 0, 0, 0);
-	return lastDayOfMonth.getDate();
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getDefaultOptions.js
-/**
-* @name getDefaultOptions
-* @category Common Helpers
-* @summary Get default options.
-* @pure false
-*
-* @description
-* Returns an object that contains defaults for
-* `options.locale`, `options.weekStartsOn` and `options.firstWeekContainsDate`
-* arguments for all functions.
-*
-* You can change these with [setDefaultOptions](https://date-fns.org/docs/setDefaultOptions).
-*
-* @returns The default options
-*
-* @example
-* const result = getDefaultOptions()
-* //=> {}
-*
-* @example
-* setDefaultOptions({ weekStarsOn: 1, firstWeekContainsDate: 4 })
-* const result = getDefaultOptions()
-* //=> { weekStarsOn: 1, firstWeekContainsDate: 4 }
-*/
-function getDefaultOptions() {
-	return Object.assign({}, getDefaultOptions$1());
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getISODay.js
-/**
-* The {@link getISODay} function options.
-*/
-/**
-* @name getISODay
-* @category Weekday Helpers
-* @summary Get the day of the ISO week of the given date.
-*
-* @description
-* Get the day of the ISO week of the given date,
-* which is 7 for Sunday, 1 for Monday etc.
-*
-* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
-*
-* @param date - The given date
-* @param options - An object with options
-*
-* @returns The day of ISO week
-*
-* @example
-* // Which day of the ISO week is 26 February 2012?
-* const result = getISODay(new Date(2012, 1, 26))
-* //=> 7
-*/
-function getISODay(date, options) {
-	const day = toDate(date, options?.in).getDay();
-	return day === 0 ? 7 : day;
-}
-
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getMonth.js
 /**
 * The {@link getMonth} function options.
@@ -24480,6 +24179,4525 @@ function isAfter(date, dateToCompare) {
 */
 function isBefore(date, dateToCompare) {
 	return +toDate(date) < +toDate(dateToCompare);
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isSameDay.js
+/**
+* The {@link isSameDay} function options.
+*/
+/**
+* @name isSameDay
+* @category Day Helpers
+* @summary Are the given dates in the same day (and year and month)?
+*
+* @description
+* Are the given dates in the same day (and year and month)?
+*
+* @param laterDate - The first date to check
+* @param earlierDate - The second date to check
+* @param options - An object with options
+*
+* @returns The dates are in the same day (and year and month)
+*
+* @example
+* // Are 4 September 06:00:00 and 4 September 18:00:00 in the same day?
+* const result = isSameDay(new Date(2014, 8, 4, 6, 0), new Date(2014, 8, 4, 18, 0))
+* //=> true
+*
+* @example
+* // Are 4 September and 4 October in the same day?
+* const result = isSameDay(new Date(2014, 8, 4), new Date(2014, 9, 4))
+* //=> false
+*
+* @example
+* // Are 4 September, 2014 and 4 September, 2015 in the same day?
+* const result = isSameDay(new Date(2014, 8, 4), new Date(2015, 8, 4))
+* //=> false
+*/
+function isSameDay(laterDate, earlierDate, options) {
+	const [dateLeft_, dateRight_] = normalizeDates(options?.in, laterDate, earlierDate);
+	return +startOfDay(dateLeft_) === +startOfDay(dateRight_);
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isSameMonth.js
+/**
+* The {@link isSameMonth} function options.
+*/
+/**
+* @name isSameMonth
+* @category Month Helpers
+* @summary Are the given dates in the same month (and year)?
+*
+* @description
+* Are the given dates in the same month (and year)?
+*
+* @param laterDate - The first date to check
+* @param earlierDate - The second date to check
+* @param options - An object with options
+*
+* @returns The dates are in the same month (and year)
+*
+* @example
+* // Are 2 September 2014 and 25 September 2014 in the same month?
+* const result = isSameMonth(new Date(2014, 8, 2), new Date(2014, 8, 25))
+* //=> true
+*
+* @example
+* // Are 2 September 2014 and 25 September 2015 in the same month?
+* const result = isSameMonth(new Date(2014, 8, 2), new Date(2015, 8, 25))
+* //=> false
+*/
+function isSameMonth(laterDate, earlierDate, options) {
+	const [laterDate_, earlierDate_] = normalizeDates(options?.in, laterDate, earlierDate);
+	return laterDate_.getFullYear() === earlierDate_.getFullYear() && laterDate_.getMonth() === earlierDate_.getMonth();
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isSameYear.js
+/**
+* The {@link isSameYear} function options.
+*/
+/**
+* @name isSameYear
+* @category Year Helpers
+* @summary Are the given dates in the same year?
+*
+* @description
+* Are the given dates in the same year?
+*
+* @param laterDate - The first date to check
+* @param earlierDate - The second date to check
+* @param options - An object with options
+*
+* @returns The dates are in the same year
+*
+* @example
+* // Are 2 September 2014 and 25 September 2014 in the same year?
+* const result = isSameYear(new Date(2014, 8, 2), new Date(2014, 8, 25))
+* //=> true
+*/
+function isSameYear(laterDate, earlierDate, options) {
+	const [laterDate_, earlierDate_] = normalizeDates(options?.in, laterDate, earlierDate);
+	return laterDate_.getFullYear() === earlierDate_.getFullYear();
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/max.js
+/**
+* The {@link max} function options.
+*/
+/**
+* @name max
+* @category Common Helpers
+* @summary Return the latest of the given dates.
+*
+* @description
+* Return the latest of the given dates.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param dates - The dates to compare
+*
+* @returns The latest of the dates
+*
+* @example
+* // Which of these dates is the latest?
+* const result = max([
+*   new Date(1989, 6, 10),
+*   new Date(1987, 1, 11),
+*   new Date(1995, 6, 2),
+*   new Date(1990, 0, 1)
+* ])
+* //=> Sun Jul 02 1995 00:00:00
+*/
+function max(dates, options) {
+	let result;
+	let context = options?.in;
+	dates.forEach((date) => {
+		if (!context && typeof date === "object") context = constructFrom.bind(null, date);
+		const date_ = toDate(date, context);
+		if (!result || result < date_ || isNaN(+date_)) result = date_;
+	});
+	return constructFrom(context, result || NaN);
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/min.js
+/**
+* The {@link min} function options.
+*/
+/**
+* @name min
+* @category Common Helpers
+* @summary Returns the earliest of the given dates.
+*
+* @description
+* Returns the earliest of the given dates.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param dates - The dates to compare
+*
+* @returns The earliest of the dates
+*
+* @example
+* // Which of these dates is the earliest?
+* const result = min([
+*   new Date(1989, 6, 10),
+*   new Date(1987, 1, 11),
+*   new Date(1995, 6, 2),
+*   new Date(1990, 0, 1)
+* ])
+* //=> Wed Feb 11 1987 00:00:00
+*/
+function min(dates, options) {
+	let result;
+	let context = options?.in;
+	dates.forEach((date) => {
+		if (!context && typeof date === "object") context = constructFrom.bind(null, date);
+		const date_ = toDate(date, context);
+		if (!result || result > date_ || isNaN(+date_)) result = date_;
+	});
+	return constructFrom(context, result || NaN);
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getDaysInMonth.js
+/**
+* The {@link getDaysInMonth} function options.
+*/
+/**
+* @name getDaysInMonth
+* @category Month Helpers
+* @summary Get the number of days in a month of the given date.
+*
+* @description
+* Get the number of days in a month of the given date, considering the context if provided.
+*
+* @param date - The given date
+* @param options - An object with options
+*
+* @returns The number of days in a month
+*
+* @example
+* // How many days are in February 2000?
+* const result = getDaysInMonth(new Date(2000, 1))
+* //=> 29
+*/
+function getDaysInMonth(date, options) {
+	const _date = toDate(date, options?.in);
+	const year = _date.getFullYear();
+	const monthIndex = _date.getMonth();
+	const lastDayOfMonth = constructFrom(_date, 0);
+	lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
+	lastDayOfMonth.setHours(0, 0, 0, 0);
+	return lastDayOfMonth.getDate();
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/setMonth.js
+/**
+* The {@link setMonth} function options.
+*/
+/**
+* @name setMonth
+* @category Month Helpers
+* @summary Set the month to the given date.
+*
+* @description
+* Set the month to the given date.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The date to be changed
+* @param month - The month index to set (0-11)
+* @param options - The options
+*
+* @returns The new date with the month set
+*
+* @example
+* // Set February to 1 September 2014:
+* const result = setMonth(new Date(2014, 8, 1), 1)
+* //=> Sat Feb 01 2014 00:00:00
+*/
+function setMonth(date, month, options) {
+	const _date = toDate(date, options?.in);
+	const year = _date.getFullYear();
+	const day = _date.getDate();
+	const midMonth = constructFrom(options?.in || date, 0);
+	midMonth.setFullYear(year, month, 15);
+	midMonth.setHours(0, 0, 0, 0);
+	const daysInMonth = getDaysInMonth(midMonth);
+	_date.setMonth(month, Math.min(day, daysInMonth));
+	return _date;
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/setYear.js
+/**
+* The {@link setYear} function options.
+*/
+/**
+* @name setYear
+* @category Year Helpers
+* @summary Set the year to the given date.
+*
+* @description
+* Set the year to the given date.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+*
+* @param date - The date to be changed
+* @param year - The year of the new date
+* @param options - An object with options.
+*
+* @returns The new date with the year set
+*
+* @example
+* // Set year 2013 to 1 September 2014:
+* const result = setYear(new Date(2014, 8, 1), 2013)
+* //=> Sun Sep 01 2013 00:00:00
+*/
+function setYear(date, year, options) {
+	const date_ = toDate(date, options?.in);
+	if (isNaN(+date_)) return constructFrom(options?.in || date, NaN);
+	date_.setFullYear(year);
+	return date_;
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/startOfMonth.js
+/**
+* The {@link startOfMonth} function options.
+*/
+/**
+* @name startOfMonth
+* @category Month Helpers
+* @summary Return the start of a month for the given date.
+*
+* @description
+* Return the start of a month for the given date. The result will be in the local timezone.
+*
+* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments.
+* Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed,
+* or inferred from the arguments.
+*
+* @param date - The original date
+* @param options - An object with options
+*
+* @returns The start of a month
+*
+* @example
+* // The start of a month for 2 September 2014 11:55:00:
+* const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+* //=> Mon Sep 01 2014 00:00:00
+*/
+function startOfMonth(date, options) {
+	const _date = toDate(date, options?.in);
+	_date.setDate(1);
+	_date.setHours(0, 0, 0, 0);
+	return _date;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getBroadcastWeeksInMonth.js
+const FIVE_WEEKS = 5;
+const FOUR_WEEKS = 4;
+/**
+* Returns the number of weeks to display in the broadcast calendar for a given
+* month.
+*
+* The broadcast calendar may have either 4 or 5 weeks in a month, depending on
+* the start and end dates of the broadcast weeks.
+*
+* @since 9.4.0
+* @param month The month for which to calculate the number of weeks.
+* @param dateLib The date library to use for date manipulation.
+* @returns The number of weeks in the broadcast calendar (4 or 5).
+*/
+function getBroadcastWeeksInMonth(month, dateLib) {
+	const firstDayOfMonth = dateLib.startOfMonth(month);
+	const firstDayOfWeek = firstDayOfMonth.getDay() > 0 ? firstDayOfMonth.getDay() : 7;
+	const broadcastStartDate = dateLib.addDays(month, -firstDayOfWeek + 1);
+	const lastDateOfLastWeek = dateLib.addDays(broadcastStartDate, 34);
+	return dateLib.getMonth(month) === dateLib.getMonth(lastDateOfLastWeek) ? FIVE_WEEKS : FOUR_WEEKS;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/startOfBroadcastWeek.js
+/**
+* Returns the start date of the week in the broadcast calendar.
+*
+* The broadcast week starts on Monday. If the first day of the month is not a
+* Monday, this function calculates the previous Monday as the start of the
+* broadcast week.
+*
+* @since 9.4.0
+* @param date The date for which to calculate the start of the broadcast week.
+* @param dateLib The date library to use for date manipulation.
+* @returns The start date of the broadcast week.
+*/
+function startOfBroadcastWeek(date, dateLib) {
+	const firstOfMonth = dateLib.startOfMonth(date);
+	const dayOfWeek = firstOfMonth.getDay();
+	if (dayOfWeek === 1) return firstOfMonth;
+	else if (dayOfWeek === 0) return dateLib.addDays(firstOfMonth, -6);
+	else return dateLib.addDays(firstOfMonth, -1 * (dayOfWeek - 1));
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/endOfBroadcastWeek.js
+/**
+* Returns the end date of the week in the broadcast calendar.
+*
+* The broadcast week ends on the last day of the last broadcast week for the
+* given date.
+*
+* @since 9.4.0
+* @param date The date for which to calculate the end of the broadcast week.
+* @param dateLib The date library to use for date manipulation.
+* @returns The end date of the broadcast week.
+*/
+function endOfBroadcastWeek(date, dateLib) {
+	const startDate = startOfBroadcastWeek(date, dateLib);
+	const numberOfWeeks = getBroadcastWeeksInMonth(date, dateLib);
+	return dateLib.addDays(startDate, numberOfWeeks * 7 - 1);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/locale/en-US.js
+/** English (United States) locale extended with DayPicker-specific translations. */
+const enUS = {
+	...enUS$1,
+	labels: {
+		labelDayButton: (date, modifiers, options, dateLib) => {
+			let formatDate;
+			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
+			else formatDate = (d, pattern) => format$5(d, pattern, {
+				locale: enUS$1,
+				...options
+			});
+			let label = formatDate(date, "PPPP");
+			if (modifiers.today) label = `Today, ${label}`;
+			if (modifiers.selected) label = `${label}, selected`;
+			return label;
+		},
+		labelMonthDropdown: "Choose the Month",
+		labelNext: "Go to the Next Month",
+		labelPrevious: "Go to the Previous Month",
+		labelWeekNumber: (weekNumber) => `Week ${weekNumber}`,
+		labelYearDropdown: "Choose the Year",
+		labelGrid: (date, options, dateLib) => {
+			let formatDate;
+			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
+			else formatDate = (d, pattern) => format$5(d, pattern, {
+				locale: enUS$1,
+				...options
+			});
+			return formatDate(date, "LLLL yyyy");
+		},
+		labelGridcell: (date, modifiers, options, dateLib) => {
+			let formatDate;
+			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
+			else formatDate = (d, pattern) => format$5(d, pattern, {
+				locale: enUS$1,
+				...options
+			});
+			let label = formatDate(date, "PPPP");
+			if (modifiers?.today) label = `Today, ${label}`;
+			return label;
+		},
+		labelNav: "Navigation bar",
+		labelWeekNumberHeader: "Week Number",
+		labelWeekday: (date, options, dateLib) => {
+			let formatDate;
+			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
+			else formatDate = (d, pattern) => format$5(d, pattern, {
+				locale: enUS$1,
+				...options
+			});
+			return formatDate(date, "cccc");
+		}
+	}
+};
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/classes/DateLib.js
+/**
+* A wrapper class around [date-fns](http://date-fns.org) that provides utility
+* methods for date manipulation and formatting.
+*
+* @since 9.2.0
+* @example
+*   const dateLib = new DateLib({ locale: es });
+*   const newDate = dateLib.addDays(new Date(), 5);
+*/
+var DateLib = class DateLib {
+	/**
+	* Creates an instance of `DateLib`.
+	*
+	* @param options Configuration options for the date library.
+	* @param overrides Custom overrides for the date library functions.
+	*/
+	constructor(options, overrides) {
+		/**
+		* Creates a new `Date` object representing today's date.
+		*
+		* @since 9.5.0
+		* @returns A `Date` object for today's date.
+		*/
+		this.today = () => {
+			if (this.overrides?.today) return this.overrides.today();
+			if (this.options.timeZone) return TZDate.tz(this.options.timeZone);
+			return new (this.options.Date ?? Date)();
+		};
+		/**
+		* Creates a new `Date` object with the specified year, month, and day.
+		*
+		* @since 9.5.0
+		* @param year The year.
+		* @param monthIndex The month (0-11).
+		* @param date The day of the month.
+		* @returns A new `Date` object.
+		*/
+		this.newDate = (year, monthIndex, date) => {
+			if (this.overrides?.newDate) return this.overrides.newDate(year, monthIndex, date);
+			if (this.options.timeZone) return new TZDate(year, monthIndex, date, this.options.timeZone);
+			return new Date(year, monthIndex, date);
+		};
+		/**
+		* Adds the specified number of days to the given date.
+		*
+		* @param date The date to add days to.
+		* @param amount The number of days to add.
+		* @returns The new date with the days added.
+		*/
+		this.addDays = (date, amount) => {
+			return this.overrides?.addDays ? this.overrides.addDays(date, amount) : addDays(date, amount);
+		};
+		/**
+		* Adds the specified number of months to the given date.
+		*
+		* @param date The date to add months to.
+		* @param amount The number of months to add.
+		* @returns The new date with the months added.
+		*/
+		this.addMonths = (date, amount) => {
+			return this.overrides?.addMonths ? this.overrides.addMonths(date, amount) : addMonths(date, amount);
+		};
+		/**
+		* Adds the specified number of weeks to the given date.
+		*
+		* @param date The date to add weeks to.
+		* @param amount The number of weeks to add.
+		* @returns The new date with the weeks added.
+		*/
+		this.addWeeks = (date, amount) => {
+			return this.overrides?.addWeeks ? this.overrides.addWeeks(date, amount) : addWeeks(date, amount);
+		};
+		/**
+		* Adds the specified number of years to the given date.
+		*
+		* @param date The date to add years to.
+		* @param amount The number of years to add.
+		* @returns The new date with the years added.
+		*/
+		this.addYears = (date, amount) => {
+			return this.overrides?.addYears ? this.overrides.addYears(date, amount) : addYears(date, amount);
+		};
+		/**
+		* Returns the number of calendar days between the given dates.
+		*
+		* @param dateLeft The later date.
+		* @param dateRight The earlier date.
+		* @returns The number of calendar days between the dates.
+		*/
+		this.differenceInCalendarDays = (dateLeft, dateRight) => {
+			return this.overrides?.differenceInCalendarDays ? this.overrides.differenceInCalendarDays(dateLeft, dateRight) : differenceInCalendarDays(dateLeft, dateRight);
+		};
+		/**
+		* Returns the number of calendar months between the given dates.
+		*
+		* @param dateLeft The later date.
+		* @param dateRight The earlier date.
+		* @returns The number of calendar months between the dates.
+		*/
+		this.differenceInCalendarMonths = (dateLeft, dateRight) => {
+			return this.overrides?.differenceInCalendarMonths ? this.overrides.differenceInCalendarMonths(dateLeft, dateRight) : differenceInCalendarMonths(dateLeft, dateRight);
+		};
+		/**
+		* Returns the months between the given dates.
+		*
+		* @param interval The interval to get the months for.
+		*/
+		this.eachMonthOfInterval = (interval) => {
+			return this.overrides?.eachMonthOfInterval ? this.overrides.eachMonthOfInterval(interval) : eachMonthOfInterval(interval);
+		};
+		/**
+		* Returns the years between the given dates.
+		*
+		* @since 9.11.1
+		* @param interval The interval to get the years for.
+		* @returns The array of years in the interval.
+		*/
+		this.eachYearOfInterval = (interval) => {
+			const years = this.overrides?.eachYearOfInterval ? this.overrides.eachYearOfInterval(interval) : eachYearOfInterval(interval);
+			const uniqueYears = new Set(years.map((d) => this.getYear(d)));
+			if (uniqueYears.size === years.length) return years;
+			const yearsArray = [];
+			uniqueYears.forEach((y) => {
+				yearsArray.push(new Date(y, 0, 1));
+			});
+			return yearsArray;
+		};
+		/**
+		* Returns the end of the broadcast week for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the broadcast week.
+		*/
+		this.endOfBroadcastWeek = (date) => {
+			return this.overrides?.endOfBroadcastWeek ? this.overrides.endOfBroadcastWeek(date) : endOfBroadcastWeek(date, this);
+		};
+		/**
+		* Returns the end of the ISO week for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the ISO week.
+		*/
+		this.endOfISOWeek = (date) => {
+			return this.overrides?.endOfISOWeek ? this.overrides.endOfISOWeek(date) : endOfISOWeek(date);
+		};
+		/**
+		* Returns the end of the month for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the month.
+		*/
+		this.endOfMonth = (date) => {
+			return this.overrides?.endOfMonth ? this.overrides.endOfMonth(date) : endOfMonth(date);
+		};
+		/**
+		* Returns the end of the week for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the week.
+		*/
+		this.endOfWeek = (date, options) => {
+			return this.overrides?.endOfWeek ? this.overrides.endOfWeek(date, options) : endOfWeek(date, this.options);
+		};
+		/**
+		* Returns the end of the year for the given date.
+		*
+		* @param date The original date.
+		* @returns The end of the year.
+		*/
+		this.endOfYear = (date) => {
+			return this.overrides?.endOfYear ? this.overrides.endOfYear(date) : endOfYear(date);
+		};
+		/**
+		* Formats the given date using the specified format string.
+		*
+		* @param date The date to format.
+		* @param formatStr The format string.
+		* @returns The formatted date string.
+		*/
+		this.format = (date, formatStr, _options) => {
+			const formatted = this.overrides?.format ? this.overrides.format(date, formatStr, this.options) : format$5(date, formatStr, this.options);
+			if (this.options.numerals && this.options.numerals !== "latn") return this.replaceDigits(formatted);
+			return formatted;
+		};
+		/**
+		* Returns the ISO week number for the given date.
+		*
+		* @param date The date to get the ISO week number for.
+		* @returns The ISO week number.
+		*/
+		this.getISOWeek = (date) => {
+			return this.overrides?.getISOWeek ? this.overrides.getISOWeek(date) : getISOWeek(date);
+		};
+		/**
+		* Returns the month of the given date.
+		*
+		* @param date The date to get the month for.
+		* @returns The month.
+		*/
+		this.getMonth = (date, _options) => {
+			return this.overrides?.getMonth ? this.overrides.getMonth(date, this.options) : getMonth(date, this.options);
+		};
+		/**
+		* Returns the year of the given date.
+		*
+		* @param date The date to get the year for.
+		* @returns The year.
+		*/
+		this.getYear = (date, _options) => {
+			return this.overrides?.getYear ? this.overrides.getYear(date, this.options) : getYear(date, this.options);
+		};
+		/**
+		* Returns the local week number for the given date.
+		*
+		* @param date The date to get the week number for.
+		* @returns The week number.
+		*/
+		this.getWeek = (date, _options) => {
+			return this.overrides?.getWeek ? this.overrides.getWeek(date, this.options) : getWeek(date, this.options);
+		};
+		/**
+		* Checks if the first date is after the second date.
+		*
+		* @param date The date to compare.
+		* @param dateToCompare The date to compare with.
+		* @returns True if the first date is after the second date.
+		*/
+		this.isAfter = (date, dateToCompare) => {
+			return this.overrides?.isAfter ? this.overrides.isAfter(date, dateToCompare) : isAfter(date, dateToCompare);
+		};
+		/**
+		* Checks if the first date is before the second date.
+		*
+		* @param date The date to compare.
+		* @param dateToCompare The date to compare with.
+		* @returns True if the first date is before the second date.
+		*/
+		this.isBefore = (date, dateToCompare) => {
+			return this.overrides?.isBefore ? this.overrides.isBefore(date, dateToCompare) : isBefore(date, dateToCompare);
+		};
+		/**
+		* Checks if the given value is a Date object.
+		*
+		* @param value The value to check.
+		* @returns True if the value is a Date object.
+		*/
+		this.isDate = (value) => {
+			return this.overrides?.isDate ? this.overrides.isDate(value) : isDate(value);
+		};
+		/**
+		* Checks if the given dates are on the same day.
+		*
+		* @param dateLeft The first date to compare.
+		* @param dateRight The second date to compare.
+		* @returns True if the dates are on the same day.
+		*/
+		this.isSameDay = (dateLeft, dateRight) => {
+			return this.overrides?.isSameDay ? this.overrides.isSameDay(dateLeft, dateRight) : isSameDay(dateLeft, dateRight);
+		};
+		/**
+		* Checks if the given dates are in the same month.
+		*
+		* @param dateLeft The first date to compare.
+		* @param dateRight The second date to compare.
+		* @returns True if the dates are in the same month.
+		*/
+		this.isSameMonth = (dateLeft, dateRight) => {
+			return this.overrides?.isSameMonth ? this.overrides.isSameMonth(dateLeft, dateRight) : isSameMonth(dateLeft, dateRight);
+		};
+		/**
+		* Checks if the given dates are in the same year.
+		*
+		* @param dateLeft The first date to compare.
+		* @param dateRight The second date to compare.
+		* @returns True if the dates are in the same year.
+		*/
+		this.isSameYear = (dateLeft, dateRight) => {
+			return this.overrides?.isSameYear ? this.overrides.isSameYear(dateLeft, dateRight) : isSameYear(dateLeft, dateRight);
+		};
+		/**
+		* Returns the latest date in the given array of dates.
+		*
+		* @param dates The array of dates to compare.
+		* @returns The latest date.
+		*/
+		this.max = (dates) => {
+			return this.overrides?.max ? this.overrides.max(dates) : max(dates);
+		};
+		/**
+		* Returns the earliest date in the given array of dates.
+		*
+		* @param dates The array of dates to compare.
+		* @returns The earliest date.
+		*/
+		this.min = (dates) => {
+			return this.overrides?.min ? this.overrides.min(dates) : min(dates);
+		};
+		/**
+		* Sets the month of the given date.
+		*
+		* @param date The date to set the month on.
+		* @param month The month to set (0-11).
+		* @returns The new date with the month set.
+		*/
+		this.setMonth = (date, month) => {
+			return this.overrides?.setMonth ? this.overrides.setMonth(date, month) : setMonth(date, month);
+		};
+		/**
+		* Sets the year of the given date.
+		*
+		* @param date The date to set the year on.
+		* @param year The year to set.
+		* @returns The new date with the year set.
+		*/
+		this.setYear = (date, year) => {
+			return this.overrides?.setYear ? this.overrides.setYear(date, year) : setYear(date, year);
+		};
+		/**
+		* Returns the start of the broadcast week for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the broadcast week.
+		*/
+		this.startOfBroadcastWeek = (date, _dateLib) => {
+			return this.overrides?.startOfBroadcastWeek ? this.overrides.startOfBroadcastWeek(date, this) : startOfBroadcastWeek(date, this);
+		};
+		/**
+		* Returns the start of the day for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the day.
+		*/
+		this.startOfDay = (date) => {
+			return this.overrides?.startOfDay ? this.overrides.startOfDay(date) : startOfDay(date);
+		};
+		/**
+		* Returns the start of the ISO week for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the ISO week.
+		*/
+		this.startOfISOWeek = (date) => {
+			return this.overrides?.startOfISOWeek ? this.overrides.startOfISOWeek(date) : startOfISOWeek(date);
+		};
+		/**
+		* Returns the start of the month for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the month.
+		*/
+		this.startOfMonth = (date) => {
+			return this.overrides?.startOfMonth ? this.overrides.startOfMonth(date) : startOfMonth(date);
+		};
+		/**
+		* Returns the start of the week for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the week.
+		*/
+		this.startOfWeek = (date, _options) => {
+			return this.overrides?.startOfWeek ? this.overrides.startOfWeek(date, this.options) : startOfWeek(date, this.options);
+		};
+		/**
+		* Returns the start of the year for the given date.
+		*
+		* @param date The original date.
+		* @returns The start of the year.
+		*/
+		this.startOfYear = (date) => {
+			return this.overrides?.startOfYear ? this.overrides.startOfYear(date) : startOfYear(date);
+		};
+		this.options = {
+			locale: enUS,
+			...options
+		};
+		this.overrides = overrides;
+	}
+	/**
+	* Generates a mapping of Arabic digits (0-9) to the target numbering system
+	* digits.
+	*
+	* @since 9.5.0
+	* @returns A record mapping Arabic digits to the target numerals.
+	*/
+	getDigitMap() {
+		const { numerals = "latn" } = this.options;
+		const formatter = new Intl.NumberFormat("en-US", { numberingSystem: numerals });
+		const digitMap = {};
+		for (let i = 0; i < 10; i++) digitMap[i.toString()] = formatter.format(i);
+		return digitMap;
+	}
+	/**
+	* Replaces Arabic digits in a string with the target numbering system digits.
+	*
+	* @since 9.5.0
+	* @param input The string containing Arabic digits.
+	* @returns The string with digits replaced.
+	*/
+	replaceDigits(input) {
+		const digitMap = this.getDigitMap();
+		return input.replace(/\d/g, (digit) => digitMap[digit] || digit);
+	}
+	/**
+	* Formats a number using the configured numbering system.
+	*
+	* @since 9.5.0
+	* @param value The number to format.
+	* @returns The formatted number as a string.
+	*/
+	formatNumber(value) {
+		return this.replaceDigits(value.toString());
+	}
+	/**
+	* Returns the preferred ordering for month and year labels for the current
+	* locale.
+	*/
+	getMonthYearOrder() {
+		const code = this.options.locale?.code;
+		if (!code) return "month-first";
+		return DateLib.yearFirstLocales.has(code) ? "year-first" : "month-first";
+	}
+	/**
+	* Formats the month/year pair respecting locale conventions.
+	*
+	* @since 9.11.0
+	*/
+	formatMonthYear(date) {
+		const { locale, timeZone, numerals } = this.options;
+		const localeCode = locale?.code;
+		if (localeCode && DateLib.yearFirstLocales.has(localeCode)) try {
+			return new Intl.DateTimeFormat(localeCode, {
+				month: "long",
+				year: "numeric",
+				timeZone,
+				numberingSystem: numerals
+			}).format(date);
+		} catch {}
+		const pattern = this.getMonthYearOrder() === "year-first" ? "y LLLL" : "LLLL y";
+		return this.format(date, pattern);
+	}
+};
+DateLib.yearFirstLocales = /* @__PURE__ */ new Set([
+	"eu",
+	"hu",
+	"ja",
+	"ja-Hira",
+	"ja-JP",
+	"ko",
+	"ko-KR",
+	"lt",
+	"lt-LT",
+	"lv",
+	"lv-LV",
+	"mn",
+	"mn-MN",
+	"zh",
+	"zh-CN",
+	"zh-HK",
+	"zh-TW"
+]);
+/**
+* The default date library with English locale.
+*
+* @since 9.2.0
+*/
+const defaultDateLib = new DateLib();
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/classes/CalendarDay.js
+/**
+* Represents a day displayed in the calendar.
+*
+* In DayPicker, a `CalendarDay` is a wrapper around a `Date` object that
+* provides additional information about the day, such as whether it belongs to
+* the displayed month.
+*/
+var CalendarDay = class {
+	constructor(date, displayMonth, dateLib = defaultDateLib) {
+		this.date = date;
+		this.displayMonth = displayMonth;
+		this.outside = Boolean(displayMonth && !dateLib.isSameMonth(date, displayMonth));
+		this.dateLib = dateLib;
+		this.isoDate = dateLib.format(date, "yyyy-MM-dd");
+		this.displayMonthId = dateLib.format(displayMonth, "yyyy-MM");
+		this.dateMonthId = dateLib.format(date, "yyyy-MM");
+	}
+	/**
+	* Checks if this day is equal to another `CalendarDay`, considering both the
+	* date and the displayed month.
+	*
+	* @param day The `CalendarDay` to compare with.
+	* @returns `true` if the days are equal, otherwise `false`.
+	*/
+	isEqualTo(day) {
+		return this.dateLib.isSameDay(day.date, this.date) && this.dateLib.isSameMonth(day.displayMonth, this.displayMonth);
+	}
+};
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/classes/CalendarMonth.js
+/**
+* Represents a month in a calendar year.
+*
+* A `CalendarMonth` contains the weeks within the month and the date of the
+* month.
+*/
+var CalendarMonth = class {
+	constructor(month, weeks) {
+		this.date = month;
+		this.weeks = weeks;
+	}
+};
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/classes/CalendarWeek.js
+/**
+* Represents a week in a calendar month.
+*
+* A `CalendarWeek` contains the days within the week and the week number.
+*/
+var CalendarWeek = class {
+	constructor(weekNumber, days) {
+		this.days = days;
+		this.weekNumber = weekNumber;
+	}
+};
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/CaptionLabel.js
+/**
+* Render the label in the month caption.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function CaptionLabel(props) {
+	return import__wp_global_react.default.createElement("span", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Chevron.js
+/**
+* Render the chevron icon used in the navigation buttons and dropdowns.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Chevron(props) {
+	const { size = 24, orientation = "left", className, style } = props;
+	return import__wp_global_react.default.createElement("svg", {
+		className,
+		style,
+		width: size,
+		height: size,
+		viewBox: "0 0 24 24"
+	}, orientation === "up" && import__wp_global_react.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }), orientation === "down" && import__wp_global_react.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }), orientation === "left" && import__wp_global_react.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }), orientation === "right" && import__wp_global_react.default.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" }));
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Day.js
+/**
+* Render a grid cell for a specific day in the calendar.
+*
+* Handles interaction and focus for the day. If you only need to change the
+* content of the day cell, consider swapping the `DayButton` component
+* instead.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Day$1(props) {
+	const { day, modifiers, ...tdProps } = props;
+	return import__wp_global_react.default.createElement("td", { ...tdProps });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/DayButton.js
+/**
+* Render a button for a specific day in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function DayButton(props) {
+	const { day, modifiers, ...buttonProps } = props;
+	const ref = import__wp_global_react.default.useRef(null);
+	import__wp_global_react.default.useEffect(() => {
+		if (modifiers.focused) ref.current?.focus();
+	}, [modifiers.focused]);
+	return import__wp_global_react.default.createElement("button", {
+		ref,
+		...buttonProps
+	});
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/UI.js
+/**
+* Enum representing the UI elements composing DayPicker. These elements are
+* mapped to {@link CustomComponents}, {@link ClassNames}, and {@link Styles}.
+*
+* Some elements are extended by flags and modifiers.
+*/
+var UI;
+(function(UI) {
+	/** The root component displaying the months and the navigation bar. */
+	UI["Root"] = "root";
+	/** The Chevron SVG element used by navigation buttons and dropdowns. */
+	UI["Chevron"] = "chevron";
+	/**
+	* The grid cell with the day's date. Extended by {@link DayFlag} and
+	* {@link SelectionState}.
+	*/
+	UI["Day"] = "day";
+	/** The button containing the formatted day's date, inside the grid cell. */
+	UI["DayButton"] = "day_button";
+	/** The caption label of the month (when not showing the dropdown navigation). */
+	UI["CaptionLabel"] = "caption_label";
+	/** The container of the dropdown navigation (when enabled). */
+	UI["Dropdowns"] = "dropdowns";
+	/** The dropdown element to select for years and months. */
+	UI["Dropdown"] = "dropdown";
+	/** The container element of the dropdown. */
+	UI["DropdownRoot"] = "dropdown_root";
+	/** The root element of the footer. */
+	UI["Footer"] = "footer";
+	/** The month grid. */
+	UI["MonthGrid"] = "month_grid";
+	/** Contains the dropdown navigation or the caption label. */
+	UI["MonthCaption"] = "month_caption";
+	/** The dropdown with the months. */
+	UI["MonthsDropdown"] = "months_dropdown";
+	/** Wrapper of the month grid. */
+	UI["Month"] = "month";
+	/** The container of the displayed months. */
+	UI["Months"] = "months";
+	/** The navigation bar with the previous and next buttons. */
+	UI["Nav"] = "nav";
+	/**
+	* The next month button in the navigation. *
+	*
+	* @since 9.1.0
+	*/
+	UI["NextMonthButton"] = "button_next";
+	/**
+	* The previous month button in the navigation.
+	*
+	* @since 9.1.0
+	*/
+	UI["PreviousMonthButton"] = "button_previous";
+	/** The row containing the week. */
+	UI["Week"] = "week";
+	/** The group of row weeks in a month (`tbody`). */
+	UI["Weeks"] = "weeks";
+	/** The column header with the weekday. */
+	UI["Weekday"] = "weekday";
+	/** The row grouping the weekdays in the column headers. */
+	UI["Weekdays"] = "weekdays";
+	/** The cell containing the week number. */
+	UI["WeekNumber"] = "week_number";
+	/** The cell header of the week numbers column. */
+	UI["WeekNumberHeader"] = "week_number_header";
+	/** The dropdown with the years. */
+	UI["YearsDropdown"] = "years_dropdown";
+})(UI || (UI = {}));
+/** Enum representing flags for the {@link UI | UI.Day} element. */
+var DayFlag;
+(function(DayFlag) {
+	/** The day is disabled. */
+	DayFlag["disabled"] = "disabled";
+	/** The day is hidden. */
+	DayFlag["hidden"] = "hidden";
+	/** The day is outside the current month. */
+	DayFlag["outside"] = "outside";
+	/** The day is focused. */
+	DayFlag["focused"] = "focused";
+	/** The day is today. */
+	DayFlag["today"] = "today";
+})(DayFlag || (DayFlag = {}));
+/**
+* Enum representing selection states that can be applied to the
+* {@link UI | UI.Day} element in selection mode.
+*/
+var SelectionState;
+(function(SelectionState) {
+	/** The day is at the end of a selected range. */
+	SelectionState["range_end"] = "range_end";
+	/** The day is at the middle of a selected range. */
+	SelectionState["range_middle"] = "range_middle";
+	/** The day is at the start of a selected range. */
+	SelectionState["range_start"] = "range_start";
+	/** The day is selected. */
+	SelectionState["selected"] = "selected";
+})(SelectionState || (SelectionState = {}));
+/**
+* Enum representing different animation states for transitioning between
+* months.
+*/
+var Animation;
+(function(Animation) {
+	/** The entering weeks when they appear before the exiting month. */
+	Animation["weeks_before_enter"] = "weeks_before_enter";
+	/** The exiting weeks when they disappear before the entering month. */
+	Animation["weeks_before_exit"] = "weeks_before_exit";
+	/** The entering weeks when they appear after the exiting month. */
+	Animation["weeks_after_enter"] = "weeks_after_enter";
+	/** The exiting weeks when they disappear after the entering month. */
+	Animation["weeks_after_exit"] = "weeks_after_exit";
+	/** The entering caption when it appears after the exiting month. */
+	Animation["caption_after_enter"] = "caption_after_enter";
+	/** The exiting caption when it disappears after the entering month. */
+	Animation["caption_after_exit"] = "caption_after_exit";
+	/** The entering caption when it appears before the exiting month. */
+	Animation["caption_before_enter"] = "caption_before_enter";
+	/** The exiting caption when it disappears before the entering month. */
+	Animation["caption_before_exit"] = "caption_before_exit";
+})(Animation || (Animation = {}));
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/useDayPicker.js
+/** @ignore */
+const dayPickerContext = (0, import__wp_global_react.createContext)(void 0);
+/**
+* Provides access to the DayPicker context, which includes properties and
+* methods to interact with the DayPicker component. This hook must be used
+* within a custom component.
+*
+* @template T - Use this type to refine the returned context type with a
+*   specific selection mode.
+* @returns The context to work with DayPicker.
+* @throws {Error} If the hook is used outside of a DayPicker provider.
+* @group Hooks
+* @see https://daypicker.dev/guides/custom-components
+*/
+function useDayPicker() {
+	const context = (0, import__wp_global_react.useContext)(dayPickerContext);
+	if (context === void 0) throw new Error("useDayPicker() must be used within a custom component.");
+	return context;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Dropdown.js
+/**
+* Render a dropdown component for navigation in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Dropdown$2(props) {
+	const { options, className, ...selectProps } = props;
+	const { classNames, components, styles } = useDayPicker();
+	const cssClassSelect = [classNames[UI.Dropdown], className].join(" ");
+	const selectedOption = options?.find(({ value }) => value === selectProps.value);
+	return import__wp_global_react.default.createElement("span", {
+		"data-disabled": selectProps.disabled,
+		className: classNames[UI.DropdownRoot],
+		style: styles?.[UI.DropdownRoot]
+	}, import__wp_global_react.default.createElement(components.Select, {
+		className: cssClassSelect,
+		...selectProps
+	}, options?.map(({ value, label, disabled }) => import__wp_global_react.default.createElement(components.Option, {
+		key: value,
+		value,
+		disabled
+	}, label))), import__wp_global_react.default.createElement("span", {
+		className: classNames[UI.CaptionLabel],
+		style: styles?.[UI.CaptionLabel],
+		"aria-hidden": true
+	}, selectedOption?.label, import__wp_global_react.default.createElement(components.Chevron, {
+		orientation: "down",
+		size: 18,
+		className: classNames[UI.Chevron],
+		style: styles?.[UI.Chevron]
+	})));
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/DropdownNav.js
+/**
+* Render the navigation dropdowns for the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function DropdownNav(props) {
+	return import__wp_global_react.default.createElement("div", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Footer.js
+/**
+* Render the footer of the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Footer(props) {
+	return import__wp_global_react.default.createElement("div", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Month.js
+/**
+* Render the grid with the weekday header row and the weeks for a specific
+* month.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Month(props) {
+	const { calendarMonth, displayIndex, ...divProps } = props;
+	return import__wp_global_react.default.createElement("div", { ...divProps }, props.children);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/MonthCaption.js
+/**
+* Render the caption for a month in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function MonthCaption(props) {
+	const { calendarMonth, displayIndex, ...divProps } = props;
+	return import__wp_global_react.default.createElement("div", { ...divProps });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/MonthGrid.js
+/**
+* Render the grid of days for a specific month.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function MonthGrid(props) {
+	return import__wp_global_react.default.createElement("table", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Months.js
+/**
+* Render a container wrapping the month grids.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Months(props) {
+	return import__wp_global_react.default.createElement("div", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
+/**
+* Render a dropdown to navigate between months in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function MonthsDropdown(props) {
+	const { components } = useDayPicker();
+	return import__wp_global_react.default.createElement(components.Dropdown, { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Nav.js
+/**
+* Render the navigation toolbar with buttons to navigate between months.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Nav(props) {
+	const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
+	const { components, classNames, styles, labels: { labelPrevious, labelNext } } = useDayPicker();
+	const handleNextClick = (0, import__wp_global_react.useCallback)((e) => {
+		if (nextMonth) onNextClick?.(e);
+	}, [nextMonth, onNextClick]);
+	const handlePreviousClick = (0, import__wp_global_react.useCallback)((e) => {
+		if (previousMonth) onPreviousClick?.(e);
+	}, [previousMonth, onPreviousClick]);
+	return import__wp_global_react.default.createElement("nav", { ...navProps }, import__wp_global_react.default.createElement(components.PreviousMonthButton, {
+		type: "button",
+		className: classNames[UI.PreviousMonthButton],
+		style: styles?.[UI.PreviousMonthButton],
+		tabIndex: previousMonth ? void 0 : -1,
+		"aria-disabled": previousMonth ? void 0 : true,
+		"aria-label": labelPrevious(previousMonth),
+		onClick: handlePreviousClick
+	}, import__wp_global_react.default.createElement(components.Chevron, {
+		disabled: previousMonth ? void 0 : true,
+		className: classNames[UI.Chevron],
+		style: styles?.[UI.Chevron],
+		orientation: "left"
+	})), import__wp_global_react.default.createElement(components.NextMonthButton, {
+		type: "button",
+		className: classNames[UI.NextMonthButton],
+		style: styles?.[UI.NextMonthButton],
+		tabIndex: nextMonth ? void 0 : -1,
+		"aria-disabled": nextMonth ? void 0 : true,
+		"aria-label": labelNext(nextMonth),
+		onClick: handleNextClick
+	}, import__wp_global_react.default.createElement(components.Chevron, {
+		disabled: nextMonth ? void 0 : true,
+		orientation: "right",
+		className: classNames[UI.Chevron],
+		style: styles?.[UI.Chevron]
+	})));
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/NextMonthButton.js
+/**
+* Render the button to navigate to the next month in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function NextMonthButton$1(props) {
+	return import__wp_global_react.default.createElement("button", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Option.js
+/**
+* Render an `option` element.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Option(props) {
+	return import__wp_global_react.default.createElement("option", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/PreviousMonthButton.js
+/**
+* Render the button to navigate to the previous month in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function PreviousMonthButton$1(props) {
+	return import__wp_global_react.default.createElement("button", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Root.js
+/**
+* Render the root element of the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Root$3(props) {
+	const { rootRef, ...rest } = props;
+	return import__wp_global_react.default.createElement("div", {
+		...rest,
+		ref: rootRef
+	});
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Select.js
+/**
+* Render a `select` element.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Select$1(props) {
+	return import__wp_global_react.default.createElement("select", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Week.js
+/**
+* Render a table row representing a week in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Week(props) {
+	const { week, ...trProps } = props;
+	return import__wp_global_react.default.createElement("tr", { ...trProps });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Weekday.js
+/**
+* Render a table header cell with the name of a weekday (e.g., "Mo", "Tu").
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Weekday(props) {
+	return import__wp_global_react.default.createElement("th", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Weekdays.js
+/**
+* Render the table row containing the weekday names.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Weekdays(props) {
+	return import__wp_global_react.default.createElement("thead", { "aria-hidden": true }, import__wp_global_react.default.createElement("tr", { ...props }));
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/WeekNumber.js
+/**
+* Render a table cell displaying the number of the week.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function WeekNumber(props) {
+	const { week, ...thProps } = props;
+	return import__wp_global_react.default.createElement("th", { ...thProps });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/WeekNumberHeader.js
+/**
+* Render the header cell for the week numbers column.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function WeekNumberHeader(props) {
+	return import__wp_global_react.default.createElement("th", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/Weeks.js
+/**
+* Render the container for the weeks in the month grid.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Weeks(props) {
+	return import__wp_global_react.default.createElement("tbody", { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/YearsDropdown.js
+/**
+* Render a dropdown to navigate between years in the calendar.
+*
+* @group Components
+* @see https://daypicker.dev/guides/custom-components
+*/
+function YearsDropdown(props) {
+	const { components } = useDayPicker();
+	return import__wp_global_react.default.createElement(components.Dropdown, { ...props });
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/custom-components.js
+var custom_components_exports = /* @__PURE__ */ __exportAll({
+	CaptionLabel: () => CaptionLabel,
+	Chevron: () => Chevron,
+	Day: () => Day$1,
+	DayButton: () => DayButton,
+	Dropdown: () => Dropdown$2,
+	DropdownNav: () => DropdownNav,
+	Footer: () => Footer,
+	Month: () => Month,
+	MonthCaption: () => MonthCaption,
+	MonthGrid: () => MonthGrid,
+	Months: () => Months,
+	MonthsDropdown: () => MonthsDropdown,
+	Nav: () => Nav,
+	NextMonthButton: () => NextMonthButton$1,
+	Option: () => Option,
+	PreviousMonthButton: () => PreviousMonthButton$1,
+	Root: () => Root$3,
+	Select: () => Select$1,
+	Week: () => Week,
+	WeekNumber: () => WeekNumber,
+	WeekNumberHeader: () => WeekNumberHeader,
+	Weekday: () => Weekday,
+	Weekdays: () => Weekdays,
+	Weeks: () => Weeks,
+	YearsDropdown: () => YearsDropdown
+});
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/rangeIncludesDate.js
+/**
+* Checks if a given date is within a specified date range.
+*
+* @since 9.0.0
+* @param range - The date range to check against.
+* @param date - The date to check.
+* @param excludeEnds - If `true`, the range's start and end dates are excluded.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the date is within the range, otherwise `false`.
+* @group Utilities
+*/
+function rangeIncludesDate(range, date, excludeEnds = false, dateLib = defaultDateLib) {
+	let { from, to } = range;
+	const { differenceInCalendarDays, isSameDay } = dateLib;
+	if (from && to) {
+		if (differenceInCalendarDays(to, from) < 0) [from, to] = [to, from];
+		return differenceInCalendarDays(date, from) >= (excludeEnds ? 1 : 0) && differenceInCalendarDays(to, date) >= (excludeEnds ? 1 : 0);
+	}
+	if (!excludeEnds && to) return isSameDay(to, date);
+	if (!excludeEnds && from) return isSameDay(from, date);
+	return false;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/typeguards.js
+/**
+* Checks if the given value is of type {@link DateInterval}.
+*
+* @param matcher - The value to check.
+* @returns `true` if the value is a {@link DateInterval}, otherwise `false`.
+* @group Utilities
+*/
+function isDateInterval(matcher) {
+	return Boolean(matcher && typeof matcher === "object" && "before" in matcher && "after" in matcher);
+}
+/**
+* Checks if the given value is of type {@link DateRange}.
+*
+* @param value - The value to check.
+* @returns `true` if the value is a {@link DateRange}, otherwise `false`.
+* @group Utilities
+*/
+function isDateRange(value) {
+	return Boolean(value && typeof value === "object" && "from" in value);
+}
+/**
+* Checks if the given value is of type {@link DateAfter}.
+*
+* @param value - The value to check.
+* @returns `true` if the value is a {@link DateAfter}, otherwise `false`.
+* @group Utilities
+*/
+function isDateAfterType(value) {
+	return Boolean(value && typeof value === "object" && "after" in value);
+}
+/**
+* Checks if the given value is of type {@link DateBefore}.
+*
+* @param value - The value to check.
+* @returns `true` if the value is a {@link DateBefore}, otherwise `false`.
+* @group Utilities
+*/
+function isDateBeforeType(value) {
+	return Boolean(value && typeof value === "object" && "before" in value);
+}
+/**
+* Checks if the given value is of type {@link DayOfWeek}.
+*
+* @param value - The value to check.
+* @returns `true` if the value is a {@link DayOfWeek}, otherwise `false`.
+* @group Utilities
+*/
+function isDayOfWeekType(value) {
+	return Boolean(value && typeof value === "object" && "dayOfWeek" in value);
+}
+/**
+* Checks if the given value is an array of valid dates.
+*
+* @private
+* @param value - The value to check.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the value is an array of valid dates, otherwise `false`.
+*/
+function isDatesArray(value, dateLib) {
+	return Array.isArray(value) && value.every(dateLib.isDate);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/dateMatchModifiers.js
+/**
+* Checks if a given date matches at least one of the specified {@link Matcher}.
+*
+* @param date - The date to check.
+* @param matchers - The matchers to check against.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the date matches any of the matchers, otherwise `false`.
+* @group Utilities
+*/
+function dateMatchModifiers(date, matchers, dateLib = defaultDateLib) {
+	const matchersArr = !Array.isArray(matchers) ? [matchers] : matchers;
+	const { isSameDay, differenceInCalendarDays, isAfter } = dateLib;
+	return matchersArr.some((matcher) => {
+		if (typeof matcher === "boolean") return matcher;
+		if (dateLib.isDate(matcher)) return isSameDay(date, matcher);
+		if (isDatesArray(matcher, dateLib)) return matcher.some((matcherDate) => isSameDay(date, matcherDate));
+		if (isDateRange(matcher)) return rangeIncludesDate(matcher, date, false, dateLib);
+		if (isDayOfWeekType(matcher)) {
+			if (!Array.isArray(matcher.dayOfWeek)) return matcher.dayOfWeek === date.getDay();
+			return matcher.dayOfWeek.includes(date.getDay());
+		}
+		if (isDateInterval(matcher)) {
+			const diffBefore = differenceInCalendarDays(matcher.before, date);
+			const diffAfter = differenceInCalendarDays(matcher.after, date);
+			const isDayBefore = diffBefore > 0;
+			const isDayAfter = diffAfter < 0;
+			if (isAfter(matcher.before, matcher.after)) return isDayAfter && isDayBefore;
+			else return isDayBefore || isDayAfter;
+		}
+		if (isDateAfterType(matcher)) return differenceInCalendarDays(date, matcher.after) > 0;
+		if (isDateBeforeType(matcher)) return differenceInCalendarDays(matcher.before, date) > 0;
+		if (typeof matcher === "function") return matcher(date);
+		return false;
+	});
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/createGetModifiers.js
+/**
+* Creates a function to retrieve the modifiers for a given day.
+*
+* This function calculates both internal and custom modifiers for each day
+* based on the provided calendar days and DayPicker props.
+*
+* @private
+* @param days The array of `CalendarDay` objects to process.
+* @param props The DayPicker props, including modifiers and configuration
+*   options.
+* @param dateLib The date library to use for date manipulation.
+* @returns A function that retrieves the modifiers for a given `CalendarDay`.
+*/
+function createGetModifiers(days, props, navStart, navEnd, dateLib) {
+	const { disabled, hidden, modifiers, showOutsideDays, broadcastCalendar, today = dateLib.today() } = props;
+	const { isSameDay, isSameMonth, startOfMonth, isBefore, endOfMonth, isAfter } = dateLib;
+	const computedNavStart = navStart && startOfMonth(navStart);
+	const computedNavEnd = navEnd && endOfMonth(navEnd);
+	const internalModifiersMap = {
+		[DayFlag.focused]: [],
+		[DayFlag.outside]: [],
+		[DayFlag.disabled]: [],
+		[DayFlag.hidden]: [],
+		[DayFlag.today]: []
+	};
+	const customModifiersMap = {};
+	for (const day of days) {
+		const { date, displayMonth } = day;
+		const isOutside = Boolean(displayMonth && !isSameMonth(date, displayMonth));
+		const isBeforeNavStart = Boolean(computedNavStart && isBefore(date, computedNavStart));
+		const isAfterNavEnd = Boolean(computedNavEnd && isAfter(date, computedNavEnd));
+		const isDisabled = Boolean(disabled && dateMatchModifiers(date, disabled, dateLib));
+		const isHidden = Boolean(hidden && dateMatchModifiers(date, hidden, dateLib)) || isBeforeNavStart || isAfterNavEnd || !broadcastCalendar && !showOutsideDays && isOutside || broadcastCalendar && showOutsideDays === false && isOutside;
+		const isToday = isSameDay(date, today);
+		if (isOutside) internalModifiersMap.outside.push(day);
+		if (isDisabled) internalModifiersMap.disabled.push(day);
+		if (isHidden) internalModifiersMap.hidden.push(day);
+		if (isToday) internalModifiersMap.today.push(day);
+		if (modifiers) Object.keys(modifiers).forEach((name) => {
+			const modifierValue = modifiers?.[name];
+			if (!(modifierValue ? dateMatchModifiers(date, modifierValue, dateLib) : false)) return;
+			if (customModifiersMap[name]) customModifiersMap[name].push(day);
+			else customModifiersMap[name] = [day];
+		});
+	}
+	return (day) => {
+		const dayFlags = {
+			[DayFlag.focused]: false,
+			[DayFlag.disabled]: false,
+			[DayFlag.hidden]: false,
+			[DayFlag.outside]: false,
+			[DayFlag.today]: false
+		};
+		const customModifiers = {};
+		for (const name in internalModifiersMap) dayFlags[name] = internalModifiersMap[name].some((d) => d === day);
+		for (const name in customModifiersMap) customModifiers[name] = customModifiersMap[name].some((d) => d === day);
+		return {
+			...dayFlags,
+			...customModifiers
+		};
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getClassNamesForModifiers.js
+/**
+* Returns the class names for a day based on its modifiers.
+*
+* This function combines the base class name for the day with any class names
+* associated with active modifiers.
+*
+* @param modifiers The modifiers applied to the day.
+* @param classNames The base class names for the calendar elements.
+* @param modifiersClassNames The class names associated with specific
+*   modifiers.
+* @returns An array of class names for the day.
+*/
+function getClassNamesForModifiers(modifiers, classNames, modifiersClassNames = {}) {
+	return Object.entries(modifiers).filter(([, active]) => active === true).reduce((previousValue, [key]) => {
+		if (modifiersClassNames[key]) previousValue.push(modifiersClassNames[key]);
+		else if (classNames[DayFlag[key]]) previousValue.push(classNames[DayFlag[key]]);
+		else if (classNames[SelectionState[key]]) previousValue.push(classNames[SelectionState[key]]);
+		return previousValue;
+	}, [classNames[UI.Day]]);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getComponents.js
+/**
+* Merges custom components from the props with the default components.
+*
+* This function ensures that any custom components provided in the props
+* override the default components.
+*
+* @param customComponents The custom components provided in the DayPicker
+*   props.
+* @returns An object containing the merged components.
+*/
+function getComponents(customComponents) {
+	return {
+		...custom_components_exports,
+		...customComponents
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getDataAttributes.js
+/**
+* Extracts `data-` attributes from the DayPicker props.
+*
+* This function collects all `data-` attributes from the props and adds
+* additional attributes based on the DayPicker configuration.
+*
+* @param props The DayPicker props.
+* @returns An object containing the `data-` attributes.
+*/
+function getDataAttributes(props) {
+	const dataAttributes = {
+		"data-mode": props.mode ?? void 0,
+		"data-required": "required" in props ? props.required : void 0,
+		"data-multiple-months": props.numberOfMonths && props.numberOfMonths > 1 || void 0,
+		"data-week-numbers": props.showWeekNumber || void 0,
+		"data-broadcast-calendar": props.broadcastCalendar || void 0,
+		"data-nav-layout": props.navLayout || void 0
+	};
+	Object.entries(props).forEach(([key, val]) => {
+		if (key.startsWith("data-")) dataAttributes[key] = val;
+	});
+	return dataAttributes;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getDefaultClassNames.js
+/**
+* Returns the default class names for the UI elements.
+*
+* This function generates a mapping of default class names for various UI
+* elements, day flags, selection states, and animations.
+*
+* @returns An object containing the default class names.
+* @group Utilities
+*/
+function getDefaultClassNames() {
+	const classNames = {};
+	for (const key in UI) classNames[UI[key]] = `rdp-${UI[key]}`;
+	for (const key in DayFlag) classNames[DayFlag[key]] = `rdp-${DayFlag[key]}`;
+	for (const key in SelectionState) classNames[SelectionState[key]] = `rdp-${SelectionState[key]}`;
+	for (const key in Animation) classNames[Animation[key]] = `rdp-${Animation[key]}`;
+	return classNames;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/formatCaption.js
+/**
+* Formats the caption of the month.
+*
+* @defaultValue Locale-specific month/year order (e.g., "November 2022").
+* @param month The date representing the month.
+* @param options Configuration options for the date library.
+* @param dateLib The date library to use for formatting. If not provided, a new
+*   instance is created.
+* @returns The formatted caption as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatCaption(month, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).formatMonthYear(month);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/formatDay.js
+/**
+* Formats the day date shown in the day cell.
+*
+* @defaultValue `d` (e.g., "1").
+* @param date The date to format.
+* @param options Configuration options for the date library.
+* @param dateLib The date library to use for formatting. If not provided, a new
+*   instance is created.
+* @returns The formatted day as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatDay(date, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).format(date, "d");
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/formatMonthDropdown.js
+/**
+* Formats the month for the dropdown option label.
+*
+* @defaultValue The localized full month name.
+* @param month The date representing the month.
+* @param dateLib The date library to use for formatting. Defaults to
+*   `defaultDateLib`.
+* @returns The formatted month name as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatMonthDropdown(month, dateLib = defaultDateLib) {
+	return dateLib.format(month, "LLLL");
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/formatWeekdayName.js
+/**
+* Formats the name of a weekday to be displayed in the weekdays header.
+*
+* @defaultValue `cccccc` (e.g., "Mo" for Monday).
+* @param weekday The date representing the weekday.
+* @param options Configuration options for the date library.
+* @param dateLib The date library to use for formatting. If not provided, a new
+*   instance is created.
+* @returns The formatted weekday name as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatWeekdayName(weekday, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).format(weekday, "cccccc");
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/formatWeekNumber.js
+/**
+* Formats the week number.
+*
+* @defaultValue The week number as a string, with a leading zero for single-digit numbers.
+* @param weekNumber The week number to format.
+* @param dateLib The date library to use for formatting. Defaults to
+*   `defaultDateLib`.
+* @returns The formatted week number as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatWeekNumber(weekNumber, dateLib = defaultDateLib) {
+	if (weekNumber < 10) return dateLib.formatNumber(`0${weekNumber.toLocaleString()}`);
+	return dateLib.formatNumber(`${weekNumber.toLocaleString()}`);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/formatWeekNumberHeader.js
+/**
+* Formats the header for the week number column.
+*
+* @defaultValue An empty string `""`.
+* @returns The formatted week number header as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatWeekNumberHeader() {
+	return ``;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/formatYearDropdown.js
+/**
+* Formats the year for the dropdown option label.
+*
+* @param year The year to format.
+* @param dateLib The date library to use for formatting. Defaults to
+*   `defaultDateLib`.
+* @returns The formatted year as a string.
+* @group Formatters
+* @see https://daypicker.dev/docs/translation#custom-formatters
+*/
+function formatYearDropdown(year, dateLib = defaultDateLib) {
+	return dateLib.format(year, "yyyy");
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/index.js
+var formatters_exports = /* @__PURE__ */ __exportAll({
+	formatCaption: () => formatCaption,
+	formatDay: () => formatDay,
+	formatMonthDropdown: () => formatMonthDropdown,
+	formatWeekNumber: () => formatWeekNumber,
+	formatWeekNumberHeader: () => formatWeekNumberHeader,
+	formatWeekdayName: () => formatWeekdayName,
+	formatYearDropdown: () => formatYearDropdown
+});
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getFormatters.js
+/**
+* Merges custom formatters from the props with the default formatters.
+*
+* @param customFormatters The custom formatters provided in the DayPicker
+*   props.
+* @returns The merged formatters object.
+*/
+function getFormatters(customFormatters) {
+	return {
+		...formatters_exports,
+		...customFormatters
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelDayButton.js
+/**
+* Generates the ARIA label for a day button.
+*
+* Use the `modifiers` argument to provide additional context for the label,
+* such as indicating if the day is "today" or "selected."
+*
+* @defaultValue The formatted date.
+* @param date - The date to format.
+* @param modifiers - The modifiers providing context for the day.
+* @param options - Optional configuration for the date formatting library.
+* @param dateLib - An optional instance of the date formatting library.
+* @returns The ARIA label for the day button.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelDayButton(date, modifiers, options, dateLib) {
+	let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
+	if (modifiers.today) label = `Today, ${label}`;
+	if (modifiers.selected) label = `${label}, selected`;
+	return label;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelGrid.js
+/**
+* Generates the ARIA label for the month grid, which is announced when entering
+* the grid.
+*
+* @defaultValue Locale-specific month/year order (e.g., "November 2022").
+* @param date - The date representing the month.
+* @param options - Optional configuration for the date formatting library.
+* @param dateLib - An optional instance of the date formatting library.
+* @returns The ARIA label for the month grid.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelGrid(date, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).formatMonthYear(date);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelGridcell.js
+/**
+* Generates the label for a day grid cell when the calendar is not interactive.
+*
+* @param date - The date to format.
+* @param modifiers - Optional modifiers providing context for the day.
+* @param options - Optional configuration for the date formatting library.
+* @param dateLib - An optional instance of the date formatting library.
+* @returns The label for the day grid cell.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelGridcell(date, modifiers, options, dateLib) {
+	let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
+	if (modifiers?.today) label = `Today, ${label}`;
+	return label;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelMonthDropdown.js
+/**
+* Generates the ARIA label for the months dropdown.
+*
+* @defaultValue `"Choose the Month"`
+* @param options - Optional configuration for the date formatting library.
+* @returns The ARIA label for the months dropdown.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelMonthDropdown(_options) {
+	return "Choose the Month";
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelNav.js
+/**
+* Generates the ARIA label for the navigation toolbar.
+*
+* @defaultValue `""`
+* @returns The ARIA label for the navigation toolbar.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelNav() {
+	return "";
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelNext.js
+const defaultLabel = "Go to the Next Month";
+/**
+* Generates the ARIA label for the "next month" button.
+*
+* @defaultValue `"Go to the Next Month"`
+* @param month - The date representing the next month, or `undefined` if there
+*   is no next month.
+* @returns The ARIA label for the "next month" button.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelNext(_month, _options) {
+	return defaultLabel;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelPrevious.js
+/**
+* Generates the ARIA label for the "previous month" button.
+*
+* @defaultValue `"Go to the Previous Month"`
+* @param month - The date representing the previous month, or `undefined` if
+*   there is no previous month.
+* @returns The ARIA label for the "previous month" button.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelPrevious(_month) {
+	return "Go to the Previous Month";
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelWeekday.js
+/**
+* Generates the ARIA label for a weekday column header.
+*
+* @defaultValue `"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"`
+* @param date - The date representing the weekday.
+* @param options - Optional configuration for the date formatting library.
+* @param dateLib - An optional instance of the date formatting library.
+* @returns The ARIA label for the weekday column header.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelWeekday(date, options, dateLib) {
+	return (dateLib ?? new DateLib(options)).format(date, "cccc");
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelWeekNumber.js
+/**
+* Generates the ARIA label for the week number cell (the first cell in a row).
+*
+* @defaultValue `Week ${weekNumber}`
+* @param weekNumber - The number of the week.
+* @param options - Optional configuration for the date formatting library.
+* @returns The ARIA label for the week number cell.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelWeekNumber(weekNumber, _options) {
+	return `Week ${weekNumber}`;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelWeekNumberHeader.js
+/**
+* Generates the ARIA label for the week number header element.
+*
+* @defaultValue `"Week Number"`
+* @param options - Optional configuration for the date formatting library.
+* @returns The ARIA label for the week number header.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelWeekNumberHeader(_options) {
+	return "Week Number";
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/labelYearDropdown.js
+/**
+* Generates the ARIA label for the years dropdown.
+*
+* @defaultValue `"Choose the Year"`
+* @param options - Optional configuration for the date formatting library.
+* @returns The ARIA label for the years dropdown.
+* @group Labels
+* @see https://daypicker.dev/docs/translation#aria-labels
+*/
+function labelYearDropdown(_options) {
+	return "Choose the Year";
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/index.js
+var labels_exports = /* @__PURE__ */ __exportAll({
+	labelDayButton: () => labelDayButton,
+	labelGrid: () => labelGrid,
+	labelGridcell: () => labelGridcell,
+	labelMonthDropdown: () => labelMonthDropdown,
+	labelNav: () => labelNav,
+	labelNext: () => labelNext,
+	labelPrevious: () => labelPrevious,
+	labelWeekNumber: () => labelWeekNumber,
+	labelWeekNumberHeader: () => labelWeekNumberHeader,
+	labelWeekday: () => labelWeekday,
+	labelYearDropdown: () => labelYearDropdown
+});
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getLabels.js
+const resolveLabel = (defaultLabel, customLabel, localeLabel) => {
+	if (customLabel) return customLabel;
+	if (localeLabel) return typeof localeLabel === "function" ? localeLabel : (..._args) => localeLabel;
+	return defaultLabel;
+};
+/**
+* Merges custom labels from the props with the default labels.
+*
+* When available, uses the locale-provided translation for `labelNext`.
+*
+* @param customLabels The custom labels provided in the DayPicker props.
+* @param options Options from the date library, used to resolve locale
+*   translations.
+* @returns The merged labels object with locale-aware defaults.
+*/
+function getLabels(customLabels, options) {
+	const localeLabels = options.locale?.labels ?? {};
+	return {
+		...labels_exports,
+		...customLabels ?? {},
+		labelDayButton: resolveLabel(labelDayButton, customLabels?.labelDayButton, localeLabels.labelDayButton),
+		labelMonthDropdown: resolveLabel(labelMonthDropdown, customLabels?.labelMonthDropdown, localeLabels.labelMonthDropdown),
+		labelNext: resolveLabel(labelNext, customLabels?.labelNext, localeLabels.labelNext),
+		labelPrevious: resolveLabel(labelPrevious, customLabels?.labelPrevious, localeLabels.labelPrevious),
+		labelWeekNumber: resolveLabel(labelWeekNumber, customLabels?.labelWeekNumber, localeLabels.labelWeekNumber),
+		labelYearDropdown: resolveLabel(labelYearDropdown, customLabels?.labelYearDropdown, localeLabels.labelYearDropdown),
+		labelGrid: resolveLabel(labelGrid, customLabels?.labelGrid, localeLabels.labelGrid),
+		labelGridcell: resolveLabel(labelGridcell, customLabels?.labelGridcell, localeLabels.labelGridcell),
+		labelNav: resolveLabel(labelNav, customLabels?.labelNav, localeLabels.labelNav),
+		labelWeekNumberHeader: resolveLabel(labelWeekNumberHeader, customLabels?.labelWeekNumberHeader, localeLabels.labelWeekNumberHeader),
+		labelWeekday: resolveLabel(labelWeekday, customLabels?.labelWeekday, localeLabels.labelWeekday)
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getMonthOptions.js
+/**
+* Returns the months to show in the dropdown.
+*
+* This function generates a list of months for the current year, formatted
+* using the provided formatter, and determines whether each month should be
+* disabled based on the navigation range.
+*
+* @param displayMonth The currently displayed month.
+* @param navStart The start date for navigation.
+* @param navEnd The end date for navigation.
+* @param formatters The formatters to use for formatting the month labels.
+* @param dateLib The date library to use for date manipulation.
+* @returns An array of dropdown options representing the months, or `undefined`
+*   if no months are available.
+*/
+function getMonthOptions(displayMonth, navStart, navEnd, formatters, dateLib) {
+	const { startOfMonth, startOfYear, endOfYear, eachMonthOfInterval, getMonth } = dateLib;
+	return eachMonthOfInterval({
+		start: startOfYear(displayMonth),
+		end: endOfYear(displayMonth)
+	}).map((month) => {
+		const label = formatters.formatMonthDropdown(month, dateLib);
+		return {
+			value: getMonth(month),
+			label,
+			disabled: navStart && month < startOfMonth(navStart) || navEnd && month > startOfMonth(navEnd) || false
+		};
+	});
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getStyleForModifiers.js
+/**
+* Returns the computed style for a day based on its modifiers.
+*
+* This function merges the base styles for the day with any styles associated
+* with active modifiers.
+*
+* @param dayModifiers The modifiers applied to the day.
+* @param styles The base styles for the calendar elements.
+* @param modifiersStyles The styles associated with specific modifiers.
+* @returns The computed style for the day.
+*/
+function getStyleForModifiers(dayModifiers, styles = {}, modifiersStyles = {}) {
+	let style = { ...styles?.[UI.Day] };
+	Object.entries(dayModifiers).filter(([, active]) => active === true).forEach(([modifier]) => {
+		style = {
+			...style,
+			...modifiersStyles?.[modifier]
+		};
+	});
+	return style;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getWeekdays.js
+/**
+* Generates a series of 7 days, starting from the beginning of the week, to use
+* for formatting weekday names (e.g., Monday, Tuesday, etc.).
+*
+* @param dateLib The date library to use for date manipulation.
+* @param ISOWeek Whether to use ISO week numbering (weeks start on Monday).
+* @param broadcastCalendar Whether to use the broadcast calendar (weeks start
+*   on Monday, but may include adjustments for broadcast-specific rules).
+* @returns An array of 7 dates representing the weekdays.
+*/
+function getWeekdays(dateLib, ISOWeek, broadcastCalendar, today) {
+	const referenceToday = today ?? dateLib.today();
+	const start = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
+	const days = [];
+	for (let i = 0; i < 7; i++) {
+		const day = dateLib.addDays(start, i);
+		days.push(day);
+	}
+	return days;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getYearOptions.js
+/**
+* Returns the years to display in the dropdown.
+*
+* This function generates a list of years between the navigation start and end
+* dates, formatted using the provided formatter.
+*
+* @param navStart The start date for navigation.
+* @param navEnd The end date for navigation.
+* @param formatters The formatters to use for formatting the year labels.
+* @param dateLib The date library to use for date manipulation.
+* @param reverse If true, reverses the order of the years (descending).
+* @returns An array of dropdown options representing the years, or `undefined`
+*   if `navStart` or `navEnd` is not provided.
+*/
+function getYearOptions(navStart, navEnd, formatters, dateLib, reverse = false) {
+	if (!navStart) return void 0;
+	if (!navEnd) return void 0;
+	const { startOfYear, endOfYear, eachYearOfInterval, getYear } = dateLib;
+	const years = eachYearOfInterval({
+		start: startOfYear(navStart),
+		end: endOfYear(navEnd)
+	});
+	if (reverse) years.reverse();
+	return years.map((year) => {
+		const label = formatters.formatYearDropdown(year, dateLib);
+		return {
+			value: getYear(year),
+			label,
+			disabled: false
+		};
+	});
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/noonDateLib.js
+/**
+* Creates `dateLib` overrides that keep all calendar math at noon in the target
+* time zone. This avoids second-level offset changes (e.g., historical zones
+* with +03:41:12) from pushing dates backward across midnight.
+*/
+function createNoonOverrides(timeZone, options = {}) {
+	const { weekStartsOn, locale } = options;
+	const fallbackWeekStartsOn = weekStartsOn ?? locale?.options?.weekStartsOn ?? 0;
+	const toNoonTZDate = (date) => {
+		const normalizedDate = typeof date === "number" || typeof date === "string" ? new Date(date) : date;
+		return new TZDate(normalizedDate.getFullYear(), normalizedDate.getMonth(), normalizedDate.getDate(), 12, 0, 0, timeZone);
+	};
+	const toCalendarDate = (date) => {
+		const zoned = toNoonTZDate(date);
+		return new Date(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 0, 0, 0, 0);
+	};
+	return {
+		today: () => {
+			return toNoonTZDate(TZDate.tz(timeZone));
+		},
+		newDate: (year, monthIndex, date) => {
+			return new TZDate(year, monthIndex, date, 12, 0, 0, timeZone);
+		},
+		startOfDay: (date) => {
+			return toNoonTZDate(date);
+		},
+		startOfWeek: (date, options) => {
+			const base = toNoonTZDate(date);
+			const weekStartsOnValue = options?.weekStartsOn ?? fallbackWeekStartsOn;
+			const diff = (base.getDay() - weekStartsOnValue + 7) % 7;
+			base.setDate(base.getDate() - diff);
+			return base;
+		},
+		startOfISOWeek: (date) => {
+			const base = toNoonTZDate(date);
+			const diff = (base.getDay() - 1 + 7) % 7;
+			base.setDate(base.getDate() - diff);
+			return base;
+		},
+		startOfMonth: (date) => {
+			const base = toNoonTZDate(date);
+			base.setDate(1);
+			return base;
+		},
+		startOfYear: (date) => {
+			const base = toNoonTZDate(date);
+			base.setMonth(0, 1);
+			return base;
+		},
+		endOfWeek: (date, options) => {
+			const base = toNoonTZDate(date);
+			const diff = (((options?.weekStartsOn ?? fallbackWeekStartsOn) + 6) % 7 - base.getDay() + 7) % 7;
+			base.setDate(base.getDate() + diff);
+			return base;
+		},
+		endOfISOWeek: (date) => {
+			const base = toNoonTZDate(date);
+			const diff = (7 - base.getDay()) % 7;
+			base.setDate(base.getDate() + diff);
+			return base;
+		},
+		endOfMonth: (date) => {
+			const base = toNoonTZDate(date);
+			base.setMonth(base.getMonth() + 1, 0);
+			return base;
+		},
+		endOfYear: (date) => {
+			const base = toNoonTZDate(date);
+			base.setMonth(11, 31);
+			return base;
+		},
+		eachMonthOfInterval: (interval) => {
+			const start = toNoonTZDate(interval.start);
+			const end = toNoonTZDate(interval.end);
+			const result = [];
+			const cursor = new TZDate(start.getFullYear(), start.getMonth(), 1, 12, 0, 0, timeZone);
+			const endKey = end.getFullYear() * 12 + end.getMonth();
+			while (cursor.getFullYear() * 12 + cursor.getMonth() <= endKey) {
+				result.push(new TZDate(cursor, timeZone));
+				cursor.setMonth(cursor.getMonth() + 1, 1);
+			}
+			return result;
+		},
+		addDays: (date, amount) => {
+			const base = toNoonTZDate(date);
+			base.setDate(base.getDate() + amount);
+			return base;
+		},
+		addWeeks: (date, amount) => {
+			const base = toNoonTZDate(date);
+			base.setDate(base.getDate() + amount * 7);
+			return base;
+		},
+		addMonths: (date, amount) => {
+			const base = toNoonTZDate(date);
+			base.setMonth(base.getMonth() + amount);
+			return base;
+		},
+		addYears: (date, amount) => {
+			const base = toNoonTZDate(date);
+			base.setFullYear(base.getFullYear() + amount);
+			return base;
+		},
+		eachYearOfInterval: (interval) => {
+			const start = toNoonTZDate(interval.start);
+			const end = toNoonTZDate(interval.end);
+			const years = [];
+			const cursor = new TZDate(start.getFullYear(), 0, 1, 12, 0, 0, timeZone);
+			while (cursor.getFullYear() <= end.getFullYear()) {
+				years.push(new TZDate(cursor, timeZone));
+				cursor.setFullYear(cursor.getFullYear() + 1, 0, 1);
+			}
+			return years;
+		},
+		getWeek: (date, options) => {
+			const base = toCalendarDate(date);
+			return getWeek(base, {
+				weekStartsOn: options?.weekStartsOn ?? fallbackWeekStartsOn,
+				firstWeekContainsDate: options?.firstWeekContainsDate ?? locale?.options?.firstWeekContainsDate ?? 1
+			});
+		},
+		getISOWeek: (date) => {
+			const base = toCalendarDate(date);
+			return getISOWeek(base);
+		},
+		differenceInCalendarDays: (dateLeft, dateRight) => {
+			const left = toCalendarDate(dateLeft);
+			const right = toCalendarDate(dateRight);
+			return differenceInCalendarDays(left, right);
+		},
+		differenceInCalendarMonths: (dateLeft, dateRight) => {
+			const left = toCalendarDate(dateLeft);
+			const right = toCalendarDate(dateRight);
+			return differenceInCalendarMonths(left, right);
+		}
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/useAnimation.js
+const asHtmlElement = (element) => {
+	if (element instanceof HTMLElement) return element;
+	return null;
+};
+const queryMonthEls = (element) => [...element.querySelectorAll("[data-animated-month]") ?? []];
+const queryMonthEl = (element) => asHtmlElement(element.querySelector("[data-animated-month]"));
+const queryCaptionEl = (element) => asHtmlElement(element.querySelector("[data-animated-caption]"));
+const queryWeeksEl = (element) => asHtmlElement(element.querySelector("[data-animated-weeks]"));
+const queryNavEl = (element) => asHtmlElement(element.querySelector("[data-animated-nav]"));
+const queryWeekdaysEl = (element) => asHtmlElement(element.querySelector("[data-animated-weekdays]"));
+/**
+* Handles animations for transitioning between months in the DayPicker
+* component.
+*
+* @private
+* @param rootElRef - A reference to the root element of the DayPicker
+*   component.
+* @param enabled - Whether animations are enabled.
+* @param options - Configuration options for the animation, including class
+*   names, months, focused day, and the date utility library.
+*/
+function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib }) {
+	const previousRootElSnapshotRef = (0, import__wp_global_react.useRef)(null);
+	const previousMonthsRef = (0, import__wp_global_react.useRef)(months);
+	const animatingRef = (0, import__wp_global_react.useRef)(false);
+	(0, import__wp_global_react.useLayoutEffect)(() => {
+		const previousMonths = previousMonthsRef.current;
+		previousMonthsRef.current = months;
+		if (!enabled || !rootElRef.current || !(rootElRef.current instanceof HTMLElement) || months.length === 0 || previousMonths.length === 0 || months.length !== previousMonths.length) return;
+		const isSameMonth = dateLib.isSameMonth(months[0].date, previousMonths[0].date);
+		const isAfterPreviousMonth = dateLib.isAfter(months[0].date, previousMonths[0].date);
+		const captionAnimationClass = isAfterPreviousMonth ? classNames[Animation.caption_after_enter] : classNames[Animation.caption_before_enter];
+		const weeksAnimationClass = isAfterPreviousMonth ? classNames[Animation.weeks_after_enter] : classNames[Animation.weeks_before_enter];
+		const previousRootElSnapshot = previousRootElSnapshotRef.current;
+		const rootElSnapshot = rootElRef.current.cloneNode(true);
+		if (rootElSnapshot instanceof HTMLElement) {
+			queryMonthEls(rootElSnapshot).forEach((currentMonthElSnapshot) => {
+				if (!(currentMonthElSnapshot instanceof HTMLElement)) return;
+				const previousMonthElSnapshot = queryMonthEl(currentMonthElSnapshot);
+				if (previousMonthElSnapshot && currentMonthElSnapshot.contains(previousMonthElSnapshot)) currentMonthElSnapshot.removeChild(previousMonthElSnapshot);
+				const captionEl = queryCaptionEl(currentMonthElSnapshot);
+				if (captionEl) captionEl.classList.remove(captionAnimationClass);
+				const weeksEl = queryWeeksEl(currentMonthElSnapshot);
+				if (weeksEl) weeksEl.classList.remove(weeksAnimationClass);
+			});
+			previousRootElSnapshotRef.current = rootElSnapshot;
+		} else previousRootElSnapshotRef.current = null;
+		if (animatingRef.current || isSameMonth || focused) return;
+		const previousMonthEls = previousRootElSnapshot instanceof HTMLElement ? queryMonthEls(previousRootElSnapshot) : [];
+		const currentMonthEls = queryMonthEls(rootElRef.current);
+		if (currentMonthEls?.every((el) => el instanceof HTMLElement) && previousMonthEls?.every((el) => el instanceof HTMLElement)) {
+			animatingRef.current = true;
+			const cleanUpFunctions = [];
+			rootElRef.current.style.isolation = "isolate";
+			const navEl = queryNavEl(rootElRef.current);
+			if (navEl) navEl.style.zIndex = "1";
+			currentMonthEls.forEach((currentMonthEl, index) => {
+				const previousMonthEl = previousMonthEls[index];
+				if (!previousMonthEl) return;
+				currentMonthEl.style.position = "relative";
+				currentMonthEl.style.overflow = "hidden";
+				const captionEl = queryCaptionEl(currentMonthEl);
+				if (captionEl) captionEl.classList.add(captionAnimationClass);
+				const weeksEl = queryWeeksEl(currentMonthEl);
+				if (weeksEl) weeksEl.classList.add(weeksAnimationClass);
+				const cleanUp = () => {
+					animatingRef.current = false;
+					if (rootElRef.current) rootElRef.current.style.isolation = "";
+					if (navEl) navEl.style.zIndex = "";
+					if (captionEl) captionEl.classList.remove(captionAnimationClass);
+					if (weeksEl) weeksEl.classList.remove(weeksAnimationClass);
+					currentMonthEl.style.position = "";
+					currentMonthEl.style.overflow = "";
+					if (currentMonthEl.contains(previousMonthEl)) currentMonthEl.removeChild(previousMonthEl);
+				};
+				cleanUpFunctions.push(cleanUp);
+				previousMonthEl.style.pointerEvents = "none";
+				previousMonthEl.style.position = "absolute";
+				previousMonthEl.style.overflow = "hidden";
+				previousMonthEl.setAttribute("aria-hidden", "true");
+				const previousWeekdaysEl = queryWeekdaysEl(previousMonthEl);
+				if (previousWeekdaysEl) previousWeekdaysEl.style.opacity = "0";
+				const previousCaptionEl = queryCaptionEl(previousMonthEl);
+				if (previousCaptionEl) {
+					previousCaptionEl.classList.add(isAfterPreviousMonth ? classNames[Animation.caption_before_exit] : classNames[Animation.caption_after_exit]);
+					previousCaptionEl.addEventListener("animationend", cleanUp);
+				}
+				const previousWeeksEl = queryWeeksEl(previousMonthEl);
+				if (previousWeeksEl) previousWeeksEl.classList.add(isAfterPreviousMonth ? classNames[Animation.weeks_before_exit] : classNames[Animation.weeks_after_exit]);
+				currentMonthEl.insertBefore(previousMonthEl, currentMonthEl.firstChild);
+			});
+		}
+	});
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getDates.js
+/**
+* Returns all the dates to display in the calendar.
+*
+* This function calculates the range of dates to display based on the provided
+* display months, constraints, and calendar configuration.
+*
+* @param displayMonths The months to display in the calendar.
+* @param maxDate The maximum date to include in the range.
+* @param props The DayPicker props, including calendar configuration options.
+* @param dateLib The date library to use for date manipulation.
+* @returns An array of dates to display in the calendar.
+*/
+function getDates(displayMonths, maxDate, props, dateLib) {
+	const firstMonth = displayMonths[0];
+	const lastMonth = displayMonths[displayMonths.length - 1];
+	const { ISOWeek, fixedWeeks, broadcastCalendar } = props ?? {};
+	const { addDays, differenceInCalendarDays, differenceInCalendarMonths, endOfBroadcastWeek, endOfISOWeek, endOfMonth, endOfWeek, isAfter, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
+	const startWeekFirstDate = broadcastCalendar ? startOfBroadcastWeek(firstMonth, dateLib) : ISOWeek ? startOfISOWeek(firstMonth) : startOfWeek(firstMonth);
+	const displayMonthsWeekEnd = broadcastCalendar ? endOfBroadcastWeek(lastMonth) : ISOWeek ? endOfISOWeek(endOfMonth(lastMonth)) : endOfWeek(endOfMonth(lastMonth));
+	const constraintWeekEnd = maxDate && (broadcastCalendar ? endOfBroadcastWeek(maxDate) : ISOWeek ? endOfISOWeek(maxDate) : endOfWeek(maxDate));
+	const nOfDays = differenceInCalendarDays(constraintWeekEnd && isAfter(displayMonthsWeekEnd, constraintWeekEnd) ? constraintWeekEnd : displayMonthsWeekEnd, startWeekFirstDate);
+	const nOfMonths = differenceInCalendarMonths(lastMonth, firstMonth) + 1;
+	const dates = [];
+	for (let i = 0; i <= nOfDays; i++) {
+		const date = addDays(startWeekFirstDate, i);
+		dates.push(date);
+	}
+	const extraDates = (broadcastCalendar ? 35 : 42) * nOfMonths;
+	if (fixedWeeks && dates.length < extraDates) {
+		const daysToAdd = extraDates - dates.length;
+		for (let i = 0; i < daysToAdd; i++) {
+			const date = addDays(dates[dates.length - 1], 1);
+			dates.push(date);
+		}
+	}
+	return dates;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getDays.js
+/**
+* Returns all the days belonging to the calendar by merging the days in the
+* weeks for each month.
+*
+* @param calendarMonths The array of calendar months.
+* @returns An array of `CalendarDay` objects representing all the days in the
+*   calendar.
+*/
+function getDays(calendarMonths) {
+	const initialDays = [];
+	return calendarMonths.reduce((days, month) => {
+		const weekDays = month.weeks.reduce((weekDays, week) => {
+			return weekDays.concat(week.days.slice());
+		}, initialDays.slice());
+		return days.concat(weekDays.slice());
+	}, initialDays.slice());
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getDisplayMonths.js
+/**
+* Returns the months to display in the calendar.
+*
+* @param firstDisplayedMonth The first month currently displayed in the
+*   calendar.
+* @param calendarEndMonth The latest month the user can navigate to.
+* @param props The DayPicker props, including `numberOfMonths`.
+* @param dateLib The date library to use for date manipulation.
+* @returns An array of dates representing the months to display.
+*/
+function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
+	const { numberOfMonths = 1 } = props;
+	const months = [];
+	for (let i = 0; i < numberOfMonths; i++) {
+		const month = dateLib.addMonths(firstDisplayedMonth, i);
+		if (calendarEndMonth && month > calendarEndMonth) break;
+		months.push(month);
+	}
+	return months;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getInitialMonth.js
+/**
+* Determines the initial month to display in the calendar based on the provided
+* props.
+*
+* This function calculates the starting month, considering constraints such as
+* `startMonth`, `endMonth`, and the number of months to display.
+*
+* @param props The DayPicker props, including navigation and date constraints.
+* @param dateLib The date library to use for date manipulation.
+* @returns The initial month to display.
+*/
+function getInitialMonth(props, navStart, navEnd, dateLib) {
+	const { month, defaultMonth, today = dateLib.today(), numberOfMonths = 1 } = props;
+	let initialMonth = month || defaultMonth || today;
+	const { differenceInCalendarMonths, addMonths, startOfMonth } = dateLib;
+	if (navEnd && differenceInCalendarMonths(navEnd, initialMonth) < numberOfMonths - 1) initialMonth = addMonths(navEnd, -1 * (numberOfMonths - 1));
+	if (navStart && differenceInCalendarMonths(initialMonth, navStart) < 0) initialMonth = navStart;
+	return startOfMonth(initialMonth);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getMonths.js
+/**
+* Returns the months to display in the calendar.
+*
+* This function generates `CalendarMonth` objects for each month to be
+* displayed, including their weeks and days, based on the provided display
+* months and dates.
+*
+* @param displayMonths The months (as dates) to display in the calendar.
+* @param dates The dates to display in the calendar.
+* @param props Options from the DayPicker props context.
+* @param dateLib The date library to use for date manipulation.
+* @returns An array of `CalendarMonth` objects representing the months to
+*   display.
+*/
+function getMonths(displayMonths, dates, props, dateLib) {
+	const { addDays, endOfBroadcastWeek, endOfISOWeek, endOfMonth, endOfWeek, getISOWeek, getWeek, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
+	const dayPickerMonths = displayMonths.reduce((months, month) => {
+		const firstDateOfFirstWeek = props.broadcastCalendar ? startOfBroadcastWeek(month, dateLib) : props.ISOWeek ? startOfISOWeek(month) : startOfWeek(month);
+		const lastDateOfLastWeek = props.broadcastCalendar ? endOfBroadcastWeek(month) : props.ISOWeek ? endOfISOWeek(endOfMonth(month)) : endOfWeek(endOfMonth(month));
+		/** The dates to display in the month. */
+		const monthDates = dates.filter((date) => {
+			return date >= firstDateOfFirstWeek && date <= lastDateOfLastWeek;
+		});
+		const nrOfDaysWithFixedWeeks = props.broadcastCalendar ? 35 : 42;
+		if (props.fixedWeeks && monthDates.length < nrOfDaysWithFixedWeeks) {
+			const extraDates = dates.filter((date) => {
+				const daysToAdd = nrOfDaysWithFixedWeeks - monthDates.length;
+				return date > lastDateOfLastWeek && date <= addDays(lastDateOfLastWeek, daysToAdd);
+			});
+			monthDates.push(...extraDates);
+		}
+		const weeks = monthDates.reduce((weeks, date) => {
+			const weekNumber = props.ISOWeek ? getISOWeek(date) : getWeek(date);
+			const week = weeks.find((week) => week.weekNumber === weekNumber);
+			const day = new CalendarDay(date, month, dateLib);
+			if (!week) weeks.push(new CalendarWeek(weekNumber, [day]));
+			else week.days.push(day);
+			return weeks;
+		}, []);
+		const dayPickerMonth = new CalendarMonth(month, weeks);
+		months.push(dayPickerMonth);
+		return months;
+	}, []);
+	if (!props.reverseMonths) return dayPickerMonths;
+	else return dayPickerMonths.reverse();
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getNavMonth.js
+/**
+* Returns the start and end months for calendar navigation.
+*
+* @param props The DayPicker props, including navigation and layout options.
+* @param dateLib The date library to use for date manipulation.
+* @returns A tuple containing the start and end months for navigation.
+*/
+function getNavMonths(props, dateLib) {
+	let { startMonth, endMonth } = props;
+	const { startOfYear, startOfDay, startOfMonth, endOfMonth, addYears, endOfYear, today } = dateLib;
+	const hasYearDropdown = props.captionLayout === "dropdown" || props.captionLayout === "dropdown-years";
+	if (startMonth) startMonth = startOfMonth(startMonth);
+	else if (!startMonth && hasYearDropdown) startMonth = startOfYear(addYears(props.today ?? today(), -100));
+	if (endMonth) endMonth = endOfMonth(endMonth);
+	else if (!endMonth && hasYearDropdown) endMonth = endOfYear(props.today ?? today());
+	return [startMonth ? startOfDay(startMonth) : startMonth, endMonth ? startOfDay(endMonth) : endMonth];
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getNextMonth.js
+/**
+* Returns the next month the user can navigate to, based on the given options.
+*
+* The next month is not always the next calendar month:
+*
+* - If it is after the `calendarEndMonth`, it returns `undefined`.
+* - If paged navigation is enabled, it skips forward by the number of displayed
+*   months.
+*
+* @param firstDisplayedMonth The first month currently displayed in the
+*   calendar.
+* @param calendarEndMonth The latest month the user can navigate to.
+* @param options Navigation options, including `numberOfMonths` and
+*   `pagedNavigation`.
+* @param dateLib The date library to use for date manipulation.
+* @returns The next month, or `undefined` if navigation is not possible.
+*/
+function getNextMonth(firstDisplayedMonth, calendarEndMonth, options, dateLib) {
+	if (options.disableNavigation) return;
+	const { pagedNavigation, numberOfMonths = 1 } = options;
+	const { startOfMonth, addMonths, differenceInCalendarMonths } = dateLib;
+	const offset = pagedNavigation ? numberOfMonths : 1;
+	const month = startOfMonth(firstDisplayedMonth);
+	if (!calendarEndMonth) return addMonths(month, offset);
+	if (differenceInCalendarMonths(calendarEndMonth, firstDisplayedMonth) < numberOfMonths) return;
+	return addMonths(month, offset);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getPreviousMonth.js
+/**
+* Returns the previous month the user can navigate to, based on the given
+* options.
+*
+* The previous month is not always the previous calendar month:
+*
+* - If it is before the `calendarStartMonth`, it returns `undefined`.
+* - If paged navigation is enabled, it skips back by the number of displayed
+*   months.
+*
+* @param firstDisplayedMonth The first month currently displayed in the
+*   calendar.
+* @param calendarStartMonth The earliest month the user can navigate to.
+* @param options Navigation options, including `numberOfMonths` and
+*   `pagedNavigation`.
+* @param dateLib The date library to use for date manipulation.
+* @returns The previous month, or `undefined` if navigation is not possible.
+*/
+function getPreviousMonth(firstDisplayedMonth, calendarStartMonth, options, dateLib) {
+	if (options.disableNavigation) return;
+	const { pagedNavigation, numberOfMonths } = options;
+	const { startOfMonth, addMonths, differenceInCalendarMonths } = dateLib;
+	const offset = pagedNavigation ? numberOfMonths ?? 1 : 1;
+	const month = startOfMonth(firstDisplayedMonth);
+	if (!calendarStartMonth) return addMonths(month, -offset);
+	if (differenceInCalendarMonths(month, calendarStartMonth) <= 0) return;
+	return addMonths(month, -offset);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getWeeks.js
+/**
+* Returns an array of calendar weeks from an array of calendar months.
+*
+* @param months The array of calendar months.
+* @returns An array of calendar weeks.
+*/
+function getWeeks(months) {
+	return months.reduce((weeks, month) => {
+		return weeks.concat(month.weeks.slice());
+	}, [].slice());
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
+/**
+* A custom hook for managing both controlled and uncontrolled component states.
+*
+* This hook allows a component to support both controlled and uncontrolled
+* states by determining whether the `controlledValue` is provided. If it is
+* undefined, the hook falls back to using the internal state.
+*
+* @example
+*   // Uncontrolled usage
+*   const [value, setValue] = useControlledValue(0, undefined);
+*
+*   // Controlled usage
+*   const [value, setValue] = useControlledValue(0, props.value);
+*
+* @template T - The type of the value.
+* @param defaultValue The initial value for the uncontrolled state.
+* @param controlledValue The value for the controlled state. If undefined, the
+*   component will use the uncontrolled state.
+* @returns A tuple where the first element is the current value (either
+*   controlled or uncontrolled) and the second element is a setter function to
+*   update the value.
+*/
+function useControlledValue$1(defaultValue, controlledValue) {
+	const [uncontrolledValue, setValue] = (0, import__wp_global_react.useState)(defaultValue);
+	return [controlledValue === void 0 ? uncontrolledValue : controlledValue, setValue];
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/useCalendar.js
+/**
+* Provides the calendar object to work with the calendar in custom components.
+*
+* @private
+* @param props - The DayPicker props related to calendar configuration.
+* @param dateLib - The date utility library instance.
+* @returns The calendar object containing displayed days, weeks, months, and
+*   navigation methods.
+*/
+function useCalendar(props, dateLib) {
+	const [navStart, navEnd] = getNavMonths(props, dateLib);
+	const { startOfMonth, endOfMonth } = dateLib;
+	const initialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
+	const [firstMonth, setFirstMonth] = useControlledValue$1(initialMonth, props.month ? initialMonth : void 0);
+	(0, import__wp_global_react.useEffect)(() => {
+		const newInitialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
+		setFirstMonth(newInitialMonth);
+	}, [props.timeZone]);
+	/** The months displayed in the calendar. */
+	const { months, weeks, days, previousMonth, nextMonth } = (0, import__wp_global_react.useMemo)(() => {
+		const displayMonths = getDisplayMonths(firstMonth, navEnd, { numberOfMonths: props.numberOfMonths }, dateLib);
+		const dates = getDates(displayMonths, props.endMonth ? endOfMonth(props.endMonth) : void 0, {
+			ISOWeek: props.ISOWeek,
+			fixedWeeks: props.fixedWeeks,
+			broadcastCalendar: props.broadcastCalendar
+		}, dateLib);
+		const months = getMonths(displayMonths, dates, {
+			broadcastCalendar: props.broadcastCalendar,
+			fixedWeeks: props.fixedWeeks,
+			ISOWeek: props.ISOWeek,
+			reverseMonths: props.reverseMonths
+		}, dateLib);
+		return {
+			months,
+			weeks: getWeeks(months),
+			days: getDays(months),
+			previousMonth: getPreviousMonth(firstMonth, navStart, props, dateLib),
+			nextMonth: getNextMonth(firstMonth, navEnd, props, dateLib)
+		};
+	}, [
+		dateLib,
+		firstMonth.getTime(),
+		navEnd?.getTime(),
+		navStart?.getTime(),
+		props.disableNavigation,
+		props.broadcastCalendar,
+		props.endMonth?.getTime(),
+		props.fixedWeeks,
+		props.ISOWeek,
+		props.numberOfMonths,
+		props.pagedNavigation,
+		props.reverseMonths
+	]);
+	const { disableNavigation, onMonthChange } = props;
+	const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d) => d.isEqualTo(day)));
+	const goToMonth = (date) => {
+		if (disableNavigation) return;
+		let newMonth = startOfMonth(date);
+		if (navStart && newMonth < startOfMonth(navStart)) newMonth = startOfMonth(navStart);
+		if (navEnd && newMonth > startOfMonth(navEnd)) newMonth = startOfMonth(navEnd);
+		setFirstMonth(newMonth);
+		onMonthChange?.(newMonth);
+	};
+	const goToDay = (day) => {
+		if (isDayInCalendar(day)) return;
+		goToMonth(day.date);
+	};
+	return {
+		months,
+		weeks,
+		days,
+		navStart,
+		navEnd,
+		previousMonth,
+		nextMonth,
+		goToMonth,
+		goToDay
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/calculateFocusTarget.js
+var FocusTargetPriority;
+(function(FocusTargetPriority) {
+	FocusTargetPriority[FocusTargetPriority["Today"] = 0] = "Today";
+	FocusTargetPriority[FocusTargetPriority["Selected"] = 1] = "Selected";
+	FocusTargetPriority[FocusTargetPriority["LastFocused"] = 2] = "LastFocused";
+	FocusTargetPriority[FocusTargetPriority["FocusedModifier"] = 3] = "FocusedModifier";
+})(FocusTargetPriority || (FocusTargetPriority = {}));
+/**
+* Determines if a day is focusable based on its modifiers.
+*
+* A day is considered focusable if it is not disabled, hidden, or outside the
+* displayed month.
+*
+* @param modifiers The modifiers applied to the day.
+* @returns `true` if the day is focusable, otherwise `false`.
+*/
+function isFocusableDay(modifiers) {
+	return !modifiers[DayFlag.disabled] && !modifiers[DayFlag.hidden] && !modifiers[DayFlag.outside];
+}
+/**
+* Calculates the focus target day based on priority.
+*
+* This function determines the day that should receive focus in the calendar,
+* prioritizing days with specific modifiers (e.g., "focused", "today") or
+* selection states.
+*
+* @param days The array of `CalendarDay` objects to evaluate.
+* @param getModifiers A function to retrieve the modifiers for a given day.
+* @param isSelected A function to determine if a day is selected.
+* @param lastFocused The last focused day, if any.
+* @returns The `CalendarDay` that should receive focus, or `undefined` if no
+*   focusable day is found.
+*/
+function calculateFocusTarget(days, getModifiers, isSelected, lastFocused) {
+	let focusTarget;
+	let foundFocusTargetPriority = -1;
+	for (const day of days) {
+		const modifiers = getModifiers(day);
+		if (isFocusableDay(modifiers)) {
+			if (modifiers[DayFlag.focused] && foundFocusTargetPriority < FocusTargetPriority.FocusedModifier) {
+				focusTarget = day;
+				foundFocusTargetPriority = FocusTargetPriority.FocusedModifier;
+			} else if (lastFocused?.isEqualTo(day) && foundFocusTargetPriority < FocusTargetPriority.LastFocused) {
+				focusTarget = day;
+				foundFocusTargetPriority = FocusTargetPriority.LastFocused;
+			} else if (isSelected(day.date) && foundFocusTargetPriority < FocusTargetPriority.Selected) {
+				focusTarget = day;
+				foundFocusTargetPriority = FocusTargetPriority.Selected;
+			} else if (modifiers[DayFlag.today] && foundFocusTargetPriority < FocusTargetPriority.Today) {
+				focusTarget = day;
+				foundFocusTargetPriority = FocusTargetPriority.Today;
+			}
+		}
+	}
+	if (!focusTarget) focusTarget = days.find((day) => isFocusableDay(getModifiers(day)));
+	return focusTarget;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getFocusableDate.js
+/**
+* Calculates the next date that should be focused in the calendar.
+*
+* This function determines the next focusable date based on the movement
+* direction, constraints, and calendar configuration.
+*
+* @param moveBy The unit of movement (e.g., "day", "week").
+* @param moveDir The direction of movement ("before" or "after").
+* @param refDate The reference date from which to calculate the next focusable
+*   date.
+* @param navStart The earliest date the user can navigate to.
+* @param navEnd The latest date the user can navigate to.
+* @param props The DayPicker props, including calendar configuration options.
+* @param dateLib The date library to use for date manipulation.
+* @returns The next focusable date.
+*/
+function getFocusableDate(moveBy, moveDir, refDate, navStart, navEnd, props, dateLib) {
+	const { ISOWeek, broadcastCalendar } = props;
+	const { addDays, addMonths, addWeeks, addYears, endOfBroadcastWeek, endOfISOWeek, endOfWeek, max, min, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
+	let focusableDate = {
+		day: addDays,
+		week: addWeeks,
+		month: addMonths,
+		year: addYears,
+		startOfWeek: (date) => broadcastCalendar ? startOfBroadcastWeek(date, dateLib) : ISOWeek ? startOfISOWeek(date) : startOfWeek(date),
+		endOfWeek: (date) => broadcastCalendar ? endOfBroadcastWeek(date) : ISOWeek ? endOfISOWeek(date) : endOfWeek(date)
+	}[moveBy](refDate, moveDir === "after" ? 1 : -1);
+	if (moveDir === "before" && navStart) focusableDate = max([navStart, focusableDate]);
+	else if (moveDir === "after" && navEnd) focusableDate = min([navEnd, focusableDate]);
+	return focusableDate;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/helpers/getNextFocus.js
+/**
+* Determines the next focusable day in the calendar.
+*
+* This function recursively calculates the next focusable day based on the
+* movement direction and modifiers applied to the days.
+*
+* @param moveBy The unit of movement (e.g., "day", "week").
+* @param moveDir The direction of movement ("before" or "after").
+* @param refDay The currently focused day.
+* @param calendarStartMonth The earliest month the user can navigate to.
+* @param calendarEndMonth The latest month the user can navigate to.
+* @param props The DayPicker props, including modifiers and configuration
+*   options.
+* @param dateLib The date library to use for date manipulation.
+* @param attempt The current recursion attempt (used to limit recursion depth).
+* @returns The next focusable day, or `undefined` if no focusable day is found.
+*/
+function getNextFocus(moveBy, moveDir, refDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt = 0) {
+	if (attempt > 365) return;
+	const focusableDate = getFocusableDate(moveBy, moveDir, refDay.date, calendarStartMonth, calendarEndMonth, props, dateLib);
+	const isDisabled = Boolean(props.disabled && dateMatchModifiers(focusableDate, props.disabled, dateLib));
+	const isHidden = Boolean(props.hidden && dateMatchModifiers(focusableDate, props.hidden, dateLib));
+	const focusDay = new CalendarDay(focusableDate, focusableDate, dateLib);
+	if (!isDisabled && !isHidden) return focusDay;
+	return getNextFocus(moveBy, moveDir, focusDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt + 1);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/useFocus.js
+/**
+* Manages focus behavior for the DayPicker component, including setting,
+* moving, and blurring focus on calendar days.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param calendar - The calendar object containing the displayed days and
+*   months.
+* @param getModifiers - A function to retrieve modifiers for a given day.
+* @param isSelected - A function to check if a date is selected.
+* @param dateLib - The date utility library instance.
+* @returns An object containing focus-related methods and the currently focused
+*   day.
+*/
+function useFocus(props, calendar, getModifiers, isSelected, dateLib) {
+	const { autoFocus } = props;
+	const [lastFocused, setLastFocused] = (0, import__wp_global_react.useState)();
+	const focusTarget = calculateFocusTarget(calendar.days, getModifiers, isSelected || (() => false), lastFocused);
+	const [focusedDay, setFocused] = (0, import__wp_global_react.useState)(autoFocus ? focusTarget : void 0);
+	(0, import__wp_global_react.useEffect)(() => {
+		if (!focusedDay || !focusTarget) return;
+		if (!calendar.days.some((day) => day.isEqualTo(focusedDay))) setFocused(focusTarget);
+	}, [
+		calendar.days,
+		focusedDay,
+		focusTarget
+	]);
+	const blur = () => {
+		setLastFocused(focusedDay);
+		setFocused(void 0);
+	};
+	const moveFocus = (moveBy, moveDir) => {
+		if (!focusedDay) return;
+		const nextFocus = getNextFocus(moveBy, moveDir, focusedDay, calendar.navStart, calendar.navEnd, props, dateLib);
+		if (!nextFocus) return;
+		if (props.disableNavigation) {
+			if (!calendar.days.some((day) => day.isEqualTo(nextFocus))) return;
+		}
+		calendar.goToDay(nextFocus);
+		setFocused(nextFocus);
+	};
+	const isFocusTarget = (day) => {
+		return Boolean(focusTarget?.isEqualTo(day));
+	};
+	return {
+		isFocusTarget,
+		setFocused,
+		focused: focusedDay,
+		blur,
+		moveFocus
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/selection/useMulti.js
+/**
+* Hook to manage multiple-date selection in the DayPicker component.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param dateLib - The date utility library instance.
+* @returns An object containing the selected dates, a function to select dates,
+*   and a function to check if a date is selected.
+*/
+function useMulti(props, dateLib) {
+	const { selected: initiallySelected, required, onSelect } = props;
+	const [internallySelected, setSelected] = useControlledValue$1(initiallySelected, onSelect ? initiallySelected : void 0);
+	const selected = !onSelect ? internallySelected : initiallySelected;
+	const { isSameDay } = dateLib;
+	const isSelected = (date) => {
+		return selected?.some((d) => isSameDay(d, date)) ?? false;
+	};
+	const { min, max } = props;
+	const select = (triggerDate, modifiers, e) => {
+		let newDates = [...selected ?? []];
+		if (isSelected(triggerDate)) {
+			if (selected?.length === min) return;
+			if (required && selected?.length === 1) return;
+			newDates = selected?.filter((d) => !isSameDay(d, triggerDate));
+		} else if (selected?.length === max) newDates = [triggerDate];
+		else newDates = [...newDates, triggerDate];
+		if (!onSelect) setSelected(newDates);
+		onSelect?.(newDates, triggerDate, modifiers, e);
+		return newDates;
+	};
+	return {
+		selected,
+		select,
+		isSelected
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/addToRange.js
+/**
+* Adds a date to an existing range, considering constraints like minimum and
+* maximum range size.
+*
+* @param date - The date to add to the range.
+* @param initialRange - The initial range to which the date will be added.
+* @param min - The minimum number of days in the range.
+* @param max - The maximum number of days in the range.
+* @param required - Whether the range must always include at least one date.
+* @param dateLib - The date utility library instance.
+* @returns The updated date range, or `undefined` if the range is cleared.
+* @group Utilities
+*/
+function addToRange(date, initialRange, min = 0, max = 0, required = false, dateLib = defaultDateLib) {
+	const { from, to } = initialRange || {};
+	const { isSameDay, isAfter, isBefore } = dateLib;
+	let range;
+	if (!from && !to) range = {
+		from: date,
+		to: min > 0 ? void 0 : date
+	};
+	else if (from && !to) {
+		if (isSameDay(from, date)) {
+			if (min === 0) range = {
+				from,
+				to: date
+			};
+			else if (required) range = {
+				from,
+				to: void 0
+			};
+			else range = void 0;
+		} else if (isBefore(date, from)) range = {
+			from: date,
+			to: from
+		};
+		else range = {
+			from,
+			to: date
+		};
+	} else if (from && to) {
+		if (isSameDay(from, date) && isSameDay(to, date)) {
+			if (required) range = {
+				from,
+				to
+			};
+			else range = void 0;
+		} else if (isSameDay(from, date)) range = {
+			from,
+			to: min > 0 ? void 0 : date
+		};
+		else if (isSameDay(to, date)) range = {
+			from: date,
+			to: min > 0 ? void 0 : date
+		};
+		else if (isBefore(date, from)) range = {
+			from: date,
+			to
+		};
+		else if (isAfter(date, from)) range = {
+			from,
+			to: date
+		};
+		else if (isAfter(date, to)) range = {
+			from,
+			to: date
+		};
+		else throw new Error("Invalid range");
+	}
+	if (range?.from && range?.to) {
+		const diff = dateLib.differenceInCalendarDays(range.to, range.from);
+		if (max > 0 && diff > max) range = {
+			from: date,
+			to: void 0
+		};
+		else if (min > 1 && diff < min) range = {
+			from: date,
+			to: void 0
+		};
+	}
+	return range;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/rangeContainsDayOfWeek.js
+/**
+* Checks if a date range contains one or more specified days of the week.
+*
+* @since 9.2.2
+* @param range - The date range to check.
+* @param dayOfWeek - The day(s) of the week to check for (`0-6`, where `0` is
+*   Sunday).
+* @param dateLib - The date utility library instance.
+* @returns `true` if the range contains the specified day(s) of the week,
+*   otherwise `false`.
+* @group Utilities
+*/
+function rangeContainsDayOfWeek(range, dayOfWeek, dateLib = defaultDateLib) {
+	const dayOfWeekArr = !Array.isArray(dayOfWeek) ? [dayOfWeek] : dayOfWeek;
+	let date = range.from;
+	const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
+	const totalDaysLimit = Math.min(totalDays, 6);
+	for (let i = 0; i <= totalDaysLimit; i++) {
+		if (dayOfWeekArr.includes(date.getDay())) return true;
+		date = dateLib.addDays(date, 1);
+	}
+	return false;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/rangeOverlaps.js
+/**
+* Determines if two date ranges overlap.
+*
+* @since 9.2.2
+* @param rangeLeft - The first date range.
+* @param rangeRight - The second date range.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the ranges overlap, otherwise `false`.
+* @group Utilities
+*/
+function rangeOverlaps(rangeLeft, rangeRight, dateLib = defaultDateLib) {
+	return rangeIncludesDate(rangeLeft, rangeRight.from, false, dateLib) || rangeIncludesDate(rangeLeft, rangeRight.to, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.from, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.to, false, dateLib);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/rangeContainsModifiers.js
+/**
+* Checks if a date range contains dates that match the given modifiers.
+*
+* @since 9.2.2
+* @param range - The date range to check.
+* @param modifiers - The modifiers to match against.
+* @param dateLib - The date utility library instance.
+* @returns `true` if the range contains matching dates, otherwise `false`.
+* @group Utilities
+*/
+function rangeContainsModifiers(range, modifiers, dateLib = defaultDateLib) {
+	const matchers = Array.isArray(modifiers) ? modifiers : [modifiers];
+	if (matchers.filter((matcher) => typeof matcher !== "function").some((matcher) => {
+		if (typeof matcher === "boolean") return matcher;
+		if (dateLib.isDate(matcher)) return rangeIncludesDate(range, matcher, false, dateLib);
+		if (isDatesArray(matcher, dateLib)) return matcher.some((date) => rangeIncludesDate(range, date, false, dateLib));
+		if (isDateRange(matcher)) {
+			if (matcher.from && matcher.to) return rangeOverlaps(range, {
+				from: matcher.from,
+				to: matcher.to
+			}, dateLib);
+			return false;
+		}
+		if (isDayOfWeekType(matcher)) return rangeContainsDayOfWeek(range, matcher.dayOfWeek, dateLib);
+		if (isDateInterval(matcher)) {
+			if (dateLib.isAfter(matcher.before, matcher.after)) return rangeOverlaps(range, {
+				from: dateLib.addDays(matcher.after, 1),
+				to: dateLib.addDays(matcher.before, -1)
+			}, dateLib);
+			return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
+		}
+		if (isDateAfterType(matcher) || isDateBeforeType(matcher)) return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
+		return false;
+	})) return true;
+	const functionMatchers = matchers.filter((matcher) => typeof matcher === "function");
+	if (functionMatchers.length) {
+		let date = range.from;
+		const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
+		for (let i = 0; i <= totalDays; i++) {
+			if (functionMatchers.some((matcher) => matcher(date))) return true;
+			date = dateLib.addDays(date, 1);
+		}
+	}
+	return false;
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/selection/useRange.js
+/**
+* Hook to manage range selection in the DayPicker component.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param dateLib - The date utility library instance.
+* @returns An object containing the selected range, a function to select a
+*   range, and a function to check if a date is within the range.
+*/
+function useRange(props, dateLib) {
+	const { disabled, excludeDisabled, resetOnSelect, selected: initiallySelected, required, onSelect } = props;
+	const [internallySelected, setSelected] = useControlledValue$1(initiallySelected, onSelect ? initiallySelected : void 0);
+	const selected = !onSelect ? internallySelected : initiallySelected;
+	const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
+	const select = (triggerDate, modifiers, e) => {
+		const { min, max } = props;
+		let newRange;
+		if (triggerDate) {
+			const selectedFrom = selected?.from;
+			const selectedTo = selected?.to;
+			const hasFullRange = !!selectedFrom && !!selectedTo;
+			const isClickingSingleDayRange = !!selectedFrom && !!selectedTo && dateLib.isSameDay(selectedFrom, selectedTo) && dateLib.isSameDay(triggerDate, selectedFrom);
+			if (resetOnSelect && (hasFullRange || !selected?.from)) {
+				if (!required && isClickingSingleDayRange) newRange = void 0;
+				else newRange = {
+					from: triggerDate,
+					to: void 0
+				};
+			} else newRange = addToRange(triggerDate, selected, min, max, required, dateLib);
+		}
+		if (excludeDisabled && disabled && newRange?.from && newRange.to) {
+			if (rangeContainsModifiers({
+				from: newRange.from,
+				to: newRange.to
+			}, disabled, dateLib)) {
+				newRange.from = triggerDate;
+				newRange.to = void 0;
+			}
+		}
+		if (!onSelect) setSelected(newRange);
+		onSelect?.(newRange, triggerDate, modifiers, e);
+		return newRange;
+	};
+	return {
+		selected,
+		select,
+		isSelected
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/selection/useSingle.js
+/**
+* Hook to manage single-date selection in the DayPicker component.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param dateLib - The date utility library instance.
+* @returns An object containing the selected date, a function to select a date,
+*   and a function to check if a date is selected.
+*/
+function useSingle(props, dateLib) {
+	const { selected: initiallySelected, required, onSelect } = props;
+	const [internallySelected, setSelected] = useControlledValue$1(initiallySelected, onSelect ? initiallySelected : void 0);
+	const selected = !onSelect ? internallySelected : initiallySelected;
+	const { isSameDay } = dateLib;
+	const isSelected = (compareDate) => {
+		return selected ? isSameDay(selected, compareDate) : false;
+	};
+	const select = (triggerDate, modifiers, e) => {
+		let newDate = triggerDate;
+		if (!required && selected && selected && isSameDay(triggerDate, selected)) newDate = void 0;
+		if (!onSelect) setSelected(newDate);
+		if (required) onSelect?.(newDate, triggerDate, modifiers, e);
+		else onSelect?.(newDate, triggerDate, modifiers, e);
+		return newDate;
+	};
+	return {
+		selected,
+		select,
+		isSelected
+	};
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/useSelection.js
+/**
+* Determines the appropriate selection hook to use based on the selection mode
+* and returns the corresponding selection object.
+*
+* @template T - The type of DayPicker props.
+* @param props - The DayPicker props.
+* @param dateLib - The date utility library instance.
+* @returns The selection object for the specified mode, or `undefined` if no
+*   mode is set.
+*/
+function useSelection(props, dateLib) {
+	const single = useSingle(props, dateLib);
+	const multi = useMulti(props, dateLib);
+	const range = useRange(props, dateLib);
+	switch (props.mode) {
+		case "single": return single;
+		case "multiple": return multi;
+		case "range": return range;
+		default: return;
+	}
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/toTimeZone.js
+/**
+* Convert a {@link Date} or {@link TZDate} instance to the given time zone.
+* Reuses the same instance when it is already a {@link TZDate} using the target
+* time zone to avoid extra allocations.
+*/
+function toTimeZone(date, timeZone) {
+	if (date instanceof TZDate && date.timeZone === timeZone) return date;
+	return new TZDate(date, timeZone);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/utils/convertMatchersToTimeZone.js
+function toZoneNoon(date, timeZone, noonSafe) {
+	if (!noonSafe) return toTimeZone(date, timeZone);
+	const zoned = toTimeZone(date, timeZone);
+	const noonZoned = new TZDate(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 12, 0, 0, timeZone);
+	return new Date(noonZoned.getTime());
+}
+function convertMatcher(matcher, timeZone, noonSafe) {
+	if (typeof matcher === "boolean" || typeof matcher === "function") return matcher;
+	if (matcher instanceof Date) return toZoneNoon(matcher, timeZone, noonSafe);
+	if (Array.isArray(matcher)) return matcher.map((value) => value instanceof Date ? toZoneNoon(value, timeZone, noonSafe) : value);
+	if (isDateRange(matcher)) return {
+		...matcher,
+		from: matcher.from ? toTimeZone(matcher.from, timeZone) : matcher.from,
+		to: matcher.to ? toTimeZone(matcher.to, timeZone) : matcher.to
+	};
+	if (isDateInterval(matcher)) return {
+		before: toZoneNoon(matcher.before, timeZone, noonSafe),
+		after: toZoneNoon(matcher.after, timeZone, noonSafe)
+	};
+	if (isDateAfterType(matcher)) return { after: toZoneNoon(matcher.after, timeZone, noonSafe) };
+	if (isDateBeforeType(matcher)) return { before: toZoneNoon(matcher.before, timeZone, noonSafe) };
+	return matcher;
+}
+/**
+* Convert any {@link Matcher} or array of matchers to the specified time zone.
+*
+* @param matchers - The matcher or matchers to convert.
+* @param timeZone - The target IANA time zone.
+* @returns The converted matcher(s).
+* @group Utilities
+*/
+function convertMatchersToTimeZone(matchers, timeZone, noonSafe) {
+	if (!matchers) return matchers;
+	if (Array.isArray(matchers)) return matchers.map((matcher) => convertMatcher(matcher, timeZone, noonSafe));
+	return convertMatcher(matchers, timeZone, noonSafe);
+}
+
+// node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/DayPicker.js
+/**
+* Renders the DayPicker calendar component.
+*
+* @param initialProps - The props for the DayPicker component.
+* @returns The rendered DayPicker component.
+* @group DayPicker
+* @see https://daypicker.dev
+*/
+function DayPicker(initialProps) {
+	let props = initialProps;
+	const timeZone = props.timeZone;
+	if (timeZone) {
+		props = {
+			...initialProps,
+			timeZone
+		};
+		if (props.today) props.today = toTimeZone(props.today, timeZone);
+		if (props.month) props.month = toTimeZone(props.month, timeZone);
+		if (props.defaultMonth) props.defaultMonth = toTimeZone(props.defaultMonth, timeZone);
+		if (props.startMonth) props.startMonth = toTimeZone(props.startMonth, timeZone);
+		if (props.endMonth) props.endMonth = toTimeZone(props.endMonth, timeZone);
+		if (props.mode === "single" && props.selected) props.selected = toTimeZone(props.selected, timeZone);
+		else if (props.mode === "multiple" && props.selected) props.selected = props.selected?.map((date) => toTimeZone(date, timeZone));
+		else if (props.mode === "range" && props.selected) props.selected = {
+			from: props.selected.from ? toTimeZone(props.selected.from, timeZone) : props.selected.from,
+			to: props.selected.to ? toTimeZone(props.selected.to, timeZone) : props.selected.to
+		};
+		if (props.disabled !== void 0) props.disabled = convertMatchersToTimeZone(props.disabled, timeZone);
+		if (props.hidden !== void 0) props.hidden = convertMatchersToTimeZone(props.hidden, timeZone);
+		if (props.modifiers) {
+			const nextModifiers = {};
+			Object.keys(props.modifiers).forEach((key) => {
+				nextModifiers[key] = convertMatchersToTimeZone(props.modifiers?.[key], timeZone);
+			});
+			props.modifiers = nextModifiers;
+		}
+	}
+	const { components, formatters, labels, dateLib, locale, classNames } = (0, import__wp_global_react.useMemo)(() => {
+		const locale = {
+			...enUS,
+			...props.locale
+		};
+		const weekStartsOn = props.broadcastCalendar ? 1 : props.weekStartsOn;
+		const noonOverrides = props.noonSafe && props.timeZone ? createNoonOverrides(props.timeZone, {
+			weekStartsOn,
+			locale
+		}) : void 0;
+		const overrides = props.dateLib && noonOverrides ? {
+			...noonOverrides,
+			...props.dateLib
+		} : props.dateLib ?? noonOverrides;
+		const dateLib = new DateLib({
+			locale,
+			weekStartsOn,
+			firstWeekContainsDate: props.firstWeekContainsDate,
+			useAdditionalWeekYearTokens: props.useAdditionalWeekYearTokens,
+			useAdditionalDayOfYearTokens: props.useAdditionalDayOfYearTokens,
+			timeZone: props.timeZone,
+			numerals: props.numerals
+		}, overrides);
+		return {
+			dateLib,
+			components: getComponents(props.components),
+			formatters: getFormatters(props.formatters),
+			labels: getLabels(props.labels, dateLib.options),
+			locale,
+			classNames: {
+				...getDefaultClassNames(),
+				...props.classNames
+			}
+		};
+	}, [
+		props.locale,
+		props.broadcastCalendar,
+		props.weekStartsOn,
+		props.firstWeekContainsDate,
+		props.useAdditionalWeekYearTokens,
+		props.useAdditionalDayOfYearTokens,
+		props.timeZone,
+		props.numerals,
+		props.dateLib,
+		props.noonSafe,
+		props.components,
+		props.formatters,
+		props.labels,
+		props.classNames
+	]);
+	if (!props.today) props = {
+		...props,
+		today: dateLib.today()
+	};
+	const { captionLayout, mode, navLayout, numberOfMonths = 1, onDayBlur, onDayClick, onDayFocus, onDayKeyDown, onDayMouseEnter, onDayMouseLeave, onNextClick, onPrevClick, showWeekNumber, styles } = props;
+	const { formatCaption, formatDay, formatMonthDropdown, formatWeekNumber, formatWeekNumberHeader, formatWeekdayName, formatYearDropdown } = formatters;
+	const calendar = useCalendar(props, dateLib);
+	const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
+	const getModifiers = createGetModifiers(days, props, navStart, navEnd, dateLib);
+	const { isSelected, select, selected: selectedValue } = useSelection(props, dateLib) ?? {};
+	const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus(props, calendar, getModifiers, isSelected ?? (() => false), dateLib);
+	const { labelDayButton, labelGridcell, labelGrid, labelMonthDropdown, labelNav, labelPrevious, labelNext, labelWeekday, labelWeekNumber, labelWeekNumberHeader, labelYearDropdown } = labels;
+	const weekdays = (0, import__wp_global_react.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [
+		dateLib,
+		props.ISOWeek,
+		props.broadcastCalendar,
+		props.today
+	]);
+	const isInteractive = mode !== void 0 || onDayClick !== void 0;
+	const handlePreviousClick = (0, import__wp_global_react.useCallback)(() => {
+		if (!previousMonth) return;
+		goToMonth(previousMonth);
+		onPrevClick?.(previousMonth);
+	}, [
+		previousMonth,
+		goToMonth,
+		onPrevClick
+	]);
+	const handleNextClick = (0, import__wp_global_react.useCallback)(() => {
+		if (!nextMonth) return;
+		goToMonth(nextMonth);
+		onNextClick?.(nextMonth);
+	}, [
+		goToMonth,
+		nextMonth,
+		onNextClick
+	]);
+	const handleDayClick = (0, import__wp_global_react.useCallback)((day, m) => (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setFocused(day);
+		if (m.disabled) return;
+		select?.(day.date, m, e);
+		onDayClick?.(day.date, m, e);
+	}, [
+		select,
+		onDayClick,
+		setFocused
+	]);
+	const handleDayFocus = (0, import__wp_global_react.useCallback)((day, m) => (e) => {
+		setFocused(day);
+		onDayFocus?.(day.date, m, e);
+	}, [onDayFocus, setFocused]);
+	const handleDayBlur = (0, import__wp_global_react.useCallback)((day, m) => (e) => {
+		blur();
+		onDayBlur?.(day.date, m, e);
+	}, [blur, onDayBlur]);
+	const handleDayKeyDown = (0, import__wp_global_react.useCallback)((day, modifiers) => (e) => {
+		const keyMap = {
+			ArrowLeft: [e.shiftKey ? "month" : "day", props.dir === "rtl" ? "after" : "before"],
+			ArrowRight: [e.shiftKey ? "month" : "day", props.dir === "rtl" ? "before" : "after"],
+			ArrowDown: [e.shiftKey ? "year" : "week", "after"],
+			ArrowUp: [e.shiftKey ? "year" : "week", "before"],
+			PageUp: [e.shiftKey ? "year" : "month", "before"],
+			PageDown: [e.shiftKey ? "year" : "month", "after"],
+			Home: ["startOfWeek", "before"],
+			End: ["endOfWeek", "after"]
+		};
+		if (keyMap[e.key]) {
+			e.preventDefault();
+			e.stopPropagation();
+			const [moveBy, moveDir] = keyMap[e.key];
+			moveFocus(moveBy, moveDir);
+		}
+		onDayKeyDown?.(day.date, modifiers, e);
+	}, [
+		moveFocus,
+		onDayKeyDown,
+		props.dir
+	]);
+	const handleDayMouseEnter = (0, import__wp_global_react.useCallback)((day, modifiers) => (e) => {
+		onDayMouseEnter?.(day.date, modifiers, e);
+	}, [onDayMouseEnter]);
+	const handleDayMouseLeave = (0, import__wp_global_react.useCallback)((day, modifiers) => (e) => {
+		onDayMouseLeave?.(day.date, modifiers, e);
+	}, [onDayMouseLeave]);
+	const handleMonthChange = (0, import__wp_global_react.useCallback)((date, monthOffset) => (e) => {
+		const selectedMonth = Number(e.target.value);
+		const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
+		goToMonth(dateLib.addMonths(month, -monthOffset));
+	}, [dateLib, goToMonth]);
+	const handleYearChange = (0, import__wp_global_react.useCallback)((date, monthOffset) => (e) => {
+		const selectedYear = Number(e.target.value);
+		const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
+		goToMonth(dateLib.addMonths(month, -monthOffset));
+	}, [dateLib, goToMonth]);
+	const { className, style } = (0, import__wp_global_react.useMemo)(() => ({
+		className: [classNames[UI.Root], props.className].filter(Boolean).join(" "),
+		style: {
+			...styles?.[UI.Root],
+			...props.style
+		}
+	}), [
+		classNames,
+		props.className,
+		props.style,
+		styles
+	]);
+	const dataAttributes = getDataAttributes(props);
+	const getDropdownStyle = (dropdown) => {
+		const dropdownStyle = styles?.[UI.Dropdown];
+		const specificDropdownStyle = styles?.[dropdown];
+		if (!dropdownStyle && !specificDropdownStyle) return;
+		return {
+			...dropdownStyle,
+			...specificDropdownStyle
+		};
+	};
+	const rootElRef = (0, import__wp_global_react.useRef)(null);
+	useAnimation(rootElRef, Boolean(props.animate), {
+		classNames,
+		months,
+		focused,
+		dateLib
+	});
+	const contextValue = {
+		dayPickerProps: props,
+		selected: selectedValue,
+		select,
+		isSelected,
+		months,
+		nextMonth,
+		previousMonth,
+		goToMonth,
+		getModifiers,
+		components,
+		classNames,
+		styles,
+		labels,
+		formatters
+	};
+	return import__wp_global_react.default.createElement(dayPickerContext.Provider, { value: contextValue }, import__wp_global_react.default.createElement(components.Root, {
+		rootRef: props.animate ? rootElRef : void 0,
+		className,
+		style,
+		dir: props.dir,
+		id: props.id,
+		lang: props.lang ?? locale.code,
+		nonce: props.nonce,
+		title: props.title,
+		role: props.role,
+		"aria-label": props["aria-label"],
+		"aria-labelledby": props["aria-labelledby"],
+		...dataAttributes
+	}, import__wp_global_react.default.createElement(components.Months, {
+		className: classNames[UI.Months],
+		style: styles?.[UI.Months]
+	}, !props.hideNavigation && !navLayout && import__wp_global_react.default.createElement(components.Nav, {
+		"data-animated-nav": props.animate ? "true" : void 0,
+		className: classNames[UI.Nav],
+		style: styles?.[UI.Nav],
+		"aria-label": labelNav(),
+		onPreviousClick: handlePreviousClick,
+		onNextClick: handleNextClick,
+		previousMonth,
+		nextMonth
+	}), months.map((calendarMonth, displayIndex) => {
+		const monthOffset = props.reverseMonths ? months.length - 1 - displayIndex : displayIndex;
+		return import__wp_global_react.default.createElement(components.Month, {
+			"data-animated-month": props.animate ? "true" : void 0,
+			className: classNames[UI.Month],
+			style: styles?.[UI.Month],
+			key: displayIndex,
+			displayIndex,
+			calendarMonth
+		}, navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import__wp_global_react.default.createElement(components.PreviousMonthButton, {
+			type: "button",
+			className: classNames[UI.PreviousMonthButton],
+			style: styles?.[UI.PreviousMonthButton],
+			tabIndex: previousMonth ? void 0 : -1,
+			"aria-disabled": previousMonth ? void 0 : true,
+			"aria-label": labelPrevious(previousMonth),
+			onClick: handlePreviousClick,
+			"data-animated-button": props.animate ? "true" : void 0
+		}, import__wp_global_react.default.createElement(components.Chevron, {
+			disabled: previousMonth ? void 0 : true,
+			className: classNames[UI.Chevron],
+			style: styles?.[UI.Chevron],
+			orientation: props.dir === "rtl" ? "right" : "left"
+		})), import__wp_global_react.default.createElement(components.MonthCaption, {
+			"data-animated-caption": props.animate ? "true" : void 0,
+			className: classNames[UI.MonthCaption],
+			style: styles?.[UI.MonthCaption],
+			calendarMonth,
+			displayIndex
+		}, captionLayout?.startsWith("dropdown") ? import__wp_global_react.default.createElement(components.DropdownNav, {
+			className: classNames[UI.Dropdowns],
+			style: styles?.[UI.Dropdowns]
+		}, (() => {
+			const monthControl = captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import__wp_global_react.default.createElement(components.MonthsDropdown, {
+				key: "month",
+				className: classNames[UI.MonthsDropdown],
+				"aria-label": labelMonthDropdown(),
+				disabled: Boolean(props.disableNavigation),
+				onChange: handleMonthChange(calendarMonth.date, monthOffset),
+				options: getMonthOptions(calendarMonth.date, navStart, navEnd, formatters, dateLib),
+				style: getDropdownStyle(UI.MonthsDropdown),
+				value: dateLib.getMonth(calendarMonth.date)
+			}) : import__wp_global_react.default.createElement("span", { key: "month" }, formatMonthDropdown(calendarMonth.date, dateLib));
+			const yearControl = captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import__wp_global_react.default.createElement(components.YearsDropdown, {
+				key: "year",
+				className: classNames[UI.YearsDropdown],
+				"aria-label": labelYearDropdown(dateLib.options),
+				disabled: Boolean(props.disableNavigation),
+				onChange: handleYearChange(calendarMonth.date, monthOffset),
+				options: getYearOptions(navStart, navEnd, formatters, dateLib, Boolean(props.reverseYears)),
+				style: getDropdownStyle(UI.YearsDropdown),
+				value: dateLib.getYear(calendarMonth.date)
+			}) : import__wp_global_react.default.createElement("span", { key: "year" }, formatYearDropdown(calendarMonth.date, dateLib));
+			return dateLib.getMonthYearOrder() === "year-first" ? [yearControl, monthControl] : [monthControl, yearControl];
+		})(), import__wp_global_react.default.createElement("span", {
+			role: "status",
+			"aria-live": "polite",
+			style: {
+				border: 0,
+				clip: "rect(0 0 0 0)",
+				height: "1px",
+				margin: "-1px",
+				overflow: "hidden",
+				padding: 0,
+				position: "absolute",
+				width: "1px",
+				whiteSpace: "nowrap",
+				wordWrap: "normal"
+			}
+		}, formatCaption(calendarMonth.date, dateLib.options, dateLib))) : import__wp_global_react.default.createElement(components.CaptionLabel, {
+			className: classNames[UI.CaptionLabel],
+			style: styles?.[UI.CaptionLabel],
+			role: "status",
+			"aria-live": "polite"
+		}, formatCaption(calendarMonth.date, dateLib.options, dateLib))), navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import__wp_global_react.default.createElement(components.NextMonthButton, {
+			type: "button",
+			className: classNames[UI.NextMonthButton],
+			style: styles?.[UI.NextMonthButton],
+			tabIndex: nextMonth ? void 0 : -1,
+			"aria-disabled": nextMonth ? void 0 : true,
+			"aria-label": labelNext(nextMonth),
+			onClick: handleNextClick,
+			"data-animated-button": props.animate ? "true" : void 0
+		}, import__wp_global_react.default.createElement(components.Chevron, {
+			disabled: nextMonth ? void 0 : true,
+			className: classNames[UI.Chevron],
+			style: styles?.[UI.Chevron],
+			orientation: props.dir === "rtl" ? "left" : "right"
+		})), displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import__wp_global_react.default.createElement(components.Nav, {
+			"data-animated-nav": props.animate ? "true" : void 0,
+			className: classNames[UI.Nav],
+			style: styles?.[UI.Nav],
+			"aria-label": labelNav(),
+			onPreviousClick: handlePreviousClick,
+			onNextClick: handleNextClick,
+			previousMonth,
+			nextMonth
+		}), import__wp_global_react.default.createElement(components.MonthGrid, {
+			role: "grid",
+			"aria-multiselectable": mode === "multiple" || mode === "range",
+			"aria-label": labelGrid(calendarMonth.date, dateLib.options, dateLib) || void 0,
+			className: classNames[UI.MonthGrid],
+			style: styles?.[UI.MonthGrid]
+		}, !props.hideWeekdays && import__wp_global_react.default.createElement(components.Weekdays, {
+			"data-animated-weekdays": props.animate ? "true" : void 0,
+			className: classNames[UI.Weekdays],
+			style: styles?.[UI.Weekdays]
+		}, showWeekNumber && import__wp_global_react.default.createElement(components.WeekNumberHeader, {
+			"aria-label": labelWeekNumberHeader(dateLib.options),
+			className: classNames[UI.WeekNumberHeader],
+			style: styles?.[UI.WeekNumberHeader],
+			scope: "col"
+		}, formatWeekNumberHeader()), weekdays.map((weekday) => import__wp_global_react.default.createElement(components.Weekday, {
+			"aria-label": labelWeekday(weekday, dateLib.options, dateLib),
+			className: classNames[UI.Weekday],
+			key: String(weekday),
+			style: styles?.[UI.Weekday],
+			scope: "col"
+		}, formatWeekdayName(weekday, dateLib.options, dateLib)))), import__wp_global_react.default.createElement(components.Weeks, {
+			"data-animated-weeks": props.animate ? "true" : void 0,
+			className: classNames[UI.Weeks],
+			style: styles?.[UI.Weeks]
+		}, calendarMonth.weeks.map((week) => {
+			return import__wp_global_react.default.createElement(components.Week, {
+				className: classNames[UI.Week],
+				key: week.weekNumber,
+				style: styles?.[UI.Week],
+				week
+			}, showWeekNumber && import__wp_global_react.default.createElement(components.WeekNumber, {
+				week,
+				style: styles?.[UI.WeekNumber],
+				"aria-label": labelWeekNumber(week.weekNumber, { locale }),
+				className: classNames[UI.WeekNumber],
+				scope: "row",
+				role: "rowheader"
+			}, formatWeekNumber(week.weekNumber, dateLib)), week.days.map((day) => {
+				const { date } = day;
+				const modifiers = getModifiers(day);
+				modifiers[DayFlag.focused] = !modifiers.hidden && Boolean(focused?.isEqualTo(day));
+				modifiers[SelectionState.selected] = isSelected?.(date) || modifiers.selected;
+				if (isDateRange(selectedValue)) {
+					const { from, to } = selectedValue;
+					modifiers[SelectionState.range_start] = Boolean(from && to && dateLib.isSameDay(date, from));
+					modifiers[SelectionState.range_end] = Boolean(from && to && dateLib.isSameDay(date, to));
+					modifiers[SelectionState.range_middle] = rangeIncludesDate(selectedValue, date, true, dateLib);
+				}
+				const style = getStyleForModifiers(modifiers, styles, props.modifiersStyles);
+				const className = getClassNamesForModifiers(modifiers, classNames, props.modifiersClassNames);
+				const ariaLabel = !isInteractive && !modifiers.hidden ? labelGridcell(date, modifiers, dateLib.options, dateLib) : void 0;
+				return import__wp_global_react.default.createElement(components.Day, {
+					key: `${day.isoDate}_${day.displayMonthId}`,
+					day,
+					modifiers,
+					className: className.join(" "),
+					style,
+					role: "gridcell",
+					"aria-selected": modifiers.selected || void 0,
+					"aria-label": ariaLabel,
+					"data-day": day.isoDate,
+					"data-month": day.outside ? day.dateMonthId : void 0,
+					"data-selected": modifiers.selected || void 0,
+					"data-disabled": modifiers.disabled || void 0,
+					"data-hidden": modifiers.hidden || void 0,
+					"data-outside": day.outside || void 0,
+					"data-focused": modifiers.focused || void 0,
+					"data-today": modifiers.today || void 0
+				}, !modifiers.hidden && isInteractive ? import__wp_global_react.default.createElement(components.DayButton, {
+					className: classNames[UI.DayButton],
+					style: styles?.[UI.DayButton],
+					type: "button",
+					day,
+					modifiers,
+					disabled: !modifiers.focused && modifiers.disabled || void 0,
+					"aria-disabled": modifiers.focused && modifiers.disabled || void 0,
+					tabIndex: isFocusTarget(day) ? 0 : -1,
+					"aria-label": labelDayButton(date, modifiers, dateLib.options, dateLib),
+					onClick: handleDayClick(day, modifiers),
+					onBlur: handleDayBlur(day, modifiers),
+					onFocus: handleDayFocus(day, modifiers),
+					onKeyDown: handleDayKeyDown(day, modifiers),
+					onMouseEnter: handleDayMouseEnter(day, modifiers),
+					onMouseLeave: handleDayMouseLeave(day, modifiers)
+				}, formatDay(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay(day.date, dateLib.options, dateLib));
+			}));
+		}))));
+	})), props.footer && import__wp_global_react.default.createElement(components.Footer, {
+		className: classNames[UI.Footer],
+		style: styles?.[UI.Footer],
+		role: "status",
+		"aria-live": "polite"
+	}, props.footer)));
+}
+
+// packages/ui/build-module/calendar/utils/root-context.mjs
+/**
+* `@daypicker/react` only accepts custom components through its `components`
+* prop, which needs to be referentially stable across renders — a new component
+* type would remount the whole calendar on every render, losing focus.
+*
+* The `Root` override is therefore declared once at module scope, and reads the
+* per-instance root props from this context instead of closing over them.
+*/
+const RootContext = (0, import_element.createContext)({});
+
+// packages/ui/build-module/calendar/utils/components.mjs
+/**
+* Render a grid cell for a specific day in the calendar.
+*
+* Handles interaction and focus for the day.
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Day(props) {
+	const { day, modifiers, children, ...tdProps } = props;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("td", {
+		...tdProps,
+		children: [modifiers.preview && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+			"aria-hidden": "true",
+			fill: "none",
+			stroke: "currentColor",
+			strokeDasharray: "4 4",
+			strokeDashoffset: "2",
+			"data-preview-start": modifiers.preview_start || void 0,
+			"data-preview-end": modifiers.preview_end || void 0,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {})
+		}), children]
+	});
+}
+/**
+* Render the root element of the calendar.
+*
+* Wired to `useRender` so that consumers can swap the underlying element
+* through the `render` prop, like every other `@wordpress/ui` component.
+* @see https://daypicker.dev/guides/custom-components
+*/
+function Root$2({ rootRef, ...props }) {
+	const { render, ref, role, defaultAriaLabel } = (0, import_element.useContext)(RootContext);
+	const { months, labels } = useDayPicker();
+	const hasExplicitLabel = props["aria-label"] !== void 0 || props["aria-labelledby"] !== void 0;
+	let ariaLabel = props["aria-label"];
+	if (!hasExplicitLabel && defaultAriaLabel && role === "application") {
+		const currentMonth = months[0];
+		ariaLabel = currentMonth ? (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s, %2$s"), defaultAriaLabel, labels.labelGrid(currentMonth.date)) : defaultAriaLabel;
+	}
+	const mergedRef = (0, import_compose.useMergeRefs)([rootRef ?? null, ref ?? null]);
+	return useRender({
+		render,
+		defaultTagName: "div",
+		ref: mergedRef,
+		props: {
+			...props,
+			role,
+			"aria-label": ariaLabel
+		}
+	});
+}
+/**
+* Render a month navigation button.
+*
+* `@daypicker/react` marks the button as `aria-disabled` (rather than
+* `disabled`) when there is no month to navigate to, so that it stays
+* discoverable. `IconButton`'s `focusableWhenDisabled` produces the same DOM.
+* It also always provides the string returned by its navigation label formatter
+* as `aria-label`; the native button prop type cannot express that requirement.
+* @see https://daypicker.dev/guides/custom-components
+*/
+function NavButton({ icon, className, children: _children, "aria-label": label, "aria-disabled": ariaDisabled, ...props }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(IconButton, {
+		...props,
+		className,
+		label,
+		icon,
+		variant: "minimal",
+		tone: "neutral",
+		size: "compact",
+		disabled: ariaDisabled === true || ariaDisabled === "true",
+		focusableWhenDisabled: true
+	});
+}
+function PreviousMonthButton(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavButton, {
+		...props,
+		icon: chevron_left_default
+	});
+}
+function NextMonthButton(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavButton, {
+		...props,
+		icon: chevron_right_default
+	});
+}
+
+// packages/ui/build-module/calendar/utils/constants.mjs
+const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$23() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$23(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$23(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$23}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$23) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$23(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$23();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$23(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$23, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$23(targetDocument) {
+	const runtime = getRuntime$23();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$23(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$23(hash, css) {
+	const runtime = getRuntime$23();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
+}
+registerStyle$23("3859529419", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8de6747d894ea5ee__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flow-root;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);min-width:calc(var(--wp-ui-calendar-cell-size)*7);position:relative;width:100%;z-index:0}._0774b987a99c9db6__day{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);padding:0;position:relative;&:has(._671e4672d884ebbc__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b)}&:has(._671e4672d884ebbc__day-button:focus-visible),&:has(._671e4672d884ebbc__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}}._671e4672d884ebbc__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:100%;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:none;border-radius:var(--wpds-border-radius-sm,2px);content:\"\";inset:0;position:absolute;z-index:-1}&:disabled{cursor:revert;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}@media (forced-colors:active){text-decoration:line-through}}&:focus-visible:before,&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ececec)}}._813519942de77739__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}._8de6747d894ea5ee__root[dir=rtl] ._67f847e87dfba813__nav-button{transform:rotate(180deg);transform-origin:50%}.a1885fdf1785dac9__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}.ea9e56f27936747c__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);position:relative}.f03204bb581f1be9__month{flex:1 0 calc(var(--wp-ui-calendar-cell-size)*7);width:100%}.d6f35f4bdae2df46__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px);min-width:100%;table-layout:fixed;width:calc(var(--wp-ui-calendar-cell-size)*7)}.b4be65791b7ce19c__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}._34e16195623304a9__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase}.eea8c52b73e5927a__today:after{border:2px solid;border-radius:50%;content:\"\";height:0;inset-block-start:2px;inset-inline-end:calc(50% - var(--wp-ui-calendar-cell-size)/2 + 2px);position:absolute;width:0;z-index:1}.a05330b46e7c1b66__selected:not(.a80b87b5f62475a4__range-middle){&:has(._671e4672d884ebbc__day-button,._671e4672d884ebbc__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(._671e4672d884ebbc__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8b8b8b)}._671e4672d884ebbc__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2e2e2e);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e5e5e5)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}._9b6a87f8af3ccd24__outside{color:var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e)}._0ec1af00abdb49a1__hidden{visibility:hidden}.b053021fd0439af0__range-start:not(.c0e4a01a50314adf__range-end) ._671e4672d884ebbc__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}.a80b87b5f62475a4__range-middle ._671e4672d884ebbc__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ececec);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}.c0e4a01a50314adf__range-end:not(.b053021fd0439af0__range-start) ._671e4672d884ebbc__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._4d562a47dce3f142__preview svg{color:var(--wpds-color-stroke-interactive-neutral,#8b8b8b);height:100%;inset:0;pointer-events:none;position:absolute;width:100%;@media (forced-colors:active){color:inherit}}._4d562a47dce3f142__preview rect{x:-2px;y:.5px;rx:2px;height:calc(100% - 1px);width:calc(100% + 4px)}._4d562a47dce3f142__preview [data-preview-start] rect{x:.5px;width:calc(100% + 2px)}._4d562a47dce3f142__preview [data-preview-end] rect{width:calc(100% + 1.5px)}._4d562a47dce3f142__preview [data-preview-start][data-preview-end] rect{width:calc(100% - 1px)}._4d562a47dce3f142__preview.a05330b46e7c1b66__selected:not(.a80b87b5f62475a4__range-middle) svg{display:none}._8de6747d894ea5ee__root[dir=rtl] ._4d562a47dce3f142__preview svg{transform:scaleX(-1)}._4d562a47dce3f142__preview.a80b87b5f62475a4__range-middle ._671e4672d884ebbc__day-button:before{border:none}@keyframes _88ee63a15e4087a1__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes c240311e225e2005__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes _7dcc729018f1ffc4__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes _21c97677c1cd7c85__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes da6b23f6b39663a7__fade-in{0%{opacity:0}to{opacity:1}}@keyframes _88e6c3a703933699__fade-out{0%{opacity:1}to{opacity:0}}._3eb3782707d12275__caption-after-enter,._504df3c7d1c2dc87__weeks-after-enter,._86a6116ddab87747__weeks-after-exit,.a0ec743ce623d0a8__weeks-before-enter,.d3e1bb60f0cec219__caption-before-enter,.ee10ab647afa9b5e__caption-before-exit,.f0825131c16db968__caption-after-exit,.f9dd36b3b2907d15__weeks-before-exit{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}._8de6747d894ea5ee__root[dir=rtl] ._504df3c7d1c2dc87__weeks-after-enter,.a0ec743ce623d0a8__weeks-before-enter{animation-name:_88ee63a15e4087a1__slide-in-left}._8de6747d894ea5ee__root[dir=rtl] ._86a6116ddab87747__weeks-after-exit,.f9dd36b3b2907d15__weeks-before-exit{animation-name:_7dcc729018f1ffc4__slide-out-left}._504df3c7d1c2dc87__weeks-after-enter,._8de6747d894ea5ee__root[dir=rtl] .a0ec743ce623d0a8__weeks-before-enter{animation-name:c240311e225e2005__slide-in-right}._86a6116ddab87747__weeks-after-exit,._8de6747d894ea5ee__root[dir=rtl] .f9dd36b3b2907d15__weeks-before-exit{animation-name:_21c97677c1cd7c85__slide-out-right}._3eb3782707d12275__caption-after-enter,.d3e1bb60f0cec219__caption-before-enter{animation-name:da6b23f6b39663a7__fade-in}.ee10ab647afa9b5e__caption-before-exit,.f0825131c16db968__caption-after-exit{animation-name:_88e6c3a703933699__fade-out}}}");
+var style_module_default$12 = {
+	"root": "_8de6747d894ea5ee__root",
+	"day": "_0774b987a99c9db6__day",
+	"day-button": "_671e4672d884ebbc__day-button",
+	"caption-label": "_813519942de77739__caption-label",
+	"nav-button": "_67f847e87dfba813__nav-button",
+	"month-caption": "a1885fdf1785dac9__month-caption",
+	"months": "ea9e56f27936747c__months",
+	"month": "f03204bb581f1be9__month",
+	"month-grid": "d6f35f4bdae2df46__month-grid",
+	"nav": "b4be65791b7ce19c__nav",
+	"weekday": "_34e16195623304a9__weekday",
+	"today": "eea8c52b73e5927a__today",
+	"selected": "a05330b46e7c1b66__selected",
+	"range-middle": "a80b87b5f62475a4__range-middle",
+	"outside": "_9b6a87f8af3ccd24__outside",
+	"hidden": "_0ec1af00abdb49a1__hidden",
+	"range-start": "b053021fd0439af0__range-start",
+	"range-end": "c0e4a01a50314adf__range-end",
+	"preview": "_4d562a47dce3f142__preview",
+	"weeks-before-enter": "a0ec743ce623d0a8__weeks-before-enter",
+	"weeks-before-exit": "f9dd36b3b2907d15__weeks-before-exit",
+	"weeks-after-enter": "_504df3c7d1c2dc87__weeks-after-enter",
+	"weeks-after-exit": "_86a6116ddab87747__weeks-after-exit",
+	"caption-after-enter": "_3eb3782707d12275__caption-after-enter",
+	"caption-after-exit": "f0825131c16db968__caption-after-exit",
+	"caption-before-enter": "d3e1bb60f0cec219__caption-before-enter",
+	"caption-before-exit": "ee10ab647afa9b5e__caption-before-exit",
+	"slide-in-left": "_88ee63a15e4087a1__slide-in-left",
+	"slide-out-left": "_7dcc729018f1ffc4__slide-out-left",
+	"slide-in-right": "c240311e225e2005__slide-in-right",
+	"slide-out-right": "_21c97677c1cd7c85__slide-out-right",
+	"fade-in": "da6b23f6b39663a7__fade-in",
+	"fade-out": "_88e6c3a703933699__fade-out"
+};
+registerStyle$23("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$23("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default$2 = {
+	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
+};
+registerStyle$23("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+const CLASSNAMES = {
+	root: clsx(style_module_default$12.root, resets_module_default$4["box-sizing"]),
+	day: style_module_default$12.day,
+	day_button: clsx(style_module_default$12["day-button"], {
+		"button": "db1aa0d975c98907__button",
+		"input": "_560ae5870016ca79__input",
+		"textarea": "_7c14c78aca908e56__textarea",
+		"div": "b752c6b223b319c4__div",
+		"p": "_56028dfe751232df__p",
+		"heading": "_48f5e2ad729cc233__heading",
+		"a": "fba8c89ccbfb853b__a",
+		"ol": "_2933712904448f13__ol",
+		"li": "c48c21f7371f7cea__li",
+		"span": "_2348cae4464115af__span"
+	}.button, focus_module_default$2["outset-ring--focus-visible"]),
+	outside: style_module_default$12.outside,
+	caption_label: style_module_default$12["caption-label"],
+	button_next: style_module_default$12["nav-button"],
+	button_previous: style_module_default$12["nav-button"],
+	nav: style_module_default$12.nav,
+	month_caption: style_module_default$12["month-caption"],
+	months: style_module_default$12.months,
+	month: style_module_default$12.month,
+	month_grid: style_module_default$12["month-grid"],
+	weekday: style_module_default$12.weekday,
+	today: style_module_default$12.today,
+	selected: style_module_default$12.selected,
+	disabled: void 0,
+	hidden: style_module_default$12.hidden,
+	range_start: style_module_default$12["range-start"],
+	range_end: style_module_default$12["range-end"],
+	range_middle: style_module_default$12["range-middle"],
+	weeks_before_enter: style_module_default$12["weeks-before-enter"],
+	weeks_before_exit: style_module_default$12["weeks-before-exit"],
+	weeks_after_enter: style_module_default$12["weeks-after-enter"],
+	weeks_after_exit: style_module_default$12["weeks-after-exit"],
+	caption_after_enter: style_module_default$12["caption-after-enter"],
+	caption_after_exit: style_module_default$12["caption-after-exit"],
+	caption_before_enter: style_module_default$12["caption-before-enter"],
+	caption_before_exit: style_module_default$12["caption-before-exit"]
+};
+const MODIFIER_CLASSNAMES = { preview: style_module_default$12.preview };
+const COMMON_PROPS = {
+	animate: true,
+	showOutsideDays: false,
+	showWeekNumber: false,
+	hideWeekdays: false,
+	captionLayout: "label",
+	fixedWeeks: false,
+	hideNavigation: false,
+	classNames: CLASSNAMES,
+	components: {
+		Day,
+		Root: Root$2,
+		PreviousMonthButton,
+		NextMonthButton
+	}
+};
+
+// packages/ui/build-module/calendar/utils/misc.mjs
+function clampNumberOfMonths(numberOfMonths) {
+	return Math.min(3, Math.max(1, numberOfMonths));
+}
+
+// packages/ui/build-module/calendar/utils/use-controlled-value.mjs
+/**
+* Keeps track of a value that can be either controlled (via the `value` prop)
+* or uncontrolled (via the `defaultValue` prop).
+*
+* @param props
+* @param props.defaultValue
+* @param props.value
+* @param props.onChange
+* @return The controlled value and the value setter.
+*/
+function useControlledValue({ defaultValue, onChange, value: valueProp }) {
+	const hasValue = typeof valueProp !== "undefined";
+	const [state, setState] = (0, import_element.useState)(hasValue ? valueProp : defaultValue);
+	const value = hasValue ? valueProp : state;
+	const uncontrolledSetValue = (0, import_element.useCallback)((nextValue, ...args) => {
+		setState(nextValue);
+		onChange?.(nextValue, ...args);
+	}, [onChange]);
+	let setValue;
+	if (hasValue && typeof onChange === "function") setValue = onChange;
+	else if (!hasValue && typeof onChange === "function") setValue = uncontrolledSetValue;
+	else setValue = setState;
+	return [value, setValue];
+}
+
+// packages/ui/build-module/calendar/utils/use-localization-props.mjs
+function isLocaleRTL(locale) {
+	const direction = (locale.getTextInfo?.() ?? locale.textInfo)?.direction;
+	if (direction) return direction === "rtl";
+	return [
+		"ar",
+		"he",
+		"fa",
+		"ur",
+		"ps",
+		"syr",
+		"dv",
+		"ku",
+		"ckb",
+		"ug",
+		"yi"
+	].includes(locale.language);
+}
+function getSupportedLocaleCode(localeCode) {
+	if (!localeCode) return;
+	let supportedLocaleCode;
+	try {
+		supportedLocaleCode = Intl.DateTimeFormat.supportedLocalesOf([localeCode])[0];
+	} catch {}
+	return supportedLocaleCode;
+}
+function getWeekStartsOn(locale) {
+	const firstDay = (locale.getWeekInfo?.() ?? locale.weekInfo)?.firstDay;
+	if (firstDay === void 0 || firstDay < 1 || firstDay > 7) return;
+	return firstDay % 7;
+}
+/**
+* Returns localization props for the calendar components.
+*
+* Notes:
+* - the following props should be intended as defaults, and should
+*   be overridden by consumer props if listed as public props.
+* - It is possible for the translated strings to use a different locale
+*   than the formatted dates. This is because the translation function doesn't
+*   expose the locale used for the translated strings, meaning that dates are
+*   formatted using the date locale props. When a supported locale is provided,
+*   it also determines `dir`; otherwise, `dir` follows the translation context.
+*   For a correct localized experience, consumers should make sure that the
+*   translation context and date-text locale are consistent.
+* @param props
+* @param props.locale
+* @param props.timeZone
+* @param props.mode
+*/
+const useLocalizationProps = ({ locale, timeZone, mode }) => {
+	return (0, import_element.useMemo)(() => {
+		const isLocaleString = typeof locale === "string";
+		const dateFnsLocale = isLocaleString || locale === void 0 ? enUS$1 : locale;
+		const supportedLocaleCode = getSupportedLocaleCode(isLocaleString ? locale : locale?.code);
+		const localeCode = supportedLocaleCode ?? "en-US";
+		const intlLocale = new Intl.Locale(localeCode);
+		const isRightToLeft = supportedLocaleCode !== void 0 ? isLocaleRTL(intlLocale) : (0, import_i18n.isRTL)();
+		const weekStartsOn = isLocaleString || supportedLocaleCode !== void 0 ? getWeekStartsOn(intlLocale) : void 0;
+		const monthNameFormatter = new Intl.DateTimeFormat(localeCode, {
+			calendar: "gregory",
+			year: "numeric",
+			month: "long",
+			timeZone
+		});
+		const weekdayNarrowFormatter = new Intl.DateTimeFormat(localeCode, {
+			calendar: "gregory",
+			weekday: "narrow",
+			timeZone
+		});
+		const weekdayLongFormatter = new Intl.DateTimeFormat(localeCode, {
+			calendar: "gregory",
+			weekday: "long",
+			timeZone
+		});
+		const fullDateFormatter = new Intl.DateTimeFormat(localeCode, {
+			calendar: "gregory",
+			weekday: "long",
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+			timeZone
+		});
+		const dayNumberFormatter = new Intl.DateTimeFormat(localeCode, {
+			calendar: "gregory",
+			day: "numeric",
+			timeZone
+		});
+		return {
+			"aria-label": mode === "single" ? (0, import_i18n.__)("Date calendar") : (0, import_i18n.__)("Date range calendar"),
+			labels: {
+				/** The label for the navigation toolbar. */
+				labelNav: () => (0, import_i18n.__)("Navigation bar"),
+				/**
+				* The label for the month grid.
+				* @param date
+				*/
+				labelGrid: monthNameFormatter.format,
+				/**
+				* The label for the gridcell, when the calendar is not interactive.
+				* @param date
+				* @param modifiers
+				*/
+				labelGridcell: (date, modifiers) => {
+					const formattedDate = fullDateFormatter.format(date);
+					let label = formattedDate;
+					if (modifiers?.today) label = (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s"), formattedDate);
+					return label;
+				},
+				/** The label for the "next month" button. */
+				labelNext: () => (0, import_i18n.__)("Next month"),
+				/** The label for the "previous month" button. */
+				labelPrevious: () => (0, import_i18n.__)("Previous month"),
+				/**
+				* The label for the day button.
+				* @param date
+				* @param modifiers
+				*/
+				labelDayButton: (date, modifiers) => {
+					const formattedDate = fullDateFormatter.format(date);
+					let label = formattedDate;
+					if (modifiers?.today && modifiers?.selected) return (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s, selected"), formattedDate);
+					if (modifiers?.today) label = (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s"), formattedDate);
+					if (modifiers?.selected) label = (0, import_i18n.sprintf)((0, import_i18n.__)("%s, selected"), formattedDate);
+					return label;
+				},
+				/**
+				* The label for the weekday.
+				* @param date
+				*/
+				labelWeekday: weekdayLongFormatter.format
+			},
+			locale: dateFnsLocale,
+			lang: localeCode,
+			dir: isRightToLeft ? "rtl" : "ltr",
+			...weekStartsOn === void 0 ? {} : { weekStartsOn },
+			formatters: {
+				formatDay: (date) => dayNumberFormatter.formatToParts(date).find((part) => part.type === "day")?.value ?? dayNumberFormatter.format(date),
+				formatWeekdayName: weekdayNarrowFormatter.format,
+				formatCaption: monthNameFormatter.format
+			},
+			timeZone
+		};
+	}, [
+		locale,
+		timeZone,
+		mode
+	]);
+};
+
+// packages/ui/build-module/calendar/utils/use-preserve-day-focus.mjs
+/**
+* Falls back to a navigation button when a controlled month change removes
+* the focused day and the new month has no enabled day. DayPicker preserves
+* focus itself when an enabled day is available.
+*
+* TODO: Remove this hook after adopting the upstream disabled-calendar focus fix.
+* @see https://github.com/gpbl/react-day-picker/pull/3036
+*
+* @param forwardedRef Ref forwarded to the calendar root.
+* @param month        The controlled first displayed month.
+*
+* @see https://github.com/gpbl/react-day-picker/pull/3010
+*/
+function usePreserveDayFocus(forwardedRef, month) {
+	const rootRef = (0, import_element.useRef)(null);
+	const hadDayFocusRef = (0, import_element.useRef)(false);
+	const mergedRef = (0, import_compose.useMergeRefs)([rootRef, forwardedRef]);
+	const monthIndex = month ? month.getFullYear() * 12 + month.getMonth() : void 0;
+	const onDayFocus = (0, import_element.useCallback)(() => {
+		hadDayFocusRef.current = true;
+	}, []);
+	const onDayBlur = (0, import_element.useCallback)(() => {
+		hadDayFocusRef.current = false;
+	}, []);
+	(0, import_element.useEffect)(() => {
+		if (!hadDayFocusRef.current) return;
+		const root = rootRef.current;
+		if (!root) return;
+		const { activeElement, body } = root.ownerDocument;
+		if (activeElement !== body) {
+			const grid = activeElement?.closest("[role=\"grid\"]");
+			hadDayFocusRef.current = !!grid && root.contains(grid);
+			return;
+		}
+		hadDayFocusRef.current = false;
+		if (root.querySelector("[role=\"grid\"] button:not(:disabled)")) return;
+		const enabledControl = root.querySelector("button:not(:disabled):not([aria-disabled=\"true\"])");
+		const focusableControl = root.querySelector("button:not(:disabled)");
+		(enabledControl ?? focusableControl)?.focus();
+	}, [monthIndex]);
+	return {
+		ref: mergedRef,
+		onDayFocus,
+		onDayBlur
+	};
+}
+
+// packages/ui/build-module/calendar/calendar.mjs
+/**
+* `Calendar` provides a customizable calendar interface for **single date**
+* selection.
+*
+* The component is built with accessibility in mind and follows ARIA best
+* practices for calendar widgets. It provides keyboard navigation, screen reader
+* support, and customizable labels for internationalization.
+*/
+const Calendar = (0, import_element.forwardRef)(function UnforwardedCalendar({ defaultValue, value: valueProp, onValueChange, numberOfMonths = 1, locale, timeZone, month, render, role = "application", "aria-label": ariaLabel, labels: customLabels, ...props }, ref) {
+	const { "aria-label": defaultAriaLabel, ...localizationProps } = useLocalizationProps({
+		locale,
+		timeZone,
+		mode: "single"
+	});
+	const labels = (0, import_element.useMemo)(() => customLabels ? {
+		...localizationProps.labels,
+		...customLabels
+	} : localizationProps.labels, [localizationProps.labels, customLabels]);
+	const onChange = (0, import_element.useCallback)((selected, triggerDate, modifiers, e) => {
+		onValueChange?.(selected ?? null, triggerDate, modifiers, e);
+	}, [onValueChange]);
+	const [selected, setSelected] = useControlledValue({
+		defaultValue,
+		value: valueProp,
+		onChange
+	});
+	const dayFocusProps = usePreserveDayFocus(ref, month);
+	const rootContextValue = (0, import_element.useMemo)(() => ({
+		render,
+		ref: dayFocusProps.ref,
+		role,
+		defaultAriaLabel
+	}), [
+		render,
+		dayFocusProps.ref,
+		role,
+		defaultAriaLabel
+	]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RootContext.Provider, {
+		value: rootContextValue,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DayPicker, {
+			...COMMON_PROPS,
+			...localizationProps,
+			...props,
+			"aria-label": ariaLabel,
+			mode: "single",
+			month,
+			numberOfMonths: clampNumberOfMonths(numberOfMonths),
+			labels,
+			selected: selected ?? void 0,
+			onSelect: setSelected,
+			onDayFocus: dayFocusProps.onDayFocus,
+			onDayBlur: dayFocusProps.onDayBlur
+		})
+	});
+});
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/areIntervalsOverlapping.js
+/**
+* The {@link areIntervalsOverlapping} function options.
+*/
+/**
+* @name areIntervalsOverlapping
+* @category Interval Helpers
+* @summary Is the given time interval overlapping with another time interval?
+*
+* @description
+* Is the given time interval overlapping with another time interval? Adjacent intervals do not count as overlapping unless `inclusive` is set to `true`.
+*
+* @param intervalLeft - The first interval to compare.
+* @param intervalRight - The second interval to compare.
+* @param options - The object with options
+*
+* @returns Whether the time intervals are overlapping
+*
+* @example
+* // For overlapping time intervals:
+* areIntervalsOverlapping(
+*   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
+*   { start: new Date(2014, 0, 17), end: new Date(2014, 0, 21) }
+* )
+* //=> true
+*
+* @example
+* // For non-overlapping time intervals:
+* areIntervalsOverlapping(
+*   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
+*   { start: new Date(2014, 0, 21), end: new Date(2014, 0, 22) }
+* )
+* //=> false
+*
+* @example
+* // For adjacent time intervals:
+* areIntervalsOverlapping(
+*   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
+*   { start: new Date(2014, 0, 20), end: new Date(2014, 0, 30) }
+* )
+* //=> false
+*
+* @example
+* // Using the inclusive option:
+* areIntervalsOverlapping(
+*   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
+*   { start: new Date(2014, 0, 20), end: new Date(2014, 0, 24) },
+*   { inclusive: true }
+* )
+* //=> true
+*/
+function areIntervalsOverlapping(intervalLeft, intervalRight, options) {
+	const [leftStartTime, leftEndTime] = [+toDate(intervalLeft.start, options?.in), +toDate(intervalLeft.end, options?.in)].sort((a, b) => a - b);
+	const [rightStartTime, rightEndTime] = [+toDate(intervalRight.start, options?.in), +toDate(intervalRight.end, options?.in)].sort((a, b) => a - b);
+	if (options?.inclusive) return leftStartTime <= rightEndTime && rightStartTime <= leftEndTime;
+	return leftStartTime < rightEndTime && rightStartTime < leftEndTime;
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getDefaultOptions.js
+/**
+* @name getDefaultOptions
+* @category Common Helpers
+* @summary Get default options.
+* @pure false
+*
+* @description
+* Returns an object that contains defaults for
+* `options.locale`, `options.weekStartsOn` and `options.firstWeekContainsDate`
+* arguments for all functions.
+*
+* You can change these with [setDefaultOptions](https://date-fns.org/docs/setDefaultOptions).
+*
+* @returns The default options
+*
+* @example
+* const result = getDefaultOptions()
+* //=> {}
+*
+* @example
+* setDefaultOptions({ weekStarsOn: 1, firstWeekContainsDate: 4 })
+* const result = getDefaultOptions()
+* //=> { weekStarsOn: 1, firstWeekContainsDate: 4 }
+*/
+function getDefaultOptions() {
+	return Object.assign({}, getDefaultOptions$1());
+}
+
+// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/getISODay.js
+/**
+* The {@link getISODay} function options.
+*/
+/**
+* @name getISODay
+* @category Weekday Helpers
+* @summary Get the day of the ISO week of the given date.
+*
+* @description
+* Get the day of the ISO week of the given date,
+* which is 7 for Sunday, 1 for Monday etc.
+*
+* ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
+*
+* @param date - The given date
+* @param options - An object with options
+*
+* @returns The day of ISO week
+*
+* @example
+* // Which day of the ISO week is 26 February 2012?
+* const result = getISODay(new Date(2012, 1, 26))
+* //=> 7
+*/
+function getISODay(date, options) {
+	const day = toDate(date, options?.in).getDay();
+	return day === 0 ? 7 : day;
 }
 
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/transpose.js
@@ -26486,67 +30704,6 @@ function cleanEscapedString(input) {
 	return input.match(escapedStringRegExp)[1].replace(doubleQuoteRegExp, "'");
 }
 
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isSameMonth.js
-/**
-* The {@link isSameMonth} function options.
-*/
-/**
-* @name isSameMonth
-* @category Month Helpers
-* @summary Are the given dates in the same month (and year)?
-*
-* @description
-* Are the given dates in the same month (and year)?
-*
-* @param laterDate - The first date to check
-* @param earlierDate - The second date to check
-* @param options - An object with options
-*
-* @returns The dates are in the same month (and year)
-*
-* @example
-* // Are 2 September 2014 and 25 September 2014 in the same month?
-* const result = isSameMonth(new Date(2014, 8, 2), new Date(2014, 8, 25))
-* //=> true
-*
-* @example
-* // Are 2 September 2014 and 25 September 2015 in the same month?
-* const result = isSameMonth(new Date(2014, 8, 2), new Date(2015, 8, 25))
-* //=> false
-*/
-function isSameMonth(laterDate, earlierDate, options) {
-	const [laterDate_, earlierDate_] = normalizeDates(options?.in, laterDate, earlierDate);
-	return laterDate_.getFullYear() === earlierDate_.getFullYear() && laterDate_.getMonth() === earlierDate_.getMonth();
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/isSameYear.js
-/**
-* The {@link isSameYear} function options.
-*/
-/**
-* @name isSameYear
-* @category Year Helpers
-* @summary Are the given dates in the same year?
-*
-* @description
-* Are the given dates in the same year?
-*
-* @param laterDate - The first date to check
-* @param earlierDate - The second date to check
-* @param options - An object with options
-*
-* @returns The dates are in the same year
-*
-* @example
-* // Are 2 September 2014 and 25 September 2014 in the same year?
-* const result = isSameYear(new Date(2014, 8, 2), new Date(2014, 8, 25))
-* //=> true
-*/
-function isSameYear(laterDate, earlierDate, options) {
-	const [laterDate_, earlierDate_] = normalizeDates(options?.in, laterDate, earlierDate);
-	return laterDate_.getFullYear() === earlierDate_.getFullYear();
-}
-
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/subDays.js
 /**
 * The {@link subDays} function options.
@@ -26772,77 +30929,6 @@ function validateTimezone(_hours, minutes) {
 	return minutes >= 0 && minutes <= 59;
 }
 
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/setMonth.js
-/**
-* The {@link setMonth} function options.
-*/
-/**
-* @name setMonth
-* @category Month Helpers
-* @summary Set the month to the given date.
-*
-* @description
-* Set the month to the given date.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param date - The date to be changed
-* @param month - The month index to set (0-11)
-* @param options - The options
-*
-* @returns The new date with the month set
-*
-* @example
-* // Set February to 1 September 2014:
-* const result = setMonth(new Date(2014, 8, 1), 1)
-* //=> Sat Feb 01 2014 00:00:00
-*/
-function setMonth(date, month, options) {
-	const _date = toDate(date, options?.in);
-	const year = _date.getFullYear();
-	const day = _date.getDate();
-	const midMonth = constructFrom(options?.in || date, 0);
-	midMonth.setFullYear(year, month, 15);
-	midMonth.setHours(0, 0, 0, 0);
-	const daysInMonth = getDaysInMonth(midMonth);
-	_date.setMonth(month, Math.min(day, daysInMonth));
-	return _date;
-}
-
-// node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/setYear.js
-/**
-* The {@link setYear} function options.
-*/
-/**
-* @name setYear
-* @category Year Helpers
-* @summary Set the year to the given date.
-*
-* @description
-* Set the year to the given date.
-*
-* @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
-* @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
-*
-* @param date - The date to be changed
-* @param year - The year of the new date
-* @param options - An object with options.
-*
-* @returns The new date with the year set
-*
-* @example
-* // Set year 2013 to 1 September 2014:
-* const result = setYear(new Date(2014, 8, 1), 2013)
-* //=> Sun Sep 01 2013 00:00:00
-*/
-function setYear(date, year, options) {
-	const date_ = toDate(date, options?.in);
-	if (isNaN(+date_)) return constructFrom(options?.in || date, NaN);
-	date_.setFullYear(year);
-	return date_;
-}
-
 // node_modules/.store/date-fns@4.4.0-N3CoundlhH8enmbadGmv6Q/node_modules/date-fns/subMonths.js
 /**
 * The subMonths function options.
@@ -26932,4080 +31018,6 @@ function subWeeks(date, amount, options) {
 function subYears(date, amount, options) {
 	return addYears(date, -amount, options);
 }
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getBroadcastWeeksInMonth.js
-const FIVE_WEEKS = 5;
-const FOUR_WEEKS = 4;
-/**
-* Returns the number of weeks to display in the broadcast calendar for a given
-* month.
-*
-* The broadcast calendar may have either 4 or 5 weeks in a month, depending on
-* the start and end dates of the broadcast weeks.
-*
-* @since 9.4.0
-* @param month The month for which to calculate the number of weeks.
-* @param dateLib The date library to use for date manipulation.
-* @returns The number of weeks in the broadcast calendar (4 or 5).
-*/
-function getBroadcastWeeksInMonth(month, dateLib) {
-	const firstDayOfMonth = dateLib.startOfMonth(month);
-	const firstDayOfWeek = firstDayOfMonth.getDay() > 0 ? firstDayOfMonth.getDay() : 7;
-	const broadcastStartDate = dateLib.addDays(month, -firstDayOfWeek + 1);
-	const lastDateOfLastWeek = dateLib.addDays(broadcastStartDate, 34);
-	return dateLib.getMonth(month) === dateLib.getMonth(lastDateOfLastWeek) ? FIVE_WEEKS : FOUR_WEEKS;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/startOfBroadcastWeek.js
-/**
-* Returns the start date of the week in the broadcast calendar.
-*
-* The broadcast week starts on Monday. If the first day of the month is not a
-* Monday, this function calculates the previous Monday as the start of the
-* broadcast week.
-*
-* @since 9.4.0
-* @param date The date for which to calculate the start of the broadcast week.
-* @param dateLib The date library to use for date manipulation.
-* @returns The start date of the broadcast week.
-*/
-function startOfBroadcastWeek(date, dateLib) {
-	const firstOfMonth = dateLib.startOfMonth(date);
-	const dayOfWeek = firstOfMonth.getDay();
-	if (dayOfWeek === 1) return firstOfMonth;
-	else if (dayOfWeek === 0) return dateLib.addDays(firstOfMonth, -6);
-	else return dateLib.addDays(firstOfMonth, -1 * (dayOfWeek - 1));
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/endOfBroadcastWeek.js
-/**
-* Returns the end date of the week in the broadcast calendar.
-*
-* The broadcast week ends on the last day of the last broadcast week for the
-* given date.
-*
-* @since 9.4.0
-* @param date The date for which to calculate the end of the broadcast week.
-* @param dateLib The date library to use for date manipulation.
-* @returns The end date of the broadcast week.
-*/
-function endOfBroadcastWeek(date, dateLib) {
-	const startDate = startOfBroadcastWeek(date, dateLib);
-	const numberOfWeeks = getBroadcastWeeksInMonth(date, dateLib);
-	return dateLib.addDays(startDate, numberOfWeeks * 7 - 1);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/locale/en-US.js
-/** English (United States) locale extended with DayPicker-specific translations. */
-const enUS = {
-	...enUS$1,
-	labels: {
-		labelDayButton: (date, modifiers, options, dateLib) => {
-			let formatDate;
-			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
-			else formatDate = (d, pattern) => format$5(d, pattern, {
-				locale: enUS$1,
-				...options
-			});
-			let label = formatDate(date, "PPPP");
-			if (modifiers.today) label = `Today, ${label}`;
-			if (modifiers.selected) label = `${label}, selected`;
-			return label;
-		},
-		labelMonthDropdown: "Choose the Month",
-		labelNext: "Go to the Next Month",
-		labelPrevious: "Go to the Previous Month",
-		labelWeekNumber: (weekNumber) => `Week ${weekNumber}`,
-		labelYearDropdown: "Choose the Year",
-		labelGrid: (date, options, dateLib) => {
-			let formatDate;
-			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
-			else formatDate = (d, pattern) => format$5(d, pattern, {
-				locale: enUS$1,
-				...options
-			});
-			return formatDate(date, "LLLL yyyy");
-		},
-		labelGridcell: (date, modifiers, options, dateLib) => {
-			let formatDate;
-			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
-			else formatDate = (d, pattern) => format$5(d, pattern, {
-				locale: enUS$1,
-				...options
-			});
-			let label = formatDate(date, "PPPP");
-			if (modifiers?.today) label = `Today, ${label}`;
-			return label;
-		},
-		labelNav: "Navigation bar",
-		labelWeekNumberHeader: "Week Number",
-		labelWeekday: (date, options, dateLib) => {
-			let formatDate;
-			if (dateLib && typeof dateLib.format === "function") formatDate = dateLib.format.bind(dateLib);
-			else formatDate = (d, pattern) => format$5(d, pattern, {
-				locale: enUS$1,
-				...options
-			});
-			return formatDate(date, "cccc");
-		}
-	}
-};
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/classes/DateLib.js
-/**
-* A wrapper class around [date-fns](http://date-fns.org) that provides utility
-* methods for date manipulation and formatting.
-*
-* @since 9.2.0
-* @example
-*   const dateLib = new DateLib({ locale: es });
-*   const newDate = dateLib.addDays(new Date(), 5);
-*/
-var DateLib = class DateLib {
-	/**
-	* Creates an instance of `DateLib`.
-	*
-	* @param options Configuration options for the date library.
-	* @param overrides Custom overrides for the date library functions.
-	*/
-	constructor(options, overrides) {
-		/**
-		* Creates a new `Date` object representing today's date.
-		*
-		* @since 9.5.0
-		* @returns A `Date` object for today's date.
-		*/
-		this.today = () => {
-			if (this.overrides?.today) return this.overrides.today();
-			if (this.options.timeZone) return TZDate.tz(this.options.timeZone);
-			return new (this.options.Date ?? Date)();
-		};
-		/**
-		* Creates a new `Date` object with the specified year, month, and day.
-		*
-		* @since 9.5.0
-		* @param year The year.
-		* @param monthIndex The month (0-11).
-		* @param date The day of the month.
-		* @returns A new `Date` object.
-		*/
-		this.newDate = (year, monthIndex, date) => {
-			if (this.overrides?.newDate) return this.overrides.newDate(year, monthIndex, date);
-			if (this.options.timeZone) return new TZDate(year, monthIndex, date, this.options.timeZone);
-			return new Date(year, monthIndex, date);
-		};
-		/**
-		* Adds the specified number of days to the given date.
-		*
-		* @param date The date to add days to.
-		* @param amount The number of days to add.
-		* @returns The new date with the days added.
-		*/
-		this.addDays = (date, amount) => {
-			return this.overrides?.addDays ? this.overrides.addDays(date, amount) : addDays(date, amount);
-		};
-		/**
-		* Adds the specified number of months to the given date.
-		*
-		* @param date The date to add months to.
-		* @param amount The number of months to add.
-		* @returns The new date with the months added.
-		*/
-		this.addMonths = (date, amount) => {
-			return this.overrides?.addMonths ? this.overrides.addMonths(date, amount) : addMonths(date, amount);
-		};
-		/**
-		* Adds the specified number of weeks to the given date.
-		*
-		* @param date The date to add weeks to.
-		* @param amount The number of weeks to add.
-		* @returns The new date with the weeks added.
-		*/
-		this.addWeeks = (date, amount) => {
-			return this.overrides?.addWeeks ? this.overrides.addWeeks(date, amount) : addWeeks(date, amount);
-		};
-		/**
-		* Adds the specified number of years to the given date.
-		*
-		* @param date The date to add years to.
-		* @param amount The number of years to add.
-		* @returns The new date with the years added.
-		*/
-		this.addYears = (date, amount) => {
-			return this.overrides?.addYears ? this.overrides.addYears(date, amount) : addYears(date, amount);
-		};
-		/**
-		* Returns the number of calendar days between the given dates.
-		*
-		* @param dateLeft The later date.
-		* @param dateRight The earlier date.
-		* @returns The number of calendar days between the dates.
-		*/
-		this.differenceInCalendarDays = (dateLeft, dateRight) => {
-			return this.overrides?.differenceInCalendarDays ? this.overrides.differenceInCalendarDays(dateLeft, dateRight) : differenceInCalendarDays(dateLeft, dateRight);
-		};
-		/**
-		* Returns the number of calendar months between the given dates.
-		*
-		* @param dateLeft The later date.
-		* @param dateRight The earlier date.
-		* @returns The number of calendar months between the dates.
-		*/
-		this.differenceInCalendarMonths = (dateLeft, dateRight) => {
-			return this.overrides?.differenceInCalendarMonths ? this.overrides.differenceInCalendarMonths(dateLeft, dateRight) : differenceInCalendarMonths(dateLeft, dateRight);
-		};
-		/**
-		* Returns the months between the given dates.
-		*
-		* @param interval The interval to get the months for.
-		*/
-		this.eachMonthOfInterval = (interval) => {
-			return this.overrides?.eachMonthOfInterval ? this.overrides.eachMonthOfInterval(interval) : eachMonthOfInterval(interval);
-		};
-		/**
-		* Returns the years between the given dates.
-		*
-		* @since 9.11.1
-		* @param interval The interval to get the years for.
-		* @returns The array of years in the interval.
-		*/
-		this.eachYearOfInterval = (interval) => {
-			const years = this.overrides?.eachYearOfInterval ? this.overrides.eachYearOfInterval(interval) : eachYearOfInterval(interval);
-			const uniqueYears = new Set(years.map((d) => this.getYear(d)));
-			if (uniqueYears.size === years.length) return years;
-			const yearsArray = [];
-			uniqueYears.forEach((y) => {
-				yearsArray.push(new Date(y, 0, 1));
-			});
-			return yearsArray;
-		};
-		/**
-		* Returns the end of the broadcast week for the given date.
-		*
-		* @param date The original date.
-		* @returns The end of the broadcast week.
-		*/
-		this.endOfBroadcastWeek = (date) => {
-			return this.overrides?.endOfBroadcastWeek ? this.overrides.endOfBroadcastWeek(date) : endOfBroadcastWeek(date, this);
-		};
-		/**
-		* Returns the end of the ISO week for the given date.
-		*
-		* @param date The original date.
-		* @returns The end of the ISO week.
-		*/
-		this.endOfISOWeek = (date) => {
-			return this.overrides?.endOfISOWeek ? this.overrides.endOfISOWeek(date) : endOfISOWeek(date);
-		};
-		/**
-		* Returns the end of the month for the given date.
-		*
-		* @param date The original date.
-		* @returns The end of the month.
-		*/
-		this.endOfMonth = (date) => {
-			return this.overrides?.endOfMonth ? this.overrides.endOfMonth(date) : endOfMonth(date);
-		};
-		/**
-		* Returns the end of the week for the given date.
-		*
-		* @param date The original date.
-		* @returns The end of the week.
-		*/
-		this.endOfWeek = (date, options) => {
-			return this.overrides?.endOfWeek ? this.overrides.endOfWeek(date, options) : endOfWeek(date, this.options);
-		};
-		/**
-		* Returns the end of the year for the given date.
-		*
-		* @param date The original date.
-		* @returns The end of the year.
-		*/
-		this.endOfYear = (date) => {
-			return this.overrides?.endOfYear ? this.overrides.endOfYear(date) : endOfYear(date);
-		};
-		/**
-		* Formats the given date using the specified format string.
-		*
-		* @param date The date to format.
-		* @param formatStr The format string.
-		* @returns The formatted date string.
-		*/
-		this.format = (date, formatStr, _options) => {
-			const formatted = this.overrides?.format ? this.overrides.format(date, formatStr, this.options) : format$5(date, formatStr, this.options);
-			if (this.options.numerals && this.options.numerals !== "latn") return this.replaceDigits(formatted);
-			return formatted;
-		};
-		/**
-		* Returns the ISO week number for the given date.
-		*
-		* @param date The date to get the ISO week number for.
-		* @returns The ISO week number.
-		*/
-		this.getISOWeek = (date) => {
-			return this.overrides?.getISOWeek ? this.overrides.getISOWeek(date) : getISOWeek(date);
-		};
-		/**
-		* Returns the month of the given date.
-		*
-		* @param date The date to get the month for.
-		* @returns The month.
-		*/
-		this.getMonth = (date, _options) => {
-			return this.overrides?.getMonth ? this.overrides.getMonth(date, this.options) : getMonth(date, this.options);
-		};
-		/**
-		* Returns the year of the given date.
-		*
-		* @param date The date to get the year for.
-		* @returns The year.
-		*/
-		this.getYear = (date, _options) => {
-			return this.overrides?.getYear ? this.overrides.getYear(date, this.options) : getYear(date, this.options);
-		};
-		/**
-		* Returns the local week number for the given date.
-		*
-		* @param date The date to get the week number for.
-		* @returns The week number.
-		*/
-		this.getWeek = (date, _options) => {
-			return this.overrides?.getWeek ? this.overrides.getWeek(date, this.options) : getWeek(date, this.options);
-		};
-		/**
-		* Checks if the first date is after the second date.
-		*
-		* @param date The date to compare.
-		* @param dateToCompare The date to compare with.
-		* @returns True if the first date is after the second date.
-		*/
-		this.isAfter = (date, dateToCompare) => {
-			return this.overrides?.isAfter ? this.overrides.isAfter(date, dateToCompare) : isAfter(date, dateToCompare);
-		};
-		/**
-		* Checks if the first date is before the second date.
-		*
-		* @param date The date to compare.
-		* @param dateToCompare The date to compare with.
-		* @returns True if the first date is before the second date.
-		*/
-		this.isBefore = (date, dateToCompare) => {
-			return this.overrides?.isBefore ? this.overrides.isBefore(date, dateToCompare) : isBefore(date, dateToCompare);
-		};
-		/**
-		* Checks if the given value is a Date object.
-		*
-		* @param value The value to check.
-		* @returns True if the value is a Date object.
-		*/
-		this.isDate = (value) => {
-			return this.overrides?.isDate ? this.overrides.isDate(value) : isDate(value);
-		};
-		/**
-		* Checks if the given dates are on the same day.
-		*
-		* @param dateLeft The first date to compare.
-		* @param dateRight The second date to compare.
-		* @returns True if the dates are on the same day.
-		*/
-		this.isSameDay = (dateLeft, dateRight) => {
-			return this.overrides?.isSameDay ? this.overrides.isSameDay(dateLeft, dateRight) : isSameDay(dateLeft, dateRight);
-		};
-		/**
-		* Checks if the given dates are in the same month.
-		*
-		* @param dateLeft The first date to compare.
-		* @param dateRight The second date to compare.
-		* @returns True if the dates are in the same month.
-		*/
-		this.isSameMonth = (dateLeft, dateRight) => {
-			return this.overrides?.isSameMonth ? this.overrides.isSameMonth(dateLeft, dateRight) : isSameMonth(dateLeft, dateRight);
-		};
-		/**
-		* Checks if the given dates are in the same year.
-		*
-		* @param dateLeft The first date to compare.
-		* @param dateRight The second date to compare.
-		* @returns True if the dates are in the same year.
-		*/
-		this.isSameYear = (dateLeft, dateRight) => {
-			return this.overrides?.isSameYear ? this.overrides.isSameYear(dateLeft, dateRight) : isSameYear(dateLeft, dateRight);
-		};
-		/**
-		* Returns the latest date in the given array of dates.
-		*
-		* @param dates The array of dates to compare.
-		* @returns The latest date.
-		*/
-		this.max = (dates) => {
-			return this.overrides?.max ? this.overrides.max(dates) : max(dates);
-		};
-		/**
-		* Returns the earliest date in the given array of dates.
-		*
-		* @param dates The array of dates to compare.
-		* @returns The earliest date.
-		*/
-		this.min = (dates) => {
-			return this.overrides?.min ? this.overrides.min(dates) : min(dates);
-		};
-		/**
-		* Sets the month of the given date.
-		*
-		* @param date The date to set the month on.
-		* @param month The month to set (0-11).
-		* @returns The new date with the month set.
-		*/
-		this.setMonth = (date, month) => {
-			return this.overrides?.setMonth ? this.overrides.setMonth(date, month) : setMonth(date, month);
-		};
-		/**
-		* Sets the year of the given date.
-		*
-		* @param date The date to set the year on.
-		* @param year The year to set.
-		* @returns The new date with the year set.
-		*/
-		this.setYear = (date, year) => {
-			return this.overrides?.setYear ? this.overrides.setYear(date, year) : setYear(date, year);
-		};
-		/**
-		* Returns the start of the broadcast week for the given date.
-		*
-		* @param date The original date.
-		* @returns The start of the broadcast week.
-		*/
-		this.startOfBroadcastWeek = (date, _dateLib) => {
-			return this.overrides?.startOfBroadcastWeek ? this.overrides.startOfBroadcastWeek(date, this) : startOfBroadcastWeek(date, this);
-		};
-		/**
-		* Returns the start of the day for the given date.
-		*
-		* @param date The original date.
-		* @returns The start of the day.
-		*/
-		this.startOfDay = (date) => {
-			return this.overrides?.startOfDay ? this.overrides.startOfDay(date) : startOfDay(date);
-		};
-		/**
-		* Returns the start of the ISO week for the given date.
-		*
-		* @param date The original date.
-		* @returns The start of the ISO week.
-		*/
-		this.startOfISOWeek = (date) => {
-			return this.overrides?.startOfISOWeek ? this.overrides.startOfISOWeek(date) : startOfISOWeek(date);
-		};
-		/**
-		* Returns the start of the month for the given date.
-		*
-		* @param date The original date.
-		* @returns The start of the month.
-		*/
-		this.startOfMonth = (date) => {
-			return this.overrides?.startOfMonth ? this.overrides.startOfMonth(date) : startOfMonth(date);
-		};
-		/**
-		* Returns the start of the week for the given date.
-		*
-		* @param date The original date.
-		* @returns The start of the week.
-		*/
-		this.startOfWeek = (date, _options) => {
-			return this.overrides?.startOfWeek ? this.overrides.startOfWeek(date, this.options) : startOfWeek(date, this.options);
-		};
-		/**
-		* Returns the start of the year for the given date.
-		*
-		* @param date The original date.
-		* @returns The start of the year.
-		*/
-		this.startOfYear = (date) => {
-			return this.overrides?.startOfYear ? this.overrides.startOfYear(date) : startOfYear(date);
-		};
-		this.options = {
-			locale: enUS,
-			...options
-		};
-		this.overrides = overrides;
-	}
-	/**
-	* Generates a mapping of Arabic digits (0-9) to the target numbering system
-	* digits.
-	*
-	* @since 9.5.0
-	* @returns A record mapping Arabic digits to the target numerals.
-	*/
-	getDigitMap() {
-		const { numerals = "latn" } = this.options;
-		const formatter = new Intl.NumberFormat("en-US", { numberingSystem: numerals });
-		const digitMap = {};
-		for (let i = 0; i < 10; i++) digitMap[i.toString()] = formatter.format(i);
-		return digitMap;
-	}
-	/**
-	* Replaces Arabic digits in a string with the target numbering system digits.
-	*
-	* @since 9.5.0
-	* @param input The string containing Arabic digits.
-	* @returns The string with digits replaced.
-	*/
-	replaceDigits(input) {
-		const digitMap = this.getDigitMap();
-		return input.replace(/\d/g, (digit) => digitMap[digit] || digit);
-	}
-	/**
-	* Formats a number using the configured numbering system.
-	*
-	* @since 9.5.0
-	* @param value The number to format.
-	* @returns The formatted number as a string.
-	*/
-	formatNumber(value) {
-		return this.replaceDigits(value.toString());
-	}
-	/**
-	* Returns the preferred ordering for month and year labels for the current
-	* locale.
-	*/
-	getMonthYearOrder() {
-		const code = this.options.locale?.code;
-		if (!code) return "month-first";
-		return DateLib.yearFirstLocales.has(code) ? "year-first" : "month-first";
-	}
-	/**
-	* Formats the month/year pair respecting locale conventions.
-	*
-	* @since 9.11.0
-	*/
-	formatMonthYear(date) {
-		const { locale, timeZone, numerals } = this.options;
-		const localeCode = locale?.code;
-		if (localeCode && DateLib.yearFirstLocales.has(localeCode)) try {
-			return new Intl.DateTimeFormat(localeCode, {
-				month: "long",
-				year: "numeric",
-				timeZone,
-				numberingSystem: numerals
-			}).format(date);
-		} catch {}
-		const pattern = this.getMonthYearOrder() === "year-first" ? "y LLLL" : "LLLL y";
-		return this.format(date, pattern);
-	}
-};
-DateLib.yearFirstLocales = /* @__PURE__ */ new Set([
-	"eu",
-	"hu",
-	"ja",
-	"ja-Hira",
-	"ja-JP",
-	"ko",
-	"ko-KR",
-	"lt",
-	"lt-LT",
-	"lv",
-	"lv-LV",
-	"mn",
-	"mn-MN",
-	"zh",
-	"zh-CN",
-	"zh-HK",
-	"zh-TW"
-]);
-/**
-* The default date library with English locale.
-*
-* @since 9.2.0
-*/
-const defaultDateLib = new DateLib();
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/classes/CalendarDay.js
-/**
-* Represents a day displayed in the calendar.
-*
-* In DayPicker, a `CalendarDay` is a wrapper around a `Date` object that
-* provides additional information about the day, such as whether it belongs to
-* the displayed month.
-*/
-var CalendarDay = class {
-	constructor(date, displayMonth, dateLib = defaultDateLib) {
-		this.date = date;
-		this.displayMonth = displayMonth;
-		this.outside = Boolean(displayMonth && !dateLib.isSameMonth(date, displayMonth));
-		this.dateLib = dateLib;
-		this.isoDate = dateLib.format(date, "yyyy-MM-dd");
-		this.displayMonthId = dateLib.format(displayMonth, "yyyy-MM");
-		this.dateMonthId = dateLib.format(date, "yyyy-MM");
-	}
-	/**
-	* Checks if this day is equal to another `CalendarDay`, considering both the
-	* date and the displayed month.
-	*
-	* @param day The `CalendarDay` to compare with.
-	* @returns `true` if the days are equal, otherwise `false`.
-	*/
-	isEqualTo(day) {
-		return this.dateLib.isSameDay(day.date, this.date) && this.dateLib.isSameMonth(day.displayMonth, this.displayMonth);
-	}
-};
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/classes/CalendarMonth.js
-/**
-* Represents a month in a calendar year.
-*
-* A `CalendarMonth` contains the weeks within the month and the date of the
-* month.
-*/
-var CalendarMonth = class {
-	constructor(month, weeks) {
-		this.date = month;
-		this.weeks = weeks;
-	}
-};
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/classes/CalendarWeek.js
-/**
-* Represents a week in a calendar month.
-*
-* A `CalendarWeek` contains the days within the week and the week number.
-*/
-var CalendarWeek = class {
-	constructor(weekNumber, days) {
-		this.days = days;
-		this.weekNumber = weekNumber;
-	}
-};
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/CaptionLabel.js
-/**
-* Render the label in the month caption.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function CaptionLabel(props) {
-	return import__wp_global_react.default.createElement("span", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Chevron.js
-/**
-* Render the chevron icon used in the navigation buttons and dropdowns.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Chevron(props) {
-	const { size = 24, orientation = "left", className, style } = props;
-	return import__wp_global_react.default.createElement("svg", {
-		className,
-		style,
-		width: size,
-		height: size,
-		viewBox: "0 0 24 24"
-	}, orientation === "up" && import__wp_global_react.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }), orientation === "down" && import__wp_global_react.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }), orientation === "left" && import__wp_global_react.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }), orientation === "right" && import__wp_global_react.default.createElement("polygon", { points: "8 18.112 14.18888889 12 8 5.87733333 9.91111111 4 18 12 9.91111111 20" }));
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Day.js
-/**
-* Render a grid cell for a specific day in the calendar.
-*
-* Handles interaction and focus for the day. If you only need to change the
-* content of the day cell, consider swapping the `DayButton` component
-* instead.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Day$1(props) {
-	const { day, modifiers, ...tdProps } = props;
-	return import__wp_global_react.default.createElement("td", { ...tdProps });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/DayButton.js
-/**
-* Render a button for a specific day in the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function DayButton(props) {
-	const { day, modifiers, ...buttonProps } = props;
-	const ref = import__wp_global_react.default.useRef(null);
-	import__wp_global_react.default.useEffect(() => {
-		if (modifiers.focused) ref.current?.focus();
-	}, [modifiers.focused]);
-	return import__wp_global_react.default.createElement("button", {
-		ref,
-		...buttonProps
-	});
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/UI.js
-/**
-* Enum representing the UI elements composing DayPicker. These elements are
-* mapped to {@link CustomComponents}, {@link ClassNames}, and {@link Styles}.
-*
-* Some elements are extended by flags and modifiers.
-*/
-var UI;
-(function(UI) {
-	/** The root component displaying the months and the navigation bar. */
-	UI["Root"] = "root";
-	/** The Chevron SVG element used by navigation buttons and dropdowns. */
-	UI["Chevron"] = "chevron";
-	/**
-	* The grid cell with the day's date. Extended by {@link DayFlag} and
-	* {@link SelectionState}.
-	*/
-	UI["Day"] = "day";
-	/** The button containing the formatted day's date, inside the grid cell. */
-	UI["DayButton"] = "day_button";
-	/** The caption label of the month (when not showing the dropdown navigation). */
-	UI["CaptionLabel"] = "caption_label";
-	/** The container of the dropdown navigation (when enabled). */
-	UI["Dropdowns"] = "dropdowns";
-	/** The dropdown element to select for years and months. */
-	UI["Dropdown"] = "dropdown";
-	/** The container element of the dropdown. */
-	UI["DropdownRoot"] = "dropdown_root";
-	/** The root element of the footer. */
-	UI["Footer"] = "footer";
-	/** The month grid. */
-	UI["MonthGrid"] = "month_grid";
-	/** Contains the dropdown navigation or the caption label. */
-	UI["MonthCaption"] = "month_caption";
-	/** The dropdown with the months. */
-	UI["MonthsDropdown"] = "months_dropdown";
-	/** Wrapper of the month grid. */
-	UI["Month"] = "month";
-	/** The container of the displayed months. */
-	UI["Months"] = "months";
-	/** The navigation bar with the previous and next buttons. */
-	UI["Nav"] = "nav";
-	/**
-	* The next month button in the navigation. *
-	*
-	* @since 9.1.0
-	*/
-	UI["NextMonthButton"] = "button_next";
-	/**
-	* The previous month button in the navigation.
-	*
-	* @since 9.1.0
-	*/
-	UI["PreviousMonthButton"] = "button_previous";
-	/** The row containing the week. */
-	UI["Week"] = "week";
-	/** The group of row weeks in a month (`tbody`). */
-	UI["Weeks"] = "weeks";
-	/** The column header with the weekday. */
-	UI["Weekday"] = "weekday";
-	/** The row grouping the weekdays in the column headers. */
-	UI["Weekdays"] = "weekdays";
-	/** The cell containing the week number. */
-	UI["WeekNumber"] = "week_number";
-	/** The cell header of the week numbers column. */
-	UI["WeekNumberHeader"] = "week_number_header";
-	/** The dropdown with the years. */
-	UI["YearsDropdown"] = "years_dropdown";
-})(UI || (UI = {}));
-/** Enum representing flags for the {@link UI | UI.Day} element. */
-var DayFlag;
-(function(DayFlag) {
-	/** The day is disabled. */
-	DayFlag["disabled"] = "disabled";
-	/** The day is hidden. */
-	DayFlag["hidden"] = "hidden";
-	/** The day is outside the current month. */
-	DayFlag["outside"] = "outside";
-	/** The day is focused. */
-	DayFlag["focused"] = "focused";
-	/** The day is today. */
-	DayFlag["today"] = "today";
-})(DayFlag || (DayFlag = {}));
-/**
-* Enum representing selection states that can be applied to the
-* {@link UI | UI.Day} element in selection mode.
-*/
-var SelectionState;
-(function(SelectionState) {
-	/** The day is at the end of a selected range. */
-	SelectionState["range_end"] = "range_end";
-	/** The day is at the middle of a selected range. */
-	SelectionState["range_middle"] = "range_middle";
-	/** The day is at the start of a selected range. */
-	SelectionState["range_start"] = "range_start";
-	/** The day is selected. */
-	SelectionState["selected"] = "selected";
-})(SelectionState || (SelectionState = {}));
-/**
-* Enum representing different animation states for transitioning between
-* months.
-*/
-var Animation;
-(function(Animation) {
-	/** The entering weeks when they appear before the exiting month. */
-	Animation["weeks_before_enter"] = "weeks_before_enter";
-	/** The exiting weeks when they disappear before the entering month. */
-	Animation["weeks_before_exit"] = "weeks_before_exit";
-	/** The entering weeks when they appear after the exiting month. */
-	Animation["weeks_after_enter"] = "weeks_after_enter";
-	/** The exiting weeks when they disappear after the entering month. */
-	Animation["weeks_after_exit"] = "weeks_after_exit";
-	/** The entering caption when it appears after the exiting month. */
-	Animation["caption_after_enter"] = "caption_after_enter";
-	/** The exiting caption when it disappears after the entering month. */
-	Animation["caption_after_exit"] = "caption_after_exit";
-	/** The entering caption when it appears before the exiting month. */
-	Animation["caption_before_enter"] = "caption_before_enter";
-	/** The exiting caption when it disappears before the entering month. */
-	Animation["caption_before_exit"] = "caption_before_exit";
-})(Animation || (Animation = {}));
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/useDayPicker.js
-/** @ignore */
-const dayPickerContext = (0, import__wp_global_react.createContext)(void 0);
-/**
-* Provides access to the DayPicker context, which includes properties and
-* methods to interact with the DayPicker component. This hook must be used
-* within a custom component.
-*
-* @template T - Use this type to refine the returned context type with a
-*   specific selection mode.
-* @returns The context to work with DayPicker.
-* @throws {Error} If the hook is used outside of a DayPicker provider.
-* @group Hooks
-* @see https://daypicker.dev/guides/custom-components
-*/
-function useDayPicker() {
-	const context = (0, import__wp_global_react.useContext)(dayPickerContext);
-	if (context === void 0) throw new Error("useDayPicker() must be used within a custom component.");
-	return context;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Dropdown.js
-/**
-* Render a dropdown component for navigation in the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Dropdown$2(props) {
-	const { options, className, ...selectProps } = props;
-	const { classNames, components, styles } = useDayPicker();
-	const cssClassSelect = [classNames[UI.Dropdown], className].join(" ");
-	const selectedOption = options?.find(({ value }) => value === selectProps.value);
-	return import__wp_global_react.default.createElement("span", {
-		"data-disabled": selectProps.disabled,
-		className: classNames[UI.DropdownRoot],
-		style: styles?.[UI.DropdownRoot]
-	}, import__wp_global_react.default.createElement(components.Select, {
-		className: cssClassSelect,
-		...selectProps
-	}, options?.map(({ value, label, disabled }) => import__wp_global_react.default.createElement(components.Option, {
-		key: value,
-		value,
-		disabled
-	}, label))), import__wp_global_react.default.createElement("span", {
-		className: classNames[UI.CaptionLabel],
-		style: styles?.[UI.CaptionLabel],
-		"aria-hidden": true
-	}, selectedOption?.label, import__wp_global_react.default.createElement(components.Chevron, {
-		orientation: "down",
-		size: 18,
-		className: classNames[UI.Chevron],
-		style: styles?.[UI.Chevron]
-	})));
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/DropdownNav.js
-/**
-* Render the navigation dropdowns for the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function DropdownNav(props) {
-	return import__wp_global_react.default.createElement("div", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Footer.js
-/**
-* Render the footer of the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Footer(props) {
-	return import__wp_global_react.default.createElement("div", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Month.js
-/**
-* Render the grid with the weekday header row and the weeks for a specific
-* month.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Month(props) {
-	const { calendarMonth, displayIndex, ...divProps } = props;
-	return import__wp_global_react.default.createElement("div", { ...divProps }, props.children);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/MonthCaption.js
-/**
-* Render the caption for a month in the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function MonthCaption(props) {
-	const { calendarMonth, displayIndex, ...divProps } = props;
-	return import__wp_global_react.default.createElement("div", { ...divProps });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/MonthGrid.js
-/**
-* Render the grid of days for a specific month.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function MonthGrid(props) {
-	return import__wp_global_react.default.createElement("table", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Months.js
-/**
-* Render a container wrapping the month grids.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Months(props) {
-	return import__wp_global_react.default.createElement("div", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
-/**
-* Render a dropdown to navigate between months in the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function MonthsDropdown(props) {
-	const { components } = useDayPicker();
-	return import__wp_global_react.default.createElement(components.Dropdown, { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Nav.js
-/**
-* Render the navigation toolbar with buttons to navigate between months.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Nav(props) {
-	const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
-	const { components, classNames, styles, labels: { labelPrevious, labelNext } } = useDayPicker();
-	const handleNextClick = (0, import__wp_global_react.useCallback)((e) => {
-		if (nextMonth) onNextClick?.(e);
-	}, [nextMonth, onNextClick]);
-	const handlePreviousClick = (0, import__wp_global_react.useCallback)((e) => {
-		if (previousMonth) onPreviousClick?.(e);
-	}, [previousMonth, onPreviousClick]);
-	return import__wp_global_react.default.createElement("nav", { ...navProps }, import__wp_global_react.default.createElement(components.PreviousMonthButton, {
-		type: "button",
-		className: classNames[UI.PreviousMonthButton],
-		style: styles?.[UI.PreviousMonthButton],
-		tabIndex: previousMonth ? void 0 : -1,
-		"aria-disabled": previousMonth ? void 0 : true,
-		"aria-label": labelPrevious(previousMonth),
-		onClick: handlePreviousClick
-	}, import__wp_global_react.default.createElement(components.Chevron, {
-		disabled: previousMonth ? void 0 : true,
-		className: classNames[UI.Chevron],
-		style: styles?.[UI.Chevron],
-		orientation: "left"
-	})), import__wp_global_react.default.createElement(components.NextMonthButton, {
-		type: "button",
-		className: classNames[UI.NextMonthButton],
-		style: styles?.[UI.NextMonthButton],
-		tabIndex: nextMonth ? void 0 : -1,
-		"aria-disabled": nextMonth ? void 0 : true,
-		"aria-label": labelNext(nextMonth),
-		onClick: handleNextClick
-	}, import__wp_global_react.default.createElement(components.Chevron, {
-		disabled: nextMonth ? void 0 : true,
-		orientation: "right",
-		className: classNames[UI.Chevron],
-		style: styles?.[UI.Chevron]
-	})));
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/NextMonthButton.js
-/**
-* Render the button to navigate to the next month in the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function NextMonthButton$1(props) {
-	return import__wp_global_react.default.createElement("button", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Option.js
-/**
-* Render an `option` element.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Option(props) {
-	return import__wp_global_react.default.createElement("option", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/PreviousMonthButton.js
-/**
-* Render the button to navigate to the previous month in the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function PreviousMonthButton$1(props) {
-	return import__wp_global_react.default.createElement("button", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Root.js
-/**
-* Render the root element of the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Root$3(props) {
-	const { rootRef, ...rest } = props;
-	return import__wp_global_react.default.createElement("div", {
-		...rest,
-		ref: rootRef
-	});
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Select.js
-/**
-* Render a `select` element.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Select$1(props) {
-	return import__wp_global_react.default.createElement("select", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Week.js
-/**
-* Render a table row representing a week in the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Week(props) {
-	const { week, ...trProps } = props;
-	return import__wp_global_react.default.createElement("tr", { ...trProps });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Weekday.js
-/**
-* Render a table header cell with the name of a weekday (e.g., "Mo", "Tu").
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Weekday(props) {
-	return import__wp_global_react.default.createElement("th", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Weekdays.js
-/**
-* Render the table row containing the weekday names.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Weekdays(props) {
-	return import__wp_global_react.default.createElement("thead", { "aria-hidden": true }, import__wp_global_react.default.createElement("tr", { ...props }));
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/WeekNumber.js
-/**
-* Render a table cell displaying the number of the week.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function WeekNumber(props) {
-	const { week, ...thProps } = props;
-	return import__wp_global_react.default.createElement("th", { ...thProps });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/WeekNumberHeader.js
-/**
-* Render the header cell for the week numbers column.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function WeekNumberHeader(props) {
-	return import__wp_global_react.default.createElement("th", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/Weeks.js
-/**
-* Render the container for the weeks in the month grid.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Weeks(props) {
-	return import__wp_global_react.default.createElement("tbody", { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/YearsDropdown.js
-/**
-* Render a dropdown to navigate between years in the calendar.
-*
-* @group Components
-* @see https://daypicker.dev/guides/custom-components
-*/
-function YearsDropdown(props) {
-	const { components } = useDayPicker();
-	return import__wp_global_react.default.createElement(components.Dropdown, { ...props });
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/components/custom-components.js
-var custom_components_exports = /* @__PURE__ */ __exportAll({
-	CaptionLabel: () => CaptionLabel,
-	Chevron: () => Chevron,
-	Day: () => Day$1,
-	DayButton: () => DayButton,
-	Dropdown: () => Dropdown$2,
-	DropdownNav: () => DropdownNav,
-	Footer: () => Footer,
-	Month: () => Month,
-	MonthCaption: () => MonthCaption,
-	MonthGrid: () => MonthGrid,
-	Months: () => Months,
-	MonthsDropdown: () => MonthsDropdown,
-	Nav: () => Nav,
-	NextMonthButton: () => NextMonthButton$1,
-	Option: () => Option,
-	PreviousMonthButton: () => PreviousMonthButton$1,
-	Root: () => Root$3,
-	Select: () => Select$1,
-	Week: () => Week,
-	WeekNumber: () => WeekNumber,
-	WeekNumberHeader: () => WeekNumberHeader,
-	Weekday: () => Weekday,
-	Weekdays: () => Weekdays,
-	Weeks: () => Weeks,
-	YearsDropdown: () => YearsDropdown
-});
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/rangeIncludesDate.js
-/**
-* Checks if a given date is within a specified date range.
-*
-* @since 9.0.0
-* @param range - The date range to check against.
-* @param date - The date to check.
-* @param excludeEnds - If `true`, the range's start and end dates are excluded.
-* @param dateLib - The date utility library instance.
-* @returns `true` if the date is within the range, otherwise `false`.
-* @group Utilities
-*/
-function rangeIncludesDate(range, date, excludeEnds = false, dateLib = defaultDateLib) {
-	let { from, to } = range;
-	const { differenceInCalendarDays, isSameDay } = dateLib;
-	if (from && to) {
-		if (differenceInCalendarDays(to, from) < 0) [from, to] = [to, from];
-		return differenceInCalendarDays(date, from) >= (excludeEnds ? 1 : 0) && differenceInCalendarDays(to, date) >= (excludeEnds ? 1 : 0);
-	}
-	if (!excludeEnds && to) return isSameDay(to, date);
-	if (!excludeEnds && from) return isSameDay(from, date);
-	return false;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/typeguards.js
-/**
-* Checks if the given value is of type {@link DateInterval}.
-*
-* @param matcher - The value to check.
-* @returns `true` if the value is a {@link DateInterval}, otherwise `false`.
-* @group Utilities
-*/
-function isDateInterval(matcher) {
-	return Boolean(matcher && typeof matcher === "object" && "before" in matcher && "after" in matcher);
-}
-/**
-* Checks if the given value is of type {@link DateRange}.
-*
-* @param value - The value to check.
-* @returns `true` if the value is a {@link DateRange}, otherwise `false`.
-* @group Utilities
-*/
-function isDateRange(value) {
-	return Boolean(value && typeof value === "object" && "from" in value);
-}
-/**
-* Checks if the given value is of type {@link DateAfter}.
-*
-* @param value - The value to check.
-* @returns `true` if the value is a {@link DateAfter}, otherwise `false`.
-* @group Utilities
-*/
-function isDateAfterType(value) {
-	return Boolean(value && typeof value === "object" && "after" in value);
-}
-/**
-* Checks if the given value is of type {@link DateBefore}.
-*
-* @param value - The value to check.
-* @returns `true` if the value is a {@link DateBefore}, otherwise `false`.
-* @group Utilities
-*/
-function isDateBeforeType(value) {
-	return Boolean(value && typeof value === "object" && "before" in value);
-}
-/**
-* Checks if the given value is of type {@link DayOfWeek}.
-*
-* @param value - The value to check.
-* @returns `true` if the value is a {@link DayOfWeek}, otherwise `false`.
-* @group Utilities
-*/
-function isDayOfWeekType(value) {
-	return Boolean(value && typeof value === "object" && "dayOfWeek" in value);
-}
-/**
-* Checks if the given value is an array of valid dates.
-*
-* @private
-* @param value - The value to check.
-* @param dateLib - The date utility library instance.
-* @returns `true` if the value is an array of valid dates, otherwise `false`.
-*/
-function isDatesArray(value, dateLib) {
-	return Array.isArray(value) && value.every(dateLib.isDate);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/dateMatchModifiers.js
-/**
-* Checks if a given date matches at least one of the specified {@link Matcher}.
-*
-* @param date - The date to check.
-* @param matchers - The matchers to check against.
-* @param dateLib - The date utility library instance.
-* @returns `true` if the date matches any of the matchers, otherwise `false`.
-* @group Utilities
-*/
-function dateMatchModifiers(date, matchers, dateLib = defaultDateLib) {
-	const matchersArr = !Array.isArray(matchers) ? [matchers] : matchers;
-	const { isSameDay, differenceInCalendarDays, isAfter } = dateLib;
-	return matchersArr.some((matcher) => {
-		if (typeof matcher === "boolean") return matcher;
-		if (dateLib.isDate(matcher)) return isSameDay(date, matcher);
-		if (isDatesArray(matcher, dateLib)) return matcher.some((matcherDate) => isSameDay(date, matcherDate));
-		if (isDateRange(matcher)) return rangeIncludesDate(matcher, date, false, dateLib);
-		if (isDayOfWeekType(matcher)) {
-			if (!Array.isArray(matcher.dayOfWeek)) return matcher.dayOfWeek === date.getDay();
-			return matcher.dayOfWeek.includes(date.getDay());
-		}
-		if (isDateInterval(matcher)) {
-			const diffBefore = differenceInCalendarDays(matcher.before, date);
-			const diffAfter = differenceInCalendarDays(matcher.after, date);
-			const isDayBefore = diffBefore > 0;
-			const isDayAfter = diffAfter < 0;
-			if (isAfter(matcher.before, matcher.after)) return isDayAfter && isDayBefore;
-			else return isDayBefore || isDayAfter;
-		}
-		if (isDateAfterType(matcher)) return differenceInCalendarDays(date, matcher.after) > 0;
-		if (isDateBeforeType(matcher)) return differenceInCalendarDays(matcher.before, date) > 0;
-		if (typeof matcher === "function") return matcher(date);
-		return false;
-	});
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/createGetModifiers.js
-/**
-* Creates a function to retrieve the modifiers for a given day.
-*
-* This function calculates both internal and custom modifiers for each day
-* based on the provided calendar days and DayPicker props.
-*
-* @private
-* @param days The array of `CalendarDay` objects to process.
-* @param props The DayPicker props, including modifiers and configuration
-*   options.
-* @param dateLib The date library to use for date manipulation.
-* @returns A function that retrieves the modifiers for a given `CalendarDay`.
-*/
-function createGetModifiers(days, props, navStart, navEnd, dateLib) {
-	const { disabled, hidden, modifiers, showOutsideDays, broadcastCalendar, today = dateLib.today() } = props;
-	const { isSameDay, isSameMonth, startOfMonth, isBefore, endOfMonth, isAfter } = dateLib;
-	const computedNavStart = navStart && startOfMonth(navStart);
-	const computedNavEnd = navEnd && endOfMonth(navEnd);
-	const internalModifiersMap = {
-		[DayFlag.focused]: [],
-		[DayFlag.outside]: [],
-		[DayFlag.disabled]: [],
-		[DayFlag.hidden]: [],
-		[DayFlag.today]: []
-	};
-	const customModifiersMap = {};
-	for (const day of days) {
-		const { date, displayMonth } = day;
-		const isOutside = Boolean(displayMonth && !isSameMonth(date, displayMonth));
-		const isBeforeNavStart = Boolean(computedNavStart && isBefore(date, computedNavStart));
-		const isAfterNavEnd = Boolean(computedNavEnd && isAfter(date, computedNavEnd));
-		const isDisabled = Boolean(disabled && dateMatchModifiers(date, disabled, dateLib));
-		const isHidden = Boolean(hidden && dateMatchModifiers(date, hidden, dateLib)) || isBeforeNavStart || isAfterNavEnd || !broadcastCalendar && !showOutsideDays && isOutside || broadcastCalendar && showOutsideDays === false && isOutside;
-		const isToday = isSameDay(date, today);
-		if (isOutside) internalModifiersMap.outside.push(day);
-		if (isDisabled) internalModifiersMap.disabled.push(day);
-		if (isHidden) internalModifiersMap.hidden.push(day);
-		if (isToday) internalModifiersMap.today.push(day);
-		if (modifiers) Object.keys(modifiers).forEach((name) => {
-			const modifierValue = modifiers?.[name];
-			if (!(modifierValue ? dateMatchModifiers(date, modifierValue, dateLib) : false)) return;
-			if (customModifiersMap[name]) customModifiersMap[name].push(day);
-			else customModifiersMap[name] = [day];
-		});
-	}
-	return (day) => {
-		const dayFlags = {
-			[DayFlag.focused]: false,
-			[DayFlag.disabled]: false,
-			[DayFlag.hidden]: false,
-			[DayFlag.outside]: false,
-			[DayFlag.today]: false
-		};
-		const customModifiers = {};
-		for (const name in internalModifiersMap) dayFlags[name] = internalModifiersMap[name].some((d) => d === day);
-		for (const name in customModifiersMap) customModifiers[name] = customModifiersMap[name].some((d) => d === day);
-		return {
-			...dayFlags,
-			...customModifiers
-		};
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getClassNamesForModifiers.js
-/**
-* Returns the class names for a day based on its modifiers.
-*
-* This function combines the base class name for the day with any class names
-* associated with active modifiers.
-*
-* @param modifiers The modifiers applied to the day.
-* @param classNames The base class names for the calendar elements.
-* @param modifiersClassNames The class names associated with specific
-*   modifiers.
-* @returns An array of class names for the day.
-*/
-function getClassNamesForModifiers(modifiers, classNames, modifiersClassNames = {}) {
-	return Object.entries(modifiers).filter(([, active]) => active === true).reduce((previousValue, [key]) => {
-		if (modifiersClassNames[key]) previousValue.push(modifiersClassNames[key]);
-		else if (classNames[DayFlag[key]]) previousValue.push(classNames[DayFlag[key]]);
-		else if (classNames[SelectionState[key]]) previousValue.push(classNames[SelectionState[key]]);
-		return previousValue;
-	}, [classNames[UI.Day]]);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getComponents.js
-/**
-* Merges custom components from the props with the default components.
-*
-* This function ensures that any custom components provided in the props
-* override the default components.
-*
-* @param customComponents The custom components provided in the DayPicker
-*   props.
-* @returns An object containing the merged components.
-*/
-function getComponents(customComponents) {
-	return {
-		...custom_components_exports,
-		...customComponents
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getDataAttributes.js
-/**
-* Extracts `data-` attributes from the DayPicker props.
-*
-* This function collects all `data-` attributes from the props and adds
-* additional attributes based on the DayPicker configuration.
-*
-* @param props The DayPicker props.
-* @returns An object containing the `data-` attributes.
-*/
-function getDataAttributes(props) {
-	const dataAttributes = {
-		"data-mode": props.mode ?? void 0,
-		"data-required": "required" in props ? props.required : void 0,
-		"data-multiple-months": props.numberOfMonths && props.numberOfMonths > 1 || void 0,
-		"data-week-numbers": props.showWeekNumber || void 0,
-		"data-broadcast-calendar": props.broadcastCalendar || void 0,
-		"data-nav-layout": props.navLayout || void 0
-	};
-	Object.entries(props).forEach(([key, val]) => {
-		if (key.startsWith("data-")) dataAttributes[key] = val;
-	});
-	return dataAttributes;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getDefaultClassNames.js
-/**
-* Returns the default class names for the UI elements.
-*
-* This function generates a mapping of default class names for various UI
-* elements, day flags, selection states, and animations.
-*
-* @returns An object containing the default class names.
-* @group Utilities
-*/
-function getDefaultClassNames() {
-	const classNames = {};
-	for (const key in UI) classNames[UI[key]] = `rdp-${UI[key]}`;
-	for (const key in DayFlag) classNames[DayFlag[key]] = `rdp-${DayFlag[key]}`;
-	for (const key in SelectionState) classNames[SelectionState[key]] = `rdp-${SelectionState[key]}`;
-	for (const key in Animation) classNames[Animation[key]] = `rdp-${Animation[key]}`;
-	return classNames;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/formatters/formatCaption.js
-/**
-* Formats the caption of the month.
-*
-* @defaultValue Locale-specific month/year order (e.g., "November 2022").
-* @param month The date representing the month.
-* @param options Configuration options for the date library.
-* @param dateLib The date library to use for formatting. If not provided, a new
-*   instance is created.
-* @returns The formatted caption as a string.
-* @group Formatters
-* @see https://daypicker.dev/docs/translation#custom-formatters
-*/
-function formatCaption(month, options, dateLib) {
-	return (dateLib ?? new DateLib(options)).formatMonthYear(month);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/formatters/formatDay.js
-/**
-* Formats the day date shown in the day cell.
-*
-* @defaultValue `d` (e.g., "1").
-* @param date The date to format.
-* @param options Configuration options for the date library.
-* @param dateLib The date library to use for formatting. If not provided, a new
-*   instance is created.
-* @returns The formatted day as a string.
-* @group Formatters
-* @see https://daypicker.dev/docs/translation#custom-formatters
-*/
-function formatDay(date, options, dateLib) {
-	return (dateLib ?? new DateLib(options)).format(date, "d");
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/formatters/formatMonthDropdown.js
-/**
-* Formats the month for the dropdown option label.
-*
-* @defaultValue The localized full month name.
-* @param month The date representing the month.
-* @param dateLib The date library to use for formatting. Defaults to
-*   `defaultDateLib`.
-* @returns The formatted month name as a string.
-* @group Formatters
-* @see https://daypicker.dev/docs/translation#custom-formatters
-*/
-function formatMonthDropdown(month, dateLib = defaultDateLib) {
-	return dateLib.format(month, "LLLL");
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/formatters/formatWeekdayName.js
-/**
-* Formats the name of a weekday to be displayed in the weekdays header.
-*
-* @defaultValue `cccccc` (e.g., "Mo" for Monday).
-* @param weekday The date representing the weekday.
-* @param options Configuration options for the date library.
-* @param dateLib The date library to use for formatting. If not provided, a new
-*   instance is created.
-* @returns The formatted weekday name as a string.
-* @group Formatters
-* @see https://daypicker.dev/docs/translation#custom-formatters
-*/
-function formatWeekdayName(weekday, options, dateLib) {
-	return (dateLib ?? new DateLib(options)).format(weekday, "cccccc");
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/formatters/formatWeekNumber.js
-/**
-* Formats the week number.
-*
-* @defaultValue The week number as a string, with a leading zero for single-digit numbers.
-* @param weekNumber The week number to format.
-* @param dateLib The date library to use for formatting. Defaults to
-*   `defaultDateLib`.
-* @returns The formatted week number as a string.
-* @group Formatters
-* @see https://daypicker.dev/docs/translation#custom-formatters
-*/
-function formatWeekNumber(weekNumber, dateLib = defaultDateLib) {
-	if (weekNumber < 10) return dateLib.formatNumber(`0${weekNumber.toLocaleString()}`);
-	return dateLib.formatNumber(`${weekNumber.toLocaleString()}`);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/formatters/formatWeekNumberHeader.js
-/**
-* Formats the header for the week number column.
-*
-* @defaultValue An empty string `""`.
-* @returns The formatted week number header as a string.
-* @group Formatters
-* @see https://daypicker.dev/docs/translation#custom-formatters
-*/
-function formatWeekNumberHeader() {
-	return ``;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/formatters/formatYearDropdown.js
-/**
-* Formats the year for the dropdown option label.
-*
-* @param year The year to format.
-* @param dateLib The date library to use for formatting. Defaults to
-*   `defaultDateLib`.
-* @returns The formatted year as a string.
-* @group Formatters
-* @see https://daypicker.dev/docs/translation#custom-formatters
-*/
-function formatYearDropdown(year, dateLib = defaultDateLib) {
-	return dateLib.format(year, "yyyy");
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/formatters/index.js
-var formatters_exports = /* @__PURE__ */ __exportAll({
-	formatCaption: () => formatCaption,
-	formatDay: () => formatDay,
-	formatMonthDropdown: () => formatMonthDropdown,
-	formatWeekNumber: () => formatWeekNumber,
-	formatWeekNumberHeader: () => formatWeekNumberHeader,
-	formatWeekdayName: () => formatWeekdayName,
-	formatYearDropdown: () => formatYearDropdown
-});
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getFormatters.js
-/**
-* Merges custom formatters from the props with the default formatters.
-*
-* @param customFormatters The custom formatters provided in the DayPicker
-*   props.
-* @returns The merged formatters object.
-*/
-function getFormatters(customFormatters) {
-	return {
-		...formatters_exports,
-		...customFormatters
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelDayButton.js
-/**
-* Generates the ARIA label for a day button.
-*
-* Use the `modifiers` argument to provide additional context for the label,
-* such as indicating if the day is "today" or "selected."
-*
-* @defaultValue The formatted date.
-* @param date - The date to format.
-* @param modifiers - The modifiers providing context for the day.
-* @param options - Optional configuration for the date formatting library.
-* @param dateLib - An optional instance of the date formatting library.
-* @returns The ARIA label for the day button.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelDayButton(date, modifiers, options, dateLib) {
-	let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
-	if (modifiers.today) label = `Today, ${label}`;
-	if (modifiers.selected) label = `${label}, selected`;
-	return label;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelGrid.js
-/**
-* Generates the ARIA label for the month grid, which is announced when entering
-* the grid.
-*
-* @defaultValue Locale-specific month/year order (e.g., "November 2022").
-* @param date - The date representing the month.
-* @param options - Optional configuration for the date formatting library.
-* @param dateLib - An optional instance of the date formatting library.
-* @returns The ARIA label for the month grid.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelGrid(date, options, dateLib) {
-	return (dateLib ?? new DateLib(options)).formatMonthYear(date);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelGridcell.js
-/**
-* Generates the label for a day grid cell when the calendar is not interactive.
-*
-* @param date - The date to format.
-* @param modifiers - Optional modifiers providing context for the day.
-* @param options - Optional configuration for the date formatting library.
-* @param dateLib - An optional instance of the date formatting library.
-* @returns The label for the day grid cell.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelGridcell(date, modifiers, options, dateLib) {
-	let label = (dateLib ?? new DateLib(options)).format(date, "PPPP");
-	if (modifiers?.today) label = `Today, ${label}`;
-	return label;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelMonthDropdown.js
-/**
-* Generates the ARIA label for the months dropdown.
-*
-* @defaultValue `"Choose the Month"`
-* @param options - Optional configuration for the date formatting library.
-* @returns The ARIA label for the months dropdown.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelMonthDropdown(_options) {
-	return "Choose the Month";
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelNav.js
-/**
-* Generates the ARIA label for the navigation toolbar.
-*
-* @defaultValue `""`
-* @returns The ARIA label for the navigation toolbar.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelNav() {
-	return "";
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelNext.js
-const defaultLabel = "Go to the Next Month";
-/**
-* Generates the ARIA label for the "next month" button.
-*
-* @defaultValue `"Go to the Next Month"`
-* @param month - The date representing the next month, or `undefined` if there
-*   is no next month.
-* @returns The ARIA label for the "next month" button.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelNext(_month, _options) {
-	return defaultLabel;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelPrevious.js
-/**
-* Generates the ARIA label for the "previous month" button.
-*
-* @defaultValue `"Go to the Previous Month"`
-* @param month - The date representing the previous month, or `undefined` if
-*   there is no previous month.
-* @returns The ARIA label for the "previous month" button.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelPrevious(_month) {
-	return "Go to the Previous Month";
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelWeekday.js
-/**
-* Generates the ARIA label for a weekday column header.
-*
-* @defaultValue `"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"`
-* @param date - The date representing the weekday.
-* @param options - Optional configuration for the date formatting library.
-* @param dateLib - An optional instance of the date formatting library.
-* @returns The ARIA label for the weekday column header.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelWeekday(date, options, dateLib) {
-	return (dateLib ?? new DateLib(options)).format(date, "cccc");
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelWeekNumber.js
-/**
-* Generates the ARIA label for the week number cell (the first cell in a row).
-*
-* @defaultValue `Week ${weekNumber}`
-* @param weekNumber - The number of the week.
-* @param options - Optional configuration for the date formatting library.
-* @returns The ARIA label for the week number cell.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelWeekNumber(weekNumber, _options) {
-	return `Week ${weekNumber}`;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelWeekNumberHeader.js
-/**
-* Generates the ARIA label for the week number header element.
-*
-* @defaultValue `"Week Number"`
-* @param options - Optional configuration for the date formatting library.
-* @returns The ARIA label for the week number header.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelWeekNumberHeader(_options) {
-	return "Week Number";
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/labelYearDropdown.js
-/**
-* Generates the ARIA label for the years dropdown.
-*
-* @defaultValue `"Choose the Year"`
-* @param options - Optional configuration for the date formatting library.
-* @returns The ARIA label for the years dropdown.
-* @group Labels
-* @see https://daypicker.dev/docs/translation#aria-labels
-*/
-function labelYearDropdown(_options) {
-	return "Choose the Year";
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/labels/index.js
-var labels_exports = /* @__PURE__ */ __exportAll({
-	labelDayButton: () => labelDayButton,
-	labelGrid: () => labelGrid,
-	labelGridcell: () => labelGridcell,
-	labelMonthDropdown: () => labelMonthDropdown,
-	labelNav: () => labelNav,
-	labelNext: () => labelNext,
-	labelPrevious: () => labelPrevious,
-	labelWeekNumber: () => labelWeekNumber,
-	labelWeekNumberHeader: () => labelWeekNumberHeader,
-	labelWeekday: () => labelWeekday,
-	labelYearDropdown: () => labelYearDropdown
-});
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getLabels.js
-const resolveLabel = (defaultLabel, customLabel, localeLabel) => {
-	if (customLabel) return customLabel;
-	if (localeLabel) return typeof localeLabel === "function" ? localeLabel : (..._args) => localeLabel;
-	return defaultLabel;
-};
-/**
-* Merges custom labels from the props with the default labels.
-*
-* When available, uses the locale-provided translation for `labelNext`.
-*
-* @param customLabels The custom labels provided in the DayPicker props.
-* @param options Options from the date library, used to resolve locale
-*   translations.
-* @returns The merged labels object with locale-aware defaults.
-*/
-function getLabels(customLabels, options) {
-	const localeLabels = options.locale?.labels ?? {};
-	return {
-		...labels_exports,
-		...customLabels ?? {},
-		labelDayButton: resolveLabel(labelDayButton, customLabels?.labelDayButton, localeLabels.labelDayButton),
-		labelMonthDropdown: resolveLabel(labelMonthDropdown, customLabels?.labelMonthDropdown, localeLabels.labelMonthDropdown),
-		labelNext: resolveLabel(labelNext, customLabels?.labelNext, localeLabels.labelNext),
-		labelPrevious: resolveLabel(labelPrevious, customLabels?.labelPrevious, localeLabels.labelPrevious),
-		labelWeekNumber: resolveLabel(labelWeekNumber, customLabels?.labelWeekNumber, localeLabels.labelWeekNumber),
-		labelYearDropdown: resolveLabel(labelYearDropdown, customLabels?.labelYearDropdown, localeLabels.labelYearDropdown),
-		labelGrid: resolveLabel(labelGrid, customLabels?.labelGrid, localeLabels.labelGrid),
-		labelGridcell: resolveLabel(labelGridcell, customLabels?.labelGridcell, localeLabels.labelGridcell),
-		labelNav: resolveLabel(labelNav, customLabels?.labelNav, localeLabels.labelNav),
-		labelWeekNumberHeader: resolveLabel(labelWeekNumberHeader, customLabels?.labelWeekNumberHeader, localeLabels.labelWeekNumberHeader),
-		labelWeekday: resolveLabel(labelWeekday, customLabels?.labelWeekday, localeLabels.labelWeekday)
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getMonthOptions.js
-/**
-* Returns the months to show in the dropdown.
-*
-* This function generates a list of months for the current year, formatted
-* using the provided formatter, and determines whether each month should be
-* disabled based on the navigation range.
-*
-* @param displayMonth The currently displayed month.
-* @param navStart The start date for navigation.
-* @param navEnd The end date for navigation.
-* @param formatters The formatters to use for formatting the month labels.
-* @param dateLib The date library to use for date manipulation.
-* @returns An array of dropdown options representing the months, or `undefined`
-*   if no months are available.
-*/
-function getMonthOptions(displayMonth, navStart, navEnd, formatters, dateLib) {
-	const { startOfMonth, startOfYear, endOfYear, eachMonthOfInterval, getMonth } = dateLib;
-	return eachMonthOfInterval({
-		start: startOfYear(displayMonth),
-		end: endOfYear(displayMonth)
-	}).map((month) => {
-		const label = formatters.formatMonthDropdown(month, dateLib);
-		return {
-			value: getMonth(month),
-			label,
-			disabled: navStart && month < startOfMonth(navStart) || navEnd && month > startOfMonth(navEnd) || false
-		};
-	});
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getStyleForModifiers.js
-/**
-* Returns the computed style for a day based on its modifiers.
-*
-* This function merges the base styles for the day with any styles associated
-* with active modifiers.
-*
-* @param dayModifiers The modifiers applied to the day.
-* @param styles The base styles for the calendar elements.
-* @param modifiersStyles The styles associated with specific modifiers.
-* @returns The computed style for the day.
-*/
-function getStyleForModifiers(dayModifiers, styles = {}, modifiersStyles = {}) {
-	let style = { ...styles?.[UI.Day] };
-	Object.entries(dayModifiers).filter(([, active]) => active === true).forEach(([modifier]) => {
-		style = {
-			...style,
-			...modifiersStyles?.[modifier]
-		};
-	});
-	return style;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getWeekdays.js
-/**
-* Generates a series of 7 days, starting from the beginning of the week, to use
-* for formatting weekday names (e.g., Monday, Tuesday, etc.).
-*
-* @param dateLib The date library to use for date manipulation.
-* @param ISOWeek Whether to use ISO week numbering (weeks start on Monday).
-* @param broadcastCalendar Whether to use the broadcast calendar (weeks start
-*   on Monday, but may include adjustments for broadcast-specific rules).
-* @returns An array of 7 dates representing the weekdays.
-*/
-function getWeekdays(dateLib, ISOWeek, broadcastCalendar, today) {
-	const referenceToday = today ?? dateLib.today();
-	const start = broadcastCalendar ? dateLib.startOfBroadcastWeek(referenceToday, dateLib) : ISOWeek ? dateLib.startOfISOWeek(referenceToday) : dateLib.startOfWeek(referenceToday);
-	const days = [];
-	for (let i = 0; i < 7; i++) {
-		const day = dateLib.addDays(start, i);
-		days.push(day);
-	}
-	return days;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getYearOptions.js
-/**
-* Returns the years to display in the dropdown.
-*
-* This function generates a list of years between the navigation start and end
-* dates, formatted using the provided formatter.
-*
-* @param navStart The start date for navigation.
-* @param navEnd The end date for navigation.
-* @param formatters The formatters to use for formatting the year labels.
-* @param dateLib The date library to use for date manipulation.
-* @param reverse If true, reverses the order of the years (descending).
-* @returns An array of dropdown options representing the years, or `undefined`
-*   if `navStart` or `navEnd` is not provided.
-*/
-function getYearOptions(navStart, navEnd, formatters, dateLib, reverse = false) {
-	if (!navStart) return void 0;
-	if (!navEnd) return void 0;
-	const { startOfYear, endOfYear, eachYearOfInterval, getYear } = dateLib;
-	const years = eachYearOfInterval({
-		start: startOfYear(navStart),
-		end: endOfYear(navEnd)
-	});
-	if (reverse) years.reverse();
-	return years.map((year) => {
-		const label = formatters.formatYearDropdown(year, dateLib);
-		return {
-			value: getYear(year),
-			label,
-			disabled: false
-		};
-	});
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/noonDateLib.js
-/**
-* Creates `dateLib` overrides that keep all calendar math at noon in the target
-* time zone. This avoids second-level offset changes (e.g., historical zones
-* with +03:41:12) from pushing dates backward across midnight.
-*/
-function createNoonOverrides(timeZone, options = {}) {
-	const { weekStartsOn, locale } = options;
-	const fallbackWeekStartsOn = weekStartsOn ?? locale?.options?.weekStartsOn ?? 0;
-	const toNoonTZDate = (date) => {
-		const normalizedDate = typeof date === "number" || typeof date === "string" ? new Date(date) : date;
-		return new TZDate(normalizedDate.getFullYear(), normalizedDate.getMonth(), normalizedDate.getDate(), 12, 0, 0, timeZone);
-	};
-	const toCalendarDate = (date) => {
-		const zoned = toNoonTZDate(date);
-		return new Date(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 0, 0, 0, 0);
-	};
-	return {
-		today: () => {
-			return toNoonTZDate(TZDate.tz(timeZone));
-		},
-		newDate: (year, monthIndex, date) => {
-			return new TZDate(year, monthIndex, date, 12, 0, 0, timeZone);
-		},
-		startOfDay: (date) => {
-			return toNoonTZDate(date);
-		},
-		startOfWeek: (date, options) => {
-			const base = toNoonTZDate(date);
-			const weekStartsOnValue = options?.weekStartsOn ?? fallbackWeekStartsOn;
-			const diff = (base.getDay() - weekStartsOnValue + 7) % 7;
-			base.setDate(base.getDate() - diff);
-			return base;
-		},
-		startOfISOWeek: (date) => {
-			const base = toNoonTZDate(date);
-			const diff = (base.getDay() - 1 + 7) % 7;
-			base.setDate(base.getDate() - diff);
-			return base;
-		},
-		startOfMonth: (date) => {
-			const base = toNoonTZDate(date);
-			base.setDate(1);
-			return base;
-		},
-		startOfYear: (date) => {
-			const base = toNoonTZDate(date);
-			base.setMonth(0, 1);
-			return base;
-		},
-		endOfWeek: (date, options) => {
-			const base = toNoonTZDate(date);
-			const diff = (((options?.weekStartsOn ?? fallbackWeekStartsOn) + 6) % 7 - base.getDay() + 7) % 7;
-			base.setDate(base.getDate() + diff);
-			return base;
-		},
-		endOfISOWeek: (date) => {
-			const base = toNoonTZDate(date);
-			const diff = (7 - base.getDay()) % 7;
-			base.setDate(base.getDate() + diff);
-			return base;
-		},
-		endOfMonth: (date) => {
-			const base = toNoonTZDate(date);
-			base.setMonth(base.getMonth() + 1, 0);
-			return base;
-		},
-		endOfYear: (date) => {
-			const base = toNoonTZDate(date);
-			base.setMonth(11, 31);
-			return base;
-		},
-		eachMonthOfInterval: (interval) => {
-			const start = toNoonTZDate(interval.start);
-			const end = toNoonTZDate(interval.end);
-			const result = [];
-			const cursor = new TZDate(start.getFullYear(), start.getMonth(), 1, 12, 0, 0, timeZone);
-			const endKey = end.getFullYear() * 12 + end.getMonth();
-			while (cursor.getFullYear() * 12 + cursor.getMonth() <= endKey) {
-				result.push(new TZDate(cursor, timeZone));
-				cursor.setMonth(cursor.getMonth() + 1, 1);
-			}
-			return result;
-		},
-		addDays: (date, amount) => {
-			const base = toNoonTZDate(date);
-			base.setDate(base.getDate() + amount);
-			return base;
-		},
-		addWeeks: (date, amount) => {
-			const base = toNoonTZDate(date);
-			base.setDate(base.getDate() + amount * 7);
-			return base;
-		},
-		addMonths: (date, amount) => {
-			const base = toNoonTZDate(date);
-			base.setMonth(base.getMonth() + amount);
-			return base;
-		},
-		addYears: (date, amount) => {
-			const base = toNoonTZDate(date);
-			base.setFullYear(base.getFullYear() + amount);
-			return base;
-		},
-		eachYearOfInterval: (interval) => {
-			const start = toNoonTZDate(interval.start);
-			const end = toNoonTZDate(interval.end);
-			const years = [];
-			const cursor = new TZDate(start.getFullYear(), 0, 1, 12, 0, 0, timeZone);
-			while (cursor.getFullYear() <= end.getFullYear()) {
-				years.push(new TZDate(cursor, timeZone));
-				cursor.setFullYear(cursor.getFullYear() + 1, 0, 1);
-			}
-			return years;
-		},
-		getWeek: (date, options) => {
-			const base = toCalendarDate(date);
-			return getWeek(base, {
-				weekStartsOn: options?.weekStartsOn ?? fallbackWeekStartsOn,
-				firstWeekContainsDate: options?.firstWeekContainsDate ?? locale?.options?.firstWeekContainsDate ?? 1
-			});
-		},
-		getISOWeek: (date) => {
-			const base = toCalendarDate(date);
-			return getISOWeek(base);
-		},
-		differenceInCalendarDays: (dateLeft, dateRight) => {
-			const left = toCalendarDate(dateLeft);
-			const right = toCalendarDate(dateRight);
-			return differenceInCalendarDays(left, right);
-		},
-		differenceInCalendarMonths: (dateLeft, dateRight) => {
-			const left = toCalendarDate(dateLeft);
-			const right = toCalendarDate(dateRight);
-			return differenceInCalendarMonths(left, right);
-		}
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/useAnimation.js
-const asHtmlElement = (element) => {
-	if (element instanceof HTMLElement) return element;
-	return null;
-};
-const queryMonthEls = (element) => [...element.querySelectorAll("[data-animated-month]") ?? []];
-const queryMonthEl = (element) => asHtmlElement(element.querySelector("[data-animated-month]"));
-const queryCaptionEl = (element) => asHtmlElement(element.querySelector("[data-animated-caption]"));
-const queryWeeksEl = (element) => asHtmlElement(element.querySelector("[data-animated-weeks]"));
-const queryNavEl = (element) => asHtmlElement(element.querySelector("[data-animated-nav]"));
-const queryWeekdaysEl = (element) => asHtmlElement(element.querySelector("[data-animated-weekdays]"));
-/**
-* Handles animations for transitioning between months in the DayPicker
-* component.
-*
-* @private
-* @param rootElRef - A reference to the root element of the DayPicker
-*   component.
-* @param enabled - Whether animations are enabled.
-* @param options - Configuration options for the animation, including class
-*   names, months, focused day, and the date utility library.
-*/
-function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib }) {
-	const previousRootElSnapshotRef = (0, import__wp_global_react.useRef)(null);
-	const previousMonthsRef = (0, import__wp_global_react.useRef)(months);
-	const animatingRef = (0, import__wp_global_react.useRef)(false);
-	(0, import__wp_global_react.useLayoutEffect)(() => {
-		const previousMonths = previousMonthsRef.current;
-		previousMonthsRef.current = months;
-		if (!enabled || !rootElRef.current || !(rootElRef.current instanceof HTMLElement) || months.length === 0 || previousMonths.length === 0 || months.length !== previousMonths.length) return;
-		const isSameMonth = dateLib.isSameMonth(months[0].date, previousMonths[0].date);
-		const isAfterPreviousMonth = dateLib.isAfter(months[0].date, previousMonths[0].date);
-		const captionAnimationClass = isAfterPreviousMonth ? classNames[Animation.caption_after_enter] : classNames[Animation.caption_before_enter];
-		const weeksAnimationClass = isAfterPreviousMonth ? classNames[Animation.weeks_after_enter] : classNames[Animation.weeks_before_enter];
-		const previousRootElSnapshot = previousRootElSnapshotRef.current;
-		const rootElSnapshot = rootElRef.current.cloneNode(true);
-		if (rootElSnapshot instanceof HTMLElement) {
-			queryMonthEls(rootElSnapshot).forEach((currentMonthElSnapshot) => {
-				if (!(currentMonthElSnapshot instanceof HTMLElement)) return;
-				const previousMonthElSnapshot = queryMonthEl(currentMonthElSnapshot);
-				if (previousMonthElSnapshot && currentMonthElSnapshot.contains(previousMonthElSnapshot)) currentMonthElSnapshot.removeChild(previousMonthElSnapshot);
-				const captionEl = queryCaptionEl(currentMonthElSnapshot);
-				if (captionEl) captionEl.classList.remove(captionAnimationClass);
-				const weeksEl = queryWeeksEl(currentMonthElSnapshot);
-				if (weeksEl) weeksEl.classList.remove(weeksAnimationClass);
-			});
-			previousRootElSnapshotRef.current = rootElSnapshot;
-		} else previousRootElSnapshotRef.current = null;
-		if (animatingRef.current || isSameMonth || focused) return;
-		const previousMonthEls = previousRootElSnapshot instanceof HTMLElement ? queryMonthEls(previousRootElSnapshot) : [];
-		const currentMonthEls = queryMonthEls(rootElRef.current);
-		if (currentMonthEls?.every((el) => el instanceof HTMLElement) && previousMonthEls?.every((el) => el instanceof HTMLElement)) {
-			animatingRef.current = true;
-			const cleanUpFunctions = [];
-			rootElRef.current.style.isolation = "isolate";
-			const navEl = queryNavEl(rootElRef.current);
-			if (navEl) navEl.style.zIndex = "1";
-			currentMonthEls.forEach((currentMonthEl, index) => {
-				const previousMonthEl = previousMonthEls[index];
-				if (!previousMonthEl) return;
-				currentMonthEl.style.position = "relative";
-				currentMonthEl.style.overflow = "hidden";
-				const captionEl = queryCaptionEl(currentMonthEl);
-				if (captionEl) captionEl.classList.add(captionAnimationClass);
-				const weeksEl = queryWeeksEl(currentMonthEl);
-				if (weeksEl) weeksEl.classList.add(weeksAnimationClass);
-				const cleanUp = () => {
-					animatingRef.current = false;
-					if (rootElRef.current) rootElRef.current.style.isolation = "";
-					if (navEl) navEl.style.zIndex = "";
-					if (captionEl) captionEl.classList.remove(captionAnimationClass);
-					if (weeksEl) weeksEl.classList.remove(weeksAnimationClass);
-					currentMonthEl.style.position = "";
-					currentMonthEl.style.overflow = "";
-					if (currentMonthEl.contains(previousMonthEl)) currentMonthEl.removeChild(previousMonthEl);
-				};
-				cleanUpFunctions.push(cleanUp);
-				previousMonthEl.style.pointerEvents = "none";
-				previousMonthEl.style.position = "absolute";
-				previousMonthEl.style.overflow = "hidden";
-				previousMonthEl.setAttribute("aria-hidden", "true");
-				const previousWeekdaysEl = queryWeekdaysEl(previousMonthEl);
-				if (previousWeekdaysEl) previousWeekdaysEl.style.opacity = "0";
-				const previousCaptionEl = queryCaptionEl(previousMonthEl);
-				if (previousCaptionEl) {
-					previousCaptionEl.classList.add(isAfterPreviousMonth ? classNames[Animation.caption_before_exit] : classNames[Animation.caption_after_exit]);
-					previousCaptionEl.addEventListener("animationend", cleanUp);
-				}
-				const previousWeeksEl = queryWeeksEl(previousMonthEl);
-				if (previousWeeksEl) previousWeeksEl.classList.add(isAfterPreviousMonth ? classNames[Animation.weeks_before_exit] : classNames[Animation.weeks_after_exit]);
-				currentMonthEl.insertBefore(previousMonthEl, currentMonthEl.firstChild);
-			});
-		}
-	});
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getDates.js
-/**
-* Returns all the dates to display in the calendar.
-*
-* This function calculates the range of dates to display based on the provided
-* display months, constraints, and calendar configuration.
-*
-* @param displayMonths The months to display in the calendar.
-* @param maxDate The maximum date to include in the range.
-* @param props The DayPicker props, including calendar configuration options.
-* @param dateLib The date library to use for date manipulation.
-* @returns An array of dates to display in the calendar.
-*/
-function getDates(displayMonths, maxDate, props, dateLib) {
-	const firstMonth = displayMonths[0];
-	const lastMonth = displayMonths[displayMonths.length - 1];
-	const { ISOWeek, fixedWeeks, broadcastCalendar } = props ?? {};
-	const { addDays, differenceInCalendarDays, differenceInCalendarMonths, endOfBroadcastWeek, endOfISOWeek, endOfMonth, endOfWeek, isAfter, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
-	const startWeekFirstDate = broadcastCalendar ? startOfBroadcastWeek(firstMonth, dateLib) : ISOWeek ? startOfISOWeek(firstMonth) : startOfWeek(firstMonth);
-	const displayMonthsWeekEnd = broadcastCalendar ? endOfBroadcastWeek(lastMonth) : ISOWeek ? endOfISOWeek(endOfMonth(lastMonth)) : endOfWeek(endOfMonth(lastMonth));
-	const constraintWeekEnd = maxDate && (broadcastCalendar ? endOfBroadcastWeek(maxDate) : ISOWeek ? endOfISOWeek(maxDate) : endOfWeek(maxDate));
-	const nOfDays = differenceInCalendarDays(constraintWeekEnd && isAfter(displayMonthsWeekEnd, constraintWeekEnd) ? constraintWeekEnd : displayMonthsWeekEnd, startWeekFirstDate);
-	const nOfMonths = differenceInCalendarMonths(lastMonth, firstMonth) + 1;
-	const dates = [];
-	for (let i = 0; i <= nOfDays; i++) {
-		const date = addDays(startWeekFirstDate, i);
-		dates.push(date);
-	}
-	const extraDates = (broadcastCalendar ? 35 : 42) * nOfMonths;
-	if (fixedWeeks && dates.length < extraDates) {
-		const daysToAdd = extraDates - dates.length;
-		for (let i = 0; i < daysToAdd; i++) {
-			const date = addDays(dates[dates.length - 1], 1);
-			dates.push(date);
-		}
-	}
-	return dates;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getDays.js
-/**
-* Returns all the days belonging to the calendar by merging the days in the
-* weeks for each month.
-*
-* @param calendarMonths The array of calendar months.
-* @returns An array of `CalendarDay` objects representing all the days in the
-*   calendar.
-*/
-function getDays(calendarMonths) {
-	const initialDays = [];
-	return calendarMonths.reduce((days, month) => {
-		const weekDays = month.weeks.reduce((weekDays, week) => {
-			return weekDays.concat(week.days.slice());
-		}, initialDays.slice());
-		return days.concat(weekDays.slice());
-	}, initialDays.slice());
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getDisplayMonths.js
-/**
-* Returns the months to display in the calendar.
-*
-* @param firstDisplayedMonth The first month currently displayed in the
-*   calendar.
-* @param calendarEndMonth The latest month the user can navigate to.
-* @param props The DayPicker props, including `numberOfMonths`.
-* @param dateLib The date library to use for date manipulation.
-* @returns An array of dates representing the months to display.
-*/
-function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib) {
-	const { numberOfMonths = 1 } = props;
-	const months = [];
-	for (let i = 0; i < numberOfMonths; i++) {
-		const month = dateLib.addMonths(firstDisplayedMonth, i);
-		if (calendarEndMonth && month > calendarEndMonth) break;
-		months.push(month);
-	}
-	return months;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getInitialMonth.js
-/**
-* Determines the initial month to display in the calendar based on the provided
-* props.
-*
-* This function calculates the starting month, considering constraints such as
-* `startMonth`, `endMonth`, and the number of months to display.
-*
-* @param props The DayPicker props, including navigation and date constraints.
-* @param dateLib The date library to use for date manipulation.
-* @returns The initial month to display.
-*/
-function getInitialMonth(props, navStart, navEnd, dateLib) {
-	const { month, defaultMonth, today = dateLib.today(), numberOfMonths = 1 } = props;
-	let initialMonth = month || defaultMonth || today;
-	const { differenceInCalendarMonths, addMonths, startOfMonth } = dateLib;
-	if (navEnd && differenceInCalendarMonths(navEnd, initialMonth) < numberOfMonths - 1) initialMonth = addMonths(navEnd, -1 * (numberOfMonths - 1));
-	if (navStart && differenceInCalendarMonths(initialMonth, navStart) < 0) initialMonth = navStart;
-	return startOfMonth(initialMonth);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getMonths.js
-/**
-* Returns the months to display in the calendar.
-*
-* This function generates `CalendarMonth` objects for each month to be
-* displayed, including their weeks and days, based on the provided display
-* months and dates.
-*
-* @param displayMonths The months (as dates) to display in the calendar.
-* @param dates The dates to display in the calendar.
-* @param props Options from the DayPicker props context.
-* @param dateLib The date library to use for date manipulation.
-* @returns An array of `CalendarMonth` objects representing the months to
-*   display.
-*/
-function getMonths(displayMonths, dates, props, dateLib) {
-	const { addDays, endOfBroadcastWeek, endOfISOWeek, endOfMonth, endOfWeek, getISOWeek, getWeek, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
-	const dayPickerMonths = displayMonths.reduce((months, month) => {
-		const firstDateOfFirstWeek = props.broadcastCalendar ? startOfBroadcastWeek(month, dateLib) : props.ISOWeek ? startOfISOWeek(month) : startOfWeek(month);
-		const lastDateOfLastWeek = props.broadcastCalendar ? endOfBroadcastWeek(month) : props.ISOWeek ? endOfISOWeek(endOfMonth(month)) : endOfWeek(endOfMonth(month));
-		/** The dates to display in the month. */
-		const monthDates = dates.filter((date) => {
-			return date >= firstDateOfFirstWeek && date <= lastDateOfLastWeek;
-		});
-		const nrOfDaysWithFixedWeeks = props.broadcastCalendar ? 35 : 42;
-		if (props.fixedWeeks && monthDates.length < nrOfDaysWithFixedWeeks) {
-			const extraDates = dates.filter((date) => {
-				const daysToAdd = nrOfDaysWithFixedWeeks - monthDates.length;
-				return date > lastDateOfLastWeek && date <= addDays(lastDateOfLastWeek, daysToAdd);
-			});
-			monthDates.push(...extraDates);
-		}
-		const weeks = monthDates.reduce((weeks, date) => {
-			const weekNumber = props.ISOWeek ? getISOWeek(date) : getWeek(date);
-			const week = weeks.find((week) => week.weekNumber === weekNumber);
-			const day = new CalendarDay(date, month, dateLib);
-			if (!week) weeks.push(new CalendarWeek(weekNumber, [day]));
-			else week.days.push(day);
-			return weeks;
-		}, []);
-		const dayPickerMonth = new CalendarMonth(month, weeks);
-		months.push(dayPickerMonth);
-		return months;
-	}, []);
-	if (!props.reverseMonths) return dayPickerMonths;
-	else return dayPickerMonths.reverse();
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getNavMonth.js
-/**
-* Returns the start and end months for calendar navigation.
-*
-* @param props The DayPicker props, including navigation and layout options.
-* @param dateLib The date library to use for date manipulation.
-* @returns A tuple containing the start and end months for navigation.
-*/
-function getNavMonths(props, dateLib) {
-	let { startMonth, endMonth } = props;
-	const { startOfYear, startOfDay, startOfMonth, endOfMonth, addYears, endOfYear, today } = dateLib;
-	const hasYearDropdown = props.captionLayout === "dropdown" || props.captionLayout === "dropdown-years";
-	if (startMonth) startMonth = startOfMonth(startMonth);
-	else if (!startMonth && hasYearDropdown) startMonth = startOfYear(addYears(props.today ?? today(), -100));
-	if (endMonth) endMonth = endOfMonth(endMonth);
-	else if (!endMonth && hasYearDropdown) endMonth = endOfYear(props.today ?? today());
-	return [startMonth ? startOfDay(startMonth) : startMonth, endMonth ? startOfDay(endMonth) : endMonth];
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getNextMonth.js
-/**
-* Returns the next month the user can navigate to, based on the given options.
-*
-* The next month is not always the next calendar month:
-*
-* - If it is after the `calendarEndMonth`, it returns `undefined`.
-* - If paged navigation is enabled, it skips forward by the number of displayed
-*   months.
-*
-* @param firstDisplayedMonth The first month currently displayed in the
-*   calendar.
-* @param calendarEndMonth The latest month the user can navigate to.
-* @param options Navigation options, including `numberOfMonths` and
-*   `pagedNavigation`.
-* @param dateLib The date library to use for date manipulation.
-* @returns The next month, or `undefined` if navigation is not possible.
-*/
-function getNextMonth(firstDisplayedMonth, calendarEndMonth, options, dateLib) {
-	if (options.disableNavigation) return;
-	const { pagedNavigation, numberOfMonths = 1 } = options;
-	const { startOfMonth, addMonths, differenceInCalendarMonths } = dateLib;
-	const offset = pagedNavigation ? numberOfMonths : 1;
-	const month = startOfMonth(firstDisplayedMonth);
-	if (!calendarEndMonth) return addMonths(month, offset);
-	if (differenceInCalendarMonths(calendarEndMonth, firstDisplayedMonth) < numberOfMonths) return;
-	return addMonths(month, offset);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getPreviousMonth.js
-/**
-* Returns the previous month the user can navigate to, based on the given
-* options.
-*
-* The previous month is not always the previous calendar month:
-*
-* - If it is before the `calendarStartMonth`, it returns `undefined`.
-* - If paged navigation is enabled, it skips back by the number of displayed
-*   months.
-*
-* @param firstDisplayedMonth The first month currently displayed in the
-*   calendar.
-* @param calendarStartMonth The earliest month the user can navigate to.
-* @param options Navigation options, including `numberOfMonths` and
-*   `pagedNavigation`.
-* @param dateLib The date library to use for date manipulation.
-* @returns The previous month, or `undefined` if navigation is not possible.
-*/
-function getPreviousMonth(firstDisplayedMonth, calendarStartMonth, options, dateLib) {
-	if (options.disableNavigation) return;
-	const { pagedNavigation, numberOfMonths } = options;
-	const { startOfMonth, addMonths, differenceInCalendarMonths } = dateLib;
-	const offset = pagedNavigation ? numberOfMonths ?? 1 : 1;
-	const month = startOfMonth(firstDisplayedMonth);
-	if (!calendarStartMonth) return addMonths(month, -offset);
-	if (differenceInCalendarMonths(month, calendarStartMonth) <= 0) return;
-	return addMonths(month, -offset);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getWeeks.js
-/**
-* Returns an array of calendar weeks from an array of calendar months.
-*
-* @param months The array of calendar months.
-* @returns An array of calendar weeks.
-*/
-function getWeeks(months) {
-	return months.reduce((weeks, month) => {
-		return weeks.concat(month.weeks.slice());
-	}, [].slice());
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
-/**
-* A custom hook for managing both controlled and uncontrolled component states.
-*
-* This hook allows a component to support both controlled and uncontrolled
-* states by determining whether the `controlledValue` is provided. If it is
-* undefined, the hook falls back to using the internal state.
-*
-* @example
-*   // Uncontrolled usage
-*   const [value, setValue] = useControlledValue(0, undefined);
-*
-*   // Controlled usage
-*   const [value, setValue] = useControlledValue(0, props.value);
-*
-* @template T - The type of the value.
-* @param defaultValue The initial value for the uncontrolled state.
-* @param controlledValue The value for the controlled state. If undefined, the
-*   component will use the uncontrolled state.
-* @returns A tuple where the first element is the current value (either
-*   controlled or uncontrolled) and the second element is a setter function to
-*   update the value.
-*/
-function useControlledValue$1(defaultValue, controlledValue) {
-	const [uncontrolledValue, setValue] = (0, import__wp_global_react.useState)(defaultValue);
-	return [controlledValue === void 0 ? uncontrolledValue : controlledValue, setValue];
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/useCalendar.js
-/**
-* Provides the calendar object to work with the calendar in custom components.
-*
-* @private
-* @param props - The DayPicker props related to calendar configuration.
-* @param dateLib - The date utility library instance.
-* @returns The calendar object containing displayed days, weeks, months, and
-*   navigation methods.
-*/
-function useCalendar(props, dateLib) {
-	const [navStart, navEnd] = getNavMonths(props, dateLib);
-	const { startOfMonth, endOfMonth } = dateLib;
-	const initialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
-	const [firstMonth, setFirstMonth] = useControlledValue$1(initialMonth, props.month ? initialMonth : void 0);
-	(0, import__wp_global_react.useEffect)(() => {
-		const newInitialMonth = getInitialMonth(props, navStart, navEnd, dateLib);
-		setFirstMonth(newInitialMonth);
-	}, [props.timeZone]);
-	/** The months displayed in the calendar. */
-	const { months, weeks, days, previousMonth, nextMonth } = (0, import__wp_global_react.useMemo)(() => {
-		const displayMonths = getDisplayMonths(firstMonth, navEnd, { numberOfMonths: props.numberOfMonths }, dateLib);
-		const dates = getDates(displayMonths, props.endMonth ? endOfMonth(props.endMonth) : void 0, {
-			ISOWeek: props.ISOWeek,
-			fixedWeeks: props.fixedWeeks,
-			broadcastCalendar: props.broadcastCalendar
-		}, dateLib);
-		const months = getMonths(displayMonths, dates, {
-			broadcastCalendar: props.broadcastCalendar,
-			fixedWeeks: props.fixedWeeks,
-			ISOWeek: props.ISOWeek,
-			reverseMonths: props.reverseMonths
-		}, dateLib);
-		return {
-			months,
-			weeks: getWeeks(months),
-			days: getDays(months),
-			previousMonth: getPreviousMonth(firstMonth, navStart, props, dateLib),
-			nextMonth: getNextMonth(firstMonth, navEnd, props, dateLib)
-		};
-	}, [
-		dateLib,
-		firstMonth.getTime(),
-		navEnd?.getTime(),
-		navStart?.getTime(),
-		props.disableNavigation,
-		props.broadcastCalendar,
-		props.endMonth?.getTime(),
-		props.fixedWeeks,
-		props.ISOWeek,
-		props.numberOfMonths,
-		props.pagedNavigation,
-		props.reverseMonths
-	]);
-	const { disableNavigation, onMonthChange } = props;
-	const isDayInCalendar = (day) => weeks.some((week) => week.days.some((d) => d.isEqualTo(day)));
-	const goToMonth = (date) => {
-		if (disableNavigation) return;
-		let newMonth = startOfMonth(date);
-		if (navStart && newMonth < startOfMonth(navStart)) newMonth = startOfMonth(navStart);
-		if (navEnd && newMonth > startOfMonth(navEnd)) newMonth = startOfMonth(navEnd);
-		setFirstMonth(newMonth);
-		onMonthChange?.(newMonth);
-	};
-	const goToDay = (day) => {
-		if (isDayInCalendar(day)) return;
-		goToMonth(day.date);
-	};
-	return {
-		months,
-		weeks,
-		days,
-		navStart,
-		navEnd,
-		previousMonth,
-		nextMonth,
-		goToMonth,
-		goToDay
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/calculateFocusTarget.js
-var FocusTargetPriority;
-(function(FocusTargetPriority) {
-	FocusTargetPriority[FocusTargetPriority["Today"] = 0] = "Today";
-	FocusTargetPriority[FocusTargetPriority["Selected"] = 1] = "Selected";
-	FocusTargetPriority[FocusTargetPriority["LastFocused"] = 2] = "LastFocused";
-	FocusTargetPriority[FocusTargetPriority["FocusedModifier"] = 3] = "FocusedModifier";
-})(FocusTargetPriority || (FocusTargetPriority = {}));
-/**
-* Determines if a day is focusable based on its modifiers.
-*
-* A day is considered focusable if it is not disabled, hidden, or outside the
-* displayed month.
-*
-* @param modifiers The modifiers applied to the day.
-* @returns `true` if the day is focusable, otherwise `false`.
-*/
-function isFocusableDay(modifiers) {
-	return !modifiers[DayFlag.disabled] && !modifiers[DayFlag.hidden] && !modifiers[DayFlag.outside];
-}
-/**
-* Calculates the focus target day based on priority.
-*
-* This function determines the day that should receive focus in the calendar,
-* prioritizing days with specific modifiers (e.g., "focused", "today") or
-* selection states.
-*
-* @param days The array of `CalendarDay` objects to evaluate.
-* @param getModifiers A function to retrieve the modifiers for a given day.
-* @param isSelected A function to determine if a day is selected.
-* @param lastFocused The last focused day, if any.
-* @returns The `CalendarDay` that should receive focus, or `undefined` if no
-*   focusable day is found.
-*/
-function calculateFocusTarget(days, getModifiers, isSelected, lastFocused) {
-	let focusTarget;
-	let foundFocusTargetPriority = -1;
-	for (const day of days) {
-		const modifiers = getModifiers(day);
-		if (isFocusableDay(modifiers)) {
-			if (modifiers[DayFlag.focused] && foundFocusTargetPriority < FocusTargetPriority.FocusedModifier) {
-				focusTarget = day;
-				foundFocusTargetPriority = FocusTargetPriority.FocusedModifier;
-			} else if (lastFocused?.isEqualTo(day) && foundFocusTargetPriority < FocusTargetPriority.LastFocused) {
-				focusTarget = day;
-				foundFocusTargetPriority = FocusTargetPriority.LastFocused;
-			} else if (isSelected(day.date) && foundFocusTargetPriority < FocusTargetPriority.Selected) {
-				focusTarget = day;
-				foundFocusTargetPriority = FocusTargetPriority.Selected;
-			} else if (modifiers[DayFlag.today] && foundFocusTargetPriority < FocusTargetPriority.Today) {
-				focusTarget = day;
-				foundFocusTargetPriority = FocusTargetPriority.Today;
-			}
-		}
-	}
-	if (!focusTarget) focusTarget = days.find((day) => isFocusableDay(getModifiers(day)));
-	return focusTarget;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getFocusableDate.js
-/**
-* Calculates the next date that should be focused in the calendar.
-*
-* This function determines the next focusable date based on the movement
-* direction, constraints, and calendar configuration.
-*
-* @param moveBy The unit of movement (e.g., "day", "week").
-* @param moveDir The direction of movement ("before" or "after").
-* @param refDate The reference date from which to calculate the next focusable
-*   date.
-* @param navStart The earliest date the user can navigate to.
-* @param navEnd The latest date the user can navigate to.
-* @param props The DayPicker props, including calendar configuration options.
-* @param dateLib The date library to use for date manipulation.
-* @returns The next focusable date.
-*/
-function getFocusableDate(moveBy, moveDir, refDate, navStart, navEnd, props, dateLib) {
-	const { ISOWeek, broadcastCalendar } = props;
-	const { addDays, addMonths, addWeeks, addYears, endOfBroadcastWeek, endOfISOWeek, endOfWeek, max, min, startOfBroadcastWeek, startOfISOWeek, startOfWeek } = dateLib;
-	let focusableDate = {
-		day: addDays,
-		week: addWeeks,
-		month: addMonths,
-		year: addYears,
-		startOfWeek: (date) => broadcastCalendar ? startOfBroadcastWeek(date, dateLib) : ISOWeek ? startOfISOWeek(date) : startOfWeek(date),
-		endOfWeek: (date) => broadcastCalendar ? endOfBroadcastWeek(date) : ISOWeek ? endOfISOWeek(date) : endOfWeek(date)
-	}[moveBy](refDate, moveDir === "after" ? 1 : -1);
-	if (moveDir === "before" && navStart) focusableDate = max([navStart, focusableDate]);
-	else if (moveDir === "after" && navEnd) focusableDate = min([navEnd, focusableDate]);
-	return focusableDate;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/helpers/getNextFocus.js
-/**
-* Determines the next focusable day in the calendar.
-*
-* This function recursively calculates the next focusable day based on the
-* movement direction and modifiers applied to the days.
-*
-* @param moveBy The unit of movement (e.g., "day", "week").
-* @param moveDir The direction of movement ("before" or "after").
-* @param refDay The currently focused day.
-* @param calendarStartMonth The earliest month the user can navigate to.
-* @param calendarEndMonth The latest month the user can navigate to.
-* @param props The DayPicker props, including modifiers and configuration
-*   options.
-* @param dateLib The date library to use for date manipulation.
-* @param attempt The current recursion attempt (used to limit recursion depth).
-* @returns The next focusable day, or `undefined` if no focusable day is found.
-*/
-function getNextFocus(moveBy, moveDir, refDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt = 0) {
-	if (attempt > 365) return;
-	const focusableDate = getFocusableDate(moveBy, moveDir, refDay.date, calendarStartMonth, calendarEndMonth, props, dateLib);
-	const isDisabled = Boolean(props.disabled && dateMatchModifiers(focusableDate, props.disabled, dateLib));
-	const isHidden = Boolean(props.hidden && dateMatchModifiers(focusableDate, props.hidden, dateLib));
-	const focusDay = new CalendarDay(focusableDate, focusableDate, dateLib);
-	if (!isDisabled && !isHidden) return focusDay;
-	return getNextFocus(moveBy, moveDir, focusDay, calendarStartMonth, calendarEndMonth, props, dateLib, attempt + 1);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/useFocus.js
-/**
-* Manages focus behavior for the DayPicker component, including setting,
-* moving, and blurring focus on calendar days.
-*
-* @template T - The type of DayPicker props.
-* @param props - The DayPicker props.
-* @param calendar - The calendar object containing the displayed days and
-*   months.
-* @param getModifiers - A function to retrieve modifiers for a given day.
-* @param isSelected - A function to check if a date is selected.
-* @param dateLib - The date utility library instance.
-* @returns An object containing focus-related methods and the currently focused
-*   day.
-*/
-function useFocus(props, calendar, getModifiers, isSelected, dateLib) {
-	const { autoFocus } = props;
-	const [lastFocused, setLastFocused] = (0, import__wp_global_react.useState)();
-	const focusTarget = calculateFocusTarget(calendar.days, getModifiers, isSelected || (() => false), lastFocused);
-	const [focusedDay, setFocused] = (0, import__wp_global_react.useState)(autoFocus ? focusTarget : void 0);
-	const blur = () => {
-		setLastFocused(focusedDay);
-		setFocused(void 0);
-	};
-	const moveFocus = (moveBy, moveDir) => {
-		if (!focusedDay) return;
-		const nextFocus = getNextFocus(moveBy, moveDir, focusedDay, calendar.navStart, calendar.navEnd, props, dateLib);
-		if (!nextFocus) return;
-		if (props.disableNavigation) {
-			if (!calendar.days.some((day) => day.isEqualTo(nextFocus))) return;
-		}
-		calendar.goToDay(nextFocus);
-		setFocused(nextFocus);
-	};
-	const isFocusTarget = (day) => {
-		return Boolean(focusTarget?.isEqualTo(day));
-	};
-	return {
-		isFocusTarget,
-		setFocused,
-		focused: focusedDay,
-		blur,
-		moveFocus
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/selection/useMulti.js
-/**
-* Hook to manage multiple-date selection in the DayPicker component.
-*
-* @template T - The type of DayPicker props.
-* @param props - The DayPicker props.
-* @param dateLib - The date utility library instance.
-* @returns An object containing the selected dates, a function to select dates,
-*   and a function to check if a date is selected.
-*/
-function useMulti(props, dateLib) {
-	const { selected: initiallySelected, required, onSelect } = props;
-	const [internallySelected, setSelected] = useControlledValue$1(initiallySelected, onSelect ? initiallySelected : void 0);
-	const selected = !onSelect ? internallySelected : initiallySelected;
-	const { isSameDay } = dateLib;
-	const isSelected = (date) => {
-		return selected?.some((d) => isSameDay(d, date)) ?? false;
-	};
-	const { min, max } = props;
-	const select = (triggerDate, modifiers, e) => {
-		let newDates = [...selected ?? []];
-		if (isSelected(triggerDate)) {
-			if (selected?.length === min) return;
-			if (required && selected?.length === 1) return;
-			newDates = selected?.filter((d) => !isSameDay(d, triggerDate));
-		} else if (selected?.length === max) newDates = [triggerDate];
-		else newDates = [...newDates, triggerDate];
-		if (!onSelect) setSelected(newDates);
-		onSelect?.(newDates, triggerDate, modifiers, e);
-		return newDates;
-	};
-	return {
-		selected,
-		select,
-		isSelected
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/addToRange.js
-/**
-* Adds a date to an existing range, considering constraints like minimum and
-* maximum range size.
-*
-* @param date - The date to add to the range.
-* @param initialRange - The initial range to which the date will be added.
-* @param min - The minimum number of days in the range.
-* @param max - The maximum number of days in the range.
-* @param required - Whether the range must always include at least one date.
-* @param dateLib - The date utility library instance.
-* @returns The updated date range, or `undefined` if the range is cleared.
-* @group Utilities
-*/
-function addToRange(date, initialRange, min = 0, max = 0, required = false, dateLib = defaultDateLib) {
-	const { from, to } = initialRange || {};
-	const { isSameDay, isAfter, isBefore } = dateLib;
-	let range;
-	if (!from && !to) range = {
-		from: date,
-		to: min > 0 ? void 0 : date
-	};
-	else if (from && !to) {
-		if (isSameDay(from, date)) {
-			if (min === 0) range = {
-				from,
-				to: date
-			};
-			else if (required) range = {
-				from,
-				to: void 0
-			};
-			else range = void 0;
-		} else if (isBefore(date, from)) range = {
-			from: date,
-			to: from
-		};
-		else range = {
-			from,
-			to: date
-		};
-	} else if (from && to) {
-		if (isSameDay(from, date) && isSameDay(to, date)) {
-			if (required) range = {
-				from,
-				to
-			};
-			else range = void 0;
-		} else if (isSameDay(from, date)) range = {
-			from,
-			to: min > 0 ? void 0 : date
-		};
-		else if (isSameDay(to, date)) range = {
-			from: date,
-			to: min > 0 ? void 0 : date
-		};
-		else if (isBefore(date, from)) range = {
-			from: date,
-			to
-		};
-		else if (isAfter(date, from)) range = {
-			from,
-			to: date
-		};
-		else if (isAfter(date, to)) range = {
-			from,
-			to: date
-		};
-		else throw new Error("Invalid range");
-	}
-	if (range?.from && range?.to) {
-		const diff = dateLib.differenceInCalendarDays(range.to, range.from);
-		if (max > 0 && diff > max) range = {
-			from: date,
-			to: void 0
-		};
-		else if (min > 1 && diff < min) range = {
-			from: date,
-			to: void 0
-		};
-	}
-	return range;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/rangeContainsDayOfWeek.js
-/**
-* Checks if a date range contains one or more specified days of the week.
-*
-* @since 9.2.2
-* @param range - The date range to check.
-* @param dayOfWeek - The day(s) of the week to check for (`0-6`, where `0` is
-*   Sunday).
-* @param dateLib - The date utility library instance.
-* @returns `true` if the range contains the specified day(s) of the week,
-*   otherwise `false`.
-* @group Utilities
-*/
-function rangeContainsDayOfWeek(range, dayOfWeek, dateLib = defaultDateLib) {
-	const dayOfWeekArr = !Array.isArray(dayOfWeek) ? [dayOfWeek] : dayOfWeek;
-	let date = range.from;
-	const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
-	const totalDaysLimit = Math.min(totalDays, 6);
-	for (let i = 0; i <= totalDaysLimit; i++) {
-		if (dayOfWeekArr.includes(date.getDay())) return true;
-		date = dateLib.addDays(date, 1);
-	}
-	return false;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/rangeOverlaps.js
-/**
-* Determines if two date ranges overlap.
-*
-* @since 9.2.2
-* @param rangeLeft - The first date range.
-* @param rangeRight - The second date range.
-* @param dateLib - The date utility library instance.
-* @returns `true` if the ranges overlap, otherwise `false`.
-* @group Utilities
-*/
-function rangeOverlaps(rangeLeft, rangeRight, dateLib = defaultDateLib) {
-	return rangeIncludesDate(rangeLeft, rangeRight.from, false, dateLib) || rangeIncludesDate(rangeLeft, rangeRight.to, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.from, false, dateLib) || rangeIncludesDate(rangeRight, rangeLeft.to, false, dateLib);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/rangeContainsModifiers.js
-/**
-* Checks if a date range contains dates that match the given modifiers.
-*
-* @since 9.2.2
-* @param range - The date range to check.
-* @param modifiers - The modifiers to match against.
-* @param dateLib - The date utility library instance.
-* @returns `true` if the range contains matching dates, otherwise `false`.
-* @group Utilities
-*/
-function rangeContainsModifiers(range, modifiers, dateLib = defaultDateLib) {
-	const matchers = Array.isArray(modifiers) ? modifiers : [modifiers];
-	if (matchers.filter((matcher) => typeof matcher !== "function").some((matcher) => {
-		if (typeof matcher === "boolean") return matcher;
-		if (dateLib.isDate(matcher)) return rangeIncludesDate(range, matcher, false, dateLib);
-		if (isDatesArray(matcher, dateLib)) return matcher.some((date) => rangeIncludesDate(range, date, false, dateLib));
-		if (isDateRange(matcher)) {
-			if (matcher.from && matcher.to) return rangeOverlaps(range, {
-				from: matcher.from,
-				to: matcher.to
-			}, dateLib);
-			return false;
-		}
-		if (isDayOfWeekType(matcher)) return rangeContainsDayOfWeek(range, matcher.dayOfWeek, dateLib);
-		if (isDateInterval(matcher)) {
-			if (dateLib.isAfter(matcher.before, matcher.after)) return rangeOverlaps(range, {
-				from: dateLib.addDays(matcher.after, 1),
-				to: dateLib.addDays(matcher.before, -1)
-			}, dateLib);
-			return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
-		}
-		if (isDateAfterType(matcher) || isDateBeforeType(matcher)) return dateMatchModifiers(range.from, matcher, dateLib) || dateMatchModifiers(range.to, matcher, dateLib);
-		return false;
-	})) return true;
-	const functionMatchers = matchers.filter((matcher) => typeof matcher === "function");
-	if (functionMatchers.length) {
-		let date = range.from;
-		const totalDays = dateLib.differenceInCalendarDays(range.to, range.from);
-		for (let i = 0; i <= totalDays; i++) {
-			if (functionMatchers.some((matcher) => matcher(date))) return true;
-			date = dateLib.addDays(date, 1);
-		}
-	}
-	return false;
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/selection/useRange.js
-/**
-* Hook to manage range selection in the DayPicker component.
-*
-* @template T - The type of DayPicker props.
-* @param props - The DayPicker props.
-* @param dateLib - The date utility library instance.
-* @returns An object containing the selected range, a function to select a
-*   range, and a function to check if a date is within the range.
-*/
-function useRange(props, dateLib) {
-	const { disabled, excludeDisabled, resetOnSelect, selected: initiallySelected, required, onSelect } = props;
-	const [internallySelected, setSelected] = useControlledValue$1(initiallySelected, onSelect ? initiallySelected : void 0);
-	const selected = !onSelect ? internallySelected : initiallySelected;
-	const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib);
-	const select = (triggerDate, modifiers, e) => {
-		const { min, max } = props;
-		let newRange;
-		if (triggerDate) {
-			const selectedFrom = selected?.from;
-			const selectedTo = selected?.to;
-			const hasFullRange = !!selectedFrom && !!selectedTo;
-			const isClickingSingleDayRange = !!selectedFrom && !!selectedTo && dateLib.isSameDay(selectedFrom, selectedTo) && dateLib.isSameDay(triggerDate, selectedFrom);
-			if (resetOnSelect && (hasFullRange || !selected?.from)) {
-				if (!required && isClickingSingleDayRange) newRange = void 0;
-				else newRange = {
-					from: triggerDate,
-					to: void 0
-				};
-			} else newRange = addToRange(triggerDate, selected, min, max, required, dateLib);
-		}
-		if (excludeDisabled && disabled && newRange?.from && newRange.to) {
-			if (rangeContainsModifiers({
-				from: newRange.from,
-				to: newRange.to
-			}, disabled, dateLib)) {
-				newRange.from = triggerDate;
-				newRange.to = void 0;
-			}
-		}
-		if (!onSelect) setSelected(newRange);
-		onSelect?.(newRange, triggerDate, modifiers, e);
-		return newRange;
-	};
-	return {
-		selected,
-		select,
-		isSelected
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/selection/useSingle.js
-/**
-* Hook to manage single-date selection in the DayPicker component.
-*
-* @template T - The type of DayPicker props.
-* @param props - The DayPicker props.
-* @param dateLib - The date utility library instance.
-* @returns An object containing the selected date, a function to select a date,
-*   and a function to check if a date is selected.
-*/
-function useSingle(props, dateLib) {
-	const { selected: initiallySelected, required, onSelect } = props;
-	const [internallySelected, setSelected] = useControlledValue$1(initiallySelected, onSelect ? initiallySelected : void 0);
-	const selected = !onSelect ? internallySelected : initiallySelected;
-	const { isSameDay } = dateLib;
-	const isSelected = (compareDate) => {
-		return selected ? isSameDay(selected, compareDate) : false;
-	};
-	const select = (triggerDate, modifiers, e) => {
-		let newDate = triggerDate;
-		if (!required && selected && selected && isSameDay(triggerDate, selected)) newDate = void 0;
-		if (!onSelect) setSelected(newDate);
-		if (required) onSelect?.(newDate, triggerDate, modifiers, e);
-		else onSelect?.(newDate, triggerDate, modifiers, e);
-		return newDate;
-	};
-	return {
-		selected,
-		select,
-		isSelected
-	};
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/useSelection.js
-/**
-* Determines the appropriate selection hook to use based on the selection mode
-* and returns the corresponding selection object.
-*
-* @template T - The type of DayPicker props.
-* @param props - The DayPicker props.
-* @param dateLib - The date utility library instance.
-* @returns The selection object for the specified mode, or `undefined` if no
-*   mode is set.
-*/
-function useSelection(props, dateLib) {
-	const single = useSingle(props, dateLib);
-	const multi = useMulti(props, dateLib);
-	const range = useRange(props, dateLib);
-	switch (props.mode) {
-		case "single": return single;
-		case "multiple": return multi;
-		case "range": return range;
-		default: return;
-	}
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/toTimeZone.js
-/**
-* Convert a {@link Date} or {@link TZDate} instance to the given time zone.
-* Reuses the same instance when it is already a {@link TZDate} using the target
-* time zone to avoid extra allocations.
-*/
-function toTimeZone(date, timeZone) {
-	if (date instanceof TZDate && date.timeZone === timeZone) return date;
-	return new TZDate(date, timeZone);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/utils/convertMatchersToTimeZone.js
-function toZoneNoon(date, timeZone, noonSafe) {
-	if (!noonSafe) return toTimeZone(date, timeZone);
-	const zoned = toTimeZone(date, timeZone);
-	const noonZoned = new TZDate(zoned.getFullYear(), zoned.getMonth(), zoned.getDate(), 12, 0, 0, timeZone);
-	return new Date(noonZoned.getTime());
-}
-function convertMatcher(matcher, timeZone, noonSafe) {
-	if (typeof matcher === "boolean" || typeof matcher === "function") return matcher;
-	if (matcher instanceof Date) return toZoneNoon(matcher, timeZone, noonSafe);
-	if (Array.isArray(matcher)) return matcher.map((value) => value instanceof Date ? toZoneNoon(value, timeZone, noonSafe) : value);
-	if (isDateRange(matcher)) return {
-		...matcher,
-		from: matcher.from ? toTimeZone(matcher.from, timeZone) : matcher.from,
-		to: matcher.to ? toTimeZone(matcher.to, timeZone) : matcher.to
-	};
-	if (isDateInterval(matcher)) return {
-		before: toZoneNoon(matcher.before, timeZone, noonSafe),
-		after: toZoneNoon(matcher.after, timeZone, noonSafe)
-	};
-	if (isDateAfterType(matcher)) return { after: toZoneNoon(matcher.after, timeZone, noonSafe) };
-	if (isDateBeforeType(matcher)) return { before: toZoneNoon(matcher.before, timeZone, noonSafe) };
-	return matcher;
-}
-/**
-* Convert any {@link Matcher} or array of matchers to the specified time zone.
-*
-* @param matchers - The matcher or matchers to convert.
-* @param timeZone - The target IANA time zone.
-* @returns The converted matcher(s).
-* @group Utilities
-*/
-function convertMatchersToTimeZone(matchers, timeZone, noonSafe) {
-	if (!matchers) return matchers;
-	if (Array.isArray(matchers)) return matchers.map((matcher) => convertMatcher(matcher, timeZone, noonSafe));
-	return convertMatcher(matchers, timeZone, noonSafe);
-}
-
-// node_modules/.store/react-day-picker@10.0.1-y2Oedn4nrpHutk6t6Rk87g/node_modules/react-day-picker/dist/esm/DayPicker.js
-/**
-* Renders the DayPicker calendar component.
-*
-* @param initialProps - The props for the DayPicker component.
-* @returns The rendered DayPicker component.
-* @group DayPicker
-* @see https://daypicker.dev
-*/
-function DayPicker(initialProps) {
-	let props = initialProps;
-	const timeZone = props.timeZone;
-	if (timeZone) {
-		props = {
-			...initialProps,
-			timeZone
-		};
-		if (props.today) props.today = toTimeZone(props.today, timeZone);
-		if (props.month) props.month = toTimeZone(props.month, timeZone);
-		if (props.defaultMonth) props.defaultMonth = toTimeZone(props.defaultMonth, timeZone);
-		if (props.startMonth) props.startMonth = toTimeZone(props.startMonth, timeZone);
-		if (props.endMonth) props.endMonth = toTimeZone(props.endMonth, timeZone);
-		if (props.mode === "single" && props.selected) props.selected = toTimeZone(props.selected, timeZone);
-		else if (props.mode === "multiple" && props.selected) props.selected = props.selected?.map((date) => toTimeZone(date, timeZone));
-		else if (props.mode === "range" && props.selected) props.selected = {
-			from: props.selected.from ? toTimeZone(props.selected.from, timeZone) : props.selected.from,
-			to: props.selected.to ? toTimeZone(props.selected.to, timeZone) : props.selected.to
-		};
-		if (props.disabled !== void 0) props.disabled = convertMatchersToTimeZone(props.disabled, timeZone);
-		if (props.hidden !== void 0) props.hidden = convertMatchersToTimeZone(props.hidden, timeZone);
-		if (props.modifiers) {
-			const nextModifiers = {};
-			Object.keys(props.modifiers).forEach((key) => {
-				nextModifiers[key] = convertMatchersToTimeZone(props.modifiers?.[key], timeZone);
-			});
-			props.modifiers = nextModifiers;
-		}
-	}
-	const { components, formatters, labels, dateLib, locale, classNames } = (0, import__wp_global_react.useMemo)(() => {
-		const locale = {
-			...enUS,
-			...props.locale
-		};
-		const weekStartsOn = props.broadcastCalendar ? 1 : props.weekStartsOn;
-		const noonOverrides = props.noonSafe && props.timeZone ? createNoonOverrides(props.timeZone, {
-			weekStartsOn,
-			locale
-		}) : void 0;
-		const overrides = props.dateLib && noonOverrides ? {
-			...noonOverrides,
-			...props.dateLib
-		} : props.dateLib ?? noonOverrides;
-		const dateLib = new DateLib({
-			locale,
-			weekStartsOn,
-			firstWeekContainsDate: props.firstWeekContainsDate,
-			useAdditionalWeekYearTokens: props.useAdditionalWeekYearTokens,
-			useAdditionalDayOfYearTokens: props.useAdditionalDayOfYearTokens,
-			timeZone: props.timeZone,
-			numerals: props.numerals
-		}, overrides);
-		return {
-			dateLib,
-			components: getComponents(props.components),
-			formatters: getFormatters(props.formatters),
-			labels: getLabels(props.labels, dateLib.options),
-			locale,
-			classNames: {
-				...getDefaultClassNames(),
-				...props.classNames
-			}
-		};
-	}, [
-		props.locale,
-		props.broadcastCalendar,
-		props.weekStartsOn,
-		props.firstWeekContainsDate,
-		props.useAdditionalWeekYearTokens,
-		props.useAdditionalDayOfYearTokens,
-		props.timeZone,
-		props.numerals,
-		props.dateLib,
-		props.noonSafe,
-		props.components,
-		props.formatters,
-		props.labels,
-		props.classNames
-	]);
-	if (!props.today) props = {
-		...props,
-		today: dateLib.today()
-	};
-	const { captionLayout, mode, navLayout, numberOfMonths = 1, onDayBlur, onDayClick, onDayFocus, onDayKeyDown, onDayMouseEnter, onDayMouseLeave, onNextClick, onPrevClick, showWeekNumber, styles } = props;
-	const { formatCaption, formatDay, formatMonthDropdown, formatWeekNumber, formatWeekNumberHeader, formatWeekdayName, formatYearDropdown } = formatters;
-	const calendar = useCalendar(props, dateLib);
-	const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
-	const getModifiers = createGetModifiers(days, props, navStart, navEnd, dateLib);
-	const { isSelected, select, selected: selectedValue } = useSelection(props, dateLib) ?? {};
-	const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus(props, calendar, getModifiers, isSelected ?? (() => false), dateLib);
-	const { labelDayButton, labelGridcell, labelGrid, labelMonthDropdown, labelNav, labelPrevious, labelNext, labelWeekday, labelWeekNumber, labelWeekNumberHeader, labelYearDropdown } = labels;
-	const weekdays = (0, import__wp_global_react.useMemo)(() => getWeekdays(dateLib, props.ISOWeek, props.broadcastCalendar, props.today), [
-		dateLib,
-		props.ISOWeek,
-		props.broadcastCalendar,
-		props.today
-	]);
-	const isInteractive = mode !== void 0 || onDayClick !== void 0;
-	const handlePreviousClick = (0, import__wp_global_react.useCallback)(() => {
-		if (!previousMonth) return;
-		goToMonth(previousMonth);
-		onPrevClick?.(previousMonth);
-	}, [
-		previousMonth,
-		goToMonth,
-		onPrevClick
-	]);
-	const handleNextClick = (0, import__wp_global_react.useCallback)(() => {
-		if (!nextMonth) return;
-		goToMonth(nextMonth);
-		onNextClick?.(nextMonth);
-	}, [
-		goToMonth,
-		nextMonth,
-		onNextClick
-	]);
-	const handleDayClick = (0, import__wp_global_react.useCallback)((day, m) => (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setFocused(day);
-		if (m.disabled) return;
-		select?.(day.date, m, e);
-		onDayClick?.(day.date, m, e);
-	}, [
-		select,
-		onDayClick,
-		setFocused
-	]);
-	const handleDayFocus = (0, import__wp_global_react.useCallback)((day, m) => (e) => {
-		setFocused(day);
-		onDayFocus?.(day.date, m, e);
-	}, [onDayFocus, setFocused]);
-	const handleDayBlur = (0, import__wp_global_react.useCallback)((day, m) => (e) => {
-		blur();
-		onDayBlur?.(day.date, m, e);
-	}, [blur, onDayBlur]);
-	const handleDayKeyDown = (0, import__wp_global_react.useCallback)((day, modifiers) => (e) => {
-		const keyMap = {
-			ArrowLeft: [e.shiftKey ? "month" : "day", props.dir === "rtl" ? "after" : "before"],
-			ArrowRight: [e.shiftKey ? "month" : "day", props.dir === "rtl" ? "before" : "after"],
-			ArrowDown: [e.shiftKey ? "year" : "week", "after"],
-			ArrowUp: [e.shiftKey ? "year" : "week", "before"],
-			PageUp: [e.shiftKey ? "year" : "month", "before"],
-			PageDown: [e.shiftKey ? "year" : "month", "after"],
-			Home: ["startOfWeek", "before"],
-			End: ["endOfWeek", "after"]
-		};
-		if (keyMap[e.key]) {
-			e.preventDefault();
-			e.stopPropagation();
-			const [moveBy, moveDir] = keyMap[e.key];
-			moveFocus(moveBy, moveDir);
-		}
-		onDayKeyDown?.(day.date, modifiers, e);
-	}, [
-		moveFocus,
-		onDayKeyDown,
-		props.dir
-	]);
-	const handleDayMouseEnter = (0, import__wp_global_react.useCallback)((day, modifiers) => (e) => {
-		onDayMouseEnter?.(day.date, modifiers, e);
-	}, [onDayMouseEnter]);
-	const handleDayMouseLeave = (0, import__wp_global_react.useCallback)((day, modifiers) => (e) => {
-		onDayMouseLeave?.(day.date, modifiers, e);
-	}, [onDayMouseLeave]);
-	const handleMonthChange = (0, import__wp_global_react.useCallback)((date, monthOffset) => (e) => {
-		const selectedMonth = Number(e.target.value);
-		const month = dateLib.setMonth(dateLib.startOfMonth(date), selectedMonth);
-		goToMonth(dateLib.addMonths(month, -monthOffset));
-	}, [dateLib, goToMonth]);
-	const handleYearChange = (0, import__wp_global_react.useCallback)((date, monthOffset) => (e) => {
-		const selectedYear = Number(e.target.value);
-		const month = dateLib.setYear(dateLib.startOfMonth(date), selectedYear);
-		goToMonth(dateLib.addMonths(month, -monthOffset));
-	}, [dateLib, goToMonth]);
-	const { className, style } = (0, import__wp_global_react.useMemo)(() => ({
-		className: [classNames[UI.Root], props.className].filter(Boolean).join(" "),
-		style: {
-			...styles?.[UI.Root],
-			...props.style
-		}
-	}), [
-		classNames,
-		props.className,
-		props.style,
-		styles
-	]);
-	const dataAttributes = getDataAttributes(props);
-	const getDropdownStyle = (dropdown) => {
-		const dropdownStyle = styles?.[UI.Dropdown];
-		const specificDropdownStyle = styles?.[dropdown];
-		if (!dropdownStyle && !specificDropdownStyle) return;
-		return {
-			...dropdownStyle,
-			...specificDropdownStyle
-		};
-	};
-	const rootElRef = (0, import__wp_global_react.useRef)(null);
-	useAnimation(rootElRef, Boolean(props.animate), {
-		classNames,
-		months,
-		focused,
-		dateLib
-	});
-	const contextValue = {
-		dayPickerProps: props,
-		selected: selectedValue,
-		select,
-		isSelected,
-		months,
-		nextMonth,
-		previousMonth,
-		goToMonth,
-		getModifiers,
-		components,
-		classNames,
-		styles,
-		labels,
-		formatters
-	};
-	return import__wp_global_react.default.createElement(dayPickerContext.Provider, { value: contextValue }, import__wp_global_react.default.createElement(components.Root, {
-		rootRef: props.animate ? rootElRef : void 0,
-		className,
-		style,
-		dir: props.dir,
-		id: props.id,
-		lang: props.lang ?? locale.code,
-		nonce: props.nonce,
-		title: props.title,
-		role: props.role,
-		"aria-label": props["aria-label"],
-		"aria-labelledby": props["aria-labelledby"],
-		...dataAttributes
-	}, import__wp_global_react.default.createElement(components.Months, {
-		className: classNames[UI.Months],
-		style: styles?.[UI.Months]
-	}, !props.hideNavigation && !navLayout && import__wp_global_react.default.createElement(components.Nav, {
-		"data-animated-nav": props.animate ? "true" : void 0,
-		className: classNames[UI.Nav],
-		style: styles?.[UI.Nav],
-		"aria-label": labelNav(),
-		onPreviousClick: handlePreviousClick,
-		onNextClick: handleNextClick,
-		previousMonth,
-		nextMonth
-	}), months.map((calendarMonth, displayIndex) => {
-		const monthOffset = props.reverseMonths ? months.length - 1 - displayIndex : displayIndex;
-		return import__wp_global_react.default.createElement(components.Month, {
-			"data-animated-month": props.animate ? "true" : void 0,
-			className: classNames[UI.Month],
-			style: styles?.[UI.Month],
-			key: displayIndex,
-			displayIndex,
-			calendarMonth
-		}, navLayout === "around" && !props.hideNavigation && displayIndex === 0 && import__wp_global_react.default.createElement(components.PreviousMonthButton, {
-			type: "button",
-			className: classNames[UI.PreviousMonthButton],
-			style: styles?.[UI.PreviousMonthButton],
-			tabIndex: previousMonth ? void 0 : -1,
-			"aria-disabled": previousMonth ? void 0 : true,
-			"aria-label": labelPrevious(previousMonth),
-			onClick: handlePreviousClick,
-			"data-animated-button": props.animate ? "true" : void 0
-		}, import__wp_global_react.default.createElement(components.Chevron, {
-			disabled: previousMonth ? void 0 : true,
-			className: classNames[UI.Chevron],
-			style: styles?.[UI.Chevron],
-			orientation: props.dir === "rtl" ? "right" : "left"
-		})), import__wp_global_react.default.createElement(components.MonthCaption, {
-			"data-animated-caption": props.animate ? "true" : void 0,
-			className: classNames[UI.MonthCaption],
-			style: styles?.[UI.MonthCaption],
-			calendarMonth,
-			displayIndex
-		}, captionLayout?.startsWith("dropdown") ? import__wp_global_react.default.createElement(components.DropdownNav, {
-			className: classNames[UI.Dropdowns],
-			style: styles?.[UI.Dropdowns]
-		}, (() => {
-			const monthControl = captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import__wp_global_react.default.createElement(components.MonthsDropdown, {
-				key: "month",
-				className: classNames[UI.MonthsDropdown],
-				"aria-label": labelMonthDropdown(),
-				disabled: Boolean(props.disableNavigation),
-				onChange: handleMonthChange(calendarMonth.date, monthOffset),
-				options: getMonthOptions(calendarMonth.date, navStart, navEnd, formatters, dateLib),
-				style: getDropdownStyle(UI.MonthsDropdown),
-				value: dateLib.getMonth(calendarMonth.date)
-			}) : import__wp_global_react.default.createElement("span", { key: "month" }, formatMonthDropdown(calendarMonth.date, dateLib));
-			const yearControl = captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import__wp_global_react.default.createElement(components.YearsDropdown, {
-				key: "year",
-				className: classNames[UI.YearsDropdown],
-				"aria-label": labelYearDropdown(dateLib.options),
-				disabled: Boolean(props.disableNavigation),
-				onChange: handleYearChange(calendarMonth.date, monthOffset),
-				options: getYearOptions(navStart, navEnd, formatters, dateLib, Boolean(props.reverseYears)),
-				style: getDropdownStyle(UI.YearsDropdown),
-				value: dateLib.getYear(calendarMonth.date)
-			}) : import__wp_global_react.default.createElement("span", { key: "year" }, formatYearDropdown(calendarMonth.date, dateLib));
-			return dateLib.getMonthYearOrder() === "year-first" ? [yearControl, monthControl] : [monthControl, yearControl];
-		})(), import__wp_global_react.default.createElement("span", {
-			role: "status",
-			"aria-live": "polite",
-			style: {
-				border: 0,
-				clip: "rect(0 0 0 0)",
-				height: "1px",
-				margin: "-1px",
-				overflow: "hidden",
-				padding: 0,
-				position: "absolute",
-				width: "1px",
-				whiteSpace: "nowrap",
-				wordWrap: "normal"
-			}
-		}, formatCaption(calendarMonth.date, dateLib.options, dateLib))) : import__wp_global_react.default.createElement(components.CaptionLabel, {
-			className: classNames[UI.CaptionLabel],
-			style: styles?.[UI.CaptionLabel],
-			role: "status",
-			"aria-live": "polite"
-		}, formatCaption(calendarMonth.date, dateLib.options, dateLib))), navLayout === "around" && !props.hideNavigation && displayIndex === numberOfMonths - 1 && import__wp_global_react.default.createElement(components.NextMonthButton, {
-			type: "button",
-			className: classNames[UI.NextMonthButton],
-			style: styles?.[UI.NextMonthButton],
-			tabIndex: nextMonth ? void 0 : -1,
-			"aria-disabled": nextMonth ? void 0 : true,
-			"aria-label": labelNext(nextMonth),
-			onClick: handleNextClick,
-			"data-animated-button": props.animate ? "true" : void 0
-		}, import__wp_global_react.default.createElement(components.Chevron, {
-			disabled: nextMonth ? void 0 : true,
-			className: classNames[UI.Chevron],
-			style: styles?.[UI.Chevron],
-			orientation: props.dir === "rtl" ? "left" : "right"
-		})), displayIndex === numberOfMonths - 1 && navLayout === "after" && !props.hideNavigation && import__wp_global_react.default.createElement(components.Nav, {
-			"data-animated-nav": props.animate ? "true" : void 0,
-			className: classNames[UI.Nav],
-			style: styles?.[UI.Nav],
-			"aria-label": labelNav(),
-			onPreviousClick: handlePreviousClick,
-			onNextClick: handleNextClick,
-			previousMonth,
-			nextMonth
-		}), import__wp_global_react.default.createElement(components.MonthGrid, {
-			role: "grid",
-			"aria-multiselectable": mode === "multiple" || mode === "range",
-			"aria-label": labelGrid(calendarMonth.date, dateLib.options, dateLib) || void 0,
-			className: classNames[UI.MonthGrid],
-			style: styles?.[UI.MonthGrid]
-		}, !props.hideWeekdays && import__wp_global_react.default.createElement(components.Weekdays, {
-			"data-animated-weekdays": props.animate ? "true" : void 0,
-			className: classNames[UI.Weekdays],
-			style: styles?.[UI.Weekdays]
-		}, showWeekNumber && import__wp_global_react.default.createElement(components.WeekNumberHeader, {
-			"aria-label": labelWeekNumberHeader(dateLib.options),
-			className: classNames[UI.WeekNumberHeader],
-			style: styles?.[UI.WeekNumberHeader],
-			scope: "col"
-		}, formatWeekNumberHeader()), weekdays.map((weekday) => import__wp_global_react.default.createElement(components.Weekday, {
-			"aria-label": labelWeekday(weekday, dateLib.options, dateLib),
-			className: classNames[UI.Weekday],
-			key: String(weekday),
-			style: styles?.[UI.Weekday],
-			scope: "col"
-		}, formatWeekdayName(weekday, dateLib.options, dateLib)))), import__wp_global_react.default.createElement(components.Weeks, {
-			"data-animated-weeks": props.animate ? "true" : void 0,
-			className: classNames[UI.Weeks],
-			style: styles?.[UI.Weeks]
-		}, calendarMonth.weeks.map((week) => {
-			return import__wp_global_react.default.createElement(components.Week, {
-				className: classNames[UI.Week],
-				key: week.weekNumber,
-				style: styles?.[UI.Week],
-				week
-			}, showWeekNumber && import__wp_global_react.default.createElement(components.WeekNumber, {
-				week,
-				style: styles?.[UI.WeekNumber],
-				"aria-label": labelWeekNumber(week.weekNumber, { locale }),
-				className: classNames[UI.WeekNumber],
-				scope: "row",
-				role: "rowheader"
-			}, formatWeekNumber(week.weekNumber, dateLib)), week.days.map((day) => {
-				const { date } = day;
-				const modifiers = getModifiers(day);
-				modifiers[DayFlag.focused] = !modifiers.hidden && Boolean(focused?.isEqualTo(day));
-				modifiers[SelectionState.selected] = isSelected?.(date) || modifiers.selected;
-				if (isDateRange(selectedValue)) {
-					const { from, to } = selectedValue;
-					modifiers[SelectionState.range_start] = Boolean(from && to && dateLib.isSameDay(date, from));
-					modifiers[SelectionState.range_end] = Boolean(from && to && dateLib.isSameDay(date, to));
-					modifiers[SelectionState.range_middle] = rangeIncludesDate(selectedValue, date, true, dateLib);
-				}
-				const style = getStyleForModifiers(modifiers, styles, props.modifiersStyles);
-				const className = getClassNamesForModifiers(modifiers, classNames, props.modifiersClassNames);
-				const ariaLabel = !isInteractive && !modifiers.hidden ? labelGridcell(date, modifiers, dateLib.options, dateLib) : void 0;
-				return import__wp_global_react.default.createElement(components.Day, {
-					key: `${day.isoDate}_${day.displayMonthId}`,
-					day,
-					modifiers,
-					className: className.join(" "),
-					style,
-					role: "gridcell",
-					"aria-selected": modifiers.selected || void 0,
-					"aria-label": ariaLabel,
-					"data-day": day.isoDate,
-					"data-month": day.outside ? day.dateMonthId : void 0,
-					"data-selected": modifiers.selected || void 0,
-					"data-disabled": modifiers.disabled || void 0,
-					"data-hidden": modifiers.hidden || void 0,
-					"data-outside": day.outside || void 0,
-					"data-focused": modifiers.focused || void 0,
-					"data-today": modifiers.today || void 0
-				}, !modifiers.hidden && isInteractive ? import__wp_global_react.default.createElement(components.DayButton, {
-					className: classNames[UI.DayButton],
-					style: styles?.[UI.DayButton],
-					type: "button",
-					day,
-					modifiers,
-					disabled: !modifiers.focused && modifiers.disabled || void 0,
-					"aria-disabled": modifiers.focused && modifiers.disabled || void 0,
-					tabIndex: isFocusTarget(day) ? 0 : -1,
-					"aria-label": labelDayButton(date, modifiers, dateLib.options, dateLib),
-					onClick: handleDayClick(day, modifiers),
-					onBlur: handleDayBlur(day, modifiers),
-					onFocus: handleDayFocus(day, modifiers),
-					onKeyDown: handleDayKeyDown(day, modifiers),
-					onMouseEnter: handleDayMouseEnter(day, modifiers),
-					onMouseLeave: handleDayMouseLeave(day, modifiers)
-				}, formatDay(date, dateLib.options, dateLib)) : !modifiers.hidden && formatDay(day.date, dateLib.options, dateLib));
-			}));
-		}))));
-	})), props.footer && import__wp_global_react.default.createElement(components.Footer, {
-		className: classNames[UI.Footer],
-		style: styles?.[UI.Footer],
-		role: "status",
-		"aria-live": "polite"
-	}, props.footer)));
-}
-
-// packages/ui/build-module/calendar/utils/root-context.mjs
-/**
-* `@daypicker/react` only accepts custom components through its `components`
-* prop, which needs to be referentially stable across renders — a new component
-* type would remount the whole calendar on every render, losing focus.
-*
-* The `Root` override is therefore declared once at module scope, and reads the
-* per-instance root props from this context instead of closing over them.
-*/
-const RootContext = (0, import_element.createContext)({});
-
-// packages/ui/build-module/calendar/utils/components.mjs
-/**
-* Render a grid cell for a specific day in the calendar.
-*
-* Handles interaction and focus for the day.
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Day(props) {
-	const { day, modifiers, children, ...tdProps } = props;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("td", {
-		...tdProps,
-		children: [modifiers.preview && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
-			"aria-hidden": "true",
-			fill: "none",
-			stroke: "currentColor",
-			strokeDasharray: "4 4",
-			strokeDashoffset: "2",
-			"data-preview-start": modifiers.preview_start || void 0,
-			"data-preview-end": modifiers.preview_end || void 0,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {})
-		}), children]
-	});
-}
-/**
-* Render the root element of the calendar.
-*
-* Wired to `useRender` so that consumers can swap the underlying element
-* through the `render` prop, like every other `@wordpress/ui` component.
-* @see https://daypicker.dev/guides/custom-components
-*/
-function Root$2({ rootRef, ...props }) {
-	const { render, ref, role, defaultAriaLabel } = (0, import_element.useContext)(RootContext);
-	const { months, labels } = useDayPicker();
-	const hasExplicitLabel = props["aria-label"] !== void 0 || props["aria-labelledby"] !== void 0;
-	let ariaLabel = props["aria-label"];
-	if (!hasExplicitLabel && defaultAriaLabel && role === "application") {
-		const currentMonth = months[0];
-		ariaLabel = currentMonth ? (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s, %2$s"), defaultAriaLabel, labels.labelGrid(currentMonth.date)) : defaultAriaLabel;
-	}
-	const mergedRef = (0, import_compose.useMergeRefs)([rootRef ?? null, ref ?? null]);
-	return useRender({
-		render,
-		defaultTagName: "div",
-		ref: mergedRef,
-		props: {
-			...props,
-			role,
-			"aria-label": ariaLabel
-		}
-	});
-}
-/**
-* Render a month navigation button.
-*
-* `@daypicker/react` marks the button as `aria-disabled` (rather than
-* `disabled`) when there is no month to navigate to, so that it stays
-* discoverable. `IconButton`'s `focusableWhenDisabled` produces the same DOM.
-* It also always provides the string returned by its navigation label formatter
-* as `aria-label`; the native button prop type cannot express that requirement.
-* @see https://daypicker.dev/guides/custom-components
-*/
-function NavButton({ icon, className, children: _children, "aria-label": label, "aria-disabled": ariaDisabled, ...props }) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(IconButton, {
-		...props,
-		className,
-		label,
-		icon,
-		variant: "minimal",
-		tone: "neutral",
-		size: "compact",
-		disabled: ariaDisabled === true || ariaDisabled === "true",
-		focusableWhenDisabled: true
-	});
-}
-function PreviousMonthButton(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavButton, {
-		...props,
-		icon: chevron_left_default
-	});
-}
-function NextMonthButton(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavButton, {
-		...props,
-		icon: chevron_right_default
-	});
-}
-
-// packages/ui/build-module/calendar/utils/constants.mjs
-const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$23() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$23(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$23(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$23}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$23) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$23(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$23();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$23(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$23, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$23(targetDocument) {
-	const runtime = getRuntime$23();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$23(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$23(hash, css) {
-	const runtime = getRuntime$23();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
-}
-registerStyle$23("3859529419", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8de6747d894ea5ee__root{--wp-ui-calendar-cell-size:var(--wpds-dimension-size-md,32px);background-color:var(--wpds-color-background-surface-neutral-strong,#fff);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flow-root;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);min-width:calc(var(--wp-ui-calendar-cell-size)*7);position:relative;width:100%;z-index:0}._0774b987a99c9db6__day{color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);padding:0;position:relative;&:has(._671e4672d884ebbc__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b)}&:has(._671e4672d884ebbc__day-button:focus-visible),&:has(._671e4672d884ebbc__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}}._671e4672d884ebbc__day-button{align-items:center;background:none;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:inherit;cursor:var(--wpds-cursor-control,pointer);display:flex;font:inherit;font-variant-numeric:tabular-nums;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin:0;padding:0;position:relative;width:100%;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);border:none;border-radius:var(--wpds-border-radius-sm,2px);content:\"\";inset:0;position:absolute;z-index:-1}&:disabled{cursor:revert;&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}@media (forced-colors:active){text-decoration:line-through}}&:focus-visible:before,&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ececec)}}._813519942de77739__caption-label{align-items:center;border:0;display:inline-flex;position:relative;text-transform:capitalize;white-space:nowrap;z-index:1}._8de6747d894ea5ee__root[dir=rtl] ._67f847e87dfba813__nav-button{transform:rotate(180deg);transform-origin:50%}.a1885fdf1785dac9__month-caption{align-content:center;display:flex;height:var(--wp-ui-calendar-cell-size);justify-content:center;margin-bottom:var(--wpds-dimension-gap-md,12px)}.ea9e56f27936747c__months{display:flex;flex-wrap:wrap;gap:var(--wpds-dimension-gap-lg,16px);position:relative}.f03204bb581f1be9__month{flex:1 0 calc(var(--wp-ui-calendar-cell-size)*7);width:100%}.d6f35f4bdae2df46__month-grid{border-collapse:separate;border-spacing:0 var(--wpds-dimension-gap-xs,4px);min-width:100%;table-layout:fixed;width:calc(var(--wp-ui-calendar-cell-size)*7)}.b4be65791b7ce19c__nav{align-items:center;display:flex;height:var(--wp-ui-calendar-cell-size);inset-block-start:0;inset-inline-end:0;inset-inline-start:0;justify-content:space-between;position:absolute}._34e16195623304a9__weekday{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);font-weight:var(--wpds-typography-font-weight-default,400);height:var(--wp-ui-calendar-cell-size);padding:0;text-align:center;text-transform:uppercase}.eea8c52b73e5927a__today:after{border:2px solid;border-radius:50%;content:\"\";height:0;inset-block-start:2px;inset-inline-end:calc(50% - var(--wp-ui-calendar-cell-size)/2 + 2px);position:absolute;width:0;z-index:1}.a05330b46e7c1b66__selected:not(.a80b87b5f62475a4__range-middle){&:has(._671e4672d884ebbc__day-button,._671e4672d884ebbc__day-button:hover:not(:disabled)){color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0)}&:has(._671e4672d884ebbc__day-button:disabled){color:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8b8b8b)}._671e4672d884ebbc__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-strong,#2e2e2e);border:1px solid transparent}&:disabled:before{background-color:var(--wpds-color-background-interactive-neutral-strong-disabled,#e5e5e5)}&:hover:not(:disabled):before{background-color:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e)}}}._9b6a87f8af3ccd24__outside{color:var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e)}._0ec1af00abdb49a1__hidden{visibility:hidden}.b053021fd0439af0__range-start:not(.c0e4a01a50314adf__range-end) ._671e4672d884ebbc__day-button{&,&:before{border-end-end-radius:0;border-start-end-radius:0}}.a80b87b5f62475a4__range-middle ._671e4672d884ebbc__day-button{&:before{background-color:var(--wpds-color-background-interactive-neutral-weak-active,#ececec);border-color:transparent;border-radius:0;border-style:solid;border-width:1px 0}}.c0e4a01a50314adf__range-end:not(.b053021fd0439af0__range-start) ._671e4672d884ebbc__day-button{&,&:before{border-end-start-radius:0;border-start-start-radius:0}}._4d562a47dce3f142__preview svg{color:var(--wpds-color-stroke-interactive-neutral,#8b8b8b);height:100%;inset:0;pointer-events:none;position:absolute;width:100%;@media (forced-colors:active){color:inherit}}._4d562a47dce3f142__preview rect{x:-2px;y:.5px;rx:2px;height:calc(100% - 1px);width:calc(100% + 4px)}._4d562a47dce3f142__preview [data-preview-start] rect{x:.5px;width:calc(100% + 2px)}._4d562a47dce3f142__preview [data-preview-end] rect{width:calc(100% + 1.5px)}._4d562a47dce3f142__preview [data-preview-start][data-preview-end] rect{width:calc(100% - 1px)}._4d562a47dce3f142__preview.a05330b46e7c1b66__selected:not(.a80b87b5f62475a4__range-middle) svg{display:none}._8de6747d894ea5ee__root[dir=rtl] ._4d562a47dce3f142__preview svg{transform:scaleX(-1)}._4d562a47dce3f142__preview.a80b87b5f62475a4__range-middle ._671e4672d884ebbc__day-button:before{border:none}@keyframes _88ee63a15e4087a1__slide-in-left{0%{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes c240311e225e2005__slide-in-right{0%{transform:translateX(100%)}to{transform:translateX(0)}}@keyframes _7dcc729018f1ffc4__slide-out-left{0%{transform:translateX(0)}to{transform:translateX(-100%)}}@keyframes _21c97677c1cd7c85__slide-out-right{0%{transform:translateX(0)}to{transform:translateX(100%)}}@keyframes da6b23f6b39663a7__fade-in{0%{opacity:0}to{opacity:1}}@keyframes _88e6c3a703933699__fade-out{0%{opacity:1}to{opacity:0}}._3eb3782707d12275__caption-after-enter,._504df3c7d1c2dc87__weeks-after-enter,._86a6116ddab87747__weeks-after-exit,.a0ec743ce623d0a8__weeks-before-enter,.d3e1bb60f0cec219__caption-before-enter,.ee10ab647afa9b5e__caption-before-exit,.f0825131c16db968__caption-after-exit,.f9dd36b3b2907d15__weeks-before-exit{animation-duration:0s;animation-fill-mode:forwards;animation-timing-function:var(--wpds-motion-easing-balanced,cubic-bezier(.4,0,.2,1));@media not (prefers-reduced-motion){animation-duration:var(--wpds-motion-duration-lg,.3s)}}._8de6747d894ea5ee__root[dir=rtl] ._504df3c7d1c2dc87__weeks-after-enter,.a0ec743ce623d0a8__weeks-before-enter{animation-name:_88ee63a15e4087a1__slide-in-left}._8de6747d894ea5ee__root[dir=rtl] ._86a6116ddab87747__weeks-after-exit,.f9dd36b3b2907d15__weeks-before-exit{animation-name:_7dcc729018f1ffc4__slide-out-left}._504df3c7d1c2dc87__weeks-after-enter,._8de6747d894ea5ee__root[dir=rtl] .a0ec743ce623d0a8__weeks-before-enter{animation-name:c240311e225e2005__slide-in-right}._86a6116ddab87747__weeks-after-exit,._8de6747d894ea5ee__root[dir=rtl] .f9dd36b3b2907d15__weeks-before-exit{animation-name:_21c97677c1cd7c85__slide-out-right}._3eb3782707d12275__caption-after-enter,.d3e1bb60f0cec219__caption-before-enter{animation-name:da6b23f6b39663a7__fade-in}.ee10ab647afa9b5e__caption-before-exit,.f0825131c16db968__caption-after-exit{animation-name:_88e6c3a703933699__fade-out}}}");
-var style_module_default$12 = {
-	"root": "_8de6747d894ea5ee__root",
-	"day": "_0774b987a99c9db6__day",
-	"day-button": "_671e4672d884ebbc__day-button",
-	"caption-label": "_813519942de77739__caption-label",
-	"nav-button": "_67f847e87dfba813__nav-button",
-	"month-caption": "a1885fdf1785dac9__month-caption",
-	"months": "ea9e56f27936747c__months",
-	"month": "f03204bb581f1be9__month",
-	"month-grid": "d6f35f4bdae2df46__month-grid",
-	"nav": "b4be65791b7ce19c__nav",
-	"weekday": "_34e16195623304a9__weekday",
-	"today": "eea8c52b73e5927a__today",
-	"selected": "a05330b46e7c1b66__selected",
-	"range-middle": "a80b87b5f62475a4__range-middle",
-	"outside": "_9b6a87f8af3ccd24__outside",
-	"hidden": "_0ec1af00abdb49a1__hidden",
-	"range-start": "b053021fd0439af0__range-start",
-	"range-end": "c0e4a01a50314adf__range-end",
-	"preview": "_4d562a47dce3f142__preview",
-	"weeks-before-enter": "a0ec743ce623d0a8__weeks-before-enter",
-	"weeks-before-exit": "f9dd36b3b2907d15__weeks-before-exit",
-	"weeks-after-enter": "_504df3c7d1c2dc87__weeks-after-enter",
-	"weeks-after-exit": "_86a6116ddab87747__weeks-after-exit",
-	"caption-after-enter": "_3eb3782707d12275__caption-after-enter",
-	"caption-after-exit": "f0825131c16db968__caption-after-exit",
-	"caption-before-enter": "d3e1bb60f0cec219__caption-before-enter",
-	"caption-before-exit": "ee10ab647afa9b5e__caption-before-exit",
-	"slide-in-left": "_88ee63a15e4087a1__slide-in-left",
-	"slide-out-left": "_7dcc729018f1ffc4__slide-out-left",
-	"slide-in-right": "c240311e225e2005__slide-in-right",
-	"slide-out-right": "_21c97677c1cd7c85__slide-out-right",
-	"fade-in": "da6b23f6b39663a7__fade-in",
-	"fade-out": "_88e6c3a703933699__fade-out"
-};
-registerStyle$23("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$4 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$23("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default$2 = {
-	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-};
-registerStyle$23("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-const CLASSNAMES = {
-	root: clsx(style_module_default$12.root, resets_module_default$4["box-sizing"]),
-	day: style_module_default$12.day,
-	day_button: clsx(style_module_default$12["day-button"], {
-		"button": "db1aa0d975c98907__button",
-		"input": "_560ae5870016ca79__input",
-		"textarea": "_7c14c78aca908e56__textarea",
-		"div": "b752c6b223b319c4__div",
-		"p": "_56028dfe751232df__p",
-		"heading": "_48f5e2ad729cc233__heading",
-		"a": "fba8c89ccbfb853b__a",
-		"ol": "_2933712904448f13__ol",
-		"li": "c48c21f7371f7cea__li",
-		"span": "_2348cae4464115af__span"
-	}.button, focus_module_default$2["outset-ring--focus-visible"]),
-	outside: style_module_default$12.outside,
-	caption_label: style_module_default$12["caption-label"],
-	button_next: style_module_default$12["nav-button"],
-	button_previous: style_module_default$12["nav-button"],
-	nav: style_module_default$12.nav,
-	month_caption: style_module_default$12["month-caption"],
-	months: style_module_default$12.months,
-	month: style_module_default$12.month,
-	month_grid: style_module_default$12["month-grid"],
-	weekday: style_module_default$12.weekday,
-	today: style_module_default$12.today,
-	selected: style_module_default$12.selected,
-	disabled: void 0,
-	hidden: style_module_default$12.hidden,
-	range_start: style_module_default$12["range-start"],
-	range_end: style_module_default$12["range-end"],
-	range_middle: style_module_default$12["range-middle"],
-	weeks_before_enter: style_module_default$12["weeks-before-enter"],
-	weeks_before_exit: style_module_default$12["weeks-before-exit"],
-	weeks_after_enter: style_module_default$12["weeks-after-enter"],
-	weeks_after_exit: style_module_default$12["weeks-after-exit"],
-	caption_after_enter: style_module_default$12["caption-after-enter"],
-	caption_after_exit: style_module_default$12["caption-after-exit"],
-	caption_before_enter: style_module_default$12["caption-before-enter"],
-	caption_before_exit: style_module_default$12["caption-before-exit"]
-};
-const MODIFIER_CLASSNAMES = { preview: style_module_default$12.preview };
-const COMMON_PROPS = {
-	animate: true,
-	showOutsideDays: false,
-	showWeekNumber: false,
-	hideWeekdays: false,
-	captionLayout: "label",
-	fixedWeeks: false,
-	hideNavigation: false,
-	classNames: CLASSNAMES,
-	components: {
-		Day,
-		Root: Root$2,
-		PreviousMonthButton,
-		NextMonthButton
-	}
-};
-
-// packages/ui/build-module/calendar/utils/misc.mjs
-function clampNumberOfMonths(numberOfMonths) {
-	return Math.min(3, Math.max(1, numberOfMonths));
-}
-
-// packages/ui/build-module/calendar/utils/use-controlled-value.mjs
-/**
-* Keeps track of a value that can be either controlled (via the `value` prop)
-* or uncontrolled (via the `defaultValue` prop).
-*
-* @param props
-* @param props.defaultValue
-* @param props.value
-* @param props.onChange
-* @return The controlled value and the value setter.
-*/
-function useControlledValue({ defaultValue, onChange, value: valueProp }) {
-	const hasValue = typeof valueProp !== "undefined";
-	const [state, setState] = (0, import_element.useState)(hasValue ? valueProp : defaultValue);
-	const value = hasValue ? valueProp : state;
-	const uncontrolledSetValue = (0, import_element.useCallback)((nextValue, ...args) => {
-		setState(nextValue);
-		onChange?.(nextValue, ...args);
-	}, [onChange]);
-	let setValue;
-	if (hasValue && typeof onChange === "function") setValue = onChange;
-	else if (!hasValue && typeof onChange === "function") setValue = uncontrolledSetValue;
-	else setValue = setState;
-	return [value, setValue];
-}
-
-// packages/ui/build-module/calendar/utils/use-localization-props.mjs
-function isLocaleRTL(locale) {
-	const direction = (locale.getTextInfo?.() ?? locale.textInfo)?.direction;
-	if (direction) return direction === "rtl";
-	return [
-		"ar",
-		"he",
-		"fa",
-		"ur",
-		"ps",
-		"syr",
-		"dv",
-		"ku",
-		"ckb",
-		"ug",
-		"yi"
-	].includes(locale.language);
-}
-function getSupportedLocaleCode(localeCode) {
-	if (!localeCode) return;
-	let supportedLocaleCode;
-	try {
-		supportedLocaleCode = Intl.DateTimeFormat.supportedLocalesOf([localeCode])[0];
-	} catch {}
-	return supportedLocaleCode;
-}
-function getWeekStartsOn(locale) {
-	const firstDay = (locale.getWeekInfo?.() ?? locale.weekInfo)?.firstDay;
-	if (firstDay === void 0 || firstDay < 1 || firstDay > 7) return;
-	return firstDay % 7;
-}
-/**
-* Returns localization props for the calendar components.
-*
-* Notes:
-* - the following props should be intended as defaults, and should
-*   be overridden by consumer props if listed as public props.
-* - It is possible for the translated strings to use a different locale
-*   than the formatted dates. This is because the translation function doesn't
-*   expose the locale used for the translated strings, meaning that dates are
-*   formatted using the date locale props. When a supported locale is provided,
-*   it also determines `dir`; otherwise, `dir` follows the translation context.
-*   For a correct localized experience, consumers should make sure that the
-*   translation context and date-text locale are consistent.
-* @param props
-* @param props.locale
-* @param props.timeZone
-* @param props.mode
-*/
-const useLocalizationProps = ({ locale, timeZone, mode }) => {
-	return (0, import_element.useMemo)(() => {
-		const isLocaleString = typeof locale === "string";
-		const dateFnsLocale = isLocaleString || locale === void 0 ? enUS$1 : locale;
-		const supportedLocaleCode = getSupportedLocaleCode(isLocaleString ? locale : locale?.code);
-		const localeCode = supportedLocaleCode ?? "en-US";
-		const intlLocale = new Intl.Locale(localeCode);
-		const isRightToLeft = supportedLocaleCode !== void 0 ? isLocaleRTL(intlLocale) : (0, import_i18n.isRTL)();
-		const weekStartsOn = isLocaleString || supportedLocaleCode !== void 0 ? getWeekStartsOn(intlLocale) : void 0;
-		const monthNameFormatter = new Intl.DateTimeFormat(localeCode, {
-			calendar: "gregory",
-			year: "numeric",
-			month: "long",
-			timeZone
-		});
-		const weekdayNarrowFormatter = new Intl.DateTimeFormat(localeCode, {
-			calendar: "gregory",
-			weekday: "narrow",
-			timeZone
-		});
-		const weekdayLongFormatter = new Intl.DateTimeFormat(localeCode, {
-			calendar: "gregory",
-			weekday: "long",
-			timeZone
-		});
-		const fullDateFormatter = new Intl.DateTimeFormat(localeCode, {
-			calendar: "gregory",
-			weekday: "long",
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-			timeZone
-		});
-		const dayNumberFormatter = new Intl.DateTimeFormat(localeCode, {
-			calendar: "gregory",
-			day: "numeric",
-			timeZone
-		});
-		return {
-			"aria-label": mode === "single" ? (0, import_i18n.__)("Date calendar") : (0, import_i18n.__)("Date range calendar"),
-			labels: {
-				/** The label for the navigation toolbar. */
-				labelNav: () => (0, import_i18n.__)("Navigation bar"),
-				/**
-				* The label for the month grid.
-				* @param date
-				*/
-				labelGrid: monthNameFormatter.format,
-				/**
-				* The label for the gridcell, when the calendar is not interactive.
-				* @param date
-				* @param modifiers
-				*/
-				labelGridcell: (date, modifiers) => {
-					const formattedDate = fullDateFormatter.format(date);
-					let label = formattedDate;
-					if (modifiers?.today) label = (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s"), formattedDate);
-					return label;
-				},
-				/** The label for the "next month" button. */
-				labelNext: () => (0, import_i18n.__)("Next month"),
-				/** The label for the "previous month" button. */
-				labelPrevious: () => (0, import_i18n.__)("Previous month"),
-				/**
-				* The label for the day button.
-				* @param date
-				* @param modifiers
-				*/
-				labelDayButton: (date, modifiers) => {
-					const formattedDate = fullDateFormatter.format(date);
-					let label = formattedDate;
-					if (modifiers?.today && modifiers?.selected) return (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s, selected"), formattedDate);
-					if (modifiers?.today) label = (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s"), formattedDate);
-					if (modifiers?.selected) label = (0, import_i18n.sprintf)((0, import_i18n.__)("%s, selected"), formattedDate);
-					return label;
-				},
-				/**
-				* The label for the weekday.
-				* @param date
-				*/
-				labelWeekday: weekdayLongFormatter.format
-			},
-			locale: dateFnsLocale,
-			lang: localeCode,
-			dir: isRightToLeft ? "rtl" : "ltr",
-			...weekStartsOn === void 0 ? {} : { weekStartsOn },
-			formatters: {
-				formatDay: (date) => dayNumberFormatter.formatToParts(date).find((part) => part.type === "day")?.value ?? dayNumberFormatter.format(date),
-				formatWeekdayName: weekdayNarrowFormatter.format,
-				formatCaption: monthNameFormatter.format
-			},
-			timeZone
-		};
-	}, [
-		locale,
-		timeZone,
-		mode
-	]);
-};
-
-// packages/ui/build-module/calendar/utils/use-preserve-day-focus.mjs
-/**
-* Keeps keyboard focus inside the calendar when a controlled month change
-* removes the focused day from the DOM.
-*
-* @param forwardedRef Ref forwarded to the calendar root.
-* @param month        The controlled first displayed month.
-*
-* @see https://github.com/gpbl/react-day-picker/issues/3009
-*/
-function usePreserveDayFocus(forwardedRef, month) {
-	const rootRef = (0, import_element.useRef)(null);
-	const hadDayFocusRef = (0, import_element.useRef)(false);
-	const mergedRef = (0, import_compose.useMergeRefs)([rootRef, forwardedRef]);
-	const monthIndex = month ? month.getFullYear() * 12 + month.getMonth() : void 0;
-	const onDayFocus = (0, import_element.useCallback)(() => {
-		hadDayFocusRef.current = true;
-	}, []);
-	const onDayBlur = (0, import_element.useCallback)(() => {
-		hadDayFocusRef.current = false;
-	}, []);
-	(0, import_element.useEffect)(() => {
-		if (!hadDayFocusRef.current) return;
-		const root = rootRef.current;
-		if (!root) return;
-		const { activeElement, body } = root.ownerDocument;
-		if (activeElement !== body) {
-			const grid = activeElement?.closest("[role=\"grid\"]");
-			hadDayFocusRef.current = !!grid && root.contains(grid);
-			return;
-		}
-		hadDayFocusRef.current = false;
-		const focusTarget = root.querySelector("[role=\"grid\"] button[tabindex=\"0\"]:not(:disabled)");
-		const enabledControl = root.querySelector("button:not(:disabled):not([aria-disabled=\"true\"])");
-		const focusableControl = root.querySelector("button:not(:disabled)");
-		(focusTarget ?? enabledControl ?? focusableControl)?.focus();
-	}, [monthIndex]);
-	return {
-		ref: mergedRef,
-		onDayFocus,
-		onDayBlur
-	};
-}
-
-// packages/ui/build-module/calendar/calendar.mjs
-/**
-* `Calendar` provides a customizable calendar interface for **single date**
-* selection.
-*
-* The component is built with accessibility in mind and follows ARIA best
-* practices for calendar widgets. It provides keyboard navigation, screen reader
-* support, and customizable labels for internationalization.
-*/
-const Calendar = (0, import_element.forwardRef)(function UnforwardedCalendar({ defaultValue, value: valueProp, onValueChange, numberOfMonths = 1, locale, timeZone, month, render, role = "application", "aria-label": ariaLabel, labels: customLabels, ...props }, ref) {
-	const { "aria-label": defaultAriaLabel, ...localizationProps } = useLocalizationProps({
-		locale,
-		timeZone,
-		mode: "single"
-	});
-	const labels = (0, import_element.useMemo)(() => customLabels ? {
-		...localizationProps.labels,
-		...customLabels
-	} : localizationProps.labels, [localizationProps.labels, customLabels]);
-	const onChange = (0, import_element.useCallback)((selected, triggerDate, modifiers, e) => {
-		onValueChange?.(selected ?? null, triggerDate, modifiers, e);
-	}, [onValueChange]);
-	const [selected, setSelected] = useControlledValue({
-		defaultValue,
-		value: valueProp,
-		onChange
-	});
-	const dayFocusProps = usePreserveDayFocus(ref, month);
-	const rootContextValue = (0, import_element.useMemo)(() => ({
-		render,
-		ref: dayFocusProps.ref,
-		role,
-		defaultAriaLabel
-	}), [
-		render,
-		dayFocusProps.ref,
-		role,
-		defaultAriaLabel
-	]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RootContext.Provider, {
-		value: rootContextValue,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DayPicker, {
-			...COMMON_PROPS,
-			...localizationProps,
-			...props,
-			"aria-label": ariaLabel,
-			mode: "single",
-			month,
-			numberOfMonths: clampNumberOfMonths(numberOfMonths),
-			labels,
-			selected: selected ?? void 0,
-			onSelect: setSelected,
-			onDayFocus: dayFocusProps.onDayFocus,
-			onDayBlur: dayFocusProps.onDayBlur
-		})
-	});
-});
 
 // packages/ui/build-module/calendar/range-calendar.mjs
 function usePreviewRange({ value, hoveredDate, excludeDisabled, resetOnSelect, min, max, disabled }) {
