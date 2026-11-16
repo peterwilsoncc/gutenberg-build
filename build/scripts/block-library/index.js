@@ -49831,34 +49831,9 @@ Icon: ButtonIcon });
 			linkTo
 		};
 		const isFlexLayout = isGalleryFlexLayout(layout);
-		const previousLayoutRef = (0, _wordpress_element.useRef)(layout);
 		const { getBlocks } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
-		const { __unstableMarkNextChangeAsNotPersistent, replaceInnerBlocks, updateBlockAttributes, selectBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
+		const { replaceInnerBlocks, updateBlockAttributes, selectBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { createSuccessNotice, createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
-		(0, _wordpress_element.useEffect)(() => {
-			const previousLayout = previousLayoutRef.current;
-			previousLayoutRef.current = layout;
-			if (!isObject$2(previousLayout) || !isObject$2(layout) || previousLayout.type === layout.type) return;
-			const nextLayout = { ...layout };
-			let hasPreservedGridSetting = false;
-			if (!Object.hasOwn(layout, "columnCount") && Number.isInteger(previousLayout.columnCount) && previousLayout.columnCount > 0) {
-				nextLayout.columnCount = previousLayout.columnCount;
-				hasPreservedGridSetting = true;
-			}
-			if (!Object.hasOwn(layout, "minimumColumnWidth") && typeof previousLayout.minimumColumnWidth === "string") {
-				nextLayout.minimumColumnWidth = previousLayout.minimumColumnWidth;
-				hasPreservedGridSetting = true;
-			}
-			if (hasPreservedGridSetting) {
-				previousLayoutRef.current = nextLayout;
-				__unstableMarkNextChangeAsNotPersistent();
-				setAttributes({ layout: nextLayout });
-			}
-		}, [
-			layout,
-			setAttributes,
-			__unstableMarkNextChangeAsNotPersistent
-		]);
 		const { innerBlockImages, multiGallerySelection, selectedStyleState } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockName, getMultiSelectedBlockClientIds, getBlocks: _getBlocks, getSelectedBlockStyleState } = select(_wordpress_block_editor.store);
 			const multiSelectedClientIds = getMultiSelectedBlockClientIds();
@@ -50326,6 +50301,23 @@ Icon: ButtonIcon });
 		return toBlock;
 	}
 	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/gallery/update-third-party-transform-from", updateThirdPartyTransformFromGallery);
+	const layoutVariationTransform = (variationName, type, isActive) => ({
+		type: "block",
+		blocks: ["core/gallery"],
+		variationName,
+		isMatch: ({ layout }) => !isActive(layout),
+		transform: (attributes, innerBlocks) => {
+			const { columnCount, minimumColumnWidth } = attributes.layout ?? {};
+			return (0, _wordpress_blocks.createBlock)("core/gallery", {
+				...attributes,
+				layout: {
+					type,
+					...Number.isInteger(columnCount) && columnCount > 0 && { columnCount },
+					...typeof minimumColumnWidth === "string" && { minimumColumnWidth }
+				}
+			}, innerBlocks);
+		}
+	});
 	const transforms$30 = {
 		from: [
 			{
@@ -50379,7 +50371,9 @@ Icon: ButtonIcon });
 					const innerBlocks = files.map((file) => (0, _wordpress_blocks.createBlock)("core/image", { blob: (0, _wordpress_blob.createBlobURL)(file) }));
 					return (0, _wordpress_blocks.createBlock)("core/gallery", {}, innerBlocks);
 				}
-			}
+			},
+			layoutVariationTransform("gallery-grid", "grid", (layout) => layout?.type === "grid"),
+			layoutVariationTransform("gallery-flex", "flex", isGalleryFlexLayout)
 		],
 		to: [{
 			type: "block",
