@@ -59739,7 +59739,6 @@ VisualLabel });
 			}
 		};
 		const cleanEventListenersRef = (0, _wordpress_element.useRef)(void 0);
-		cleanEventListenersRef.current = cleanEventListeners;
 		(0, _wordpress_element.useEffect)(() => {
 			return () => {
 				cleanEventListenersRef.current?.();
@@ -59760,15 +59759,17 @@ VisualLabel });
 					onMouseDown: () => {
 						if (disablePositioning) return;
 						if (window && window.addEventListener) {
+							cleanEventListenersRef.current?.();
 							controlPointMoveStateRef.current = {
 								initialPosition,
 								index,
 								significantMoveHappened: false,
 								listenersActivated: true
 							};
-							onStartControlPointChange();
+							cleanEventListenersRef.current = cleanEventListeners;
 							window.addEventListener("mousemove", onMouseMove);
 							window.addEventListener("mouseup", cleanEventListeners);
+							onStartControlPointChange();
 						}
 					},
 					onKeyDown: (event) => {
