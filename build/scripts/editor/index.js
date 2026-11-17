@@ -112824,17 +112824,17 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 // packages/editor/build-module/components/collab-sidebar/utils/rich-text.mjs
 /**
 	* Key of the block's rich text attribute when that is all the content the
-	* block has: exactly one attribute sourced from the markup, and it is rich
-	* text. Formats applied across blocks reach only such blocks.
+	* block has: its only attribute that is sourced or has the content role.
 	*
-	* A copy of `getSoleRichTextAttributeKey` in the block editor's
-	* `multi-block-format-edit.tsx`, which isn't exported.
+	* Unlike the block editor's version in `multi-block-format-edit.tsx`, content
+	* attributes kept in the comment delimiter count, so a note covers a block
+	* such as Embed whole rather than only its caption.
 	*
 	* @param blockName Block name.
 	* @return Attribute key.
 	*/
 	function getSoleRichTextAttributeKey(blockName) {
-		const sourced = Object.entries((0, _wordpress_blocks.getBlockType)(blockName ?? "")?.attributes ?? {}).filter(([, { source }]) => source);
+		const sourced = Object.entries((0, _wordpress_blocks.getBlockType)(blockName ?? "")?.attributes ?? {}).filter(([, { source, role }]) => source || role === "content");
 		return sourced.length === 1 && sourced[0][1].source === "rich-text" ? sourced[0][0] : void 0;
 	}
 	/**
