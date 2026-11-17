@@ -99968,6 +99968,33 @@ If there's a particular need for this, please submit a feature request at https:
 		return useInternalImageEditor(options);
 	}
 
+// packages/image-editor/build-module/map-image-edit.mjs
+/**
+	* Turn each part of an edit into the consumer's own format, in the order the
+	* parts apply: flip, then rotation, then crop.
+	*
+	* Use it to build instructions for something that applies them one at a
+	* time, such as the `modifiers` sent to the WordPress media REST endpoint.
+	* `rotation` is measured after the flip, and `crop` is a fraction of the
+	* image after both, so applying them in another order frames a different
+	* part of the image.
+	*
+	* @param edit              The edit, as returned by `getImageEdit`.
+	* @param handlers          One function for each part, called only when the
+	*                          edit has that part.
+	* @param handlers.flip     Turns the flip into the consumer's format.
+	* @param handlers.rotation Turns the rotation, in degrees, into it.
+	* @param handlers.crop     Turns the crop into it.
+	* @return What the handlers returned, in the order the parts apply.
+	*/
+	function mapImageEdit(edit, handlers) {
+		const result = [];
+		if (edit.flip) result.push(handlers.flip(edit.flip));
+		if (edit.rotation !== void 0) result.push(handlers.rotation(edit.rotation));
+		if (edit.crop) result.push(handlers.crop(edit.crop));
+		return result;
+	}
+
 // packages/media-editor/build-module/state/aspect-ratio-presets.mjs
 /**
 	* The presets the editor offers by default. They live here rather than
@@ -101238,25 +101265,25 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!session.hasOutputEdits) return [];
 		const edit = getImageEdit(session.imageEditor.state);
 		if (!edit) return [];
-		const modifiers = [];
-		if (edit.flip) modifiers.push({
-			type: "flip",
-			args: { flip: edit.flip }
+		return mapImageEdit(edit, {
+			flip: (flip) => ({
+				type: "flip",
+				args: { flip }
+			}),
+			rotation: (angle) => ({
+				type: "rotate",
+				args: { angle }
+			}),
+			crop: ({ x, y, width, height }) => ({
+				type: "crop",
+				args: {
+					left: x * 100,
+					top: y * 100,
+					width: width * 100,
+					height: height * 100
+				}
+			})
 		});
-		if (edit.rotation !== void 0) modifiers.push({
-			type: "rotate",
-			args: { angle: edit.rotation }
-		});
-		if (edit.crop) modifiers.push({
-			type: "crop",
-			args: {
-				left: edit.crop.x * 100,
-				top: edit.crop.y * 100,
-				width: edit.crop.width * 100,
-				height: edit.crop.height * 100
-			}
-		});
-		return modifiers;
 	}
 	function getMetadataEdits(pendingEdits, media) {
 		const metadataEdits = {};
