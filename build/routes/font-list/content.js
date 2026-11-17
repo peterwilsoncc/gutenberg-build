@@ -24719,6 +24719,11 @@ function FontCollection({ slug }) {
 	}));
 	const selectedCategoryItem = categoryItems.find((item) => item.value === filters.category) ?? categoryItems[0];
 	const fonts = (0, import_element.useMemo)(() => filterFonts(collectionFonts, filters), [collectionFonts, filters]);
+	const hasFilters = filters.search !== void 0 || filters.category !== void 0;
+	(0, import_element.useEffect)(() => {
+		if (!hasFilters) return;
+		speak(fonts.length ? (0, import_i18n.sprintf)((0, import_i18n._n)("%d font found.", "%d fonts found.", fonts.length), fonts.length) : (0, import_i18n.__)("No fonts found. Try with a different search term."));
+	}, [hasFilters, fonts]);
 	const windowHeight = Math.max(window.innerHeight, MIN_WINDOW_HEIGHT);
 	const pageSize = Math.floor((windowHeight - 417) / 61);
 	const totalPages = Math.ceil(fonts.length / pageSize);
