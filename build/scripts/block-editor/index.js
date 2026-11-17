@@ -67441,8 +67441,16 @@ var wp;
     return (0, import_compose26.useRefEffect)(
       (node) => {
         function onFocus(event) {
+          function removeCaretElsewhere() {
+            const selection2 = node.ownerDocument.defaultView.getSelection();
+            const caretClientId = selection2.anchorNode && getBlockClientId(selection2.anchorNode);
+            if (caretClientId && caretClientId !== clientId) {
+              selection2.removeAllRanges();
+            }
+          }
           if (isBlockSelected2(clientId)) {
             if (!event.target.isContentEditable) {
+              removeCaretElsewhere();
               selectionChange2(clientId);
             }
             return;
@@ -67460,6 +67468,7 @@ var wp;
             selectBlock2(clientId, null);
             return;
           }
+          removeCaretElsewhere();
           selectBlock2(clientId);
         }
         return subscribeDelegatedListener2(node, "focusin", onFocus);
@@ -71962,7 +71971,6 @@ var wp;
       isMultiSelecting: isMultiSelecting3,
       getSelectionStart: getSelectionStart2,
       getSelectionEnd: getSelectionEnd2,
-      getSelectedBlockClientId: getSelectedBlockClientId2,
       canHostEditableRoot: canHostEditableRoot2
     } = unlock((0, import_data48.useSelect)(store));
     return (0, import_compose46.useRefEffect)(
@@ -71998,14 +72006,10 @@ var wp;
           }
           const isClickShift = event.shiftKey && event.type === "mouseup";
           if (selection2.isCollapsed && !isClickShift) {
-            const collapsedClientId = getBlockClientId(startNode);
-            if (!isMultiSelecting3() && collapsedClientId && // Only keep the wrapper editable when the collapsed
-            // selection is in the block that is actually selected.
-            // A stale native selection may linger in a previously
-            // selected editable root block (e.g. Firefox does not
-            // always move it), which must not re-enable the wrapper
-            // after another block has been selected.
-            collapsedClientId === getSelectedBlockClientId2() && canHostEditableRoot2(collapsedClientId)) {
+            const collapsedClientId = getBlockClientId(
+              selection2.anchorNode
+            );
+            if (!isMultiSelecting3() && collapsedClientId && canHostEditableRoot2(collapsedClientId)) {
               setContentEditableWrapper(node, true);
               const { activeElement: activeElement2 } = ownerDocument2;
               if (activeElement2 !== node && activeElement2?.isContentEditable && node.contains(activeElement2) && getBlockClientId(activeElement2) === collapsedClientId) {
