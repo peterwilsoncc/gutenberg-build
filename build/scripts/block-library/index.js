@@ -35098,6 +35098,7 @@ Icon: ButtonIcon });
 		const renderCategoryDropdown = () => {
 			const categoriesList = getCategoriesList(isHierarchicalTaxonomy && showHierarchy ? 0 : null);
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [showLabel ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichText, {
+				identifier: "label",
 				className: "wp-block-categories__label",
 				"aria-label": (0, _wordpress_i18n.__)("Label text"),
 				placeholder: taxonomy?.name,
