@@ -1722,23 +1722,25 @@ react = __toESM(react, 1);
 					id: category.id,
 					slug: category.slug,
 					name
-				});
+				}, { throwOnError: true });
 				invalidateResolution("getUserPatternCategories");
 				onSuccess?.(savedRecord);
-				onClose();
 				createSuccessNotice((0, _wordpress_i18n.__)("Pattern category renamed."), {
 					type: "snackbar",
 					id: "pattern-category-update"
 				});
 			} catch (error) {
 				onError?.();
-				createErrorNotice(error.message, {
+				const restError = error;
+				const errorMessage = restError.message && restError.code !== "unknown_error" ? restError.message : (0, _wordpress_i18n.__)("An error occurred while renaming the pattern category.");
+				createErrorNotice(errorMessage, {
 					type: "snackbar",
 					id: "pattern-category-update"
 				});
 			} finally {
 				setIsSaving(false);
 				setName("");
+				onClose();
 			}
 		};
 		const onRequestClose = () => {
