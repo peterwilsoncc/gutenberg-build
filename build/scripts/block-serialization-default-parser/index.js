@@ -265,40 +265,37 @@ var wp;
     output.push(block);
   }
   function implicitlyCloseAllOpenBlocks() {
-    let implicitlyClosed = null;
-    let lastFreeform = null;
+    let lastClosedBlock = null;
+    let lastOpenerAt = document.length;
+    let lastLeadingHtml = null;
     while (stack.length > 0) {
       const stackTop = stack.pop();
       let html;
-      if (lastFreeform !== null) {
-        html = document.substr(
-          stackTop.prevOffset,
-          lastFreeform[1] - stackTop.prevOffset
-        );
-      } else {
-        html = document.substr(stackTop.prevOffset);
-      }
-      if (html) {
+      const htmlLength = lastOpenerAt - stackTop.prevOffset;
+      if (htmlLength > 0) {
+        html = document.substr(stackTop.prevOffset, htmlLength);
         stackTop.block.innerHTML += html;
         stackTop.block.innerContent.push(html);
       }
-      lastFreeform = [stackTop.leadingHtmlStart ?? 0, stackTop.tokenStart];
-      if (implicitlyClosed !== null) {
+      if (lastClosedBlock !== null) {
         stackTop.block.innerContent.push(null);
-        stackTop.block.innerBlocks.push(implicitlyClosed);
+        stackTop.block.innerBlocks.push(lastClosedBlock);
       }
-      implicitlyClosed = stackTop.block;
+      lastClosedBlock = stackTop.block;
+      lastOpenerAt = stackTop.tokenStart;
+      lastLeadingHtml = stackTop.leadingHtmlStart;
     }
-    if (lastFreeform !== null && lastFreeform[1] > lastFreeform[0]) {
+    if (null !== lastLeadingHtml && lastOpenerAt > lastLeadingHtml) {
       const html = document.substr(
-        lastFreeform[0],
-        lastFreeform[1] - lastFreeform[0]
+        lastLeadingHtml,
+        lastOpenerAt - lastLeadingHtml
       );
       output.push(Freeform(html));
     }
-    if (implicitlyClosed !== null) {
-      output.push(implicitlyClosed);
+    if (lastClosedBlock !== null) {
+      output.push(lastClosedBlock);
     }
+    offset = document.length;
   }
   return __toCommonJS(index_exports);
 })();
