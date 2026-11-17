@@ -41903,6 +41903,12 @@ Icon: ButtonIcon });
 	}
 	const PRESET_METADATA = [
 		{
+			path: ["dimensions", "aspectRatios"],
+			valueKey: "ratio",
+			cssVarInfix: "aspect-ratio",
+			classes: []
+		},
+		{
 			path: ["color", "palette"],
 			valueKey: "color",
 			cssVarInfix: "color",

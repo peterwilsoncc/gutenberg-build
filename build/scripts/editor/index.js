@@ -951,6 +951,12 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	}
 	const PRESET_METADATA = [
 		{
+			path: ["dimensions", "aspectRatios"],
+			valueKey: "ratio",
+			cssVarInfix: "aspect-ratio",
+			classes: []
+		},
+		{
 			path: ["color", "palette"],
 			valueKey: "color",
 			cssVarInfix: "color",
