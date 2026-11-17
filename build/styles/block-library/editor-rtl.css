@@ -1155,7 +1155,7 @@ figure.wp-block-image:not(.wp-block) {
 }
 
 .wp-block-math__textarea-control textarea {
-  font-family: Menlo, Consolas, monaco, monospace;
+  font-family: var(--wpds-typography-font-family-mono, "Menlo", "Consolas", monaco, monospace);
   direction: ltr;
 }
 

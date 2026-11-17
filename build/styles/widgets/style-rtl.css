@@ -149,7 +149,7 @@ body.admin-color-fresh {
   border: none;
   box-shadow: none;
   display: block;
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: var(--wpds-typography-font-family-body, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
 }
 .wp-block-legacy-widget__edit-form .widget-inside.widget-inside p {
   margin: 8px 0;

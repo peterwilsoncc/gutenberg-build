@@ -4842,7 +4842,7 @@ div.dataviews-view-list {
   height: 32px;
   padding: 0 8px;
   box-sizing: border-box;
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: var(--wpds-typography-font-family-body, -apple-system, system-ui, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif);
   -webkit-user-select: none;
   user-select: none;
   touch-action: none;
