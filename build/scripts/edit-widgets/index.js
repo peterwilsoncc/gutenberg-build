@@ -5608,9 +5608,16 @@ Icon: ButtonIcon });
 		const batchMeta = [];
 		const batchTasks = [];
 		const sidebarWidgetsIds = [];
+		const claimedWidgetIds = /* @__PURE__ */ new Set();
 		for (let i = 0; i < widgetsBlocks.length; i++) {
 			const block = widgetsBlocks[i];
-			const widgetId = (0, _wordpress_widgets.getWidgetIdFromBlock)(block);
+			let widgetId = (0, _wordpress_widgets.getWidgetIdFromBlock)(block);
+			if (widgetId) {
+				if (claimedWidgetIds.has(widgetId) || select.getWidgetAreaForWidgetId(widgetId)?.id !== widgetAreaId) {
+					widgetId = void 0;
+					delete block.attributes.__internalWidgetId;
+				} else claimedWidgetIds.add(widgetId);
+			}
 			const oldWidget = widgets[widgetId];
 			const widget = transformBlockToWidget(block, oldWidget);
 			sidebarWidgetsIds.push(widgetId);
@@ -5637,7 +5644,7 @@ Icon: ButtonIcon });
 		for (let i = 0; i < preservedRecords.length; i++) {
 			const widget = preservedRecords[i];
 			const { block, position } = batchMeta[i];
-			post.blocks[position].attributes.__internalWidgetId = widget.id;
+			block.attributes.__internalWidgetId = widget.id;
 			if (registry.select(_wordpress_core_data.store).getLastEntitySaveError("root", "widget", widget.id)) failedWidgetNames.push(block.attributes?.name || block?.name);
 			if (!sidebarWidgetsIds[position]) sidebarWidgetsIds[position] = widget.id;
 		}
