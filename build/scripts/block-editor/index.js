@@ -97156,7 +97156,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function BlockTools({ children, __unstableContentRef, ...props }) {
 		const { clientId, hasFixedToolbar, isTyping, isZoomOutMode, isDragging, viewportModalClientIds, blockVisibilitySetting } = (0, _wordpress_data.useSelect)(selector, []);
 		const isMatch = (0, _wordpress_keyboard_shortcuts.__unstableUseShortcutEventMatch)();
-		const { getBlocksByClientId, getSelectedBlockClientIds, getBlockRootClientId, getBlockEditingMode, getBlockName, isGroupable, getEditedContentOnlySection, canEditBlock } = unlock$2((0, _wordpress_data.useSelect)(store));
+		const { getBlocksByClientId, getSelectedBlockClientIds, getBlockIndex, getBlockRootClientId, getBlockEditingMode, getBlockName, isGroupable, getEditedContentOnlySection, canEditBlock } = unlock$2((0, _wordpress_data.useSelect)(store));
 		const { getGroupingBlockName } = (0, _wordpress_data.useSelect)(_wordpress_blocks.store);
 		const { showEmptyBlockSideInserter, showBlockToolbarPopover } = useShowBlockTools();
 		const pasteStyles = usePasteStyles();
@@ -97169,11 +97169,13 @@ If there's a particular need for this, please submit a feature request at https:
 				const clientIds = getSelectedBlockClientIds();
 				if (clientIds.length) {
 					event.preventDefault();
-					const rootClientId = getBlockRootClientId(clientIds[0]);
+					const firstClientId = clientIds[0];
+					const rootClientId = getBlockRootClientId(firstClientId);
+					const previousIndex = getBlockIndex(firstClientId);
 					if ((isMatch("core/block-editor/move-up", event) ? "up" : "down") === "up") moveBlocksUp(clientIds, rootClientId);
 					else moveBlocksDown(clientIds, rootClientId);
-					const blockLength = Array.isArray(clientIds) ? clientIds.length : 1;
-					const message = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d block moved.", "%d blocks moved.", clientIds.length), blockLength);
+					if (getBlockIndex(firstClientId) === previousIndex) return;
+					const message = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d block moved.", "%d blocks moved.", clientIds.length), clientIds.length);
 					(0, _wordpress_a11y.speak)(message);
 				}
 			} else if (isMatch("core/block-editor/duplicate", event)) {
