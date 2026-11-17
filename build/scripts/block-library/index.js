@@ -87151,12 +87151,18 @@ Icon: ButtonIcon });
 		from: [{
 			type: "block",
 			blocks: ["core/categories"],
-			transform: () => (0, _wordpress_blocks.createBlock)("core/tag-cloud")
+			transform: ({ taxonomy, showPostCounts }) => (0, _wordpress_blocks.createBlock)("core/tag-cloud", {
+				taxonomy,
+				showTagCounts: showPostCounts
+			})
 		}],
 		to: [{
 			type: "block",
 			blocks: ["core/categories"],
-			transform: () => (0, _wordpress_blocks.createBlock)("core/categories")
+			transform: ({ taxonomy, showTagCounts }) => (0, _wordpress_blocks.createBlock)("core/categories", {
+				taxonomy,
+				showPostCounts: showTagCounts
+			})
 		}]
 	};
 
