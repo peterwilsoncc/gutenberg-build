@@ -4303,7 +4303,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				const nextInsertUsage = action.blocks.reduce((prevUsage, block) => {
 					const { attributes, name: blockName } = block;
 					let id = blockName;
-					const match = (0, _wordpress_data.select)(_wordpress_blocks.store).getActiveBlockVariation(blockName, attributes);
+					const { getActiveBlockVariation, getBlockVariations } = (0, _wordpress_data.select)(_wordpress_blocks.store);
+					const match = getActiveBlockVariation(blockName, attributes) ?? getBlockVariations(blockName, "inserter")?.find(({ isDefault }) => isDefault);
 					if (match?.name) id += "/" + match.name;
 					if (blockName === "core/block") id += "/" + attributes.ref;
 					return {
