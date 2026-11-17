@@ -30746,7 +30746,7 @@ const Description$2 = (0, import_element.forwardRef)(function NoticeDescription(
 	});
 });
 
-// packages/ui/build-module/popover/arrow.mjs
+// packages/ui/build-module/button-link/button-link.mjs
 const STYLE_HASH_ATTRIBUTE$61 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -30848,106 +30848,65 @@ function registerStyle$61(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$61(targetDocument, hash, css);
 }
-registerStyle$61("7dd02d37c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2986955e2ef5d630__positioner{z-index:var(--wp-ui-popover-z-index,initial)}._652e9b9e91704743__popup{outline:0}._0b48fc6fd3d780d8__surface{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);padding:var(--wpds-dimension-padding-lg,16px)}.fc0a1ed92f89e55b__backdrop~* ._0b48fc6fd3d780d8__surface{border-color:transparent}@media (forced-colors:active){._0b48fc6fd3d780d8__surface,.fc0a1ed92f89e55b__backdrop~* ._0b48fc6fd3d780d8__surface{border-color:CanvasText}}._0bc67a8a6c6d34a3__arrow{display:flex}._0bc67a8a6c6d34a3__arrow[data-side=top]{bottom:-8px;rotate:180deg}._0bc67a8a6c6d34a3__arrow[data-side=bottom]{rotate:0deg;top:-8px}._0bc67a8a6c6d34a3__arrow[data-side=left]{inset-inline-end:-13px;rotate:90deg}._0bc67a8a6c6d34a3__arrow[data-side=right]{inset-inline-start:-13px;rotate:-90deg}._1be5c9af42315b1e__arrow-fill{fill:var(--wpds-color-background-surface-neutral-strong,#fff)}.c0360f2f9044fbfc__arrow-stroke{fill:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}.b459029fd727337b__title{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.fc0a1ed92f89e55b__backdrop{background-color:rgba(0,0,0,.15);inset:0;opacity:1;position:fixed;z-index:var(--wp-ui-popover-z-index,initial)}.fc0a1ed92f89e55b__backdrop[data-ending-style],.fc0a1ed92f89e55b__backdrop[data-starting-style]{opacity:0}@media not (prefers-reduced-motion){.fc0a1ed92f89e55b__backdrop{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}}}");
-var style_module_default$21 = {
-	"positioner": "_2986955e2ef5d630__positioner",
-	"popup": "_652e9b9e91704743__popup _069972d5e326bada__dropdown-motion",
-	"surface": "_0b48fc6fd3d780d8__surface",
-	"backdrop": "fc0a1ed92f89e55b__backdrop",
-	"arrow": "_0bc67a8a6c6d34a3__arrow",
-	"arrow-fill": "_1be5c9af42315b1e__arrow-fill",
-	"arrow-stroke": "c0360f2f9044fbfc__arrow-stroke",
-	"title": "b459029fd727337b__title"
+registerStyle$61("04047f1442", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._3a88234bd4090b5e__button,.be08760d191644aa__is-unstyled{appearance:none;padding:0}._3a88234bd4090b5e__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e5e5e5);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8b8b8b);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(.c33c63637242ce6f__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._6b70110a7de0c4ea__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}.be84d98396868a6b__icon{flex-shrink:0;margin:var(--wp-ui-button-icon-margin)}._4a1bd3811e44a37a__is-brand{&._60593aef46db5256__is-outline,&._7fc529b15153b6fa__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8b8b8b)}&._60593aef46db5256__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 13%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 84%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._7fc529b15153b6fa__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 13%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._1e01e7af6cf44d0f__is-neutral{&._7fc529b15153b6fa__is-minimal[aria-pressed=true],&.d8226c9fcd3f5c9a__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2e2e2e);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e5e5e5);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8b8b8b)}&._60593aef46db5256__is-outline,&._7fc529b15153b6fa__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b)}&._60593aef46db5256__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ececec);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8b8b8b);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6c6c6c);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._7fc529b15153b6fa__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ececec);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}&._7fc529b15153b6fa__is-minimal[aria-pressed=true]:not(.c33c63637242ce6f__is-loading){@media (forced-colors:active){background-color:SelectedItem;border-bottom-color:ButtonBorder;border-left-color:ButtonBorder;border-right-color:ButtonBorder;border-top-color:ButtonBorder;color:SelectedItemText;forced-color-adjust:none;outline-color:CanvasText;&[data-disabled]{background-color:GrayText;border-color:GrayText;color:Canvas}}}}.be08760d191644aa__is-unstyled{background:none;border:none;min-width:unset}.d755fbf867cb9979__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}.c33c63637242ce6f__is-loading:not(.be08760d191644aa__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(.c65877490e4d9f6c__spinner){opacity:0}}}@layer compositions{.c65877490e4d9f6c__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
+var style_module_default$1$1 = {
+	"button": "_3a88234bd4090b5e__button",
+	"is-unstyled": "be08760d191644aa__is-unstyled",
+	"is-loading": "c33c63637242ce6f__is-loading",
+	"is-small": "_6b70110a7de0c4ea__is-small",
+	"icon": "be84d98396868a6b__icon",
+	"is-brand": "_4a1bd3811e44a37a__is-brand",
+	"is-outline": "_60593aef46db5256__is-outline",
+	"is-minimal": "_7fc529b15153b6fa__is-minimal",
+	"is-neutral": "_1e01e7af6cf44d0f__is-neutral",
+	"is-solid": "d8226c9fcd3f5c9a__is-solid",
+	"is-compact": "d755fbf867cb9979__is-compact",
+	"spinner": "c65877490e4d9f6c__spinner"
 };
-function DefaultArrowSvg(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
-		width: "20",
-		height: "10",
-		viewBox: "0 0 20 10",
-		fill: "none",
+registerStyle$61("3eccb80605", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._536f317cc24e88ad__button-link{--_gcd-a-color:var(--wp-ui-button-foreground-color);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);&:visited{--_gcd-a-color:var(--wp-ui-button-foreground-color)}&:is(:hover,:active,:focus){--_gcd-a-color:var(--wp-ui-button-foreground-color-active)}}}}");
+var style_module_default$21 = { "button-link": "_536f317cc24e88ad__button-link" };
+/**
+* A link that looks like a `Button`. Prefer `Link` for navigation unless
+* button prominence is intentional.
+*
+* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+*/
+const ForwardedButtonLink = (0, import_element.forwardRef)(function ButtonLink({ tone = "brand", variant = "solid", size = "default", className, children, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link$1, {
+		ref,
+		variant: "unstyled",
+		className: clsx(style_module_default$21["button-link"], variant !== "unstyled" && style_module_default$1$1.button, style_module_default$1$1[`is-${tone}`], style_module_default$1$1[`is-${variant}`], style_module_default$1$1[`is-${size}`], className),
 		...props,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
-			d: "M20 10H0V8h1.465a4 4 0 0 0 2.676-1.027l5.19-4.388c.378-.341.96-.341 1.338 0l5.19 4.388A4 4 0 0 0 18.535 8H20z",
-			className: style_module_default$21["arrow-fill"]
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
-			d: "M10 3.097 4.81 7.486A5 5 0 0 1 1.465 8.77H0V8h1.465a4 4 0 0 0 2.676-1.027l5.19-4.388c.378-.341.96-.341 1.338 0l5.19 4.388A4 4 0 0 0 18.535 8H20v.77h-1.465a5 5 0 0 1-3.345-1.284z",
-			className: style_module_default$21["arrow-stroke"]
-		})]
-	});
-}
-/**
-* Renders an optional arrow element that points toward the anchor.
-*
-* Must be placed inside `Popover.Popup`. The arrow automatically rotates
-* to match the current placement side.
-*/
-const Arrow = (0, import_element.forwardRef)(function PopoverArrow$1({ children, className, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverArrow, {
-		ref,
-		className: clsx(style_module_default$21.arrow, className),
-		...props,
-		children: children ?? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DefaultArrowSvg, {})
-	});
-});
-
-// packages/ui/build-module/popover/close.mjs
-/**
-* Renders a button that closes the popover when clicked.
-*
-* When the popover opens, initial focus skips this button in favor of
-* the first interactive element inside the popup (unless `initialFocus`
-* on `Popover.Popup` overrides this behavior).
-*/
-const Close = (0, import_element.forwardRef)(function PopoverClose$1(props, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverClose, {
-		ref,
-		"data-wp-ui-popover-close": "",
-		...props
-	});
-});
-
-// packages/ui/build-module/popover/description.mjs
-/**
-* Renders an optional paragraph that describes the popover content.
-*
-* The rendered element is linked to the popup via `aria-describedby`.
-*/
-const Description$1 = (0, import_element.forwardRef)(function PopoverDescription$1({ children, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
-		ref,
-		variant: "body-md",
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverDescription, { ...props }),
 		children
 	});
 });
 
-// packages/ui/build-module/popover/context.mjs
-const popoverTitleValidation = createOverlayTitleValidation("Popover");
-/**
-* Hook to access the popover validation context.
-* Returns null in production or if not within a Popover.Popup.
-*/
-const usePopoverValidationContext = popoverTitleValidation.useValidationContext;
-/**
-* Provider component that validates Popover.Title presence in development mode.
-* In production, this component is a no-op and just renders children.
-*/
-const PopoverValidationProvider = popoverTitleValidation.ValidationProvider;
-
-// packages/ui/build-module/popover/portal.mjs
-/**
-* Used to apply custom portal behavior to `Popover`'s floating content.
-* `container` defaults to the `@wordpress/ui` compat overlay slot.
-*/
-const Portal$2 = (0, import_element.forwardRef)(function PopoverPortal$1({ container, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverPortal, {
-		container: container === void 0 ? getWpCompatOverlaySlot() : container,
-		...restProps,
-		ref
+// packages/ui/build-module/button-link/icon.mjs
+const ForwardedButtonLinkIcon = (0, import_element.forwardRef)(function ButtonLinkIcon(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ButtonIcon, {
+		ref,
+		...props
 	});
 });
 
-// packages/ui/build-module/popover/positioner.mjs
+// packages/ui/build-module/button-link/index.mjs
+ForwardedButtonLinkIcon.displayName = "ButtonLink.Icon";
+/**
+* A link that looks like a `Button`. Prefer `Link` for navigation unless
+* button prominence is intentional.
+*
+* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+*/
+const ButtonLink = Object.assign(ForwardedButtonLink, { 
+/**
+* An icon component specifically designed to work well when rendered inside
+* a `ButtonLink` component.
+*/
+Icon: ForwardedButtonLinkIcon });
+
+// packages/ui/build-module/popover/arrow.mjs
 const STYLE_HASH_ATTRIBUTE$60 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31049,8 +31008,6 @@ function registerStyle$60(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$60(targetDocument, hash, css);
 }
-registerStyle$60("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$9 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
 registerStyle$60("7dd02d37c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2986955e2ef5d630__positioner{z-index:var(--wp-ui-popover-z-index,initial)}._652e9b9e91704743__popup{outline:0}._0b48fc6fd3d780d8__surface{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);padding:var(--wpds-dimension-padding-lg,16px)}.fc0a1ed92f89e55b__backdrop~* ._0b48fc6fd3d780d8__surface{border-color:transparent}@media (forced-colors:active){._0b48fc6fd3d780d8__surface,.fc0a1ed92f89e55b__backdrop~* ._0b48fc6fd3d780d8__surface{border-color:CanvasText}}._0bc67a8a6c6d34a3__arrow{display:flex}._0bc67a8a6c6d34a3__arrow[data-side=top]{bottom:-8px;rotate:180deg}._0bc67a8a6c6d34a3__arrow[data-side=bottom]{rotate:0deg;top:-8px}._0bc67a8a6c6d34a3__arrow[data-side=left]{inset-inline-end:-13px;rotate:90deg}._0bc67a8a6c6d34a3__arrow[data-side=right]{inset-inline-start:-13px;rotate:-90deg}._1be5c9af42315b1e__arrow-fill{fill:var(--wpds-color-background-surface-neutral-strong,#fff)}.c0360f2f9044fbfc__arrow-stroke{fill:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}.b459029fd727337b__title{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.fc0a1ed92f89e55b__backdrop{background-color:rgba(0,0,0,.15);inset:0;opacity:1;position:fixed;z-index:var(--wp-ui-popover-z-index,initial)}.fc0a1ed92f89e55b__backdrop[data-ending-style],.fc0a1ed92f89e55b__backdrop[data-starting-style]{opacity:0}@media not (prefers-reduced-motion){.fc0a1ed92f89e55b__backdrop{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}}}");
 var style_module_default$20 = {
 	"positioner": "_2986955e2ef5d630__positioner",
@@ -31062,22 +31019,95 @@ var style_module_default$20 = {
 	"arrow-stroke": "c0360f2f9044fbfc__arrow-stroke",
 	"title": "b459029fd727337b__title"
 };
-/**
-* Used to apply custom positioning to `Popover`'s floating content.
-*/
-const Positioner$2 = (0, import_element.forwardRef)(function PopoverPositioner$1({ align = "center", arrowPadding = 8, className, side = "bottom", sideOffset = 8, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverPositioner, {
-		ref,
-		align,
-		arrowPadding,
-		side,
-		sideOffset,
+function DefaultArrowSvg(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+		width: "20",
+		height: "10",
+		viewBox: "0 0 20 10",
+		fill: "none",
 		...props,
-		className: clsx(resets_module_default$9["box-sizing"], style_module_default$20.positioner, className)
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+			d: "M20 10H0V8h1.465a4 4 0 0 0 2.676-1.027l5.19-4.388c.378-.341.96-.341 1.338 0l5.19 4.388A4 4 0 0 0 18.535 8H20z",
+			className: style_module_default$20["arrow-fill"]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", {
+			d: "M10 3.097 4.81 7.486A5 5 0 0 1 1.465 8.77H0V8h1.465a4 4 0 0 0 2.676-1.027l5.19-4.388c.378-.341.96-.341 1.338 0l5.19 4.388A4 4 0 0 0 18.535 8H20v.77h-1.465a5 5 0 0 1-3.345-1.284z",
+			className: style_module_default$20["arrow-stroke"]
+		})]
+	});
+}
+/**
+* Renders an optional arrow element that points toward the anchor.
+*
+* Must be placed inside `Popover.Popup`. The arrow automatically rotates
+* to match the current placement side.
+*/
+const Arrow = (0, import_element.forwardRef)(function PopoverArrow$1({ children, className, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverArrow, {
+		ref,
+		className: clsx(style_module_default$20.arrow, className),
+		...props,
+		children: children ?? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DefaultArrowSvg, {})
 	});
 });
 
-// packages/ui/build-module/popover/popup.mjs
+// packages/ui/build-module/popover/close.mjs
+/**
+* Renders a button that closes the popover when clicked.
+*
+* When the popover opens, initial focus skips this button in favor of
+* the first interactive element inside the popup (unless `initialFocus`
+* on `Popover.Popup` overrides this behavior).
+*/
+const Close = (0, import_element.forwardRef)(function PopoverClose$1(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverClose, {
+		ref,
+		"data-wp-ui-popover-close": "",
+		...props
+	});
+});
+
+// packages/ui/build-module/popover/description.mjs
+/**
+* Renders an optional paragraph that describes the popover content.
+*
+* The rendered element is linked to the popup via `aria-describedby`.
+*/
+const Description$1 = (0, import_element.forwardRef)(function PopoverDescription$1({ children, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
+		ref,
+		variant: "body-md",
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverDescription, { ...props }),
+		children
+	});
+});
+
+// packages/ui/build-module/popover/context.mjs
+const popoverTitleValidation = createOverlayTitleValidation("Popover");
+/**
+* Hook to access the popover validation context.
+* Returns null in production or if not within a Popover.Popup.
+*/
+const usePopoverValidationContext = popoverTitleValidation.useValidationContext;
+/**
+* Provider component that validates Popover.Title presence in development mode.
+* In production, this component is a no-op and just renders children.
+*/
+const PopoverValidationProvider = popoverTitleValidation.ValidationProvider;
+
+// packages/ui/build-module/popover/portal.mjs
+/**
+* Used to apply custom portal behavior to `Popover`'s floating content.
+* `container` defaults to the `@wordpress/ui` compat overlay slot.
+*/
+const Portal$2 = (0, import_element.forwardRef)(function PopoverPortal$1({ container, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverPortal, {
+		container: container === void 0 ? getWpCompatOverlaySlot() : container,
+		...restProps,
+		ref
+	});
+});
+
+// packages/ui/build-module/popover/positioner.mjs
 const STYLE_HASH_ATTRIBUTE$59 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31179,6 +31209,8 @@ function registerStyle$59(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$59(targetDocument, hash, css);
 }
+registerStyle$59("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$9 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
 registerStyle$59("7dd02d37c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2986955e2ef5d630__positioner{z-index:var(--wp-ui-popover-z-index,initial)}._652e9b9e91704743__popup{outline:0}._0b48fc6fd3d780d8__surface{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);padding:var(--wpds-dimension-padding-lg,16px)}.fc0a1ed92f89e55b__backdrop~* ._0b48fc6fd3d780d8__surface{border-color:transparent}@media (forced-colors:active){._0b48fc6fd3d780d8__surface,.fc0a1ed92f89e55b__backdrop~* ._0b48fc6fd3d780d8__surface{border-color:CanvasText}}._0bc67a8a6c6d34a3__arrow{display:flex}._0bc67a8a6c6d34a3__arrow[data-side=top]{bottom:-8px;rotate:180deg}._0bc67a8a6c6d34a3__arrow[data-side=bottom]{rotate:0deg;top:-8px}._0bc67a8a6c6d34a3__arrow[data-side=left]{inset-inline-end:-13px;rotate:90deg}._0bc67a8a6c6d34a3__arrow[data-side=right]{inset-inline-start:-13px;rotate:-90deg}._1be5c9af42315b1e__arrow-fill{fill:var(--wpds-color-background-surface-neutral-strong,#fff)}.c0360f2f9044fbfc__arrow-stroke{fill:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}.b459029fd727337b__title{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.fc0a1ed92f89e55b__backdrop{background-color:rgba(0,0,0,.15);inset:0;opacity:1;position:fixed;z-index:var(--wp-ui-popover-z-index,initial)}.fc0a1ed92f89e55b__backdrop[data-ending-style],.fc0a1ed92f89e55b__backdrop[data-starting-style]{opacity:0}@media not (prefers-reduced-motion){.fc0a1ed92f89e55b__backdrop{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}}}");
 var style_module_default$19 = {
 	"positioner": "_2986955e2ef5d630__positioner",
@@ -31190,83 +31222,22 @@ var style_module_default$19 = {
 	"arrow-stroke": "c0360f2f9044fbfc__arrow-stroke",
 	"title": "b459029fd727337b__title"
 };
-const CLOSE_ATTR = "data-wp-ui-popover-close";
 /**
-* Renders the floating popup container for the popover content.
-*
-* Handles portal rendering, positioning relative to the anchor, collision
-* avoidance, focus management, and optional backdrop. Use
-* `portal={ <Popover.Portal container={ ... } /> }` for cross-document
-* scenarios such as iframes, and `positioner={ <Popover.Positioner … /> }`
-* to customize placement.
+* Used to apply custom positioning to `Popover`'s floating content.
 */
-const Popup$2 = (0, import_element.forwardRef)(function PopoverPopup$1({ backdrop = false, children, className, portal, positioner, finalFocus, initialFocus, variant = "default", ...props }, ref) {
-	const { resolvedInitialFocus, popupRef } = useDeprioritizedInitialFocus({
-		initialFocus,
-		deprioritizedAttributes: [CLOSE_ATTR]
-	});
-	const mergedPopupRef = (0, import_compose.useMergeRefs)([ref, popupRef]);
-	const useDefaultSurface = variant !== "unstyled";
-	const validatedChildren = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverValidationProvider, { children });
-	const popupChildren = useDefaultSurface ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: style_module_default$19.surface,
-		children: validatedChildren
-	}) : validatedChildren;
-	const backdropElement = backdrop ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverBackdrop, { className: style_module_default$19.backdrop }) : null;
-	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverPopup, {
-		ref: mergedPopupRef,
-		initialFocus: resolvedInitialFocus,
-		finalFocus,
-		className: clsx(useDefaultSurface && style_module_default$19.popup, className),
+const Positioner$2 = (0, import_element.forwardRef)(function PopoverPositioner$1({ align = "center", arrowPadding = 8, className, side = "bottom", sideOffset = 8, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverPositioner, {
+		ref,
+		align,
+		arrowPadding,
+		side,
+		sideOffset,
 		...props,
-		children: popupChildren
+		className: clsx(resets_module_default$9["box-sizing"], style_module_default$19.positioner, className)
 	});
-	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner$2, {}), popupContent);
-	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$2, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [backdropElement, positionedPopup] }));
 });
 
-// packages/ui/build-module/popover/root.mjs
-/**
-* An accessible popup anchored to a trigger element.
-*
-* Popover renders ARIA-compliant floating content that appears next to its
-* trigger. It can contain interactive content such as form controls, menus,
-* and rich descriptions.
-*
-* Compose the compound components to build a popover:
-*
-* - `Popover.Root` — provides open state and context to all sub-components.
-* - `Popover.Trigger` — the button that toggles the popup.
-* - `Popover.Popup` — the floating container. Portals by default or via
-*   `portal={ <Popover.Portal /> }`, and is positioned by default or via
-*   `positioner={ <Popover.Positioner /> }`.
-* - `Popover.Positioner` — controls placement, alignment, offset, collision
-*   behavior, and anchor for the floating content.
-* - `Popover.Arrow` — an optional arrow pointing toward the anchor.
-* - `Popover.Title` — **required** heading that labels the popover for
-*   accessibility (can be visually hidden).
-* - `Popover.Description` — optional paragraph linked via `aria-describedby`.
-* - `Popover.Close` — a button that closes the popover when clicked.
-*   **Required** when `modal` is `true` or `'trap-focus'` so that focus
-*   can cycle correctly and the user can dismiss the popover.
-*
-* ```jsx
-* <Popover.Root>
-*   <Popover.Trigger>Open</Popover.Trigger>
-*   <Popover.Popup>
-*     <Popover.Arrow />
-*     <Popover.Title>Popover title</Popover.Title>
-*     <Popover.Description>Popover description</Popover.Description>
-*     <Popover.Close>Close</Popover.Close>
-*   </Popover.Popup>
-* </Popover.Root>
-* ```
-*/
-function Root$5(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverRoot, { ...props }) });
-}
-
-// packages/ui/build-module/popover/title.mjs
+// packages/ui/build-module/popover/popup.mjs
 const STYLE_HASH_ATTRIBUTE$58 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31379,79 +31350,83 @@ var style_module_default$18 = {
 	"arrow-stroke": "c0360f2f9044fbfc__arrow-stroke",
 	"title": "b459029fd727337b__title"
 };
+const CLOSE_ATTR = "data-wp-ui-popover-close";
 /**
-* Renders a heading that labels the popover for accessibility.
+* Renders the floating popup container for the popover content.
 *
-* **Required** — every popover must include a `Popover.Title`, even if
-* visually hidden. The rendered element is linked to the popup via
-* `aria-labelledby`. Uses the `heading-xl` text variant, matching Dialog.
+* Handles portal rendering, positioning relative to the anchor, collision
+* avoidance, focus management, and optional backdrop. Use
+* `portal={ <Popover.Portal container={ ... } /> }` for cross-document
+* scenarios such as iframes, and `positioner={ <Popover.Positioner … /> }`
+* to customize placement.
+*/
+const Popup$2 = (0, import_element.forwardRef)(function PopoverPopup$1({ backdrop = false, children, className, portal, positioner, finalFocus, initialFocus, variant = "default", ...props }, ref) {
+	const { resolvedInitialFocus, popupRef } = useDeprioritizedInitialFocus({
+		initialFocus,
+		deprioritizedAttributes: [CLOSE_ATTR]
+	});
+	const mergedPopupRef = (0, import_compose.useMergeRefs)([ref, popupRef]);
+	const useDefaultSurface = variant !== "unstyled";
+	const validatedChildren = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverValidationProvider, { children });
+	const popupChildren = useDefaultSurface ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: style_module_default$18.surface,
+		children: validatedChildren
+	}) : validatedChildren;
+	const backdropElement = backdrop ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverBackdrop, { className: style_module_default$18.backdrop }) : null;
+	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverPopup, {
+		ref: mergedPopupRef,
+		initialFocus: resolvedInitialFocus,
+		finalFocus,
+		className: clsx(useDefaultSurface && style_module_default$18.popup, className),
+		...props,
+		children: popupChildren
+	});
+	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner$2, {}), popupContent);
+	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal$2, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [backdropElement, positionedPopup] }));
+});
+
+// packages/ui/build-module/popover/root.mjs
+/**
+* An accessible popup anchored to a trigger element.
 *
-* To visually hide the title while keeping it accessible, wrap it with
-* `VisuallyHidden` using the `render` prop:
+* Popover renders ARIA-compliant floating content that appears next to its
+* trigger. It can contain interactive content such as form controls, menus,
+* and rich descriptions.
+*
+* Compose the compound components to build a popover:
+*
+* - `Popover.Root` — provides open state and context to all sub-components.
+* - `Popover.Trigger` — the button that toggles the popup.
+* - `Popover.Popup` — the floating container. Portals by default or via
+*   `portal={ <Popover.Portal /> }`, and is positioned by default or via
+*   `positioner={ <Popover.Positioner /> }`.
+* - `Popover.Positioner` — controls placement, alignment, offset, collision
+*   behavior, and anchor for the floating content.
+* - `Popover.Arrow` — an optional arrow pointing toward the anchor.
+* - `Popover.Title` — **required** heading that labels the popover for
+*   accessibility (can be visually hidden).
+* - `Popover.Description` — optional paragraph linked via `aria-describedby`.
+* - `Popover.Close` — a button that closes the popover when clicked.
+*   **Required** when `modal` is `true` or `'trap-focus'` so that focus
+*   can cycle correctly and the user can dismiss the popover.
 *
 * ```jsx
-* <VisuallyHidden render={ <Popover.Title /> }>
-*   Accessible title text
-* </VisuallyHidden>
+* <Popover.Root>
+*   <Popover.Trigger>Open</Popover.Trigger>
+*   <Popover.Popup>
+*     <Popover.Arrow />
+*     <Popover.Title>Popover title</Popover.Title>
+*     <Popover.Description>Popover description</Popover.Description>
+*     <Popover.Close>Close</Popover.Close>
+*   </Popover.Popup>
+* </Popover.Root>
 * ```
 */
-const Title = (0, import_element.forwardRef)(function PopoverTitle$1({ children, ...props }, forwardedRef) {
-	const validationContext = usePopoverValidationContext();
-	const internalRef = (0, import_element.useRef)(null);
-	const mergedRef = (0, import_compose.useMergeRefs)([internalRef, forwardedRef]);
-	(0, import_element.useEffect)(() => {
-		if (validationContext) return validationContext.registerTitle(internalRef.current);
-	}, [validationContext]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
-		ref: mergedRef,
-		variant: "heading-xl",
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverTitle, { ...props }),
-		className: style_module_default$18.title,
-		children
-	});
-});
-
-// packages/ui/build-module/popover/trigger.mjs
-/**
-* Renders a button that toggles the popover popup when clicked.
-*
-* Renders as a `<button>` by default. Also supports hover-triggered
-* popovers via the `openOnHover`, `delay`, and `closeDelay` props.
-*/
-const Trigger$2 = (0, import_element.forwardRef)(function PopoverTrigger$1(props, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverTrigger, {
-		ref,
-		...props
-	});
-});
-
-// packages/ui/build-module/utils/use-enable-wp-compat-overlay-slot.mjs
-/**
-* Opts the host application into the `@wordpress/ui` compat overlay slot —
-* a body-level container into which `@wordpress/ui` overlays portal so they
-* reliably stack above `@wordpress/components` overlays in mixed-library
-* compositions.
-*
-* Call once from a component that mounts for the lifetime of the app
-* (typically the root). Idempotent and one-way: a single caller should not
-* be able to turn off shared infrastructure for everyone else; if the slot
-* isn't wanted, simply don't call this hook.
-*
-* The opt-in applies to the whole window, including other React roots and
-* package copies, and remains enabled after the calling component unmounts.
-* Explicit portal containers still take precedence.
-*
-* Where `window.wp.components` is on the global — the typical setup for
-* plugins enqueueing `wp-components` through WordPress's script-loader —
-* the slot auto-enables and this hook is a no-op.
-*/
-function useEnableWpCompatOverlaySlot() {
-	if (typeof window === "undefined") return;
-	const internalWindow = window;
-	if (internalWindow.__wpUiCompatOverlaySlotEnabled !== true) internalWindow.__wpUiCompatOverlaySlotEnabled = true;
+function Root$5(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverRoot, { ...props }) });
 }
 
-// packages/ui/build-module/badge/badge.mjs
+// packages/ui/build-module/popover/title.mjs
 const STYLE_HASH_ATTRIBUTE$57 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31553,60 +31528,90 @@ function registerStyle$57(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$57(targetDocument, hash, css);
 }
-registerStyle$57("88df672499", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._84df7684b49aa730__badge{border-radius:var(--wpds-border-radius-lg,8px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._85b36a7f2f82368e__infotip-trigger{--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-button-font-weight:var(--wpds-typography-font-weight-default,400);align-items:center;border:0;cursor:var(--wpds-cursor-control,pointer);display:inline-flex;gap:var(--wpds-dimension-gap-xs,4px);text-align:start;vertical-align:middle}._85b36a7f2f82368e__infotip-trigger:focus{outline:none}._85b36a7f2f82368e__infotip-trigger:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._1fc230b83756f21c__infotip-icon{flex-shrink:0;margin-inline-end:-3px}.afe4f8ced1ddd62e__is-high-intent{background-color:var(--wpds-color-background-surface-error,#fae4e0);color:var(--wpds-color-foreground-content-error,#470000)}._2a9a0780b901ba56__is-medium-intent{background-color:var(--wpds-color-background-surface-warning,#fde5bd);color:var(--wpds-color-foreground-content-warning,#2e1900)}._281d4b3387e0f387__is-low-intent{background-color:var(--wpds-color-background-surface-caution,#fde893);color:var(--wpds-color-foreground-content-caution,#281d00)}._2776e6380467a804__is-stable-intent{background-color:var(--wpds-color-background-surface-success,#c0f8c9);color:var(--wpds-color-foreground-content-success,#002900)}._5c4c75c305549219__is-informational-intent{background-color:var(--wpds-color-background-surface-info,#ddebfa);color:var(--wpds-color-foreground-content-info,#001b4f)}._043d2a67bb3a39c2__is-draft-intent{background-color:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);border:var(--wpds-border-width-xs,1px) dashed var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._043d2a67bb3a39c2__is-draft-intent,.f6ca293dbec67e96__is-none-intent{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}.f6ca293dbec67e96__is-none-intent{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}}");
+registerStyle$57("7dd02d37c8", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._069972d5e326bada__dropdown-motion,._66136bf671f00b1f__dropdown-motion--fade-only{--wp-ui-dropdown-slide-distance:4px;--wp-ui-dropdown-slide-duration:var(--wpds-motion-duration-md,200ms);--wp-ui-dropdown-slide-easing:var(--wpds-motion-easing-expressive,cubic-bezier(0.25,0,0,1));--wp-ui-dropdown-fade-duration:var(--wpds-motion-duration-sm,100ms);--wp-ui-dropdown-fade-easing:linear;@media not (prefers-reduced-motion){transition-duration:var(--wp-ui-dropdown-slide-duration),var(--wp-ui-dropdown-fade-duration);transition-property:transform,opacity;transition-timing-function:var(--wp-ui-dropdown-slide-easing),var(--wp-ui-dropdown-fade-easing);will-change:transform,opacity}opacity:1;&[data-instant]{transition:none}&[data-ending-style],&[data-starting-style]{opacity:0}}._069972d5e326bada__dropdown-motion{transform:translate(0);&[data-side=bottom][data-ending-style],&[data-side=bottom][data-starting-style]{transform:translateY(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=top][data-ending-style],&[data-side=top][data-starting-style]{transform:translateY(var(--wp-ui-dropdown-slide-distance))}&[data-side=left][data-ending-style],&[data-side=left][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=right][data-ending-style],&[data-side=right][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&[data-side=inline-start][data-ending-style],&[data-side=inline-start][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}&[data-side=inline-end][data-ending-style],&[data-side=inline-end][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-start][data-ending-style],&:dir(rtl)[data-side=inline-start][data-starting-style]{transform:translateX(calc(var(--wp-ui-dropdown-slide-distance)*-1))}&:dir(rtl)[data-side=inline-end][data-ending-style],&:dir(rtl)[data-side=inline-end][data-starting-style]{transform:translateX(var(--wp-ui-dropdown-slide-distance))}}}}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._2986955e2ef5d630__positioner{z-index:var(--wp-ui-popover-z-index,initial)}._652e9b9e91704743__popup{outline:0}._0b48fc6fd3d780d8__surface{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:var(--wpds-border-radius-md,4px);box-shadow:0 2px 3px rgba(0,0,0,.05),0 4px 5px rgba(0,0,0,.04),0 12px 12px rgba(0,0,0,.03),0 16px 16px rgba(0,0,0,.02);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);line-height:var(--wpds-typography-line-height-md,24px);padding:var(--wpds-dimension-padding-lg,16px)}.fc0a1ed92f89e55b__backdrop~* ._0b48fc6fd3d780d8__surface{border-color:transparent}@media (forced-colors:active){._0b48fc6fd3d780d8__surface,.fc0a1ed92f89e55b__backdrop~* ._0b48fc6fd3d780d8__surface{border-color:CanvasText}}._0bc67a8a6c6d34a3__arrow{display:flex}._0bc67a8a6c6d34a3__arrow[data-side=top]{bottom:-8px;rotate:180deg}._0bc67a8a6c6d34a3__arrow[data-side=bottom]{rotate:0deg;top:-8px}._0bc67a8a6c6d34a3__arrow[data-side=left]{inset-inline-end:-13px;rotate:90deg}._0bc67a8a6c6d34a3__arrow[data-side=right]{inset-inline-start:-13px;rotate:-90deg}._1be5c9af42315b1e__arrow-fill{fill:var(--wpds-color-background-surface-neutral-strong,#fff)}.c0360f2f9044fbfc__arrow-stroke{fill:var(--wpds-color-stroke-surface-neutral,#dbdbdb)}.b459029fd727337b__title{--_gcd-heading-color:var(--wpds-color-foreground-content-neutral,#1e1e1e);color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.fc0a1ed92f89e55b__backdrop{background-color:rgba(0,0,0,.15);inset:0;opacity:1;position:fixed;z-index:var(--wp-ui-popover-z-index,initial)}.fc0a1ed92f89e55b__backdrop[data-ending-style],.fc0a1ed92f89e55b__backdrop[data-starting-style]{opacity:0}@media not (prefers-reduced-motion){.fc0a1ed92f89e55b__backdrop{transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1))}}}}");
 var style_module_default$17 = {
-	"badge": "_84df7684b49aa730__badge",
-	"infotip-trigger": "_85b36a7f2f82368e__infotip-trigger",
-	"infotip-icon": "_1fc230b83756f21c__infotip-icon",
-	"is-high-intent": "afe4f8ced1ddd62e__is-high-intent",
-	"is-medium-intent": "_2a9a0780b901ba56__is-medium-intent",
-	"is-low-intent": "_281d4b3387e0f387__is-low-intent",
-	"is-stable-intent": "_2776e6380467a804__is-stable-intent",
-	"is-informational-intent": "_5c4c75c305549219__is-informational-intent",
-	"is-draft-intent": "_043d2a67bb3a39c2__is-draft-intent",
-	"is-none-intent": "f6ca293dbec67e96__is-none-intent"
-};
-registerStyle$57("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$7 = {
-	"button": "db1aa0d975c98907__button",
-	"input": "_560ae5870016ca79__input",
-	"textarea": "_7c14c78aca908e56__textarea",
-	"div": "b752c6b223b319c4__div",
-	"p": "_56028dfe751232df__p",
-	"heading": "_48f5e2ad729cc233__heading",
-	"a": "fba8c89ccbfb853b__a",
-	"ol": "_2933712904448f13__ol",
-	"li": "c48c21f7371f7cea__li",
-	"span": "_2348cae4464115af__span"
+	"positioner": "_2986955e2ef5d630__positioner",
+	"popup": "_652e9b9e91704743__popup _069972d5e326bada__dropdown-motion",
+	"surface": "_0b48fc6fd3d780d8__surface",
+	"backdrop": "fc0a1ed92f89e55b__backdrop",
+	"arrow": "_0bc67a8a6c6d34a3__arrow",
+	"arrow-fill": "_1be5c9af42315b1e__arrow-fill",
+	"arrow-stroke": "c0360f2f9044fbfc__arrow-stroke",
+	"title": "b459029fd727337b__title"
 };
 /**
-* A badge component for displaying labels with semantic intent.
-* Add an infotip to explain a status in a popover.
+* Renders a heading that labels the popover for accessibility.
+*
+* **Required** — every popover must include a `Popover.Title`, even if
+* visually hidden. The rendered element is linked to the popup via
+* `aria-labelledby`. Uses the `heading-xl` text variant, matching Dialog.
+*
+* To visually hide the title while keeping it accessible, wrap it with
+* `VisuallyHidden` using the `render` prop:
+*
+* ```jsx
+* <VisuallyHidden render={ <Popover.Title /> }>
+*   Accessible title text
+* </VisuallyHidden>
+* ```
 */
-const Badge = (0, import_element.forwardRef)(function UnforwardedBadge({ intent = "none", className, children, infotip, render, ...props }, ref) {
-	const badge = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Text$1, {
-		ref,
-		className: clsx(style_module_default$17.badge, style_module_default$17[`is-${intent}-intent`], className),
-		...props,
-		render: infotip ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(infotip.popover.Trigger, {
-			className: clsx(style_module_default$17["infotip-trigger"], global_css_defense_module_default$7.button),
-			openOnHover: true,
-			delay: 200,
-			closeDelay: 200,
-			render
-		}) : render,
-		variant: "body-sm",
-		children: [children, infotip && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$5, {
-			icon: help_default,
-			size: 16,
-			"aria-hidden": "true",
-			className: style_module_default$17["infotip-icon"]
-		})]
+const Title = (0, import_element.forwardRef)(function PopoverTitle$1({ children, ...props }, forwardedRef) {
+	const validationContext = usePopoverValidationContext();
+	const internalRef = (0, import_element.useRef)(null);
+	const mergedRef = (0, import_compose.useMergeRefs)([internalRef, forwardedRef]);
+	(0, import_element.useEffect)(() => {
+		if (validationContext) return validationContext.registerTitle(internalRef.current);
+	}, [validationContext]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text$1, {
+		ref: mergedRef,
+		variant: "heading-xl",
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverTitle, { ...props }),
+		className: style_module_default$17.title,
+		children
 	});
-	return infotip ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(infotip.popover.Root, { children: [badge, infotip.popup] }) : badge;
 });
 
-// packages/ui/build-module/button-link/button-link.mjs
+// packages/ui/build-module/popover/trigger.mjs
+/**
+* Renders a button that toggles the popover popup when clicked.
+*
+* Renders as a `<button>` by default. Also supports hover-triggered
+* popovers via the `openOnHover`, `delay`, and `closeDelay` props.
+*/
+const Trigger$2 = (0, import_element.forwardRef)(function PopoverTrigger$1(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PopoverTrigger, {
+		ref,
+		...props
+	});
+});
+
+// packages/ui/build-module/utils/use-enable-wp-compat-overlay-slot.mjs
+/**
+* Opts the host application into the `@wordpress/ui` compat overlay slot —
+* a body-level container into which `@wordpress/ui` overlays portal so they
+* reliably stack above `@wordpress/components` overlays in mixed-library
+* compositions.
+*
+* Call once from a component that mounts for the lifetime of the app
+* (typically the root). Idempotent and one-way: a single caller should not
+* be able to turn off shared infrastructure for everyone else; if the slot
+* isn't wanted, simply don't call this hook.
+*
+* The opt-in applies to the whole window, including other React roots and
+* package copies, and remains enabled after the calling component unmounts.
+* Explicit portal containers still take precedence.
+*
+* Where `window.wp.components` is on the global — the typical setup for
+* plugins enqueueing `wp-components` through WordPress's script-loader —
+* the slot auto-enables and this hook is a no-op.
+*/
+function useEnableWpCompatOverlaySlot() {
+	if (typeof window === "undefined") return;
+	const internalWindow = window;
+	if (internalWindow.__wpUiCompatOverlaySlotEnabled !== true) internalWindow.__wpUiCompatOverlaySlotEnabled = true;
+}
+
+// packages/ui/build-module/badge/badge.mjs
 const STYLE_HASH_ATTRIBUTE$56 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -31708,63 +31713,58 @@ function registerStyle$56(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$56(targetDocument, hash, css);
 }
-registerStyle$56("04047f1442", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._3a88234bd4090b5e__button,.be08760d191644aa__is-unstyled{appearance:none;padding:0}._3a88234bd4090b5e__button{--wp-ui-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-strong-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 93%,#000));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-strong-disabled,#e5e5e5);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand-strong,#fff);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-strong-active,#fff);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-strong-disabled,#8b8b8b);--wp-ui-button-padding-block:var(--wpds-dimension-padding-xs,4px);--wp-ui-button-padding-inline:var(--wpds-dimension-padding-md,12px);--wp-ui-button-height:var(--wpds-dimension-size-lg,40px);--wp-ui-button-aspect-ratio:auto;--wp-ui-button-font-size:var(--wpds-typography-font-size-md,13px);--wp-ui-button-min-width:calc(4ch + var(--wp-ui-button-padding-inline)*2);--wp-ui-button-icon-margin:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2);--wp-ui-button-border-color:var(--wp-ui-button-background-color);--wp-ui-button-border-color-active:var(--wp-ui-button-background-color-active);--wp-ui-button-border-color-disabled:var(--wp-ui-button-background-color-disabled);--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wp-ui-button-font-size);--_gcd-button-font-weight:var(--wp-ui-button-font-weight);align-items:center;aspect-ratio:var(--wp-ui-button-aspect-ratio);background-clip:border-box;background-color:var(--wp-ui-button-background-color);border-color:var(--wp-ui-button-border-color);border-radius:var(--wpds-border-radius-sm,2px);border-style:solid;border-width:1px;color:var(--wp-ui-button-foreground-color);display:inline-flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wp-ui-button-font-size);font-weight:var(--wp-ui-button-font-weight);gap:var(--wpds-dimension-gap-sm,8px);justify-content:center;line-height:var(--wpds-typography-line-height-sm,20px);max-width:100%;min-height:var(--wp-ui-button-height);min-width:var(--wp-ui-button-min-width);overflow-wrap:anywhere;padding-block:var(--wp-ui-button-padding-block);padding-inline:var(--wp-ui-button-padding-inline);position:relative;text-align:center;text-decoration:none;&:not([data-disabled]){cursor:var(--wpds-cursor-control,pointer)}@media not (prefers-reduced-motion){transition:color .1s ease-out;*{transition:opacity .1s ease-out}}&[href]{cursor:pointer}[href]{color:inherit;text-decoration:inherit}&:not([data-disabled]):is(:hover,:active,:focus){background-color:var(--wp-ui-button-background-color-active);border-color:var(--wp-ui-button-border-color-active);color:var(--wp-ui-button-foreground-color-active)}&[data-disabled]:not(.c33c63637242ce6f__is-loading){background-color:var(--wp-ui-button-background-color-disabled);border-color:var(--wp-ui-button-border-color-disabled);color:var(--wp-ui-button-foreground-color-disabled);@media (forced-colors:active){border-bottom-color:GrayText;border-left-color:GrayText;border-right-color:GrayText;border-top-color:GrayText;color:GrayText}}}._6b70110a7de0c4ea__is-small{--wp-ui-button-padding-block:0px;--wp-ui-button-padding-inline:var(--wpds-dimension-padding-sm,8px);--wp-ui-button-height:var(--wpds-dimension-size-sm,24px)}.be84d98396868a6b__icon{flex-shrink:0;margin:var(--wp-ui-button-icon-margin)}._4a1bd3811e44a37a__is-brand{&._60593aef46db5256__is-outline,&._7fc529b15153b6fa__is-minimal{--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-brand-disabled,#8b8b8b)}&._60593aef46db5256__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 13%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-brand,var(--wp-admin-theme-color,#3858e9));--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 84%,#000));--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-brand-disabled,#dbdbdb)}&._7fc529b15153b6fa__is-minimal{--wp-ui-button-background-color:var(--wpds-color-background-interactive-brand-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-brand-weak-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 13%,#fff));--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-brand-weak-disabled,#0000)}}._1e01e7af6cf44d0f__is-neutral{&._7fc529b15153b6fa__is-minimal[aria-pressed=true],&.d8226c9fcd3f5c9a__is-solid{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-strong,#2e2e2e);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-strong-active,#1e1e1e);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-strong-disabled,#e5e5e5);--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-strong-active,#f0f0f0);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-strong-disabled,#8b8b8b)}&._60593aef46db5256__is-outline,&._7fc529b15153b6fa__is-minimal:not([aria-pressed=true]){--wp-ui-button-foreground-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);--wp-ui-button-foreground-color-active:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);--wp-ui-button-foreground-color-disabled:var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b)}&._60593aef46db5256__is-outline{--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ececec);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000);--wp-ui-button-border-color:var(--wpds-color-stroke-interactive-neutral,#8b8b8b);--wp-ui-button-border-color-active:var(--wpds-color-stroke-interactive-neutral-active,#6c6c6c);--wp-ui-button-border-color-disabled:var(--wpds-color-stroke-interactive-neutral-disabled,#dbdbdb)}&._7fc529b15153b6fa__is-minimal:not([aria-pressed=true]){--wp-ui-button-background-color:var(--wpds-color-background-interactive-neutral-weak,#0000);--wp-ui-button-background-color-active:var(--wpds-color-background-interactive-neutral-weak-active,#ececec);--wp-ui-button-background-color-disabled:var(--wpds-color-background-interactive-neutral-weak-disabled,#0000)}&._7fc529b15153b6fa__is-minimal[aria-pressed=true]:not(.c33c63637242ce6f__is-loading){@media (forced-colors:active){background-color:SelectedItem;border-bottom-color:ButtonBorder;border-left-color:ButtonBorder;border-right-color:ButtonBorder;border-top-color:ButtonBorder;color:SelectedItemText;forced-color-adjust:none;outline-color:CanvasText;&[data-disabled]{background-color:GrayText;border-color:GrayText;color:Canvas}}}}.be08760d191644aa__is-unstyled{background:none;border:none;min-width:unset}.d755fbf867cb9979__is-compact{--wp-ui-button-height:var(--wpds-dimension-size-md,32px)}.c33c63637242ce6f__is-loading:not(.be08760d191644aa__is-unstyled){color:transparent;&:not([data-disabled]):is(:hover,:active,:focus){color:transparent}@media (forced-colors:active){color:ButtonFace}>:not(.c65877490e4d9f6c__spinner){opacity:0}}}@layer compositions{.c65877490e4d9f6c__spinner{color:var(--wp-ui-button-foreground-color);height:var(--wp-ui-button-font-size);inset:0;margin:auto;pointer-events:none;position:absolute;width:var(--wp-ui-button-font-size);>*{stroke-width:2.75}@media (prefers-reduced-motion){>*{animation:none}}@media (forced-colors:active){>*{stroke:ButtonText}}}}}");
-var style_module_default$1$1 = {
-	"button": "_3a88234bd4090b5e__button",
-	"is-unstyled": "be08760d191644aa__is-unstyled",
-	"is-loading": "c33c63637242ce6f__is-loading",
-	"is-small": "_6b70110a7de0c4ea__is-small",
-	"icon": "be84d98396868a6b__icon",
-	"is-brand": "_4a1bd3811e44a37a__is-brand",
-	"is-outline": "_60593aef46db5256__is-outline",
-	"is-minimal": "_7fc529b15153b6fa__is-minimal",
-	"is-neutral": "_1e01e7af6cf44d0f__is-neutral",
-	"is-solid": "d8226c9fcd3f5c9a__is-solid",
-	"is-compact": "d755fbf867cb9979__is-compact",
-	"spinner": "c65877490e4d9f6c__spinner"
+registerStyle$56("88df672499", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._84df7684b49aa730__badge{border-radius:var(--wpds-border-radius-lg,8px);padding-block:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wpds-dimension-padding-sm,8px)}._85b36a7f2f82368e__infotip-trigger{--_gcd-button-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-button-font-size:var(--wpds-typography-font-size-sm,12px);--_gcd-button-font-weight:var(--wpds-typography-font-weight-default,400);align-items:center;border:0;cursor:var(--wpds-cursor-control,pointer);display:inline-flex;gap:var(--wpds-dimension-gap-xs,4px);text-align:start;vertical-align:middle}._85b36a7f2f82368e__infotip-trigger:focus{outline:none}._85b36a7f2f82368e__infotip-trigger:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._1fc230b83756f21c__infotip-icon{flex-shrink:0;margin-inline-end:-3px}.afe4f8ced1ddd62e__is-high-intent{background-color:var(--wpds-color-background-surface-error,#fae4e0);color:var(--wpds-color-foreground-content-error,#470000)}._2a9a0780b901ba56__is-medium-intent{background-color:var(--wpds-color-background-surface-warning,#fde5bd);color:var(--wpds-color-foreground-content-warning,#2e1900)}._281d4b3387e0f387__is-low-intent{background-color:var(--wpds-color-background-surface-caution,#fde893);color:var(--wpds-color-foreground-content-caution,#281d00)}._2776e6380467a804__is-stable-intent{background-color:var(--wpds-color-background-surface-success,#c0f8c9);color:var(--wpds-color-foreground-content-success,#002900)}._5c4c75c305549219__is-informational-intent{background-color:var(--wpds-color-background-surface-info,#ddebfa);color:var(--wpds-color-foreground-content-info,#001b4f)}._043d2a67bb3a39c2__is-draft-intent{background-color:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);border:var(--wpds-border-width-xs,1px) dashed var(--wpds-color-stroke-surface-neutral,#dbdbdb)}._043d2a67bb3a39c2__is-draft-intent,.f6ca293dbec67e96__is-none-intent{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);padding-block:calc(var(--wpds-dimension-padding-xs, 4px) - var(--wpds-border-width-xs, 1px));padding-inline:calc(var(--wpds-dimension-padding-sm, 8px) - var(--wpds-border-width-xs, 1px))}.f6ca293dbec67e96__is-none-intent{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb)}}}");
+var style_module_default$16 = {
+	"badge": "_84df7684b49aa730__badge",
+	"infotip-trigger": "_85b36a7f2f82368e__infotip-trigger",
+	"infotip-icon": "_1fc230b83756f21c__infotip-icon",
+	"is-high-intent": "afe4f8ced1ddd62e__is-high-intent",
+	"is-medium-intent": "_2a9a0780b901ba56__is-medium-intent",
+	"is-low-intent": "_281d4b3387e0f387__is-low-intent",
+	"is-stable-intent": "_2776e6380467a804__is-stable-intent",
+	"is-informational-intent": "_5c4c75c305549219__is-informational-intent",
+	"is-draft-intent": "_043d2a67bb3a39c2__is-draft-intent",
+	"is-none-intent": "f6ca293dbec67e96__is-none-intent"
 };
-registerStyle$56("3eccb80605", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer compositions{._536f317cc24e88ad__button-link{--_gcd-a-color:var(--wp-ui-button-foreground-color);--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);&:visited{--_gcd-a-color:var(--wp-ui-button-foreground-color)}&:is(:hover,:active,:focus){--_gcd-a-color:var(--wp-ui-button-foreground-color-active)}}}}");
-var style_module_default$16 = { "button-link": "_536f317cc24e88ad__button-link" };
+registerStyle$56("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$7 = {
+	"button": "db1aa0d975c98907__button",
+	"input": "_560ae5870016ca79__input",
+	"textarea": "_7c14c78aca908e56__textarea",
+	"div": "b752c6b223b319c4__div",
+	"p": "_56028dfe751232df__p",
+	"heading": "_48f5e2ad729cc233__heading",
+	"a": "fba8c89ccbfb853b__a",
+	"ol": "_2933712904448f13__ol",
+	"li": "c48c21f7371f7cea__li",
+	"span": "_2348cae4464115af__span"
+};
 /**
-* A link that looks like a `Button`. Prefer `Link` for navigation unless
-* button prominence is intentional.
-*
-* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+* A badge component for displaying labels with semantic intent.
+* Add an infotip to explain a status in a popover.
 */
-const ForwardedButtonLink = (0, import_element.forwardRef)(function ButtonLink({ tone = "brand", variant = "solid", size = "default", className, children, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link$1, {
+const Badge = (0, import_element.forwardRef)(function UnforwardedBadge({ intent = "none", className, children, infotip, render, ...props }, ref) {
+	const badge = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Text$1, {
 		ref,
-		variant: "unstyled",
-		className: clsx(style_module_default$16["button-link"], variant !== "unstyled" && style_module_default$1$1.button, style_module_default$1$1[`is-${tone}`], style_module_default$1$1[`is-${variant}`], style_module_default$1$1[`is-${size}`], className),
+		className: clsx(style_module_default$16.badge, style_module_default$16[`is-${intent}-intent`], className),
 		...props,
-		children
+		render: infotip ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(infotip.popover.Trigger, {
+			className: clsx(style_module_default$16["infotip-trigger"], global_css_defense_module_default$7.button),
+			openOnHover: true,
+			delay: 200,
+			closeDelay: 200,
+			render
+		}) : render,
+		variant: "body-sm",
+		children: [children, infotip && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$5, {
+			icon: help_default,
+			size: 16,
+			"aria-hidden": "true",
+			className: style_module_default$16["infotip-icon"]
+		})]
 	});
+	return infotip ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(infotip.popover.Root, { children: [badge, infotip.popup] }) : badge;
 });
-
-// packages/ui/build-module/button-link/icon.mjs
-const ForwardedButtonLinkIcon = (0, import_element.forwardRef)(function ButtonLinkIcon(props, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ButtonIcon, {
-		ref,
-		...props
-	});
-});
-
-// packages/ui/build-module/button-link/index.mjs
-ForwardedButtonLinkIcon.displayName = "ButtonLink.Icon";
-/**
-* A link that looks like a `Button`. Prefer `Link` for navigation unless
-* button prominence is intentional.
-*
-* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
-*/
-const ButtonLink = Object.assign(ForwardedButtonLink, { 
-/**
-* An icon component specifically designed to work well when rendered inside
-* a `ButtonLink` component.
-*/
-Icon: ForwardedButtonLinkIcon });
 
 // node_modules/.store/@date-fns/tz@1.5.0-6qk8-gBjYJv6JcqYS_Lgqg/node_modules/@date-fns/tz/tzName/index.js
 /**

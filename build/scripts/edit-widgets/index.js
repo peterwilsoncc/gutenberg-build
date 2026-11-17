@@ -5029,7 +5029,7 @@ Icon: ButtonIcon });
 		"is-error": "dc5849c75608480d__is-error"
 	};
 	/**
-	* A container for Notice.ActionButton and Notice.ActionLink.
+	* A container for Notice.ActionButton, Notice.ActionButtonLink and Notice.ActionLink.
 	*/
 	const Actions = (0, _wordpress_element.forwardRef)(function NoticeActions({ render, ...props }, ref) {
 		return useRender({
