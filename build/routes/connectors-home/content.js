@@ -2030,6 +2030,68 @@ var require_url = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 // routes/connectors-home/use-connector-plugin.ts
 var import_url = require_url();
 var import_notices = require_notices();
+/**
+* Whether a rejected REST plugin install failed because the filesystem
+* requires credentials (`FS_METHOD` is not `direct` and none are stored).
+*
+* @param error Rejection from the REST plugin endpoint.
+*/
+function isFilesystemUnavailableError(error) {
+	return typeof error === "object" && error !== null && error.code === "fs_unavailable";
+}
+/**
+* Installs a plugin via `wp.updates.installPlugin()`.
+*
+* @param slug    Plugin slug.
+* @param trigger Element that started the install. Focus returns to it when
+*                the filesystem credentials modal closes.
+*/
+function installPluginViaWpUpdates(slug, trigger) {
+	return new Promise((resolve, reject) => {
+		const w = window;
+		const jq = w.jQuery;
+		const updates = w.wp?.updates;
+		if (!jq || !updates?.installPlugin) {
+			reject(/* @__PURE__ */ new Error("wp.updates.installPlugin is not available."));
+			return;
+		}
+		const cleanup = () => {
+			jq(document).off("wp-plugin-install-success", onSuccess);
+			jq(document).off("wp-plugin-install-error", onError);
+			jq(document).off("credential-modal-cancel", onCancel);
+			jq(document).off("ajaxComplete", onAjaxComplete);
+		};
+		const onSuccess = (_event, response) => {
+			if (response.slug !== slug) return;
+			cleanup();
+			resolve("installed");
+		};
+		const onError = (_event, response) => {
+			if (response.slug !== slug) return;
+			cleanup();
+			reject(new Error(response.errorMessage ?? "Install failed."));
+		};
+		const onCancel = () => {
+			cleanup();
+			resolve("canceled");
+		};
+		const onAjaxComplete = (_event, xhr, settings) => {
+			if (typeof settings.data !== "string") return;
+			const params = new URLSearchParams(settings.data);
+			if (params.get("action") !== "install-plugin" || params.get("slug") !== slug) return;
+			if (xhr.status !== 200 || typeof xhr.responseJSON !== "object" || xhr.responseJSON === null) {
+				cleanup();
+				reject(/* @__PURE__ */ new Error("Install failed."));
+			}
+		};
+		jq(document).on("wp-plugin-install-success", onSuccess);
+		jq(document).on("wp-plugin-install-error", onError);
+		jq(document).on("credential-modal-cancel", onCancel);
+		jq(document).on("ajaxComplete", onAjaxComplete);
+		updates.maybeRequestFilesystemCredentials?.({ target: trigger ?? null });
+		updates.installPlugin({ slug });
+	});
+}
 function useConnectorPlugin({ file: pluginFileFromServer, settingName, connectorName, isInstalled, isActivated, keySource = "none", initialIsConnected = false }) {
 	const [isExpanded, setIsExpanded] = (0, import_element.useState)(false);
 	const [isBusy, setIsBusy] = (0, import_element.useState)(false);
@@ -2117,14 +2179,29 @@ function useConnectorPlugin({ file: pluginFileFromServer, settingName, connector
 			type: "snackbar"
 		});
 	};
-	const installPlugin = async () => {
+	const installPlugin = async (event) => {
 		if (!pluginSlug) return;
+		const trigger = event?.currentTarget;
 		setIsBusy(true);
 		try {
-			await saveEntityRecord("root", "plugin", {
-				slug: pluginSlug,
-				status: "active"
-			}, { throwOnError: true });
+			try {
+				await saveEntityRecord("root", "plugin", {
+					slug: pluginSlug,
+					status: "active"
+				}, { throwOnError: true });
+			} catch (error) {
+				if (!isFilesystemUnavailableError(error)) throw error;
+				if (await installPluginViaWpUpdates(pluginSlug, trigger) === "canceled") return;
+				if (pluginBasename) await saveEntityRecord("root", "plugin", {
+					plugin: pluginBasename,
+					status: "active"
+				}, { throwOnError: true });
+				invalidateResolution("getEntityRecord", [
+					"root",
+					"plugin",
+					pluginBasename
+				]);
+			}
 			setPluginStatusOverride("active");
 			invalidateResolution("getEntityRecord", ["root", "site"]);
 			setIsExpanded(true);
@@ -2165,10 +2242,10 @@ function useConnectorPlugin({ file: pluginFileFromServer, settingName, connector
 			setIsBusy(false);
 		}
 	};
-	const handleButtonClick = () => {
+	const handleButtonClick = (event) => {
 		if (pluginStatus === "not-installed") {
 			if (canInstallPlugins === false) return;
-			installPlugin();
+			installPlugin(event);
 		} else if (pluginStatus === "inactive") {
 			if (canActivatePlugins === false) return;
 			activatePlugin();
@@ -2665,13 +2742,23 @@ function AiPluginCallout() {
 	}, []);
 	const { saveEntityRecord } = (0, import_data.useDispatch)(import_core_data.store);
 	const { createSuccessNotice, createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
-	const installPlugin = async () => {
+	const installPlugin = async (event) => {
+		const trigger = event.currentTarget;
 		setIsBusy(true);
 		try {
-			await saveEntityRecord("root", "plugin", {
-				slug: AI_PLUGIN_SLUG,
-				status: "active"
-			}, { throwOnError: true });
+			try {
+				await saveEntityRecord("root", "plugin", {
+					slug: AI_PLUGIN_SLUG,
+					status: "active"
+				}, { throwOnError: true });
+			} catch (error) {
+				if (!isFilesystemUnavailableError(error)) throw error;
+				if (await installPluginViaWpUpdates(AI_PLUGIN_SLUG, trigger) === "canceled") return;
+				await saveEntityRecord("root", "plugin", {
+					plugin: AI_PLUGIN_ID,
+					status: "active"
+				}, { throwOnError: true });
+			}
 			setJustActivated(true);
 			createSuccessNotice((0, import_i18n.__)("AI plugin installed and activated successfully."), {
 				id: "ai-plugin-install-success",
