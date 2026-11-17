@@ -111748,6 +111748,7 @@ If there's a particular need for this, please submit a feature request at https:
 				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Flex, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, {
 					isBlock: true,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalUnitControl, {
+						...otherProps,
 						label: (0, _wordpress_i18n.__)("Line indent"),
 						labelPosition: "top",
 						hideLabelFromVision: true,
