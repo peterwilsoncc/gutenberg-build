@@ -55234,14 +55234,15 @@ Icon: ButtonIcon });
 			let additionalAttributes;
 			if (!media.id || media.id !== id) additionalAttributes = { sizeSlug: newSize };
 			const linkDestination = attributes.linkDestination || getDefaultLinkDestination();
-			let href;
 			switch (linkDestination) {
 				case LINK_DESTINATION_MEDIA$1:
-					href = media.url;
+					mediaAttributes.href = media.url;
 					break;
-				case LINK_DESTINATION_ATTACHMENT$1: href = media.link;
+				case LINK_DESTINATION_ATTACHMENT$1:
+					mediaAttributes.href = media.link;
+					break;
+				case LINK_DESTINATION_NONE$1: mediaAttributes.href = void 0;
 			}
-			mediaAttributes.href = href;
 			setAttributes({
 				blob: void 0,
 				...mediaAttributes,

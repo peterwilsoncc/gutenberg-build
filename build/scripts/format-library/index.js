@@ -14063,7 +14063,7 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			allowedTypes: ALLOWED_MEDIA_TYPES,
 			value: getCurrentImageId(activeObjectAttributes),
 			onSelect: ({ id, url, alt, width: imgWidth }) => {
-				onChange((0, _wordpress_rich_text.insertObject)(value, {
+				const newImage = {
 					type: name$12,
 					attributes: {
 						className: `wp-image-${id}`,
@@ -14071,7 +14071,19 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 						url,
 						alt
 					}
-				}));
+				};
+				let newValue;
+				if (isObjectActive && value.start !== void 0) {
+					const replacements = value.replacements.slice();
+					replacements[value.start] = newImage;
+					newValue = {
+						...value,
+						replacements,
+						start: value.end,
+						end: value.end
+					};
+				} else newValue = (0, _wordpress_rich_text.insertObject)(value, newImage);
+				onChange(newValue);
 				onFocus();
 			},
 			render: ({ open }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichTextToolbarButton, {
