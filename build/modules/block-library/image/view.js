@@ -43,6 +43,13 @@ const touchStartEvent = {
 */
 let inertElements = [];
 /**
+* Timer for the cleanup that runs after the close animation. Reopening the
+* lightbox cancels it, so it can't clear the new selection.
+*
+* @type {number|undefined}
+*/
+let closeCleanupTimer;
+/**
 * Per-gesture state for the in-progress horizontal drag on the lightbox.
 *
 * `direction` is null until the gesture exceeds a small disambiguation
@@ -251,6 +258,7 @@ const { state, actions, callbacks } = store("core/image", {
 		showLightbox() {
 			const { imageId } = getContext();
 			if (!getImageMetadata(imageId)?.imageRef?.complete) return;
+			clearTimeout(closeCleanupTimer);
 			state.scrollTopReset = document.documentElement.scrollTop;
 			state.scrollLeftReset = document.documentElement.scrollLeft;
 			state.selectedImageId = imageId;
@@ -262,8 +270,8 @@ const { state, actions, callbacks } = store("core/image", {
 		hideLightbox() {
 			if (state.overlayEnabled) {
 				state.overlayEnabled = false;
-				setTimeout(function() {
-					state.selectedImage.buttonRef.focus({ preventScroll: true });
+				closeCleanupTimer = setTimeout(function() {
+					state.selectedImage?.buttonRef?.focus({ preventScroll: true });
 					state.selectedImageId = null;
 					state.selectedGalleryId = null;
 				}, 450);
