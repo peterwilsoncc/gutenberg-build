@@ -91145,6 +91145,24 @@ Icon: ButtonIcon });
 	const { usesContextKey } = unlock$1(_wordpress_block_editor.privateApis);
 	const POST_CONTENT_BLOCK_NAME = "core/post-content";
 	const SYNCED_PATTERN_BLOCK_NAME = "core/block";
+	/**
+	* Finds the first footnotes block in the post content, searching breadth
+	* first. Inner blocks of synced patterns are not searched.
+	*
+	* @param {Function} getBlocks             The block editor's `getBlocks` selector.
+	* @param {string}   [postContentClientId] Client ID of the post content block, if
+	*                                         there is one.
+	* @return {?Object} The footnotes block, or `null` if there is none.
+	*/
+	function findFootnotesBlock(getBlocks, postContentClientId) {
+		const queue = [...getBlocks(postContentClientId)];
+		while (queue.length) {
+			const block = queue.shift();
+			if (block.name === name) return block;
+			queue.push(...block.innerBlocks);
+		}
+		return null;
+	}
 	const format = {
 		title: (0, _wordpress_i18n.__)("Footnote"),
 		tagName: "sup",
@@ -91161,10 +91179,13 @@ Icon: ButtonIcon });
 				const allowedBlocks = select(_wordpress_block_editor.store).getSettings().allowedBlockTypes;
 				if (allowedBlocks === false || Array.isArray(allowedBlocks) && !allowedBlocks.includes("core/footnotes")) return false;
 				if ("string" !== typeof select(_wordpress_core_data.store).getEntityRecord("postType", postType, postId)?.meta?.footnotes) return false;
-				const { getBlockParentsByBlockName: _getBlockParentsByBlockName, getSelectedBlockClientId: _getSelectedBlockClientId, getBlockName: _getBlockName } = select(_wordpress_block_editor.store);
+				const { getBlockParentsByBlockName: _getBlockParentsByBlockName, getSelectedBlockClientId: _getSelectedBlockClientId, getBlockName: _getBlockName, getBlocks: _getBlocks, canInsertBlockType: _canInsertBlockType } = select(_wordpress_block_editor.store);
 				const selectedClientId = _getSelectedBlockClientId();
 				if (!selectedClientId) return false;
 				if (_getBlockName(selectedClientId) === name) return false;
+				const parentPostContent = _getBlockParentsByBlockName(selectedClientId, POST_CONTENT_BLOCK_NAME);
+				const rootClientId = parentPostContent.length ? parentPostContent[parentPostContent.length - 1] : null;
+				if (!_canInsertBlockType(name, rootClientId) && !findFootnotesBlock(_getBlocks, parentPostContent[0])) return false;
 				const parentCoreBlocks = _getBlockParentsByBlockName(selectedClientId, SYNCED_PATTERN_BLOCK_NAME);
 				return !parentCoreBlocks || parentCoreBlocks.length === 0;
 			}, [postType, postId]);
@@ -91186,19 +91207,7 @@ Icon: ButtonIcon });
 					}
 					const selectedClientId = getSelectedBlockClientId();
 					const parentPostContent = getBlockParentsByBlockName(selectedClientId, POST_CONTENT_BLOCK_NAME);
-					const blocks = parentPostContent.length ? getBlocks(parentPostContent[0]) : getBlocks();
-					let fnBlock = null;
-					{
-						const queue = [...blocks];
-						while (queue.length) {
-							const block = queue.shift();
-							if (block.name === "core/footnotes") {
-								fnBlock = block;
-								break;
-							}
-							queue.push(...block.innerBlocks);
-						}
-					}
+					let fnBlock = findFootnotesBlock(getBlocks, parentPostContent[0]);
 					if (!fnBlock) {
 						let rootClientId = getBlockRootClientId(selectedClientId);
 						while (rootClientId && getBlockName(rootClientId) !== POST_CONTENT_BLOCK_NAME) rootClientId = getBlockRootClientId(rootClientId);
