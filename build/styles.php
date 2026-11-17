@@ -9,6 +9,10 @@
  * @package gutenberg
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Registers a style according to `wp_register_style`. Honors this request by
  * deregistering any style by the same handler before registration.

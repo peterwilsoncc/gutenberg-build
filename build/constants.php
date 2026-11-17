@@ -8,6 +8,10 @@
  * @package gutenberg
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	'version' => '24.4.1',
 	'build_url' => plugin_dir_url( __FILE__ ),

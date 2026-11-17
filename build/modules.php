@@ -6,6 +6,10 @@
  * @package gutenberg
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Register all script modules.
  */

@@ -6,6 +6,10 @@
  * @package gutenberg
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 return array(
 	array(
 		'handle' => 'wp-block-directory',

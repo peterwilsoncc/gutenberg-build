@@ -6,6 +6,10 @@
  * @package gutenberg
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 foreach ( [
 	__DIR__ . '/pages/font-library/page.php',
 	__DIR__ . '/pages/font-library/page-wp-admin.php',

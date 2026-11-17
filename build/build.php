@@ -6,6 +6,10 @@
  * @package gutenberg
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Load script module registration.
 $modules_file = __DIR__ . '/modules.php';
 if ( file_exists( $modules_file ) ) {
