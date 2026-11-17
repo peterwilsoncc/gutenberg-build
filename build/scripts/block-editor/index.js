@@ -3768,7 +3768,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 					return newState;
 				}
 				case "INSERT_BLOCKS": {
-					const { rootClientId = "" } = action;
+					const rootClientId = action.rootClientId ?? "";
 					const subState = state.get(rootClientId) || [];
 					const mappedBlocks = mapBlockOrder(action.blocks, rootClientId);
 					const { index = subState.length } = action;
@@ -3780,7 +3780,9 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 					return newState;
 				}
 				case "MOVE_BLOCKS_TO_POSITION": {
-					const { fromRootClientId = "", toRootClientId = "", clientIds } = action;
+					const { clientIds } = action;
+					const fromRootClientId = action.fromRootClientId ?? "";
+					const toRootClientId = action.toRootClientId ?? "";
 					const { index = state.get(toRootClientId).length } = action;
 					if (fromRootClientId === toRootClientId) {
 						const fromIndex = state.get(toRootClientId).indexOf(clientIds[0]);
@@ -3795,7 +3797,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 					return newState;
 				}
 				case "MOVE_BLOCKS_UP": {
-					const { clientIds, rootClientId = "" } = action;
+					const { clientIds } = action;
+					const rootClientId = action.rootClientId ?? "";
 					const firstClientId = clientIds[0];
 					const subState = state.get(rootClientId);
 					if (!subState.length || firstClientId === subState[0]) return state;
@@ -3805,7 +3808,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 					return newState;
 				}
 				case "MOVE_BLOCKS_DOWN": {
-					const { clientIds, rootClientId = "" } = action;
+					const { clientIds } = action;
+					const rootClientId = action.rootClientId ?? "";
 					const firstClientId = clientIds[0];
 					const lastClientId = clientIds[clientIds.length - 1];
 					const subState = state.get(rootClientId);
