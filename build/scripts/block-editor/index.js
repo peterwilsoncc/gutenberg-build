@@ -8031,7 +8031,6 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		getStyleStateViewport: () => getStyleStateViewport,
 		getViewportModalClientIds: () => getViewportModalClientIds,
 		getZoomLevel: () => getZoomLevel,
-		hasBlockSpotlight: () => hasBlockSpotlight,
 		isBlockHiddenAnywhere: () => isBlockHiddenAnywhere,
 		isBlockHiddenAtViewport: () => isBlockHiddenAtViewport,
 		isBlockHiddenEverywhere: () => isBlockHiddenEverywhere,
@@ -8706,17 +8705,6 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	const isBlockParentHiddenAtViewport = (state, clientId, viewport) => {
 		return getBlockParents(state, clientId).some((parentId) => isBlockHiddenAtViewport(state, parentId, viewport));
 	};
-	/**
-	* Returns true if there is a spotlighted block, which is the case while a
-	* contentOnly section is being edited.
-	*
-	* @param state Global application state.
-	*
-	* @return Whether the block is currently spotlighted.
-	*/
-	function hasBlockSpotlight(state) {
-		return !!state.editedContentOnlySection;
-	}
 	/**
 	* Returns whether a block is locked to prevent editing.
 	*
@@ -92268,14 +92256,15 @@ If there's a particular need for this, please submit a feature request at https:
 	const delayedBlockVisibilityDebounceOptions = { trailing: true };
 	function Root({ className, ...settings }) {
 		const { isOutlineMode, isFocusMode, isPreviewMode, editedContentOnlySection, deviceType, viewportSettings } = (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings, isTyping, hasBlockSpotlight, getEditedContentOnlySection } = unlock$2(select(store));
+			const { getSettings, isTyping, getEditedContentOnlySection } = unlock$2(select(store));
 			const editorSettings = getSettings();
 			const { outlineMode, focusMode, isPreviewMode: _isPreviewMode } = editorSettings;
+			const _editedContentOnlySection = getEditedContentOnlySection();
 			return {
 				isOutlineMode: outlineMode && !isTyping(),
-				isFocusMode: !_isPreviewMode && (focusMode || hasBlockSpotlight()),
+				isFocusMode: !_isPreviewMode && (focusMode || !!_editedContentOnlySection),
 				isPreviewMode: _isPreviewMode,
-				editedContentOnlySection: getEditedContentOnlySection(),
+				editedContentOnlySection: _editedContentOnlySection,
 				deviceType: editorSettings[deviceTypeKey]?.toLowerCase() || "desktop",
 				viewportSettings: editorSettings.__experimentalFeatures?.viewport
 			};
