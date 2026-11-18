@@ -64205,6 +64205,7 @@ Icon: ButtonIcon });
 					return;
 				}
 				if (event.keyCode !== _wordpress_keycodes.TAB) return;
+				if (event.ctrlKey || event.metaKey || event.altKey) return;
 				if (!focusCaptureAfterRef.current || !focusCaptureBeforeRef.current) return;
 				const { target, shiftKey: isShift } = event;
 				const direction = isShift ? "findPrevious" : "findNext";
