@@ -44502,8 +44502,8 @@ Icon: ButtonIcon });
 	const { lock: lock$3, unlock: unlock$3 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$49 = {};
-	lock$3(privateApis$49, {
+	const privateApis$48 = {};
+	lock$3(privateApis$48, {
 		getResponsiveMediaQueries,
 		getViewportBreakpoints: getViewportBreakpoints$2,
 		getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels$1,
@@ -62750,7 +62750,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const { lock, unlock } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-ui");
 
 // packages/global-styles-ui/build-module/utils.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$1, resolveStyle } = unlock(privateApis$49);
+	const { getViewportBreakpoints: getViewportBreakpoints$1, resolveStyle } = unlock(privateApis$48);
 	/**
 	* Valid states for elements with their labels.
 	* This mirrors the PHP constant in lib/class-wp-theme-json-gutenberg.php
@@ -63467,7 +63467,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/global-styles-ui/build-module/block-preview-panel.mjs
-	const { getViewportBreakpoints, getViewportBreakpointValueInPixels } = unlock(privateApis$49);
+	const { getViewportBreakpoints, getViewportBreakpointValueInPixels } = unlock(privateApis$48);
 
 // packages/global-styles-ui/build-module/screen-block.mjs
 	const { useHasDimensionsPanel: useHasDimensionsPanel$3, useHasTypographyPanel: useHasTypographyPanel$2, useHasBorderPanel: useHasBorderPanel$2, useSettingsForBlockElement: useSettingsForBlockElement$4, useHasColorPanel: useHasColorPanel$1, useHasFiltersPanel, useHasImageSettingsPanel, useHasBackgroundPanel: useHasBackgroundPanel$3, BackgroundPanel: StylesBackgroundPanel$2, BorderPanel: StylesBorderPanel$1, ColorPanel: StylesColorPanel, TypographyPanel: StylesTypographyPanel$1, DimensionsPanel: StylesDimensionsPanel$2, FiltersPanel: StylesFiltersPanel, ImageSettingsPanel, AdvancedPanel: StylesAdvancedPanel$2 } = unlock(_wordpress_block_editor.privateApis);
@@ -76502,8 +76502,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/index.mjs
-	const { registerCoreBlockBindingsSources } = unlock$5(_wordpress_editor.privateApis);
-	/**
+/**
 	* Initializes the site editor screen.
 	*
 	* @param {string} id       ID of the root element to render the screen in.
@@ -76515,7 +76514,7 @@ If there's a particular need for this, please submit a feature request at https:
 		(0, _wordpress_data.dispatch)(_wordpress_blocks.store).reapplyBlockTypeFilters();
 		const coreBlocks = (0, _wordpress_block_library.__experimentalGetCoreBlocks)().filter(({ name }) => name !== "core/freeform");
 		(0, _wordpress_block_library.registerCoreBlocks)(coreBlocks);
-		registerCoreBlockBindingsSources();
+		(0, _wordpress_editor.registerCoreBlockBindingsSources)();
 		(0, _wordpress_data.dispatch)(_wordpress_blocks.store).setFreeformFallbackBlockName("core/html");
 		(0, _wordpress_widgets.registerLegacyWidgetBlock)({ inserter: false });
 		(0, _wordpress_widgets.registerWidgetGroupBlock)({ inserter: false });

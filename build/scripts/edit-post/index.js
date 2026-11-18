@@ -10303,7 +10303,7 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 	}
 
 // packages/edit-post/build-module/index.mjs
-	const { BackButton: __experimentalMainDashboardButton, registerCoreBlockBindingsSources } = unlock(_wordpress_editor.privateApis);
+	const { BackButton: __experimentalMainDashboardButton } = unlock(_wordpress_editor.privateApis);
 	const { enablePreloadMultiUse, clearPreloadedData } = unlock(_wordpress_api_fetch.default.privateApis);
 	/**
 	* Initializes and returns an instance of Editor.
@@ -10349,7 +10349,7 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		});
 		(0, _wordpress_data.dispatch)(_wordpress_blocks.store).reapplyBlockTypeFilters();
 		(0, _wordpress_block_library.registerCoreBlocks)();
-		registerCoreBlockBindingsSources();
+		(0, _wordpress_editor.registerCoreBlockBindingsSources)();
 		(0, _wordpress_widgets.registerLegacyWidgetBlock)({ inserter: false });
 		(0, _wordpress_widgets.registerWidgetGroupBlock)({ inserter: false });
 		(0, _wordpress_block_library.__experimentalRegisterExperimentalCoreBlocks)({ enableFSEBlocks: settings.__unstableEnableFullSiteEditingBlocks });

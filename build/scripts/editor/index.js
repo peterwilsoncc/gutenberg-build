@@ -106317,6 +106317,340 @@ If there's a particular need for this, please submit a feature request at https:
 	(0, _wordpress_hooks.addFilter)("blocks.switchToBlockType.transformedBlock", "core/notes/addTransforms", addTransforms);
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/notes/addMergeCallback", addMergeCallback);
 
+// packages/editor/build-module/bindings/pattern-overrides.mjs
+	const CONTENT = "content";
+	/**
+	* @type {WPBlockBindingsSource}
+	*/
+	var pattern_overrides_default = {
+		name: "core/pattern-overrides",
+		getValues({ select, clientId, context, bindings }) {
+			const patternOverridesContent = context["pattern/overrides"];
+			const { getBlockAttributes } = select(_wordpress_block_editor.store);
+			const currentBlockAttributes = getBlockAttributes(clientId);
+			const overridesValues = {};
+			for (const attributeName of Object.keys(bindings)) {
+				const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
+				if (overridableValue === void 0) {
+					overridesValues[attributeName] = currentBlockAttributes?.[attributeName];
+					continue;
+				} else overridesValues[attributeName] = overridableValue === "" ? void 0 : overridableValue;
+			}
+			return overridesValues;
+		},
+		setValues({ select, dispatch, clientId, bindings }) {
+			const { getBlockAttributes, getBlockParentsByBlockName, getBlocks } = select(_wordpress_block_editor.store);
+			const blockName = getBlockAttributes(clientId)?.metadata?.name;
+			if (!blockName) return;
+			const [patternClientId] = getBlockParentsByBlockName(clientId, "core/block", true);
+			const attributes = Object.entries(bindings).reduce((attrs, [key, { newValue }]) => {
+				attrs[key] = newValue;
+				return attrs;
+			}, {});
+			if (!patternClientId) {
+				const syncBlocksWithSameName = (blocks) => {
+					for (const block of blocks) {
+						if (block.attributes?.metadata?.name === blockName) dispatch(_wordpress_block_editor.store).updateBlockAttributes(block.clientId, attributes);
+						syncBlocksWithSameName(block.innerBlocks);
+					}
+				};
+				syncBlocksWithSameName(getBlocks());
+				return;
+			}
+			const currentBindingValue = getBlockAttributes(patternClientId)?.[CONTENT];
+			dispatch(_wordpress_block_editor.store).updateBlockAttributes(patternClientId, { [CONTENT]: {
+				...currentBindingValue,
+				[blockName]: {
+					...currentBindingValue?.[blockName],
+					...Object.entries(attributes).reduce((acc, [key, value]) => {
+						acc[key] = value === void 0 ? "" : value;
+						return acc;
+					}, {})
+				}
+			} });
+		},
+		canUserEditValue: () => true
+	};
+
+// packages/editor/build-module/bindings/post-data.mjs
+	const NAVIGATION_BLOCK_TYPES$1 = ["core/navigation-link", "core/navigation-submenu"];
+	const postDataFields = [
+		{
+			label: (0, _wordpress_i18n.__)("Post Date"),
+			args: { field: "date" },
+			type: "string"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Post Modified Date"),
+			args: { field: "modified" },
+			type: "string"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Post Link"),
+			args: { field: "link" },
+			type: "string"
+		}
+	];
+	/**
+	* @type {WPBlockBindingsSource}
+	*/
+	var post_data_default = {
+		name: "core/post-data",
+		getValues({ select, context, bindings, clientId }) {
+			const { getBlockAttributes, getBlockName } = select(_wordpress_block_editor.store);
+			const blockName = getBlockName(clientId);
+			const isNavigationBlock = NAVIGATION_BLOCK_TYPES$1.includes(blockName);
+			let postId, postType;
+			if (isNavigationBlock) {
+				const blockAttributes = getBlockAttributes(clientId);
+				postId = blockAttributes?.id;
+				postType = blockAttributes?.type;
+			} else {
+				postId = context?.postId;
+				postType = context?.postType;
+			}
+			const { getEditedEntityRecord } = select(_wordpress_core_data.store);
+			const entityDataValues = getEditedEntityRecord("postType", postType, postId);
+			const newValues = {};
+			for (const [attributeName, binding] of Object.entries(bindings)) {
+				const postDataField = postDataFields.find((field) => field.args.field === binding.args.field);
+				if (!postDataField) newValues[attributeName] = binding.args.field;
+				else if (!entityDataValues) newValues[attributeName] = postDataField.label;
+				else newValues[attributeName] = entityDataValues[binding.args.field];
+			}
+			return newValues;
+		},
+		setValues({ dispatch, context, bindings, clientId, select }) {
+			const { getBlockName } = select(_wordpress_block_editor.store);
+			const blockName = getBlockName(clientId);
+			if (NAVIGATION_BLOCK_TYPES$1.includes(blockName)) return false;
+			const newData = {};
+			Object.values(bindings).forEach(({ args, newValue }) => {
+				newData[args.field] = newValue;
+			});
+			dispatch(_wordpress_core_data.store).editEntityRecord("postType", context?.postType, context?.postId, newData);
+		},
+		canUserEditValue({ select, context }) {
+			const { getBlockName, getSelectedBlockClientId } = select(_wordpress_block_editor.store);
+			const blockName = getBlockName(getSelectedBlockClientId());
+			if (NAVIGATION_BLOCK_TYPES$1.includes(blockName)) return false;
+			if (context?.query || context?.queryId) return false;
+			if (!context?.postType) return false;
+			if (!select(_wordpress_core_data.store).canUser("update", {
+				kind: "postType",
+				name: context?.postType,
+				id: context?.postId
+			})) return false;
+			return true;
+		},
+		getFieldsList({ context, select }) {
+			if (select(_wordpress_block_editor.store).getSelectedBlock()?.name !== "core/post-date") return [];
+			if (!context || !context.postId || !context.postType) return [];
+			return postDataFields;
+		}
+	};
+
+// packages/editor/build-module/bindings/post-meta.mjs
+/**
+	* Gets a list of post meta fields with their values and labels
+	* to be consumed in the needed callbacks.
+	* If the value is not available based on context, like in templates,
+	* it falls back to the default value, label, or key.
+	*
+	* @param {Object} select  The select function from the data store.
+	* @param {Object} context The context provided.
+	* @return {Object} List of post meta fields with their value and label.
+	*
+	* @example
+	* ```js
+	* {
+	*     field_1_key: {
+	*         label: 'Field 1 Label',
+	*         value: 'Field 1 Value',
+	*     },
+	*     field_2_key: {
+	*         label: 'Field 2 Label',
+	*         value: 'Field 2 Value',
+	*     },
+	*     ...
+	* }
+	* ```
+	*/
+	function getPostMetaFields(select, context) {
+		const { getRegisteredPostMeta } = unlock$5(select(_wordpress_core_data.store));
+		const registeredFields = getRegisteredPostMeta(context?.postType);
+		const metaFields = [];
+		Object.entries(registeredFields).forEach(([key, props]) => {
+			if (key === "footnotes" || key.charAt(0) === "_") return;
+			metaFields.push({
+				label: props.title || key,
+				args: { key },
+				default: props.default,
+				type: props.type
+			});
+		});
+		return metaFields;
+	}
+	function getValue({ select, context, args }) {
+		const metaField = getPostMetaFields(select, context).find((field) => field.args.key === args.key);
+		if (!metaField) return args.key;
+		if (!context?.postId) return metaField.default || metaField.label || args.key;
+		const { getEditedEntityRecord } = select(_wordpress_core_data.store);
+		return getEditedEntityRecord("postType", context?.postType, context?.postId).meta?.[args.key] ?? metaField?.label ?? args.key;
+	}
+	/**
+	* @type {WPBlockBindingsSource}
+	*/
+	var post_meta_default = {
+		name: "core/post-meta",
+		getValues({ select, context, bindings }) {
+			const newValues = {};
+			for (const [attributeName, binding] of Object.entries(bindings)) newValues[attributeName] = getValue({
+				select,
+				context,
+				args: binding.args
+			});
+			return newValues;
+		},
+		setValues({ dispatch, context, bindings }) {
+			const newMeta = {};
+			Object.values(bindings).forEach(({ args, newValue }) => {
+				newMeta[args.key] = newValue;
+			});
+			dispatch(_wordpress_core_data.store).editEntityRecord("postType", context?.postType, context?.postId, { meta: newMeta });
+		},
+		canUserEditValue({ select, context, args }) {
+			if (context?.query || context?.queryId) return false;
+			if (!context?.postType) return false;
+			if (!getPostMetaFields(select, context).some((field) => field.args.key === args.key)) return false;
+			if (select(store).getEditorSettings().enableCustomFields) return false;
+			if (!select(_wordpress_core_data.store).canUser("update", {
+				kind: "postType",
+				name: context?.postType,
+				id: context?.postId
+			})) return false;
+			return true;
+		},
+		getFieldsList({ select, context }) {
+			return getPostMetaFields(select, context).map(({ default: defaultProp, ...otherProps }) => ({ ...otherProps }));
+		}
+	};
+
+// packages/editor/build-module/bindings/term-data.mjs
+	const NAVIGATION_BLOCK_TYPES = ["core/navigation-link", "core/navigation-submenu"];
+	const termDataFields = [
+		{
+			label: (0, _wordpress_i18n.__)("Term ID"),
+			args: { field: "id" },
+			type: "string"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Name"),
+			args: { field: "name" },
+			type: "string"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Slug"),
+			args: { field: "slug" },
+			type: "string"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Link"),
+			args: { field: "link" },
+			type: "string"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Description"),
+			args: { field: "description" },
+			type: "string"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Parent ID"),
+			args: { field: "parent" },
+			type: "string"
+		},
+		{
+			label: (0, _wordpress_i18n.__)("Count"),
+			args: { field: "count" },
+			type: "string"
+		}
+	];
+	/**
+	* @type {WPBlockBindingsSource}
+	*/
+	var term_data_default = {
+		name: "core/term-data",
+		usesContext: [
+			"taxonomy",
+			"termId",
+			"termData"
+		],
+		getValues({ select, context, bindings, clientId }) {
+			const { getEntityRecord } = select(_wordpress_core_data.store);
+			const { getBlockAttributes, getBlockName } = select(_wordpress_block_editor.store);
+			const blockName = getBlockName(clientId);
+			const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
+			let termDataValues;
+			if (isNavigationBlock) {
+				const blockAttributes = getBlockAttributes(clientId);
+				const typeFromAttributes = blockAttributes?.type;
+				termDataValues = getEntityRecord("taxonomy", typeFromAttributes === "tag" ? "post_tag" : typeFromAttributes, blockAttributes?.id);
+			} else if (context.termId && context.taxonomy) termDataValues = getEntityRecord("taxonomy", context.taxonomy, context.termId);
+			if (!termDataValues && context?.termData && !isNavigationBlock) termDataValues = context.termData;
+			const newValues = {};
+			for (const [attributeName, binding] of Object.entries(bindings)) {
+				const termDataField = termDataFields.find((field) => field.args.field === binding.args.field);
+				if (!termDataField) newValues[attributeName] = binding.args.field;
+				else if (!termDataValues || termDataValues[binding.args.field] === void 0) newValues[attributeName] = termDataField.label;
+				else if (binding.args.field === "count") newValues[attributeName] = "(" + termDataValues[binding.args.field] + ")";
+				else newValues[attributeName] = termDataValues[binding.args.field];
+			}
+			return newValues;
+		},
+		setValues({ dispatch, context, bindings }) {
+			return false;
+		},
+		canUserEditValue({ select, context }) {
+			const { getBlockName, getSelectedBlockClientId } = select(_wordpress_block_editor.store);
+			const blockName = getBlockName(getSelectedBlockClientId());
+			if (NAVIGATION_BLOCK_TYPES.includes(blockName)) return false;
+			if (context?.termQuery) return false;
+			if (!context?.taxonomy || !context?.termId) return false;
+			return false;
+		},
+		getFieldsList({ context, select }) {
+			const { getBlockAttributes, getBlockName, getSelectedBlockClientId } = select(_wordpress_block_editor.store);
+			const clientId = getSelectedBlockClientId();
+			const blockName = getBlockName(clientId);
+			if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
+				const blockAttributes = getBlockAttributes(clientId);
+				if (!blockAttributes || !blockAttributes.id || !blockAttributes.type) return [];
+				return termDataFields;
+			}
+			if (!context) return [];
+			if (context.taxonomy && context.termId || context.termData) return termDataFields;
+			return [];
+		}
+	};
+
+// packages/editor/build-module/bindings/api.mjs
+/**
+	* Function to register core block bindings sources provided by the editor.
+	*
+	* @example
+	* ```js
+	* import { registerCoreBlockBindingsSources } from '@wordpress/editor';
+	*
+	* registerCoreBlockBindingsSources();
+	* ```
+	*/
+	function registerCoreBlockBindingsSources() {
+		(0, _wordpress_blocks.registerBlockBindingsSource)(pattern_overrides_default);
+		(0, _wordpress_blocks.registerBlockBindingsSource)(post_data_default);
+		(0, _wordpress_blocks.registerBlockBindingsSource)(post_meta_default);
+		(0, _wordpress_blocks.registerBlockBindingsSource)(term_data_default);
+	}
+
 // packages/editor/build-module/components/header/back-button.mjs
 	const slotName = "__experimentalMainDashboardButton";
 	const useHasBackButton = () => {
@@ -116042,340 +116376,6 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 		});
 	}
 
-// packages/editor/build-module/bindings/pattern-overrides.mjs
-	const CONTENT = "content";
-	/**
-	* @type {WPBlockBindingsSource}
-	*/
-	var pattern_overrides_default = {
-		name: "core/pattern-overrides",
-		getValues({ select, clientId, context, bindings }) {
-			const patternOverridesContent = context["pattern/overrides"];
-			const { getBlockAttributes } = select(_wordpress_block_editor.store);
-			const currentBlockAttributes = getBlockAttributes(clientId);
-			const overridesValues = {};
-			for (const attributeName of Object.keys(bindings)) {
-				const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
-				if (overridableValue === void 0) {
-					overridesValues[attributeName] = currentBlockAttributes?.[attributeName];
-					continue;
-				} else overridesValues[attributeName] = overridableValue === "" ? void 0 : overridableValue;
-			}
-			return overridesValues;
-		},
-		setValues({ select, dispatch, clientId, bindings }) {
-			const { getBlockAttributes, getBlockParentsByBlockName, getBlocks } = select(_wordpress_block_editor.store);
-			const blockName = getBlockAttributes(clientId)?.metadata?.name;
-			if (!blockName) return;
-			const [patternClientId] = getBlockParentsByBlockName(clientId, "core/block", true);
-			const attributes = Object.entries(bindings).reduce((attrs, [key, { newValue }]) => {
-				attrs[key] = newValue;
-				return attrs;
-			}, {});
-			if (!patternClientId) {
-				const syncBlocksWithSameName = (blocks) => {
-					for (const block of blocks) {
-						if (block.attributes?.metadata?.name === blockName) dispatch(_wordpress_block_editor.store).updateBlockAttributes(block.clientId, attributes);
-						syncBlocksWithSameName(block.innerBlocks);
-					}
-				};
-				syncBlocksWithSameName(getBlocks());
-				return;
-			}
-			const currentBindingValue = getBlockAttributes(patternClientId)?.[CONTENT];
-			dispatch(_wordpress_block_editor.store).updateBlockAttributes(patternClientId, { [CONTENT]: {
-				...currentBindingValue,
-				[blockName]: {
-					...currentBindingValue?.[blockName],
-					...Object.entries(attributes).reduce((acc, [key, value]) => {
-						acc[key] = value === void 0 ? "" : value;
-						return acc;
-					}, {})
-				}
-			} });
-		},
-		canUserEditValue: () => true
-	};
-
-// packages/editor/build-module/bindings/post-data.mjs
-	const NAVIGATION_BLOCK_TYPES$1 = ["core/navigation-link", "core/navigation-submenu"];
-	const postDataFields = [
-		{
-			label: (0, _wordpress_i18n.__)("Post Date"),
-			args: { field: "date" },
-			type: "string"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Post Modified Date"),
-			args: { field: "modified" },
-			type: "string"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Post Link"),
-			args: { field: "link" },
-			type: "string"
-		}
-	];
-	/**
-	* @type {WPBlockBindingsSource}
-	*/
-	var post_data_default = {
-		name: "core/post-data",
-		getValues({ select, context, bindings, clientId }) {
-			const { getBlockAttributes, getBlockName } = select(_wordpress_block_editor.store);
-			const blockName = getBlockName(clientId);
-			const isNavigationBlock = NAVIGATION_BLOCK_TYPES$1.includes(blockName);
-			let postId, postType;
-			if (isNavigationBlock) {
-				const blockAttributes = getBlockAttributes(clientId);
-				postId = blockAttributes?.id;
-				postType = blockAttributes?.type;
-			} else {
-				postId = context?.postId;
-				postType = context?.postType;
-			}
-			const { getEditedEntityRecord } = select(_wordpress_core_data.store);
-			const entityDataValues = getEditedEntityRecord("postType", postType, postId);
-			const newValues = {};
-			for (const [attributeName, binding] of Object.entries(bindings)) {
-				const postDataField = postDataFields.find((field) => field.args.field === binding.args.field);
-				if (!postDataField) newValues[attributeName] = binding.args.field;
-				else if (!entityDataValues) newValues[attributeName] = postDataField.label;
-				else newValues[attributeName] = entityDataValues[binding.args.field];
-			}
-			return newValues;
-		},
-		setValues({ dispatch, context, bindings, clientId, select }) {
-			const { getBlockName } = select(_wordpress_block_editor.store);
-			const blockName = getBlockName(clientId);
-			if (NAVIGATION_BLOCK_TYPES$1.includes(blockName)) return false;
-			const newData = {};
-			Object.values(bindings).forEach(({ args, newValue }) => {
-				newData[args.field] = newValue;
-			});
-			dispatch(_wordpress_core_data.store).editEntityRecord("postType", context?.postType, context?.postId, newData);
-		},
-		canUserEditValue({ select, context }) {
-			const { getBlockName, getSelectedBlockClientId } = select(_wordpress_block_editor.store);
-			const blockName = getBlockName(getSelectedBlockClientId());
-			if (NAVIGATION_BLOCK_TYPES$1.includes(blockName)) return false;
-			if (context?.query || context?.queryId) return false;
-			if (!context?.postType) return false;
-			if (!select(_wordpress_core_data.store).canUser("update", {
-				kind: "postType",
-				name: context?.postType,
-				id: context?.postId
-			})) return false;
-			return true;
-		},
-		getFieldsList({ context, select }) {
-			if (select(_wordpress_block_editor.store).getSelectedBlock()?.name !== "core/post-date") return [];
-			if (!context || !context.postId || !context.postType) return [];
-			return postDataFields;
-		}
-	};
-
-// packages/editor/build-module/bindings/post-meta.mjs
-/**
-	* Gets a list of post meta fields with their values and labels
-	* to be consumed in the needed callbacks.
-	* If the value is not available based on context, like in templates,
-	* it falls back to the default value, label, or key.
-	*
-	* @param {Object} select  The select function from the data store.
-	* @param {Object} context The context provided.
-	* @return {Object} List of post meta fields with their value and label.
-	*
-	* @example
-	* ```js
-	* {
-	*     field_1_key: {
-	*         label: 'Field 1 Label',
-	*         value: 'Field 1 Value',
-	*     },
-	*     field_2_key: {
-	*         label: 'Field 2 Label',
-	*         value: 'Field 2 Value',
-	*     },
-	*     ...
-	* }
-	* ```
-	*/
-	function getPostMetaFields(select, context) {
-		const { getRegisteredPostMeta } = unlock$5(select(_wordpress_core_data.store));
-		const registeredFields = getRegisteredPostMeta(context?.postType);
-		const metaFields = [];
-		Object.entries(registeredFields).forEach(([key, props]) => {
-			if (key === "footnotes" || key.charAt(0) === "_") return;
-			metaFields.push({
-				label: props.title || key,
-				args: { key },
-				default: props.default,
-				type: props.type
-			});
-		});
-		return metaFields;
-	}
-	function getValue({ select, context, args }) {
-		const metaField = getPostMetaFields(select, context).find((field) => field.args.key === args.key);
-		if (!metaField) return args.key;
-		if (!context?.postId) return metaField.default || metaField.label || args.key;
-		const { getEditedEntityRecord } = select(_wordpress_core_data.store);
-		return getEditedEntityRecord("postType", context?.postType, context?.postId).meta?.[args.key] ?? metaField?.label ?? args.key;
-	}
-	/**
-	* @type {WPBlockBindingsSource}
-	*/
-	var post_meta_default = {
-		name: "core/post-meta",
-		getValues({ select, context, bindings }) {
-			const newValues = {};
-			for (const [attributeName, binding] of Object.entries(bindings)) newValues[attributeName] = getValue({
-				select,
-				context,
-				args: binding.args
-			});
-			return newValues;
-		},
-		setValues({ dispatch, context, bindings }) {
-			const newMeta = {};
-			Object.values(bindings).forEach(({ args, newValue }) => {
-				newMeta[args.key] = newValue;
-			});
-			dispatch(_wordpress_core_data.store).editEntityRecord("postType", context?.postType, context?.postId, { meta: newMeta });
-		},
-		canUserEditValue({ select, context, args }) {
-			if (context?.query || context?.queryId) return false;
-			if (!context?.postType) return false;
-			if (!getPostMetaFields(select, context).some((field) => field.args.key === args.key)) return false;
-			if (select(store).getEditorSettings().enableCustomFields) return false;
-			if (!select(_wordpress_core_data.store).canUser("update", {
-				kind: "postType",
-				name: context?.postType,
-				id: context?.postId
-			})) return false;
-			return true;
-		},
-		getFieldsList({ select, context }) {
-			return getPostMetaFields(select, context).map(({ default: defaultProp, ...otherProps }) => ({ ...otherProps }));
-		}
-	};
-
-// packages/editor/build-module/bindings/term-data.mjs
-	const NAVIGATION_BLOCK_TYPES = ["core/navigation-link", "core/navigation-submenu"];
-	const termDataFields = [
-		{
-			label: (0, _wordpress_i18n.__)("Term ID"),
-			args: { field: "id" },
-			type: "string"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Name"),
-			args: { field: "name" },
-			type: "string"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Slug"),
-			args: { field: "slug" },
-			type: "string"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Link"),
-			args: { field: "link" },
-			type: "string"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Description"),
-			args: { field: "description" },
-			type: "string"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Parent ID"),
-			args: { field: "parent" },
-			type: "string"
-		},
-		{
-			label: (0, _wordpress_i18n.__)("Count"),
-			args: { field: "count" },
-			type: "string"
-		}
-	];
-	/**
-	* @type {WPBlockBindingsSource}
-	*/
-	var term_data_default = {
-		name: "core/term-data",
-		usesContext: [
-			"taxonomy",
-			"termId",
-			"termData"
-		],
-		getValues({ select, context, bindings, clientId }) {
-			const { getEntityRecord } = select(_wordpress_core_data.store);
-			const { getBlockAttributes, getBlockName } = select(_wordpress_block_editor.store);
-			const blockName = getBlockName(clientId);
-			const isNavigationBlock = NAVIGATION_BLOCK_TYPES.includes(blockName);
-			let termDataValues;
-			if (isNavigationBlock) {
-				const blockAttributes = getBlockAttributes(clientId);
-				const typeFromAttributes = blockAttributes?.type;
-				termDataValues = getEntityRecord("taxonomy", typeFromAttributes === "tag" ? "post_tag" : typeFromAttributes, blockAttributes?.id);
-			} else if (context.termId && context.taxonomy) termDataValues = getEntityRecord("taxonomy", context.taxonomy, context.termId);
-			if (!termDataValues && context?.termData && !isNavigationBlock) termDataValues = context.termData;
-			const newValues = {};
-			for (const [attributeName, binding] of Object.entries(bindings)) {
-				const termDataField = termDataFields.find((field) => field.args.field === binding.args.field);
-				if (!termDataField) newValues[attributeName] = binding.args.field;
-				else if (!termDataValues || termDataValues[binding.args.field] === void 0) newValues[attributeName] = termDataField.label;
-				else if (binding.args.field === "count") newValues[attributeName] = "(" + termDataValues[binding.args.field] + ")";
-				else newValues[attributeName] = termDataValues[binding.args.field];
-			}
-			return newValues;
-		},
-		setValues({ dispatch, context, bindings }) {
-			return false;
-		},
-		canUserEditValue({ select, context }) {
-			const { getBlockName, getSelectedBlockClientId } = select(_wordpress_block_editor.store);
-			const blockName = getBlockName(getSelectedBlockClientId());
-			if (NAVIGATION_BLOCK_TYPES.includes(blockName)) return false;
-			if (context?.termQuery) return false;
-			if (!context?.taxonomy || !context?.termId) return false;
-			return false;
-		},
-		getFieldsList({ context, select }) {
-			const { getBlockAttributes, getBlockName, getSelectedBlockClientId } = select(_wordpress_block_editor.store);
-			const clientId = getSelectedBlockClientId();
-			const blockName = getBlockName(clientId);
-			if (NAVIGATION_BLOCK_TYPES.includes(blockName)) {
-				const blockAttributes = getBlockAttributes(clientId);
-				if (!blockAttributes || !blockAttributes.id || !blockAttributes.type) return [];
-				return termDataFields;
-			}
-			if (!context) return [];
-			if (context.taxonomy && context.termId || context.termData) return termDataFields;
-			return [];
-		}
-	};
-
-// packages/editor/build-module/bindings/api.mjs
-/**
-	* Function to register core block bindings sources provided by the editor.
-	*
-	* @example
-	* ```js
-	* import { registerCoreBlockBindingsSources } from '@wordpress/editor';
-	*
-	* registerCoreBlockBindingsSources();
-	* ```
-	*/
-	function registerCoreBlockBindingsSources() {
-		(0, _wordpress_blocks.registerBlockBindingsSource)(pattern_overrides_default);
-		(0, _wordpress_blocks.registerBlockBindingsSource)(post_data_default);
-		(0, _wordpress_blocks.registerBlockBindingsSource)(post_meta_default);
-		(0, _wordpress_blocks.registerBlockBindingsSource)(term_data_default);
-	}
-
 // packages/editor/build-module/components/upload-progress-snackbar/index.mjs
 	const NOTICE_ID = "upload-progress";
 	const COMPLETION_DISPLAY_MS = 3e3;
@@ -116537,7 +116537,6 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 		ViewMoreMenuGroup,
 		ResizableEditor,
 		UploadProgressSnackbar,
-		registerCoreBlockBindingsSources,
 		GlobalStylesUIWrapper,
 		GlobalStylesActionMenu,
 		StyleBookPreview,
@@ -116782,6 +116781,7 @@ exports.getFontSizeClass = getFontSizeClass;
 exports.linkAutocompleter = link_default;
 exports.mediaUpload = mediaUpload;
 exports.privateApis = privateApis;
+exports.registerCoreBlockBindingsSources = registerCoreBlockBindingsSources;
 exports.registerEntityAction = registerEntityAction;
 exports.registerEntityField = registerEntityField;
 exports.store = store;
