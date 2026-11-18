@@ -34065,10 +34065,10 @@ function UploadFonts() {
 		fontObj.fromDataBuffer(buffer, fontFile.name);
 		const font = (await new Promise((resolve) => fontObj.onload = resolve)).detail.font;
 		const { name } = font.opentype.tables;
-		const fontName = name.get(16) || name.get(1);
+		const fontName = name?.get(16) || name?.get(1);
 		if (!fontName) throw new Error((0, import_i18n.sprintf)((0, import_i18n.__)("%s cannot be installed because it does not include a font family name. Try a different version of this font, for example one downloaded from the font's official source."), fontFile.name));
-		const isItalic = (name.get(2) || "").toLowerCase().includes("italic");
-		const fontWeight = font.opentype.tables["OS/2"].usWeightClass || "normal";
+		const isItalic = (name?.get(2) || "").toLowerCase().includes("italic");
+		const fontWeight = font.opentype.tables["OS/2"]?.usWeightClass || "normal";
 		const weightAxis = font.opentype.tables.fvar?.axes.find(({ tag }) => tag === "wght");
 		const weightRange = weightAxis ? `${weightAxis.minValue} ${weightAxis.maxValue}` : null;
 		return {
