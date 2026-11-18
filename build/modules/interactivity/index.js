@@ -2146,6 +2146,121 @@ const populateServerData = (data) => {
 	});
 };
 
+// packages/interactivity/build-module/html.mjs
+/** Empty HTML accepted by HTML sinks, including under Trusted Types enforcement. */
+const emptyHTML = globalThis.trustedTypes?.emptyHTML ?? "";
+/** Void and text-only elements on which `data-wp-html` cannot own content. */
+const unsupportedHtmlElements = /* @__PURE__ */ new Set([
+	"area",
+	"base",
+	"basefont",
+	"bgsound",
+	"br",
+	"col",
+	"embed",
+	"frame",
+	"hr",
+	"img",
+	"input",
+	"keygen",
+	"link",
+	"meta",
+	"param",
+	"source",
+	"track",
+	"wbr",
+	"textarea",
+	"title",
+	"script",
+	"style",
+	"iframe",
+	"xmp",
+	"noembed",
+	"noframes"
+]);
+const trustedHtmlByToken = /* @__PURE__ */ new WeakMap();
+/**
+* Marks a string (or native `TrustedHTML`) as trusted so the `data-wp-html`
+* directive renders it as markup. Other values empty the bound element,
+* except pending values and the server's token representation, which keep
+* its content.
+*
+* This function never sanitizes or otherwise processes the HTML passed
+* here, the same responsibility you take on using `dangerouslySetInnerHTML`
+* in React. Treating untrusted input as trusted is an XSS risk: never pass
+* it raw, unescaped user input, and never pass it a `context` value
+* directly. `context` is for selecting *which* trusted markup to show; the
+* markup itself should come from `state`, computed by your own code from a
+* source it trusts.
+*
+* The returned token is opaque and identity-based, not content-based: it
+* carries no inspectable trace of the HTML it wraps. Adding it to
+* `data-wp-context`, spreading it into a new object, or serializing it as
+* JSON does not carry the "trusted" marker with it — only a `data-wp-html`
+* reference that resolves directly to the exact value this function
+* returned is ever rendered as HTML.
+*
+* This package creates no Trusted Types policy of its own. On a site that
+* enforces Trusted Types, pass a `TrustedHTML` value from the site's own
+* policy: `asDangerousHTML( policy.createHTML( markup ) )`. A rejected value
+* empties the element.
+*
+* "Trusted" here only means the `data-wp-html` directive will render it and
+* the Interactivity API won't process directives inside it. It's still live
+* browser HTML once rendered. Content that isn't safe to render as HTML
+* isn't made safe by this function.
+*
+* @param  html Raw HTML string, or a native `TrustedHTML` value from a
+*              site-provided Trusted Types policy, to render.
+*
+* @throws {TypeError} If `html` is neither a string nor a native `TrustedHTML`
+*                     value.
+*
+* @return An opaque token the `data-wp-html` directive recognizes as trusted HTML.
+*
+* @example
+* ```js
+* import { asDangerousHTML, store } from '@wordpress/interactivity';
+*
+* store( 'myPlugin', {
+* 	state: {
+* 		get description() {
+* 			return asDangerousHTML(
+* 				'<p>A <strong>formatted</strong> description.</p>'
+* 			);
+* 		},
+* 	},
+* } );
+* ```
+*/
+function asDangerousHTML(html) {
+	const { trustedTypes } = globalThis;
+	if (typeof html !== "string" && !trustedTypes?.isHTML(html)) throw new TypeError("asDangerousHTML() expects a string or a native TrustedHTML value.");
+	const token = Object.freeze(Object.create(null));
+	trustedHtmlByToken.set(token, html);
+	return token;
+}
+/**
+* Checks whether a value was produced by `asDangerousHTML()`.
+*
+* @param value Value to check.
+*
+* @return Whether the value is a trusted HTML token.
+*/
+function isDangerousHTML(value) {
+	return typeof value === "object" && value !== null && trustedHtmlByToken.has(value);
+}
+/**
+* Retrieves the HTML value a trusted HTML token represents.
+*
+* @param token A token previously returned by `asDangerousHTML()`.
+*
+* @return The HTML value the token represents.
+*/
+function getDangerousHTML(token) {
+	return trustedHtmlByToken.get(token);
+}
+
 // packages/interactivity/build-module/vdom.mjs
 init_preact_module();
 /** Associates opaque HTML props with script-free snapshots owned by the live document's template-contents document. */
@@ -2320,6 +2435,8 @@ const getInteractiveNamespace = (value) => {
 /**
 * Recursive function that transforms a DOM tree into vDOM.
 * Directive attributes are interpreted with {@link parseDirectiveValue}.
+* Only supported `data-wp-html` entries on supported elements own opaque
+* content; ignored HTML bindings leave descendants under ordinary conversion.
 *
 * Unprefixed directives get the namespace of the nearest `data-wp-interactive`
 * at or above their element within `root`. Where there is none, the namespace
@@ -2432,11 +2549,11 @@ function convertToVdom(root) {
 				delete props.__directives.html;
 			}
 		}
-		const hasDefaultHtmlDirective = props.__directives?.html?.some(({ suffix }) => suffix === null);
-		if (props.__directives?.["each-child"] || hasDefaultHtmlDirective) {
+		const hasSupportedHtmlDirective = !unsupportedHtmlElements.has(localName) && props.__directives?.html?.some(({ suffix, uniqueId }) => suffix === null && uniqueId === null);
+		if (props.__directives?.["each-child"] || hasSupportedHtmlDirective) {
 			const htmlProps = { __html: elementNode.innerHTML };
 			props.dangerouslySetInnerHTML = htmlProps;
-			if (hasDefaultHtmlDirective) {
+			if (hasSupportedHtmlDirective) {
 				const snapshot = getTemplateContentsOwnerDocument().createDocumentFragment();
 				copyFallbackChildren(elementNode, snapshot);
 				htmlFallbacks.set(htmlProps, snapshot);
@@ -3045,92 +3162,6 @@ directive("each-child", ({ directives: { "each-child": eachChild }, element, eva
 	return evaluate(entry) === PENDING_GETTER ? element : null;
 }, { priority: 1 });
 
-// packages/interactivity/build-module/html.mjs
-/** Empty HTML accepted by HTML sinks, including under Trusted Types enforcement. */
-const emptyHTML = globalThis.trustedTypes?.emptyHTML ?? "";
-const trustedHtmlByToken = /* @__PURE__ */ new WeakMap();
-/**
-* Marks a string (or native `TrustedHTML`) as trusted so the `data-wp-html`
-* directive renders it as markup. Other values empty the bound element,
-* except pending values and the server's token representation, which keep
-* its content.
-*
-* This function never sanitizes or otherwise processes the HTML passed
-* here, the same responsibility you take on using `dangerouslySetInnerHTML`
-* in React. Treating untrusted input as trusted is an XSS risk: never pass
-* it raw, unescaped user input, and never pass it a `context` value
-* directly. `context` is for selecting *which* trusted markup to show; the
-* markup itself should come from `state`, computed by your own code from a
-* source it trusts.
-*
-* The returned token is opaque and identity-based, not content-based: it
-* carries no inspectable trace of the HTML it wraps. Adding it to
-* `data-wp-context`, spreading it into a new object, or serializing it as
-* JSON does not carry the "trusted" marker with it — only a `data-wp-html`
-* reference that resolves directly to the exact value this function
-* returned is ever rendered as HTML.
-*
-* This package creates no Trusted Types policy of its own. On a site that
-* enforces Trusted Types, pass a `TrustedHTML` value from the site's own
-* policy: `asDangerousHTML( policy.createHTML( markup ) )`. A rejected value
-* empties the element.
-*
-* "Trusted" here only means the `data-wp-html` directive will render it and
-* the Interactivity API won't process directives inside it. It's still live
-* browser HTML once rendered. Content that isn't safe to render as HTML
-* isn't made safe by this function.
-*
-* @param  html Raw HTML string, or a native `TrustedHTML` value from a
-*              site-provided Trusted Types policy, to render.
-*
-* @throws {TypeError} If `html` is neither a string nor a native `TrustedHTML`
-*                     value.
-*
-* @return An opaque token the `data-wp-html` directive recognizes as trusted HTML.
-*
-* @example
-* ```js
-* import { asDangerousHTML, store } from '@wordpress/interactivity';
-*
-* store( 'myPlugin', {
-* 	state: {
-* 		get description() {
-* 			return asDangerousHTML(
-* 				'<p>A <strong>formatted</strong> description.</p>'
-* 			);
-* 		},
-* 	},
-* } );
-* ```
-*/
-function asDangerousHTML(html) {
-	const { trustedTypes } = globalThis;
-	if (typeof html !== "string" && !trustedTypes?.isHTML(html)) throw new TypeError("asDangerousHTML() expects a string or a native TrustedHTML value.");
-	const token = Object.freeze(Object.create(null));
-	trustedHtmlByToken.set(token, html);
-	return token;
-}
-/**
-* Checks whether a value was produced by `asDangerousHTML()`.
-*
-* @param value Value to check.
-*
-* @return Whether the value is a trusted HTML token.
-*/
-function isDangerousHTML(value) {
-	return typeof value === "object" && value !== null && trustedHtmlByToken.has(value);
-}
-/**
-* Retrieves the HTML value a trusted HTML token represents.
-*
-* @param token A token previously returned by `asDangerousHTML()`.
-*
-* @return The HTML value the token represents.
-*/
-function getDangerousHTML(token) {
-	return trustedHtmlByToken.get(token);
-}
-
 // packages/interactivity/build-module/directives/html.mjs
 /**
 * Checks whether a value is `{ wpServerHtml: true }`, the server's
@@ -3168,6 +3199,7 @@ const isSameServerContent = (content, other) => {
 };
 directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => {
 	const entry = htmlEntries.find(isDefaultDirectiveSuffix);
+	const supportedElement = !unsupportedHtmlElements.has(element.type);
 	const writeRecord = A(void 0);
 	const previousHost = A(null);
 	const previousInputs = A(null);
@@ -3178,13 +3210,14 @@ directive("html", ({ directives: { html: htmlEntries }, element, evaluate }) => 
 	let result;
 	if (!entry) warn("The usage of data-wp-html--suffix is not supported. Please use data-wp-html instead.");
 	else if (entry.uniqueId) warnUniqueIdNotSupported("html", entry.uniqueId);
+	else if (!supportedElement) warn(`The data-wp-html directive is not supported on <${element.type}> elements. Use an element that supports HTML content instead.`);
 	else try {
 		result = evaluate(entry);
 		if (typeof result === "function") result = result();
 	} catch {
 		result = void 0;
 	}
-	const active = !!entry && !entry.uniqueId;
+	const active = !!entry && !entry.uniqueId && supportedElement;
 	const serverHTMLRepresentation = isServerHTMLRepresentation(result);
 	const preserveContent = result === PENDING_GETTER || serverHTMLRepresentation;
 	const trusted = isDangerousHTML(result);
