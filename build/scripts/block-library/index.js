@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_compose, _wordpress_data, _wordpress_block_editor, _wordpress_server_side_render, _wordpress_i18n, _wordpress_dom, react_jsx_runtime, _wordpress_element, _wordpress_primitives, _wordpress_components, _wordpress_blob, _wordpress_core_data, react, react_dom, _wordpress_warning, _wordpress_a11y, _wordpress_theme, _wordpress_private_apis, _wordpress_url, _wordpress_html_entities, _wordpress_notices, _wordpress_keycodes, _wordpress_deprecated, _wordpress_rich_text, _wordpress_date, _wordpress_hooks, _wordpress_style_engine, _wordpress_upload_media, _wordpress_escape_html, _wordpress_wordcount, _wordpress_patterns, _wordpress_autop, _wordpress_shortcode) {
+(function(exports, _wordpress_blocks, _wordpress_compose, _wordpress_data, _wordpress_block_editor, _wordpress_server_side_render, _wordpress_i18n, _wordpress_dom, react_jsx_runtime, _wordpress_element, _wordpress_primitives, _wordpress_components, _wordpress_blob, _wordpress_core_data, react, react_dom, _wordpress_warning, _wordpress_a11y, _wordpress_theme, _wordpress_private_apis, _wordpress_url, _wordpress_html_entities, _wordpress_notices, _wordpress_keycodes, _wordpress_deprecated, _wordpress_rich_text, _wordpress_date, _wordpress_hooks, _wordpress_escape_html, _wordpress_style_engine, _wordpress_upload_media, _wordpress_wordcount, _wordpress_patterns, _wordpress_autop, _wordpress_shortcode) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -45604,7 +45604,7 @@ Icon: ButtonIcon });
 				const href = attributes.src ?? attributes.url;
 				return (0, _wordpress_blocks.createBlock)("core/file", {
 					href,
-					fileName: attributes.caption || (0, _wordpress_url.getFilename)(href),
+					fileName: attributes.caption || (0, _wordpress_escape_html.escapeEditableHTML)((0, _wordpress_url.getFilename)(href) ?? ""),
 					textLinkHref: href,
 					id: attributes.id,
 					anchor: attributes.anchor,
@@ -91677,5 +91677,5 @@ exports.registerCoreBlocks = registerCoreBlocks;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).blockLibrary = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.compose, window.wp.data, window.wp.blockEditor, window.wp.serverSideRender, window.wp.i18n, window.wp.dom, window.ReactJSXRuntime, window.wp.element, window.wp.primitives, window.wp.components, window.wp.blob, window.wp.coreData, window.React, window.ReactDOM, window.wp.warning, window.wp.a11y, window.wp.theme, window.wp.privateApis, window.wp.url, window.wp.htmlEntities, window.wp.notices, window.wp.keycodes, window.wp.deprecated, window.wp.richText, window.wp.date, window.wp.hooks, window.wp.styleEngine, window.wp.uploadMedia, window.wp.escapeHtml, window.wp.wordcount, window.wp.patterns, window.wp.autop, window.wp.shortcode);
+})({}, window.wp.blocks, window.wp.compose, window.wp.data, window.wp.blockEditor, window.wp.serverSideRender, window.wp.i18n, window.wp.dom, window.ReactJSXRuntime, window.wp.element, window.wp.primitives, window.wp.components, window.wp.blob, window.wp.coreData, window.React, window.ReactDOM, window.wp.warning, window.wp.a11y, window.wp.theme, window.wp.privateApis, window.wp.url, window.wp.htmlEntities, window.wp.notices, window.wp.keycodes, window.wp.deprecated, window.wp.richText, window.wp.date, window.wp.hooks, window.wp.escapeHtml, window.wp.styleEngine, window.wp.uploadMedia, window.wp.wordcount, window.wp.patterns, window.wp.autop, window.wp.shortcode);
 //# sourceMappingURL=index.js.map
