@@ -39486,6 +39486,218 @@ Icon: ButtonIcon });
 	var deprecated_default$30 = [
 		{
 			attributes: {
+				url: { type: "string" },
+				useFeaturedImage: {
+					type: "boolean",
+					default: false
+				},
+				id: { type: "number" },
+				alt: {
+					type: "string",
+					default: ""
+				},
+				hasParallax: {
+					type: "boolean",
+					default: false
+				},
+				isRepeated: {
+					type: "boolean",
+					default: false
+				},
+				dimRatio: {
+					type: "number",
+					default: 100
+				},
+				overlayColor: { type: "string" },
+				customOverlayColor: { type: "string" },
+				isUserOverlayColor: { type: "boolean" },
+				backgroundType: {
+					type: "string",
+					default: "image"
+				},
+				focalPoint: { type: "object" },
+				gradient: { type: "string" },
+				customGradient: { type: "string" },
+				contentPosition: { type: "string" },
+				isDark: {
+					type: "boolean",
+					default: true
+				},
+				templateLock: {
+					type: ["string", "boolean"],
+					enum: [
+						"all",
+						"insert",
+						"contentOnly",
+						false
+					]
+				},
+				tagName: {
+					type: "string",
+					default: "div"
+				},
+				sizeSlug: { type: "string" },
+				poster: {
+					type: "string",
+					source: "attribute",
+					selector: "video",
+					attribute: "poster"
+				},
+				allowedVideoProviders: {
+					type: "array",
+					default: [
+						"youtube",
+						"vimeo",
+						"videopress",
+						"animoto",
+						"tiktok",
+						"wordpress-tv"
+					]
+				}
+			},
+			supports: {
+				__experimentalOnEnter: true,
+				anchor: true,
+				align: true,
+				html: false,
+				shadow: true,
+				spacing: {
+					padding: true,
+					margin: ["top", "bottom"],
+					blockGap: true,
+					__experimentalDefaultControls: {
+						padding: true,
+						blockGap: true
+					}
+				},
+				__experimentalBorder: {
+					color: true,
+					radius: true,
+					style: true,
+					width: true,
+					__experimentalDefaultControls: {
+						color: true,
+						radius: true,
+						style: true,
+						width: true
+					}
+				},
+				color: {
+					heading: true,
+					text: true,
+					link: true,
+					button: true,
+					background: false,
+					__experimentalSkipSerialization: ["gradients"],
+					enableContrastChecker: false
+				},
+				dimensions: {
+					aspectRatio: true,
+					minHeight: true,
+					minWidth: true,
+					__experimentalDefaultControls: { minHeight: true }
+				},
+				typography: {
+					fontSize: true,
+					lineHeight: true,
+					__experimentalFontFamily: true,
+					__experimentalFontWeight: true,
+					__experimentalFontStyle: true,
+					__experimentalTextTransform: true,
+					__experimentalTextDecoration: true,
+					__experimentalLetterSpacing: true,
+					__experimentalDefaultControls: { fontSize: true }
+				},
+				layout: { allowJustification: false },
+				interactivity: {
+					clientNavigation: true,
+					interactive: true
+				},
+				filter: { duotone: true },
+				allowedBlocks: true
+			},
+			save({ attributes }) {
+				const { backgroundType, gradient, contentPosition, customGradient, customOverlayColor, dimRatio, focalPoint, useFeaturedImage, hasParallax, isDark, isRepeated, overlayColor, url, alt, id, tagName: Tag, sizeSlug, poster } = attributes;
+				const overlayColorClass = (0, _wordpress_block_editor.getColorClassName)("background-color", overlayColor);
+				const gradientClass = (0, _wordpress_block_editor.__experimentalGetGradientClass)(gradient);
+				const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
+				const isVideoBackground = VIDEO_BACKGROUND_TYPE === backgroundType;
+				const isEmbedVideoBackground = EMBED_VIDEO_BACKGROUND_TYPE === backgroundType;
+				const isImgElement = !(hasParallax || isRepeated);
+				const bgStyle = {
+					backgroundColor: !overlayColorClass ? customOverlayColor : void 0,
+					background: customGradient ? customGradient : void 0
+				};
+				const objectPosition = focalPoint && isImgElement ? mediaPosition$1(focalPoint) : void 0;
+				const backgroundImage = url ? `url(${url})` : void 0;
+				const backgroundPosition = mediaPosition$1(focalPoint);
+				const classes = clsx({
+					"is-light": !isDark,
+					"has-parallax": hasParallax,
+					"is-repeated": isRepeated,
+					"has-custom-content-position": !isContentPositionCenter(contentPosition)
+				}, getPositionClassName(contentPosition));
+				const imgClasses = clsx("wp-block-cover__image-background", id ? `wp-image-${id}` : null, {
+					[`size-${sizeSlug}`]: sizeSlug,
+					"has-parallax": hasParallax,
+					"is-repeated": isRepeated
+				});
+				const gradientValue = gradient || customGradient;
+				return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Tag, {
+					..._wordpress_block_editor.useBlockProps.save({ className: classes }),
+					children: [
+						!useFeaturedImage && isImageBackground && url && (isImgElement ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
+							className: imgClasses,
+							alt,
+							src: url,
+							style: { objectPosition },
+							"data-object-fit": "cover",
+							"data-object-position": objectPosition
+						}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+							role: alt ? "img" : void 0,
+							"aria-label": alt ? alt : void 0,
+							className: imgClasses,
+							style: {
+								backgroundPosition,
+								backgroundImage
+							}
+						})),
+						isVideoBackground && url && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("video", {
+							className: clsx("wp-block-cover__video-background", "intrinsic-ignore"),
+							autoPlay: true,
+							muted: true,
+							loop: true,
+							playsInline: true,
+							src: url,
+							poster,
+							style: { objectPosition },
+							"data-object-fit": "cover",
+							"data-object-position": objectPosition
+						}),
+						isEmbedVideoBackground && url && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("figure", {
+							className: clsx("wp-block-cover__video-background", "wp-block-cover__embed-background", "wp-block-embed"),
+							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+								className: "wp-block-embed__wrapper",
+								children: url
+							})
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+							"aria-hidden": "true",
+							className: clsx("wp-block-cover__background", overlayColorClass, dimRatioToClass$1(dimRatio), {
+								"has-background-dim": dimRatio !== void 0,
+								"wp-block-cover__gradient-background": url && gradientValue && dimRatio !== 0,
+								"has-background-gradient": gradientValue,
+								[gradientClass]: gradientClass
+							}),
+							style: bgStyle
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ..._wordpress_block_editor.useInnerBlocksProps.save({ className: "wp-block-cover__inner-container" }) })
+					]
+				});
+			}
+		},
+		{
+			attributes: {
 				...v14BlockAttributes,
 				templateLock: {
 					type: ["string", "boolean"],
@@ -42973,9 +43185,7 @@ Icon: ButtonIcon });
 					className: imgClasses,
 					alt,
 					src: url,
-					style: { objectPosition },
-					"data-object-fit": "cover",
-					"data-object-position": objectPosition
+					style: { objectPosition }
 				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					role: alt ? "img" : void 0,
 					"aria-label": alt ? alt : void 0,
@@ -42993,9 +43203,7 @@ Icon: ButtonIcon });
 					playsInline: true,
 					src: url,
 					poster,
-					style: { objectPosition },
-					"data-object-fit": "cover",
-					"data-object-position": objectPosition
+					style: { objectPosition }
 				}),
 				isEmbedVideoBackground && url && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("figure", {
 					className: clsx("wp-block-cover__video-background", "wp-block-cover__embed-background", "wp-block-embed"),
