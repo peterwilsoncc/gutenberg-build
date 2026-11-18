@@ -4536,7 +4536,21 @@ ul.wp-block-rss.is-grid li {
   border-bottom: none;
 }
 
+:where(.is-layout-flex.is-vertical) > .wp-block-separator {
+  align-self: stretch;
+}
+
+:where(.is-layout-flex:not(.is-vertical)) > .wp-block-separator {
+  flex-grow: 1;
+}
+
+:root :where(.wp-block-separator[class*=wp-container-content-]) {
+  flex-grow: 0;
+}
+
 :root :where(.wp-block-separator.is-style-dots) {
+  align-self: auto;
+  flex-grow: 0;
   text-align: center;
   line-height: 1;
   height: auto;

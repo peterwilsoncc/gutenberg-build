@@ -225,6 +225,11 @@
   height: 2px;
 }
 
+:root :where(.wp-block-separator:not(.is-style-wide):not(.is-style-dots)) {
+  align-self: auto;
+  flex-grow: 0;
+}
+
 .wp-block-table {
   margin: 0 0 1em 0;
 }
