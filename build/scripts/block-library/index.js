@@ -44424,17 +44424,6 @@ Icon: ButtonIcon });
 			}
 		},
 		{
-			name: "imgur",
-			title: getTitle("Imgur"),
-			icon: embedPhotoIcon,
-			description: (0, _wordpress_i18n.__)("Embed Imgur content."),
-			patterns: [/^https?:\/\/(.+\.)?imgur\.com\/.+/i],
-			attributes: {
-				providerNameSlug: "imgur",
-				responsive: true
-			}
-		},
-		{
 			name: "issuu",
 			title: getTitle("Issuu"),
 			icon: embedContentIcon,
