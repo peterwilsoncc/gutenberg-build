@@ -66006,6 +66006,7 @@ Icon: ButtonIcon });
 			if (ownerNode === null) return accumulator;
 			if (!cssRules) return accumulator;
 			if (ownerNode.id.startsWith("wp-")) return accumulator;
+			if (ownerNode.id === "global-styles-css-custom-properties-inline-css") return accumulator;
 			if (!ownerNode.id) return accumulator;
 			function matchFromRules(_cssRules) {
 				return Array.from(_cssRules).find(({ selectorText, conditionText, cssRules: __cssRules }) => {
