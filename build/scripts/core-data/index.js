@@ -312,6 +312,31 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return /^\s*\d+\s*$/.test(id);
 	}
 
+// packages/core-data/build-module/utils/is-safe-entity-key.mjs
+/**
+	* Characters with special meaning in a URL path or query string, plus the
+	* backslash and control characters.
+	*/
+	const UNSAFE_CHARACTERS = /[?#&\\\x00-\x1f\x7f]/;
+	/**
+	* Checks whether an entity record key can be used in a REST path.
+	*
+	* Rejects URL delimiters, control characters, and dot segments, in their raw
+	* and percent-encoded forms.
+	*
+	* @param key The entity record key to check. A key that is not a number,
+	*            string, null or undefined is rejected.
+	* @return True if the key can be used in a REST path.
+	*/
+	function isSafeEntityKey(key) {
+		if (key === null || key === void 0 || typeof key === "number") return true;
+		if (typeof key !== "string") return false;
+		if (/%2f/i.test(key)) return false;
+		const decoded = key.replace(/%([0-7][0-9a-f])/gi, (match, hex) => String.fromCharCode(parseInt(hex, 16)));
+		if (UNSAFE_CHARACTERS.test(decoded)) return false;
+		return decoded.split("/").every((segment) => segment !== "." && segment !== "..");
+	}
+
 // packages/core-data/build-module/utils/user-permissions.mjs
 	const ALLOWED_RESOURCE_ACTIONS = [
 		"create",
@@ -21100,6 +21125,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			let hasError = false;
 			const { baseURL } = entityConfig;
 			try {
+				if (!isSafeEntityKey(recordId)) throw new Error("Invalid entity record key.");
 				let path = `${baseURL}/${recordId}`;
 				if (query) path = (0, _wordpress_url.addQueryArgs)(path, query);
 				deletedRecord = await __unstableFetch({
@@ -21291,6 +21317,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			let hasError = false;
 			const { baseURL } = entityConfig;
 			try {
+				if (!isSafeEntityKey(recordId)) throw new Error("Invalid entity record key.");
 				const path = `${baseURL}${recordId ? "/" + recordId : ""}`;
 				const persistedRecord = !isNewRecord ? select.getRawEntityRecord(kind, name, recordId) : {};
 				const syncManager = getEntitySyncManager();
@@ -21660,6 +21687,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				recordId
 			});
 			try {
+				if (!isSafeEntityKey(recordId)) throw new Error("Invalid entity record key.");
 				const newRecord = await __unstableFetch({
 					path: `${entityConfig.baseURL}/${recordId}/edit`,
 					method: "POST",
@@ -22369,6 +22397,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const getEntityRecord = (kind, name, key = "", query) => async ({ select, dispatch, registry, resolveSelect }) => {
 		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.name === name && config.kind === kind);
 		if (!entityConfig) return;
+		if (!isSafeEntityKey(key)) return;
 		const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, [
 			"entities",
 			"records",
@@ -22626,10 +22655,14 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		let resourcePath = null;
 		if (typeof resource === "object") {
 			if (!resource.kind || !resource.name) throw new Error("The entity resource object is not valid.");
+			if (!isSafeEntityKey(resource.id)) return;
 			const entityConfig = (await resolveSelect.getEntitiesConfig(resource.kind)).find((config) => config.name === resource.name && config.kind === resource.kind);
 			if (!entityConfig) return;
 			resourcePath = entityConfig.baseURL + (resource.id ? "/" + resource.id : "");
-		} else resourcePath = `/wp/v2/${resource}` + (id ? "/" + id : "");
+		} else {
+			if (!isSafeEntityKey(resource) || !isSafeEntityKey(id)) return;
+			resourcePath = `/wp/v2/${resource}` + (id ? "/" + id : "");
+		}
 		let response;
 		try {
 			response = await (0, _wordpress_api_fetch.default)({
@@ -22679,6 +22712,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* @param postId   The id of the parent post.
 	*/
 	const getAutosaves = (postType, postId) => async ({ dispatch, resolveSelect }) => {
+		if (!isSafeEntityKey(postId)) return;
 		const { rest_base: restBase, rest_namespace: restNamespace = "wp/v2", supports } = await resolveSelect.getPostType(postType);
 		if (!supports?.autosave) return;
 		const autosaves = await (0, _wordpress_api_fetch.default)({ path: `/${restNamespace}/${restBase}/${postId}/autosaves?context=edit` });
@@ -22797,7 +22831,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	const getRevisions = (kind, name, recordKey, query = {}) => async ({ dispatch, resolveSelect }) => {
 		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.name === name && config.kind === kind);
-		if (!entityConfig) return;
+		if (!entityConfig || !isSafeEntityKey(recordKey)) return;
 		const rawQuery = { ...query };
 		const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, [
 			"entities",
@@ -22865,7 +22899,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	const getRevision = (kind, name, recordKey, revisionKey, query) => async ({ select, dispatch, resolveSelect }) => {
 		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.name === name && config.kind === kind);
-		if (!entityConfig) return;
+		if (!entityConfig || !isSafeEntityKey(recordKey) || !isSafeEntityKey(revisionKey)) return;
 		if (query !== void 0 && query._fields) query = {
 			...query,
 			_fields: [.../* @__PURE__ */ new Set([...getNormalizedCommaSeparable(query._fields) || [], entityConfig.revisionKey || "id"])].join()
