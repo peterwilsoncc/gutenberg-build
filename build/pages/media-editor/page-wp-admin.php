@@ -138,10 +138,17 @@ function gutenberg_media_editor_wp_admin_enqueue_scripts( $hook_suffix ) {
 	// Check all possible ways this page can be accessed:
 	// 1. Menu page via admin.php?page=media-editor-wp-admin (plugin)
 	// 2. Direct file via media-editor.php (Core) - screen ID will be 'media-editor'
+	// The screen ID alone is not enough: a Core screen can share it with the page
+	// slug (for example, index.php has the screen ID 'dashboard').
 	$current_screen = get_current_screen();
 	$is_our_page = (
 		( isset( $_GET['page'] ) && 'media-editor-wp-admin' === $_GET['page'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		( $current_screen && 'media-editor' === $current_screen->id )
+		(
+			$current_screen &&
+			'media-editor' === $current_screen->id &&
+			isset( $GLOBALS['pagenow'] ) &&
+			'media-editor.php' === $GLOBALS['pagenow']
+		)
 	);
 
 	if ( ! $is_our_page ) {

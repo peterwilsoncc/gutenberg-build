@@ -138,10 +138,17 @@ function gutenberg_site_editor_v2_wp_admin_enqueue_scripts( $hook_suffix ) {
 	// Check all possible ways this page can be accessed:
 	// 1. Menu page via admin.php?page=site-editor-v2-wp-admin (plugin)
 	// 2. Direct file via site-editor-v2.php (Core) - screen ID will be 'site-editor-v2'
+	// The screen ID alone is not enough: a Core screen can share it with the page
+	// slug (for example, index.php has the screen ID 'dashboard').
 	$current_screen = get_current_screen();
 	$is_our_page = (
 		( isset( $_GET['page'] ) && 'site-editor-v2-wp-admin' === $_GET['page'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		( $current_screen && 'site-editor-v2' === $current_screen->id )
+		(
+			$current_screen &&
+			'site-editor-v2' === $current_screen->id &&
+			isset( $GLOBALS['pagenow'] ) &&
+			'site-editor-v2.php' === $GLOBALS['pagenow']
+		)
 	);
 
 	if ( ! $is_our_page ) {
