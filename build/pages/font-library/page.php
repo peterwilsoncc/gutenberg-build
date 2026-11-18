@@ -194,6 +194,7 @@ function gutenberg_font_library_render_page() {
 		wp_register_style( 'font-library-prerequisites', false, $style_dependencies, $asset['version'] );
 
 		// Base styles for the full-page screen, which renders without the wp-admin stylesheets.
+		// `:where()` lets a page that shows the admin bar override the rule hiding it.
 		$page_styles = <<<'CSS'
 		html {
 			background: #f1f1f1;
@@ -205,7 +206,7 @@ function gutenberg_font_library_render_page() {
 		body {
 			margin: 0;
 		}
-		#wpadminbar { display: none; }
+		:where(#wpadminbar) { display: none; }
 		CSS;
 		wp_add_inline_style( 'font-library-prerequisites', $page_styles );
 
