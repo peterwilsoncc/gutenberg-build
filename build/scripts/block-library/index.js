@@ -44485,7 +44485,7 @@ Icon: ButtonIcon });
 			title: getTitle("ReverbNation"),
 			icon: embedAudioIcon,
 			description: (0, _wordpress_i18n.__)("Embed ReverbNation content."),
-			patterns: [/^https?:\/\/(www\.)?reverbnation\.com\/.+/i],
+			patterns: [/^https?:\/\/((legacy|www)\.)?reverbnation\.com\/.+/i],
 			attributes: {
 				providerNameSlug: "reverbnation",
 				responsive: true
