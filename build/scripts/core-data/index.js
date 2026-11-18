@@ -18148,17 +18148,21 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const objectType = `${kind}/${name}`;
 		const objectId = toObjectId(recordId);
 		if (persistedRecord) manager.update(objectType, objectId, edits, LOCAL_UNDO_IGNORED_ORIGIN);
+		const syncEdits = {};
 		if (isAutosave) {
 			const snapshot = manager.getEntitySnapshot(objectType, objectId);
-			return snapshot ? { [CRDT_AUTOSAVE_SNAPSHOT_KEY]: snapshot } : void 0;
+			if (snapshot) syncEdits[CRDT_AUTOSAVE_SNAPSHOT_KEY] = snapshot;
 		}
-		if ("postType" !== kind || !persistedRecord) return;
-		const serializedDoc = await manager.createPersistedCRDTDoc(objectType, toObjectId(persistedRecord.id));
-		if (!serializedDoc) return;
-		return { meta: {
-			...edits.meta,
-			[POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE]: serializedDoc
-		} };
+		const writesParentPost = !isAutosave || "auto-draft" === persistedRecord?.status;
+		if ("postType" === kind && persistedRecord && writesParentPost) {
+			const serializedDoc = await manager.createPersistedCRDTDoc(objectType, objectId);
+			if (serializedDoc) syncEdits.meta = {
+				...edits.meta,
+				[POST_META_KEY_FOR_CRDT_DOC_PERSISTENCE]: serializedDoc
+			};
+		}
+		if (0 === Object.keys(syncEdits).length) return;
+		return syncEdits;
 	}
 	function createRecordHandlers(data, kind, name, recordId, syncConfig, handlers) {
 		return {
