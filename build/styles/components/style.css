@@ -3711,8 +3711,8 @@ body.lockscroll {
   display: block;
   border-radius: 2px;
   height: 32px;
-  left: 8px;
-  right: 8px;
+  left: 7px;
+  right: 7px;
   z-index: -1;
 }
 @media not (prefers-reduced-motion) {
@@ -3825,8 +3825,8 @@ body.lockscroll {
 }
 .components-toolbar-group .components-button.components-button::before,
 .components-toolbar-group .components-button.has-icon.has-icon::before {
-  left: 2px;
-  right: 2px;
+  left: 1px;
+  right: 1px;
 }
 
 .components-toolbar {

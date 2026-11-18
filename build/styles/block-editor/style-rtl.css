@@ -1052,6 +1052,10 @@ iframe[name=editor-canvas] {
 .components-button.block-editor-block-mover-button:focus::before {
   outline-offset: 0;
 }
+.components-button.block-editor-block-mover-button.has-icon.has-icon::before {
+  right: 2px;
+  left: 2px;
+}
 
 .block-editor-block-navigation__container {
   min-width: 280px;
