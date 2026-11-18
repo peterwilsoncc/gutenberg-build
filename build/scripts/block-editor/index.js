@@ -96861,9 +96861,9 @@ If there's a particular need for this, please submit a feature request at https:
 	* @param props.showPlaceholder             While no block is selected, show the default block's icon and the mover, disabled.
 	*/
 	function PrivateBlockToolbar({ hideDragHandle, focusOnMount, __experimentalInitialIndex, __experimentalOnIndexChange, variant = "unstyled", showPlaceholder = false }) {
-		const { blockClientId, blockClientIds, isDefaultEditingMode, blockType, toolbarKey, shouldShowVisualToolbar, showParentSelector, isUsingBindings, isSectionContainer, hasContentOnlyLocking, showShuffleButton, showSlots, showGroupButtons, showLockButtons, showBlockVisibilityButton, showSwitchSectionStyleButton, areSelectedBlocksHiddenOnViewport, showStyleStateSlot, canEdit } = (0, _wordpress_data.useSelect)((select) => {
+		const { blockClientId, blockClientIds, isDefaultEditingMode, blockType, toolbarKey, shouldShowVisualToolbar, showParentSelector, isUsingBindings, isSectionContainer, hasContentOnlyLocking, showShuffleButton, showSlots, showGroupButtons, showLockButtons, showBlockVisibilityButton, showSwitchSectionStyleButton, showStyleStateSlot, canEdit } = (0, _wordpress_data.useSelect)((select) => {
 			const { canEditBlock } = select(store);
-			const { getBlockName, getBlockMode, getSelectedBlockClientIds, isBlockValid, getBlockEditingMode, getBlockAttributes, getSettings, getTemplateLock, getParentSectionBlock, getEnabledBlockParents, isZoomOut, isSectionBlock, isBlockHiddenAtViewport, getSelectedBlockStyleState, isResponsiveEditing } = unlock$2(select(store));
+			const { getBlockName, getBlockMode, getSelectedBlockClientIds, isBlockValid, getBlockEditingMode, getBlockAttributes, getTemplateLock, getParentSectionBlock, getEnabledBlockParents, isZoomOut, isSectionBlock, getSelectedBlockStyleState, isResponsiveEditing } = unlock$2(select(store));
 			const selectedBlockClientIds = getSelectedBlockClientIds();
 			const selectedBlockClientId = selectedBlockClientIds[0];
 			const parentSection = getParentSectionBlock(selectedBlockClientId);
@@ -96881,8 +96881,6 @@ If there's a particular need for this, please submit a feature request at https:
 			const _isSectionBlock = isSectionBlock(selectedBlockClientId);
 			const _canEditBlock = canEditBlock(selectedBlockClientId);
 			const _showSwitchSectionStyleButton = _canEditBlock && (_isZoomOut || _isSectionBlock);
-			const _currentDeviceType = getSettings()?.[deviceTypeKey]?.toLowerCase() || "desktop";
-			const _areSelectedBlocksHiddenOnViewport = selectedBlockClientIds.length > 0 && selectedBlockClientIds.every((id) => isBlockHiddenAtViewport(id, _currentDeviceType));
 			const _isEditingResponsiveStyleState = !!selectedBlockClientId && isResponsiveEditing() && hasViewportBlockStyleState(getSelectedBlockStyleState(selectedBlockClientId));
 			return {
 				blockClientId: selectedBlockClientId,
@@ -96902,7 +96900,6 @@ If there's a particular need for this, please submit a feature request at https:
 				showLockButtons: !_isZoomOut,
 				showBlockVisibilityButton: !_isZoomOut,
 				showSwitchSectionStyleButton: _showSwitchSectionStyleButton,
-				areSelectedBlocksHiddenOnViewport: _areSelectedBlocksHiddenOnViewport,
 				canEdit: _canEditBlock
 			};
 		}, []);
@@ -96956,11 +96953,11 @@ If there's a particular need for this, please submit a feature request at https:
 							]
 						})
 					}),
-					!areSelectedBlocksHiddenOnViewport && !hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && showGroupButtons && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockGroupToolbar, {}),
+					!hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && showGroupButtons && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockGroupToolbar, {}),
 					!isPlaceholder && !isMultiToolbar && canEdit && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(EditSectionButton, { clientId: blockClientIds[0] }),
-					!areSelectedBlocksHiddenOnViewport && showShuffleButton && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ChangeDesign, { clientId: blockClientIds[0] }),
-					!areSelectedBlocksHiddenOnViewport && showSwitchSectionStyleButton && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SwitchSectionStyle, { clientId: blockClientIds[0] }),
-					!isPlaceholder && !areSelectedBlocksHiddenOnViewport && shouldShowVisualToolbar && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [!isSectionContainer && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [showSlots && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
+					showShuffleButton && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ChangeDesign, { clientId: blockClientIds[0] }),
+					showSwitchSectionStyleButton && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SwitchSectionStyle, { clientId: blockClientIds[0] }),
+					!isPlaceholder && shouldShowVisualToolbar && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [!isSectionContainer && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [showSlots && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockControls.Slot, {
 							group: "parent",
 							className: "block-editor-block-toolbar__slot"
