@@ -3764,7 +3764,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 					blockOrder.forEach((order, clientId) => {
 						if (clientId !== "") newState.set(clientId, order);
 					});
-					newState.set("", (state.get("") ?? []).concat(blockOrder[""]));
+					newState.set("", (state.get("") ?? []).concat(blockOrder.get("")));
 					return newState;
 				}
 				case "INSERT_BLOCKS": {
