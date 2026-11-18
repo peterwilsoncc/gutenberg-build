@@ -31410,9 +31410,12 @@ Icon: ButtonIcon });
 	* Returns the embed block's information by matching the provided service provider
 	*
 	* @param {string} provider The embed block's provider
-	* @return {WPBlockVariation} The embed block's information
+	* @return {WPBlockVariation|undefined} The embed block's information
 	*/
-	const getEmbedInfoByProvider = (provider) => (0, _wordpress_blocks.getBlockVariations)(DEFAULT_EMBED_BLOCK$1)?.find(({ name }) => name === provider);
+	const getEmbedInfoByProvider = (provider) => {
+		if (!provider) return;
+		return (0, _wordpress_blocks.getBlockVariations)(DEFAULT_EMBED_BLOCK$1)?.find(({ name, attributes }) => name === provider || attributes?.providerNameSlug === provider);
+	};
 	/**
 	* Returns true if any of the regular expressions match the URL.
 	*
@@ -44590,7 +44593,7 @@ Icon: ButtonIcon });
 			keywords: [(0, _wordpress_i18n.__)("ebook")],
 			description: (0, _wordpress_i18n.__)("Embed Amazon Kindle content."),
 			patterns: [/^https?:\/\/([a-z0-9-]+\.)?(amazon|amzn)(\.[a-z]{2,4})+\/.+/i, /^https?:\/\/(www\.)?(a\.co|z\.cn)\/.+/i],
-			attributes: { providerNameSlug: "amazon-kindle" }
+			attributes: { providerNameSlug: "amazon" }
 		},
 		{
 			name: "pinterest",
