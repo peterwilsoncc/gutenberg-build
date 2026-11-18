@@ -100851,8 +100851,36 @@ If there's a particular need for this, please submit a feature request at https:
 	/** @typedef {import('@wordpress/block-editor').InserterMediaRequest} InserterMediaRequest */
 	/** @typedef {import('@wordpress/block-editor').InserterMediaItem} InserterMediaItem */
 	/** @typedef {import('@wordpress/block-editor').InserterMediaCategory} InserterMediaCategory */
-	const getExternalLink = (url, text) => `<a ${getExternalLinkAttributes(url)}>${text}</a>`;
-	const getExternalLinkAttributes = (url) => `href="${url}" target="_blank" rel="noopener"`;
+	const escapeAmpersand = (value) => value.replace(/&(?!([a-z0-9]+|#[0-9]+|#x[a-f0-9]+);)/gi, "&amp;");
+	const escapeQuotationMark = (value) => value.replace(/"/g, "&quot;");
+	const escapeLessThan = (value) => value.replace(/</g, "&lt;");
+	const escapeGreaterThan = (value) => value.replace(/>/g, "&gt;");
+	const escapeAttribute = (value) => escapeGreaterThan(escapeLessThan(escapeQuotationMark(escapeAmpersand(value))));
+	const escapeEditableHTML = (value) => escapeLessThan(value.replace(/&/g, "&amp;"));
+	/**
+	* Returns whether a URL is an http or https URL.
+	*
+	* @param {string} url The URL to check.
+	* @return {boolean} Whether the URL can be linked to.
+	*/
+	const isHttpURL = (url) => /^https?:/.test(url);
+	/**
+	* Returns a link to an external URL. Returns only the text when the URL
+	* isn't an http or https URL.
+	*
+	* @param {string} url  The URL to link to.
+	* @param {string} text The link text, already escaped.
+	* @return {string} The link markup.
+	*/
+	const getExternalLink = (url, text) => isHttpURL(url) ? `<a ${getExternalLinkAttributes(url)}>${text}</a>` : text;
+	/**
+	* Returns the attributes of a link to an external URL. Returns an empty
+	* `href` when the URL isn't an http or https URL.
+	*
+	* @param {string} url The URL to link to.
+	* @return {string} The link attributes.
+	*/
+	const getExternalLinkAttributes = (url) => `href="${isHttpURL(url) ? escapeAttribute(url) : ""}" target="_blank" rel="noopener"`;
 	const getOpenverseLicense = (license, licenseVersion) => {
 		let licenseName = license.trim();
 		if (license !== "pdm") licenseName = license.toUpperCase().replace("SAMPLING", "Sampling");
@@ -100862,11 +100890,11 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 	const getOpenverseCaption = (item) => {
 		const { title, foreign_landing_url: foreignLandingUrl, creator, creator_url: creatorUrl, license, license_version: licenseVersion, license_url: licenseUrl } = item;
-		const fullLicense = getOpenverseLicense(license, licenseVersion);
-		const _creator = (0, _wordpress_html_entities.decodeEntities)(creator);
+		const fullLicense = escapeEditableHTML(getOpenverseLicense(license, licenseVersion));
+		const _creator = creator ? escapeEditableHTML((0, _wordpress_html_entities.decodeEntities)(creator)) : "";
 		let _caption;
-		if (_creator) _caption = title ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("\"%1$s\" by %2$s/ %3$s", "caption"), getExternalLink(foreignLandingUrl, (0, _wordpress_html_entities.decodeEntities)(title)), creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator, licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("<a %1$s>Work</a> by %2$s/ %3$s", "caption"), getExternalLinkAttributes(foreignLandingUrl), creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator, licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense);
-		else _caption = title ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("\"%1$s\"/ %2$s", "caption"), getExternalLink(foreignLandingUrl, (0, _wordpress_html_entities.decodeEntities)(title)), licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("<a %1$s>Work</a>/ %2$s", "caption"), getExternalLinkAttributes(foreignLandingUrl), licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense);
+		if (_creator) _caption = title ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("\"%1$s\" by %2$s/ %3$s", "caption"), getExternalLink(foreignLandingUrl, escapeEditableHTML((0, _wordpress_html_entities.decodeEntities)(title))), creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator, licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("<a %1$s>Work</a> by %2$s/ %3$s", "caption"), getExternalLinkAttributes(foreignLandingUrl), creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator, licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense);
+		else _caption = title ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("\"%1$s\"/ %2$s", "caption"), getExternalLink(foreignLandingUrl, escapeEditableHTML((0, _wordpress_html_entities.decodeEntities)(title))), licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("<a %1$s>Work</a>/ %2$s", "caption"), getExternalLinkAttributes(foreignLandingUrl), licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense);
 		return _caption.replace(/\s{2}/g, " ");
 	};
 	const getCoreMediaQuery = (query = {}) => ({
