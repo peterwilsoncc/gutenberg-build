@@ -71903,7 +71903,7 @@ Icon: ButtonIcon });
 		}, [postTypeSlug]);
 		const activeBlockVariationName = (0, _wordpress_data.useSelect)((select) => select(_wordpress_blocks.store).getActiveBlockVariation(name, attributes)?.name, [name, attributes]);
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
-		const validDatetime = datetime || /* @__PURE__ */ new Date();
+		const validDatetime = isValidDatetime(datetime) ? datetime : /* @__PURE__ */ new Date();
 		let postDate = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("time", {
 			dateTime: (0, _wordpress_date.dateI18n)("c", validDatetime),
 			ref: setPopoverAnchor,
@@ -71981,6 +71981,15 @@ Icon: ButtonIcon });
 				children: postDate
 			})
 		] });
+	}
+	/**
+	* Checks whether a value can be parsed as a valid date.
+	*
+	* @param {Date|string|undefined} datetime The value to check.
+	* @return {boolean} Whether the value is a valid date.
+	*/
+	function isValidDatetime(datetime) {
+		return !!datetime && !Number.isNaN(new Date(datetime).getTime());
 	}
 	function is12HourFormat(format) {
 		return /(?:^|[^\\])[aAgh]/.test(format);
