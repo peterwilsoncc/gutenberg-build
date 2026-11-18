@@ -11029,14 +11029,14 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		if (canInsertBlockTypeUnmemoized(state, "core/block", rootClientId)) blockTypes.push("core/block");
 		return blockTypes;
 	}, (state, rootClientId) => [(0, _wordpress_blocks.getBlockTypes)(), ...getInsertBlockTypeDependants(select)(state, rootClientId)]));
-	const __experimentalGetAllowedBlocks = (0, _wordpress_data.createSelector)((state, rootClientId = null) => {
+	const __experimentalGetAllowedBlocks = (state, rootClientId = null) => {
 		(0, _wordpress_deprecated.default)("wp.data.select( \"core/block-editor\" ).__experimentalGetAllowedBlocks", {
 			alternative: "wp.data.select( \"core/block-editor\" ).getAllowedBlocks",
 			since: "6.2",
 			version: "6.4"
 		});
 		return getAllowedBlocks(state, rootClientId);
-	}, (state, rootClientId) => getAllowedBlocks.getDependants(state, rootClientId));
+	};
 	/**
 	* Returns the block to be directly inserted by the block appender.
 	*
