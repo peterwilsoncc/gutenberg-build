@@ -4568,7 +4568,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		],
 		"primary-bgFill1": ["background-interactive-brand-strong"],
 		"primary-bgFill2": ["background-interactive-brand-strong-active"],
-		"primary-fgFill": ["foreground-interactive-brand-strong", "foreground-interactive-brand-strong-active"],
+		"primary-fgFill": [
+			"background-thumb-brand-strong",
+			"foreground-interactive-brand-strong",
+			"foreground-interactive-brand-strong-active"
+		],
 		"primary-surface4": ["background-interactive-brand-weak-active"],
 		"primary-fgSurface4": ["foreground-interactive-brand-active"],
 		"primary-fgSurface3": ["foreground-interactive-brand"],
@@ -4618,10 +4622,12 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		"error-stroke4": ["background-indicator-error", "stroke-interactive-error-active"],
 		"error-stroke1": ["stroke-surface-error"],
 		"bg-surface2": ["background-surface-neutral"],
+		"bg-fgFill": ["background-thumb-neutral-disabled"],
 		"bg-surface5": [
 			"background-interactive-brand-strong-disabled",
 			"background-interactive-error-strong-disabled",
-			"background-interactive-neutral-strong-disabled"
+			"background-interactive-neutral-strong-disabled",
+			"background-track-neutral-disabled"
 		],
 		"bg-surface4": ["background-interactive-neutral-weak-active"],
 		"bg-surface3": [
@@ -4632,7 +4638,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		],
 		"bg-fgSurface4": [
 			"background-indicator-neutral",
-			"background-thumb-neutral",
 			"foreground-content-neutral",
 			"foreground-interactive-neutral",
 			"foreground-interactive-neutral-active",
@@ -4668,6 +4673,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			"stroke-surface-neutral"
 		],
 		"bg-stroke1": ["background-track-neutral-weak", "stroke-surface-neutral-weak"],
+		"bg-fgFillDark": ["background-thumb-neutral"],
 		"bg-bgFillInverted2": ["background-interactive-neutral-strong-active"],
 		"bg-bgFillInverted1": ["background-interactive-neutral-strong"],
 		"bg-fgFillInverted": ["foreground-interactive-neutral-strong", "foreground-interactive-neutral-strong-active"],

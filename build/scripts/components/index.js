@@ -70004,6 +70004,29 @@ Icon: ButtonIcon });
 
 // packages/components/build-module/form-toggle/index.mjs
 	const noop$9 = () => {};
+	const onLabel = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+		className: "components-form-toggle__label components-form-toggle__on-label",
+		xmlns: "http://www.w3.org/2000/svg",
+		viewBox: "0 0 8 8",
+		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
+			d: "M4 1.5v5",
+			fill: "none",
+			stroke: "currentColor",
+			strokeLinecap: "round"
+		})
+	});
+	const offLabel = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+		className: "components-form-toggle__label components-form-toggle__off-label",
+		xmlns: "http://www.w3.org/2000/svg",
+		viewBox: "0 0 8 8",
+		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Circle, {
+			cx: 4,
+			cy: 4,
+			r: 2.5,
+			fill: "none",
+			stroke: "currentColor"
+		})
+	});
 	function UnforwardedFormToggle(props, ref) {
 		const { className, checked, id, disabled, onChange = noop$9, onClick, ...additionalProps } = props;
 		const wrapperClasses = clsx("components-form-toggle", className, {
@@ -70028,6 +70051,10 @@ Icon: ButtonIcon });
 					ref
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { className: "components-form-toggle__track" }),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
+					className: "components-form-toggle__labels",
+					children: [onLabel, offLabel]
+				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { className: "components-form-toggle__thumb" })
 			]
 		});
