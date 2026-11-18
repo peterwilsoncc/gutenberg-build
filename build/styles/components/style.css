@@ -2300,15 +2300,6 @@ body.modal-open {
   justify-content: flex-start;
 }
 
-.components-modal__header-icon-container {
-  display: inline-block;
-}
-.components-modal__header-icon-container svg {
-  max-width: 36px;
-  max-height: 36px;
-  padding: var(--wpds-dimension-padding-sm, 8px);
-}
-
 .components-modal__content {
   flex: 1;
   margin-top: calc(64px + var(--wpds-dimension-padding-sm, 8px));
