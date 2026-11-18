@@ -21471,14 +21471,6 @@ ${url}
       attributes: { providerNameSlug: "dailymotion", responsive: true }
     },
     {
-      name: "imgur",
-      title: getTitle("Imgur"),
-      icon: embedPhotoIcon,
-      description: (0, import_i18n61.__)("Embed Imgur content."),
-      patterns: [/^https?:\/\/(.+\.)?imgur\.com\/.+/i],
-      attributes: { providerNameSlug: "imgur", responsive: true }
-    },
-    {
       name: "issuu",
       title: getTitle("Issuu"),
       icon: embedContentIcon,
