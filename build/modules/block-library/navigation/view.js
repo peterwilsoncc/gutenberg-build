@@ -28,6 +28,38 @@ function getFocusableElements(ref) {
 	});
 }
 document.addEventListener("click", () => {});
+const FADE_OUT_BUFFER_MS = 100;
+function prefersReducedMotion() {
+	return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+/**
+* Returns the length of the overlay's animation in milliseconds, or 0 when the
+* overlay has no animation, e.g. when a theme sets `animation: none`. The
+* fade-out uses the same duration as the fade-in.
+*
+* @param {Element} modal The overlay element.
+* @return {number} The animation duration in milliseconds.
+*/
+function getOverlayAnimationDuration(modal) {
+	const { animationName, animationDuration } = window.getComputedStyle(modal);
+	if (animationName === "none") return 0;
+	return Math.max(...animationDuration.split(",").map((duration) => {
+		const value = parseFloat(duration);
+		return duration.trim().endsWith("ms") ? value : value * 1e3;
+	}));
+}
+/**
+* Ends the overlay fade-out: stops displaying the overlay and releases the
+* page scroll lock.
+*
+* @param {Object} ctx The navigation overlay context.
+*/
+function finishClosingOverlay(ctx) {
+	clearTimeout(ctx.closingTimeout);
+	ctx.closingTimeout = null;
+	ctx.isClosing = false;
+	document.documentElement.classList.remove("has-modal-open");
+}
 const { state, actions } = store("core/navigation", {
 	state: {
 		get roleAttribute() {
@@ -42,6 +74,12 @@ const { state, actions } = store("core/navigation", {
 		},
 		get isMenuOpen() {
 			return Object.values(state.menuOpenedBy).filter(Boolean).length > 0;
+		},
+		get isMenuClosing() {
+			return !!getContext().isClosing;
+		},
+		get isMenuVisible() {
+			return state.isMenuOpen || state.isMenuClosing;
 		},
 		get menuOpenedBy() {
 			const ctx = getContext();
@@ -118,8 +156,10 @@ const { state, actions } = store("core/navigation", {
 			}
 		}),
 		openMenu(menuOpenedOn = "click") {
-			const { type } = getContext();
+			const ctx = getContext();
+			const { type } = ctx;
 			state.menuOpenedBy[menuOpenedOn] = true;
+			if (ctx.isClosing) finishClosingOverlay(ctx);
 			if (type === "overlay") document.documentElement.classList.add("has-modal-open");
 		},
 		closeMenu(menuClosedOn = "click") {
@@ -127,10 +167,22 @@ const { state, actions } = store("core/navigation", {
 			state.menuOpenedBy[menuClosedOn] = false;
 			if (!state.isMenuOpen) {
 				if (ctx.modal?.contains(window.document.activeElement)) ctx.previousFocus?.focus();
+				const modal = ctx.modal;
 				ctx.modal = null;
 				ctx.previousFocus = null;
-				if (ctx.type === "overlay") document.documentElement.classList.remove("has-modal-open");
+				if (ctx.type === "overlay") {
+					if (ctx.isClosing) return;
+					const animationDuration = modal && !prefersReducedMotion() ? getOverlayAnimationDuration(modal) : 0;
+					if (animationDuration) {
+						ctx.isClosing = true;
+						ctx.closingTimeout = setTimeout(() => finishClosingOverlay(ctx), animationDuration + FADE_OUT_BUFFER_MS);
+					} else document.documentElement.classList.remove("has-modal-open");
+				}
 			}
+		},
+		handleOverlayAnimationEnd(event) {
+			const ctx = getContext();
+			if (ctx.isClosing && event.target === event.currentTarget && event.animationName === "overlay-menu__fade-out-animation") finishClosingOverlay(ctx);
 		}
 	},
 	callbacks: {

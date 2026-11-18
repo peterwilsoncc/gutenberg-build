@@ -478,6 +478,16 @@ button.wp-block-navigation-item__content {
     transform: translateY(0);
   }
 }
+@keyframes overlay-menu__fade-out-animation {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+}
 .wp-block-navigation__responsive-container {
   display: none;
   position: fixed;
@@ -509,6 +519,11 @@ button.wp-block-navigation-item__content {
   .wp-block-navigation__responsive-container.is-menu-open {
     animation: overlay-menu__fade-in-animation 0.1s ease-out;
     animation-fill-mode: forwards;
+  }
+  .wp-block-navigation__responsive-container.is-menu-open.is-menu-closing {
+    animation-name: overlay-menu__fade-out-animation;
+    animation-duration: 0.1s;
+    pointer-events: none;
   }
 }
 .wp-block-navigation__responsive-container.is-menu-open:not(.disable-default-overlay) {
