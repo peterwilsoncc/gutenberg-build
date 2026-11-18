@@ -61609,6 +61609,7 @@ Icon: ButtonIcon });
 		const { removeBlock, resetZoomLevel, startDraggingBlocks, stopDraggingBlocks, editContentOnlySection } = unlock$2((0, _wordpress_data.useDispatch)(store));
 		return (0, _wordpress_compose.useRefEffect)((node) => {
 			if (!isSelected && !isMultiSelected) return;
+			let endDrag;
 			/**
 			* Interprets keydown event intent to remove or insert after block if
 			* key event occurs on wrapper node. This can occur when the block has
@@ -61846,10 +61847,15 @@ Icon: ButtonIcon });
 					node.style.left = `${leftDelta * inverted}px`;
 					pile?.move(lastClientX, lastClientY);
 				}
+				function endOnMouseMove(e) {
+					if (!e.buttons) end();
+				}
 				function end() {
+					endDrag = void 0;
 					ownerDocument.removeEventListener("dragover", dragOver);
 					ownerDocument.removeEventListener("dragend", end);
 					ownerDocument.removeEventListener("drop", end);
+					ownerDocument.removeEventListener("mousemove", endOnMouseMove);
 					ownerDocument.removeEventListener("scroll", over);
 					for (const [property, value] of Object.entries(originalNodeProperties)) node.style[property] = value;
 					clone.remove();
@@ -61863,7 +61869,9 @@ Icon: ButtonIcon });
 				ownerDocument.addEventListener("dragover", dragOver);
 				ownerDocument.addEventListener("dragend", end);
 				ownerDocument.addEventListener("drop", end);
+				ownerDocument.addEventListener("mousemove", endOnMouseMove);
 				ownerDocument.addEventListener("scroll", over);
+				endDrag = end;
 				startDraggingBlocks(clientIds);
 				document.body.classList.add("is-dragging-components-draggable");
 				ownerDocument.documentElement.classList.add("is-dragging");
@@ -61871,6 +61879,7 @@ Icon: ButtonIcon });
 			node.addEventListener("dragstart", onDragStart);
 			node.addEventListener("mousedown", onMouseDown);
 			if (!isSelected) return () => {
+				endDrag?.();
 				node.removeEventListener("dragstart", onDragStart);
 				node.removeEventListener("mousedown", onMouseDown);
 			};
@@ -61891,6 +61900,7 @@ Icon: ButtonIcon });
 			}
 			node.addEventListener("dblclick", onDoubleClick);
 			return () => {
+				endDrag?.();
 				node.removeEventListener("keydown", onKeyDown);
 				node.removeEventListener("dragstart", onDragStart);
 				node.removeEventListener("mousedown", onMouseDown);
