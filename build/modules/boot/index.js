@@ -10788,6 +10788,7 @@ var style_module_default$6 = {
 	"save-button": "_4e8b2ecc322dfc1f__save-button",
 	"shortcut": "_0e6f3a8336688e3f__shortcut"
 };
+const { EntitiesSavedStates: EntitiesSavedStates$1 } = unlock(import_core_data.privateApis);
 function SaveButton() {
 	const [isSaveViewOpen, setIsSaveViewOpened] = (0, import_element.useState)(false);
 	const { isSaving, dirtyEntityRecordsCount } = (0, import_data.useSelect)((select) => {
@@ -10849,7 +10850,7 @@ function SaveButton() {
 		title: (0, import_i18n.__)("Review changes"),
 		onRequestClose: () => setIsSaveViewOpened(false),
 		size: "small",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_editor.EntitiesSavedStates, {
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntitiesSavedStates$1, {
 			close: () => setIsSaveViewOpened(false),
 			variant: "inline"
 		})
@@ -11097,6 +11098,7 @@ function registerStyle$4(hash, css) {
 }
 registerStyle$4("e8f942db13", "@media (min-width:600px){._1bb5b45e7ea3b538__modal{width:600px}}");
 var style_module_default$4 = { "modal": "_1bb5b45e7ea3b538__modal" };
+const { EntitiesSavedStates } = unlock(import_core_data.privateApis);
 function SavePanel() {
 	const [isOpen, setIsOpen] = (0, import_element.useState)(false);
 	useSaveShortcut({ openSavePanel: () => setIsOpen(true) });
@@ -11106,7 +11108,7 @@ function SavePanel() {
 		onRequestClose: () => setIsOpen(false),
 		title: (0, import_i18n.__)("Review changes"),
 		size: "small",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_editor.EntitiesSavedStates, {
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntitiesSavedStates, {
 			close: () => setIsOpen(false),
 			variant: "inline"
 		})
