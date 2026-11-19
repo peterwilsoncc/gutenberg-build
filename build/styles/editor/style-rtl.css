@@ -8475,7 +8475,8 @@ textarea.editor-post-text-editor::placeholder {
   padding-left: 24px;
 }
 .editor-visual-editor {
-  overflow: hidden;
+  overflow: clip;
+  min-height: 0;
 }
 .editor-visual-editor .components-button {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
