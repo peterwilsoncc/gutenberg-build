@@ -73317,7 +73317,7 @@ Icon: ButtonIcon });
 	function useSomeItemHasAPossibleBulkAction(actions, data) {
 		return (0, _wordpress_element.useMemo)(() => data.some((item) => hasAPossibleBulkAction(actions, item)), [actions, data]);
 	}
-	function BulkSelectionCheckbox({ selection, onChangeSelection, data, actions, getItemId, disableSelectAll = false, checkboxRef }) {
+	function BulkSelectionCheckbox({ selection, onChangeSelection, data, actions, getItemId, disableSelectAll = false, checkboxRef, onClear, onSelect }) {
 		const selectableItems = (0, _wordpress_element.useMemo)(() => {
 			return data.filter((item) => {
 				return actions.some((action) => action.supportsBulk && (!action.isEligible || action.isEligible(item)));
@@ -73330,7 +73330,10 @@ Icon: ButtonIcon });
 			ref: checkboxRef,
 			checked: hasSelection,
 			disabled: !hasSelection,
-			onCheckedChange: () => onChangeSelection([]),
+			onCheckedChange: () => {
+				onClear?.();
+				onChangeSelection([]);
+			},
 			"aria-label": (0, _wordpress_i18n.__)("Deselect all")
 		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Checkbox$2, {
@@ -73338,8 +73341,13 @@ Icon: ButtonIcon });
 			checked: areAllSelected,
 			indeterminate: !areAllSelected && !!selectedItems.length,
 			onCheckedChange: () => {
-				if (areAllSelected) onChangeSelection([]);
-				else onChangeSelection(selectableItems.map((item) => getItemId(item)));
+				if (areAllSelected) {
+					onClear?.();
+					onChangeSelection([]);
+				} else {
+					onSelect?.();
+					onChangeSelection(selectableItems.map((item) => getItemId(item)));
+				}
 			},
 			"aria-label": areAllSelected ? (0, _wordpress_i18n.__)("Deselect all") : (0, _wordpress_i18n.__)("Select all")
 		});
@@ -73375,7 +73383,7 @@ Icon: ButtonIcon });
 			isBusy
 		});
 	}
-	function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, onAction, onChangeSelection, totalItems, isMobile, selectionCheckboxRef) {
+	function renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, onAction, onChangeSelection, totalItems, isMobile, selectionCheckboxRef, onClearSelection) {
 		const clearSelection = selectedItems.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(IconButton, {
 			className: "dataviews-bulk-actions__clear",
 			variant: "minimal",
@@ -73385,7 +73393,10 @@ Icon: ButtonIcon });
 			label: (0, _wordpress_i18n.__)("Cancel"),
 			disabled: !!actionInProgress,
 			focusableWhenDisabled: false,
-			onClick: () => onChangeSelection(EMPTY_ARRAY$15)
+			onClick: () => {
+				onClearSelection?.();
+				onChangeSelection(EMPTY_ARRAY$15);
+			}
 		});
 		const renderActions = (isMenuItem = false) => actionsToShow.map((action) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionButton, {
 			action,
@@ -73414,7 +73425,8 @@ Icon: ButtonIcon });
 						data,
 						actions,
 						getItemId,
-						disableSelectAll: isInfiniteScroll
+						disableSelectAll: isInfiniteScroll,
+						onClear: onClearSelection
 					}), !selection.length && !isInfiniteScroll && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Label, {
 						variant: "plain",
 						children: (0, _wordpress_i18n.__)("Select all")
@@ -73444,7 +73456,7 @@ Icon: ButtonIcon });
 			]
 		});
 	}
-	function BulkActionsContent({ selection, actions, onChangeSelection, data, getItemId, isInfiniteScroll, selectionCheckboxRef, onActionInProgressChange }) {
+	function BulkActionsContent({ selection, actions, onChangeSelection, data, getItemId, isInfiniteScroll, selectionCheckboxRef, onActionInProgressChange, onClearSelection }) {
 		const { paginationInfo } = (0, _wordpress_element.useContext)(DataViewsContext);
 		const [pendingContent, setPendingContent] = (0, _wordpress_element.useState)();
 		const registry = (0, _wordpress_data.useRegistry)();
@@ -73484,18 +73496,19 @@ Icon: ButtonIcon });
 		const actionsToShow = (0, _wordpress_element.useMemo)(() => actions.filter((action) => {
 			return action.supportsBulk && selectedItems.some((item) => !action.isEligible || action.isEligible(item));
 		}), [actions, selectedItems]);
-		const renderContent = (actionInProgress) => renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, onAction, onChangeSelection, paginationInfo.totalItems, isMobile, selectionCheckboxRef);
+		const renderContent = (actionInProgress) => renderBulkActionsContent(data, actions, getItemId, isInfiniteScroll, selection, actionsToShow, selectedItems, actionInProgress, onAction, onChangeSelection, paginationInfo.totalItems, isMobile, selectionCheckboxRef, onClearSelection);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [pendingContent ?? renderContent(null), activeModal && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionModal, {
 			action: activeModal.action,
 			items: activeModal.items,
 			closeModal: () => setActiveModal(null)
 		})] });
 	}
-	function BulkActionToolbar({ selectionCheckboxRef, onActionInProgressChange } = {}) {
+	function BulkActionToolbar({ selectionCheckboxRef, onActionInProgressChange, onClearSelection } = {}) {
 		const { data, selection, actions = EMPTY_ARRAY$15, onChangeSelection, getItemId, view } = (0, _wordpress_element.useContext)(DataViewsContext);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BulkActionsContent, {
 			selectionCheckboxRef,
 			onActionInProgressChange,
+			onClearSelection,
 			selection,
 			onChangeSelection,
 			data,
@@ -73853,6 +73866,30 @@ Icon: ButtonIcon });
 			isHorizontalScrollEnd,
 			isVerticallyScrolled
 		};
+	}
+
+// packages/dataviews/build-module/components/dataviews-layouts/utils/use-bulk-actions-focus.mjs
+/**
+	* Moves focus when the bulk actions toolbar is shown or hidden, but only when
+	* an interaction asked for it. Selection can be controlled by the consumer and
+	* change asynchronously, for example when it is kept in the URL, so the move
+	* cannot always happen in the event handler itself.
+	*
+	* @param options         Options.
+	* @param options.isShown Whether the bulk actions toolbar shows actions.
+	*
+	* @return A function that asks to focus `target` once the toolbar is shown or
+	*         hidden.
+	*/
+	function useBulkActionsFocus({ isShown }) {
+		const targetRef = (0, _wordpress_element.useRef)(null);
+		(0, _wordpress_element.useLayoutEffect)(() => {
+			targetRef.current?.current?.focus();
+			targetRef.current = null;
+		}, [isShown]);
+		return (0, _wordpress_element.useCallback)((target) => {
+			targetRef.current = target;
+		}, []);
 	}
 
 // packages/dataviews/build-module/components/dataviews-layouts/utils/get-data-by-group.mjs
@@ -74229,14 +74266,7 @@ Icon: ButtonIcon });
 		const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
 		const showBulkActions = hasBulkActions && selection.length > 0 || isActionInProgress;
 		(0, _wordpress_element.useLayoutEffect)(syncBulkActionsPosition, [showBulkActions]);
-		const hadSelectionRef = (0, _wordpress_element.useRef)(false);
-		(0, _wordpress_element.useEffect)(() => {
-			const tableHead = tableHeaderRef.current;
-			const ownerDocument = tableHead?.ownerDocument;
-			if (showBulkActions && tableHead?.contains(ownerDocument?.activeElement ?? null)) bulkSelectionRef.current?.focus();
-			else if (hadSelectionRef.current && !showBulkActions && (ownerDocument?.activeElement === ownerDocument?.body || bulkActionsRef.current?.contains(ownerDocument?.activeElement ?? null))) tableSelectionRef.current?.focus();
-			hadSelectionRef.current = showBulkActions;
-		}, [showBulkActions]);
+		const focusAfterToggle = useBulkActionsFocus({ isShown: showBulkActions });
 		const { isHorizontalScrollEnd, isVerticallyScrolled } = useScrollState({
 			scrollContainerRef: containerRef,
 			enabledHorizontal: !!actions?.length
@@ -74303,7 +74333,8 @@ Icon: ButtonIcon });
 				inert: inertValue(!!isLoading),
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BulkActionToolbar, {
 					onActionInProgressChange: setIsActionInProgress,
-					selectionCheckboxRef: bulkSelectionRef
+					selectionCheckboxRef: bulkSelectionRef,
+					onClearSelection: () => focusAfterToggle(tableSelectionRef)
 				})
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("table", {
@@ -74347,6 +74378,7 @@ Icon: ButtonIcon });
 										"aria-hidden": disableHeaderControls || void 0,
 										children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BulkSelectionCheckbox, {
 											checkboxRef: tableSelectionRef,
+											onSelect: () => focusAfterToggle(bulkSelectionRef),
 											selection,
 											onChangeSelection,
 											data,
@@ -74865,14 +74897,7 @@ Icon: ButtonIcon });
 	function ViewGrid({ actions, data, fields, getItemId, isLoading, onChangeSelection, onClickItem, isItemClickable, renderItemLink, selection, view, className, empty }) {
 		const [isActionInProgress, setIsActionInProgress] = (0, _wordpress_element.useState)(false);
 		const selectionCheckboxRef = (0, _wordpress_element.useRef)(null);
-		const bulkActionsRef = (0, _wordpress_element.useRef)(null);
-		const hadSelectionRef = (0, _wordpress_element.useRef)(false);
-		const hasSelection = selection.length > 0;
-		(0, _wordpress_element.useEffect)(() => {
-			const ownerDocument = bulkActionsRef.current?.ownerDocument;
-			if (hadSelectionRef.current && !hasSelection && (ownerDocument?.activeElement === ownerDocument?.body || bulkActionsRef.current?.contains(ownerDocument?.activeElement ?? null))) selectionCheckboxRef.current?.focus();
-			hadSelectionRef.current = hasSelection;
-		}, [hasSelection]);
+		const focusAfterToggle = useBulkActionsFocus({ isShown: selection.length > 0 || isActionInProgress });
 		const isDelayedLoading = useDelayedLoading(!!isLoading);
 		const hasData = !!data?.length;
 		const groupField = view.groupBy?.field ? fields.find((f) => f.id === view.groupBy?.field) : null;
@@ -74910,12 +74935,12 @@ Icon: ButtonIcon });
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			(hasBulkActions || isActionInProgress) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				ref: bulkActionsRef,
 				className: "dataviews-view-grid__bulk-actions-header",
 				inert: inertValue(!!isLoading),
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BulkActionToolbar, {
 					selectionCheckboxRef,
-					onActionInProgressChange: setIsActionInProgress
+					onActionInProgressChange: setIsActionInProgress,
+					onClearSelection: () => focusAfterToggle(selectionCheckboxRef)
 				})
 			}),
 			hasData && groupField && dataByGroup && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
