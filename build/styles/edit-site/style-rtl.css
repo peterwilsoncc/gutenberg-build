@@ -3816,7 +3816,7 @@ button.font-library__upload-area {
   display: inline-flex;
 }
 
-.global-styles-ui__palette-preview > * + * {
+.global-styles-ui__palette-preview > :where(:not(:first-child)) {
   margin-inline-start: -8px;
 }
 

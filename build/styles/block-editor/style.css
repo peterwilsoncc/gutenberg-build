@@ -1664,7 +1664,7 @@ iframe[name=editor-canvas] {
   display: flex;
   flex-shrink: 0;
 }
-.block-editor-panel-color-gradient-settings__color-indicators > * + * {
+.block-editor-panel-color-gradient-settings__color-indicators > :where(:not(:first-child)) {
   margin-inline-start: -8px;
 }
 

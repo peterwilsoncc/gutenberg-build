@@ -1119,7 +1119,7 @@ button.font-library__upload-area {
   display: inline-flex;
 }
 
-.global-styles-ui__palette-preview > * + * {
+.global-styles-ui__palette-preview > :where(:not(:first-child)) {
   margin-inline-start: -8px;
 }
 
@@ -6082,7 +6082,7 @@ mark.wp-note {
   padding: 0 8px;
 }
 
-.show-icon-labels .editor-document-tools__left > * + * {
+.show-icon-labels .editor-document-tools__left > :where(:not(:first-child)) {
   margin-left: 8px;
 }
 
