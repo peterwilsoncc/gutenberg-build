@@ -2880,15 +2880,31 @@ var import_mousetrap = /* @__PURE__ */ __toESM(require_mousetrap(), 1);
 		]);
 		(0, _wordpress_element.useLayoutEffect)(() => {
 			if (!useWindowing) return;
-			const scrollContainer = (0, _wordpress_dom.getScrollContainer)(elementRef.current);
-			if (!scrollContainer) return;
-			const { defaultView } = scrollContainer.ownerDocument;
+			const element = elementRef.current;
+			const initialContainer = (0, _wordpress_dom.getScrollContainer)(element);
+			if (!initialContainer) return;
+			let scrollContainer = initialContainer;
+			const { defaultView, documentElement } = scrollContainer.ownerDocument;
 			const onMeasure = () => measureWindow();
 			const onKeyDown = (event) => handleKeyDown(event, scrollContainer);
 			scrollContainer.addEventListener("scroll", onMeasure);
 			defaultView?.addEventListener("resize", onMeasure);
 			defaultView?.addEventListener("keydown", onKeyDown);
+			let observer;
+			if (initialContainer === documentElement) {
+				observer = new ResizeObserver(() => {
+					const nextContainer = (0, _wordpress_dom.getScrollContainer)(element);
+					if (nextContainer && nextContainer !== scrollContainer) {
+						scrollContainer.removeEventListener("scroll", onMeasure);
+						scrollContainer = nextContainer;
+						scrollContainer.addEventListener("scroll", onMeasure);
+						onMeasure();
+					}
+				});
+				for (let node = element; node; node = node.parentElement) observer.observe(node);
+			}
 			return () => {
+				observer?.disconnect();
 				scrollContainer.removeEventListener("scroll", onMeasure);
 				defaultView?.removeEventListener("resize", onMeasure);
 				defaultView?.removeEventListener("keydown", onKeyDown);
