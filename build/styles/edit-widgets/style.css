@@ -266,7 +266,7 @@ body.admin-color-fresh {
 }
 
 .interface-complementary-area h2 {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: #1e1e1e;
   margin-bottom: 1.5em;
@@ -910,7 +910,7 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
   padding: 0 32px;
 }
 .edit-widgets-welcome-guide__text {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   line-height: 1.4;
   margin: 0 0 24px 0;
   padding: 0 32px;
@@ -941,7 +941,7 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
 }
 .edit-widgets-block-editor .components-button {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
 }
 .edit-widgets-block-editor .components-button.is-tertiary, .edit-widgets-block-editor .components-button.has-icon {
   padding: 6px;

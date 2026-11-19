@@ -56,7 +56,7 @@
   white-space: nowrap;
 }
 .wp-block-nextpage > span {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   position: relative;
   text-transform: uppercase;
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);

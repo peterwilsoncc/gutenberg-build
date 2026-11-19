@@ -471,13 +471,13 @@ _::-webkit-full-page-media, _:future, :root [data-has-multi-selection=true] .blo
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   color: #000;
   font-weight: 400;
 }
 .is-zoomed-out .block-editor-block-list__zoom-out-separator {
-  font-size: calc(13px / var(--wp-block-editor-iframe-zoom-out-scale));
+  font-size: calc(var(--wpds-typography-font-size-md, 13px) / var(--wp-block-editor-iframe-zoom-out-scale));
 }
 .block-editor-block-list__zoom-out-separator.is-dragged-over {
   background: #ccc;
@@ -970,7 +970,7 @@ figcaption.block-editor-rich-text__editable [data-rich-text-placeholder]::before
 .block-editor-warning .block-editor-warning__message {
   line-height: 1.4;
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   color: #1e1e1e;
   margin: 0;
 }

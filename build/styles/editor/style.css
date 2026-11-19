@@ -267,7 +267,7 @@ body.admin-color-fresh {
 }
 
 .interface-complementary-area h2 {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   color: #1e1e1e;
   margin-bottom: 1.5em;
@@ -1862,7 +1862,7 @@ button.font-library__upload-area {
 
 @media (min-width: 600px) {
   .dataviews-filters__search-widget-filter-combobox__wrapper .dataviews-filters__search-widget-filter-combobox__input {
-    font-size: 13px;
+    font-size: var(--wpds-typography-font-size-md, 13px);
     /* Override core line-height. To be reviewed. */
     line-height: normal;
   }
@@ -5495,7 +5495,7 @@ mark.wp-note {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: var(--wpds-typography-font-size-xs, 11px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   border: 0;
   background-clip: border-box;
@@ -5509,7 +5509,7 @@ mark.wp-note {
 }
 
 .editor-avatar__name {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 20px;
   color: var(--editor-avatar-name-color, #fff);
@@ -5629,7 +5629,7 @@ mark.wp-note {
 .editor-avatar-group__overflow {
   margin-inline-start: 4px;
   margin-inline-end: 4px;
-  font-size: 12px;
+  font-size: var(--wpds-typography-font-size-sm, 12px);
   line-height: 20px;
   color: #1e1e1e;
   white-space: nowrap;
@@ -5652,7 +5652,7 @@ mark.wp-note {
   padding: 8px 16px;
 }
 .editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-header-title {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 20px;
   display: flex;
@@ -5706,7 +5706,7 @@ mark.wp-note {
   min-width: 0;
 }
 .editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item-name {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 20px;
   color: #1e1e1e;
@@ -5976,7 +5976,7 @@ mark.wp-note {
   background: #ddd;
   color: #1e1e1e;
   border-radius: 3px;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   padding: 1px 6px;
   margin-right: 4px;
 }
@@ -6258,7 +6258,7 @@ mark.wp-note {
   padding: 0 32px;
 }
 .editor-welcome-guide__text {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   line-height: 1.4;
   margin: 0 0 16px 0;
   padding: 0 32px;
@@ -7220,7 +7220,7 @@ mark.wp-note {
 
 .editor-revisions-header__no-revisions {
   color: #757575;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
 }
 
 .editor-revisions-canvas__loading {
@@ -8032,7 +8032,7 @@ textarea.editor-post-text-editor::placeholder {
 .editor-sidebar__revisions-block-message {
   padding: 16px;
   color: #757575;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
 }
 
 .fields-controls__password {
@@ -8262,7 +8262,7 @@ textarea.editor-post-text-editor::placeholder {
   gap: 4px 8px;
   margin: 0;
   color: #1e1e1e;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
 }
 
 .editor-styles-canvas-revision-details__current {
@@ -8341,7 +8341,7 @@ textarea.editor-post-text-editor::placeholder {
   flex-basis: 33%;
   display: flex;
   flex-direction: column;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   color: #1e1e1e;
   padding-right: 8px;
   margin-bottom: 0;
@@ -8440,7 +8440,7 @@ textarea.editor-post-text-editor::placeholder {
 .editor-text-editor__toolbar h2 {
   line-height: 40px;
   margin: 0 auto 0 0;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   color: #1e1e1e;
 }
 
@@ -8496,7 +8496,7 @@ textarea.editor-post-text-editor::placeholder {
 }
 .editor-visual-editor .components-button {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   padding: 6px 12px;
 }
 .editor-visual-editor .components-button.is-tertiary, .editor-visual-editor .components-button.has-icon {
@@ -8527,7 +8527,7 @@ textarea.editor-post-text-editor::placeholder {
   margin-left: auto;
   padding: 0 18px;
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
 }
 .editor-viewport-status .editor-viewport-status__responsive-styles {
   color: var(--wp-block-synced-color);

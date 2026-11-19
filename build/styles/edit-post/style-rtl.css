@@ -280,7 +280,7 @@ body.admin-color-fresh {
 .edit-post-meta-boxes-area #poststuff h2.hndle { /* WordPress selectors yolo */
   box-sizing: border-box;
   color: #1e1e1e;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   outline: none;
   padding: 0 24px;
@@ -350,7 +350,7 @@ body.admin-color-fresh {
 }
 .edit-post-welcome-guide__text,
 .edit-template-welcome-guide__text {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   line-height: 1.4;
   margin: 0 0 24px 0;
   padding: 0 24px;

@@ -57,7 +57,7 @@
 }
 .wp-block-more .rich-text {
   position: relative;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   text-transform: uppercase;
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;

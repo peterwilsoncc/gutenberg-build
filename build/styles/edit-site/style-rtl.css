@@ -673,7 +673,7 @@ body.admin-color-fresh {
 
 @media (min-width: 600px) {
   .dataviews-filters__search-widget-filter-combobox__wrapper .dataviews-filters__search-widget-filter-combobox__input {
-    font-size: 13px;
+    font-size: var(--wpds-typography-font-size-md, 13px);
     /* Override core line-height. To be reviewed. */
     line-height: normal;
   }
@@ -4367,7 +4367,7 @@ button.font-library__upload-area {
   padding: 0 32px;
 }
 .edit-site-welcome-guide__text {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   line-height: 1.4;
   margin: 0 0 16px 0;
   padding: 0 32px;

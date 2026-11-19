@@ -75,7 +75,7 @@
   margin-bottom: 0;
 }
 .entities-saved-states__panel.is-inline .entities-saved-states__panel-body > h2 button {
-  font-size: 11px;
+  font-size: var(--wpds-typography-font-size-xs, 11px);
   text-transform: uppercase;
 }
 .entities-saved-states__panel.is-inline .entities-saved-states__text-prompt--header-wrapper {
@@ -94,7 +94,7 @@
 }
 
 .entities-saved-states__changes {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   margin: 4px 16px 0 24px;
   list-style: disc;
 }

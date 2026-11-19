@@ -232,7 +232,7 @@
   align-items: center;
   gap: 2px;
   max-width: 100%;
-  font-size: 12px;
+  font-size: var(--wpds-typography-font-size-sm, 12px);
   font-weight: 400;
   line-height: 20px;
 }
@@ -305,7 +305,7 @@
   display: inline-flex;
   text-decoration: none;
   font-family: inherit;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   margin: 0;
   cursor: var(--wpds-cursor-control, pointer);
@@ -639,7 +639,7 @@ p + .components-button.is-tertiary {
 }
 @media (min-width: 600px) {
   .components-checkbox-control__input[type=checkbox] {
-    font-size: 13px;
+    font-size: var(--wpds-typography-font-size-md, 13px);
     /* Override core line-height. To be reviewed. */
     line-height: normal;
   }
@@ -961,7 +961,7 @@ input.components-combobox-control__input[type=text]:focus {
 }
 @media (min-width: 600px) {
   .components-combobox-control__suggestions-container {
-    font-size: 13px;
+    font-size: var(--wpds-typography-font-size-md, 13px);
     /* Override core line-height. To be reviewed. */
     line-height: normal;
   }
@@ -1031,7 +1031,7 @@ input.components-combobox-control__input[type=text]:focus {
   padding: 12px 16px;
   border-radius: 0 0 4px 4px;
   position: relative;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.2), inset 1px 0 0 0 rgba(0, 0, 0, 0.2), inset -1px 0 0 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -1209,7 +1209,7 @@ input.components-combobox-control__input[type=text]:focus {
 
 .components-drop-zone__content-text {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
 }
 
 .components-dropdown {
@@ -1282,7 +1282,7 @@ input.components-combobox-control__input[type=text]:focus {
 .components-dropdown-menu__menu {
   width: 100%;
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   line-height: 1.4;
 }
 .components-dropdown-menu__menu .components-dropdown-menu__menu-item,
@@ -1632,7 +1632,7 @@ input.components-combobox-control__input[type=text]:focus {
 }
 @media (min-width: 600px) {
   .components-form-token-field__input-container {
-    font-size: 13px;
+    font-size: var(--wpds-typography-font-size-md, 13px);
     /* Override core line-height. To be reviewed. */
     line-height: normal;
   }
@@ -1697,7 +1697,7 @@ input.components-combobox-control__input[type=text]:focus {
 }
 
 .components-form-token-field__token {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   display: flex;
   color: #1e1e1e;
   max-width: 100%;
@@ -1801,7 +1801,7 @@ input.components-combobox-control__input[type=text]:focus {
 .components-form-token-field__suggestion {
   color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
   display: block;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   padding: 8px 12px;
   min-height: 32px;
   margin: 0;
@@ -2613,7 +2613,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 }
 
 .components-placeholder.components-placeholder {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   box-sizing: border-box;
   position: relative;
   padding: 24px;
@@ -2637,7 +2637,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 .components-placeholder__label,
 .components-placeholder__fieldset {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   letter-spacing: initial;
   line-height: initial;
   text-transform: none;
@@ -2671,7 +2671,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 .components-placeholder__fieldset p,
 .components-placeholder__fieldset form p {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
 }
 
 .components-placeholder__fieldset.is-column-layout,
@@ -2691,7 +2691,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 }
 @media (min-width: 600px) {
   .components-placeholder__input[type=url] {
-    font-size: 13px;
+    font-size: var(--wpds-typography-font-size-md, 13px);
     /* Override core line-height. To be reviewed. */
     line-height: normal;
   }
@@ -2958,7 +2958,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   margin: 0;
   padding: 0;
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
 }
 
 .components-radio-control__help {
@@ -3268,7 +3268,7 @@ body.lockscroll {
 
 .components-snackbar {
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(16px) saturate(180%);
   border-radius: 4px;
@@ -3300,7 +3300,7 @@ body.lockscroll {
 .components-snackbar .components-snackbar__icon {
   position: absolute;
   left: -8px;
-  top: calc((5.8px) / -2);
+  top: calc((24px - var(--wpds-typography-font-size-md, 13px) * 1.4) / -2);
 }
 .components-snackbar .components-snackbar__dismiss-button {
   margin-left: 24px;
@@ -3517,7 +3517,7 @@ body.lockscroll {
   .components-text-control__input[type=email],
   .components-text-control__input[type=month],
   .components-text-control__input[type=number] {
-    font-size: 13px;
+    font-size: var(--wpds-typography-font-size-md, 13px);
     /* Override core line-height. To be reviewed. */
     line-height: normal;
   }
@@ -3850,7 +3850,7 @@ body.lockscroll {
 .components-toolbar__control.components-button[data-subscript]::after {
   content: attr(data-subscript);
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   line-height: 12px;
   position: absolute;

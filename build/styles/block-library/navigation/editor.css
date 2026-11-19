@@ -269,7 +269,7 @@
   display: flex;
   align-items: center;
   min-width: 96px;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 .wp-block-navigation.is-selected .wp-block-navigation-placeholder__preview {
@@ -363,7 +363,7 @@
 
 .wp-block-navigation-placeholder__actions {
   display: flex;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   gap: 6px;
   align-items: center;

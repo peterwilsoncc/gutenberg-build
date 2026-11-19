@@ -999,7 +999,7 @@ html :where(.wp-block-column) {
 }
 
 .wp-block-icon__inserter-grid-icons-list-item-title {
-  font-size: 12px;
+  font-size: var(--wpds-typography-font-size-sm, 12px);
   padding: 4px 4px 8px;
   overflow-wrap: break-word;
 }
@@ -1225,7 +1225,7 @@ figure.wp-block-image:not(.wp-block) {
 }
 .wp-block-more .rich-text {
   position: relative;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   text-transform: uppercase;
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -1421,7 +1421,7 @@ figure.wp-block-image:not(.wp-block) {
   display: flex;
   align-items: center;
   min-width: 96px;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 .wp-block-navigation.is-selected .wp-block-navigation-placeholder__preview {
@@ -1515,7 +1515,7 @@ figure.wp-block-image:not(.wp-block) {
 
 .wp-block-navigation-placeholder__actions {
   display: flex;
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   gap: 6px;
   align-items: center;
@@ -1968,7 +1968,7 @@ body.editor-styles-wrapper .wp-block-navigation__responsive-container.is-menu-op
   white-space: nowrap;
 }
 .wp-block-nextpage > span {
-  font-size: 13px;
+  font-size: var(--wpds-typography-font-size-md, 13px);
   position: relative;
   text-transform: uppercase;
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
@@ -2126,7 +2126,7 @@ body.editor-styles-wrapper .wp-block-navigation__responsive-container.is-menu-op
 }
 @media (min-width: 600px) {
   .blocks-shortcode__textarea {
-    font-size: 13px !important;
+    font-size: var(--wpds-typography-font-size-md, 13px) !important;
   }
 }
 .blocks-shortcode__textarea:focus {
