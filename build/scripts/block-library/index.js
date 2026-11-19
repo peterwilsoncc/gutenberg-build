@@ -81205,10 +81205,10 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/shortcode/transforms.mjs
 	const getShortcodeFromTransforms = () => (0, _wordpress_blocks.getBlockTransforms)("from").filter((transform) => transform.type === "shortcode" && transform.blockName !== "core/shortcode");
-	const isSingleShortcode = (text, tag) => {
+	const isSingleShortcode = (text, tag, isMatch) => {
 		const trimmed = text.trim();
 		const match = (0, _wordpress_shortcode.next)(tag, trimmed);
-		return !!match && match.index === 0 && match.content.length === trimmed.length;
+		return !!match && match.index === 0 && match.content.length === trimmed.length && (!isMatch || isMatch(match.shortcode.attrs));
 	};
 	const transforms$8 = {
 		from: [{
@@ -81227,7 +81227,7 @@ Icon: ButtonIcon });
 				type: "block",
 				blocks: [fromTransform.blockName],
 				isMatch: ({ text = "" }) => {
-					return [].concat(fromTransform.tag).some((tag) => isSingleShortcode(text, tag));
+					return [].concat(fromTransform.tag).some((tag) => isSingleShortcode(text, tag, fromTransform.isMatch));
 				},
 				transform: ({ text = "" }) => {
 					return (0, _wordpress_blocks.rawHandler)({ HTML: `<p>${text.trim()}</p>` });
