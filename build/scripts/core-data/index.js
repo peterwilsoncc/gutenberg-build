@@ -12425,6 +12425,42 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return ((...args) => fn(...args));
 	}
 
+// packages/sync/build-module/deferred-updates.mjs
+/**
+	* Create a queue for local updates that are kept off the typing hot path
+	* (#79964).
+	*
+	* The queue is shared by all documents, because the order of updates to
+	* different documents decides the order of their undo levels. The items are
+	* held in a list, and not closed over in their timeouts, so that a read of a
+	* document (a snapshot, persistence, undo) can flush them first.
+	*
+	* @param apply Applies one item.
+	*/
+	function createDeferredUpdateQueue(apply) {
+		const queue = [];
+		let isFlushing = false;
+		function flush() {
+			if (isFlushing) return;
+			isFlushing = true;
+			try {
+				while (queue.length > 0) {
+					const item = queue.shift();
+					if (item) apply(item);
+				}
+			} finally {
+				isFlushing = false;
+			}
+		}
+		return {
+			defer(item) {
+				queue.push(item);
+				setTimeout(flush, 0);
+			},
+			flush
+		};
+	}
+
 // node_modules/.store/y-protocols@1.0.7-LCrc4ked9I2BIv1vBZfNXw/node_modules/y-protocols/sync.js
 /**
 	* @module sync-protocol
@@ -13168,7 +13204,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		}
 		start();
 	}
-	function registerRoom({ room, doc, awareness, log, onStatusChange }) {
+	function registerRoom({ room, doc, awareness, flushLocalUpdates, log, onStatusChange }) {
 		if (roomStates.has(room)) return;
 		const updateQueue = createUpdateQueue([createSyncStep1Update(doc)]);
 		/**
@@ -13238,7 +13274,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			log,
 			onStatusChange,
 			processAwarenessUpdate: (state) => processAwarenessUpdate(state, awareness),
-			processDocUpdate: (update) => processDocUpdate(update, doc),
+			processDocUpdate: (update) => {
+				flushLocalUpdates?.();
+				return processDocUpdate(update, doc);
+			},
 			room,
 			unregister,
 			updateQueue
@@ -13333,6 +13372,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				room: this.options.room,
 				doc: this.options.ydoc,
 				awareness: this.awareness,
+				flushLocalUpdates: this.options.flushLocalUpdates,
 				log: this.log,
 				onStatusChange: this.emitStatus
 			});
@@ -13390,9 +13430,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* Create a provider creator function for the HttpPollingProvider
 	*/
 	function createHttpPollingProvider() {
-		return async ({ awareness, objectType, objectId, ydoc }) => {
+		return async ({ awareness, flushLocalUpdates, objectType, objectId, ydoc }) => {
 			const provider = new HttpPollingProvider({
 				awareness,
+				flushLocalUpdates,
 				room: objectId ? `${objectType}:${objectId}` : objectType,
 				ydoc
 			});
@@ -13400,7 +13441,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				destroy: () => provider.destroy(),
 				on: (event, callback) => {
 					provider.on(event, callback);
-				}
+				},
+				supportsDeferredUpdates: true
 			};
 		};
 	}
@@ -13615,6 +13657,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const debugWrap = debug ? logPerformanceTiming : passThru;
 		const collectionStates = /* @__PURE__ */ new Map();
 		const entityStates = /* @__PURE__ */ new Map();
+		const deferredUpdates = createDeferredUpdateQueue(({ objectType, objectId, changes, origin, options }) => updateCRDTDoc(objectType, objectId, changes, origin, options));
 		/**
 		* The undo history of the loaded entities. Each entity has its own undo
 		* manager, in which Yjs tracks the changes to its document, so core-data
@@ -13626,11 +13669,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		*/
 		const undoManager = {
 			undo(objectType, objectId) {
-				flushPendingCRDTDocUpdates();
+				deferredUpdates.flush();
 				return entityStates.get(getEntityId(objectType, objectId))?.undoManager.undo() ?? false;
 			},
 			redo(objectType, objectId) {
-				flushPendingCRDTDocUpdates();
+				deferredUpdates.flush();
 				return entityStates.get(getEntityId(objectType, objectId))?.undoManager.redo() ?? false;
 			},
 			hasUndo() {
@@ -13640,11 +13683,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				return [...entityStates.values()].some((entityState) => entityState.undoManager.hasRedo());
 			},
 			stopCapturing() {
-				flushPendingCRDTDocUpdates();
+				deferredUpdates.flush();
 				entityStates.forEach((entityState) => entityState.undoManager.stopCapturing());
 			},
 			clearRedo() {
-				flushPendingCRDTDocUpdates();
+				deferredUpdates.flush();
 				entityStates.forEach((entityState) => entityState.undoManager.clearRedo());
 			}
 		};
@@ -13751,6 +13794,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			let providerResults;
 			const entityState = {
 				awareness,
+				canDeferUpdates: false,
 				handlers,
 				objectId,
 				objectType,
@@ -13767,6 +13811,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 					objectId,
 					ydoc,
 					awareness,
+					flushLocalUpdates: deferredUpdates.flush,
 					Y: yjs_exports
 				});
 				provider.on("status", handlers.onStatusChange);
@@ -13777,6 +13822,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				providerResults.forEach((result) => result.destroy());
 				return;
 			}
+			entityState.canDeferUpdates = providerResults.every((result) => true === result.supportsDeferredUpdates);
 			initializeYjsDoc(ydoc);
 			internal.applyPersistedCrdtDoc(objectType, objectId, record);
 			recordMap.observeDeep(onRecordUpdate);
@@ -13850,6 +13896,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 					objectType,
 					objectId: null,
 					ydoc,
+					flushLocalUpdates: deferredUpdates.flush,
 					Y: yjs_exports
 				});
 				provider.on("status", handlers.onStatusChange);
@@ -13982,31 +14029,22 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				markEntityAsSaved(collectionState.ydoc);
 			}, origin);
 		}
-		const pendingCRDTDocUpdates = [];
-		let isFlushingCRDTDocUpdates = false;
-		function flushPendingCRDTDocUpdates() {
-			if (isFlushingCRDTDocUpdates) return;
-			isFlushingCRDTDocUpdates = true;
-			try {
-				while (pendingCRDTDocUpdates.length > 0) {
-					const args = pendingCRDTDocUpdates.shift();
-					if (args) updateCRDTDoc(...args);
-				}
-			} finally {
-				isFlushingCRDTDocUpdates = false;
-			}
-		}
-		function deferUpdateCRDTDoc(...args) {
-			pendingCRDTDocUpdates.push(args);
-			setTimeout(flushPendingCRDTDocUpdates, 0);
-		}
 		function updateOrDefer(objectType, objectId, changes, origin, options = {}) {
-			if ((getAwareness(objectType, objectId)?.getStates().size ?? 0) > 1) {
-				flushPendingCRDTDocUpdates();
+			const entityState = entityStates.get(getEntityId(objectType, objectId));
+			const hasRemotePeers = (entityState?.awareness?.getStates().size ?? 0) > 1;
+			const canDefer = entityState?.canDeferUpdates ?? true;
+			if (hasRemotePeers || !canDefer) {
+				deferredUpdates.flush();
 				updateCRDTDoc(objectType, objectId, changes, origin, options);
 				return;
 			}
-			deferUpdateCRDTDoc(objectType, objectId, changes, origin, options);
+			deferredUpdates.defer({
+				objectType,
+				objectId,
+				changes,
+				origin,
+				options
+			});
 		}
 		/**
 		* Encode the current state of an entity's CRDT document as a snapshot.
@@ -14027,7 +14065,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				log("getEntitySnapshot", "no entity state", entityId);
 				return;
 			}
-			flushPendingCRDTDocUpdates();
+			deferredUpdates.flush();
 			return encodeDocSnapshot(entityState.ydoc);
 		}
 		/**
@@ -14046,7 +14084,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			const entityId = getEntityId(objectType, objectId);
 			const entityState = entityStates.get(entityId);
 			if (!entityState) return false;
-			flushPendingCRDTDocUpdates();
+			deferredUpdates.flush();
 			return docContainsSnapshot(entityState.ydoc, encodedSnapshot);
 		}
 		/**
@@ -14080,7 +14118,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			const entityId = getEntityId(objectType, objectId);
 			const entityState = entityStates.get(entityId);
 			if (!entityState?.ydoc) return null;
-			flushPendingCRDTDocUpdates();
+			deferredUpdates.flush();
 			return serializeCrdtDoc(entityState.ydoc);
 		}
 		const internal = {
@@ -17120,18 +17158,25 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			return history.slice(0);
 		};
 		/**
+		* Convert a selection to positions in the document as it is now. The
+		* positions stay correct when the text around them changes later.
+		* @param newSelection
+		*/
+		const resolveSelection = (newSelection) => {
+			if (!newSelection?.selectionStart?.clientId || !newSelection?.selectionEnd?.clientId) return null;
+			const { selectionStart, selectionEnd } = newSelection;
+			return {
+				start: convertWPBlockSelectionToSelection(selectionStart, ydoc),
+				end: convertWPBlockSelectionToSelection(selectionEnd, ydoc)
+			};
+		};
+		/**
 		* Update the selection history with a new selection.
 		* @param newSelection
 		*/
 		const updateSelection = (newSelection) => {
-			if (!newSelection?.selectionStart?.clientId || !newSelection?.selectionEnd?.clientId) return;
-			const { selectionStart, selectionEnd } = newSelection;
-			const start = convertWPBlockSelectionToSelection(selectionStart, ydoc);
-			const end = convertWPBlockSelectionToSelection(selectionEnd, ydoc);
-			addToHistory({
-				start,
-				end
-			});
+			const selection = resolveSelection(newSelection);
+			if (selection) addToHistory(selection);
 		};
 		/**
 		* Add a selection to the history, maintaining only the last `historySize` unique selections.
@@ -17149,7 +17194,9 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			if (history.length > historySize + 1) history = history.slice(0, historySize + 1);
 		};
 		return {
+			addSelection: addToHistory,
 			getSelectionHistory,
+			resolveSelection,
 			updateSelection
 		};
 	}
@@ -17198,8 +17245,29 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function getSelectionHistory(ydoc) {
 		return getBlockSelectionHistory(ydoc).getSelectionHistory();
 	}
-	function updateSelectionHistory(ydoc, wpSelection) {
-		return getBlockSelectionHistory(ydoc).updateSelection(wpSelection);
+	/**
+	* Record a selection after the current transaction captures undo metadata.
+	*
+	* Convert offsets before remote changes can shift the text. Store the
+	* positions after undo metadata saves the previous selection, but before
+	* remote changes trigger reconciliation.
+	*
+	* @param ydoc        The document whose selection changed.
+	* @param wpSelection The selection after the local edit.
+	*/
+	function scheduleSelectionHistory(ydoc, wpSelection) {
+		const history = getBlockSelectionHistory(ydoc);
+		const selection = history.resolveSelection(wpSelection);
+		if (!selection) return;
+		ydoc.transact((transaction) => {
+			const recordSelection = (completed) => {
+				if (completed === transaction) {
+					ydoc.off("afterTransactionCleanup", recordSelection);
+					history.addSelection(selection);
+				}
+			};
+			ydoc.on("afterTransactionCleanup", recordSelection);
+		});
 	}
 	/**
 	* Convert a YSelection to a WPBlockSelection.
@@ -17400,12 +17468,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				}
 			}
 		});
-		if (changes.selection) {
-			const selection = changes.selection;
-			setTimeout(() => {
-				updateSelectionHistory(ydoc, selection);
-			}, 0);
-		}
+		if (changes.selection) scheduleSelectionHistory(ydoc, changes.selection);
 	}
 	/**
 	* Derive blocks from a raw content string and merge them into the post's
