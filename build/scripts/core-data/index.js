@@ -25075,6 +25075,37 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		});
 	}
 
+// packages/core-data/build-module/components/unsaved-changes-warning/index.mjs
+/**
+	* Warns the user if there are unsaved changes before leaving the editor.
+	* Compatible with Post Editor and Site Editor.
+	*
+	* @return The component.
+	*/
+	function UnsavedChangesWarning() {
+		const { __experimentalGetDirtyEntityRecords } = (0, _wordpress_data.useSelect)(STORE_NAME);
+		(0, _wordpress_element.useEffect)(() => {
+			/**
+			* Warns the user if there are unsaved changes before leaving the editor.
+			*
+			* @param event `beforeunload` event.
+			*
+			* @return Warning prompt message, if unsaved changes exist.
+			*/
+			const warnIfUnsavedChanges = (event) => {
+				if (__experimentalGetDirtyEntityRecords().length > 0) {
+					event.returnValue = (0, _wordpress_i18n.__)("You have unsaved changes. If you proceed, they will be lost.");
+					return event.returnValue;
+				}
+			};
+			window.addEventListener("beforeunload", warnIfUnsavedChanges);
+			return () => {
+				window.removeEventListener("beforeunload", warnIfUnsavedChanges);
+			};
+		}, [__experimentalGetDirtyEntityRecords]);
+		return null;
+	}
+
 // packages/core-data/build-module/private-apis.mjs
 	const lockedApis = {
 		PrivateEntityProvider,
@@ -25083,6 +25114,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		getTemplateInfo,
 		getTemplatePartIcon,
 		useEntitiesSavedStatesIsDirty: useIsDirty,
+		UnsavedChangesWarning,
 		useEntityRecordsWithPermissions,
 		RECEIVE_INTERMEDIATE_RESULTS,
 		CRDT_AUTOSAVE_SNAPSHOT_KEY,

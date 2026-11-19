@@ -9626,15 +9626,9 @@ var require_notices = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.notices;
 }));
 
-// \0wp-global:@wordpress/editor
-var require_editor = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.editor;
-}));
-
 // packages/boot/build-module/store/reducer.mjs
 var import_core_data = require_core_data();
 var import_notices = require_notices();
-var import_editor = require_editor();
 const initialState = {
 	menuItems: {},
 	routes: [],
@@ -10641,9 +10635,15 @@ var require_keyboard_shortcuts = /* @__PURE__ */ __commonJSMin(((exports, module
 	module.exports = window.wp.keyboardShortcuts;
 }));
 
+// \0wp-global:@wordpress/editor
+var require_editor = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.editor;
+}));
+
 // packages/boot/build-module/components/save-panel/use-save-shortcut.mjs
 var import_keycodes = require_keycodes();
 var import_keyboard_shortcuts = require_keyboard_shortcuts();
+var import_editor = require_editor();
 const shortcutName = "core/boot/save";
 /**
 * Register the save keyboard shortcut in view mode.
@@ -11843,6 +11843,7 @@ var style_module_default$2 = {
 	"slideSidebarToRight": "a0bb8b58f3887328__slideSidebarToRight"
 };
 const { useLocation, useMatches: useMatches$1, Outlet: Outlet$1 } = unlock(privateApis);
+const { UnsavedChangesWarning: UnsavedChangesWarning$1 } = unlock(import_core_data.privateApis);
 function Root() {
 	const matches = useMatches$1();
 	const location = useLocation();
@@ -11874,7 +11875,7 @@ function Root() {
 					[style_module_default$2["has-full-canvas"]]: isFullScreen
 				}),
 				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_editor.UnsavedChangesWarning, {}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(UnsavedChangesWarning$1, {}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SavePanel, {}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_notices.SnackbarNotices, { className: style_module_default$2["notices-snackbar"] }),
 					isMobileViewport && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Page.SidebarToggleFill, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
@@ -12327,6 +12328,7 @@ var style_module_default = {
 	"slideSidebarToRight": "a0bb8b58f3887328__slideSidebarToRight"
 };
 const { useMatches, Outlet } = unlock(privateApis);
+const { UnsavedChangesWarning } = unlock(import_core_data.privateApis);
 /**
 * Root component for single page mode (no sidebar).
 * Used when rendering pages within wp-admin without taking over the full page.
@@ -12355,7 +12357,7 @@ function RootSinglePage() {
 					[style_module_default["has-full-canvas"]]: isFullScreen
 				}),
 				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_editor.UnsavedChangesWarning, {}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(UnsavedChangesWarning, {}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SavePanel, {}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_notices.SnackbarNotices, { className: style_module_default["notices-snackbar"] }),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
