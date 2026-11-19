@@ -7157,6 +7157,183 @@ var menu_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives
 });
 
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
+const STYLE_HASH_ATTRIBUTE$27 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$27() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$27(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$27(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$27}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$27) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$27(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$27();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$27(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$27, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$27(targetDocument) {
+	const runtime = getRuntime$27();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$27(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$27(hash, css) {
+	const runtime = getRuntime$27();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$27(targetDocument, hash, css);
+}
+registerStyle$27("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
+var style_module_default$26 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
+/**
+* Visually hides content while keeping it accessible to screen readers.
+* Useful when providing context that's only meaningful to assistive technology.
+*
+* Renders a `<div>` by default. Use the `render` prop to swap the
+* underlying element while preserving the visually-hidden behavior.
+*
+* ## Composing with other components
+*
+* When composing with another component that uses the `render` prop
+* pattern, keep `VisuallyHidden` as the **host** (outer component) and
+* pass the other component via `render`. This keeps the other
+* component's HTML element and semantics intact, while `VisuallyHidden`
+* only adds its hiding styles:
+*
+* ```jsx
+* // OtherComponent keeps its semantic element (e.g. <h2>).
+* <VisuallyHidden render={ <OtherComponent /> }>
+*   Accessible text
+* </VisuallyHidden>
+* ```
+*/
+const VisuallyHidden = (0, import_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
+	return useRender({
+		render,
+		ref,
+		props: mergeProps({ className: style_module_default$26["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
+	});
+});
+
+// packages/ui/build-module/utils/keyboard-shortcut.mjs
+/**
+* Returns shortcut accessibility metadata for an interactive element.
+*
+* Render `KeyboardShortcutDescription` with the returned `descriptionId` when
+* a shortcut is provided.
+*/
+function useKeyboardShortcutProps({ "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, shortcut }) {
+	const generatedDescriptionId = (0, import_element.useId)();
+	const descriptionId = shortcut ? generatedDescriptionId : void 0;
+	return {
+		descriptionId,
+		targetProps: {
+			"aria-describedby": [ariaDescribedBy, descriptionId].filter(Boolean).join(" ") || void 0,
+			"aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
+		}
+	};
+}
+/**
+* Renders a localized, visually hidden description for a keyboard shortcut.
+*/
+const KeyboardShortcutDescription = (0, import_element.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
+		id: descriptionId,
+		"aria-hidden": "true",
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { ref }),
+		children: (0, import_i18n.sprintf)((0, import_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+	});
+});
+/**
+* Renders a visual keyboard shortcut while hiding it from assistive
+* technology.
+*/
+const KeyboardShortcutDisplay = (0, import_element.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+		ref,
+		"aria-hidden": "true",
+		className,
+		dir: "ltr",
+		children: shortcut.displayShortcut
+	});
+});
+
+// packages/ui/build-module/text/text.mjs
 const STYLE_HASH_ATTRIBUTE$26 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7258,82 +7435,72 @@ function registerStyle$26(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$26(targetDocument, hash, css);
 }
-registerStyle$26("7caae29f9e", ".e2c3cbe6ada7d785__visually-hidden{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;overflow-wrap:normal;padding:0;position:absolute;width:1px;word-break:normal}");
-var style_module_default$25 = { "visually-hidden": "e2c3cbe6ada7d785__visually-hidden" };
+registerStyle$26("f1111e65b4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._071bdd99bfd7971d__text{--_gcd-heading-font-size:var(--_wp-ui-text-font-size);--_gcd-heading-font-weight:var(--_wp-ui-text-font-weight);--_gcd-p-font-size:var(--_wp-ui-text-font-size);--_gcd-p-line-height:var(--_wp-ui-text-line-height);text-wrap:pretty;font-family:var(--_wp-ui-text-font-family);font-size:var(--_wp-ui-text-font-size);font-weight:var(--_wp-ui-text-font-weight);line-height:var(--_wp-ui-text-line-height);margin:0}._044639169be0ddc8__heading-2xl{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-2xl,32px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-2xl,40px)}._6d09f119bc9d4082__heading-xl{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-xl,20px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-md,24px)}._91d66fab1e491589__heading-lg{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-lg,15px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-sm,20px)}.fa45095e6c448022__heading-md{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-md,13px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-sm,20px)}._8005563893523539__heading-sm{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-xs,11px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._304c298de3ee1214__body-xl{--_wp-ui-text-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-default,400);--_wp-ui-text-font-size:var(--wpds-typography-font-size-xl,20px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-xl,32px)}._739e6a8e329f4d6a__body-lg{--_wp-ui-text-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-default,400);--_wp-ui-text-font-size:var(--wpds-typography-font-size-lg,15px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-md,24px)}._330441fcf3fa3e88__body-md{--_wp-ui-text-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-default,400);--_wp-ui-text-font-size:var(--wpds-typography-font-size-md,13px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-sm,20px)}.cf8040c939c453ff__body-sm{--_wp-ui-text-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-default,400);--_wp-ui-text-font-size:var(--wpds-typography-font-size-sm,12px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-xs,16px)}}}");
+var style_module_default$25 = {
+	"text": "_071bdd99bfd7971d__text",
+	"heading-2xl": "_044639169be0ddc8__heading-2xl",
+	"heading-xl": "_6d09f119bc9d4082__heading-xl",
+	"heading-lg": "_91d66fab1e491589__heading-lg",
+	"heading-md": "fa45095e6c448022__heading-md",
+	"heading-sm": "_8005563893523539__heading-sm",
+	"body-xl": "_304c298de3ee1214__body-xl",
+	"body-lg": "_739e6a8e329f4d6a__body-lg",
+	"body-md": "_330441fcf3fa3e88__body-md",
+	"body-sm": "cf8040c939c453ff__body-sm"
+};
+registerStyle$26("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default$1 = {
+	"button": "db1aa0d975c98907__button",
+	"input": "_560ae5870016ca79__input",
+	"textarea": "_7c14c78aca908e56__textarea",
+	"div": "b752c6b223b319c4__div",
+	"p": "_56028dfe751232df__p",
+	"heading": "_48f5e2ad729cc233__heading",
+	"a": "fba8c89ccbfb853b__a",
+	"ol": "_2933712904448f13__ol",
+	"li": "c48c21f7371f7cea__li",
+	"span": "_2348cae4464115af__span"
+};
 /**
-* Visually hides content while keeping it accessible to screen readers.
-* Useful when providing context that's only meaningful to assistive technology.
-*
-* Renders a `<div>` by default. Use the `render` prop to swap the
-* underlying element while preserving the visually-hidden behavior.
-*
-* ## Composing with other components
-*
-* When composing with another component that uses the `render` prop
-* pattern, keep `VisuallyHidden` as the **host** (outer component) and
-* pass the other component via `render`. This keeps the other
-* component's HTML element and semantics intact, while `VisuallyHidden`
-* only adds its hiding styles:
-*
-* ```jsx
-* // OtherComponent keeps its semantic element (e.g. <h2>).
-* <VisuallyHidden render={ <OtherComponent /> }>
-*   Accessible text
-* </VisuallyHidden>
-* ```
+* A text component for rendering content with predefined typographic variants.
+* Built on design tokens for consistent typography across the UI.
 */
-const VisuallyHidden = (0, import_element.forwardRef)(function UnforwardedVisuallyHidden({ render, ...restProps }, ref) {
+const Text = (0, import_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
 	return useRender({
 		render,
+		defaultTagName: "span",
 		ref,
-		props: mergeProps({ className: style_module_default$25["visually-hidden"] }, restProps, { "data-visually-hidden": "" })
+		props: mergeProps(props, { className: clsx(style_module_default$25.text, global_css_defense_module_default$1.heading, global_css_defense_module_default$1.p, style_module_default$25[variant], className) })
 	});
 });
 
-// packages/ui/build-module/utils/keyboard-shortcut.mjs
+// packages/ui/build-module/utils/render-slot-with-children.mjs
 /**
-* Returns shortcut accessibility metadata for an interactive element.
+* Fills an optional "slot" element prop with content by cloning it and
+* injecting the given `children`. When `slot` is undefined, the provided
+* `defaultSlot` is used in its place.
 *
-* Render `KeyboardShortcutDescription` with the returned `descriptionId` when
-* a shortcut is provided.
+* Shared by overlay `Popup` components for their slot-shaped customization
+* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
+* children injection — stays consistent across all of them.
+*
+* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
+* any subtree passed on the slot element is overwritten by `children`.
+*
+* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
+*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
+*                    is used. Injected `children` replace any subtree the caller
+*                    may have passed on the slot element.
+* @param defaultSlot Unpopulated default element used when `slot` is omitted
+*                    (e.g. `<Tooltip.Portal />`).
+* @param children    Content to inject as the slot's children (backdrop,
+*                    positioner, popup subtree, etc.).
 */
-function useKeyboardShortcutProps({ "aria-describedby": ariaDescribedBy, "aria-keyshortcuts": ariaKeyShortcuts, shortcut }) {
-	const generatedDescriptionId = (0, import_element.useId)();
-	const descriptionId = shortcut ? generatedDescriptionId : void 0;
-	return {
-		descriptionId,
-		targetProps: {
-			"aria-describedby": [ariaDescribedBy, descriptionId].filter(Boolean).join(" ") || void 0,
-			"aria-keyshortcuts": shortcut?.ariaKeyShortcut ?? ariaKeyShortcuts
-		}
-	};
+function renderSlotWithChildren(slot, defaultSlot, children) {
+	return (0, import_element.cloneElement)(slot ?? defaultSlot, { children });
 }
-/**
-* Renders a localized, visually hidden description for a keyboard shortcut.
-*/
-const KeyboardShortcutDescription = (0, import_element.forwardRef)(function UnforwardedKeyboardShortcutDescription({ descriptionId, shortcut }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
-		id: descriptionId,
-		"aria-hidden": "true",
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { ref }),
-		children: (0, import_i18n.sprintf)((0, import_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
-	});
-});
-/**
-* Renders a visual keyboard shortcut while hiding it from assistive
-* technology.
-*/
-const KeyboardShortcutDisplay = (0, import_element.forwardRef)(function UnforwardedKeyboardShortcutDisplay({ className, shortcut }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-		ref,
-		"aria-hidden": "true",
-		className,
-		dir: "ltr",
-		children: shortcut.displayShortcut
-	});
-});
 
-// packages/ui/build-module/text/text.mjs
+// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
 const STYLE_HASH_ATTRIBUTE$25 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7435,72 +7602,96 @@ function registerStyle$25(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$25(targetDocument, hash, css);
 }
-registerStyle$25("f1111e65b4", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._071bdd99bfd7971d__text{--_gcd-heading-font-size:var(--_wp-ui-text-font-size);--_gcd-heading-font-weight:var(--_wp-ui-text-font-weight);--_gcd-p-font-size:var(--_wp-ui-text-font-size);--_gcd-p-line-height:var(--_wp-ui-text-line-height);text-wrap:pretty;font-family:var(--_wp-ui-text-font-family);font-size:var(--_wp-ui-text-font-size);font-weight:var(--_wp-ui-text-font-weight);line-height:var(--_wp-ui-text-line-height);margin:0}._044639169be0ddc8__heading-2xl{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-2xl,32px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-2xl,40px)}._6d09f119bc9d4082__heading-xl{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-xl,20px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-md,24px)}._91d66fab1e491589__heading-lg{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-lg,15px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-sm,20px)}.fa45095e6c448022__heading-md{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-md,13px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-sm,20px)}._8005563893523539__heading-sm{--_wp-ui-text-font-family:var(--wpds-typography-font-family-heading,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-emphasis,600);--_wp-ui-text-font-size:var(--wpds-typography-font-size-xs,11px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-xs,16px);text-transform:uppercase}._304c298de3ee1214__body-xl{--_wp-ui-text-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-default,400);--_wp-ui-text-font-size:var(--wpds-typography-font-size-xl,20px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-xl,32px)}._739e6a8e329f4d6a__body-lg{--_wp-ui-text-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-default,400);--_wp-ui-text-font-size:var(--wpds-typography-font-size-lg,15px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-md,24px)}._330441fcf3fa3e88__body-md{--_wp-ui-text-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-default,400);--_wp-ui-text-font-size:var(--wpds-typography-font-size-md,13px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-sm,20px)}.cf8040c939c453ff__body-sm{--_wp-ui-text-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_wp-ui-text-font-weight:var(--wpds-typography-font-weight-default,400);--_wp-ui-text-font-size:var(--wpds-typography-font-size-sm,12px);--_wp-ui-text-line-height:var(--wpds-typography-line-height-xs,16px)}}}");
-var style_module_default$24 = {
-	"text": "_071bdd99bfd7971d__text",
-	"heading-2xl": "_044639169be0ddc8__heading-2xl",
-	"heading-xl": "_6d09f119bc9d4082__heading-xl",
-	"heading-lg": "_91d66fab1e491589__heading-lg",
-	"heading-md": "fa45095e6c448022__heading-md",
-	"heading-sm": "_8005563893523539__heading-sm",
-	"body-xl": "_304c298de3ee1214__body-xl",
-	"body-lg": "_739e6a8e329f4d6a__body-lg",
-	"body-md": "_330441fcf3fa3e88__body-md",
-	"body-sm": "cf8040c939c453ff__body-sm"
-};
-registerStyle$25("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default$1 = {
-	"button": "db1aa0d975c98907__button",
-	"input": "_560ae5870016ca79__input",
-	"textarea": "_7c14c78aca908e56__textarea",
-	"div": "b752c6b223b319c4__div",
-	"p": "_56028dfe751232df__p",
-	"heading": "_48f5e2ad729cc233__heading",
-	"a": "fba8c89ccbfb853b__a",
-	"ol": "_2933712904448f13__ol",
-	"li": "c48c21f7371f7cea__li",
-	"span": "_2348cae4464115af__span"
-};
+registerStyle$25("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
+var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
 /**
-* A text component for rendering content with predefined typographic variants.
-* Built on design tokens for consistent typography across the UI.
+* Marker attribute on the compat overlay slot element.
 */
-const Text = (0, import_element.forwardRef)(function UnforwardedText({ variant = "body-md", render, className, ...props }, ref) {
-	return useRender({
-		render,
-		defaultTagName: "span",
-		ref,
-		props: mergeProps(props, { className: clsx(style_module_default$24.text, global_css_defense_module_default$1.heading, global_css_defense_module_default$1.p, style_module_default$24[variant], className) })
+const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
+function resolveOwnerDocument() {
+	return typeof document === "undefined" ? null : document;
+}
+function isInWordPressEnvironment() {
+	let topWp;
+	try {
+		topWp = window.top?.wp;
+	} catch {}
+	const wp = topWp ?? window.wp;
+	return typeof wp?.components === "object" && wp.components !== null;
+}
+let cachedSlot = null;
+function ensureSlotIsAccessible(element) {
+	element.setAttribute("aria-hidden", "false");
+	return element;
+}
+function createSlot(ownerDocument) {
+	const element = ownerDocument.createElement("div");
+	element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
+	if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
+	ownerDocument.body.appendChild(element);
+	return element;
+}
+/**
+* Returns the body-level compat overlay slot when the runtime opts in,
+* lazily creating it on first call. Returns `undefined` otherwise — so the
+* return value can be forwarded straight to a `container` prop, leaving the
+* default portal container in effect.
+*
+* Two opt-in paths:
+*
+* - Auto-detected when `window.wp.components` is on the global — the
+*   typical script-loader setup for WordPress plugins and admin screens.
+* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
+*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
+*   relying on the global.
+*
+* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
+* local document's body. Subsequent calls return the same element; if it's
+* been removed it's recreated, and a slot created by another
+* `@wordpress/ui` instance in the same document is adopted rather than
+* duplicated.
+*/
+function getWpCompatOverlaySlot() {
+	if (typeof window === "undefined") return;
+	if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
+	const ownerDocument = resolveOwnerDocument();
+	if (!ownerDocument || !ownerDocument.body) return;
+	if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
+	const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
+	if (existing instanceof HTMLDivElement) {
+		cachedSlot = ensureSlotIsAccessible(existing);
+		return cachedSlot;
+	}
+	if (cachedSlot?.isConnected) cachedSlot.remove();
+	cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
+	return cachedSlot;
+}
+
+// packages/ui/build-module/utils/direction-provider.mjs
+/**
+* Provides WordPress's text direction to Base UI components.
+*/
+function DirectionProvider({ children }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider$1, {
+		direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr",
+		children
+	});
+}
+
+// packages/ui/build-module/tooltip/portal.mjs
+/**
+* Used to apply custom portal behavior to `Tooltip`'s floating content.
+* `container` defaults to the `@wordpress/ui` compat overlay slot.
+*/
+const Portal = (0, import_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPortal, {
+		container: container === void 0 ? getWpCompatOverlaySlot() : container,
+		...restProps,
+		ref
 	});
 });
 
-// packages/ui/build-module/utils/render-slot-with-children.mjs
-/**
-* Fills an optional "slot" element prop with content by cloning it and
-* injecting the given `children`. When `slot` is undefined, the provided
-* `defaultSlot` is used in its place.
-*
-* Shared by overlay `Popup` components for their slot-shaped customization
-* props (e.g. `portal`, `positioner`), so the merge behavior — defaults,
-* children injection — stays consistent across all of them.
-*
-* Callers should type the slot prop as `ReactElement<Omit<Props, 'children'>>`:
-* any subtree passed on the slot element is overwritten by `children`.
-*
-* @param slot        Optional element from the slot prop (e.g. `<Tooltip.Portal … />`
-*                    or `<Tooltip.Positioner … />`). When omitted, `defaultSlot`
-*                    is used. Injected `children` replace any subtree the caller
-*                    may have passed on the slot element.
-* @param defaultSlot Unpopulated default element used when `slot` is omitted
-*                    (e.g. `<Tooltip.Portal />`).
-* @param children    Content to inject as the slot's children (backdrop,
-*                    positioner, popup subtree, etc.).
-*/
-function renderSlotWithChildren(slot, defaultSlot, children) {
-	return (0, import_element.cloneElement)(slot ?? defaultSlot, { children });
-}
-
-// packages/ui/build-module/utils/wp-compat-overlay-slot.mjs
+// packages/ui/build-module/tooltip/positioner.mjs
 const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7602,96 +7793,52 @@ function registerStyle$24(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
 }
-registerStyle$24("40df669685", "._9e7887c25dedb459__slot{inset:0;isolation:isolate;pointer-events:none;position:fixed;z-index:1000000003}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._9e7887c25dedb459__slot>*{pointer-events:auto}}}");
-var wp_compat_overlay_slot_module_default = { "slot": "_9e7887c25dedb459__slot" };
+registerStyle$24("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$24("e5b1850198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._6889cbaa814dd733__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._5345eeb049827f3a__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px)}@media (forced-colors:active){._5345eeb049827f3a__popup{border:1px solid CanvasText}}}}");
+var style_module_default$24 = {
+	"positioner": "_6889cbaa814dd733__positioner",
+	"popup": "_5345eeb049827f3a__popup"
+};
 /**
-* Marker attribute on the compat overlay slot element.
+* Used to apply custom positioning to `Tooltip`'s floating content.
 */
-const WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE = "data-wp-compat-overlay-slot";
-function resolveOwnerDocument() {
-	return typeof document === "undefined" ? null : document;
-}
-function isInWordPressEnvironment() {
-	let topWp;
-	try {
-		topWp = window.top?.wp;
-	} catch {}
-	const wp = topWp ?? window.wp;
-	return typeof wp?.components === "object" && wp.components !== null;
-}
-let cachedSlot = null;
-function ensureSlotIsAccessible(element) {
-	element.setAttribute("aria-hidden", "false");
-	return element;
-}
-function createSlot(ownerDocument) {
-	const element = ownerDocument.createElement("div");
-	element.setAttribute(WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE, "");
-	if (wp_compat_overlay_slot_module_default.slot) element.classList.add(wp_compat_overlay_slot_module_default.slot);
-	ownerDocument.body.appendChild(element);
-	return element;
-}
-/**
-* Returns the body-level compat overlay slot when the runtime opts in,
-* lazily creating it on first call. Returns `undefined` otherwise — so the
-* return value can be forwarded straight to a `container` prop, leaving the
-* default portal container in effect.
-*
-* Two opt-in paths:
-*
-* - Auto-detected when `window.wp.components` is on the global — the
-*   typical script-loader setup for WordPress plugins and admin screens.
-* - Explicit, via `useEnableWpCompatOverlaySlot()` — for hosts that bundle
-*   `@wordpress/components` (or only `@wordpress/ui`) directly rather than
-*   relying on the global.
-*
-* The slot is a single `<div data-wp-compat-overlay-slot>` appended to the
-* local document's body. Subsequent calls return the same element; if it's
-* been removed it's recreated, and a slot created by another
-* `@wordpress/ui` instance in the same document is adopted rather than
-* duplicated.
-*/
-function getWpCompatOverlaySlot() {
-	if (typeof window === "undefined") return;
-	if (!isInWordPressEnvironment() && window.__wpUiCompatOverlaySlotEnabled !== true) return;
-	const ownerDocument = resolveOwnerDocument();
-	if (!ownerDocument || !ownerDocument.body) return;
-	if (cachedSlot && cachedSlot.ownerDocument === ownerDocument && cachedSlot.isConnected) return ensureSlotIsAccessible(cachedSlot);
-	const existing = ownerDocument.querySelector(`[${WP_COMPAT_OVERLAY_SLOT_ATTRIBUTE}]`);
-	if (existing instanceof HTMLDivElement) {
-		cachedSlot = ensureSlotIsAccessible(existing);
-		return cachedSlot;
-	}
-	if (cachedSlot?.isConnected) cachedSlot.remove();
-	cachedSlot = ensureSlotIsAccessible(createSlot(ownerDocument));
-	return cachedSlot;
-}
-
-// packages/ui/build-module/utils/direction-provider.mjs
-/**
-* Provides WordPress's text direction to Base UI components.
-*/
-function DirectionProvider({ children }) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider$1, {
-		direction: (0, import_i18n.isRTL)() ? "rtl" : "ltr",
-		children
-	});
-}
-
-// packages/ui/build-module/tooltip/portal.mjs
-/**
-* Used to apply custom portal behavior to `Tooltip`'s floating content.
-* `container` defaults to the `@wordpress/ui` compat overlay slot.
-*/
-const Portal = (0, import_element.forwardRef)(function TooltipPortal$1({ container, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPortal, {
-		container: container === void 0 ? getWpCompatOverlaySlot() : container,
-		...restProps,
-		ref
+const Positioner = (0, import_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPositioner, {
+		ref,
+		align,
+		side,
+		sideOffset,
+		...props,
+		className: clsx(resets_module_default$1["box-sizing"], style_module_default$24.positioner, className)
 	});
 });
 
-// packages/ui/build-module/tooltip/positioner.mjs
+// \0wp-global:@wordpress/theme
+var require_theme = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.theme;
+}));
+
+// \0wp-global:@wordpress/private-apis
+var require_private_apis = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.privateApis;
+}));
+
+// packages/ui/build-module/lock-unlock.mjs
+var import_private_apis = require_private_apis();
+const { lock: lock$1, unlock: unlock$1 } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
+
+// packages/ui/build-module/utils/theme-provider.mjs
+var import_theme = /* @__PURE__ */ __toESM(require_theme(), 1);
+function getThemeProvider() {
+	const themePackage = import_theme;
+	if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
+	if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
+	return unlock$1(themePackage.privateApis).ThemeProvider;
+}
+const ThemeProvider$2 = getThemeProvider();
+
+// packages/ui/build-module/tooltip/popup.mjs
 const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7793,52 +7940,58 @@ function registerStyle$23(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
 }
-registerStyle$23("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
 registerStyle$23("e5b1850198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._6889cbaa814dd733__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._5345eeb049827f3a__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px)}@media (forced-colors:active){._5345eeb049827f3a__popup{border:1px solid CanvasText}}}}");
 var style_module_default$23 = {
 	"positioner": "_6889cbaa814dd733__positioner",
 	"popup": "_5345eeb049827f3a__popup"
 };
-/**
-* Used to apply custom positioning to `Tooltip`'s floating content.
-*/
-const Positioner = (0, import_element.forwardRef)(function TooltipPositioner$1({ align = "center", className, side = "top", sideOffset = 4, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPositioner, {
+const POPUP_COLOR = { background: "#1e1e1e" };
+const Popup = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
+	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeProvider$2, {
+		color: POPUP_COLOR,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPopup, {
+			ref,
+			className: clsx(style_module_default$23.popup, className),
+			...props,
+			children
+		})
+	});
+	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner, {}), popupContent);
+	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {}), positionedPopup);
+});
+
+// packages/ui/build-module/tooltip/trigger.mjs
+const Trigger = (0, import_element.forwardRef)(function TooltipTrigger$1(props, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipTrigger, {
 		ref,
-		align,
-		side,
-		sideOffset,
-		...props,
-		className: clsx(resets_module_default$1["box-sizing"], style_module_default$23.positioner, className)
+		...props
 	});
 });
 
-// \0wp-global:@wordpress/theme
-var require_theme = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.theme;
-}));
-
-// \0wp-global:@wordpress/private-apis
-var require_private_apis = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.privateApis;
-}));
-
-// packages/ui/build-module/lock-unlock.mjs
-var import_private_apis = require_private_apis();
-const { lock: lock$1, unlock: unlock$1 } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
-
-// packages/ui/build-module/utils/theme-provider.mjs
-var import_theme = /* @__PURE__ */ __toESM(require_theme(), 1);
-function getThemeProvider() {
-	const themePackage = import_theme;
-	if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
-	if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
-	return unlock$1(themePackage.privateApis).ThemeProvider;
+// packages/ui/build-module/tooltip/root.mjs
+/**
+* `Tooltip` is used to visually show the label of an icon button, or other such
+* interactive controls that don't have a visual text label.
+*
+* Tooltip popups are visual-only and not exposed to assistive technologies.
+* The trigger's accessible name (e.g. `aria-label`) is the source of truth
+* for screen reader users. Tooltips are not available on touch devices,
+* and thus should not be used for infotips, descriptions, or dynamic status
+* messages.
+*
+* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
+* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
+*/
+function Root$2(props) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
 }
-const ThemeProvider$2 = getThemeProvider();
 
-// packages/ui/build-module/tooltip/popup.mjs
+// packages/ui/build-module/tooltip/provider.mjs
+function Provider({ ...props }) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipProvider, { ...props });
+}
+
+// packages/ui/build-module/link/link.mjs
 const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -7940,58 +8093,93 @@ function registerStyle$22(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
 }
-registerStyle$22("e5b1850198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._6889cbaa814dd733__positioner{z-index:var(--wp-ui-tooltip-z-index,initial)}._5345eeb049827f3a__popup{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);border-radius:var(--wpds-border-radius-md,4px);box-shadow:0 1px 2px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.04),0 6px 6px rgba(0,0,0,.03),0 8px 8px rgba(0,0,0,.02);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-sm,12px);line-height:1.4;padding:var(--wpds-dimension-padding-xs,4px) var(--wpds-dimension-padding-sm,8px)}@media (forced-colors:active){._5345eeb049827f3a__popup{border:1px solid CanvasText}}}}");
-var style_module_default$22 = {
-	"positioner": "_6889cbaa814dd733__positioner",
-	"popup": "_5345eeb049827f3a__popup"
+registerStyle$22("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$22("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
+var focus_module_default = {
+	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
+	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
+	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
+	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
+	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
 };
-const POPUP_COLOR = { background: "#1e1e1e" };
-const Popup = (0, import_element.forwardRef)(function TooltipPopup$1({ portal, positioner, children, className, ...props }, ref) {
-	const popupContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ThemeProvider$2, {
-		color: POPUP_COLOR,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipPopup, {
-			ref,
-			className: clsx(style_module_default$22.popup, className),
-			...props,
-			children
+registerStyle$22("af1d110bbb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._37fee74d1dbea108__link{--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);border-radius:var(--wpds-border-radius-sm,2px);text-decoration-thickness:from-font;text-underline-offset:.2em}._2caa5ab8d301aa35__link-with-icon{text-decoration-line:none}._03f6a10e54c8bf7d__link-contents{text-decoration:inherit;text-decoration-line:underline}._3c28bf5c32a6f83e__is-brand,._3c28bf5c32a6f83e__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}._3c28bf5c32a6f83e__is-brand:active,._3c28bf5c32a6f83e__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}.f753b1750f8ddc4a__is-neutral,.f753b1750f8ddc4a__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8b8b8b)}.f753b1750f8ddc4a__is-neutral:active,.f753b1750f8ddc4a__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._46c7919834b1ac73__is-unstyled{--_gcd-a-border-radius:0;--_gcd-a-color:inherit;color:inherit;text-decoration:none}.ce7e7311b7483d3f__link-icon{font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}.ce7e7311b7483d3f__link-icon:after{content:\"\\2060\\2197\"}.ce7e7311b7483d3f__link-icon:dir(rtl):after{content:\"\\2060\\2196\"}}}");
+var style_module_default$22 = {
+	"link": "_37fee74d1dbea108__link",
+	"link-with-icon": "_2caa5ab8d301aa35__link-with-icon",
+	"link-contents": "_03f6a10e54c8bf7d__link-contents",
+	"is-brand": "_3c28bf5c32a6f83e__is-brand",
+	"is-neutral": "f753b1750f8ddc4a__is-neutral",
+	"is-unstyled": "_46c7919834b1ac73__is-unstyled",
+	"link-icon": "ce7e7311b7483d3f__link-icon"
+};
+registerStyle$22("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default = {
+	"button": "db1aa0d975c98907__button",
+	"input": "_560ae5870016ca79__input",
+	"textarea": "_7c14c78aca908e56__textarea",
+	"div": "b752c6b223b319c4__div",
+	"p": "_56028dfe751232df__p",
+	"heading": "_48f5e2ad729cc233__heading",
+	"a": "fba8c89ccbfb853b__a",
+	"ol": "_2933712904448f13__ol",
+	"li": "c48c21f7371f7cea__li",
+	"span": "_2348cae4464115af__span"
+};
+/**
+* A styled anchor element with support for semantic color tones and an
+* unstyled escape hatch.
+*
+* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
+* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+*/
+const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children, variant = "default", tone = "brand", openInNewTab = false, target, render, className, ...props }, ref) {
+	const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+	return useRender({
+		render,
+		defaultTagName: "a",
+		ref,
+		props: mergeProps(props, {
+			className: clsx(global_css_defense_module_default.a, resets_module_default["box-sizing"], focus_module_default["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$22.link, variant !== "unstyled" && shouldShowNewTabIndicator && style_module_default$22["link-with-icon"], variant !== "unstyled" && style_module_default$22[`is-${tone}`], variant === "unstyled" && style_module_default$22["is-unstyled"], className),
+			target: target ?? (openInNewTab ? "_blank" : void 0),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: style_module_default$22["link-contents"],
+				children
+			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: style_module_default$22["link-icon"],
+				role: "img",
+				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+			})] })
 		})
 	});
-	const positionedPopup = renderSlotWithChildren(positioner, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Positioner, {}), popupContent);
-	return renderSlotWithChildren(portal, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Portal, {}), positionedPopup);
 });
 
-// packages/ui/build-module/tooltip/trigger.mjs
-const Trigger = (0, import_element.forwardRef)(function TooltipTrigger$1(props, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipTrigger, {
-		ref,
-		...props
-	});
-});
-
-// packages/ui/build-module/tooltip/root.mjs
+// packages/react-inert-value/build-module/index.mjs
+var import_compose = require_compose();
+const majorVersion = parseInt(import__wp_global_react.version, 10);
 /**
-* `Tooltip` is used to visually show the label of an icon button, or other such
-* interactive controls that don't have a visual text label.
+* Returns a value for the `inert` prop that the running version of React
+* renders as the `inert` HTML attribute.
 *
-* Tooltip popups are visual-only and not exposed to assistive technologies.
-* The trigger's accessible name (e.g. `aria-label`) is the source of truth
-* for screen reader users. Tooltips are not available on touch devices,
-* and thus should not be used for infotips, descriptions, or dynamic status
-* messages.
+* React 19 handles `inert` as a boolean attribute, while React 18 knows nothing
+* about `inert` and ignores `inert={ true }`, so it has to be given the string
+* `'true'` instead.
 *
-* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-tooltip-usage-guidelines--docs Usage Guidelines}
-* @see {@link https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-iconbutton--docs IconButton}
+* The return type describes what React 19 types accept. React 18 doesn't support
+* `inert` HTML attribute at all, so a TypeScript call site still
+* needs a `@ts-expect-error` annotation.
+*
+* Inspired by the helper of the same name in the Base UI library.
+*
+* @param value Boolean value for the `inert` prop.
+* @return The actual value to pass to the `inert` prop.
 */
-function Root$2(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DirectionProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipRoot, { ...props }) });
+function inertValue(value) {
+	if (majorVersion >= 19) return value;
+	return value ? "true" : void 0;
 }
 
-// packages/ui/build-module/tooltip/provider.mjs
-function Provider({ ...props }) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TooltipProvider, { ...props });
-}
-
-// packages/ui/build-module/link/link.mjs
+// packages/ui/build-module/stack/stack.mjs
 const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -8093,93 +8281,40 @@ function registerStyle$21(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$21(targetDocument, hash, css);
 }
-registerStyle$21("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$21("c13e206e92", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{._0f52be5f1d4ce686__outset-ring--focus-within:focus-within,._8f922cee854f2408__outset-ring--focus-visible:focus-visible,.accedd6ae8fd878e__outset-ring--focus:focus{--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within,.c20f61b115485a7f__outset-ring--focus-except-active:focus{outline:none}._3ad2c88c126f2bdd__outset-ring--focus-within-except-active:focus-within:not(:has(:active)),.c20f61b115485a7f__outset-ring--focus-except-active:focus:not(:active){--_gcd-a-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));--_gcd-div-outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}}}");
-var focus_module_default = {
-	"outset-ring--focus": "accedd6ae8fd878e__outset-ring--focus",
-	"outset-ring--focus-visible": "_8f922cee854f2408__outset-ring--focus-visible",
-	"outset-ring--focus-within": "_0f52be5f1d4ce686__outset-ring--focus-within",
-	"outset-ring--focus-except-active": "c20f61b115485a7f__outset-ring--focus-except-active",
-	"outset-ring--focus-within-except-active": "_3ad2c88c126f2bdd__outset-ring--focus-within-except-active"
-};
-registerStyle$21("af1d110bbb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._37fee74d1dbea108__link{--_gcd-a-border-radius:var(--wpds-border-radius-sm,2px);border-radius:var(--wpds-border-radius-sm,2px);text-decoration-thickness:from-font;text-underline-offset:.2em}._2caa5ab8d301aa35__link-with-icon{text-decoration-line:none}._03f6a10e54c8bf7d__link-contents{text-decoration:inherit;text-decoration-line:underline}._3c28bf5c32a6f83e__is-brand,._3c28bf5c32a6f83e__is-brand:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9));color:var(--wpds-color-foreground-interactive-brand,var(--wp-admin-theme-color,#3858e9))}._3c28bf5c32a6f83e__is-brand:active,._3c28bf5c32a6f83e__is-brand:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}.f753b1750f8ddc4a__is-neutral,.f753b1750f8ddc4a__is-neutral:visited{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);text-decoration-color:var(--wpds-color-stroke-interactive-neutral,#8b8b8b)}.f753b1750f8ddc4a__is-neutral:active,.f753b1750f8ddc4a__is-neutral:hover{--_gcd-a-color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e);color:var(--wpds-color-foreground-interactive-neutral-active,#1e1e1e)}._46c7919834b1ac73__is-unstyled{--_gcd-a-border-radius:0;--_gcd-a-color:inherit;color:inherit;text-decoration:none}.ce7e7311b7483d3f__link-icon{font-weight:var(--wpds-typography-font-weight-default,400);line-height:1;margin-inline-start:var(--wpds-dimension-padding-xs,4px);text-decoration:none}.ce7e7311b7483d3f__link-icon:after{content:\"\\2060\\2197\"}.ce7e7311b7483d3f__link-icon:dir(rtl):after{content:\"\\2060\\2196\"}}}");
-var style_module_default$21 = {
-	"link": "_37fee74d1dbea108__link",
-	"link-with-icon": "_2caa5ab8d301aa35__link-with-icon",
-	"link-contents": "_03f6a10e54c8bf7d__link-contents",
-	"is-brand": "_3c28bf5c32a6f83e__is-brand",
-	"is-neutral": "f753b1750f8ddc4a__is-neutral",
-	"is-unstyled": "_46c7919834b1ac73__is-unstyled",
-	"link-icon": "ce7e7311b7483d3f__link-icon"
-};
-registerStyle$21("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default = {
-	"button": "db1aa0d975c98907__button",
-	"input": "_560ae5870016ca79__input",
-	"textarea": "_7c14c78aca908e56__textarea",
-	"div": "b752c6b223b319c4__div",
-	"p": "_56028dfe751232df__p",
-	"heading": "_48f5e2ad729cc233__heading",
-	"a": "fba8c89ccbfb853b__a",
-	"ol": "_2933712904448f13__ol",
-	"li": "c48c21f7371f7cea__li",
-	"span": "_2348cae4464115af__span"
+registerStyle$21("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
+var style_module_default$21 = { "stack": "_8e8e79c1a2eec43b__stack" };
+const gapTokens = {
+	xs: "var(--wpds-dimension-gap-xs, 4px)",
+	sm: "var(--wpds-dimension-gap-sm, 8px)",
+	md: "var(--wpds-dimension-gap-md, 12px)",
+	lg: "var(--wpds-dimension-gap-lg, 16px)",
+	xl: "var(--wpds-dimension-gap-xl, 24px)",
+	"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
+	"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
 };
 /**
-* A styled anchor element with support for semantic color tones and an
-* unstyled escape hatch.
-*
-* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
-* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
+* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
+* Built on design tokens for predictable spacing values.
 */
-const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children, variant = "default", tone = "brand", openInNewTab = false, target, render, className, ...props }, ref) {
-	const shouldShowNewTabIndicator = openInNewTab || /^_blank$/i.test(target ?? "");
+const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
+	const style = {
+		gap: gap && gapTokens[gap],
+		alignItems: align,
+		justifyContent: justify,
+		flexDirection: direction,
+		flexWrap: wrap
+	};
 	return useRender({
 		render,
-		defaultTagName: "a",
 		ref,
 		props: mergeProps(props, {
-			className: clsx(global_css_defense_module_default.a, resets_module_default["box-sizing"], focus_module_default["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$21.link, variant !== "unstyled" && shouldShowNewTabIndicator && style_module_default$21["link-with-icon"], variant !== "unstyled" && style_module_default$21[`is-${tone}`], variant === "unstyled" && style_module_default$21["is-unstyled"], className),
-			target: target ?? (openInNewTab ? "_blank" : void 0),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [shouldShowNewTabIndicator && variant !== "unstyled" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: style_module_default$21["link-contents"],
-				children
-			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: style_module_default$21["link-icon"],
-				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
-			})] })
+			style,
+			className: style_module_default$21.stack
 		})
 	});
 });
 
-// packages/react-inert-value/build-module/index.mjs
-var import_compose = require_compose();
-const majorVersion = parseInt(import__wp_global_react.version, 10);
-/**
-* Returns a value for the `inert` prop that the running version of React
-* renders as the `inert` HTML attribute.
-*
-* React 19 handles `inert` as a boolean attribute, while React 18 knows nothing
-* about `inert` and ignores `inert={ true }`, so it has to be given the string
-* `'true'` instead.
-*
-* The return type describes what React 19 types accept. React 18 doesn't support
-* `inert` HTML attribute at all, so a TypeScript call site still
-* needs a `@ts-expect-error` annotation.
-*
-* Inspired by the helper of the same name in the Base UI library.
-*
-* @param value Boolean value for the `inert` prop.
-* @return The actual value to pass to the `inert` prop.
-*/
-function inertValue(value) {
-	if (majorVersion >= 19) return value;
-	return value ? "true" : void 0;
-}
-
-// packages/ui/build-module/stack/stack.mjs
+// packages/ui/build-module/empty-state/root.mjs
 const STYLE_HASH_ATTRIBUTE$20 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -8281,40 +8416,29 @@ function registerStyle$20(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$20(targetDocument, hash, css);
 }
-registerStyle$20("67591fa198", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._8e8e79c1a2eec43b__stack{display:flex}}}");
-var style_module_default$20 = { "stack": "_8e8e79c1a2eec43b__stack" };
-const gapTokens = {
-	xs: "var(--wpds-dimension-gap-xs, 4px)",
-	sm: "var(--wpds-dimension-gap-sm, 8px)",
-	md: "var(--wpds-dimension-gap-md, 12px)",
-	lg: "var(--wpds-dimension-gap-lg, 16px)",
-	xl: "var(--wpds-dimension-gap-xl, 24px)",
-	"2xl": "var(--wpds-dimension-gap-2xl, 32px)",
-	"3xl": "var(--wpds-dimension-gap-3xl, 40px)"
+registerStyle$20("bf8cc785d1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._5f7db30941de28a4__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}.dde48c3787485ab8__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}.c1bd14c4506e8867__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}._4811b2db6b49acd4__title{margin:0}.c0517cde523a2ff3__description{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);margin:0}._5938278e518844cf__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}@layer compositions{._4811b2db6b49acd4__title,.c0517cde523a2ff3__description{text-wrap:balance}}}");
+var style_module_default$20 = {
+	"root": "_5f7db30941de28a4__root",
+	"visual": "dde48c3787485ab8__visual",
+	"icon": "c1bd14c4506e8867__icon",
+	"title": "_4811b2db6b49acd4__title",
+	"description": "c0517cde523a2ff3__description",
+	"actions": "_5938278e518844cf__actions"
 };
 /**
-* A flexible layout component using CSS Flexbox for consistent spacing and alignment.
-* Built on design tokens for predictable spacing values.
+* The root container for an empty state component.
 */
-const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ direction, gap, align, justify, wrap, render, ...props }, ref) {
-	const style = {
-		gap: gap && gapTokens[gap],
-		alignItems: align,
-		justifyContent: justify,
-		flexDirection: direction,
-		flexWrap: wrap
-	};
+const Root$1 = (0, import_element.forwardRef)(function EmptyStateRoot({ render, ...props }, ref) {
+	const className = clsx(style_module_default$20.root);
 	return useRender({
+		defaultTagName: "div",
 		render,
 		ref,
-		props: mergeProps(props, {
-			style,
-			className: style_module_default$20.stack
-		})
+		props: mergeProps({ className }, props)
 	});
 });
 
-// packages/ui/build-module/empty-state/root.mjs
+// packages/ui/build-module/empty-state/visual.mjs
 const STYLE_HASH_ATTRIBUTE$19 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -8426,10 +8550,11 @@ var style_module_default$19 = {
 	"actions": "_5938278e518844cf__actions"
 };
 /**
-* The root container for an empty state component.
+* A container for visual content in an empty state (e.g., icons, illustrations).
+* Provides appropriate spacing and alignment for visual elements.
 */
-const Root$1 = (0, import_element.forwardRef)(function EmptyStateRoot({ render, ...props }, ref) {
-	const className = clsx(style_module_default$19.root);
+const Visual = (0, import_element.forwardRef)(function EmptyStateVisual({ render, ...props }, ref) {
+	const className = clsx(style_module_default$19.visual);
 	return useRender({
 		defaultTagName: "div",
 		render,
@@ -8438,7 +8563,7 @@ const Root$1 = (0, import_element.forwardRef)(function EmptyStateRoot({ render, 
 	});
 });
 
-// packages/ui/build-module/empty-state/visual.mjs
+// packages/ui/build-module/empty-state/icon.mjs
 const STYLE_HASH_ATTRIBUTE$18 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -8550,20 +8675,19 @@ var style_module_default$18 = {
 	"actions": "_5938278e518844cf__actions"
 };
 /**
-* A container for visual content in an empty state (e.g., icons, illustrations).
-* Provides appropriate spacing and alignment for visual elements.
+* An icon visual for empty states. Renders an icon with styling treatment for
+* empty states.
 */
-const Visual = (0, import_element.forwardRef)(function EmptyStateVisual({ render, ...props }, ref) {
-	const className = clsx(style_module_default$18.visual);
-	return useRender({
-		defaultTagName: "div",
-		render,
+const Icon$3 = (0, import_element.forwardRef)(function EmptyStateIcon({ icon, className, ...restProps }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Visual, {
 		ref,
-		props: mergeProps({ className }, props)
+		className: clsx(style_module_default$18.icon, className),
+		...restProps,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$4, { icon })
 	});
 });
 
-// packages/ui/build-module/empty-state/icon.mjs
+// packages/ui/build-module/empty-state/title.mjs
 const STYLE_HASH_ATTRIBUTE$17 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -8674,20 +8798,22 @@ var style_module_default$17 = {
 	"description": "c0517cde523a2ff3__description",
 	"actions": "_5938278e518844cf__actions"
 };
+const DEFAULT_TAG$1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {});
 /**
-* An icon visual for empty states. Renders an icon with styling treatment for
-* empty states.
+* The title is a short heading that communicates the empty state.
 */
-const Icon$3 = (0, import_element.forwardRef)(function EmptyStateIcon({ icon, className, ...restProps }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Visual, {
+const Title = (0, import_element.forwardRef)(function EmptyStateTitle({ render = DEFAULT_TAG$1, className, children, ...props }, ref) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
 		ref,
-		className: clsx(style_module_default$17.icon, className),
-		...restProps,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$4, { icon })
+		variant: "heading-lg",
+		render,
+		className: clsx(style_module_default$17.title, className),
+		...props,
+		children
 	});
 });
 
-// packages/ui/build-module/empty-state/title.mjs
+// packages/ui/build-module/empty-state/description.mjs
 const STYLE_HASH_ATTRIBUTE$16 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -8798,22 +8924,23 @@ var style_module_default$16 = {
 	"description": "c0517cde523a2ff3__description",
 	"actions": "_5938278e518844cf__actions"
 };
-const DEFAULT_TAG$1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {});
+const DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {});
 /**
-* The title is a short heading that communicates the empty state.
+* The description text for an empty state, providing additional context and
+* guidance on what the user should do next.
 */
-const Title = (0, import_element.forwardRef)(function EmptyStateTitle({ render = DEFAULT_TAG$1, className, children, ...props }, ref) {
+const Description = (0, import_element.forwardRef)(function EmptyStateDescription({ render = DEFAULT_TAG, className, children, ...props }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
 		ref,
-		variant: "heading-lg",
+		variant: "body-md",
 		render,
-		className: clsx(style_module_default$16.title, className),
+		className: clsx(style_module_default$16.description, className),
 		...props,
 		children
 	});
 });
 
-// packages/ui/build-module/empty-state/description.mjs
+// packages/ui/build-module/empty-state/actions.mjs
 const STYLE_HASH_ATTRIBUTE$15 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -8924,23 +9051,35 @@ var style_module_default$15 = {
 	"description": "c0517cde523a2ff3__description",
 	"actions": "_5938278e518844cf__actions"
 };
-const DEFAULT_TAG = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {});
 /**
-* The description text for an empty state, providing additional context and
-* guidance on what the user should do next.
+* A container for action buttons in an empty state. Actions are optional, and
+* can include a primary and optional secondary action button.
 */
-const Description = (0, import_element.forwardRef)(function EmptyStateDescription({ render = DEFAULT_TAG, className, children, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
-		ref,
-		variant: "body-md",
+const Actions = (0, import_element.forwardRef)(function EmptyStateActions({ render, ...props }, ref) {
+	const className = clsx(style_module_default$15.actions);
+	return useRender({
+		defaultTagName: "div",
 		render,
-		className: clsx(style_module_default$15.description, className),
+		ref,
+		props: mergeProps({ className }, props)
+	});
+});
+
+// packages/admin-ui/build-module/navigable-region/index.mjs
+const NavigableRegion = (0, import_element.forwardRef)(({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tag, {
+		ref,
+		className: clsx("admin-ui-navigable-region", className),
+		"aria-label": ariaLabel,
+		role: "region",
+		tabIndex: "-1",
 		...props,
 		children
 	});
 });
+NavigableRegion.displayName = "NavigableRegion";
 
-// packages/ui/build-module/empty-state/actions.mjs
+// packages/admin-ui/build-module/navigation/index.mjs
 const STYLE_HASH_ATTRIBUTE$14 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -9042,44 +9181,64 @@ function registerStyle$14(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$14(targetDocument, hash, css);
 }
-registerStyle$14("bf8cc785d1", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._5f7db30941de28a4__root{text-wrap:balance;align-items:center;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:column;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);gap:var(--wpds-dimension-gap-xs,4px);max-width:var(--wpds-dimension-surface-width-sm,320px);text-align:center}.dde48c3787485ab8__visual{align-items:center;color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);display:flex;justify-content:center;line-height:1;margin-block-end:var(--wpds-dimension-gap-xs,4px)}.c1bd14c4506e8867__icon{background-color:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:50%;padding:var(--wpds-dimension-padding-xs,4px)}._4811b2db6b49acd4__title{margin:0}.c0517cde523a2ff3__description{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);margin:0}._5938278e518844cf__actions{align-items:center;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-xs,4px);margin-block-start:var(--wpds-dimension-gap-md,12px);@media (min-width:480px){flex-direction:row;justify-content:center}}}@layer compositions{._4811b2db6b49acd4__title,.c0517cde523a2ff3__description{text-wrap:balance}}}");
+registerStyle$14("50915012c9", "._7712e691febe28ed__list{--focus-ring-size:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);list-style:none;margin:calc(var(--focus-ring-size)*-1);overflow-x:auto;padding:var(--focus-ring-size);scroll-padding:var(--focus-ring-size)}.ccd070cc3f1689cf__li{flex-shrink:0}.e850dabb78bfc419__item{align-items:center;color:var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e);display:flex;font-weight:var(--wpds-typography-font-weight-default,400);min-block-size:44px;min-inline-size:44px;text-decoration:none}.e850dabb78bfc419__item:hover,.e850dabb78bfc419__item[aria-current=page]{color:var(--wpds-color-foreground-interactive-neutral-weak-active,#1e1e1e)}.e850dabb78bfc419__item[aria-current=page]{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
 var style_module_default$14 = {
-	"root": "_5f7db30941de28a4__root",
-	"visual": "dde48c3787485ab8__visual",
-	"icon": "c1bd14c4506e8867__icon",
-	"title": "_4811b2db6b49acd4__title",
-	"description": "c0517cde523a2ff3__description",
-	"actions": "_5938278e518844cf__actions"
+	"list": "_7712e691febe28ed__list",
+	"li": "ccd070cc3f1689cf__li",
+	"item": "e850dabb78bfc419__item"
 };
 /**
-* A container for action buttons in an empty state. Actions are optional, and
-* can include a primary and optional secondary action button.
+* Renders a horizontal list of links for navigating between the sections of a
+* screen. The item whose `href` matches `currentHref` is marked with
+* `aria-current="page"`.
+*
+* Internal to the package: configured through the `Page` `navigation` prop.
 */
-const Actions = (0, import_element.forwardRef)(function EmptyStateActions({ render, ...props }, ref) {
-	const className = clsx(style_module_default$14.actions);
-	return useRender({
-		defaultTagName: "div",
-		render,
-		ref,
-		props: mergeProps({ className }, props)
-	});
-});
-
-// packages/admin-ui/build-module/navigable-region/index.mjs
-const NavigableRegion = (0, import_element.forwardRef)(({ children, className, ariaLabel, as: Tag = "div", ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Tag, {
-		ref,
-		className: clsx("admin-ui-navigable-region", className),
+const Navigation$1 = ({ items, currentHref, ariaLabel = (0, import_i18n.__)("Sections"), linkComponent, className }) => {
+	if (!items.length) return null;
+	const LinkComponent = linkComponent ?? "a";
+	{
+		const invalidItem = items.find((item) => typeof item.href !== "string");
+		if (invalidItem) throw new Error(`Navigation: item "${invalidItem.label}" is missing an \`href\` prop.`);
+		const duplicate = items.find((item, index) => items.findIndex((other) => other.href === item.href) !== index);
+		if (duplicate) throw new Error(`Navigation: duplicate \`href\` "${duplicate.href}". Each item must have a unique \`href\` so a single item receives \`aria-current="page"\`.`);
+	}
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("nav", {
 		"aria-label": ariaLabel,
-		role: "region",
-		tabIndex: "-1",
-		...props,
-		children
+		className,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
+			render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { role: "list" }),
+			direction: "row",
+			align: "center",
+			gap: "md",
+			className: style_module_default$14.list,
+			children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
+				className: style_module_default$14.li,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
+					variant: "body-md",
+					className: style_module_default$14.item,
+					render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+						variant: "unstyled",
+						"aria-current": item.href === currentHref ? "page" : void 0,
+						render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LinkComponent, { href: item.href })
+					}),
+					children: item.label
+				})
+			}, item.href))
+		})
 	});
-});
-NavigableRegion.displayName = "NavigableRegion";
+};
 
-// packages/admin-ui/build-module/navigation/index.mjs
+// \0wp-global:@wordpress/components
+var require_components = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.components;
+}));
+
+// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
+var import_components = require_components();
+const { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
+
+// packages/admin-ui/build-module/page/header.mjs
 const STYLE_HASH_ATTRIBUTE$13 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -9181,64 +9340,83 @@ function registerStyle$13(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$13(targetDocument, hash, css);
 }
-registerStyle$13("50915012c9", "._7712e691febe28ed__list{--focus-ring-size:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);list-style:none;margin:calc(var(--focus-ring-size)*-1);overflow-x:auto;padding:var(--focus-ring-size);scroll-padding:var(--focus-ring-size)}.ccd070cc3f1689cf__li{flex-shrink:0}.e850dabb78bfc419__item{align-items:center;color:var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e);display:flex;font-weight:var(--wpds-typography-font-weight-default,400);min-block-size:44px;min-inline-size:44px;text-decoration:none}.e850dabb78bfc419__item:hover,.e850dabb78bfc419__item[aria-current=page]{color:var(--wpds-color-foreground-interactive-neutral-weak-active,#1e1e1e)}.e850dabb78bfc419__item[aria-current=page]{font-weight:var(--wpds-typography-font-weight-emphasis,600)}");
+registerStyle$13("05dfc7076f", "._52bf6d26b2cc898d__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._24667cfed9f43255__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.f92719188634c5d6__header-content{min-height:var(--wpds-dimension-size-md,32px)}._141425854f032b21__header-actions{flex-shrink:0}._4d5abf3b39fc4e47__header-lockup{min-width:0}._939fd173dcd6f7b5__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._2ebb2614e76305a3__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}._3ee1b13e76b21c76__sidebar-toggle-slot:empty{display:none}._3e0a8b957270846f__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._24667cfed9f43255__header.b230252b347a13f0__has-navigation,._24667cfed9f43255__header.b230252b347a13f0__has-navigation ._3e0a8b957270846f__header-subtitle{padding-block-end:0}._08493e4139885090__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}._164a4cfa881f76f7__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._2859463eef17c76b__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
 var style_module_default$13 = {
-	"list": "_7712e691febe28ed__list",
-	"li": "ccd070cc3f1689cf__li",
-	"item": "e850dabb78bfc419__item"
+	"page": "_52bf6d26b2cc898d__page",
+	"header": "_24667cfed9f43255__header",
+	"header-content": "f92719188634c5d6__header-content",
+	"header-actions": "_141425854f032b21__header-actions",
+	"header-lockup": "_4d5abf3b39fc4e47__header-lockup",
+	"header-title": "_939fd173dcd6f7b5__header-title",
+	"header-visual": "_2ebb2614e76305a3__header-visual",
+	"sidebar-toggle-slot": "_3ee1b13e76b21c76__sidebar-toggle-slot",
+	"header-subtitle": "_3e0a8b957270846f__header-subtitle",
+	"has-navigation": "b230252b347a13f0__has-navigation",
+	"header-navigation": "_08493e4139885090__header-navigation",
+	"content": "_164a4cfa881f76f7__content",
+	"has-padding": "_2859463eef17c76b__has-padding"
 };
-/**
-* Renders a horizontal list of links for navigating between the sections of a
-* screen. The item whose `href` matches `currentHref` is marked with
-* `aria-current="page"`.
-*
-* Internal to the package: configured through the `Page` `navigation` prop.
-*/
-const Navigation$1 = ({ items, currentHref, ariaLabel = (0, import_i18n.__)("Sections"), linkComponent, className }) => {
-	if (!items.length) return null;
-	const LinkComponent = linkComponent ?? "a";
-	{
-		const invalidItem = items.find((item) => typeof item.href !== "string");
-		if (invalidItem) throw new Error(`Navigation: item "${invalidItem.label}" is missing an \`href\` prop.`);
-		const duplicate = items.find((item, index) => items.findIndex((other) => other.href === item.href) !== index);
-		if (duplicate) throw new Error(`Navigation: duplicate \`href\` "${duplicate.href}". Each item must have a unique \`href\` so a single item receives \`aria-current="page"\`.`);
-	}
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("nav", {
-		"aria-label": ariaLabel,
-		className,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
-			render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", { role: "list" }),
-			direction: "row",
-			align: "center",
-			gap: "md",
-			className: style_module_default$13.list,
-			children: items.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-				className: style_module_default$13.li,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
-					variant: "body-md",
-					className: style_module_default$13.item,
-					render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-						variant: "unstyled",
-						"aria-current": item.href === currentHref ? "page" : void 0,
-						render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LinkComponent, { href: item.href })
-					}),
-					children: item.label
-				})
-			}, item.href))
-		})
+function Header({ headingLevel = 1, breadcrumbs, badges, visual, title, subTitle, actions, navigation, components, showSidebarToggle = true }) {
+	const HeadingTag = `h${headingLevel}`;
+	const hasNavigation = !!navigation?.items?.length;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
+		direction: "column",
+		className: clsx(style_module_default$13.header, hasNavigation && style_module_default$13["has-navigation"]),
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
+				className: style_module_default$13["header-content"],
+				direction: "row",
+				gap: "sm",
+				justify: "space-between",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
+					direction: "row",
+					gap: "sm",
+					align: "center",
+					justify: "start",
+					className: style_module_default$13["header-lockup"],
+					children: [
+						showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SidebarToggleSlot, {
+							bubblesVirtually: true,
+							className: style_module_default$13["sidebar-toggle-slot"]
+						}),
+						visual && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: style_module_default$13["header-visual"],
+							"aria-hidden": "true",
+							children: visual
+						}),
+						title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
+							className: style_module_default$13["header-title"],
+							render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeadingTag, {}),
+							variant: "heading-lg",
+							children: title
+						}),
+						breadcrumbs,
+						badges
+					]
+				}), actions && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
+					align: "center",
+					className: style_module_default$13["header-actions"],
+					direction: "row",
+					gap: "sm",
+					children: actions
+				})]
+			}),
+			subTitle && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
+				render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {}),
+				variant: "body-md",
+				className: style_module_default$13["header-subtitle"],
+				children: subTitle
+			}),
+			hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Navigation$1, {
+				...navigation,
+				linkComponent: components?.link,
+				className: style_module_default$13["header-navigation"]
+			})
+		]
 	});
-};
+}
 
-// \0wp-global:@wordpress/components
-var require_components = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.components;
-}));
-
-// packages/admin-ui/build-module/page/sidebar-toggle-slot.mjs
-var import_components = require_components();
-const { Fill: SidebarToggleFill, Slot: SidebarToggleSlot } = (0, import_components.createSlotFill)("SidebarToggle");
-
-// packages/admin-ui/build-module/page/header.mjs
+// packages/admin-ui/build-module/page/index.mjs
 const STYLE_HASH_ATTRIBUTE$12 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -9356,191 +9534,13 @@ var style_module_default$12 = {
 	"content": "_164a4cfa881f76f7__content",
 	"has-padding": "_2859463eef17c76b__has-padding"
 };
-function Header({ headingLevel = 1, breadcrumbs, badges, visual, title, subTitle, actions, navigation, components, showSidebarToggle = true }) {
-	const HeadingTag = `h${headingLevel}`;
-	const hasNavigation = !!navigation?.items?.length;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
-		direction: "column",
-		className: clsx(style_module_default$12.header, hasNavigation && style_module_default$12["has-navigation"]),
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
-				className: style_module_default$12["header-content"],
-				direction: "row",
-				gap: "sm",
-				justify: "space-between",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
-					direction: "row",
-					gap: "sm",
-					align: "center",
-					justify: "start",
-					className: style_module_default$12["header-lockup"],
-					children: [
-						showSidebarToggle && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SidebarToggleSlot, {
-							bubblesVirtually: true,
-							className: style_module_default$12["sidebar-toggle-slot"]
-						}),
-						visual && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: style_module_default$12["header-visual"],
-							"aria-hidden": "true",
-							children: visual
-						}),
-						title && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
-							className: style_module_default$12["header-title"],
-							render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeadingTag, {}),
-							variant: "heading-lg",
-							children: title
-						}),
-						breadcrumbs,
-						badges
-					]
-				}), actions && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
-					align: "center",
-					className: style_module_default$12["header-actions"],
-					direction: "row",
-					gap: "sm",
-					children: actions
-				})]
-			}),
-			subTitle && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
-				render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {}),
-				variant: "body-md",
-				className: style_module_default$12["header-subtitle"],
-				children: subTitle
-			}),
-			hasNavigation && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Navigation$1, {
-				...navigation,
-				linkComponent: components?.link,
-				className: style_module_default$12["header-navigation"]
-			})
-		]
-	});
-}
-
-// packages/admin-ui/build-module/page/index.mjs
-const STYLE_HASH_ATTRIBUTE$11 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$11() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$11(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$11(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$11}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$11) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$11(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$11();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$11(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$11, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$11(targetDocument) {
-	const runtime = getRuntime$11();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$11(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$11(hash, css) {
-	const runtime = getRuntime$11();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$11(targetDocument, hash, css);
-}
-registerStyle$11("05dfc7076f", "._52bf6d26b2cc898d__page{text-wrap:pretty;background-color:var(--wpds-color-background-surface-neutral,#fcfcfc);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-flow:column;height:100%;position:relative;z-index:1}._24667cfed9f43255__header{background:var(--wpds-color-background-surface-neutral-strong,#fff);border-block-end:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);inset-block-start:0;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px);position:sticky;z-index:1}.f92719188634c5d6__header-content{min-height:var(--wpds-dimension-size-md,32px)}._141425854f032b21__header-actions{flex-shrink:0}._4d5abf3b39fc4e47__header-lockup{min-width:0}._939fd173dcd6f7b5__header-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}._2ebb2614e76305a3__header-visual{display:grid;flex-shrink:0;grid-template-columns:1fr;grid-template-rows:1fr;height:var(--wpds-dimension-size-sm,24px);width:var(--wpds-dimension-size-sm,24px);>*{grid-column:1/-1;grid-row:1/-1;max-height:100%;max-width:100%}}._3ee1b13e76b21c76__sidebar-toggle-slot:empty{display:none}._3e0a8b957270846f__header-subtitle{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);padding-block-end:var(--wpds-dimension-padding-xs,4px)}._24667cfed9f43255__header.b230252b347a13f0__has-navigation,._24667cfed9f43255__header.b230252b347a13f0__has-navigation ._3e0a8b957270846f__header-subtitle{padding-block-end:0}._08493e4139885090__header-navigation{margin-block-start:var(--wpds-dimension-gap-md,12px)}._164a4cfa881f76f7__content{display:flex;flex-direction:column;flex-grow:1;overflow:auto;&._2859463eef17c76b__has-padding{padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}}");
-var style_module_default$11 = {
-	"page": "_52bf6d26b2cc898d__page",
-	"header": "_24667cfed9f43255__header",
-	"header-content": "f92719188634c5d6__header-content",
-	"header-actions": "_141425854f032b21__header-actions",
-	"header-lockup": "_4d5abf3b39fc4e47__header-lockup",
-	"header-title": "_939fd173dcd6f7b5__header-title",
-	"header-visual": "_2ebb2614e76305a3__header-visual",
-	"sidebar-toggle-slot": "_3ee1b13e76b21c76__sidebar-toggle-slot",
-	"header-subtitle": "_3e0a8b957270846f__header-subtitle",
-	"has-navigation": "b230252b347a13f0__has-navigation",
-	"header-navigation": "_08493e4139885090__header-navigation",
-	"content": "_164a4cfa881f76f7__content",
-	"has-padding": "_2859463eef17c76b__has-padding"
-};
 /**
 * A standard layout for admin screens. It includes a header with support for
 * a title or breadcrumbs, badges, actions such as a Save button, and tab-style
 * links to the sections of the screen. The page content shows below the header.
 */
 function Page({ headingLevel, breadcrumbs, badges, visual, title, subTitle, children, className, actions, navigation, components, ariaLabel, hasPadding = false, showSidebarToggle = true }) {
-	const classes = clsx(style_module_default$11.page, className);
+	const classes = clsx(style_module_default$12.page, className);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(NavigableRegion, {
 		className: classes,
 		ariaLabel: ariaLabel ?? (typeof title === "string" ? title : ""),
@@ -9556,7 +9556,7 @@ function Page({ headingLevel, breadcrumbs, badges, visual, title, subTitle, chil
 			components,
 			showSidebarToggle
 		}), hasPadding ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: clsx(style_module_default$11.content, style_module_default$11["has-padding"]),
+			className: clsx(style_module_default$12.content, style_module_default$12["has-padding"]),
 			children
 		}) : children]
 	});
@@ -9838,6 +9838,134 @@ function wrapIcon(icon, shouldShowPlaceholder = true) {
 }
 
 // packages/boot/build-module/components/navigation/navigation-item/index.mjs
+const STYLE_HASH_ATTRIBUTE$11 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$11() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$11(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$11(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$11}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$11) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$11(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$11();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$11(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$11, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$11(targetDocument) {
+	const runtime = getRuntime$11();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$11(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$11(hash, css) {
+	const runtime = getRuntime$11();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$11(targetDocument, hash, css);
+}
+registerStyle$11("8d0506d52b", "._873b0f189db62fa3__item._873b0f189db62fa3__item{align-items:center;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);line-height:var(--wpds-typography-line-height-sm,20px);margin-block-end:4px;margin-inline:12px;min-height:32px;padding-block:0;padding-inline:4px;width:calc(100% - 24px)}._873b0f189db62fa3__item._873b0f189db62fa3__item:focus,._873b0f189db62fa3__item._873b0f189db62fa3__item:hover,._873b0f189db62fa3__item._873b0f189db62fa3__item[aria-current=true]{color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._873b0f189db62fa3__item._873b0f189db62fa3__item svg:last-child{padding:4px}._873b0f189db62fa3__item._873b0f189db62fa3__item[aria-current=page],._873b0f189db62fa3__item._873b0f189db62fa3__item[data-status=active]{color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));font-weight:var(--wpds-typography-font-weight-emphasis,600)}._873b0f189db62fa3__item._873b0f189db62fa3__item:focus-visible{transform:translateZ(0)}._873b0f189db62fa3__item._1ac4ca98dd21cec1__is-compact{min-height:24px}");
+var style_module_default$11 = {
+	"item": "_873b0f189db62fa3__item",
+	"is-compact": "_1ac4ca98dd21cec1__is-compact"
+};
+function NavigationItem({ className, icon, shouldShowPlaceholder = true, children, to }) {
+	const isExternal = !String(new URL(to, window.location.origin)).startsWith(window.location.origin);
+	const content = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
+		justify: "flex-start",
+		spacing: 2,
+		style: { flexGrow: "1" },
+		children: [wrapIcon(icon, shouldShowPlaceholder), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children })]
+	});
+	if (isExternal) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, {
+		as: "a",
+		href: to,
+		className: clsx(style_module_default$11.item, className),
+		children: content
+	});
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterLinkItem, {
+		to,
+		className: clsx(style_module_default$11.item, className),
+		children: content
+	});
+}
+
+// packages/boot/build-module/components/navigation/drilldown-item/index.mjs
 const STYLE_HASH_ATTRIBUTE$10 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -9944,28 +10072,31 @@ var style_module_default$10 = {
 	"item": "_873b0f189db62fa3__item",
 	"is-compact": "_1ac4ca98dd21cec1__is-compact"
 };
-function NavigationItem({ className, icon, shouldShowPlaceholder = true, children, to }) {
-	const isExternal = !String(new URL(to, window.location.origin)).startsWith(window.location.origin);
-	const content = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
-		justify: "flex-start",
-		spacing: 2,
-		style: { flexGrow: "1" },
-		children: [wrapIcon(icon, shouldShowPlaceholder), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children })]
-	});
-	if (isExternal) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, {
-		as: "a",
-		href: to,
+function DrilldownItem({ className, id, icon, shouldShowPlaceholder = true, children, onNavigate }) {
+	const handleClick = (e) => {
+		e.preventDefault();
+		onNavigate({
+			id,
+			direction: "forward"
+		});
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, {
 		className: clsx(style_module_default$10.item, className),
-		children: content
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RouterLinkItem, {
-		to,
-		className: clsx(style_module_default$10.item, className),
-		children: content
+		onClick: handleClick,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
+			justify: "flex-start",
+			spacing: 2,
+			style: { flexGrow: "1" },
+			children: [
+				wrapIcon(icon, shouldShowPlaceholder),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Icon, { icon: (0, import_i18n.isRTL)() ? chevron_left_small_default : chevron_right_small_default })
+			]
+		})
 	});
 }
 
-// packages/boot/build-module/components/navigation/drilldown-item/index.mjs
+// packages/boot/build-module/components/navigation/dropdown-item/index.mjs
 const STYLE_HASH_ATTRIBUTE$9 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -10068,35 +10199,68 @@ function registerStyle$9(hash, css) {
 	for (const targetDocument of runtime.documents.keys()) injectStyle$9(targetDocument, hash, css);
 }
 registerStyle$9("8d0506d52b", "._873b0f189db62fa3__item._873b0f189db62fa3__item{align-items:center;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);line-height:var(--wpds-typography-line-height-sm,20px);margin-block-end:4px;margin-inline:12px;min-height:32px;padding-block:0;padding-inline:4px;width:calc(100% - 24px)}._873b0f189db62fa3__item._873b0f189db62fa3__item:focus,._873b0f189db62fa3__item._873b0f189db62fa3__item:hover,._873b0f189db62fa3__item._873b0f189db62fa3__item[aria-current=true]{color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._873b0f189db62fa3__item._873b0f189db62fa3__item svg:last-child{padding:4px}._873b0f189db62fa3__item._873b0f189db62fa3__item[aria-current=page],._873b0f189db62fa3__item._873b0f189db62fa3__item[data-status=active]{color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));font-weight:var(--wpds-typography-font-weight-emphasis,600)}._873b0f189db62fa3__item._873b0f189db62fa3__item:focus-visible{transform:translateZ(0)}._873b0f189db62fa3__item._1ac4ca98dd21cec1__is-compact{min-height:24px}");
-var style_module_default$9 = {
+var style_module_default$1$1 = {
 	"item": "_873b0f189db62fa3__item",
 	"is-compact": "_1ac4ca98dd21cec1__is-compact"
 };
-function DrilldownItem({ className, id, icon, shouldShowPlaceholder = true, children, onNavigate }) {
-	const handleClick = (e) => {
-		e.preventDefault();
-		onNavigate({
-			id,
-			direction: "forward"
-		});
-	};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, {
-		className: clsx(style_module_default$9.item, className),
-		onClick: handleClick,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
-			justify: "flex-start",
-			spacing: 2,
-			style: { flexGrow: "1" },
-			children: [
-				wrapIcon(icon, shouldShowPlaceholder),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children }),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Icon, { icon: (0, import_i18n.isRTL)() ? chevron_left_small_default : chevron_right_small_default })
-			]
-		})
+registerStyle$9("afe932ce31", "._51fbf12353b41bfd__dropdown{display:block}.d62b19ea84deb921__dropdown-children{display:flex;flex-direction:column;margin-block-end:2px;margin-block-start:-2px;margin-inline-start:30px;overflow:hidden;padding:2px}._32fed855b8f13ebb__chevron._3ab794a15eff17b0__is-up{transform:rotate(180deg)}");
+var style_module_default$9 = {
+	"dropdown": "_51fbf12353b41bfd__dropdown",
+	"dropdown-children": "d62b19ea84deb921__dropdown-children",
+	"chevron": "_32fed855b8f13ebb__chevron",
+	"is-up": "_3ab794a15eff17b0__is-up"
+};
+const ANIMATION_DURATION$1 = .2;
+function DropdownItem({ className, id, icon, children, isExpanded, onToggle }) {
+	const items = (0, import_data.useSelect)((select) => select(STORE_NAME).getMenuItems(), []).filter((item) => item.parent === id);
+	const disableMotion = (0, import_compose.useReducedMotion)();
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: style_module_default$9.dropdown,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, {
+			className: clsx(style_module_default$1$1.item, className),
+			onClick: (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				onToggle();
+			},
+			onMouseDown: (e) => e.preventDefault(),
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
+				justify: "flex-start",
+				spacing: 2,
+				style: { flexGrow: "1" },
+				children: [
+					wrapIcon(icon, false),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children }),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Icon, {
+						icon: chevron_down_small_default,
+						className: clsx(style_module_default$9.chevron, { [style_module_default$9["is-up"]]: isExpanded })
+					})
+				]
+			})
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__unstableAnimatePresence, {
+			initial: false,
+			children: isExpanded && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__unstableMotion.div, {
+				initial: { height: 0 },
+				animate: { height: "auto" },
+				exit: { height: 0 },
+				transition: {
+					type: "tween",
+					duration: disableMotion ? 0 : ANIMATION_DURATION$1,
+					ease: "easeOut"
+				},
+				className: style_module_default$9["dropdown-children"],
+				children: items.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavigationItem, {
+					className: style_module_default$1$1["is-compact"],
+					to: item.to,
+					shouldShowPlaceholder: false,
+					children: item.label
+				}, index))
+			})
+		})]
 	});
 }
 
-// packages/boot/build-module/components/navigation/dropdown-item/index.mjs
+// packages/boot/build-module/components/navigation/navigation-screen/index.mjs
 const STYLE_HASH_ATTRIBUTE$8 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -10198,172 +10362,8 @@ function registerStyle$8(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$8(targetDocument, hash, css);
 }
-registerStyle$8("8d0506d52b", "._873b0f189db62fa3__item._873b0f189db62fa3__item{align-items:center;border:none;border-radius:var(--wpds-border-radius-sm,2px);color:var(--wpds-color-foreground-interactive-neutral,#1e1e1e);display:flex;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--wpds-typography-font-size-md,13px);font-weight:var(--wpds-typography-font-weight-default,400);line-height:var(--wpds-typography-line-height-sm,20px);margin-block-end:4px;margin-inline:12px;min-height:32px;padding-block:0;padding-inline:4px;width:calc(100% - 24px)}._873b0f189db62fa3__item._873b0f189db62fa3__item:focus,._873b0f189db62fa3__item._873b0f189db62fa3__item:hover,._873b0f189db62fa3__item._873b0f189db62fa3__item[aria-current=true]{color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000))}._873b0f189db62fa3__item._873b0f189db62fa3__item svg:last-child{padding:4px}._873b0f189db62fa3__item._873b0f189db62fa3__item[aria-current=page],._873b0f189db62fa3__item._873b0f189db62fa3__item[data-status=active]{color:var(--wpds-color-foreground-interactive-brand-active,color-mix(in oklch,var(--wp-admin-theme-color,#3858e9) 52%,#000));font-weight:var(--wpds-typography-font-weight-emphasis,600)}._873b0f189db62fa3__item._873b0f189db62fa3__item:focus-visible{transform:translateZ(0)}._873b0f189db62fa3__item._1ac4ca98dd21cec1__is-compact{min-height:24px}");
-var style_module_default$1$1 = {
-	"item": "_873b0f189db62fa3__item",
-	"is-compact": "_1ac4ca98dd21cec1__is-compact"
-};
-registerStyle$8("afe932ce31", "._51fbf12353b41bfd__dropdown{display:block}.d62b19ea84deb921__dropdown-children{display:flex;flex-direction:column;margin-block-end:2px;margin-block-start:-2px;margin-inline-start:30px;overflow:hidden;padding:2px}._32fed855b8f13ebb__chevron._3ab794a15eff17b0__is-up{transform:rotate(180deg)}");
+registerStyle$8("587e8bd148", "._8ee768104cd6989d__screen{padding-block-end:4px}._8ee768104cd6989d__screen .components-text{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._86eaeab8cbb71ab3__title-icon{padding-block-end:8px;padding-block-start:12px;padding-inline-end:16px;padding-inline-start:16px;position:sticky;top:0}.c70a3969756ff3ce__title{flex-grow:1;overflow-wrap:break-word}.c70a3969756ff3ce__title.c70a3969756ff3ce__title,.c70a3969756ff3ce__title.c70a3969756ff3ce__title .c70a3969756ff3ce__title{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);line-height:32px}.f21c64ba84799e5c__actions{display:flex;flex-shrink:0}");
 var style_module_default$8 = {
-	"dropdown": "_51fbf12353b41bfd__dropdown",
-	"dropdown-children": "d62b19ea84deb921__dropdown-children",
-	"chevron": "_32fed855b8f13ebb__chevron",
-	"is-up": "_3ab794a15eff17b0__is-up"
-};
-const ANIMATION_DURATION$1 = .2;
-function DropdownItem({ className, id, icon, children, isExpanded, onToggle }) {
-	const items = (0, import_data.useSelect)((select) => select(STORE_NAME).getMenuItems(), []).filter((item) => item.parent === id);
-	const disableMotion = (0, import_compose.useReducedMotion)();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: style_module_default$8.dropdown,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalItem, {
-			className: clsx(style_module_default$1$1.item, className),
-			onClick: (e) => {
-				e.preventDefault();
-				e.stopPropagation();
-				onToggle();
-			},
-			onMouseDown: (e) => e.preventDefault(),
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
-				justify: "flex-start",
-				spacing: 2,
-				style: { flexGrow: "1" },
-				children: [
-					wrapIcon(icon, false),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexBlock, { children }),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Icon, {
-						icon: chevron_down_small_default,
-						className: clsx(style_module_default$8.chevron, { [style_module_default$8["is-up"]]: isExpanded })
-					})
-				]
-			})
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__unstableAnimatePresence, {
-			initial: false,
-			children: isExpanded && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__unstableMotion.div, {
-				initial: { height: 0 },
-				animate: { height: "auto" },
-				exit: { height: 0 },
-				transition: {
-					type: "tween",
-					duration: disableMotion ? 0 : ANIMATION_DURATION$1,
-					ease: "easeOut"
-				},
-				className: style_module_default$8["dropdown-children"],
-				children: items.map((item, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(NavigationItem, {
-					className: style_module_default$1$1["is-compact"],
-					to: item.to,
-					shouldShowPlaceholder: false,
-					children: item.label
-				}, index))
-			})
-		})]
-	});
-}
-
-// packages/boot/build-module/components/navigation/navigation-screen/index.mjs
-const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$7() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$7(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$7(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$7}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$7) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$7(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$7();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$7(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$7, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$7(targetDocument) {
-	const runtime = getRuntime$7();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$7(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$7(hash, css) {
-	const runtime = getRuntime$7();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
-}
-registerStyle$7("587e8bd148", "._8ee768104cd6989d__screen{padding-block-end:4px}._8ee768104cd6989d__screen .components-text{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._86eaeab8cbb71ab3__title-icon{padding-block-end:8px;padding-block-start:12px;padding-inline-end:16px;padding-inline-start:16px;position:sticky;top:0}.c70a3969756ff3ce__title{flex-grow:1;overflow-wrap:break-word}.c70a3969756ff3ce__title.c70a3969756ff3ce__title,.c70a3969756ff3ce__title.c70a3969756ff3ce__title .c70a3969756ff3ce__title{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);line-height:32px}.f21c64ba84799e5c__actions{display:flex;flex-shrink:0}");
-var style_module_default$7 = {
 	"screen": "_8ee768104cd6989d__screen",
 	"title-icon": "_86eaeab8cbb71ab3__title-icon",
 	"title": "c70a3969756ff3ce__title",
@@ -10395,7 +10395,7 @@ function NavigationScreen({ isRoot, title, actions, content, description, animat
 		});
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: style_module_default$7.screen,
+		className: style_module_default$8.screen,
 		style: {
 			overflow: "hidden",
 			position: "relative",
@@ -10429,7 +10429,7 @@ function NavigationScreen({ isRoot, title, actions, content, description, animat
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
 						spacing: 2,
-						className: style_module_default$7["title-icon"],
+						className: style_module_default$8["title-icon"],
 						children: [
 							!isRoot && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 								ref: backButtonRef,
@@ -10440,13 +10440,13 @@ function NavigationScreen({ isRoot, title, actions, content, description, animat
 								variant: "tertiary"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalHeading, {
-								className: style_module_default$7.title,
+								className: style_module_default$8.title,
 								level: 1,
 								size: "15px",
 								children: title
 							}),
 							actions && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: style_module_default$7.actions,
+								className: style_module_default$8.actions,
 								children: actions
 							})
 						]
@@ -10682,6 +10682,182 @@ function useSaveShortcut({ openSavePanel }) {
 }
 
 // packages/boot/build-module/components/save-button/index.mjs
+const STYLE_HASH_ATTRIBUTE$7 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$7() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$7(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$7(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$7}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$7) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$7(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$7();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$7(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$7, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$7(targetDocument) {
+	const runtime = getRuntime$7();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$7(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$7(hash, css) {
+	const runtime = getRuntime$7();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$7(targetDocument, hash, css);
+}
+registerStyle$7("da0f7c3ff6", "._4e8b2ecc322dfc1f__save-button{width:100%}._0e6f3a8336688e3f__shortcut:not(:first-child){margin-inline-start:8px}");
+var style_module_default$7 = {
+	"save-button": "_4e8b2ecc322dfc1f__save-button",
+	"shortcut": "_0e6f3a8336688e3f__shortcut"
+};
+const { EntitiesSavedStates: EntitiesSavedStates$1 } = unlock(import_core_data.privateApis);
+function SaveButton() {
+	const [isSaveViewOpen, setIsSaveViewOpened] = (0, import_element.useState)(false);
+	const { isSaving, dirtyEntityRecordsCount } = (0, import_data.useSelect)((select) => {
+		const { isSavingEntityRecord, __experimentalGetDirtyEntityRecords } = select(import_core_data.store);
+		const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
+		return {
+			isSaving: dirtyEntityRecords.some((record) => isSavingEntityRecord(record.kind, record.name, record.key)),
+			dirtyEntityRecordsCount: dirtyEntityRecords.length
+		};
+	}, []);
+	const [showSavedState, setShowSavedState] = (0, import_element.useState)(false);
+	(0, import_element.useEffect)(() => {
+		if (isSaving) setShowSavedState(true);
+	}, [isSaving]);
+	const hasChanges = dirtyEntityRecordsCount > 0;
+	(0, import_element.useEffect)(() => {
+		if (!isSaving && hasChanges) setShowSavedState(false);
+	}, [isSaving, hasChanges]);
+	function hideSavedState() {
+		if (showSavedState) setShowSavedState(false);
+	}
+	const shouldShowButton = hasChanges || showSavedState;
+	useSaveShortcut({ openSavePanel: () => setIsSaveViewOpened(true) });
+	const shortcut = {
+		displayShortcut: import_keycodes.displayShortcut.primary("s"),
+		ariaKeyShortcut: import_keycodes.ariaKeyShortcut.primary("s"),
+		label: import_keycodes.shortcutAriaLabel.primary("s")
+	};
+	const { descriptionId, targetProps } = useKeyboardShortcutProps({ shortcut });
+	if (!shouldShowButton) return null;
+	const isInSavedState = showSavedState && !hasChanges;
+	const disabled = isSaving || isInSavedState;
+	const getLabel = () => {
+		if (isInSavedState) return (0, import_i18n.__)("Saved");
+		return (0, import_i18n.sprintf)((0, import_i18n._n)("Review %d change…", "Review %d changes…", dirtyEntityRecordsCount), dirtyEntityRecordsCount);
+	};
+	const label = getLabel();
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$2, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger, {
+		...targetProps,
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
+			variant: "primary",
+			size: "compact",
+			onClick: () => setIsSaveViewOpened(true),
+			onBlur: hideSavedState,
+			disabled,
+			accessibleWhenDisabled: true,
+			isBusy: isSaving,
+			className: style_module_default$7["save-button"],
+			icon: isInSavedState ? check_default : void 0
+		}),
+		children: [label, descriptionId && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDescription, {
+			descriptionId,
+			shortcut
+		})]
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popup, { children: [hasChanges && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: label }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDisplay, {
+		className: style_module_default$7.shortcut,
+		shortcut
+	})] })] }), isSaveViewOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Modal, {
+		title: (0, import_i18n.__)("Review changes"),
+		onRequestClose: () => setIsSaveViewOpened(false),
+		size: "small",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntitiesSavedStates$1, {
+			close: () => setIsSaveViewOpened(false),
+			variant: "inline"
+		})
+	})] });
+}
+
+// packages/boot/build-module/components/sidebar/index.mjs
 const STYLE_HASH_ATTRIBUTE$6 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -10783,81 +10959,42 @@ function registerStyle$6(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$6(targetDocument, hash, css);
 }
-registerStyle$6("da0f7c3ff6", "._4e8b2ecc322dfc1f__save-button{width:100%}._0e6f3a8336688e3f__shortcut:not(:first-child){margin-inline-start:8px}");
+registerStyle$6("040f861d87", ".e805c0d27c9fe7b6__scrollable{display:flex;flex-direction:column;height:100%;overflow:auto;position:relative}._16abc09ab6556b14__content{contain:content;flex-grow:1;position:relative}._7d16636622fe90e5__footer{padding-block-end:8px;padding-block-start:16px;padding-inline-end:8px;padding-inline-start:16px}._6058c5869f31f9bd__back-button{margin-block-end:8px;margin-block-start:16px;margin-inline-end:12px;margin-inline-start:12px}");
 var style_module_default$6 = {
-	"save-button": "_4e8b2ecc322dfc1f__save-button",
-	"shortcut": "_0e6f3a8336688e3f__shortcut"
+	"scrollable": "e805c0d27c9fe7b6__scrollable",
+	"content": "_16abc09ab6556b14__content",
+	"footer": "_7d16636622fe90e5__footer",
+	"back-button": "_6058c5869f31f9bd__back-button"
 };
-const { EntitiesSavedStates: EntitiesSavedStates$1 } = unlock(import_core_data.privateApis);
-function SaveButton() {
-	const [isSaveViewOpen, setIsSaveViewOpened] = (0, import_element.useState)(false);
-	const { isSaving, dirtyEntityRecordsCount } = (0, import_data.useSelect)((select) => {
-		const { isSavingEntityRecord, __experimentalGetDirtyEntityRecords } = select(import_core_data.store);
-		const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
-		return {
-			isSaving: dirtyEntityRecords.some((record) => isSavingEntityRecord(record.kind, record.name, record.key)),
-			dirtyEntityRecordsCount: dirtyEntityRecords.length
-		};
-	}, []);
-	const [showSavedState, setShowSavedState] = (0, import_element.useState)(false);
-	(0, import_element.useEffect)(() => {
-		if (isSaving) setShowSavedState(true);
-	}, [isSaving]);
-	const hasChanges = dirtyEntityRecordsCount > 0;
-	(0, import_element.useEffect)(() => {
-		if (!isSaving && hasChanges) setShowSavedState(false);
-	}, [isSaving, hasChanges]);
-	function hideSavedState() {
-		if (showSavedState) setShowSavedState(false);
-	}
-	const shouldShowButton = hasChanges || showSavedState;
-	useSaveShortcut({ openSavePanel: () => setIsSaveViewOpened(true) });
-	const shortcut = {
-		displayShortcut: import_keycodes.displayShortcut.primary("s"),
-		ariaKeyShortcut: import_keycodes.ariaKeyShortcut.primary("s"),
-		label: import_keycodes.shortcutAriaLabel.primary("s")
-	};
-	const { descriptionId, targetProps } = useKeyboardShortcutProps({ shortcut });
-	if (!shouldShowButton) return null;
-	const isInSavedState = showSavedState && !hasChanges;
-	const disabled = isSaving || isInSavedState;
-	const getLabel = () => {
-		if (isInSavedState) return (0, import_i18n.__)("Saved");
-		return (0, import_i18n.sprintf)((0, import_i18n._n)("Review %d change…", "Review %d changes…", dirtyEntityRecordsCount), dirtyEntityRecordsCount);
-	};
-	const label = getLabel();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$2, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger, {
-		...targetProps,
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-			variant: "primary",
-			size: "compact",
-			onClick: () => setIsSaveViewOpened(true),
-			onBlur: hideSavedState,
-			disabled,
-			accessibleWhenDisabled: true,
-			isBusy: isSaving,
-			className: style_module_default$6["save-button"],
-			icon: isInSavedState ? check_default : void 0
-		}),
-		children: [label, descriptionId && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDescription, {
-			descriptionId,
-			shortcut
-		})]
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Popup, { children: [hasChanges && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: label }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyboardShortcutDisplay, {
-		className: style_module_default$6.shortcut,
-		shortcut
-	})] })] }), isSaveViewOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Modal, {
-		title: (0, import_i18n.__)("Review changes"),
-		onRequestClose: () => setIsSaveViewOpened(false),
-		size: "small",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntitiesSavedStates$1, {
-			close: () => setIsSaveViewOpened(false),
-			variant: "inline"
-		})
-	})] });
+function DashboardBackButton() {
+	const dashboardLink = (0, import_data.useSelect)((select) => select(store).getDashboardLink(), []);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
+		__next40pxDefaultSize: true,
+		className: style_module_default$6["back-button"],
+		href: dashboardLink || "/",
+		icon: (0, import_i18n.isRTL)() ? chevron_right_default : chevron_left_default,
+		label: (0, import_i18n.__)("Go to the Dashboard"),
+		children: (0, import_i18n.__)("Dashboard")
+	});
+}
+function Sidebar() {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: style_module_default$6.scrollable,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashboardBackButton, {}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: style_module_default$6.content,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Navigation, {})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: style_module_default$6.footer,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SaveButton, {})
+			})
+		]
+	});
 }
 
-// packages/boot/build-module/components/sidebar/index.mjs
+// packages/boot/build-module/components/save-panel/index.mjs
 const STYLE_HASH_ATTRIBUTE$5 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -10959,152 +11096,15 @@ function registerStyle$5(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$5(targetDocument, hash, css);
 }
-registerStyle$5("040f861d87", ".e805c0d27c9fe7b6__scrollable{display:flex;flex-direction:column;height:100%;overflow:auto;position:relative}._16abc09ab6556b14__content{contain:content;flex-grow:1;position:relative}._7d16636622fe90e5__footer{padding-block-end:8px;padding-block-start:16px;padding-inline-end:8px;padding-inline-start:16px}._6058c5869f31f9bd__back-button{margin-block-end:8px;margin-block-start:16px;margin-inline-end:12px;margin-inline-start:12px}");
-var style_module_default$5 = {
-	"scrollable": "e805c0d27c9fe7b6__scrollable",
-	"content": "_16abc09ab6556b14__content",
-	"footer": "_7d16636622fe90e5__footer",
-	"back-button": "_6058c5869f31f9bd__back-button"
-};
-function DashboardBackButton() {
-	const dashboardLink = (0, import_data.useSelect)((select) => select(store).getDashboardLink(), []);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-		__next40pxDefaultSize: true,
-		className: style_module_default$5["back-button"],
-		href: dashboardLink || "/",
-		icon: (0, import_i18n.isRTL)() ? chevron_right_default : chevron_left_default,
-		label: (0, import_i18n.__)("Go to the Dashboard"),
-		children: (0, import_i18n.__)("Dashboard")
-	});
-}
-function Sidebar() {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: style_module_default$5.scrollable,
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DashboardBackButton, {}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: style_module_default$5.content,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Navigation, {})
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: style_module_default$5.footer,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SaveButton, {})
-			})
-		]
-	});
-}
-
-// packages/boot/build-module/components/save-panel/index.mjs
-const STYLE_HASH_ATTRIBUTE$4 = "data-wp-hash";
-/**
-* Returns the shared style runtime registry.
-*
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
-*/
-function getRuntime$4() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$4(document);
-	return globalScope.__wpStyleRuntime;
-}
-/**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
-*/
-function documentContainsStyleHash$4(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$4}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$4) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$4(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$4();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$4(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$4, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$4(targetDocument) {
-	const runtime = getRuntime$4();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$4(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$4(hash, css) {
-	const runtime = getRuntime$4();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$4(targetDocument, hash, css);
-}
-registerStyle$4("e8f942db13", "@media (min-width:600px){._1bb5b45e7ea3b538__modal{width:600px}}");
-var style_module_default$4 = { "modal": "_1bb5b45e7ea3b538__modal" };
+registerStyle$5("e8f942db13", "@media (min-width:600px){._1bb5b45e7ea3b538__modal{width:600px}}");
+var style_module_default$5 = { "modal": "_1bb5b45e7ea3b538__modal" };
 const { EntitiesSavedStates } = unlock(import_core_data.privateApis);
 function SavePanel() {
 	const [isOpen, setIsOpen] = (0, import_element.useState)(false);
 	useSaveShortcut({ openSavePanel: () => setIsOpen(true) });
 	if (!isOpen) return false;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Modal, {
-		className: style_module_default$4.modal,
+		className: style_module_default$5.modal,
 		onRequestClose: () => setIsOpen(false),
 		title: (0, import_i18n.__)("Review changes"),
 		size: "small",
@@ -11461,6 +11461,232 @@ function CanvasRenderer({ canvas, routeContentModule }) {
 }
 
 // packages/boot/build-module/components/error-boundary/index.mjs
+const STYLE_HASH_ATTRIBUTE$4 = "data-wp-hash";
+/**
+* Returns the shared style runtime registry.
+*
+* The registry is stored on `globalThis` so separately bundled copies of this
+* package can coordinate through the same document and style maps.
+*
+* @return The shared runtime registry.
+*/
+function getRuntime$4() {
+	const globalScope = globalThis;
+	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+	globalScope.__wpStyleRuntime = {
+		documents: /* @__PURE__ */ new Map(),
+		styles: /* @__PURE__ */ new Map(),
+		injectedStyles: /* @__PURE__ */ new WeakMap()
+	};
+	if (typeof document !== "undefined") registerDocument$4(document);
+	return globalScope.__wpStyleRuntime;
+}
+/**
+* Checks whether a document already contains a style tag for a hash.
+*
+* @param targetDocument Document to inspect.
+* @param hash           Stable hash for the transformed CSS.
+*
+* @return Whether the style hash already exists in the document.
+*/
+function documentContainsStyleHash$4(targetDocument, hash) {
+	if (!targetDocument.head) return false;
+	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$4}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$4) === hash) return true;
+	return false;
+}
+/**
+* Injects a registered style into a document, unless that document already
+* contains a style tag for the same hash.
+*
+* @param targetDocument Document to inject the style into.
+* @param hash           Stable hash for the transformed CSS.
+* @param css            CSS text to inject.
+*/
+function injectStyle$4(targetDocument, hash, css) {
+	if (!targetDocument.head) return;
+	const runtime = getRuntime$4();
+	let injectedStyles = runtime.injectedStyles.get(targetDocument);
+	if (!injectedStyles) {
+		injectedStyles = /* @__PURE__ */ new Set();
+		runtime.injectedStyles.set(targetDocument, injectedStyles);
+	}
+	if (injectedStyles.has(hash)) return;
+	if (documentContainsStyleHash$4(targetDocument, hash)) {
+		injectedStyles.add(hash);
+		return;
+	}
+	const style = targetDocument.createElement("style");
+	style.setAttribute(STYLE_HASH_ATTRIBUTE$4, hash);
+	style.appendChild(targetDocument.createTextNode(css));
+	targetDocument.head.appendChild(style);
+	injectedStyles.add(hash);
+}
+/**
+* Registers a document as a style injection target.
+*
+* Existing registered styles are replayed into the document immediately.
+* Documents are reference-counted so multiple providers can safely register the
+* same document without one cleanup removing it while another registration is
+* still active.
+*
+* @param targetDocument Document to receive registered styles.
+* @return Cleanup function that unregisters this document registration.
+*/
+function registerDocument$4(targetDocument) {
+	const runtime = getRuntime$4();
+	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+	for (const [hash, css] of runtime.styles) injectStyle$4(targetDocument, hash, css);
+	return () => {
+		const count = runtime.documents.get(targetDocument);
+		if (count === void 0) return;
+		if (count <= 1) {
+			runtime.documents.delete(targetDocument);
+			return;
+		}
+		runtime.documents.set(targetDocument, count - 1);
+	};
+}
+/**
+* Registers a style and injects it into all registered documents.
+*
+* The hash is used as the deduplication key, so calling this repeatedly with
+* the same hash will not add duplicate style tags to a document.
+* Registered styles are retained for the lifetime of the page so they can be
+* replayed into documents that are registered later.
+*
+* @param hash Stable hash for the transformed CSS.
+* @param css  CSS text to inject.
+*/
+function registerStyle$4(hash, css) {
+	const runtime = getRuntime$4();
+	runtime.styles.set(hash, css);
+	for (const targetDocument of runtime.documents.keys()) injectStyle$4(targetDocument, hash, css);
+}
+registerStyle$4("f23470a71f", "._69e0fe7ecf360e98__error-boundary{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:16px}");
+var style_module_default$4 = { "error-boundary": "_69e0fe7ecf360e98__error-boundary" };
+const COPY_FEEDBACK_TIMEOUT = 2e3;
+const RESULT_ICON = {
+	idle: copy_default,
+	copied: check_default,
+	error: error_default
+};
+function CopyErrorButton({ error }) {
+	const [feedback, setFeedback] = (0, import_element.useState)({
+		result: "idle",
+		id: 0
+	});
+	(0, import_element.useEffect)(() => {
+		if (feedback.result === "idle") return;
+		const timeoutId = setTimeout(() => setFeedback({
+			result: "idle",
+			id: 0
+		}), COPY_FEEDBACK_TIMEOUT);
+		return () => clearTimeout(timeoutId);
+	}, [feedback]);
+	function report(result, message) {
+		setFeedback((current) => ({
+			result,
+			id: current.id + 1
+		}));
+		speak(message);
+	}
+	const ref = (0, import_compose.useCopyToClipboard)(() => error.stack ?? String(error), () => report("copied", (0, import_i18n.__)("Copied to clipboard")), () => report("error", (0, import_i18n.__)("Couldn't copy to clipboard.")));
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
+		__next40pxDefaultSize: true,
+		variant: "secondary",
+		ref,
+		icon: RESULT_ICON[feedback.result],
+		children: (0, import_i18n._x)("Copy error", "button label")
+	});
+}
+/**
+* Contains a failure to one surface, so a screen keeps working around it.
+*
+* Wrapping each surface separately means a stage that throws leaves the
+* navigation, the canvas and the way to save reachable, rather than taking the
+* whole screen down with it.
+*/
+var ErrorBoundary = class extends import_element.Component {
+	constructor(props) {
+		super(props);
+		this.state = { error: null };
+	}
+	static getDerivedStateFromError(error) {
+		return { error };
+	}
+	render() {
+		const { error } = this.state;
+		if (!error) return this.props.children;
+		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: style_module_default$4["error-boundary"],
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$1, { children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, { icon: caution_default }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Title, { children: (0, import_i18n.__)("Something went wrong") }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Description, { children: (0, import_i18n.__)("This part of the screen could not be displayed. Reloading the page may help.") }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Actions, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyErrorButton, { error }) })
+			] })
+		});
+	}
+};
+
+// \0wp-global:@wordpress/plugins
+var require_plugins = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.plugins;
+}));
+
+// packages/boot/build-module/components/plugin-area/index.mjs
+var import_plugins = require_plugins();
+/**
+* Mounts every plugin registered with `registerPlugin`, so the fills they
+* render reach their slots.
+*
+* Sits at the root rather than with the editor: a plugin's fills mostly target
+* editor slots, but the component holding them is also where it registers
+* commands and extends a list, which the routes without a canvas need too.
+*
+* @return The mount point. Renders whatever the plugins do, and nothing itself.
+*/
+function PluginArea() {
+	const { createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_plugins.PluginArea, { onError: (name) => {
+		createErrorNotice((0, import_i18n.sprintf)((0, import_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."), name));
+	} });
+}
+
+// packages/boot/build-module/components/app/use-route-title.mjs
+const { useLocation: useLocation$1, useMatches: useMatches$2 } = unlock(privateApis);
+/**
+* Hook that manages document title updates based on route changes.
+* Formats titles with WordPress conventions and announces them to screen readers.
+*
+* This hook should be called from the Root component to ensure it runs on every route.
+*/
+function useRouteTitle() {
+	const location = useLocation$1();
+	const matches = useMatches$2();
+	const routeTitle = (matches[matches.length - 1]?.loaderData)?.title;
+	const siteTitle = (0, import_data.useSelect)((select) => select(import_core_data.store).getEntityRecord("root", "__unstableBase")?.name, []);
+	const isInitialLocationRef = (0, import_element.useRef)(true);
+	(0, import_element.useEffect)(() => {
+		isInitialLocationRef.current = false;
+	}, [location]);
+	(0, import_element.useEffect)(() => {
+		if (isInitialLocationRef.current) return;
+		if (routeTitle && typeof routeTitle === "string" && siteTitle && typeof siteTitle === "string") {
+			const decodedRouteTitle = (0, import_html_entities.decodeEntities)(routeTitle);
+			const decodedSiteTitle = (0, import_html_entities.decodeEntities)(siteTitle);
+			const formattedTitle = (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s ‹ %2$s — WordPress"), decodedRouteTitle, decodedSiteTitle);
+			document.title = formattedTitle;
+			if (decodedRouteTitle) speak(decodedRouteTitle, "assertive");
+		}
+	}, [
+		routeTitle,
+		siteTitle,
+		location
+	]);
+}
+
+// packages/boot/build-module/components/app/use-route-focus.mjs
 const STYLE_HASH_ATTRIBUTE$3 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -11562,128 +11788,57 @@ function registerStyle$3(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
 }
-registerStyle$3("f23470a71f", "._69e0fe7ecf360e98__error-boundary{align-items:center;box-sizing:border-box;display:flex;justify-content:center;min-height:100%;padding:16px}");
-var style_module_default$3 = { "error-boundary": "_69e0fe7ecf360e98__error-boundary" };
-const COPY_FEEDBACK_TIMEOUT = 2e3;
-const RESULT_ICON = {
-	idle: copy_default,
-	copied: check_default,
-	error: error_default
+registerStyle$3("a1e6beedc4", ".ec570fbb2868f496__layout{background:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);display:flex;flex-direction:row;height:100%;isolation:isolate;width:100%}@media (min-width:600px){.ec570fbb2868f496__layout{bottom:0;inset-inline-end:0;inset-inline-start:0;min-height:calc(100vh - 46px);position:absolute;top:0}}@media (min-width:782px){.ec570fbb2868f496__layout{min-height:calc(100vh - 32px)}body:has(.ec570fbb2868f496__layout._412c860698817aa8__has-full-canvas) .ec570fbb2868f496__layout{min-height:100vh}}:where(.ec570fbb2868f496__layout) img{height:auto;max-width:100%}.ec570fbb2868f496__layout ._1c9a312567e28b20__notices-snackbar{bottom:var(--wpds-dimension-size-md,32px);box-sizing:border-box;display:flex;flex-direction:column;left:0;padding-inline:16px;pointer-events:none;position:fixed;right:0}.ec570fbb2868f496__layout ._1c9a312567e28b20__notices-snackbar .components-snackbar,.ec570fbb2868f496__layout ._1c9a312567e28b20__notices-snackbar .d4a42c38e09753ae__components-snackbar{margin-inline:auto}._8e41abc61ab38a0b__sidebar-backdrop{background-color:rgba(0,0,0,.5);bottom:0;cursor:var(--wpds-cursor-control,pointer);inset-inline-end:0;inset-inline-start:0;position:fixed;top:0;z-index:100002}._9c70c6016411e369__sidebar{flex-shrink:0;height:100%;overflow:hidden;position:relative;width:240px}._9c70c6016411e369__sidebar.b5ec24928c8da36b__is-mobile{background:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);bottom:0;box-shadow:0 0 8px rgba(0,0,0,.2);inset-inline-start:0;max-width:85vw;position:fixed;top:0;width:300px;z-index:100003}.ed28d4367377467b__mobile-sidebar-drawer{inset-inline-end:0;inset-inline-start:0;position:fixed;top:0}._452d7ff5ac74eb84__layout-single-page .ed28d4367377467b__mobile-sidebar-drawer{top:46px}.ed28d4367377467b__mobile-sidebar-drawer{align-items:center;background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-bottom:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);display:flex;justify-content:flex-start;padding:16px;z-index:3}.e6b2ba021c702ffb__canvas._7cfa87f7a2463610__has-mobile-drawer{padding-top:65px;position:relative}._0ec9efcb29281d50__surfaces{display:flex;flex-grow:1;gap:8px;margin:0}@media (min-width:782px){._0ec9efcb29281d50__surfaces{margin:8px}._452d7ff5ac74eb84__layout-single-page ._0ec9efcb29281d50__surfaces{height:calc(100vh - 40px);margin-top:0;margin-inline-start:0;position:sticky;top:32px}}.a7bbf3aae333d0d8__stage,.e674251381793b5f__inspector{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border-radius:0;bottom:0;color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;inset-inline-end:0;inset-inline-start:0;margin:0;overflow-y:auto;position:relative;position:fixed;top:0;width:100vw}._452d7ff5ac74eb84__layout-single-page .a7bbf3aae333d0d8__stage,._452d7ff5ac74eb84__layout-single-page .e674251381793b5f__inspector{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.a7bbf3aae333d0d8__stage,.e674251381793b5f__inspector{border-radius:var(--wpds-border-radius-xl,12px);height:auto;margin:0;position:static;width:auto}._452d7ff5ac74eb84__layout-single-page .a7bbf3aae333d0d8__stage,._452d7ff5ac74eb84__layout-single-page .e674251381793b5f__inspector{height:auto}}.a7bbf3aae333d0d8__stage{z-index:2}@media (min-width:782px){.a7bbf3aae333d0d8__stage{z-index:auto}}.e674251381793b5f__inspector{z-index:3}@media (min-width:782px){.e674251381793b5f__inspector{z-index:auto}}.e6b2ba021c702ffb__canvas{background:var(--wpds-color-background-surface-neutral,#fcfcfc);border:1px solid var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-radius:0;bottom:0;box-shadow:0 1px 3px rgba(0,0,0,.1);color:var(--wpds-color-foreground-content-neutral,#1e1e1e);flex:1;height:100vh;inset-inline-end:0;inset-inline-start:0;margin:0;overflow-y:auto;position:relative;position:fixed;top:0;width:100vw;z-index:1}._452d7ff5ac74eb84__layout-single-page .e6b2ba021c702ffb__canvas{height:calc(100vh - 46px);top:46px}@media (min-width:782px){.e6b2ba021c702ffb__canvas{border-radius:var(--wpds-border-radius-xl,12px);height:auto;position:static;width:auto;z-index:auto}._452d7ff5ac74eb84__layout-single-page .e6b2ba021c702ffb__canvas{height:auto}.e674251381793b5f__inspector,.ec570fbb2868f496__layout._15176d330d368459__has-canvas .a7bbf3aae333d0d8__stage{max-width:400px}}.e6b2ba021c702ffb__canvas .interface-interface-skeleton{height:100%;inset-inline-start:0!important;position:relative;top:0!important}.ec570fbb2868f496__layout._412c860698817aa8__has-full-canvas ._0ec9efcb29281d50__surfaces{gap:0;margin:0}.ec570fbb2868f496__layout._412c860698817aa8__has-full-canvas .a7bbf3aae333d0d8__stage,.ec570fbb2868f496__layout._412c860698817aa8__has-full-canvas .e674251381793b5f__inspector{display:none}.ec570fbb2868f496__layout._412c860698817aa8__has-full-canvas .e6b2ba021c702ffb__canvas{border:none;border-radius:0;bottom:0;box-shadow:none;inset-inline-end:0;inset-inline-start:0;margin:0;max-width:none;overflow:hidden;position:fixed;top:var(--wp-admin--admin-bar--height,0)}._452d7ff5ac74eb84__layout-single-page .ec570fbb2868f496__layout._412c860698817aa8__has-full-canvas .e6b2ba021c702ffb__canvas{top:46px}@media (min-width:782px){._452d7ff5ac74eb84__layout-single-page .ec570fbb2868f496__layout._412c860698817aa8__has-full-canvas .e6b2ba021c702ffb__canvas{top:32px}}@media (max-width:782px){.a7bbf3aae333d0d8__stage,.e674251381793b5f__inspector,.e6b2ba021c702ffb__canvas:not(._7cfa87f7a2463610__has-mobile-drawer){height:calc(100vh - var(--wp-admin--admin-bar--height, 0px));top:var(--wp-admin--admin-bar--height,0)}.ed28d4367377467b__mobile-sidebar-drawer{top:var(--wp-admin--admin-bar--height,0)}}@media not (prefers-reduced-motion:reduce){.e6b2ba021c702ffb__canvas .interface-interface-skeleton__header{view-transition-name:boot--canvas-header}.e6b2ba021c702ffb__canvas .interface-interface-skeleton__sidebar{view-transition-name:boot--canvas-sidebar}.a7bbf3aae333d0d8__stage{view-transition-name:boot--stage}.e674251381793b5f__inspector{view-transition-name:boot--inspector}.e6b2ba021c702ffb__canvas{view-transition-name:boot--canvas}@supports (-webkit-hyphens:none) and (not (-moz-appearance:none)){.a7bbf3aae333d0d8__stage{view-transition-name:boot-safari--stage}.e674251381793b5f__inspector{view-transition-name:boot-safari--inspector}.e6b2ba021c702ffb__canvas{view-transition-name:boot-safari--canvas}}}@media (max-width:782px){:root:has(.ec570fbb2868f496__layout) *{view-transition-name:none!important}}:root:has(.ec570fbb2868f496__layout)::view-transition-new(root),:root:has(.ec570fbb2868f496__layout)::view-transition-old(root){animation-duration:.25s}@media not (prefers-reduced-motion:reduce){:root:has(.ec570fbb2868f496__layout) .components-popover:first-of-type{view-transition-name:boot--components-popover}}:root:has(.ec570fbb2868f496__layout)::view-transition-group(boot--canvas),:root:has(.ec570fbb2868f496__layout)::view-transition-group(boot--canvas-header),:root:has(.ec570fbb2868f496__layout)::view-transition-group(boot--canvas-sidebar),:root:has(.ec570fbb2868f496__layout)::view-transition-group(boot-safari--canvas){z-index:1}:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot-safari--canvas),:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot-safari--inspector),:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot-safari--stage),:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot-safari--canvas),:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot-safari--inspector),:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot-safari--stage){width:auto}:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--canvas),:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--inspector),:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--stage),:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--canvas),:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--inspector),:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--stage){background:#fff;border-radius:var(--wpds-border-radius-xl,12px);height:100%;object-fit:none;object-position:left top;overflow:hidden;width:100%}:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--canvas),:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--canvas){object-position:center top}:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--inspector):only-child,:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--stage):only-child,:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot-safari--inspector):only-child,:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot-safari--stage):only-child{animation-name:_5a1779b2f2c90caf__zoomOut;will-change:transform,opacity}:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--inspector):only-child,:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--stage):only-child,:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot-safari--inspector):only-child,:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot-safari--stage):only-child{animation-name:_4e45a7a3e5f56197__zoomIn;will-change:transform,opacity}:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--canvas):only-child,:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot-safari--canvas):only-child{animation-name:_537b6d2e5041d8b9__slideFromRight;will-change:transform}:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--canvas):only-child,:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot-safari--canvas):only-child{animation-name:db499c91f24ad370__slideToRight;will-change:transform}:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--canvas-header):only-child{animation-name:_6b902826dce37697__slideHeaderFromTop;will-change:transform}:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--canvas-header):only-child{animation-name:_8e9025331ac47b17__slideHeaderToTop;will-change:transform}:root:has(.ec570fbb2868f496__layout)::view-transition-new(boot--canvas-sidebar):only-child{animation-name:_08fb3da5295b47f8__slideSidebarFromRight;will-change:transform}:root:has(.ec570fbb2868f496__layout)::view-transition-old(boot--canvas-sidebar):only-child{animation-name:a0bb8b58f3887328__slideSidebarToRight;will-change:transform}@keyframes _5a1779b2f2c90caf__zoomOut{0%{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.9)}}@keyframes _4e45a7a3e5f56197__zoomIn{0%{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}@keyframes _537b6d2e5041d8b9__slideFromRight{0%{transform:translateX(100vw)}to{transform:translateX(0)}}@keyframes db499c91f24ad370__slideToRight{0%{transform:translateX(0)}to{transform:translateX(100vw)}}@keyframes _6b902826dce37697__slideHeaderFromTop{0%{transform:translateY(-100%)}}@keyframes _8e9025331ac47b17__slideHeaderToTop{to{transform:translateY(-100%)}}@keyframes _08fb3da5295b47f8__slideSidebarFromRight{0%{transform:translateX(100%)}}@keyframes a0bb8b58f3887328__slideSidebarToRight{to{transform:translateX(100%)}}");
+var style_module_default$3 = {
+	"layout": "ec570fbb2868f496__layout",
+	"has-full-canvas": "_412c860698817aa8__has-full-canvas",
+	"notices-snackbar": "_1c9a312567e28b20__notices-snackbar",
+	"components-snackbar": "d4a42c38e09753ae__components-snackbar",
+	"sidebar-backdrop": "_8e41abc61ab38a0b__sidebar-backdrop",
+	"sidebar": "_9c70c6016411e369__sidebar",
+	"is-mobile": "b5ec24928c8da36b__is-mobile",
+	"mobile-sidebar-drawer": "ed28d4367377467b__mobile-sidebar-drawer",
+	"layout-single-page": "_452d7ff5ac74eb84__layout-single-page",
+	"canvas": "e6b2ba021c702ffb__canvas",
+	"has-mobile-drawer": "_7cfa87f7a2463610__has-mobile-drawer",
+	"surfaces": "_0ec9efcb29281d50__surfaces",
+	"stage": "a7bbf3aae333d0d8__stage",
+	"inspector": "e674251381793b5f__inspector",
+	"has-canvas": "_15176d330d368459__has-canvas",
+	"zoomOut": "_5a1779b2f2c90caf__zoomOut",
+	"zoomIn": "_4e45a7a3e5f56197__zoomIn",
+	"slideFromRight": "_537b6d2e5041d8b9__slideFromRight",
+	"slideToRight": "db499c91f24ad370__slideToRight",
+	"slideHeaderFromTop": "_6b902826dce37697__slideHeaderFromTop",
+	"slideHeaderToTop": "_8e9025331ac47b17__slideHeaderToTop",
+	"slideSidebarFromRight": "_08fb3da5295b47f8__slideSidebarFromRight",
+	"slideSidebarToRight": "a0bb8b58f3887328__slideSidebarToRight"
 };
-function CopyErrorButton({ error }) {
-	const [feedback, setFeedback] = (0, import_element.useState)({
-		result: "idle",
-		id: 0
-	});
-	(0, import_element.useEffect)(() => {
-		if (feedback.result === "idle") return;
-		const timeoutId = setTimeout(() => setFeedback({
-			result: "idle",
-			id: 0
-		}), COPY_FEEDBACK_TIMEOUT);
-		return () => clearTimeout(timeoutId);
-	}, [feedback]);
-	function report(result, message) {
-		setFeedback((current) => ({
-			result,
-			id: current.id + 1
-		}));
-		speak(message);
-	}
-	const ref = (0, import_compose.useCopyToClipboard)(() => error.stack ?? String(error), () => report("copied", (0, import_i18n.__)("Copied to clipboard")), () => report("error", (0, import_i18n.__)("Couldn't copy to clipboard.")));
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-		__next40pxDefaultSize: true,
-		variant: "secondary",
-		ref,
-		icon: RESULT_ICON[feedback.result],
-		children: (0, import_i18n._x)("Copy error", "button label")
-	});
-}
+const { useRouterState } = unlock(privateApis);
 /**
-* Contains a failure to one surface, so a screen keeps working around it.
+* Hook that moves focus to the new page when a navigation removes the focused
+* element, such as a breadcrumb link that becomes the new page's heading.
+* Otherwise focus falls back to the document body, and keyboard and screen
+* reader users lose their place.
 *
-* Wrapping each surface separately means a stage that throws leaves the
-* navigation, the canvas and the way to save reachable, rather than taking the
-* whole screen down with it.
+* It runs in an effect after the route resolves. Effects of the page content
+* run before it, so the page can move focus itself first.
+*
+* @param layoutRef Ref to the layout element that contains the stage.
 */
-var ErrorBoundary = class extends import_element.Component {
-	constructor(props) {
-		super(props);
-		this.state = { error: null };
-	}
-	static getDerivedStateFromError(error) {
-		return { error };
-	}
-	render() {
-		const { error } = this.state;
-		if (!error) return this.props.children;
-		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: style_module_default$3["error-boundary"],
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$1, { children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$3, { icon: caution_default }),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Title, { children: (0, import_i18n.__)("Something went wrong") }),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Description, { children: (0, import_i18n.__)("This part of the screen could not be displayed. Reloading the page may help.") }),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Actions, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CopyErrorButton, { error }) })
-			] })
-		});
-	}
-};
-
-// \0wp-global:@wordpress/plugins
-var require_plugins = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.plugins;
-}));
-
-// packages/boot/build-module/components/plugin-area/index.mjs
-var import_plugins = require_plugins();
-/**
-* Mounts every plugin registered with `registerPlugin`, so the fills they
-* render reach their slots.
-*
-* Sits at the root rather than with the editor: a plugin's fills mostly target
-* editor slots, but the component holding them is also where it registers
-* commands and extends a list, which the routes without a canvas need too.
-*
-* @return The mount point. Renders whatever the plugins do, and nothing itself.
-*/
-function PluginArea() {
-	const { createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_plugins.PluginArea, { onError: (name) => {
-		createErrorNotice((0, import_i18n.sprintf)((0, import_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."), name));
-	} });
-}
-
-// packages/boot/build-module/components/app/use-route-title.mjs
-const { useLocation: useLocation$1, useMatches: useMatches$2 } = unlock(privateApis);
-/**
-* Hook that manages document title updates based on route changes.
-* Formats titles with WordPress conventions and announces them to screen readers.
-*
-* This hook should be called from the Root component to ensure it runs on every route.
-*/
-function useRouteTitle() {
-	const location = useLocation$1();
-	const matches = useMatches$2();
-	const routeTitle = (matches[matches.length - 1]?.loaderData)?.title;
-	const siteTitle = (0, import_data.useSelect)((select) => select(import_core_data.store).getEntityRecord("root", "__unstableBase")?.name, []);
-	const isInitialLocationRef = (0, import_element.useRef)(true);
+function useRouteFocus(layoutRef) {
+	const href = useRouterState({ select: (state) => state.resolvedLocation?.href });
+	const previousHrefRef = (0, import_element.useRef)(href);
 	(0, import_element.useEffect)(() => {
-		isInitialLocationRef.current = false;
-	}, [location]);
-	(0, import_element.useEffect)(() => {
-		if (isInitialLocationRef.current) return;
-		if (routeTitle && typeof routeTitle === "string" && siteTitle && typeof siteTitle === "string") {
-			const decodedRouteTitle = (0, import_html_entities.decodeEntities)(routeTitle);
-			const decodedSiteTitle = (0, import_html_entities.decodeEntities)(siteTitle);
-			const formattedTitle = (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s ‹ %2$s — WordPress"), decodedRouteTitle, decodedSiteTitle);
-			document.title = formattedTitle;
-			if (decodedRouteTitle) speak(decodedRouteTitle, "assertive");
-		}
-	}, [
-		routeTitle,
-		siteTitle,
-		location
-	]);
+		const previousHref = previousHrefRef.current;
+		previousHrefRef.current = href;
+		if (!previousHref || href === previousHref) return;
+		const layout = layoutRef.current;
+		if (!layout) return;
+		const { activeElement, body } = layout.ownerDocument;
+		if (activeElement && activeElement !== body) return;
+		layout.querySelector(`.${style_module_default$3.stage} [role="region"]`)?.focus();
+	}, [href, layoutRef]);
 }
 
 // packages/boot/build-module/components/root/use-sync-body-background.mjs
@@ -11860,6 +12015,7 @@ function Root() {
 	}, [location.pathname, isMobileViewport]);
 	const themeColors = (0, import_element.useMemo)(getAdminThemeColors, []);
 	const layoutRef = useSyncBodyBackground();
+	useRouteFocus(layoutRef);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.SlotFillProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Provider, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PluginArea, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_theme.ThemeProvider, {
 		isRoot: true,
 		color: {
@@ -12342,6 +12498,7 @@ function RootSinglePage() {
 	useRouteTitle();
 	const themeColors = (0, import_element.useMemo)(getAdminThemeColors, []);
 	const layoutRef = useSyncBodyBackground();
+	useRouteFocus(layoutRef);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.SlotFillProvider, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PluginArea, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_theme.ThemeProvider, {
 		isRoot: true,
 		color: {
