@@ -99475,47 +99475,6 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 	/**
-	* Translate a pipeline transform operation into the equivalent
-	* reducer action. Pipeline ops aren't 1:1 with reducer actions —
-	* `rotate` is a delta here, whereas SET_ROTATION takes an absolute
-	* angle — so deltas are resolved against the current state.
-	*
-	* Used by APPLY_OPERATION (and by the pipeline module's
-	* `applyOperationToState`, which is now a thin wrapper around the
-	* reducer) so that pipeline replay produces identical bounded
-	* state to UI interaction or direct setters.
-	*
-	* @param state The current editor state.
-	* @param op    The pipeline operation.
-	* @return The equivalent reducer action.
-	*/
-	function operationToAction(state, op) {
-		switch (op.type) {
-			case "crop": return {
-				type: "SET_CROP_RECT",
-				payload: { ...op.rect }
-			};
-			case "rotate": {
-				const fieldDelta = state.flip.horizontal !== state.flip.vertical ? -op.degrees : op.degrees;
-				return {
-					type: "SET_ROTATION",
-					payload: normalizeRotation(state.rotation + fieldDelta)
-				};
-			}
-			case "flip": return {
-				type: "SET_FLIP",
-				payload: {
-					...state.flip,
-					[op.direction]: !state.flip[op.direction]
-				}
-			};
-			case "zoom": return {
-				type: "SET_ZOOM",
-				payload: op.level
-			};
-		}
-	}
-	/**
 	* Enforces containment: restricts the crop rect to fit within the
 	* rotated image, computes minimum zoom, clamps zoom, and restricts
 	* the pan position so the image always covers the crop area.
@@ -99722,7 +99681,6 @@ If there's a particular need for this, please submit a feature request at https:
 					}
 				}));
 			}
-			case "APPLY_OPERATION": return imageEditorReducer(state, operationToAction(state, action.payload));
 			case "RESET": return commitBase(enforceContainment(fitCropToLockedRatio({
 				...DEFAULT_STATE,
 				image: state.image,
