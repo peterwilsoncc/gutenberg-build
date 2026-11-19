@@ -1552,6 +1552,13 @@ div.dataviews-view-list {
   color: var(--wpds-color-foreground-content-neutral-weak, #6e6e6e);
   margin-bottom: auto;
   background-color: inherit;
+  --dataviews-view-table-fade-to-start: left;
+  --dataviews-view-table-fade-to-end: right;
+}
+
+.dataviews-view-table:dir(rtl) {
+  --dataviews-view-table-fade-to-start: right;
+  --dataviews-view-table-fade-to-end: left;
 }
 
 .dataviews-view-table th {
@@ -1569,25 +1576,36 @@ div.dataviews-view-list {
 .dataviews-view-table td.dataviews-view-table__actions-column,
 .dataviews-view-table th.dataviews-view-table__actions-column {
   text-align: left;
-}
-
-.dataviews-view-table td.dataviews-view-table__actions-column--sticky,
-.dataviews-view-table th.dataviews-view-table__actions-column--sticky {
   position: sticky;
-  left: 0;
-  background-color: var(--wp-dataviews-color-background, var(--wpds-color-background-surface-neutral-strong, #fff));
+  inset-inline-end: 0;
+  background-color: var(--dataviews-view-table-row-background);
 }
 
-.dataviews-view-table td.dataviews-view-table__actions-column--stuck::after,
-.dataviews-view-table th.dataviews-view-table__actions-column--stuck::after {
-  display: block;
+.dataviews-view-table td.dataviews-view-table__actions-column::before,
+.dataviews-view-table th.dataviews-view-table__actions-column::before {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  inset-block: 0;
+  inset-inline-start: calc(-1 * var(--wpds-dimension-padding-2xl, 24px));
+  width: calc(var(--wpds-dimension-padding-2xl, 24px) + var(--wpds-dimension-padding-2xl, 24px));
+  background-image: linear-gradient(to var(--dataviews-view-table-fade-to-end), transparent, var(--dataviews-view-table-row-background) var(--wpds-dimension-padding-2xl, 24px));
+  pointer-events: none;
+}
+
+.dataviews-view-table td.dataviews-view-table__actions-column::after,
+.dataviews-view-table th.dataviews-view-table__actions-column::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: var(--wpds-dimension-padding-2xl, 24px);
   width: 1px;
   background-color: var(--wpds-color-stroke-surface-neutral-weak, #f0f0f0);
+}
+
+.dataviews-view-table td.dataviews-view-table__actions-column::before, .dataviews-view-table td.dataviews-view-table__actions-column::after,
+.dataviews-view-table th.dataviews-view-table__actions-column::before,
+.dataviews-view-table th.dataviews-view-table__actions-column::after {
+  opacity: 0;
 }
 
 .dataviews-view-table td.dataviews-view-table__checkbox-column,
@@ -1602,18 +1620,20 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-table tr {
-  border-top: 1px solid var(--wpds-color-stroke-surface-neutral-weak, #f0f0f0);
+  --dataviews-view-table-row-stroke: var(--wpds-color-stroke-surface-neutral-weak, #f0f0f0);
+  --dataviews-view-table-row-background: var(--wp-dataviews-color-background, var(--wpds-color-background-surface-neutral-strong, #fff));
+  border-top: 1px solid transparent;
   background-color: inherit;
 }
 
 .dataviews-view-table tr td:first-child,
 .dataviews-view-table tr th:first-child {
-  padding-right: var(--wpds-dimension-padding-2xl, 24px);
+  padding-inline-start: 0;
 }
 
 .dataviews-view-table tr td:last-child,
 .dataviews-view-table tr th:last-child {
-  padding-left: var(--wpds-dimension-padding-2xl, 24px);
+  padding-inline-end: 0;
 }
 
 .dataviews-view-table tr:last-child {
@@ -1630,34 +1650,23 @@ div.dataviews-view-list {
   }
 }
 .dataviews-view-table tr.is-selected {
-  background-color: var(--wpds-color-background-interactive-brand-weak-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 13%, white));
+  --dataviews-view-table-row-background: var(--wpds-color-background-interactive-brand-weak-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 13%, white));
+  background-color: var(--dataviews-view-table-row-background);
   color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
 }
 
 .dataviews-view-table tr.is-selected, .dataviews-view-table tr.is-selected + tr {
-  border-top: 1px solid var(--wpds-color-stroke-surface-brand, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 39%, white));
-}
-
-.dataviews-view-table tr.is-selected .dataviews-view-table__actions-column--sticky {
-  background-color: var(--wpds-color-background-interactive-brand-weak-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 13%, white));
+  --dataviews-view-table-row-stroke: var(--wpds-color-stroke-surface-brand, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 39%, white));
 }
 
 .dataviews-view-table tr:focus-within .dataviews-item-actions .components-button:not(.dataviews-all-actions-button), .dataviews-view-table tr.is-hovered .dataviews-item-actions .components-button:not(.dataviews-all-actions-button), .dataviews-view-table tr:hover .dataviews-item-actions .components-button:not(.dataviews-all-actions-button) {
   opacity: 1;
 }
 
-.dataviews-view-table.has-bulk-actions tr:focus-within .dataviews-view-table__actions-column--sticky, .dataviews-view-table.has-bulk-actions tr:hover .dataviews-view-table__actions-column--sticky {
-  background-color: var(--wp-dataviews-color-background, var(--wpds-color-background-surface-neutral-strong, #fff));
-}
-
-.dataviews-view-table.has-bulk-actions tr.is-selected .dataviews-view-table__actions-column--sticky, .dataviews-view-table.has-bulk-actions tr.is-selected:hover .dataviews-view-table__actions-column--sticky {
-  background-color: var(--wpds-color-background-interactive-brand-weak-active, color-mix(in oklch, var(--wp-admin-theme-color, #3858e9) 13%, white));
-}
-
 .dataviews-view-table thead {
   position: sticky;
   inset-block-start: 0;
-  z-index: 1;
+  z-index: 2;
   background-color: inherit;
 }
 
@@ -1694,8 +1703,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-table thead th:has(.dataviews-view-table-header-button) {
-  padding-right: var(--wpds-dimension-padding-xs, 4px);
-  padding-left: var(--wpds-dimension-padding-xs, 4px);
+  padding-inline: var(--wpds-dimension-padding-xs, 4px);
 }
 
 .dataviews-view-table thead th:has(.dataviews-view-table-header-button) .dataviews-view-table-header-button {
@@ -1703,11 +1711,23 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-table thead th:has(.dataviews-view-table-header-button):first-child {
-  padding-right: var(--wpds-dimension-padding-lg, 16px);
+  padding-inline-start: 0;
+}
+
+.dataviews-view-table thead th:has(.dataviews-view-table-header-button):first-child .dataviews-view-table-header-button {
+  margin-inline-start: calc(-1 * var(--wpds-dimension-padding-sm, 8px));
 }
 
 .dataviews-view-table thead th:has(.dataviews-view-table-header-button):last-child {
-  padding-left: var(--wpds-dimension-padding-lg, 16px);
+  padding-inline-end: 0;
+}
+
+.dataviews-view-table thead th:has(.dataviews-view-table-header-button):last-child .dataviews-view-table-header-button {
+  margin-inline-end: calc(-1 * var(--wpds-dimension-padding-sm, 8px));
+}
+
+.dataviews-view-table tbody {
+  background-color: inherit;
 }
 
 .dataviews-view-table tbody td {
@@ -1762,12 +1782,8 @@ div.dataviews-view-list {
   white-space: nowrap;
 }
 
-.dataviews-view-table.has-compact-density thead th:has(.dataviews-view-table-header-button):not(:first-child) {
-  padding-right: 0;
-}
-
-.dataviews-view-table.has-compact-density thead th:has(.dataviews-view-table-header-button):not(:last-child) {
-  padding-left: 0;
+.dataviews-view-table.has-compact-density thead th:has(.dataviews-view-table-header-button) {
+  padding-inline: 0;
 }
 
 .dataviews-view-table.has-compact-density td,
@@ -1784,6 +1800,56 @@ div.dataviews-view-list {
 .dataviews-view-table.has-compact-density th.dataviews-view-table__checkbox-column, .dataviews-view-table.has-comfortable-density td.dataviews-view-table__checkbox-column,
 .dataviews-view-table.has-comfortable-density th.dataviews-view-table__checkbox-column {
   padding-left: 0;
+}
+
+.dataviews-view-table tr > td.dataviews-view-table__actions-column,
+.dataviews-view-table tr > th.dataviews-view-table__actions-column {
+  padding-inline: calc(var(--wpds-dimension-padding-2xl, 24px) + var(--wpds-dimension-padding-md, 12px)) var(--wpds-dimension-padding-2xl, 24px);
+}
+
+.dataviews-view-table.has-compact-density tr > td.dataviews-view-table__actions-column, .dataviews-view-table.has-compact-density tr > th.dataviews-view-table__actions-column {
+  padding-inline-start: calc(var(--wpds-dimension-padding-2xl, 24px) + var(--wpds-dimension-padding-sm, 8px));
+}
+
+.dataviews-view-table tr::before, .dataviews-view-table:not(.has-actions) tr::after {
+  content: "";
+  display: table-cell;
+  position: sticky;
+  width: var(--wpds-dimension-padding-2xl, 24px);
+  min-width: var(--wpds-dimension-padding-2xl, 24px);
+  padding: 0;
+  pointer-events: none;
+  transform-origin: var(--dataviews-view-table-fade-edge);
+}
+
+.dataviews-view-table tr::before {
+  --dataviews-view-table-fade-edge: var(--dataviews-view-table-fade-to-start);
+  inset-inline-start: 0;
+  z-index: 1;
+}
+
+.dataviews-view-table:not(.has-actions) tr::after {
+  --dataviews-view-table-fade-edge: var(--dataviews-view-table-fade-to-end);
+  inset-inline-end: 0;
+  width: var(--wpds-dimension-padding-3xl, 32px);
+  min-width: var(--wpds-dimension-padding-3xl, 32px);
+}
+
+.dataviews-view-table tbody tr > *,
+.dataviews-view-table tbody tr::before, .dataviews-view-table:not(.has-actions) tbody tr::after {
+  background-image: linear-gradient(var(--dataviews-view-table-row-stroke), var(--dataviews-view-table-row-stroke));
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+}
+
+.dataviews-view-table.has-columns-before tr::before, .dataviews-view-table.has-columns-after:not(.has-actions) tr::after {
+  background-image: linear-gradient(to var(--dataviews-view-table-fade-edge), transparent calc(50% - var(--wpds-dimension-padding-2xl, 24px) / 2), var(--dataviews-view-table-row-background) 50%);
+  background-size: auto;
+  transform: scaleX(2);
+}
+
+.dataviews-view-table.has-columns-after .dataviews-view-table__actions-column::before, .dataviews-view-table.has-columns-after .dataviews-view-table__actions-column::after {
+  opacity: 1;
 }
 
 .dataviews-column-primary__media {

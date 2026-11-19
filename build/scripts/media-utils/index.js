@@ -8320,7 +8320,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			}
 		};
 	};
-	function isRTL$9(element) {
+	function isRTL$8(element) {
 		return getComputedStyle$1(element).direction === "rtl";
 	}
 	const platform = {
@@ -8333,7 +8333,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		getDimensions,
 		getScale: getScale$1,
 		isElement: isElement$1,
-		isRTL: isRTL$9
+		isRTL: isRTL$8
 	};
 	function rectsAreEqual(a, b) {
 		return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
@@ -34249,15 +34249,13 @@ Icon: ButtonIcon });
 	}
 
 // packages/dataviews/build-module/components/dataviews-layouts/table/use-scroll-state.mjs
-	const isScrolledToEnd = (element) => {
-		if ((0, _wordpress_i18n.isRTL)()) return Math.abs(element.scrollLeft) <= 1;
-		return element.scrollLeft + element.clientWidth >= element.scrollWidth - 1;
-	};
-	/**
+/**
 	* A hook to track the scroll state of a container element.
 	*
-	* Returns whether the container has been scrolled vertically (for sticky header styling)
-	* and whether it has reached the horizontal scroll end (for sticky actions column styling).
+	* Returns whether the container has been scrolled vertically (for sticky header
+	* styling), and whether there are columns to scroll to before and after the
+	* visible ones (for the table's scroll fades): the cue at the start shows from
+	* the first pixel scrolled, and the one at the end until the last pixel.
 	*
 	* The current way receives "refs" as arguments, but it lacks a mechanism to detect when a ref has changed.
 	* As a result, when the "ref" is updated and attached to a new div, the computation should trigger again.
@@ -34265,38 +34263,42 @@ Icon: ButtonIcon });
 	*
 	* See https://github.com/Automattic/wp-calypso/pull/103005#discussion_r2077567912.
 	*
-	* @param params                           The parameters for the hook.
-	* @param params.scrollContainerRef        The ref to the scroll container element.
-	* @param [params.enabledHorizontal=false] Whether to track horizontal scroll end.
+	* @param params                    The parameters for the hook.
+	* @param params.scrollContainerRef The ref to the scroll container element.
 	* @return  The scroll state.
 	*/
-	function useScrollState({ scrollContainerRef, enabledHorizontal = false }) {
-		const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0, _wordpress_element.useState)(false);
-		const [isVerticallyScrolled, setIsVerticallyScrolled] = (0, _wordpress_element.useState)(false);
-		const handleScroll = (0, _wordpress_element.useCallback)(() => {
+	function useScrollState({ scrollContainerRef }) {
+		const [hasVerticalScrollStart, setHasVerticalScrollStart] = (0, _wordpress_element.useState)(false);
+		const [hasHorizontalScrollStart, setHasHorizontalScrollStart] = (0, _wordpress_element.useState)(false);
+		const [hasHorizontalScrollEnd, setHasHorizontalScrollEnd] = (0, _wordpress_element.useState)(false);
+		(0, _wordpress_element.useEffect)(() => {
 			const scrollContainer = scrollContainerRef.current;
 			if (!scrollContainer) return;
-			if (enabledHorizontal) setIsHorizontalScrollEnd(isScrolledToEnd(scrollContainer));
-			setIsVerticallyScrolled(scrollContainer.scrollTop > 0);
-		}, [scrollContainerRef, enabledHorizontal]);
-		(0, _wordpress_element.useEffect)(() => {
-			if (typeof window === "undefined" || !scrollContainerRef.current) return () => {};
-			const scrollContainer = scrollContainerRef.current;
-			handleScroll();
-			scrollContainer.addEventListener("scroll", handleScroll);
-			window.addEventListener("resize", handleScroll);
-			return () => {
-				scrollContainer.removeEventListener("scroll", handleScroll);
-				window.removeEventListener("resize", handleScroll);
+			const update = () => {
+				setHasVerticalScrollStart(scrollContainer.scrollTop > 0);
+				const scrolled = Math.abs(scrollContainer.scrollLeft);
+				const remaining = scrollContainer.scrollWidth - scrollContainer.clientWidth - scrolled;
+				setHasHorizontalScrollStart(scrolled >= 1);
+				setHasHorizontalScrollEnd(remaining >= 1);
 			};
-		}, [
-			scrollContainerRef,
-			enabledHorizontal,
-			handleScroll
-		]);
+			update();
+			scrollContainer.addEventListener("scroll", update);
+			let resizeObserver;
+			if (typeof ResizeObserver !== "undefined") {
+				resizeObserver = new ResizeObserver(update);
+				resizeObserver.observe(scrollContainer);
+				const table = scrollContainer.querySelector("table");
+				if (table) resizeObserver.observe(table);
+			}
+			return () => {
+				scrollContainer.removeEventListener("scroll", update);
+				resizeObserver?.disconnect();
+			};
+		}, [scrollContainerRef]);
 		return {
-			isHorizontalScrollEnd,
-			isVerticallyScrolled
+			hasVerticalScrollStart,
+			hasHorizontalScrollStart,
+			hasHorizontalScrollEnd
 		};
 	}
 
@@ -34575,7 +34577,7 @@ Icon: ButtonIcon });
 			})
 		});
 	}
-	function TableRow$1({ hasBulkActions, item, level, actions, fields, id, view, titleField, mediaField, mediaAspectRatio, descriptionField, selection, getItemId, isItemClickable, onClickItem, renderItemLink, onChangeSelection, onMouseDown, onClickCapture, isActionsColumnSticky, posinset }) {
+	function TableRow$1({ hasBulkActions, item, level, actions, fields, id, view, titleField, mediaField, mediaAspectRatio, descriptionField, selection, getItemId, isItemClickable, onClickItem, renderItemLink, onChangeSelection, onMouseDown, onClickCapture, posinset }) {
 		const { paginationInfo } = (0, _wordpress_element.useContext)(DataViewsContext);
 		const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
 		const isSelected = hasPossibleBulkAction && selection.includes(id);
@@ -34640,10 +34642,7 @@ Icon: ButtonIcon });
 					}, column);
 				}),
 				!!actions?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
-					className: clsx("dataviews-view-table__actions-column", {
-						"dataviews-view-table__actions-column--sticky": true,
-						"dataviews-view-table__actions-column--stuck": isActionsColumnSticky
-					}),
+					className: "dataviews-view-table__actions-column",
 					onClick: (e) => e.stopPropagation(),
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemActions, {
 						item,
@@ -34699,10 +34698,7 @@ Icon: ButtonIcon });
 		const showBulkActions = hasBulkActions && selection.length > 0 || isActionInProgress;
 		(0, _wordpress_element.useLayoutEffect)(syncBulkActionsPosition, [showBulkActions]);
 		const focusAfterToggle = useBulkActionsFocus({ isShown: showBulkActions });
-		const { isHorizontalScrollEnd, isVerticallyScrolled } = useScrollState({
-			scrollContainerRef: containerRef,
-			enabledHorizontal: !!actions?.length
-		});
+		const { hasVerticalScrollStart, hasHorizontalScrollStart, hasHorizontalScrollEnd } = useScrollState({ scrollContainerRef: containerRef });
 		const disableHeaderControls = showBulkActions;
 		if (nextHeaderMenuToFocus) {
 			headerMenuToFocusRef.current = nextHeaderMenuToFocus;
@@ -34773,6 +34769,9 @@ Icon: ButtonIcon });
 				className: clsx("dataviews-view-table", className, {
 					[`has-${view.layout?.density}-density`]: view.layout?.density && ["compact", "comfortable"].includes(view.layout.density),
 					"has-bulk-actions": hasBulkActions,
+					"has-actions": !!actions?.length,
+					"has-columns-before": hasHorizontalScrollStart,
+					"has-columns-after": hasHorizontalScrollEnd,
 					"is-refreshing": !isInfiniteScroll && isDelayedLoading,
 					"has-media-aspect-ratio": !!mediaAspectRatio
 				}),
@@ -34783,6 +34782,7 @@ Icon: ButtonIcon });
 				inert: inertValue(!isInfiniteScroll && isLoading),
 				children: [
 					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("colgroup", { children: [
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-scroll-fade" }),
 						hasBulkActions && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-checkbox" }),
 						hasPrimaryColumn && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: "dataviews-view-table__col-first-data" }),
 						columns.map((column, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("col", { className: clsx(`dataviews-view-table__col-${column}`, { "dataviews-view-table__col-expand": !hasPrimaryColumn && index === columns.length - 1 }) }, `col-${column}`)),
@@ -34796,7 +34796,7 @@ Icon: ButtonIcon });
 					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("thead", {
 						ref: tableHeaderRefs,
-						className: clsx({ "dataviews-view-table__thead--stuck": isVerticallyScrolled }),
+						className: clsx({ "dataviews-view-table__thead--stuck": hasVerticalScrollStart }),
 						onContextMenu: handleHeaderContextMenu,
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("tr", {
 							className: "dataviews-view-table__row",
@@ -34865,10 +34865,7 @@ Icon: ButtonIcon });
 									}, column);
 								}),
 								!!actions?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("th", {
-									className: clsx("dataviews-view-table__actions-column", {
-										"dataviews-view-table__actions-column--sticky": true,
-										"dataviews-view-table__actions-column--stuck": !isHorizontalScrollEnd
-									}),
+									className: "dataviews-view-table__actions-column",
 									children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 										className: "dataviews-view-table-header",
 										children: (0, _wordpress_i18n.__)("Actions")
@@ -34904,8 +34901,7 @@ Icon: ButtonIcon });
 							...getSelectionProps(id),
 							onClickItem,
 							renderItemLink,
-							isItemClickable,
-							isActionsColumnSticky: !isHorizontalScrollEnd
+							isItemClickable
 						}, getItemId(item));
 					})] }, `group-${groupName}`)) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("tbody", { children: hasData && data.map((item, index) => {
 						const id = getItemId(item) || index.toString();
@@ -34928,7 +34924,6 @@ Icon: ButtonIcon });
 							onClickItem,
 							renderItemLink,
 							isItemClickable,
-							isActionsColumnSticky: !isHorizontalScrollEnd,
 							posinset: isInfiniteScroll ? index + 1 : void 0
 						}, getItemId(item));
 					}) })
