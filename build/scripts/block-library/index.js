@@ -17209,7 +17209,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*
 	* Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 	*/
-	const Button$45 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
+	const Button$44 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
 		const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 		const { getButtonProps, buttonRef } = useButton({
 			disabled,
@@ -17222,7 +17222,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			props: [elementProps, getButtonProps]
 		});
 	});
-	Button$45.displayName = "Button";
+	Button$44.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -22025,12 +22025,12 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$44 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
+	const Button$43 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
 		const mergedClassName = clsx(global_css_defense_module_default$12.button, resets_module_default$10["box-sizing"], focus_module_default$6["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$24.button, style_module_default$24[`is-${tone}`], style_module_default$24[`is-${variant}`], style_module_default$24[`is-${size}`], loading && style_module_default$24["is-loading"], className);
 		(0, _wordpress_element.useEffect)(() => {
 			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
 		}, [loading, loadingAnnouncement]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$45, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$44, {
 			ref,
 			className: mergedClassName,
 			focusableWhenDisabled,
@@ -22175,7 +22175,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$43 = Object.assign(Button$44, { 
+	const Button$42 = Object.assign(Button$43, { 
 	/**
 	* An icon component specifically designed to work well when rendered inside
 	* a `Button` component.
@@ -23650,7 +23650,7 @@ Icon: ButtonIcon });
 			ref,
 			...targetProps,
 			disabled: disabled && !focusableWhenDisabled,
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$43, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$42, {
 				...restProps,
 				size,
 				"aria-label": label,
@@ -70006,9 +70006,9 @@ Icon: ButtonIcon });
 	const PlaylistTrackEdit = ({ attributes, setAttributes, context, clientId, isSelected }) => {
 		const { id, src, album, artist, image, imageAlt, length, title } = attributes;
 		const [temporaryURL, setTemporaryURL] = (0, _wordpress_element.useState)(attributes.blob);
+		const [temporaryImageURL, setTemporaryImageURL] = (0, _wordpress_element.useState)();
 		const showArtists = context?.showArtists;
 		const showImages = context?.showImages ?? true;
-		const imageButton = (0, _wordpress_element.useRef)();
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)();
 		const { currentTrackClientId, setCurrentTrackClientId, removeTrack } = (0, _wordpress_element.useContext)(PlaylistContext);
 		const { createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
@@ -70063,14 +70063,31 @@ Icon: ButtonIcon });
 			setTemporaryURL();
 		}
 		function onSelectTrackImage(trackImage) {
+			if (!trackImage) {
+				setTemporaryImageURL();
+				return;
+			}
+			const imageSrc = trackImage?.src ?? trackImage?.url ?? trackImage?.source_url;
+			if (imageSrc && (0, _wordpress_blob.isBlobURL)(imageSrc)) {
+				setTemporaryImageURL(imageSrc);
+				return;
+			}
+			setTemporaryImageURL();
 			setAttributes(getTrackImageAttributes(trackImage));
 		}
 		function onRemoveTrackImage() {
+			setTemporaryImageURL();
 			setAttributes({
 				image: void 0,
 				imageAlt: void 0
 			});
-			imageButton.current.focus();
+		}
+		function onTrackImageUploadError(message) {
+			createErrorNotice((0, _wordpress_dom.__unstableStripHTML)(message), {
+				type: "snackbar",
+				explicitDismiss: true
+			});
+			setTemporaryImageURL();
 		}
 		if (!hasTrackSource) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			...blockProps,
@@ -70125,32 +70142,15 @@ Icon: ButtonIcon });
 							setAttributes({ album: albumValue });
 						}
 					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.MediaUploadCheck, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.BaseControl, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BaseControl.VisualLabel, { children: (0, _wordpress_i18n.__)("Track image") }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-						className: "editor-video-poster-control",
-						children: [
-							!!image && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
-								src: image,
-								alt: (0, _wordpress_i18n.__)("Preview of the track image")
-							}),
-							/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.MediaUpload, {
-								title: (0, _wordpress_i18n.__)("Select image"),
-								onSelect: onSelectTrackImage,
-								allowedTypes: TRACK_IMAGE_ALLOWED_MEDIA_TYPES,
-								render: ({ open }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-									__next40pxDefaultSize: true,
-									variant: "primary",
-									onClick: open,
-									ref: imageButton,
-									children: !image ? (0, _wordpress_i18n.__)("Select") : (0, _wordpress_i18n.__)("Replace")
-								})
-							}),
-							!!image && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-								__next40pxDefaultSize: true,
-								onClick: onRemoveTrackImage,
-								variant: "tertiary",
-								children: (0, _wordpress_i18n.__)("Remove")
-							})
-						]
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.MediaUploadCheck, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.BaseControl, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BaseControl.VisualLabel, { children: (0, _wordpress_i18n.__)("Track image") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaControl, {
+						mediaUrl: image,
+						filename: image ? (0, _wordpress_url.getFilename)(image) : void 0,
+						allowedTypes: TRACK_IMAGE_ALLOWED_MEDIA_TYPES,
+						onSelect: onSelectTrackImage,
+						onError: onTrackImageUploadError,
+						onReset: onRemoveTrackImage,
+						isUploading: !!temporaryImageURL,
+						emptyLabel: (0, _wordpress_i18n.__)("Add image")
 					})] }) }),
 					!!image && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.TextareaControl, {
 						label: (0, _wordpress_i18n.__)("Alternative text"),
