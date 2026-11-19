@@ -5877,7 +5877,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/empty.mjs
 	function NOOP$2() {}
-	const EMPTY_ARRAY$12 = Object.freeze([]);
+	const EMPTY_ARRAY$11 = Object.freeze([]);
 	const EMPTY_OBJECT$2 = Object.freeze({});
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/getStateAttributesProps.mjs
@@ -6212,7 +6212,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* A React.useEffect equivalent that runs once, when the component is mounted.
 	*/
 	function useOnMount(fn) {
-		react.useEffect(fn, EMPTY_ARRAY$12);
+		react.useEffect(fn, EMPTY_ARRAY$11);
 	}
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useAnimationFrame.mjs
@@ -12220,7 +12220,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			function isItemAvailable(index) {
 				const element = getElement(index);
 				if (element && !isElementVisible(element) || element?.matches(":disabled")) return false;
-				return disabledIndices == null || !isListIndexDisabled(EMPTY_ARRAY$12, index, disabledIndices);
+				return disabledIndices == null || !isListIndexDisabled(EMPTY_ARRAY$11, index, disabledIndices);
 			}
 			function getMatchingIndex(list, string, startIndex = 0) {
 				if (list.length === 0) return -1;
@@ -14570,7 +14570,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		else autoHighlightMode = autoHighlight ? "input-change" : false;
 		const [selectedValue, setSelectedValueUnwrapped] = useControlled({
 			controlled: selectedValueProp,
-			default: multiple ? defaultSelectedValue ?? EMPTY_ARRAY$12 : defaultSelectedValue,
+			default: multiple ? defaultSelectedValue ?? EMPTY_ARRAY$11 : defaultSelectedValue,
 			name: "Combobox",
 			state: "selectedValue"
 		});
@@ -14606,10 +14606,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const shouldBypassFiltering = single && !queryChangedAfterOpen && query !== "" && selectedLabelString.length === query.length && collatorFilter.contains(selectedLabelString, query);
 		const filterQuery = shouldBypassFiltering ? "" : filterQueryProp ?? query;
 		const shouldIgnoreExternalFiltering = hasItems && hasFilteredItemsProp && shouldBypassFiltering && (!collection || collection.hasValue(selectedValue, isItemEqualToValue));
-		const flatItems = react.useMemo(() => items ? flattenLeafItems(items) : EMPTY_ARRAY$12, [items]);
+		const flatItems = react.useMemo(() => items ? flattenLeafItems(items) : EMPTY_ARRAY$11, [items]);
 		const filteredItems = react.useMemo(() => {
 			if (filteredItemsProp && !shouldIgnoreExternalFiltering) return filteredItemsProp;
-			if (!items) return EMPTY_ARRAY$12;
+			if (!items) return EMPTY_ARRAY$11;
 			if (isGrouped) {
 				const groupedItems = items;
 				const resultingGroups = [];
@@ -15164,7 +15164,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			resetOnPointerLeave: !keepHighlight,
 			orientation: grid ? "horizontal" : void 0,
 			rtl: direction === "rtl",
-			disabledIndices: EMPTY_ARRAY$12,
+			disabledIndices: EMPTY_ARRAY$11,
 			grid: grid ? gridNavigation : void 0,
 			onNavigate(nextActiveIndex, event) {
 				if (!event && !open && !(inline && nextActiveIndex === null) || transitionStatus === "ending") return;
@@ -18792,7 +18792,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/root/useCompositeRoot.mjs
 	function useCompositeRoot(params) {
-		const { loopFocus = true, orientation = "both", grid, onLoop, direction, highlightedIndex: externalHighlightedIndex, onHighlightedIndexChange: externalSetHighlightedIndex, rootRef: externalRef, enableHomeAndEndKeys = false, stopEventPropagation, disabledIndices, modifierKeys = EMPTY_ARRAY$12 } = params;
+		const { loopFocus = true, orientation = "both", grid, onLoop, direction, highlightedIndex: externalHighlightedIndex, onHighlightedIndexChange: externalSetHighlightedIndex, rootRef: externalRef, enableHomeAndEndKeys = false, stopEventPropagation, disabledIndices, modifierKeys = EMPTY_ARRAY$11 } = params;
 		const [internalHighlightedIndex, internalSetHighlightedIndex] = react.useState(0);
 		const isGrid = grid != null;
 		const rootRef = react.useRef(null);
@@ -18950,7 +18950,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/internals/composite/root/CompositeRoot.mjs
 	function CompositeRoot(componentProps) {
-		const { render, className, style, refs = EMPTY_ARRAY$12, props = EMPTY_ARRAY$12, state = EMPTY_OBJECT$2, stateAttributesMapping, highlightedIndex: highlightedIndexProp, onHighlightedIndexChange: onHighlightedIndexChangeProp, orientation, grid, loopFocus, onLoop, enableHomeAndEndKeys, onMapChange: onMapChangeProp, stopEventPropagation = true, rootRef, disabledIndices, modifierKeys, highlightItemOnHover = false, tag = "div", ...elementProps } = componentProps;
+		const { render, className, style, refs = EMPTY_ARRAY$11, props = EMPTY_ARRAY$11, state = EMPTY_OBJECT$2, stateAttributesMapping, highlightedIndex: highlightedIndexProp, onHighlightedIndexChange: onHighlightedIndexChangeProp, orientation, grid, loopFocus, onLoop, enableHomeAndEndKeys, onMapChange: onMapChangeProp, stopEventPropagation = true, rootRef, disabledIndices, modifierKeys, highlightItemOnHover = false, tag = "div", ...elementProps } = componentProps;
 		const direction = useDirection();
 		const { props: defaultProps, highlightedIndex, onHighlightedIndexChange, elementsRef, onMapChange: onMapChangeUnwrapped, relayKeyboardEvent } = useCompositeRoot({
 			grid,
@@ -19140,7 +19140,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const name = fieldName ?? nameProp;
 		const [value, setValueUnwrapped] = useControlled({
 			controlled: valueProp,
-			default: multiple ? defaultValue ?? EMPTY_ARRAY$12 : defaultValue,
+			default: multiple ? defaultValue ?? EMPTY_ARRAY$11 : defaultValue,
 			name: "Select",
 			state: "value"
 		});
@@ -19340,7 +19340,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			listRef,
 			activeIndex,
 			selectedIndex,
-			disabledIndices: EMPTY_ARRAY$12,
+			disabledIndices: EMPTY_ARRAY$11,
 			onNavigate(nextActiveIndex) {
 				if (nextActiveIndex === null && !open) return;
 				store.set("activeIndex", nextActiveIndex);
@@ -21243,7 +21243,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				orientation,
 				onHighlightedIndexChange: setHighlightedTabIndex,
 				onMapChange: setTabMap,
-				disabledIndices: EMPTY_ARRAY$12
+				disabledIndices: EMPTY_ARRAY$11
 			})
 		});
 	});
@@ -49629,7 +49629,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/gallery/use-dynamic-gallery.mjs
-	const EMPTY_ARRAY$11 = [];
+	const EMPTY_ARRAY$10 = [];
 	/**
 	* Builds the attributes for a `core/image` block from a media (attachment)
 	* record, applying the gallery-wide settings that affect how the image renders.
@@ -49700,7 +49700,7 @@ Icon: ButtonIcon });
 		const query = (0, _wordpress_element.useMemo)(() => dynamicContent ? getSourceQuery(dynamicContent, { postId }) : null, [dynamicContent, postId]);
 		const { dynamicMedia, dynamicMediaTotal, isResolvingDynamic } = (0, _wordpress_data.useSelect)((select) => {
 			if (!query) return {
-				dynamicMedia: EMPTY_ARRAY$11,
+				dynamicMedia: EMPTY_ARRAY$10,
 				dynamicMediaTotal: 0,
 				isResolvingDynamic: false
 			};
@@ -49710,7 +49710,7 @@ Icon: ButtonIcon });
 				query
 			];
 			return {
-				dynamicMedia: select(_wordpress_core_data.store).getEntityRecords(...selectorArgs) ?? EMPTY_ARRAY$11,
+				dynamicMedia: select(_wordpress_core_data.store).getEntityRecords(...selectorArgs) ?? EMPTY_ARRAY$10,
 				dynamicMediaTotal: select(_wordpress_core_data.store).getEntityRecordsTotalItems(...selectorArgs) ?? 0,
 				isResolvingDynamic: !select(_wordpress_core_data.store).hasFinishedResolution("getEntityRecords", selectorArgs)
 			};
@@ -50022,7 +50022,7 @@ Icon: ButtonIcon });
 	const ALLOWED_MEDIA_TYPES$6 = ["image"];
 	const PLACEHOLDER_TEXT = (0, _wordpress_i18n.__)("Drag and drop images, upload, or choose from your library.");
 	const DEFAULT_BLOCK$3 = { name: "core/image" };
-	const EMPTY_ARRAY$10 = [];
+	const EMPTY_ARRAY$9 = [];
 	function GalleryEdit(props) {
 		const { setAttributes, attributes, className, clientId, insertBlocksAfter, context } = props;
 		const postId = context?.postId;
@@ -50119,7 +50119,7 @@ Icon: ButtonIcon });
 			directInsert: true,
 			orientation: "horizontal",
 			renderAppender: false,
-			allowedBlocks: isDynamic ? EMPTY_ARRAY$10 : void 0
+			allowedBlocks: isDynamic ? EMPTY_ARRAY$9 : void 0
 		});
 		if (!hasImages && !isDynamic) return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			...innerBlocksProps,
@@ -62026,18 +62026,13 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/navigation/edit/use-inner-blocks.mjs
-	const EMPTY_ARRAY$9 = [];
 	function useInnerBlocks(clientId) {
 		return (0, _wordpress_data.useSelect)((select) => {
-			const { getBlock, getBlocks, hasSelectedInnerBlock } = select(_wordpress_block_editor.store);
-			const _uncontrolledInnerBlocks = getBlock(clientId).innerBlocks;
-			const _hasUncontrolledInnerBlocks = !!_uncontrolledInnerBlocks?.length;
-			const _controlledInnerBlocks = _hasUncontrolledInnerBlocks ? EMPTY_ARRAY$9 : getBlocks(clientId);
+			const { areInnerBlocksControlled, getBlocks, hasSelectedInnerBlock } = select(_wordpress_block_editor.store);
+			const innerBlocks = getBlocks(clientId);
 			return {
-				innerBlocks: _hasUncontrolledInnerBlocks ? _uncontrolledInnerBlocks : _controlledInnerBlocks,
-				hasUncontrolledInnerBlocks: _hasUncontrolledInnerBlocks,
-				uncontrolledInnerBlocks: _uncontrolledInnerBlocks,
-				controlledInnerBlocks: _controlledInnerBlocks,
+				innerBlocks,
+				hasUncontrolledInnerBlocks: !areInnerBlocksControlled(clientId) && !!innerBlocks.length,
 				isInnerBlockSelected: hasSelectedInnerBlock(clientId, true)
 			};
 		}, [clientId]);
@@ -63658,7 +63653,7 @@ Icon: ButtonIcon });
 		const createUntitledEmptyNavigationMenu = async () => {
 			await createNavigationMenu("");
 		};
-		const { hasUncontrolledInnerBlocks, uncontrolledInnerBlocks, isInnerBlockSelected, innerBlocks } = useInnerBlocks(clientId);
+		const { hasUncontrolledInnerBlocks, isInnerBlockSelected, innerBlocks } = useInnerBlocks(clientId);
 		const { replaceInnerBlocks, selectBlock, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		(0, _wordpress_element.useEffect)(() => {
 			if (orientation === "horizontal" && submenuVisibility === "always") {
@@ -63992,7 +63987,7 @@ Icon: ButtonIcon });
 					onNavigateToEntityRecord,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnsavedInnerBlocks, {
 						createNavigationMenu,
-						blocks: uncontrolledInnerBlocks,
+						blocks: innerBlocks,
 						hasSelection: isSelected || isInnerBlockSelected
 					})
 				})]
