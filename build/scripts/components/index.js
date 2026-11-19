@@ -14709,7 +14709,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const isBrowser$1 = typeof window !== "undefined";
 
 // node_modules/.store/framer-motion@11.18.2-c6uTn1GdwNuTiEI_ZcwZaQ/node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs
-	const useIsomorphicLayoutEffect$3 = isBrowser$1 ? react$1.useLayoutEffect : react$1.useEffect;
+	const useIsomorphicLayoutEffect$4 = isBrowser$1 ? react$1.useLayoutEffect : react$1.useEffect;
 
 // node_modules/.store/framer-motion@11.18.2-c6uTn1GdwNuTiEI_ZcwZaQ/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs
 /**
@@ -14777,7 +14777,7 @@ If there's a particular need for this, please submit a feature request at https:
 		*/
 		const [diffedChildren, setDiffedChildren] = (0, react$1.useState)(presentChildren);
 		const [renderedChildren, setRenderedChildren] = (0, react$1.useState)(presentChildren);
-		useIsomorphicLayoutEffect$3(() => {
+		useIsomorphicLayoutEffect$4(() => {
 			isInitialRender.current = false;
 			pendingPresentChildren.current = presentChildren;
 			/**
@@ -15386,7 +15386,7 @@ get: (_target, key) => {
 		*/
 		const optimisedAppearId = props[optimizedAppearDataAttribute];
 		const wantsHandoff = (0, react$1.useRef)(Boolean(optimisedAppearId) && !((_a = window.MotionHandoffIsComplete) === null || _a === void 0 ? void 0 : _a.call(window, optimisedAppearId)) && ((_b = window.MotionHasOptimisedAnimation) === null || _b === void 0 ? void 0 : _b.call(window, optimisedAppearId)));
-		useIsomorphicLayoutEffect$3(() => {
+		useIsomorphicLayoutEffect$4(() => {
 			if (!visualElement) return;
 			isMounted.current = true;
 			window.MotionIsMounted = true;
@@ -62778,7 +62778,9 @@ Icon: ButtonIcon });
 	const GradientTypePicker = ({ gradientAST, hasGradient, onChange }) => {
 		const { type } = gradientAST;
 		const lastLinearOrientationAngle = (0, _wordpress_element.useRef)(Number(HORIZONTAL_GRADIENT_ORIENTATION.value));
-		if (type === "linear-gradient" && gradientAST.orientation) lastLinearOrientationAngle.current = Number(gradientAST.orientation.value);
+		(0, _wordpress_compose.useIsomorphicLayoutEffect)(() => {
+			if (type === "linear-gradient" && gradientAST.orientation) lastLinearOrientationAngle.current = Number(gradientAST.orientation.value);
+		}, [gradientAST, type]);
 		const onSetLinearGradient = () => {
 			onChange(serializeGradient({
 				...gradientAST,
