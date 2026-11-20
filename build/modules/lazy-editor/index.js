@@ -2699,7 +2699,7 @@ var require_jsx_runtime = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 
 // packages/lazy-editor/build-module/components/editor/index.mjs
 var import_jsx_runtime = require_jsx_runtime();
-const { Editor: PrivateEditor, BackButton, PreferencesModal, ToolsMoreMenuGroup, SiteExport } = unlock(import_editor.privateApis);
+const { Editor: PrivateEditor, BackButton, PreferencesModal, ToolsMoreMenuGroup, SiteExport, UploadProgressSnackbar } = unlock(import_editor.privateApis);
 /**
 * Lazy-loading editor component that handles asset loading and settings initialization.
 *
@@ -2743,7 +2743,7 @@ function Editor({ postType, postId, settings, backButton, onActionPerformed, ini
 		},
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Spinner, {})
 	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(PrivateEditor, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(PrivateEditor, {
 		postType: resolvedPostType,
 		postId: resolvedPostId,
 		templateId,
@@ -2757,7 +2757,7 @@ function Editor({ postType, postId, settings, backButton, onActionPerformed, ini
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(PreferencesModal, {}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ToolsMoreMenuGroup, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SiteExport, {}) })
 		]
-	});
+	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(UploadProgressSnackbar, {})] });
 }
 
 // \0wp-global:@wordpress/block-editor

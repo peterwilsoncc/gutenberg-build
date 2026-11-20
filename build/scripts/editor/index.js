@@ -116435,8 +116435,9 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 		(0, _wordpress_element.useEffect)(() => {
 			return () => {
 				if (completionTimeoutRef.current) clearTimeout(completionTimeoutRef.current);
+				removeNotice(NOTICE_ID);
 			};
-		}, []);
+		}, [removeNotice]);
 		(0, _wordpress_element.useEffect)(() => {
 			const isUploading = remaining > 0;
 			const failures = csmFailureCount + getFailureCount();
