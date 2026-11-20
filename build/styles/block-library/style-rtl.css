@@ -4550,17 +4550,18 @@ ul.wp-block-rss.is-grid li {
   height: auto;
 }
 .wp-block-site-logo img {
+  box-sizing: border-box;
   height: auto;
   max-width: 100%;
-}
-.wp-block-site-logo a,
-.wp-block-site-logo img {
-  border-radius: inherit;
 }
 .wp-block-site-logo.aligncenter {
   margin-right: auto;
   margin-left: auto;
   text-align: center;
+}
+
+:root :where(.wp-block-site-logo a, .wp-block-site-logo img) {
+  border-radius: inherit;
 }
 
 :root :where(.wp-block-site-logo.is-style-rounded) {

@@ -81325,6 +81325,13 @@ Icon: ButtonIcon });
 					"padding": false
 				}
 			},
+			"__experimentalBorder": {
+				"__experimentalSkipSerialization": true,
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			},
 			"interactivity": { "clientNavigation": true },
 			"filter": { "duotone": true }
 		},
@@ -81336,7 +81343,10 @@ Icon: ButtonIcon });
 			"name": "rounded",
 			"label": "Rounded"
 		}],
-		selectors: { "filter": { "duotone": ".wp-block-site-logo img, .wp-block-site-logo .components-placeholder__illustration, .wp-block-site-logo .components-placeholder::before" } },
+		selectors: {
+			"border": ".wp-block-site-logo img, .wp-block-site-logo .components-placeholder",
+			"filter": { "duotone": ".wp-block-site-logo img, .wp-block-site-logo .components-placeholder__illustration, .wp-block-site-logo .components-placeholder::before" }
+		},
 		editorStyle: "wp-block-site-logo-editor",
 		style: "wp-block-site-logo"
 	};
@@ -81344,7 +81354,7 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/site-logo/edit.mjs
 	const ALLOWED_MEDIA_TYPES$1 = ["image"];
 	const { mediaEditKey, openMediaEditorModalKey } = unlock$1(_wordpress_block_editor.privateApis);
-	const SiteLogo = ({ alt, attributes: { align, width, height, isLink, linkTarget, shouldSyncIcon }, isSelected, setAttributes, setLogo, logoUrl, siteUrl, logoId, iconId, setIcon, canUserEdit }) => {
+	const SiteLogo = ({ alt, attributes: { align, width, height, isLink, linkTarget, shouldSyncIcon }, borderProps, isSelected, setAttributes, setLogo, logoUrl, siteUrl, logoId, iconId, setIcon, canUserEdit }) => {
 		const isLargeViewport = (0, _wordpress_compose.useViewportMatch)("medium");
 		const isResizable = !["wide", "full"].includes(align) && isLargeViewport;
 		const [{ naturalWidth, naturalHeight }, setNaturalSize] = (0, _wordpress_element.useState)({});
@@ -81378,7 +81388,8 @@ Icon: ButtonIcon });
 			toggleSelection(true);
 		}
 		const img = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
-			className: "custom-logo",
+			className: clsx("custom-logo", borderProps.className),
+			style: borderProps.style,
 			src: logoUrl,
 			alt,
 			onLoad: (event) => {
@@ -81535,6 +81546,7 @@ Icon: ButtonIcon });
 	};
 	function LogoEdit({ attributes, className, setAttributes, isSelected }) {
 		const { width, shouldSyncIcon } = attributes;
+		const borderProps = (0, _wordpress_block_editor.__experimentalUseBorderProps)(attributes);
 		const { siteLogoId, canUserEdit, url, siteIconId, mediaItemData, isRequestingMediaItem } = (0, _wordpress_data.useSelect)((select) => {
 			const { canUser, getEntityRecord, getEditedEntityRecord } = select(_wordpress_core_data.store);
 			const _canUserEdit = canUser("update", {
@@ -81635,6 +81647,7 @@ Icon: ButtonIcon });
 		if (!!logoUrl || !!temporaryURL) logoImage = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SiteLogo, {
 			alt,
 			attributes,
+			borderProps,
 			className,
 			isSelected,
 			setAttributes,
@@ -81647,12 +81660,15 @@ Icon: ButtonIcon });
 			canUserEdit
 		}), canUserEdit && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropZone, { onFilesDrop })] });
 		const placeholder = (content) => {
-			const placeholderClassName = clsx("block-editor-media-placeholder", className);
+			const placeholderClassName = clsx("block-editor-media-placeholder", className, { [borderProps.className]: !!borderProps.className && !isSelected });
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Placeholder, {
 				className: placeholderClassName,
 				preview: logoImage,
 				withIllustration: true,
-				style: { width },
+				style: {
+					width,
+					...borderProps.style
+				},
 				children: content
 			});
 		};
@@ -81700,7 +81716,8 @@ Icon: ButtonIcon });
 				mediaInspectorPanel,
 				(!!logoUrl || !!temporaryURL) && logoImage,
 				(isLoading || !temporaryURL && !logoUrl && !canUserEdit) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Placeholder, {
-					className: "site-logo_placeholder",
+					className: clsx("site-logo_placeholder", borderProps.className),
+					style: borderProps.style,
 					withIllustration: true,
 					children: isLoading && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 						className: "components-placeholder__preview",

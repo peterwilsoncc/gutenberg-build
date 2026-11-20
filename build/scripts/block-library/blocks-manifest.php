@@ -8370,6 +8370,13 @@ return array(
 					'padding' => false
 				)
 			),
+			'__experimentalBorder' => array(
+				'__experimentalSkipSerialization' => true,
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
@@ -8389,6 +8396,7 @@ return array(
 			)
 		),
 		'selectors' => array(
+			'border' => '.wp-block-site-logo img, .wp-block-site-logo .components-placeholder',
 			'filter' => array(
 				'duotone' => '.wp-block-site-logo img, .wp-block-site-logo .components-placeholder__illustration, .wp-block-site-logo .components-placeholder::before'
 			)
