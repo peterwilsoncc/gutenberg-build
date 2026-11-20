@@ -5878,6 +5878,7 @@ Icon: ButtonIcon });
 		isSavingWidgetAreas: () => isSavingWidgetAreas,
 		isWidgetSavingLocked: () => isWidgetSavingLocked
 	}, 1);
+	/** @typedef {import('@wordpress/blocks').Block} Block */
 	const EMPTY_INSERTION_POINT = {
 		rootClientId: void 0,
 		insertionIndex: void 0
@@ -5928,7 +5929,8 @@ Icon: ButtonIcon });
 	*
 	* @param {string} clientId The client id of a block in a widget area.
 	*
-	* @return {WPBlock} The widget area block.
+	* @return {Block | null} The widget area block.
+	* @type {(state: Record<string, unknown>, clientId: string) => Block | null}
 	*/
 	const getParentWidgetAreaBlock = (0, _wordpress_data.createRegistrySelector)((select) => (state, clientId) => {
 		const { getBlock, getBlockName, getBlockParents } = select(_wordpress_block_editor.store);

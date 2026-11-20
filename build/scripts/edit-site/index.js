@@ -867,12 +867,11 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	const STORE_NAME = "core/edit-site";
 
 // packages/edit-site/build-module/store/index.mjs
-	const storeConfig = {
+	const store = (0, _wordpress_data.createReduxStore)(STORE_NAME, {
 		reducer: reducer_default,
 		actions: actions_exports,
 		selectors: selectors_exports
-	};
-	const store = (0, _wordpress_data.createReduxStore)(STORE_NAME, storeConfig);
+	});
 	(0, _wordpress_data.register)(store);
 	unlock$5(store).registerPrivateSelectors(private_selectors_exports);
 	unlock$5(store).registerPrivateActions(private_actions_exports);
@@ -40656,6 +40655,9 @@ Icon: ButtonIcon });
 	function isPreviewingTheme() {
 		return !!(0, _wordpress_url.getQueryArg)(window.location.href, "wp_theme_preview");
 	}
+	/**
+	* @return {ReturnType<typeof getQueryArg> | null} Currently previewing theme.
+	*/
 	function currentlyPreviewingTheme() {
 		if (isPreviewingTheme()) return (0, _wordpress_url.getQueryArg)(window.location.href, "wp_theme_preview");
 		return null;
