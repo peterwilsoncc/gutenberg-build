@@ -2254,7 +2254,7 @@ var import_cjs = /* @__PURE__ */ __toESM(require_cjs(), 1);
 	*
 	* @return Persistence interface.
 	*/
-	function createPersistenceInterface(options) {
+	function createPersistenceInterface(options = {}) {
 		const { storage = DEFAULT_STORAGE, storageKey = DEFAULT_STORAGE_KEY } = options;
 		let data;
 		/**
@@ -2300,7 +2300,7 @@ var import_cjs = /* @__PURE__ */ __toESM(require_cjs(), 1);
 	*
 	* @return Data plugin.
 	*/
-	function persistencePlugin(registry, pluginOptions) {
+	function persistencePlugin(registry, pluginOptions = {}) {
 		const persistence = createPersistenceInterface(pluginOptions);
 		/**
 		* Creates an enhanced store dispatch function, triggering the state of the
