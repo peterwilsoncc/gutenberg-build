@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_compose, _wordpress_data, _wordpress_block_editor, _wordpress_server_side_render, _wordpress_i18n, _wordpress_dom, react_jsx_runtime, _wordpress_element, _wordpress_primitives, _wordpress_components, _wordpress_blob, _wordpress_core_data, react, react_dom, _wordpress_warning, _wordpress_a11y, _wordpress_theme, _wordpress_private_apis, _wordpress_url, _wordpress_html_entities, _wordpress_notices, _wordpress_keycodes, _wordpress_deprecated, _wordpress_rich_text, _wordpress_date, _wordpress_hooks, _wordpress_escape_html, _wordpress_style_engine, _wordpress_upload_media, _wordpress_wordcount, _wordpress_patterns, _wordpress_autop, _wordpress_shortcode) {
+(function(exports, _wordpress_blocks, _wordpress_compose, _wordpress_data, _wordpress_block_editor, _wordpress_server_side_render, _wordpress_i18n, _wordpress_dom, react_jsx_runtime, _wordpress_element, _wordpress_blob, _wordpress_core_data, _wordpress_primitives, _wordpress_components, react, react_dom, _wordpress_warning, _wordpress_a11y, _wordpress_theme, _wordpress_private_apis, _wordpress_url, _wordpress_html_entities, _wordpress_notices, _wordpress_keycodes, _wordpress_deprecated, _wordpress_rich_text, _wordpress_date, _wordpress_hooks, _wordpress_escape_html, _wordpress_style_engine, _wordpress_upload_media, _wordpress_wordcount, _wordpress_patterns, _wordpress_autop, _wordpress_shortcode) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -2430,6 +2430,136 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return esm_default(sanitizedContent, options);
 	};
 
+// packages/block-library/build-module/utils/hooks.mjs
+/**
+	* Returns whether the current user can edit the given entity.
+	*
+	* @param kind     Entity kind.
+	* @param name     Entity name.
+	* @param recordId Record's id.
+	*/
+	function useCanEditEntity(kind, name, recordId) {
+		return (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).canUser("update", {
+			kind,
+			name,
+			id: recordId
+		}), [
+			kind,
+			name,
+			recordId
+		]);
+	}
+	/**
+	* Returns whether the current user can edit the post referenced by a block's
+	* `postId`/`postType` context, reporting `false` only when the reference
+	* could be positively checked.
+	*
+	* The `postId` and `postType` context values can come from different
+	* providers (e.g. a block providing only `postId`, with `postType` coming
+	* from the editor root), so the pair may not designate an existing post. The
+	* REST permission check then reports every action as disallowed even when the
+	* user can edit the actual post, so a plain `canUser( 'update' )` gate would
+	* produce false negatives. Only a post that is confirmed readable under
+	* `postType` yet not updatable is reported as non-editable; any state that
+	* can't be determined (still resolving, or no readable post behind the pair)
+	* is `undefined`.
+	*
+	* Both `canUser` calls resolve from a single OPTIONS request.
+	*
+	* @param select   Registry `select` function.
+	* @param postType Post type from block context.
+	* @param postId   Post ID from block context.
+	* @return Whether the post can be edited, or `undefined` when it can't be
+	*         determined.
+	*/
+	function canUserEditPostContext(select, postType, postId) {
+		if (!postType || !postId) return;
+		const resource = {
+			kind: "postType",
+			name: postType,
+			id: postId
+		};
+		if (select(_wordpress_core_data.store).canUser("read", resource) !== true) return;
+		return select(_wordpress_core_data.store).canUser("update", resource);
+	}
+	/**
+	* Hook version of `canUserEditPostContext`.
+	*
+	* @param postType Post type from block context.
+	* @param postId   Post ID from block context.
+	* @return Whether the post can be edited, or `undefined` when it can't be
+	*         determined.
+	*/
+	function useCanEditPostContext(postType, postId) {
+		return (0, _wordpress_data.useSelect)((select) => canUserEditPostContext(select, postType, postId), [postType, postId]);
+	}
+	/**
+	* Returns the comments query of a post: `totalItems` is its comment count once
+	* known, and stays null when the request fails.
+	*
+	* @param postId Post ID. Nothing is fetched without one.
+	*/
+	function usePostCommentsCount(postId) {
+		return (0, _wordpress_core_data.useEntityRecords)("root", "comment", {
+			post: postId,
+			per_page: 1,
+			_fields: "id",
+			context: "view"
+		}, { enabled: !!postId });
+	}
+	/**
+	* Handles uploading a media file from a blob URL on mount.
+	*
+	* @param args Upload media arguments.
+	*/
+	function useUploadMediaFromBlobURL(args = {}) {
+		const hasUploadStartedRef = (0, _wordpress_element.useRef)(false);
+		const { getSettings } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
+		const onChange = (0, _wordpress_compose.useEvent)(args.onChange);
+		const onError = (0, _wordpress_compose.useEvent)(args.onError);
+		const startUpload = (0, _wordpress_compose.useEvent)(() => {
+			if (hasUploadStartedRef.current) return;
+			if (!args.url || !(0, _wordpress_blob.isBlobURL)(args.url)) return;
+			const file = (0, _wordpress_blob.getBlobByURL)(args.url);
+			if (!file) return;
+			const { url, allowedTypes } = args;
+			const { mediaUpload } = getSettings();
+			if (!mediaUpload) return;
+			hasUploadStartedRef.current = true;
+			mediaUpload({
+				filesList: [file],
+				allowedTypes,
+				onFileChange: ([media]) => {
+					if ((0, _wordpress_blob.isBlobURL)(media?.url)) return;
+					(0, _wordpress_blob.revokeBlobURL)(url);
+					onChange(media);
+					hasUploadStartedRef.current = false;
+				},
+				onError: (message) => {
+					(0, _wordpress_blob.revokeBlobURL)(url);
+					onError(message);
+					hasUploadStartedRef.current = false;
+				}
+			});
+		});
+		(0, _wordpress_element.useEffect)(() => {
+			startUpload();
+		}, [startUpload]);
+	}
+	function useDefaultAvatar() {
+		return (0, _wordpress_data.useSelect)((select) => {
+			const { getSettings } = select(_wordpress_block_editor.store);
+			const { __experimentalDiscussionSettings } = getSettings();
+			return __experimentalDiscussionSettings?.avatarURL ?? "";
+		}, []);
+	}
+	function useToolsPanelDropdownMenuProps() {
+		return !(0, _wordpress_compose.useViewportMatch)("medium", "<") ? { popoverProps: {
+			placement: "left-start",
+			offset: 259
+		} } : {};
+	}
+
 // packages/icons/build-module/icon/index.mjs
 /**
 	* Return an SVG icon.
@@ -4501,92 +4631,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M19 7.75V11.2941M19 11.2941V12.1176M19 11.2941C19 9.23529 17.8235 8.41176 16.3824 8.41176C14.7905 8.41176 13.5 9.64706 13.5 11.7059C13.5 13.7647 14.7905 15 16.3824 15C17.5592 15 19 13.7647 19 12.1176M19 12.1176V13.0386C19 14.2739 19.1824 15 20.5 15" })
 		]
 	});
-
-// packages/block-library/build-module/utils/hooks.mjs
-/**
-	* Returns whether the current user can edit the given entity.
-	*
-	* @param kind     Entity kind.
-	* @param name     Entity name.
-	* @param recordId Record's id.
-	*/
-	function useCanEditEntity(kind, name, recordId) {
-		return (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).canUser("update", {
-			kind,
-			name,
-			id: recordId
-		}), [
-			kind,
-			name,
-			recordId
-		]);
-	}
-	/**
-	* Returns the comments query of a post: `totalItems` is its comment count once
-	* known, and stays null when the request fails.
-	*
-	* @param postId Post ID. Nothing is fetched without one.
-	*/
-	function usePostCommentsCount(postId) {
-		return (0, _wordpress_core_data.useEntityRecords)("root", "comment", {
-			post: postId,
-			per_page: 1,
-			_fields: "id",
-			context: "view"
-		}, { enabled: !!postId });
-	}
-	/**
-	* Handles uploading a media file from a blob URL on mount.
-	*
-	* @param args Upload media arguments.
-	*/
-	function useUploadMediaFromBlobURL(args = {}) {
-		const hasUploadStartedRef = (0, _wordpress_element.useRef)(false);
-		const { getSettings } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
-		const onChange = (0, _wordpress_compose.useEvent)(args.onChange);
-		const onError = (0, _wordpress_compose.useEvent)(args.onError);
-		const startUpload = (0, _wordpress_compose.useEvent)(() => {
-			if (hasUploadStartedRef.current) return;
-			if (!args.url || !(0, _wordpress_blob.isBlobURL)(args.url)) return;
-			const file = (0, _wordpress_blob.getBlobByURL)(args.url);
-			if (!file) return;
-			const { url, allowedTypes } = args;
-			const { mediaUpload } = getSettings();
-			if (!mediaUpload) return;
-			hasUploadStartedRef.current = true;
-			mediaUpload({
-				filesList: [file],
-				allowedTypes,
-				onFileChange: ([media]) => {
-					if ((0, _wordpress_blob.isBlobURL)(media?.url)) return;
-					(0, _wordpress_blob.revokeBlobURL)(url);
-					onChange(media);
-					hasUploadStartedRef.current = false;
-				},
-				onError: (message) => {
-					(0, _wordpress_blob.revokeBlobURL)(url);
-					onError(message);
-					hasUploadStartedRef.current = false;
-				}
-			});
-		});
-		(0, _wordpress_element.useEffect)(() => {
-			startUpload();
-		}, [startUpload]);
-	}
-	function useDefaultAvatar() {
-		return (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings } = select(_wordpress_block_editor.store);
-			const { __experimentalDiscussionSettings } = getSettings();
-			return __experimentalDiscussionSettings?.avatarURL ?? "";
-		}, []);
-	}
-	function useToolsPanelDropdownMenuProps() {
-		return !(0, _wordpress_compose.useViewportMatch)("medium", "<") ? { popoverProps: {
-			placement: "left-start",
-			offset: 259
-		} } : {};
-	}
 
 // packages/block-library/build-module/accordion/edit.mjs
 	const ACCORDION_BLOCK_NAME = "core/accordion-item";
@@ -32086,9 +32130,15 @@ Icon: ButtonIcon });
 	const separatorDefaultValue = "/";
 	function BreadcrumbEdit({ attributes, setAttributes, name, context: { postId, postType, templateSlug } }) {
 		const { separator, showHomeItem, showCurrentItem, prefersTaxonomy, showOnHomePage } = attributes;
-		const { post, isPostTypeHierarchical, postTypeHasTaxonomies, hasTermsAssigned, isLoading } = (0, _wordpress_data.useSelect)((select) => {
+		const { post, canEditPost, isPostTypeHierarchical, postTypeHasTaxonomies, hasTermsAssigned, isLoading } = (0, _wordpress_data.useSelect)((select) => {
 			if (!postType) return {};
 			const _post = select(_wordpress_core_data.store).getEntityRecord("postType", postType, postId);
+			const _canReadPost = postId ? select(_wordpress_core_data.store).canUser("read", {
+				kind: "postType",
+				name: postType,
+				id: postId
+			}) : void 0;
+			const _canEditPost = canUserEditPostContext(select, postType, postId);
 			const postTypeObject = select(_wordpress_core_data.store).getPostType(postType);
 			const _postTypeHasTaxonomies = postTypeObject && postTypeObject.taxonomies.length;
 			let taxonomies;
@@ -32098,12 +32148,13 @@ Icon: ButtonIcon });
 			});
 			return {
 				post: _post,
+				canEditPost: _canEditPost,
 				isPostTypeHierarchical: postTypeObject?.hierarchical,
 				postTypeHasTaxonomies: _postTypeHasTaxonomies,
 				hasTermsAssigned: _post && (taxonomies || []).filter(({ visibility }) => visibility?.publicly_queryable).some((taxonomy) => {
 					return !!_post[taxonomy.rest_base]?.length;
 				}),
-				isLoading: postId && !_post || !postTypeObject || _postTypeHasTaxonomies && !taxonomies
+				isLoading: postId && _canEditPost !== false && _canReadPost !== false && !_post || !postTypeObject || _postTypeHasTaxonomies && !taxonomies
 			};
 		}, [postType, postId]);
 		/**
@@ -32127,7 +32178,7 @@ Icon: ButtonIcon });
 			skipBlockSupportAttributes: true,
 			block: name,
 			urlQueryArgs: {
-				post_id: postId,
+				post_id: canEditPost === false ? void 0 : postId,
 				invalidationKey
 			}
 		});
@@ -32157,7 +32208,7 @@ Icon: ButtonIcon });
 		else if (!postTypeHasTaxonomies) _showTerms = false;
 		else _showTerms = prefersTaxonomy;
 		let placeholder = null;
-		const showPlaceholder = !postId || !postType || templateSlug && !postType || !_showTerms && !isPostTypeHierarchical || _showTerms && !hasTermsAssigned;
+		const showPlaceholder = !postId || !postType || canEditPost === false || templateSlug && !postType || !_showTerms && !isPostTypeHierarchical || _showTerms && !hasTermsAssigned;
 		if (showPlaceholder) {
 			const placeholderItems = [];
 			if (showHomeItem) placeholderItems.push((0, _wordpress_i18n.__)("Home"));
@@ -91646,14 +91697,19 @@ Icon: ButtonIcon });
 				...bootstrappedBlockType,
 				title: bootstrappedBlockType?.title || blockName,
 				...(bootstrappedBlockType?.apiVersion ?? 0) < 3 && { apiVersion: 3 },
-				usesContext: Array.from(/* @__PURE__ */ new Set([...bootstrappedBlockType?.usesContext ?? [], "postId"])),
+				usesContext: Array.from(/* @__PURE__ */ new Set([
+					...bootstrappedBlockType?.usesContext ?? [],
+					"postId",
+					"postType"
+				])),
 				edit: function Edit({ attributes, context }) {
 					const disabledRef = (0, _wordpress_compose.useDisabled)();
 					const blockProps = (0, _wordpress_block_editor.useBlockProps)({ ref: disabledRef });
+					const canEditPost = useCanEditPostContext(context?.postType, context?.postId);
 					const { content, status, error } = (0, _wordpress_server_side_render.useServerSideRender)({
 						block: blockName,
 						attributes,
-						urlQueryArgs: { post_id: context?.postId }
+						urlQueryArgs: { post_id: canEditPost === false ? void 0 : context?.postId }
 					});
 					if (status === "loading") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 						...blockProps,
@@ -91699,5 +91755,5 @@ exports.registerCoreBlocks = registerCoreBlocks;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).blockLibrary = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.compose, window.wp.data, window.wp.blockEditor, window.wp.serverSideRender, window.wp.i18n, window.wp.dom, window.ReactJSXRuntime, window.wp.element, window.wp.primitives, window.wp.components, window.wp.blob, window.wp.coreData, window.React, window.ReactDOM, window.wp.warning, window.wp.a11y, window.wp.theme, window.wp.privateApis, window.wp.url, window.wp.htmlEntities, window.wp.notices, window.wp.keycodes, window.wp.deprecated, window.wp.richText, window.wp.date, window.wp.hooks, window.wp.escapeHtml, window.wp.styleEngine, window.wp.uploadMedia, window.wp.wordcount, window.wp.patterns, window.wp.autop, window.wp.shortcode);
+})({}, window.wp.blocks, window.wp.compose, window.wp.data, window.wp.blockEditor, window.wp.serverSideRender, window.wp.i18n, window.wp.dom, window.ReactJSXRuntime, window.wp.element, window.wp.blob, window.wp.coreData, window.wp.primitives, window.wp.components, window.React, window.ReactDOM, window.wp.warning, window.wp.a11y, window.wp.theme, window.wp.privateApis, window.wp.url, window.wp.htmlEntities, window.wp.notices, window.wp.keycodes, window.wp.deprecated, window.wp.richText, window.wp.date, window.wp.hooks, window.wp.escapeHtml, window.wp.styleEngine, window.wp.uploadMedia, window.wp.wordcount, window.wp.patterns, window.wp.autop, window.wp.shortcode);
 //# sourceMappingURL=index.js.map
