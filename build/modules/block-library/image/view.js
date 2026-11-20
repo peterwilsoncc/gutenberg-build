@@ -9,7 +9,7 @@ import { getConfig, getContext, getElement, splitTask, store, withScope, withSyn
 * reads the preference once; callers that need to react to it changing should
 * watch the media query themselves.
 *
-* @return {boolean} Whether reduced motion is preferred.
+* @return Whether reduced motion is preferred.
 */
 function prefersReducedMotion() {
 	return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;

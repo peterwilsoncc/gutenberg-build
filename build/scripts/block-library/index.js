@@ -4506,9 +4506,9 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 /**
 	* Returns whether the current user can edit the given entity.
 	*
-	* @param {string} kind     Entity kind.
-	* @param {string} name     Entity name.
-	* @param {string} recordId Record's id.
+	* @param kind     Entity kind.
+	* @param name     Entity name.
+	* @param recordId Record's id.
 	*/
 	function useCanEditEntity(kind, name, recordId) {
 		return (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).canUser("update", {
@@ -4525,7 +4525,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* Returns the comments query of a post: `totalItems` is its comment count once
 	* known, and stays null when the request fails.
 	*
-	* @param {number} postId Post ID. Nothing is fetched without one.
+	* @param postId Post ID. Nothing is fetched without one.
 	*/
 	function usePostCommentsCount(postId) {
 		return (0, _wordpress_core_data.useEntityRecords)("root", "comment", {
@@ -4538,11 +4538,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	/**
 	* Handles uploading a media file from a blob URL on mount.
 	*
-	* @param {Object}   args              Upload media arguments.
-	* @param {string}   args.url          Blob URL.
-	* @param {?Array}   args.allowedTypes Array of allowed media types.
-	* @param {Function} args.onChange     Function called when the media is uploaded.
-	* @param {Function} args.onError      Function called when an error happens.
+	* @param args Upload media arguments.
 	*/
 	function useUploadMediaFromBlobURL(args = {}) {
 		const hasUploadStartedRef = (0, _wordpress_element.useRef)(false);
@@ -4809,9 +4805,9 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 /**
 	* Function to register an individual block.
 	*
-	* @param {Object} block The block to be registered.
+	* @param block The block to be registered.
 	*
-	* @return {WPBlockType | undefined} The block, if it has been successfully registered;
+	* @return The block, if it has been successfully registered;
 	*                        otherwise `undefined`.
 	*/
 	function initBlock(block) {
@@ -32302,8 +32298,8 @@ Icon: ButtonIcon });
 	* whose value was "var:preset|font-family|helvetica-arial",
 	* to the style.fontFamily attribute, whose value will be "helvetica-arial".
 	*
-	* @param {Object} attributes The current attributes
-	* @return {Object} The updated attributes.
+	* @param attributes The current attributes
+	* @return The updated attributes.
 	*/
 	function migrate_font_family_default(attributes) {
 		if (!attributes?.style?.typography?.fontFamily) return attributes;
@@ -32322,8 +32318,8 @@ Icon: ButtonIcon });
 /**
 	* Migrates the current textAlign attribute,
 	*
-	* @param {Object} attributes The current attributes
-	* @return {Object} The updated attributes.
+	* @param attributes The current attributes
+	* @return The updated attributes.
 	*/
 	function migrate_text_align_default(attributes) {
 		const { textAlign, ...restAttributes } = attributes;
@@ -33551,9 +33547,9 @@ Icon: ButtonIcon });
 /**
 	* Removes anchor tags from a string.
 	*
-	* @param {string} value The value to remove anchor tags from.
+	* @param value The value to remove anchor tags from.
 	*
-	* @return {string} The value with anchor tags removed.
+	* @return The value with anchor tags removed.
 	*/
 	function removeAnchorTag(value) {
 		return value.toString().replace(/<\/?a[^>]*>/g, "");
@@ -33884,7 +33880,7 @@ Icon: ButtonIcon });
 	* If a plugin is still using the old textAlign attribute, we need to migrate its value
 	* to the new style.typography.textAlign attribute.
 	*
-	* @param {Object} props Block props.
+	* @param props Block props.
 	*/
 	function useDeprecatedTextAlign(props) {
 		const { name, attributes, setAttributes } = props;
@@ -33904,7 +33900,7 @@ Icon: ButtonIcon });
 				}
 			} }));
 		});
-		const lastUpdatedAlignRef = (0, _wordpress_element.useRef)();
+		const lastUpdatedAlignRef = (0, _wordpress_element.useRef)(void 0);
 		(0, _wordpress_element.useEffect)(() => {
 			if (textAlign === lastUpdatedAlignRef.current) return;
 			lastUpdatedAlignRef.current = textAlign;
@@ -34594,10 +34590,10 @@ Icon: ButtonIcon });
 /**
 	* Transform block support attributes and metadata during block transforms.
 	*
-	* @param {Object}   attributes       Original attributes from the block being transformed.
-	* @param {string}   newBlockName     Name of the target block after transformation.
-	* @param {Function} bindingsCallback Optional callback to transform the `bindings` property object.
-	* @return {Object} New attributes object with preserved block support attributes and metadata.
+	* @param attributes       Original attributes from the block being transformed.
+	* @param newBlockName     Name of the target block after transformation.
+	* @param bindingsCallback Optional callback to transform the `bindings` property object.
+	* @return New attributes object with preserved block support attributes and metadata.
 	*/
 	function getTransformedAttributes(attributes, newBlockName, bindingsCallback = null) {
 		if (!attributes) return;
@@ -52910,9 +52906,9 @@ Icon: ButtonIcon });
 	/**
 	* Sanitizes the search input string.
 	*
-	* @param {string} input The search input to normalize.
+	* @param input The search input to normalize.
 	*
-	* @return {string} The normalized search input.
+	* @return The normalized search input.
 	*/
 	function normalizeSearchInput(input = "") {
 		return normalizeString$1(input).trim();
@@ -52920,10 +52916,10 @@ Icon: ButtonIcon });
 	/**
 	* Filters a pattern list given a search term.
 	*
-	* @param {Array}  patterns    Item list
-	* @param {string} searchValue Search input.
+	* @param patterns    Item list
+	* @param searchValue Search input.
 	*
-	* @return {Array} Filtered pattern list.
+	* @return Filtered pattern list.
 	*/
 	function searchPatterns(patterns = [], searchValue = "") {
 		return searchItems$1(patterns, searchValue, { fields: [{ get: (pattern) => pattern.title }] });
@@ -60512,8 +60508,6 @@ Icon: ButtonIcon });
 	* Template part area identifier for navigation overlays.
 	* This constant defines the area name used when registering and filtering
 	* template parts that are specifically designed for navigation overlay layouts.
-	*
-	* @type {string}
 	*/
 	const NAVIGATION_OVERLAY_TEMPLATE_PART_AREA = "navigation-overlay";
 
@@ -63463,7 +63457,7 @@ Icon: ButtonIcon });
 	* React components should wrap this in useSelect for reactivity. Non-React contexts
 	* (like filter callbacks) can call this directly.
 	*
-	* @return {boolean} True if editing a navigation overlay template part, false otherwise.
+	* @return True if editing a navigation overlay template part, false otherwise.
 	*/
 	function isWithinNavigationOverlay() {
 		const editorStore = (0, _wordpress_data.select)("core/editor");
@@ -91478,8 +91472,8 @@ Icon: ButtonIcon });
 	* Checks if the block is experimental based on the metadata loaded
 	* from block.json.
 	*
-	* @param {Object} metadata Parsed block.json metadata.
-	* @return {boolean} Is the block experimental?
+	* @param metadata Parsed block.json metadata.
+	* @return Is the block experimental?
 	*/
 	function isBlockMetadataExperimental(metadata) {
 		return metadata && "__experimental" in metadata && metadata.__experimental !== false;
