@@ -17197,7 +17197,7 @@ Icon: ButtonIcon });
 		style: { fill: "none" },
 		stroke: "currentColor",
 		strokeWidth: "1.5",
-		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M7.59201 17.7565C8.8135 18.6933 10.3417 19.25 12 19.25C16.0041 19.25 19.25 16.0041 19.25 12C19.25 7.99594 16.0041 4.75 12 4.75C7.99594 4.75 4.75 7.99593 4.75 12L4.75 14M14.75 14.75L12.25 12.25L12.25 8M2 12L4.75 14L7.5 12" })
+		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M5.18723 9.52035C6.39058 6.21416 9.79402 4.24918 13.25895 4.86014C16.72388 5.4711 19.25 8.48162 19.25 12C19.25 15.51838 16.72388 18.5289 13.25895 19.13986C9.79402 19.75082 6.39058 17.78584 5.18723 14.47965M4.5 6V9.5H8M14.5 14.5L12 12V7.75" })
 	});
 
 // packages/icons/build-module/library/block-meta.mjs
