@@ -7343,7 +7343,6 @@ const ajv = new import_dist.default({
 	allowUnionTypes: true
 });
 (0, import_dist$1.default)(ajv, [
-	"date-time",
 	"email",
 	"hostname",
 	"ipv4",
@@ -7351,6 +7350,7 @@ const ajv = new import_dist.default({
 	"uri",
 	"uuid"
 ]);
+ajv.addFormat("date-time", import_dist$1.default.get("iso-date-time"));
 /**
 * Formats AJV errors into a simple error message.
 * The Abilities API will wrap this with ability_invalid_input/output to match the server side format.
