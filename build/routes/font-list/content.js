@@ -910,38 +910,6 @@ var require_warning = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.warning;
 }));
 
-// \0wp-global:@wordpress/primitives
-var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.primitives;
-}));
-
-// packages/ui/build-module/icon/icon.mjs
-var import_element = require_element();
-var import_primitives = require_primitives();
-/**
-* Renders an SVG icon with a 24px default size.
-*
-* ```jsx
-* import { wordpress } from '@wordpress/icons';
-*
-* <Icon icon={ wordpress } />
-* ```
-*/
-const Icon = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
-	const mergedStyle = icon.props.style || style ? {
-		...icon.props.style,
-		...style
-	} : void 0;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
-		ref,
-		...icon.props,
-		...restProps,
-		...mergedStyle ? { style: mergedStyle } : {},
-		width: size,
-		height: size
-	});
-});
-
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
 const error = createLogOnce("error", "Base UI");
 
@@ -13606,6 +13574,38 @@ function useRender(params) {
 var require_compose = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.compose;
 }));
+
+// \0wp-global:@wordpress/primitives
+var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.primitives;
+}));
+
+// packages/ui/build-module/icon/icon.mjs
+var import_element = require_element();
+var import_primitives = require_primitives();
+/**
+* Renders an SVG icon with a 24px default size.
+*
+* ```jsx
+* import { wordpress } from '@wordpress/icons';
+*
+* <Icon icon={ wordpress } />
+* ```
+*/
+const Icon = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+	const mergedStyle = icon.props.style || style ? {
+		...icon.props.style,
+		...style
+	} : void 0;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+		ref,
+		...icon.props,
+		...restProps,
+		...mergedStyle ? { style: mergedStyle } : {},
+		width: size,
+		height: size
+	});
+});
 
 // packages/icons/build-module/icon/index.mjs
 /**

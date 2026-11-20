@@ -34725,31 +34725,6 @@ VisualLabel });
 		return timeout;
 	}
 
-// packages/ui/build-module/icon/icon.mjs
-/**
-	* Renders an SVG icon with a 24px default size.
-	*
-	* ```jsx
-	* import { wordpress } from '@wordpress/icons';
-	*
-	* <Icon icon={ wordpress } />
-	* ```
-	*/
-	const Icon$1 = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
-		const mergedStyle = icon.props.style || style ? {
-			...icon.props.style,
-			...style
-		} : void 0;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
-			ref,
-			...icon.props,
-			...restProps,
-			...mergedStyle ? { style: mergedStyle } : {},
-			width: size,
-			height: size
-		});
-	});
-
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
 	const error = createLogOnce("error", "Base UI");
 
@@ -46027,6 +46002,31 @@ VisualLabel });
 			disabled: disabled ?? loading,
 			...props,
 			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$1, { className: style_module_default$104.spinner })]
+		});
+	});
+
+// packages/ui/build-module/icon/icon.mjs
+/**
+	* Renders an SVG icon with a 24px default size.
+	*
+	* ```jsx
+	* import { wordpress } from '@wordpress/icons';
+	*
+	* <Icon icon={ wordpress } />
+	* ```
+	*/
+	const Icon$1 = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+		const mergedStyle = icon.props.style || style ? {
+			...icon.props.style,
+			...style
+		} : void 0;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+			ref,
+			...icon.props,
+			...restProps,
+			...mergedStyle ? { style: mergedStyle } : {},
+			width: size,
+			height: size
 		});
 	});
 

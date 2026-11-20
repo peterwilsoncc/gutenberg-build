@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_block_library, _wordpress_data, _wordpress_deprecated, _wordpress_element, _wordpress_editor, _wordpress_preferences, _wordpress_widgets, _wordpress_core_data, _wordpress_block_editor, _wordpress_i18n, _wordpress_patterns, _wordpress_private_apis, _wordpress_router, react, react_jsx_runtime, react_dom, _wordpress_warning, _wordpress_primitives, _wordpress_compose, _wordpress_a11y, _wordpress_theme, _wordpress_components, _wordpress_dom, _wordpress_plugins, _wordpress_notices, _wordpress_url, _wordpress_keyboard_shortcuts, _wordpress_keycodes, _wordpress_api_fetch, _wordpress_commands, _wordpress_html_entities, _wordpress_style_engine, _wordpress_date, _wordpress_blob, _wordpress_media_utils) {
+(function(exports, _wordpress_blocks, _wordpress_block_library, _wordpress_data, _wordpress_deprecated, _wordpress_element, _wordpress_editor, _wordpress_preferences, _wordpress_widgets, _wordpress_core_data, _wordpress_block_editor, _wordpress_i18n, _wordpress_patterns, _wordpress_private_apis, _wordpress_router, react, react_jsx_runtime, react_dom, _wordpress_warning, _wordpress_compose, _wordpress_a11y, _wordpress_primitives, _wordpress_theme, _wordpress_components, _wordpress_dom, _wordpress_plugins, _wordpress_notices, _wordpress_url, _wordpress_keyboard_shortcuts, _wordpress_keycodes, _wordpress_api_fetch, _wordpress_commands, _wordpress_html_entities, _wordpress_style_engine, _wordpress_date, _wordpress_blob, _wordpress_media_utils) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -1720,31 +1720,6 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		useOnMount(timeout.disposeEffect);
 		return timeout;
 	}
-
-// packages/ui/build-module/icon/icon.mjs
-/**
-	* Renders an SVG icon with a 24px default size.
-	*
-	* ```jsx
-	* import { wordpress } from '@wordpress/icons';
-	*
-	* <Icon icon={ wordpress } />
-	* ```
-	*/
-	const Icon$6 = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
-		const mergedStyle = icon.props.style || style ? {
-			...icon.props.style,
-			...style
-		} : void 0;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
-			ref,
-			...icon.props,
-			...restProps,
-			...mergedStyle ? { style: mergedStyle } : {},
-			width: size,
-			height: size
-		});
-	});
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
 	const error = createLogOnce("error", "Base UI");
@@ -16958,6 +16933,31 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 			disabled: disabled ?? loading,
 			...props,
 			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$17, { className: style_module_default$44.spinner })]
+		});
+	});
+
+// packages/ui/build-module/icon/icon.mjs
+/**
+	* Renders an SVG icon with a 24px default size.
+	*
+	* ```jsx
+	* import { wordpress } from '@wordpress/icons';
+	*
+	* <Icon icon={ wordpress } />
+	* ```
+	*/
+	const Icon$6 = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+		const mergedStyle = icon.props.style || style ? {
+			...icon.props.style,
+			...style
+		} : void 0;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+			ref,
+			...icon.props,
+			...restProps,
+			...mergedStyle ? { style: mergedStyle } : {},
+			width: size,
+			height: size
 		});
 	});
 
@@ -76595,5 +76595,5 @@ exports.store = store;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).editSite = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.blockLibrary, window.wp.data, window.wp.deprecated, window.wp.element, window.wp.editor, window.wp.preferences, window.wp.widgets, window.wp.coreData, window.wp.blockEditor, window.wp.i18n, window.wp.patterns, window.wp.privateApis, window.wp.router, window.React, window.ReactJSXRuntime, window.ReactDOM, window.wp.warning, window.wp.primitives, window.wp.compose, window.wp.a11y, window.wp.theme, window.wp.components, window.wp.dom, window.wp.plugins, window.wp.notices, window.wp.url, window.wp.keyboardShortcuts, window.wp.keycodes, window.wp.apiFetch, window.wp.commands, window.wp.htmlEntities, window.wp.styleEngine, window.wp.date, window.wp.blob, window.wp.mediaUtils);
+})({}, window.wp.blocks, window.wp.blockLibrary, window.wp.data, window.wp.deprecated, window.wp.element, window.wp.editor, window.wp.preferences, window.wp.widgets, window.wp.coreData, window.wp.blockEditor, window.wp.i18n, window.wp.patterns, window.wp.privateApis, window.wp.router, window.React, window.ReactJSXRuntime, window.ReactDOM, window.wp.warning, window.wp.compose, window.wp.a11y, window.wp.primitives, window.wp.theme, window.wp.components, window.wp.dom, window.wp.plugins, window.wp.notices, window.wp.url, window.wp.keyboardShortcuts, window.wp.keycodes, window.wp.apiFetch, window.wp.commands, window.wp.htmlEntities, window.wp.styleEngine, window.wp.date, window.wp.blob, window.wp.mediaUtils);
 //# sourceMappingURL=index.js.map

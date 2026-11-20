@@ -1,4 +1,4 @@
-(function(exports, _wordpress_data, _wordpress_blocks, _wordpress_core_data, _wordpress_block_editor, _wordpress_private_apis, _wordpress_components, _wordpress_element, _wordpress_i18n, react_jsx_runtime, react, _wordpress_primitives, _wordpress_compose, _wordpress_a11y, _wordpress_notices, _wordpress_html_entities, _wordpress_url) {
+(function(exports, _wordpress_data, _wordpress_blocks, _wordpress_core_data, _wordpress_block_editor, _wordpress_private_apis, _wordpress_components, _wordpress_element, _wordpress_i18n, react_jsx_runtime, react, _wordpress_compose, _wordpress_a11y, _wordpress_primitives, _wordpress_notices, _wordpress_html_entities, _wordpress_url) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -2012,5 +2012,5 @@ exports.store = store;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).patterns = exports;
 return exports;
-})({}, window.wp.data, window.wp.blocks, window.wp.coreData, window.wp.blockEditor, window.wp.privateApis, window.wp.components, window.wp.element, window.wp.i18n, window.ReactJSXRuntime, window.React, window.wp.primitives, window.wp.compose, window.wp.a11y, window.wp.notices, window.wp.htmlEntities, window.wp.url);
+})({}, window.wp.data, window.wp.blocks, window.wp.coreData, window.wp.blockEditor, window.wp.privateApis, window.wp.components, window.wp.element, window.wp.i18n, window.ReactJSXRuntime, window.React, window.wp.compose, window.wp.a11y, window.wp.primitives, window.wp.notices, window.wp.htmlEntities, window.wp.url);
 //# sourceMappingURL=index.js.map

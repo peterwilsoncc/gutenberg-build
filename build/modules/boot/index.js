@@ -921,38 +921,6 @@ function clsx() {
 	return n;
 }
 
-// \0wp-global:@wordpress/primitives
-var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.primitives;
-}));
-
-// packages/ui/build-module/icon/icon.mjs
-var import_primitives = require_primitives();
-var import_jsx_runtime = require_jsx_runtime();
-/**
-* Renders an SVG icon with a 24px default size.
-*
-* ```jsx
-* import { wordpress } from '@wordpress/icons';
-*
-* <Icon icon={ wordpress } />
-* ```
-*/
-const Icon$4 = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
-	const mergedStyle = icon.props.style || style ? {
-		...icon.props.style,
-		...style
-	} : void 0;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
-		ref,
-		...icon.props,
-		...restProps,
-		...mergedStyle ? { style: mergedStyle } : {},
-		width: size,
-		height: size
-	});
-});
-
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useForcedRerendering.mjs
 /**
 * Returns a function that forces a rerender.
@@ -1456,6 +1424,7 @@ function isHoverOpenEvent(openEventType) {
 }
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/floating-ui-react/components/FloatingDelayGroup.mjs
+var import_jsx_runtime = require_jsx_runtime();
 const FloatingDelayGroupContext = /*#__PURE__*/ import__wp_global_react.createContext({
 	hasProvider: false,
 	timeoutMs: 0,
@@ -7052,6 +7021,37 @@ function useRender(params) {
 var require_compose = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.compose;
 }));
+
+// \0wp-global:@wordpress/primitives
+var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.primitives;
+}));
+
+// packages/ui/build-module/icon/icon.mjs
+var import_primitives = require_primitives();
+/**
+* Renders an SVG icon with a 24px default size.
+*
+* ```jsx
+* import { wordpress } from '@wordpress/icons';
+*
+* <Icon icon={ wordpress } />
+* ```
+*/
+const Icon$4 = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+	const mergedStyle = icon.props.style || style ? {
+		...icon.props.style,
+		...style
+	} : void 0;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+		ref,
+		...icon.props,
+		...restProps,
+		...mergedStyle ? { style: mergedStyle } : {},
+		width: size,
+		height: size
+	});
+});
 
 // packages/icons/build-module/library/caution.mjs
 var caution_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {

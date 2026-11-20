@@ -1,4 +1,4 @@
-(function(exports, _wordpress_element, _wordpress_block_library, _wordpress_widgets, _wordpress_blocks, _wordpress_data, _wordpress_preferences, _wordpress_i18n, react, react_jsx_runtime, react_dom, _wordpress_primitives, _wordpress_compose, _wordpress_a11y, _wordpress_theme, _wordpress_private_apis, _wordpress_components, _wordpress_hooks, _wordpress_core_data, _wordpress_block_editor, _wordpress_media_utils, _wordpress_keycodes, _wordpress_keyboard_shortcuts, _wordpress_is_shallow_equal, _wordpress_dom) {
+(function(exports, _wordpress_element, _wordpress_block_library, _wordpress_widgets, _wordpress_blocks, _wordpress_data, _wordpress_preferences, _wordpress_i18n, react, react_jsx_runtime, react_dom, _wordpress_compose, _wordpress_a11y, _wordpress_primitives, _wordpress_theme, _wordpress_private_apis, _wordpress_components, _wordpress_hooks, _wordpress_core_data, _wordpress_block_editor, _wordpress_media_utils, _wordpress_keycodes, _wordpress_keyboard_shortcuts, _wordpress_is_shallow_equal, _wordpress_dom) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -880,31 +880,6 @@ react_dom = __toESM(react_dom, 1);
 		for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
 		return n;
 	}
-
-// packages/ui/build-module/icon/icon.mjs
-/**
-	* Renders an SVG icon with a 24px default size.
-	*
-	* ```jsx
-	* import { wordpress } from '@wordpress/icons';
-	*
-	* <Icon icon={ wordpress } />
-	* ```
-	*/
-	const Icon = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
-		const mergedStyle = icon.props.style || style ? {
-			...icon.props.style,
-			...style
-		} : void 0;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
-			ref,
-			...icon.props,
-			...restProps,
-			...mergedStyle ? { style: mergedStyle } : {},
-			width: size,
-			height: size
-		});
-	});
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
 	const error = createLogOnce("error", "Base UI");
@@ -2162,6 +2137,31 @@ react_dom = __toESM(react_dom, 1);
 			disabled: disabled ?? loading,
 			...props,
 			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner, { className: style_module_default$14.spinner })]
+		});
+	});
+
+// packages/ui/build-module/icon/icon.mjs
+/**
+	* Renders an SVG icon with a 24px default size.
+	*
+	* ```jsx
+	* import { wordpress } from '@wordpress/icons';
+	*
+	* <Icon icon={ wordpress } />
+	* ```
+	*/
+	const Icon = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+		const mergedStyle = icon.props.style || style ? {
+			...icon.props.style,
+			...style
+		} : void 0;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.SVG, {
+			ref,
+			...icon.props,
+			...restProps,
+			...mergedStyle ? { style: mergedStyle } : {},
+			width: size,
+			height: size
 		});
 	});
 
@@ -6195,5 +6195,5 @@ exports.store = store;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).customizeWidgets = exports;
 return exports;
-})({}, window.wp.element, window.wp.blockLibrary, window.wp.widgets, window.wp.blocks, window.wp.data, window.wp.preferences, window.wp.i18n, window.React, window.ReactJSXRuntime, window.ReactDOM, window.wp.primitives, window.wp.compose, window.wp.a11y, window.wp.theme, window.wp.privateApis, window.wp.components, window.wp.hooks, window.wp.coreData, window.wp.blockEditor, window.wp.mediaUtils, window.wp.keycodes, window.wp.keyboardShortcuts, window.wp.isShallowEqual, window.wp.dom);
+})({}, window.wp.element, window.wp.blockLibrary, window.wp.widgets, window.wp.blocks, window.wp.data, window.wp.preferences, window.wp.i18n, window.React, window.ReactJSXRuntime, window.ReactDOM, window.wp.compose, window.wp.a11y, window.wp.primitives, window.wp.theme, window.wp.privateApis, window.wp.components, window.wp.hooks, window.wp.coreData, window.wp.blockEditor, window.wp.mediaUtils, window.wp.keycodes, window.wp.keyboardShortcuts, window.wp.isShallowEqual, window.wp.dom);
 //# sourceMappingURL=index.js.map

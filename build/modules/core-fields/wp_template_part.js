@@ -1155,6 +1155,33 @@ function useTimeout() {
 	return timeout;
 }
 
+// node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/avatar/fallback/AvatarFallback.mjs
+/**
+* Rendered when the image fails to load or when no image is provided.
+* Renders a `<span>` element.
+*
+* Documentation: [Base UI Avatar](https://base-ui.com/react/components/avatar)
+*/
+const AvatarFallback = /*#__PURE__*/ import__wp_global_react.forwardRef(function AvatarFallback(componentProps, forwardedRef) {
+	const { className, render, delay = 0, style, ...elementProps } = componentProps;
+	const { imageLoadingStatus } = useAvatarRootContext();
+	const [delayPassed, setDelayPassed] = import__wp_global_react.useState(delay === 0);
+	const timeout = useTimeout();
+	import__wp_global_react.useEffect(() => {
+		if (delay > 0) timeout.start(delay, () => setDelayPassed(true));
+		else setDelayPassed(true);
+		return timeout.clear;
+	}, [timeout, delay]);
+	return useRenderElement("span", componentProps, {
+		state: { imageLoadingStatus },
+		ref: forwardedRef,
+		props: elementProps,
+		stateAttributesMapping: avatarStateAttributesMapping,
+		enabled: imageLoadingStatus !== "loaded" && (delay === 0 || delayPassed)
+	});
+});
+AvatarFallback.displayName = "AvatarFallback";
+
 // node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
 var import_data = require_data();
 var import_core_data = require_core_data();
@@ -1177,180 +1204,64 @@ var require_warning = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.warning;
 }));
 
-// packages/ui/build-module/avatar/dev-warnings.mjs
+// packages/ui/build-module/avatar/color.mjs
 var import_warning = /* @__PURE__ */ __toESM(require_warning(), 1);
-function warnAvatarColor(color) {
+function getDisallowedColorWarning(color) {
+	if (color.match(/\/\*[\s\S]*?(?:\*\/|$)|"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|(?:[-\w\u0080-\uFFFF]|\\(?:[\da-fA-F]{1,6}[ \t\r\n\f]?|[^\r\n\f]))+/g)?.some((token) => token.toLowerCase() === "currentcolor")) return "Avatar: `color` contains `currentColor`, which can produce insufficient contrast in colored fallbacks. Use a color that does not depend on the foreground.";
+	if (/^(inherit|initial|unset|revert|revert-layer)$/i.test(color.trim())) return "Avatar: `color` cannot be used as a colored fallback fill. Use an explicit CSS color instead of a CSS-wide keyword such as `inherit`.";
+}
+/**
+* Validate direct colors; CSS handles variables that resolve to invalid values.
+*
+* @param color The requested avatar color.
+*/
+function getAvatarColor(color) {
 	if (color === void 0) return;
-	if (color.match(/\/\*[\s\S]*?(?:\*\/|$)|"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|(?:[-\w\u0080-\uFFFF]|\\(?:[\da-fA-F]{1,6}[ \t\r\n\f]?|[^\r\n\f]))+/g)?.some((token) => token.toLowerCase() === "currentcolor")) {
-		(0, import_warning.default)("Avatar.Root: `color` contains `currentColor`, which can produce insufficient contrast in colored fallbacks. Use a color that does not depend on the foreground.");
+	const message = getDisallowedColorWarning(color);
+	if (message) {
+		(0, import_warning.default)(message);
 		return;
 	}
-	if (typeof CSS === "undefined" || !CSS.supports) return;
-	if (!CSS.supports("color", color)) (0, import_warning.default)("Avatar.Root: The browser does not support the `color` value. Use a valid CSS color supported by this browser.");
-	else if (CSS.supports("color", "rgb(from red r g b / 1)") && !CSS.supports("color", `rgb(from ${color} r g b / 1)`)) (0, import_warning.default)("Avatar.Root: `color` cannot be used as a colored fallback fill. Use an explicit CSS color instead of a CSS-wide keyword such as `inherit`.");
+	if (typeof CSS !== "undefined" && CSS.supports && !CSS.supports("color", color)) (0, import_warning.default)("Avatar: The browser does not support the `color` value. Use a valid CSS color supported by this browser.");
+	return color;
 }
 
-// packages/ui/build-module/avatar/root.mjs
-const STYLE_HASH_ATTRIBUTE$10 = "data-wp-hash";
+// packages/ui/build-module/avatar/get-initials.mjs
 /**
-* Returns the shared style runtime registry.
+* Extract complete first and last initials without interpreting name structure.
 *
-* The registry is stored on `globalThis` so separately bundled copies of this
-* package can coordinate through the same document and style maps.
-*
-* @return The shared runtime registry.
+* @param name      The person's display name.
+* @param segmenter The reusable grapheme segmenter.
+* @param locale    The locale for uppercase conversion.
 */
-function getRuntime$10() {
-	const globalScope = globalThis;
-	if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-	globalScope.__wpStyleRuntime = {
-		documents: /* @__PURE__ */ new Map(),
-		styles: /* @__PURE__ */ new Map(),
-		injectedStyles: /* @__PURE__ */ new WeakMap()
-	};
-	if (typeof document !== "undefined") registerDocument$10(document);
-	return globalScope.__wpStyleRuntime;
+function getInitials(name, segmenter, locale) {
+	const words = (name ?? "").trim().split(/\s+/).map((word) => {
+		for (const { segment } of segmenter.segment(word)) if (/[^\p{C}\p{Z}\p{Default_Ignorable_Code_Point}]/u.test(segment)) return segment;
+	}).filter((word) => word !== void 0);
+	return words.filter((_, index) => index === 0 || index === words.length - 1).map((word) => segmenter.segment(word.toLocaleUpperCase(locale)).containing(0).segment);
 }
+
+// packages/ui/build-module/avatar/fallback-with-loading-delay.mjs
 /**
-* Checks whether a document already contains a style tag for a hash.
-*
-* @param targetDocument Document to inspect.
-* @param hash           Stable hash for the transformed CSS.
-*
-* @return Whether the style hash already exists in the document.
+* Work around Base UI delaying fallbacks for missing and failed images.
+* Remove this adapter and use _Avatar.Fallback directly once the installed
+* version bypasses delay for idle and error states.
+* https://github.com/mui/base-ui/issues/5988
 */
-function documentContainsStyleHash$10(targetDocument, hash) {
-	if (!targetDocument.head) return false;
-	for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$10}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$10) === hash) return true;
-	return false;
-}
-/**
-* Injects a registered style into a document, unless that document already
-* contains a style tag for the same hash.
-*
-* @param targetDocument Document to inject the style into.
-* @param hash           Stable hash for the transformed CSS.
-* @param css            CSS text to inject.
-*/
-function injectStyle$10(targetDocument, hash, css) {
-	if (!targetDocument.head) return;
-	const runtime = getRuntime$10();
-	let injectedStyles = runtime.injectedStyles.get(targetDocument);
-	if (!injectedStyles) {
-		injectedStyles = /* @__PURE__ */ new Set();
-		runtime.injectedStyles.set(targetDocument, injectedStyles);
-	}
-	if (injectedStyles.has(hash)) return;
-	if (documentContainsStyleHash$10(targetDocument, hash)) {
-		injectedStyles.add(hash);
-		return;
-	}
-	const style = targetDocument.createElement("style");
-	style.setAttribute(STYLE_HASH_ATTRIBUTE$10, hash);
-	style.appendChild(targetDocument.createTextNode(css));
-	targetDocument.head.appendChild(style);
-	injectedStyles.add(hash);
-}
-/**
-* Registers a document as a style injection target.
-*
-* Existing registered styles are replayed into the document immediately.
-* Documents are reference-counted so multiple providers can safely register the
-* same document without one cleanup removing it while another registration is
-* still active.
-*
-* @param targetDocument Document to receive registered styles.
-* @return Cleanup function that unregisters this document registration.
-*/
-function registerDocument$10(targetDocument) {
-	const runtime = getRuntime$10();
-	runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-	for (const [hash, css] of runtime.styles) injectStyle$10(targetDocument, hash, css);
-	return () => {
-		const count = runtime.documents.get(targetDocument);
-		if (count === void 0) return;
-		if (count <= 1) {
-			runtime.documents.delete(targetDocument);
-			return;
-		}
-		runtime.documents.set(targetDocument, count - 1);
-	};
-}
-/**
-* Registers a style and injects it into all registered documents.
-*
-* The hash is used as the deduplication key, so calling this repeatedly with
-* the same hash will not add duplicate style tags to a document.
-* Registered styles are retained for the lifetime of the page so they can be
-* replayed into documents that are registered later.
-*
-* @param hash Stable hash for the transformed CSS.
-* @param css  CSS text to inject.
-*/
-function registerStyle$10(hash, css) {
-	const runtime = getRuntime$10();
-	runtime.styles.set(hash, css);
-	for (const targetDocument of runtime.documents.keys()) injectStyle$10(targetDocument, hash, css);
-}
-registerStyle$10("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
-var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
-registerStyle$10("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
-var global_css_defense_module_default = {
-	"button": "db1aa0d975c98907__button",
-	"input": "_560ae5870016ca79__input",
-	"textarea": "_7c14c78aca908e56__textarea",
-	"div": "b752c6b223b319c4__div",
-	"p": "_56028dfe751232df__p",
-	"heading": "_48f5e2ad729cc233__heading",
-	"a": "fba8c89ccbfb853b__a",
-	"ol": "_2933712904448f13__ol",
-	"li": "c48c21f7371f7cea__li",
-	"span": "_2348cae4464115af__span"
-};
-registerStyle$10("0b89a18de0", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b84be79a3ef16eba__root{--_wp-ui-avatar-size:var(--wpds-dimension-size-md,32px);--_gcd-span-position:relative;--_gcd-span-display:inline-flex;--_gcd-span-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-span-font-size:var(--_wp-ui-avatar-font-size);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-sm,12px);align-items:center;background-color:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);block-size:var(--_wp-ui-avatar-size);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:50%;color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);display:inline-flex;flex-shrink:0;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--_wp-ui-avatar-font-size);font-weight:var(--wpds-typography-font-weight-emphasis,600);inline-size:var(--_wp-ui-avatar-size);justify-content:center;line-height:1;position:relative;vertical-align:middle}._2bda17bbc860e5ae__has-color:after{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--_wp-ui-avatar-color);border-radius:inherit;content:\"\";inset:calc(var(--wpds-border-width-xs, 1px)*-1);pointer-events:none;position:absolute}._4eef40716b09ca34__is-square{border-radius:var(--wpds-border-radius-sm,2px)}.de8c73ce93e1e940__is-xs{--_wp-ui-avatar-size:var(--wpds-dimension-size-2xs,16px);--_wp-ui-avatar-font-size:calc(var(--_wp-ui-avatar-size)/2)}.b6f9eb010a93208f__is-sm{--_wp-ui-avatar-size:var(--wpds-dimension-size-sm,24px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xs,11px)}._9b3840be134ac82c__is-lg{--_wp-ui-avatar-size:var(--wpds-dimension-size-lg,40px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-md,13px)}.feb93d60a9b7b931__is-xl{--_wp-ui-avatar-size:calc(var(--wpds-dimension-size-md, 32px)*2);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xl,20px)}._2c00856e9a4a08a4__fallback,._62f08da281b87dc7__image{block-size:100%;border-radius:inherit;inline-size:100%;inset:0;position:absolute}._62f08da281b87dc7__image{object-fit:cover;@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1));&[data-error],&[data-loading],&[data-starting-style]{opacity:0}}&[data-ending-style],&[data-error],&[data-loading]{visibility:hidden}}._2c00856e9a4a08a4__fallback{--_gcd-span-position:absolute;--_gcd-span-display:flex;align-items:center;display:flex;justify-content:center;overflow:hidden;white-space:nowrap;>svg{block-size:100%;flex-shrink:0;inline-size:100%}>.f116bff0e9bddc20__person-icon{block-size:110%;color:var(--wpds-color-stroke-surface-neutral-strong,#8b8b8b);inline-size:110%;translate:0 15%}}@media not (forced-colors:active){@supports (color:rgb(from green r g b/1)) and (color:color(from green srgb-linear round(up,r) g b/1)){._2bda17bbc860e5ae__has-color:has(>._2c00856e9a4a08a4__fallback){border:none}._2bda17bbc860e5ae__has-color:has(>._2c00856e9a4a08a4__fallback):after{content:none}._2bda17bbc860e5ae__has-color>._2c00856e9a4a08a4__fallback{--_wp-ui-avatar-background:rgb(from var(--_wp-ui-avatar-color) clamp(0,r,255) clamp(0,g,255) clamp(0,b,255)/1);--_wp-ui-avatar-contrast-target:4.55;background-color:var(--_wp-ui-avatar-background)}._2bda17bbc860e5ae__has-color>._2c00856e9a4a08a4__fallback>.f116bff0e9bddc20__person-icon{--_wp-ui-avatar-contrast-target:3.05}._2bda17bbc860e5ae__has-color>._2c00856e9a4a08a4__fallback,._2bda17bbc860e5ae__has-color>._2c00856e9a4a08a4__fallback>.f116bff0e9bddc20__person-icon{--_wp-ui-avatar-luminance:calc(0.2126 * r + 0.7152 * g + 0.0722 * b);--_wp-ui-avatar-light-foreground:round(up,clamp(0,calc(0.17913 - var(--_wp-ui-avatar-luminance)),1));--_wp-ui-avatar-dark-tint:clamp(0,calc(((var(--_wp-ui-avatar-luminance) + 0.05)/var(--_wp-ui-avatar-contrast-target) - 0.05)/max(0.000001, var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-light-tint:clamp(0,calc((1.05 - var(--_wp-ui-avatar-contrast-target)*(var(--_wp-ui-avatar-luminance) + 0.05))/max(0.000001, 1 - var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-tint:calc(var(--_wp-ui-avatar-light-foreground)*var(--_wp-ui-avatar-light-tint) + (1 - var(--_wp-ui-avatar-light-foreground))*var(--_wp-ui-avatar-dark-tint));color:color(from var(--_wp-ui-avatar-background) srgb-linear calc(var(--_wp-ui-avatar-light-foreground) + (r - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-foreground) + (g - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-foreground) + (b - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint))/1)}}}}}");
-var style_module_default$9 = {
-	"root": "b84be79a3ef16eba__root",
-	"has-color": "_2bda17bbc860e5ae__has-color",
-	"is-square": "_4eef40716b09ca34__is-square",
-	"is-xs": "de8c73ce93e1e940__is-xs",
-	"is-sm": "b6f9eb010a93208f__is-sm",
-	"is-lg": "_9b3840be134ac82c__is-lg",
-	"is-xl": "feb93d60a9b7b931__is-xl",
-	"image": "_62f08da281b87dc7__image",
-	"fallback": "_2c00856e9a4a08a4__fallback",
-	"person-icon": "f116bff0e9bddc20__person-icon"
-};
-/**
-* Displays a profile image with a customizable fallback.
-* Compose with `Avatar.Image` and `Avatar.Fallback`.
-*
-* For an avatar that identifies a person, use `role="img"` and `aria-label`
-* on the root, with an empty image `alt`. This keeps the name available while
-* the image loads or the fallback is shown. Use `aria-hidden` on the root
-* when nearby text already identifies the person.
-*
-* ```jsx
-* <Avatar.Root role="img" aria-label="Alex Morgan">
-* 	<Avatar.Fallback delay={300}>AM</Avatar.Fallback>
-* 	<Avatar.Image src="/alex.jpg" alt="" />
-* </Avatar.Root>
-* ```
-*/
-const Root$1 = (0, import_element.forwardRef)(function AvatarRoot$1({ size = "md", shape = "circle", color, className, style, ...props }, ref) {
-	warnAvatarColor(color);
-	const customProperties = color === void 0 ? style : {
-		...style,
-		"--_wp-ui-avatar-color": color
-	};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AvatarRoot, {
-		ref,
-		style: customProperties,
-		className: clsx(resets_module_default$1["box-sizing"], global_css_defense_module_default.span, style_module_default$9.root, style_module_default$9[`is-${size}`], shape === "square" && style_module_default$9["is-square"], color !== void 0 && style_module_default$9["has-color"], className),
-		...props
+function FallbackWithLoadingDelay({ children, className }) {
+	const [delayPassed, setDelayPassed] = (0, import_element.useState)(false);
+	(0, import_element.useEffect)(() => {
+		const timeout = setTimeout(() => setDelayPassed(true), 300);
+		return () => clearTimeout(timeout);
+	}, []);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AvatarFallback, {
+		className,
+		render: (props, { imageLoadingStatus }) => imageLoadingStatus === "loading" && !delayPassed ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { ...props }),
+		children
 	});
-});
+}
 
-// packages/ui/build-module/avatar/image.mjs
+// packages/ui/build-module/avatar/avatar.mjs
 const STYLE_HASH_ATTRIBUTE$9 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -1452,57 +1363,77 @@ function registerStyle$9(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$9(targetDocument, hash, css);
 }
-registerStyle$9("0b89a18de0", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.b84be79a3ef16eba__root{--_wp-ui-avatar-size:var(--wpds-dimension-size-md,32px);--_gcd-span-position:relative;--_gcd-span-display:inline-flex;--_gcd-span-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-span-font-size:var(--_wp-ui-avatar-font-size);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-sm,12px);align-items:center;background-color:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);block-size:var(--_wp-ui-avatar-size);border:var(--wpds-border-width-xs,1px) solid var(--wpds-color-stroke-surface-neutral,#dbdbdb);border-radius:50%;color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);display:inline-flex;flex-shrink:0;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:var(--_wp-ui-avatar-font-size);font-weight:var(--wpds-typography-font-weight-emphasis,600);inline-size:var(--_wp-ui-avatar-size);justify-content:center;line-height:1;position:relative;vertical-align:middle}._2bda17bbc860e5ae__has-color:after{border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--_wp-ui-avatar-color);border-radius:inherit;content:\"\";inset:calc(var(--wpds-border-width-xs, 1px)*-1);pointer-events:none;position:absolute}._4eef40716b09ca34__is-square{border-radius:var(--wpds-border-radius-sm,2px)}.de8c73ce93e1e940__is-xs{--_wp-ui-avatar-size:var(--wpds-dimension-size-2xs,16px);--_wp-ui-avatar-font-size:calc(var(--_wp-ui-avatar-size)/2)}.b6f9eb010a93208f__is-sm{--_wp-ui-avatar-size:var(--wpds-dimension-size-sm,24px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xs,11px)}._9b3840be134ac82c__is-lg{--_wp-ui-avatar-size:var(--wpds-dimension-size-lg,40px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-md,13px)}.feb93d60a9b7b931__is-xl{--_wp-ui-avatar-size:calc(var(--wpds-dimension-size-md, 32px)*2);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xl,20px)}._2c00856e9a4a08a4__fallback,._62f08da281b87dc7__image{block-size:100%;border-radius:inherit;inline-size:100%;inset:0;position:absolute}._62f08da281b87dc7__image{object-fit:cover;@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1));&[data-error],&[data-loading],&[data-starting-style]{opacity:0}}&[data-ending-style],&[data-error],&[data-loading]{visibility:hidden}}._2c00856e9a4a08a4__fallback{--_gcd-span-position:absolute;--_gcd-span-display:flex;align-items:center;display:flex;justify-content:center;overflow:hidden;white-space:nowrap;>svg{block-size:100%;flex-shrink:0;inline-size:100%}>.f116bff0e9bddc20__person-icon{block-size:110%;color:var(--wpds-color-stroke-surface-neutral-strong,#8b8b8b);inline-size:110%;translate:0 15%}}@media not (forced-colors:active){@supports (color:rgb(from green r g b/1)) and (color:color(from green srgb-linear round(up,r) g b/1)){._2bda17bbc860e5ae__has-color:has(>._2c00856e9a4a08a4__fallback){border:none}._2bda17bbc860e5ae__has-color:has(>._2c00856e9a4a08a4__fallback):after{content:none}._2bda17bbc860e5ae__has-color>._2c00856e9a4a08a4__fallback{--_wp-ui-avatar-background:rgb(from var(--_wp-ui-avatar-color) clamp(0,r,255) clamp(0,g,255) clamp(0,b,255)/1);--_wp-ui-avatar-contrast-target:4.55;background-color:var(--_wp-ui-avatar-background)}._2bda17bbc860e5ae__has-color>._2c00856e9a4a08a4__fallback>.f116bff0e9bddc20__person-icon{--_wp-ui-avatar-contrast-target:3.05}._2bda17bbc860e5ae__has-color>._2c00856e9a4a08a4__fallback,._2bda17bbc860e5ae__has-color>._2c00856e9a4a08a4__fallback>.f116bff0e9bddc20__person-icon{--_wp-ui-avatar-luminance:calc(0.2126 * r + 0.7152 * g + 0.0722 * b);--_wp-ui-avatar-light-foreground:round(up,clamp(0,calc(0.17913 - var(--_wp-ui-avatar-luminance)),1));--_wp-ui-avatar-dark-tint:clamp(0,calc(((var(--_wp-ui-avatar-luminance) + 0.05)/var(--_wp-ui-avatar-contrast-target) - 0.05)/max(0.000001, var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-light-tint:clamp(0,calc((1.05 - var(--_wp-ui-avatar-contrast-target)*(var(--_wp-ui-avatar-luminance) + 0.05))/max(0.000001, 1 - var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-tint:calc(var(--_wp-ui-avatar-light-foreground)*var(--_wp-ui-avatar-light-tint) + (1 - var(--_wp-ui-avatar-light-foreground))*var(--_wp-ui-avatar-dark-tint));color:color(from var(--_wp-ui-avatar-background) srgb-linear calc(var(--_wp-ui-avatar-light-foreground) + (r - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-foreground) + (g - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-foreground) + (b - var(--_wp-ui-avatar-light-foreground)) * var(--_wp-ui-avatar-tint))/1)}}}}}");
+registerStyle$9("37477070fb", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer utilities{.ccc29f9575c4c758__box-sizing{box-sizing:border-box;*,:after,:before{box-sizing:inherit}}}}");
+var resets_module_default$1 = { "box-sizing": "ccc29f9575c4c758__box-sizing" };
+registerStyle$9("0a1cfe0066", ".db1aa0d975c98907__button{box-sizing:var(--_gcd-button-box-sizing,border-box);font-family:var(--_gcd-button-font-family,inherit);font-size:var(--_gcd-button-font-size,inherit);font-weight:var(--_gcd-button-font-weight,inherit)}._560ae5870016ca79__input{box-sizing:var(--_gcd-input-box-sizing,border-box);font-family:var(--_gcd-input-font-family,inherit);font-size:var(--_gcd-input-font-size,inherit);font-weight:var(--_gcd-input-font-weight,inherit);margin:var(--_gcd-input-margin,0);&::placeholder{color:var(--_gcd-input-placeholder-color,var(--wpds-color-foreground-interactive-neutral-weak,#6e6e6e))}&:is(textarea,[type=text],[type=password],[type=color],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){background-color:var(--_gcd-input-background-color,transparent);border:var(--_gcd-input-border,none);border-radius:var(--_gcd-input-border-radius,0);box-shadow:var(--_gcd-input-box-shadow,0 0 0 transparent);color:var(--_gcd-input-color,var(--wpds-color-foreground-interactive-neutral,#1e1e1e));&:focus{border-color:var(--_gcd-input-border-color-focus,var(--wp-admin-theme-color));box-shadow:var(--_gcd-input-box-shadow-focus,none);outline:var(--_gcd-input-outline-focus,none)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);border-color:var(--_gcd-input-border-color-disabled,transparent);box-shadow:var(--_gcd-input-box-shadow-disabled,none);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}&:is(textarea,[type=text],[type=password],[type=date],[type=datetime],[type=datetime-local],[type=email],[type=month],[type=number],[type=search],[type=tel],[type=time],[type=url],[type=week]){line-height:var(--_gcd-input-line-height,inherit);min-height:var(--_gcd-input-min-height,auto);padding:var(--_gcd-input-padding,0)}&:is(input):not([type]){&[readonly]{background-color:var(--_gcd-input-background-color,transparent)}&:disabled{background:var(--_gcd-input-background-disabled,transparent);color:var(--_gcd-input-color-disabled,var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b))}}}._7c14c78aca908e56__textarea{box-sizing:var(--_gcd-textarea-box-sizing,border-box);overflow:var(--_gcd-textarea-overflow,auto);resize:var(--_gcd-textarea-resize,block)}.b752c6b223b319c4__div{outline:var(--_gcd-div-outline,0 solid transparent)}p._56028dfe751232df__p{font-size:var(--_gcd-p-font-size,13px);line-height:var(--_gcd-p-line-height,1.5);margin:var(--_gcd-p-margin,0)}:is(h1,h2,h3,h4,h5,h6)._48f5e2ad729cc233__heading{color:var(--_gcd-heading-color,var(--wpds-color-foreground-content-neutral,#1e1e1e));font-size:var(--_gcd-heading-font-size,inherit);font-weight:var(--_gcd-heading-font-weight,var(--wpds-typography-font-weight-emphasis,600));margin:var(--_gcd-heading-margin,0)}.fba8c89ccbfb853b__a,.fba8c89ccbfb853b__a:is(:hover,:focus,:active){border-radius:var(--_gcd-a-border-radius,0);box-shadow:var(--_gcd-a-box-shadow,none);color:var(--_gcd-a-color,inherit);outline:var(--_gcd-a-outline,0 solid transparent);transition:var(--_gcd-a-transition,none)}._2933712904448f13__ol{list-style:var(--_gcd-ol-list-style,none);margin:var(--_gcd-ol-margin,0);padding-block:var(--_gcd-ol-padding-block,0);padding-inline:var(--_gcd-ol-padding-inline,0)}.c48c21f7371f7cea__li{margin:var(--_gcd-li-margin,0)}[role=treeitem] span._2348cae4464115af__span[aria-hidden]{display:var(--_gcd-span-display,inline);font-family:var(--_gcd-span-font-family,inherit);font-size:var(--_gcd-span-font-size,inherit);line-height:var(--_gcd-span-line-height,1);pointer-events:var(--_gcd-span-pointer-events,auto);position:var(--_gcd-span-position,static)}");
+var global_css_defense_module_default = {
+	"button": "db1aa0d975c98907__button",
+	"input": "_560ae5870016ca79__input",
+	"textarea": "_7c14c78aca908e56__textarea",
+	"div": "b752c6b223b319c4__div",
+	"p": "_56028dfe751232df__p",
+	"heading": "_48f5e2ad729cc233__heading",
+	"a": "fba8c89ccbfb853b__a",
+	"ol": "_2933712904448f13__ol",
+	"li": "c48c21f7371f7cea__li",
+	"span": "_2348cae4464115af__span"
+};
+registerStyle$9("08cf20f26e", "@property --_wp-ui-avatar-background{syntax:\"<color>\";inherits:true;initial-value:transparent}@property --_wp-ui-avatar-foreground{syntax:\"<color>\";inherits:true;initial-value:#000}@property --_wp-ui-avatar-ring{syntax:\"<color>\";inherits:true;initial-value:transparent}@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.a33ee7cdd21ca560__root{--_wp-ui-avatar-size:var(--wpds-dimension-size-md,32px);--_wp-ui-avatar-track-space:3px;--_wp-ui-avatar-radius:50%;--_wp-ui-avatar-background:var(--wpds-color-background-surface-neutral-weak,#f3f3f3);--_wp-ui-avatar-foreground:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);--_wp-ui-avatar-ring:var(--wpds-color-stroke-surface-neutral-strong,#8b8b8b);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-sm,12px);--_wp-ui-avatar-font-scale:1;--_wp-ui-avatar-content-size:calc(var(--_wp-ui-avatar-size) + var(--_wp-ui-avatar-track-space) - var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px))*2);--_wp-ui-avatar-fitted-font-size:min(var(--_wp-ui-avatar-font-size),calc(var(--_wp-ui-avatar-content-size)/2.5));--_gcd-span-position:relative;--_gcd-span-display:inline-flex;--_gcd-span-font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);--_gcd-span-font-size:calc(var(--_wp-ui-avatar-fitted-font-size)*var(--_wp-ui-avatar-font-scale));--_gcd-button-font-family:var(--_gcd-span-font-family);--_gcd-button-font-size:var(--_gcd-span-font-size);--_gcd-button-font-weight:var(--wpds-typography-font-weight-emphasis,600);block-size:calc(var(--_wp-ui-avatar-size) + var(--_wp-ui-avatar-track-space));border-radius:var(--_wp-ui-avatar-radius);display:inline-flex;flex-shrink:0;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:calc(var(--_wp-ui-avatar-fitted-font-size)*var(--_wp-ui-avatar-font-scale));font-weight:var(--wpds-typography-font-weight-emphasis,600);inline-size:calc(var(--_wp-ui-avatar-size) + var(--_wp-ui-avatar-track-space));isolation:isolate;line-height:1;position:relative;vertical-align:middle}._36e2693432ca611d__content{--_gcd-span-position:absolute;--_gcd-span-display:block;border-radius:50%;color:var(--_wp-ui-avatar-foreground);inset:0;position:absolute}._36e2693432ca611d__content:before,._97ef81775b80a299__image,.e6807b39a4e7cc60__fallback{block-size:var(--_wp-ui-avatar-content-size);border-radius:inherit;inline-size:var(--_wp-ui-avatar-content-size);left:0;position:absolute;top:0;translate:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}._36e2693432ca611d__content:before{background-color:var(--_wp-ui-avatar-background);box-sizing:border-box;content:\"\";pointer-events:none;z-index:-1}._97ff7fd3bccea6b1__is-active>._36e2693432ca611d__content:before{block-size:100%;border-radius:var(--_wp-ui-avatar-radius);box-shadow:inset 0 0 0 var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) var(--_wp-ui-avatar-ring);inline-size:100%;translate:none;@media (forced-colors:active){background:none;border:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid CanvasText;box-shadow:none}}.c944b3f7d6ab4ff6__is-square{--_wp-ui-avatar-radius:calc(var(--wpds-border-radius-sm, 2px) + var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));>._36e2693432ca611d__content{border-radius:var(--wpds-border-radius-sm,2px)}}._272333f2ddc4e849__has-single-initial{--_wp-ui-avatar-font-scale:1.25}._4184a7344051b960__is-xs{--_wp-ui-avatar-size:var(--wpds-dimension-size-2xs,16px);--_wp-ui-avatar-font-size:calc(var(--_wp-ui-avatar-size)/2)}.b6d9334ad345147c__is-sm{--_wp-ui-avatar-size:var(--wpds-dimension-size-sm,24px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xs,11px)}.aaa4204e860a0f88__is-lg{--_wp-ui-avatar-size:var(--wpds-dimension-size-lg,40px);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-md,13px)}._9d62a56ed4bf715a__is-xl{--_wp-ui-avatar-size:calc(var(--wpds-dimension-size-md, 32px)*2);--_wp-ui-avatar-font-size:var(--wpds-typography-font-size-xl,20px)}._97ef81775b80a299__image{object-fit:cover;@media not (prefers-reduced-motion){transition:opacity var(--wpds-motion-duration-sm,.1s) var(--wpds-motion-easing-subtle,cubic-bezier(.15,0,.15,1));&[data-error],&[data-loading],&[data-starting-style]{opacity:0}}&[data-ending-style],&[data-error],&[data-loading]{visibility:hidden}}.e6807b39a4e7cc60__fallback{--_gcd-span-position:absolute;--_gcd-span-display:flex;align-items:center;background-color:var(--_wp-ui-avatar-background);display:flex;justify-content:center;overflow:hidden;white-space:nowrap}@media not (forced-colors:active){@supports (color:rgb(from green r g b/1)) and (color:color(from green srgb-linear round(up,r) g b/1)){._1c237d972fded0fd__has-color>._36e2693432ca611d__content{--_wp-ui-avatar-tint-source:rgb(from var(--_wp-ui-avatar-color) clamp(0,r,255) clamp(0,g,255) clamp(0,b,255)/1);--_wp-ui-avatar-ring:var(--_wp-ui-avatar-tint-source);--_wp-ui-avatar-contrast-target:3.05;--_wp-ui-avatar-fill:var(--_wp-ui-avatar-contrasting-tint);--_wp-ui-avatar-background:var(--_wp-ui-avatar-fill)}._1c237d972fded0fd__has-color>._36e2693432ca611d__content>.e6807b39a4e7cc60__fallback{--_wp-ui-avatar-tint-source:var(--_wp-ui-avatar-fill);--_wp-ui-avatar-contrast-target:4.55;--_wp-ui-avatar-foreground:var(--_wp-ui-avatar-contrasting-tint);color:var(--_wp-ui-avatar-foreground)}._1c237d972fded0fd__has-color>._36e2693432ca611d__content,._1c237d972fded0fd__has-color>._36e2693432ca611d__content>.e6807b39a4e7cc60__fallback{--_wp-ui-avatar-luminance:calc(0.2126 * r + 0.7152 * g + 0.0722 * b);--_wp-ui-avatar-light-contrast:round(up,clamp(0,calc(0.17913 - var(--_wp-ui-avatar-luminance)),1));--_wp-ui-avatar-dark-tint:clamp(0,calc(((var(--_wp-ui-avatar-luminance) + 0.05)/var(--_wp-ui-avatar-contrast-target) - 0.05)/max(0.000001, var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-light-tint:clamp(0,calc((1.05 - var(--_wp-ui-avatar-contrast-target)*(var(--_wp-ui-avatar-luminance) + 0.05))/max(0.000001, 1 - var(--_wp-ui-avatar-luminance))),1);--_wp-ui-avatar-tint:calc(var(--_wp-ui-avatar-light-contrast)*var(--_wp-ui-avatar-light-tint) + (1 - var(--_wp-ui-avatar-light-contrast))*var(--_wp-ui-avatar-dark-tint));--_wp-ui-avatar-contrasting-tint:color(from var(--_wp-ui-avatar-tint-source) srgb-linear calc(var(--_wp-ui-avatar-light-contrast) + (r - var(--_wp-ui-avatar-light-contrast)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-contrast) + (g - var(--_wp-ui-avatar-light-contrast)) * var(--_wp-ui-avatar-tint)) calc(var(--_wp-ui-avatar-light-contrast) + (b - var(--_wp-ui-avatar-light-contrast)) * var(--_wp-ui-avatar-tint))/1)}}}}}");
 var style_module_default$8 = {
-	"root": "b84be79a3ef16eba__root",
-	"has-color": "_2bda17bbc860e5ae__has-color",
-	"is-square": "_4eef40716b09ca34__is-square",
-	"is-xs": "de8c73ce93e1e940__is-xs",
-	"is-sm": "b6f9eb010a93208f__is-sm",
-	"is-lg": "_9b3840be134ac82c__is-lg",
-	"is-xl": "feb93d60a9b7b931__is-xl",
-	"image": "_62f08da281b87dc7__image",
-	"fallback": "_2c00856e9a4a08a4__fallback",
-	"person-icon": "f116bff0e9bddc20__person-icon"
+	"root": "a33ee7cdd21ca560__root",
+	"content": "_36e2693432ca611d__content",
+	"image": "_97ef81775b80a299__image",
+	"fallback": "e6807b39a4e7cc60__fallback",
+	"is-active": "_97ff7fd3bccea6b1__is-active",
+	"is-square": "c944b3f7d6ab4ff6__is-square",
+	"has-single-initial": "_272333f2ddc4e849__has-single-initial",
+	"is-xs": "_4184a7344051b960__is-xs",
+	"is-sm": "b6d9334ad345147c__is-sm",
+	"is-lg": "aaa4204e860a0f88__is-lg",
+	"is-xl": "_9d62a56ed4bf715a__is-xl",
+	"has-color": "_1c237d972fded0fd__has-color"
 };
 /**
-* The profile image, displayed once it has loaded.
-* Set `keepMounted` to render the image element immediately and let the image
-* load in place. Use it with `loading="lazy"` or an optimized image component
-* passed through `render`.
-* When passing a custom image component through `render`, forward its ref and
-* image props, including `onLoad` and `onError`, to the underlying image element.
-*/
-const Image = (0, import_element.forwardRef)(function AvatarImage$1({ className, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AvatarImage, {
-		ref,
-		className: clsx(style_module_default$8.image, className),
-		...props
-	});
-});
-
-// packages/ui/build-module/icon/icon.mjs
-/**
-* Renders an SVG icon with a 24px default size.
+* Displays a profile image with initials as its fallback.
+* The required name supplies both the initials and the default accessible label.
+* Use `aria-hidden` when nearby text or a surrounding control supplies the name.
+* Avatar has the image role by default. A custom `render` element supplies its
+* own role. For an action, render an unstyled Button. If you render a custom
+* `span` as an image, set `role="img"` on Avatar.
 *
 * ```jsx
-* import { wordpress } from '@wordpress/icons';
-*
-* <Icon icon={ wordpress } />
+* <Avatar name="Alex Morgan" src="/alex.jpg" color="#008a20" active />
 * ```
 */
-const Icon = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
-	const mergedStyle = icon.props.style || style ? {
-		...icon.props.style,
-		...style
-	} : void 0;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+const Avatar = (0, import_element.forwardRef)(function UnforwardedAvatar({ name, src, crossOrigin, locale, size = "md", shape = "circle", color, active = false, className, style, ...props }, ref) {
+	const segmenter = (0, import_element.useMemo)(() => new Intl.Segmenter(locale, { granularity: "grapheme" }), [locale]);
+	const initials = getInitials(name, segmenter, locale);
+	const avatarColor = getAvatarColor(color);
+	if (!initials.length) (0, import_warning.default)("Avatar: `name` has no displayable characters. Provide a name with visible characters for the initials and accessible label.");
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AvatarRoot, {
 		ref,
-		...icon.props,
-		...restProps,
-		...mergedStyle ? { style: mergedStyle } : {},
-		width: size,
-		height: size
+		role: props.render ? void 0 : "img",
+		"aria-label": name,
+		style: avatarColor === void 0 ? style : {
+			...style,
+			"--_wp-ui-avatar-color": avatarColor
+		},
+		className: clsx(resets_module_default$1["box-sizing"], global_css_defense_module_default.span, style_module_default$8.root, style_module_default$8[`is-${size}`], shape === "square" && style_module_default$8["is-square"], avatarColor !== void 0 && style_module_default$8["has-color"], active && style_module_default$8["is-active"], initials.length === 1 && style_module_default$8["has-single-initial"], className),
+		...props,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: clsx(style_module_default$8.content, global_css_defense_module_default.span),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FallbackWithLoadingDelay, {
+				className: clsx(style_module_default$8.fallback, global_css_defense_module_default.span),
+				children: initials.join("")
+			}), src && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AvatarImage, {
+				crossOrigin,
+				src,
+				alt: "",
+				"aria-hidden": "true",
+				keepMounted: true,
+				className: style_module_default$8.image
+			})]
+		})
 	});
 });
 
@@ -7536,6 +7467,31 @@ var require_i18n = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.i18n;
 }));
 
+// packages/ui/build-module/icon/icon.mjs
+/**
+* Renders an SVG icon with a 24px default size.
+*
+* ```jsx
+* import { wordpress } from '@wordpress/icons';
+*
+* <Icon icon={ wordpress } />
+* ```
+*/
+const Icon = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+	const mergedStyle = icon.props.style || style ? {
+		...icon.props.style,
+		...style
+	} : void 0;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+		ref,
+		...icon.props,
+		...restProps,
+		...mergedStyle ? { style: mergedStyle } : {},
+		width: size,
+		height: size
+	});
+});
+
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
 const STYLE_HASH_ATTRIBUTE$8 = "data-wp-hash";
 /**
@@ -8420,23 +8376,20 @@ function registerStyle$3(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$3(targetDocument, hash, css);
 }
-registerStyle$3("efeba968e6", "._4d84143be9dae462__icon,.dd9b5d817b3207dc__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}._4d84143be9dae462__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}.de468aa290326111__name{overflow:hidden;text-overflow:ellipsis}");
+registerStyle$3("49ace5f3ae", "._4d295b73ac678749__avatar,.bf8e1f291e04c1f4__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px);justify-content:center}.bf8e1f291e04c1f4__icon svg{fill:currentColor;flex-shrink:0}.ed2c065460ae4844__name{overflow:hidden;text-overflow:ellipsis}");
 var style_module_default$3 = {
-	"avatar": "dd9b5d817b3207dc__avatar",
-	"icon": "_4d84143be9dae462__icon",
-	"name": "de468aa290326111__name"
+	"avatar": "_4d295b73ac678749__avatar",
+	"icon": "bf8e1f291e04c1f4__icon",
+	"name": "ed2c065460ae4844__name"
 };
-function AuthorAvatar({ src }) {
+function AuthorAvatar({ src, name }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 		className: style_module_default$3.avatar,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Root$1, {
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Avatar, {
+			name,
+			src,
 			size: "xs",
-			"aria-hidden": "true",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Image, {
-				src,
-				alt: "",
-				keepMounted: true
-			})
+			"aria-hidden": "true"
 		})
 	});
 }
@@ -8543,11 +8496,11 @@ function registerStyle$2(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$2(targetDocument, hash, css);
 }
-registerStyle$2("efeba968e6", "._4d84143be9dae462__icon,.dd9b5d817b3207dc__avatar{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px)}._4d84143be9dae462__icon svg{fill:currentColor;margin-inline:calc((var(--wpds-dimension-size-2xs, 16px) - var(--wpds-dimension-size-sm, 24px))/2)}.de468aa290326111__name{overflow:hidden;text-overflow:ellipsis}");
+registerStyle$2("49ace5f3ae", "._4d295b73ac678749__avatar,.bf8e1f291e04c1f4__icon{align-items:center;block-size:1lh;display:flex;flex-shrink:0;inline-size:var(--wpds-dimension-size-2xs,16px);justify-content:center}.bf8e1f291e04c1f4__icon svg{fill:currentColor;flex-shrink:0}.ed2c065460ae4844__name{overflow:hidden;text-overflow:ellipsis}");
 var style_module_default$2 = {
-	"avatar": "dd9b5d817b3207dc__avatar",
-	"icon": "_4d84143be9dae462__icon",
-	"name": "de468aa290326111__name"
+	"avatar": "_4d295b73ac678749__avatar",
+	"icon": "bf8e1f291e04c1f4__icon",
+	"name": "ed2c065460ae4844__name"
 };
 function getIconForSource(originalSource) {
 	switch (originalSource) {
@@ -8576,7 +8529,10 @@ function TemplateAuthorView({ item }) {
 		gap: "xs",
 		align: "flex-start",
 		children: [
-			imageUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AuthorAvatar, { src: imageUrl }),
+			imageUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AuthorAvatar, {
+				src: imageUrl,
+				name: text
+			}),
 			!imageUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: style_module_default$2.icon,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { icon })

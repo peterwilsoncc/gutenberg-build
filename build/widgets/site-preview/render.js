@@ -579,32 +579,6 @@ function clsx() {
 	return n;
 }
 
-// packages/ui/build-module/icon/icon.mjs
-var import_element = require_element();
-/**
-* Renders an SVG icon with a 24px default size.
-*
-* ```jsx
-* import { wordpress } from '@wordpress/icons';
-*
-* <Icon icon={ wordpress } />
-* ```
-*/
-const Icon = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
-	const mergedStyle = icon.props.style || style ? {
-		...icon.props.style,
-		...style
-	} : void 0;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
-		ref,
-		...icon.props,
-		...restProps,
-		...mergedStyle ? { style: mergedStyle } : {},
-		width: size,
-		height: size
-	});
-});
-
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/error.mjs
 const error = createLogOnce("error", "Base UI");
 
@@ -840,6 +814,7 @@ function useRender(params) {
 }
 
 // packages/ui/build-module/spinner/spinner.mjs
+var import_element = require_element();
 const STYLE_HASH_ATTRIBUTE$5 = "data-wp-hash";
 /**
 * Returns the shared style runtime registry.
@@ -1129,6 +1104,31 @@ const Button$2 = (0, import_element.forwardRef)(function UnforwardedButton({ ton
 		disabled: disabled ?? loading,
 		...props,
 		children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner, { className: style_module_default$4.spinner })]
+	});
+});
+
+// packages/ui/build-module/icon/icon.mjs
+/**
+* Renders an SVG icon with a 24px default size.
+*
+* ```jsx
+* import { wordpress } from '@wordpress/icons';
+*
+* <Icon icon={ wordpress } />
+* ```
+*/
+const Icon = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+	const mergedStyle = icon.props.style || style ? {
+		...icon.props.style,
+		...style
+	} : void 0;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
+		ref,
+		...icon.props,
+		...restProps,
+		...mergedStyle ? { style: mergedStyle } : {},
+		width: size,
+		height: size
 	});
 });
 

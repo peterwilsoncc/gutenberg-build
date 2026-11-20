@@ -907,11 +907,6 @@ var require_element = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.element;
 }));
 
-// \0wp-global:@wordpress/primitives
-var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.primitives;
-}));
-
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useForcedRerendering.mjs
 /**
 * Returns a function that forces a rerender.
@@ -6940,6 +6935,11 @@ function useRender(params) {
 // \0wp-global:@wordpress/compose
 var require_compose = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.wp.compose;
+}));
+
+// \0wp-global:@wordpress/primitives
+var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.primitives;
 }));
 
 // packages/icons/build-module/icon/index.mjs

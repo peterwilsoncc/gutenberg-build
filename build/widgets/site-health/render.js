@@ -504,11 +504,6 @@ function clsx() {
 	return n;
 }
 
-// \0wp-global:@wordpress/primitives
-var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.primitives;
-}));
-
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/use-render/useRender.mjs
 /**
 * Renders a Base UI element.
@@ -518,6 +513,11 @@ var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 function useRender(params) {
 	return useRenderElement(params.defaultTagName ?? "div", params, params);
 }
+
+// \0wp-global:@wordpress/primitives
+var require_primitives = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.primitives;
+}));
 
 // packages/ui/build-module/text/text.mjs
 var import_element = require_element();

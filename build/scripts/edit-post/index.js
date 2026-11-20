@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_block_library, _wordpress_deprecated, _wordpress_element, _wordpress_data, _wordpress_preferences, _wordpress_widgets, _wordpress_editor, _wordpress_core_data, _wordpress_api_fetch, _wordpress_i18n, react, react_jsx_runtime, react_dom, _wordpress_primitives, _wordpress_compose, _wordpress_theme, _wordpress_private_apis, _wordpress_components, _wordpress_block_editor, _wordpress_plugins, _wordpress_notices, _wordpress_commands, _wordpress_url, _wordpress_html_entities, _wordpress_keyboard_shortcuts, _wordpress_hooks, _wordpress_keycodes) {
+(function(exports, _wordpress_blocks, _wordpress_block_library, _wordpress_deprecated, _wordpress_element, _wordpress_data, _wordpress_preferences, _wordpress_widgets, _wordpress_editor, _wordpress_core_data, _wordpress_api_fetch, _wordpress_i18n, react, react_jsx_runtime, react_dom, _wordpress_compose, _wordpress_primitives, _wordpress_theme, _wordpress_private_apis, _wordpress_components, _wordpress_block_editor, _wordpress_plugins, _wordpress_notices, _wordpress_commands, _wordpress_url, _wordpress_html_entities, _wordpress_keyboard_shortcuts, _wordpress_hooks, _wordpress_keycodes) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -10490,5 +10490,5 @@ exports.store = store;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).editPost = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.blockLibrary, window.wp.deprecated, window.wp.element, window.wp.data, window.wp.preferences, window.wp.widgets, window.wp.editor, window.wp.coreData, window.wp.apiFetch, window.wp.i18n, window.React, window.ReactJSXRuntime, window.ReactDOM, window.wp.primitives, window.wp.compose, window.wp.theme, window.wp.privateApis, window.wp.components, window.wp.blockEditor, window.wp.plugins, window.wp.notices, window.wp.commands, window.wp.url, window.wp.htmlEntities, window.wp.keyboardShortcuts, window.wp.hooks, window.wp.keycodes);
+})({}, window.wp.blocks, window.wp.blockLibrary, window.wp.deprecated, window.wp.element, window.wp.data, window.wp.preferences, window.wp.widgets, window.wp.editor, window.wp.coreData, window.wp.apiFetch, window.wp.i18n, window.React, window.ReactJSXRuntime, window.ReactDOM, window.wp.compose, window.wp.primitives, window.wp.theme, window.wp.privateApis, window.wp.components, window.wp.blockEditor, window.wp.plugins, window.wp.notices, window.wp.commands, window.wp.url, window.wp.htmlEntities, window.wp.keyboardShortcuts, window.wp.hooks, window.wp.keycodes);
 //# sourceMappingURL=index.js.map
