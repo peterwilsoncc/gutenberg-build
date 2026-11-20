@@ -48068,7 +48068,8 @@ Icon: ButtonIcon });
 		"filter",
 		"outline",
 		"shadow",
-		"background"
+		"background",
+		"transform"
 	];
 	function pickStyleKeys(treeToPickFrom, responsiveMediaQueries) {
 		return pickStyleAndPseudoKeys(treeToPickFrom, void 0, responsiveMediaQueries);
@@ -51166,6 +51167,7 @@ Icon: ButtonIcon });
 				}
 			},
 			"shadow": true,
+			"transform": { "rotate": true },
 			"spacing": {
 				"margin": ["top", "bottom"],
 				"padding": true,
@@ -51909,6 +51911,7 @@ Icon: ButtonIcon });
 				"minWidth": true
 			},
 			"shadow": true,
+			"transform": { "rotate": true },
 			"spacing": {
 				"margin": true,
 				"padding": true,
@@ -90428,6 +90431,7 @@ Icon: ButtonIcon });
 				"interactive": true
 			},
 			"shadow": { "__experimentalSkipSerialization": true },
+			"transform": { "rotate": true },
 			"dimensions": {
 				"minWidth": true,
 				"minHeight": true,

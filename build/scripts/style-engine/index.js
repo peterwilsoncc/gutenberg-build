@@ -494,6 +494,21 @@
 // packages/style-engine/build-module/styles/spacing/index.mjs
 	var spacing_default = [margin, padding];
 
+// packages/style-engine/build-module/styles/transform/index.mjs
+	const VALID_ANGLE_PATTERN = /^(?:[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:deg|grad|rad|turn)|0)$/i;
+	var transform_default = [{
+		name: "rotate",
+		generate: (style, options) => {
+			const value = style?.transform?.rotate;
+			if (typeof value !== "string" || !VALID_ANGLE_PATTERN.test(value)) return [];
+			return [{
+				selector: options.selector,
+				key: "rotate",
+				value
+			}];
+		}
+	}];
+
 // packages/style-engine/build-module/styles/typography/index.mjs
 	var typography_default = [
 		{
@@ -585,7 +600,8 @@
 		...spacing_default,
 		...typography_default,
 		...shadow_default,
-		...background_default
+		...background_default,
+		...transform_default
 	];
 
 // packages/style-engine/build-module/index.mjs

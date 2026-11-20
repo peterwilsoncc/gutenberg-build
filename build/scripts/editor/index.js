@@ -689,6 +689,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		"spacing.margin",
 		"spacing.padding",
 		"spacing.units",
+		"transform.rotate",
 		"typography.fluid",
 		"typography.customFontSize",
 		"typography.defaultFontSizes",
@@ -1610,7 +1611,8 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		"styles.shadow": (0, _wordpress_i18n.__)("Shadow"),
 		"styles.outline": (0, _wordpress_i18n.__)("Outline"),
 		"styles.filter": (0, _wordpress_i18n.__)("Filter"),
-		"styles.dimensions": (0, _wordpress_i18n.__)("Dimensions")
+		"styles.dimensions": (0, _wordpress_i18n.__)("Dimensions"),
+		"styles.transform": (0, _wordpress_i18n._x)("Transform", "Visual transform styles such as rotate, move and scale")
 	};
 	const getBlockNames = memize(() => (0, _wordpress_blocks.getBlockTypes)().reduce((accumulator, { name, title }) => {
 		accumulator[name] = title;
@@ -1657,7 +1659,8 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		"shadow",
 		"outline",
 		"filter",
-		"dimensions"
+		"dimensions",
+		"transform"
 	];
 	/**
 	* Picks the style properties that are compared for changes.
@@ -2860,7 +2863,8 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		"filter",
 		"outline",
 		"shadow",
-		"background"
+		"background",
+		"transform"
 	];
 	function pickStyleKeys(treeToPickFrom, responsiveMediaQueries) {
 		return pickStyleAndPseudoKeys(treeToPickFrom, void 0, responsiveMediaQueries);
@@ -55085,7 +55089,7 @@ Icon: ButtonIcon });
 			}
 		};
 	}
-	const { useHasDimensionsPanel: useHasDimensionsPanel$3, useHasTypographyPanel: useHasTypographyPanel$2, useHasBorderPanel: useHasBorderPanel$2, useSettingsForBlockElement: useSettingsForBlockElement$4, useHasColorPanel: useHasColorPanel$1, useHasFiltersPanel, useHasImageSettingsPanel, useHasBackgroundPanel: useHasBackgroundPanel$3, BackgroundPanel: StylesBackgroundPanel$2, BorderPanel: StylesBorderPanel$1, ColorPanel: StylesColorPanel, TypographyPanel: StylesTypographyPanel$1, DimensionsPanel: StylesDimensionsPanel$2, FiltersPanel: StylesFiltersPanel, ImageSettingsPanel, AdvancedPanel: StylesAdvancedPanel$2 } = unlock$2(_wordpress_block_editor.privateApis);
+	const { useHasDimensionsPanel: useHasDimensionsPanel$3, useHasTypographyPanel: useHasTypographyPanel$2, useHasBorderPanel: useHasBorderPanel$2, useSettingsForBlockElement: useSettingsForBlockElement$4, useHasColorPanel: useHasColorPanel$1, useHasFiltersPanel, useHasImageSettingsPanel, useHasBackgroundPanel: useHasBackgroundPanel$3, useHasTransformPanel: useHasTransformPanel$1, BackgroundPanel: StylesBackgroundPanel$2, BorderPanel: StylesBorderPanel$1, ColorPanel: StylesColorPanel, TypographyPanel: StylesTypographyPanel$1, DimensionsPanel: StylesDimensionsPanel$2, FiltersPanel: StylesFiltersPanel, TransformPanel: StylesTransformPanel, ImageSettingsPanel, AdvancedPanel: StylesAdvancedPanel$2 } = unlock$2(_wordpress_block_editor.privateApis);
 	function ScreenBlock({ name, variation, selectedViewport: controlledSelectedViewport, showResponsiveStateControls = true, showBlockStateControls = true }) {
 		const { user: userConfig, merged: mergedConfig, onChange: onChangeGlobalStyles } = (0, _wordpress_element.useContext)(GlobalStylesContext);
 		let prefixParts = [];
@@ -55129,7 +55133,9 @@ Icon: ButtonIcon });
 		const hasColorPanel = useHasColorPanel$1(settings);
 		const hasBorderPanel = useHasBorderPanel$2(settings);
 		const hasDimensionsPanel = useHasDimensionsPanel$3(settings);
-		const shouldShowFiltersPanel = useHasFiltersPanel(settings) && effectiveSelectedViewport === "default";
+		const hasFiltersPanel = useHasFiltersPanel(settings);
+		const hasTransformPanel = useHasTransformPanel$1(settings);
+		const shouldShowFiltersPanel = hasFiltersPanel && effectiveSelectedViewport === "default";
 		const hasImageSettingsPanel = useHasImageSettingsPanel(name, userSettings, settings);
 		const hasVariationsPanel = !!blockVariations?.length && !variation && !hasSelectedState;
 		const canEditCSS = useCanEditCSS();
@@ -55241,6 +55247,12 @@ Icon: ButtonIcon });
 				inheritedValue: inheritedStyle,
 				value: style,
 				onChange: onChangeBorders,
+				settings
+			}),
+			hasTransformPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesTransformPanel, {
+				inheritedValue: inheritedStyle,
+				value: style,
+				onChange: setStyle$1,
 				settings
 			}),
 			hasColorPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesColorPanel, {
@@ -55427,7 +55439,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
-	const { useHasDimensionsPanel: useHasDimensionsPanel$1, useHasTypographyPanel, useHasBorderPanel, useSettingsForBlockElement: useSettingsForBlockElement$2, useHasColorPanel, useHasBackgroundPanel: useHasBackgroundPanel$1, searchItems: searchItems$2 } = unlock$2(_wordpress_block_editor.privateApis);
+	const { useHasDimensionsPanel: useHasDimensionsPanel$1, useHasTypographyPanel, useHasBorderPanel, useHasTransformPanel, useSettingsForBlockElement: useSettingsForBlockElement$2, useHasColorPanel, useHasBackgroundPanel: useHasBackgroundPanel$1, searchItems: searchItems$2 } = unlock$2(_wordpress_block_editor.privateApis);
 	const ELEMENT_GROUPS = [
 		{
 			title: (0, _wordpress_i18n.__)("Elements"),
@@ -55529,9 +55541,10 @@ Icon: ButtonIcon });
 		const hasBackgroundPanel = useHasBackgroundPanel$1(settings);
 		const hasBorderPanel = useHasBorderPanel(settings);
 		const hasDimensionsPanel = useHasDimensionsPanel$1(settings);
+		const hasTransformPanel = useHasTransformPanel(settings);
 		const hasLayoutPanel = hasBorderPanel || hasDimensionsPanel;
 		const hasVariationsPanel = !!useBlockVariations(blockName)?.length;
-		return hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasVariationsPanel;
+		return hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasTransformPanel || hasVariationsPanel;
 	}
 	function ListMenuItem({ path, icon, title }) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NavigationButtonAsItem, {

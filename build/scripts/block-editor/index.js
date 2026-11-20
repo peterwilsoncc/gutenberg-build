@@ -6996,7 +6996,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		"filter",
 		"outline",
 		"shadow",
-		"background"
+		"background",
+		"transform"
 	];
 	function pickStyleKeys(treeToPickFrom, responsiveMediaQueries) {
 		return pickStyleAndPseudoKeys(treeToPickFrom, void 0, responsiveMediaQueries);
@@ -15778,7 +15779,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 
 // packages/block-editor/build-module/components/block-alignment-control/use-available-alignments.mjs
 	const EMPTY_ARRAY$18 = [];
-	const DEFAULT_CONTROLS$7 = [
+	const DEFAULT_CONTROLS$8 = [
 		"none",
 		"left",
 		"center",
@@ -15825,7 +15826,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			return true;
 		}, [clientId]);
 	}
-	function useAvailableAlignments(controls = DEFAULT_CONTROLS$7) {
+	function useAvailableAlignments(controls = DEFAULT_CONTROLS$8) {
 		if (!controls.includes("none")) controls = ["none", ...controls];
 		const isNoneOnly = controls.length === 1 && controls[0] === "none";
 		const settings = useAlignmentSettings(isNoneOnly);
@@ -15857,7 +15858,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		const alignments = controls.filter((control) => {
 			if (layout.alignments) return layout.alignments.includes(control);
 			if (!wideControlsEnabled && WIDE_CONTROLS.includes(control)) return false;
-			return DEFAULT_CONTROLS$7.includes(control);
+			return DEFAULT_CONTROLS$8.includes(control);
 		}).map((name) => ({ name }));
 		if (alignments.length === 1 && alignments[0].name === "none") return EMPTY_ARRAY$18;
 		return alignments;
@@ -15877,7 +15878,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	*
 	* @return The split alignments.
 	*/
-	function useAlignmentMenu(controls = DEFAULT_CONTROLS$7) {
+	function useAlignmentMenu(controls = DEFAULT_CONTROLS$8) {
 		if (!controls.includes("none")) controls = ["none", ...controls];
 		const isNoneOnly = controls.length === 1 && controls[0] === "none";
 		const settings = useAlignmentSettings(isNoneOnly);
@@ -15889,11 +15890,11 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			unavailable: EMPTY_ARRAY$18
 		};
 		const enabled = getAvailableAlignments(controls, layout, settings);
-		if (!!!getAvailableAlignments(DEFAULT_CONTROLS$7, layout, settings).length || !isParentLayoutEditable) return {
+		if (!!!getAvailableAlignments(DEFAULT_CONTROLS$8, layout, settings).length || !isParentLayoutEditable) return {
 			enabled,
 			unavailable: EMPTY_ARRAY$18
 		};
-		const themeNames = getAvailableAlignments(DEFAULT_CONTROLS$7, {
+		const themeNames = getAvailableAlignments(DEFAULT_CONTROLS$8, {
 			...globalLayout,
 			type: "constrained"
 		}, settings).map(({ name }) => name);
@@ -92487,6 +92488,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const InspectorControlsElements = (0, _wordpress_components.createSlotFill)("InspectorControlsElements");
 	const InspectorControlsPosition = (0, _wordpress_components.createSlotFill)("InspectorControlsPosition");
 	const InspectorControlsTypography = (0, _wordpress_components.createSlotFill)("InspectorControlsTypography");
+	const InspectorControlsTransform = (0, _wordpress_components.createSlotFill)("InspectorControlsTransform");
 	const InspectorControlsStyleState = (0, _wordpress_components.createSlotFill)("InspectorControlsStyleState");
 	const InspectorControlsListView = (0, _wordpress_components.createSlotFill)("InspectorControlsListView");
 	const InspectorControlsStyles = (0, _wordpress_components.createSlotFill)("InspectorControlsStyles");
@@ -92508,6 +92510,7 @@ If there's a particular need for this, please submit a feature request at https:
 		position: InspectorControlsPosition,
 		settings: InspectorControlsDefault,
 		styles: InspectorControlsStyles,
+		transform: InspectorControlsTransform,
 		typography: InspectorControlsTypography,
 		"style-state": InspectorControlsStyleState
 	};
@@ -94479,12 +94482,14 @@ If there's a particular need for this, please submit a feature request at https:
 	];
 	const EFFECTS_SUPPORT_KEYS = ["shadow"];
 	const SPACING_SUPPORT_KEY$1 = "spacing";
+	const TRANSFORM_SUPPORT_KEY$1 = "transform";
 	const styleSupportKeys$1 = [
 		...EFFECTS_SUPPORT_KEYS,
 		...TYPOGRAPHY_SUPPORT_KEYS$1,
 		BORDER_SUPPORT_KEY$1,
 		COLOR_SUPPORT_KEY$1,
-		SPACING_SUPPORT_KEY$1
+		SPACING_SUPPORT_KEY$1,
+		TRANSFORM_SUPPORT_KEY$1
 	];
 	/**
 	* Returns true if the block defines support for align.
@@ -100301,13 +100306,13 @@ If there's a particular need for this, please submit a feature request at https:
 			title: (0, _wordpress_i18n._x)("Space between", "Block vertical alignment setting")
 		}
 	};
-	const DEFAULT_CONTROLS$6 = [
+	const DEFAULT_CONTROLS$7 = [
 		"top",
 		"center",
 		"bottom"
 	];
 	const DEFAULT_CONTROL = "top";
-	function BlockVerticalAlignmentUI({ value, onChange, controls = DEFAULT_CONTROLS$6, isCollapsed = true, isToolbar, label = (0, _wordpress_i18n.__)("Align content vertically") }) {
+	function BlockVerticalAlignmentUI({ value, onChange, controls = DEFAULT_CONTROLS$7, isCollapsed = true, isToolbar, label = (0, _wordpress_i18n.__)("Align content vertically") }) {
 		function applyOrUnset(align) {
 			return () => onChange(value === align ? void 0 : align);
 		}
@@ -109089,6 +109094,10 @@ If there's a particular need for this, please submit a feature request at https:
 				backgroundClip: ["text"]
 			};
 			updatedSettings.shadow = supportedStyles.includes("shadow") ? updatedSettings.shadow : false;
+			if (!supportedStyles.includes("rotate")) updatedSettings.transform = {
+				...updatedSettings.transform,
+				rotate: false
+			};
 			return updatedSettings;
 		}, [
 			parentSettings,
@@ -109287,13 +109296,13 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		});
 	}
-	const DEFAULT_CONTROLS$5 = {
+	const DEFAULT_CONTROLS$6 = {
 		link: true,
 		heading: true,
 		button: true,
 		caption: true
 	};
-	function ColorPanel({ as: Wrapper = ColorToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$5, label, children, contrastWarning, additionalElements }) {
+	function ColorPanel({ as: Wrapper = ColorToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$6, label, children, contrastWarning, additionalElements }) {
 		const { colors, gradients, areCustomSolidsEnabled, areCustomGradientsEnabled, hasSolidColors, hasGradientColors, allColors, decodeValue, encodeGradientValue } = useColorGradientSettings(settings);
 		const decodeInheritedColor = (rawValue) => (0, _wordpress_style_engine.getCSSValueFromRawStyle)(decodeValue(rawValue));
 		const showLinkPanel = useHasLinkPanel(settings);
@@ -110970,7 +110979,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/global-styles/background-panel.mjs
-	const DEFAULT_CONTROLS$4 = {
+	const DEFAULT_CONTROLS$5 = {
 		backgroundImage: true,
 		backgroundColor: true,
 		gradient: true,
@@ -111098,7 +111107,7 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		});
 	}
-	function BackgroundImagePanel$1({ as: Wrapper = BackgroundToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS$4, defaultValues = {}, headerLabel = (0, _wordpress_i18n.__)("Background"), contrastWarning }) {
+	function BackgroundImagePanel$1({ as: Wrapper = BackgroundToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS$5, defaultValues = {}, headerLabel = (0, _wordpress_i18n.__)("Background"), contrastWarning }) {
 		const { colors, gradients, allColors, areCustomSolidsEnabled, areCustomGradientsEnabled, hasSolidColors, hasGradientColors, decodeValue, encodeGradientValue } = useColorGradientSettings(settings);
 		const hasBackgroundGradientControl = useHasBackgroundControl(settings, "gradient");
 		const hasColorPanelBackgroundSupport = useHasBackgroundColorPanel(settings);
@@ -112191,7 +112200,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const { menuItems } = (0, _wordpress_element.useContext)(_wordpress_components.__experimentalToolsPanelContext);
 		return isShownByDefault || !!menuItems?.optional?.[label] ? children : null;
 	}
-	const DEFAULT_CONTROLS$3 = {
+	const DEFAULT_CONTROLS$4 = {
 		textColor: true,
 		fontFamily: true,
 		fontSize: true,
@@ -112229,7 +112238,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const [quantity] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(rawValue);
 		return quantity;
 	}
-	function TypographyPanel$1({ as: Wrapper = TypographyToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS$3, isGlobalStyles = false, contrastWarning }) {
+	function TypographyPanel$1({ as: Wrapper = TypographyToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS$4, isGlobalStyles = false, contrastWarning }) {
 		const { colors, gradients, allColors, areCustomSolidsEnabled, areCustomGradientsEnabled, hasGradientColors, decodeValue, encodeGradientValue } = useColorGradientSettings(settings);
 		const hasTextColorEnabled = useHasTextPanel(settings);
 		const textColor = decodeValue(inheritedValue?.color?.text);
@@ -113965,6 +113974,10 @@ If there's a particular need for this, please submit a feature request at https:
 					label: (0, _wordpress_i18n.__)("Borders")
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, {
+					group: "transform",
+					label: (0, _wordpress_i18n._x)("Transform", "Visual transform styles such as rotate, move and scale")
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, {
 					group: "elements",
 					label: (0, _wordpress_i18n.__)("Elements"),
 					className: "elements-block-support-panel__inner-wrapper"
@@ -114181,7 +114194,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	function useInspectorControlsTabs(blockName, contentClientIds, isSectionBlock, hasBlockStyles) {
 		const tabs = [];
-		const { bindings: bindingsGroup, border: borderGroup, color: colorGroup, content: contentGroup, default: defaultGroup, layout: layoutGroup, dimensions: dimensionsGroup, list: listGroup, position: positionGroup, styles: stylesGroup, typography: typographyGroup, effects: effectsGroup } = groups;
+		const { bindings: bindingsGroup, border: borderGroup, color: colorGroup, content: contentGroup, default: defaultGroup, layout: layoutGroup, dimensions: dimensionsGroup, list: listGroup, position: positionGroup, styles: stylesGroup, transform: transformGroup, typography: typographyGroup, effects: effectsGroup } = groups;
 		const listFills = (0, _wordpress_components.__experimentalUseSlotFills)(listGroup.name);
 		const hasListFills = !!listFills && listFills.length;
 		const contentFills = (0, _wordpress_components.__experimentalUseSlotFills)(contentGroup.name);
@@ -114193,6 +114206,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...(0, _wordpress_components.__experimentalUseSlotFills)(positionGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(dimensionsGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(stylesGroup.name) || [],
+			...(0, _wordpress_components.__experimentalUseSlotFills)(transformGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(typographyGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(effectsGroup.name) || []
 		].length;
@@ -114511,6 +114525,10 @@ If there's a particular need for this, please submit a feature request at https:
 				label: (0, _wordpress_i18n.__)("Borders")
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, {
+				group: "transform",
+				label: (0, _wordpress_i18n._x)("Transform", "Visual transform styles such as rotate, move and scale")
+			}),
+			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, {
 				group: "elements",
 				label: (0, _wordpress_i18n.__)("Elements"),
 				className: "elements-block-support-panel__inner-wrapper"
@@ -114559,6 +114577,10 @@ If there's a particular need for this, please submit a feature request at https:
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, {
 					group: "border",
 					label: (0, _wordpress_i18n.__)("Borders")
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, {
+					group: "transform",
+					label: (0, _wordpress_i18n._x)("Transform", "Visual transform styles such as rotate, move and scale")
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls.Slot, {
 					group: "elements",
@@ -115287,7 +115309,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* @return Settings object.
 	*/
 	function useBlockSettings(name, parentLayout) {
-		const [backgroundImage, backgroundSize, gradient, backgroundClip, customFontFamilies, defaultFontFamilies, themeFontFamilies, defaultFontSizesEnabled, customFontSizes, defaultFontSizes, themeFontSizes, customFontSize, fontStyle, fontWeight, lineHeight, textAlign, textColumns, textDecoration, textIndent, textShadow, writingMode, textTransform, letterSpacing, padding, margin, blockGap, defaultSpacingSizesEnabled, customSpacingSize, userSpacingSizes, defaultSpacingSizes, themeSpacingSizes, units, aspectRatio, height, minHeight, minWidth, width, dimensionSizes, layout, borderColor, borderRadius, borderStyle, borderWidth, borderRadiusSizes, customColorsEnabled, customColors, customDuotone, themeColors, defaultColors, defaultPalette, defaultDuotone, userDuotonePalette, themeDuotonePalette, defaultDuotonePalette, userGradientPalette, themeGradientPalette, defaultGradientPalette, defaultGradients, areCustomGradientsEnabled, isBackgroundEnabled, isLinkEnabled, isTextEnabled, isHeadingEnabled, isButtonEnabled, shadow, defaultTextShadowPresetsEnabled, customTextShadowPresets, defaultTextShadowPresets, themeTextShadowPresets] = useSettings("background.backgroundImage", "background.backgroundSize", "background.gradient", "background.backgroundClip", "typography.fontFamilies.custom", "typography.fontFamilies.default", "typography.fontFamilies.theme", "typography.defaultFontSizes", "typography.fontSizes.custom", "typography.fontSizes.default", "typography.fontSizes.theme", "typography.customFontSize", "typography.fontStyle", "typography.fontWeight", "typography.lineHeight", "typography.textAlign", "typography.textColumns", "typography.textDecoration", "typography.textIndent", "typography.textShadow", "typography.writingMode", "typography.textTransform", "typography.letterSpacing", "spacing.padding", "spacing.margin", "spacing.blockGap", "spacing.defaultSpacingSizes", "spacing.customSpacingSize", "spacing.spacingSizes.custom", "spacing.spacingSizes.default", "spacing.spacingSizes.theme", "spacing.units", "dimensions.aspectRatio", "dimensions.height", "dimensions.minHeight", "dimensions.minWidth", "dimensions.width", "dimensions.dimensionSizes", "layout", "border.color", "border.radius", "border.style", "border.width", "border.radiusSizes", "color.custom", "color.palette.custom", "color.customDuotone", "color.palette.theme", "color.palette.default", "color.defaultPalette", "color.defaultDuotone", "color.duotone.custom", "color.duotone.theme", "color.duotone.default", "color.gradients.custom", "color.gradients.theme", "color.gradients.default", "color.defaultGradients", "color.customGradient", "color.background", "color.link", "color.text", "color.heading", "color.button", "shadow", "typography.defaultTextShadowPresets", "typography.textShadowPresets.custom", "typography.textShadowPresets.default", "typography.textShadowPresets.theme");
+		const [backgroundImage, backgroundSize, gradient, backgroundClip, customFontFamilies, defaultFontFamilies, themeFontFamilies, defaultFontSizesEnabled, customFontSizes, defaultFontSizes, themeFontSizes, customFontSize, fontStyle, fontWeight, lineHeight, textAlign, textColumns, textDecoration, textIndent, textShadow, writingMode, textTransform, letterSpacing, padding, margin, blockGap, defaultSpacingSizesEnabled, customSpacingSize, userSpacingSizes, defaultSpacingSizes, themeSpacingSizes, units, aspectRatio, height, minHeight, minWidth, width, dimensionSizes, layout, borderColor, borderRadius, borderStyle, borderWidth, borderRadiusSizes, customColorsEnabled, customColors, customDuotone, themeColors, defaultColors, defaultPalette, defaultDuotone, userDuotonePalette, themeDuotonePalette, defaultDuotonePalette, userGradientPalette, themeGradientPalette, defaultGradientPalette, defaultGradients, areCustomGradientsEnabled, isBackgroundEnabled, isLinkEnabled, isTextEnabled, isHeadingEnabled, isButtonEnabled, shadow, defaultTextShadowPresetsEnabled, customTextShadowPresets, defaultTextShadowPresets, themeTextShadowPresets, rotate] = useSettings("background.backgroundImage", "background.backgroundSize", "background.gradient", "background.backgroundClip", "typography.fontFamilies.custom", "typography.fontFamilies.default", "typography.fontFamilies.theme", "typography.defaultFontSizes", "typography.fontSizes.custom", "typography.fontSizes.default", "typography.fontSizes.theme", "typography.customFontSize", "typography.fontStyle", "typography.fontWeight", "typography.lineHeight", "typography.textAlign", "typography.textColumns", "typography.textDecoration", "typography.textIndent", "typography.textShadow", "typography.writingMode", "typography.textTransform", "typography.letterSpacing", "spacing.padding", "spacing.margin", "spacing.blockGap", "spacing.defaultSpacingSizes", "spacing.customSpacingSize", "spacing.spacingSizes.custom", "spacing.spacingSizes.default", "spacing.spacingSizes.theme", "spacing.units", "dimensions.aspectRatio", "dimensions.height", "dimensions.minHeight", "dimensions.minWidth", "dimensions.width", "dimensions.dimensionSizes", "layout", "border.color", "border.radius", "border.style", "border.width", "border.radiusSizes", "color.custom", "color.palette.custom", "color.customDuotone", "color.palette.theme", "color.palette.default", "color.defaultPalette", "color.defaultDuotone", "color.duotone.custom", "color.duotone.theme", "color.duotone.default", "color.gradients.custom", "color.gradients.theme", "color.gradients.default", "color.defaultGradients", "color.customGradient", "color.background", "color.link", "color.text", "color.heading", "color.button", "shadow", "typography.defaultTextShadowPresets", "typography.textShadowPresets.custom", "typography.textShadowPresets.default", "typography.textShadowPresets.theme", "transform.rotate");
 		const rawSettings = (0, _wordpress_element.useMemo)(() => {
 			return {
 				background: {
@@ -115385,7 +115407,8 @@ If there's a particular need for this, please submit a feature request at https:
 				},
 				layout,
 				parentLayout,
-				shadow
+				shadow,
+				transform: { rotate }
 			};
 		}, [
 			backgroundImage,
@@ -115457,7 +115480,8 @@ If there's a particular need for this, please submit a feature request at https:
 			isTextEnabled,
 			isHeadingEnabled,
 			isButtonEnabled,
-			shadow
+			shadow,
+			rotate
 		]);
 		return useSettingsForBlockElement(rawSettings, name);
 	}
@@ -116801,7 +116825,7 @@ If there's a particular need for this, please submit a feature request at https:
 			children
 		});
 	}
-	const DEFAULT_CONTROLS$2 = {
+	const DEFAULT_CONTROLS$3 = {
 		contentSize: true,
 		wideSize: true,
 		padding: true,
@@ -116814,7 +116838,7 @@ If there's a particular need for this, please submit a feature request at https:
 		aspectRatio: true,
 		childLayout: true
 	};
-	function DimensionsPanel$1({ as: Wrapper = DimensionsToolsPanel, value, onChange, inheritedValue = value, inheritedChildLayout, settings, panelId, defaultControls = DEFAULT_CONTROLS$2, onVisualize = () => {}, includeLayoutControls = false, allowAxialBlockGap = true, styleState = DEFAULT_BLOCK_STYLE_STATE }) {
+	function DimensionsPanel$1({ as: Wrapper = DimensionsToolsPanel, value, onChange, inheritedValue = value, inheritedChildLayout, settings, panelId, defaultControls = DEFAULT_CONTROLS$3, onVisualize = () => {}, includeLayoutControls = false, allowAxialBlockGap = true, styleState = DEFAULT_BLOCK_STYLE_STATE }) {
 		const { dimensions, spacing } = settings;
 		const decodeValue = (rawValue) => {
 			if (rawValue && typeof rawValue === "object") return Object.keys(rawValue).reduce((acc, key) => {
@@ -117020,7 +117044,7 @@ If there's a particular need for this, please submit a feature request at https:
 					label: (0, _wordpress_i18n.__)("Content width"),
 					hasValue: hasUserSetContentSizeValue,
 					onDeselect: resetContentSizeValue,
-					isShownByDefault: defaultControls.contentSize ?? DEFAULT_CONTROLS$2.contentSize,
+					isShownByDefault: defaultControls.contentSize ?? DEFAULT_CONTROLS$3.contentSize,
 					panelId,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalUnitControl, {
 						label: (0, _wordpress_i18n.__)("Content width"),
@@ -117041,7 +117065,7 @@ If there's a particular need for this, please submit a feature request at https:
 					label: (0, _wordpress_i18n.__)("Wide width"),
 					hasValue: hasUserSetWideSizeValue,
 					onDeselect: resetWideSizeValue,
-					isShownByDefault: defaultControls.wideSize ?? DEFAULT_CONTROLS$2.wideSize,
+					isShownByDefault: defaultControls.wideSize ?? DEFAULT_CONTROLS$3.wideSize,
 					panelId,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalUnitControl, {
 						label: (0, _wordpress_i18n.__)("Wide width"),
@@ -117062,7 +117086,7 @@ If there's a particular need for this, please submit a feature request at https:
 					hasValue: hasPaddingValue,
 					label: (0, _wordpress_i18n.__)("Padding"),
 					onDeselect: resetPaddingValue,
-					isShownByDefault: defaultControls.padding ?? DEFAULT_CONTROLS$2.padding,
+					isShownByDefault: defaultControls.padding ?? DEFAULT_CONTROLS$3.padding,
 					className: clsx({ "tools-panel-item-spacing": showSpacingPresetsControl }),
 					panelId,
 					children: [!showSpacingPresetsControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BoxControl, {
@@ -117093,7 +117117,7 @@ If there's a particular need for this, please submit a feature request at https:
 					hasValue: hasMarginValue,
 					label: (0, _wordpress_i18n.__)("Margin"),
 					onDeselect: resetMarginValue,
-					isShownByDefault: defaultControls.margin ?? DEFAULT_CONTROLS$2.margin,
+					isShownByDefault: defaultControls.margin ?? DEFAULT_CONTROLS$3.margin,
 					className: clsx({ "tools-panel-item-spacing": showSpacingPresetsControl }),
 					panelId,
 					children: [!showSpacingPresetsControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BoxControl, {
@@ -117132,7 +117156,7 @@ If there's a particular need for this, please submit a feature request at https:
 					hasValue: hasGapValue,
 					label: (0, _wordpress_i18n.__)("Block spacing"),
 					onDeselect: resetGapValue,
-					isShownByDefault: defaultControls.blockGap ?? DEFAULT_CONTROLS$2.blockGap,
+					isShownByDefault: defaultControls.blockGap ?? DEFAULT_CONTROLS$3.blockGap,
 					className: clsx({
 						"tools-panel-item-spacing": showSpacingPresetsControl,
 						"single-column": !showSpacingPresetsControl && !isAxialGap
@@ -117172,13 +117196,13 @@ If there's a particular need for this, please submit a feature request at https:
 					panelId,
 					showGridSpanDefaults: !hasViewportBlockStyleState(styleState),
 					isViewportState: hasViewportBlockStyleState(styleState),
-					isShownByDefault: defaultControls.childLayout ?? DEFAULT_CONTROLS$2.childLayout
+					isShownByDefault: defaultControls.childLayout ?? DEFAULT_CONTROLS$3.childLayout
 				}),
 				showMinHeightControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: hasMinHeightValue,
 					label: (0, _wordpress_i18n.__)("Minimum height"),
 					onDeselect: resetMinHeightValue,
-					isShownByDefault: defaultControls.minHeight ?? DEFAULT_CONTROLS$2.minHeight,
+					isShownByDefault: defaultControls.minHeight ?? DEFAULT_CONTROLS$3.minHeight,
 					panelId,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DimensionControl, {
 						label: (0, _wordpress_i18n.__)("Minimum height"),
@@ -117192,7 +117216,7 @@ If there's a particular need for this, please submit a feature request at https:
 					hasValue: hasMinWidthValue,
 					label: (0, _wordpress_i18n.__)("Minimum width"),
 					onDeselect: resetMinWidthValue,
-					isShownByDefault: defaultControls.minWidth ?? DEFAULT_CONTROLS$2.minWidth,
+					isShownByDefault: defaultControls.minWidth ?? DEFAULT_CONTROLS$3.minWidth,
 					panelId,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DimensionControl, {
 						label: (0, _wordpress_i18n.__)("Minimum width"),
@@ -117206,7 +117230,7 @@ If there's a particular need for this, please submit a feature request at https:
 					hasValue: hasHeightValue,
 					label: (0, _wordpress_i18n.__)("Height"),
 					onDeselect: resetHeightValue,
-					isShownByDefault: defaultControls.height ?? DEFAULT_CONTROLS$2.height,
+					isShownByDefault: defaultControls.height ?? DEFAULT_CONTROLS$3.height,
 					panelId,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DimensionControl, {
 						label: (0, _wordpress_i18n.__)("Height"),
@@ -117220,7 +117244,7 @@ If there's a particular need for this, please submit a feature request at https:
 					hasValue: hasWidthValue,
 					label: (0, _wordpress_i18n.__)("Width"),
 					onDeselect: resetWidthValue,
-					isShownByDefault: defaultControls.width ?? DEFAULT_CONTROLS$2.width,
+					isShownByDefault: defaultControls.width ?? DEFAULT_CONTROLS$3.width,
 					panelId,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DimensionControl, {
 						label: (0, _wordpress_i18n.__)("Width"),
@@ -117235,7 +117259,7 @@ If there's a particular need for this, please submit a feature request at https:
 					value: aspectRatioValue,
 					onChange: setAspectRatioValue,
 					panelId,
-					isShownByDefault: defaultControls.aspectRatio ?? DEFAULT_CONTROLS$2.aspectRatio
+					isShownByDefault: defaultControls.aspectRatio ?? DEFAULT_CONTROLS$3.aspectRatio
 				})
 			]
 		});
@@ -117438,13 +117462,13 @@ If there's a particular need for this, please submit a feature request at https:
 			children
 		});
 	}
-	const DEFAULT_CONTROLS$1 = {
+	const DEFAULT_CONTROLS$2 = {
 		radius: true,
 		color: true,
 		width: true,
 		shadow: true
 	};
-	function BorderPanel$1({ as: Wrapper = BorderToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$1 }) {
+	function BorderPanel$1({ as: Wrapper = BorderToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$2 }) {
 		const colors = useColorsPerOrigin(settings);
 		const itemPopoverProps = useToolsPanelItemPopoverProps();
 		const areCustomSolidsEnabled = settings?.color?.custom;
@@ -117674,7 +117698,7 @@ If there's a particular need for this, please submit a feature request at https:
 			children
 		});
 	}
-	const DEFAULT_CONTROLS = { duotone: true };
+	const DEFAULT_CONTROLS$1 = { duotone: true };
 	const LabeledColorIndicator = ({ indicator, label }) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 		className: "block-editor-panel-duotone-settings__label-row",
 		direction: "row",
@@ -117716,7 +117740,7 @@ If there's a particular need for this, please submit a feature request at https:
 			onClick: handleReset
 		})] });
 	};
-	function FiltersPanel({ as: Wrapper = FiltersToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS }) {
+	function FiltersPanel({ as: Wrapper = FiltersToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS$1 }) {
 		const popoverProps = {
 			...useToolsPanelItemPopoverProps(),
 			className: "block-editor-duotone-control__popover",
@@ -117910,6 +117934,157 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
+// packages/block-editor/build-module/components/global-styles/unit-range-control.mjs
+/**
+	* A unit input paired with a slider whose range follows the selected unit.
+	* Typed values may fall outside the slider range.
+	*
+	* @param props              Component props.
+	* @param props.label        A label for both the input and the slider.
+	* @param props.value        The current CSS value.
+	* @param props.onChange     Called with the new value, or `undefined` when cleared.
+	* @param props.units        The units offered; the first is the default.
+	* @param props.unitSettings The slider `min`, `max` and `step` for each unit.
+	*
+	* @return The unit range control.
+	*/
+	function UnitRangeControl({ label, value, onChange, units, unitSettings }) {
+		const [pickedUnit, setPickedUnit] = (0, _wordpress_element.useState)();
+		const [quantity, parsedUnit] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(value, units);
+		const selectedUnit = parsedUnit ?? pickedUnit ?? units[0]?.value ?? "";
+		const range = unitSettings[selectedUnit];
+		const handleChange = (nextValue) => {
+			const [nextQuantity] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(nextValue);
+			onChange(nextQuantity === void 0 ? void 0 : nextValue);
+		};
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(FieldsetRoot, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldsetLegend, { children: label }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+			direction: "row",
+			align: "center",
+			gap: "md",
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalUnitControl, {
+				className: "block-editor-global-styles-unit-range-control__input",
+				label,
+				hideLabelFromVision: true,
+				value: value ?? "",
+				units,
+				onChange: handleChange,
+				onUnitChange: setPickedUnit
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.RangeControl, {
+				className: "block-editor-global-styles-unit-range-control__slider",
+				label,
+				hideLabelFromVision: true,
+				value: quantity,
+				min: range?.min,
+				max: range?.max,
+				step: range?.step,
+				initialPosition: 0,
+				withInputField: false,
+				onChange: (next) => onChange(next === void 0 ? void 0 : `${next}${selectedUnit}`)
+			})]
+		})] });
+	}
+
+// packages/block-editor/build-module/components/global-styles/transform-panel.mjs
+	const ROTATE_UNITS = [
+		{
+			value: "deg",
+			label: "deg"
+		},
+		{
+			value: "turn",
+			label: "turn"
+		},
+		{
+			value: "rad",
+			label: "rad"
+		},
+		{
+			value: "grad",
+			label: "grad"
+		}
+	];
+	const ROTATE_UNIT_SETTINGS = {
+		deg: {
+			min: -360,
+			max: 360,
+			step: 1
+		},
+		turn: {
+			min: -1,
+			max: 1,
+			step: .01
+		},
+		rad: {
+			min: -6.28,
+			max: 6.28,
+			step: .01
+		},
+		grad: {
+			min: -400,
+			max: 400,
+			step: 1
+		}
+	};
+	function useHasTransformPanel(settings) {
+		return useHasRotateControl(settings);
+	}
+	function useHasRotateControl(settings) {
+		return !!settings?.transform?.rotate;
+	}
+	function TransformToolsPanel({ resetAllFilter, onChange, value, panelId, children }) {
+		const dropdownMenuProps = useToolsPanelDropdownMenuProps$1();
+		const resetAll = () => {
+			onChange(resetAllFilter(value));
+		};
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanel, {
+			label: (0, _wordpress_i18n._x)("Transform", "Visual transform styles such as rotate, move and scale"),
+			resetAll,
+			panelId,
+			dropdownMenuProps,
+			children
+		});
+	}
+	const DEFAULT_CONTROLS = { rotate: true };
+	function TransformPanel$1({ as: Wrapper = TransformToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS }) {
+		const showRotateControl = useHasRotateControl(settings);
+		const storedRotate = value?.transform?.rotate ?? inheritedValue?.transform?.rotate;
+		const rotate = typeof storedRotate === "string" ? storedRotate : void 0;
+		const setRotate = (newValue) => {
+			onChange(setImmutably(value, ["transform", "rotate"], newValue));
+		};
+		const hasRotateValue = () => value?.transform?.rotate !== void 0;
+		const resetRotate = () => setRotate(void 0);
+		const resetAllFilter = (0, _wordpress_element.useCallback)((previousValue) => {
+			return {
+				...previousValue,
+				transform: {
+					...previousValue?.transform,
+					rotate: void 0
+				}
+			};
+		}, []);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Wrapper, {
+			resetAllFilter,
+			value,
+			onChange,
+			panelId,
+			children: showRotateControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+				label: (0, _wordpress_i18n.__)("Rotation"),
+				hasValue: hasRotateValue,
+				onDeselect: resetRotate,
+				isShownByDefault: defaultControls.rotate,
+				panelId,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitRangeControl, {
+					label: (0, _wordpress_i18n.__)("Rotation"),
+					value: rotate,
+					onChange: setRotate,
+					units: ROTATE_UNITS,
+					unitSettings: ROTATE_UNIT_SETTINGS
+				})
+			})
+		});
+	}
+
 // packages/block-editor/build-module/components/global-styles/index.mjs
 	var global_styles_exports = /* @__PURE__ */ __exportAll$1({
 		AdvancedPanel: () => AdvancedPanel,
@@ -117922,6 +118097,7 @@ If there's a particular need for this, please submit a feature request at https:
 		StateControl: () => StateControl,
 		StateControlBadges: () => StateControlBadges,
 		ToolsPanelPopoverPropsContext: () => ToolsPanelPopoverPropsContext,
+		TransformPanel: () => TransformPanel$1,
 		TypographyPanel: () => TypographyPanel$1,
 		getBlockElementLayers: () => getBlockElementLayers,
 		getBlockTypesForElement: () => getBlockTypesForElement,
@@ -117932,6 +118108,7 @@ If there's a particular need for this, please submit a feature request at https:
 		useHasDimensionsPanel: () => useHasDimensionsPanel,
 		useHasFiltersPanel: () => useHasFiltersPanel,
 		useHasImageSettingsPanel: () => useHasImageSettingsPanel,
+		useHasTransformPanel: () => useHasTransformPanel,
 		useHasTypographyPanel: () => useHasTypographyPanel,
 		useSettingsForBlockElement: () => useSettingsForBlockElement,
 		useToolsPanelItemPopoverProps: () => useToolsPanelItemPopoverProps
@@ -118160,6 +118337,83 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 	};
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/border/addAttributes", addAttributes$1);
+
+// packages/block-editor/build-module/hooks/transform.mjs
+	const TRANSFORM_SUPPORT_KEY = "transform";
+	function TransformInspectorControl({ children, resetAllFilter }) {
+		const attributesResetAllFilter = (0, _wordpress_element.useCallback)((attributes) => {
+			const existingStyle = attributes.style;
+			const updatedStyle = resetAllFilter(existingStyle);
+			return {
+				...attributes,
+				style: updatedStyle
+			};
+		}, [resetAllFilter]);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControls, {
+			group: "transform",
+			resetAllFilter: attributesResetAllFilter,
+			children
+		});
+	}
+	/**
+	* Returns the inherited value the Transform panel shows for a block state.
+	* Each transform comes from the block styles the state renders over, else
+	* from Global Styles.
+	*
+	* @param resolvedValue Global Styles value resolved for the state.
+	* @param style         The block styles.
+	* @param selectedState Selected block style state.
+	*
+	* @return Inherited value for the panel.
+	*/
+	function getStateInheritedValue(resolvedValue, style, selectedState) {
+		const { viewport, pseudo } = selectedState;
+		const layers = [style];
+		if (hasViewportBlockStyleState(selectedState) && hasPseudoBlockStyleState(selectedState)) layers.push(style?.[viewport], style?.[pseudo]);
+		const transform = { ...resolvedValue?.transform };
+		for (const layer of layers) {
+			const layerTransform = layer?.transform;
+			if (!layerTransform || typeof layerTransform !== "object") continue;
+			for (const [key, layerValue] of Object.entries(layerTransform)) if (layerValue !== void 0 && layerValue !== null) transform[key] = layerValue;
+		}
+		return {
+			...resolvedValue,
+			transform
+		};
+	}
+	function TransformPanel({ clientId, name, setAttributes, settings }) {
+		const selectedState = useBlockStyleState();
+		const isStateSelected = !isDefaultBlockStyleState(selectedState);
+		const isEnabled = useHasTransformPanel(settings);
+		const { style, className } = (0, _wordpress_data.useSelect)((select) => {
+			if (!isEnabled) return {};
+			const attributes = select(store).getBlockAttributes(clientId) || {};
+			return {
+				style: attributes.style,
+				className: attributes.className
+			};
+		}, [clientId, isEnabled]);
+		const { value: resolvedValue } = useResolvedStyle(name, className, selectedState);
+		if (!isEnabled) return null;
+		const inheritedValue = isStateSelected ? getStateInheritedValue(resolvedValue, style, selectedState) : resolvedValue;
+		const value = isStateSelected ? getStyleForState(style, selectedState) : style;
+		const onChange = (newStyle) => {
+			setAttributes({ style: isStateSelected ? setStyleForState(style, selectedState, newStyle) : cleanEmptyObject(newStyle) });
+		};
+		const defaultControls = (0, _wordpress_blocks.getBlockSupport)(name, [TRANSFORM_SUPPORT_KEY, "__experimentalDefaultControls"]);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TransformPanel$1, {
+			as: TransformInspectorControl,
+			panelId: clientId,
+			settings,
+			value,
+			onChange,
+			defaultControls: {
+				rotate: false,
+				...defaultControls
+			},
+			inheritedValue
+		});
+	}
 
 // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
 	function SpacingVisualizer({ clientId, value, computeStyle, forceShow }) {
@@ -118458,7 +118712,8 @@ If there's a particular need for this, please submit a feature request at https:
 		DIMENSIONS_SUPPORT_KEY,
 		BACKGROUND_SUPPORT_KEY,
 		SPACING_SUPPORT_KEY,
-		SHADOW_SUPPORT_KEY
+		SHADOW_SUPPORT_KEY,
+		TRANSFORM_SUPPORT_KEY
 	];
 	const hasStyleSupport = (nameOrType) => styleSupportKeys.some((key) => (0, _wordpress_blocks.hasBlockSupport)(nameOrType, key));
 	/**
@@ -118842,7 +119097,8 @@ If there's a particular need for this, please submit a feature request at https:
 		[`${DIMENSIONS_SUPPORT_KEY}.__experimentalSkipSerialization`]: [DIMENSIONS_SUPPORT_KEY],
 		[`${SPACING_SUPPORT_KEY}.__experimentalSkipSerialization`]: [SPACING_SUPPORT_KEY],
 		[`${SHADOW_SUPPORT_KEY}.__experimentalSkipSerialization`]: [SHADOW_SUPPORT_KEY],
-		[`${BACKGROUND_SUPPORT_KEY}.__experimentalSkipSerialization`]: [BACKGROUND_SUPPORT_KEY]
+		[`${BACKGROUND_SUPPORT_KEY}.__experimentalSkipSerialization`]: [BACKGROUND_SUPPORT_KEY],
+		[`${TRANSFORM_SUPPORT_KEY}.__experimentalSkipSerialization`]: [TRANSFORM_SUPPORT_KEY]
 	};
 	/**
 	* A dictionary of paths to flag skipping block support serialization as the key,
@@ -119064,7 +119320,8 @@ If there's a particular need for this, please submit a feature request at https:
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BackgroundImagePanel, { ...passedProps }),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(TypographyPanel, { ...passedProps }),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BorderPanel, { ...passedProps }),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(DimensionsPanel, { ...passedProps })
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(DimensionsPanel, { ...passedProps }),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(TransformPanel, { ...passedProps })
 			]
 		});
 	}
@@ -119095,6 +119352,17 @@ If there's a particular need for this, please submit a feature request at https:
 	];
 	const STYLE_BLOCK_PROPS_REFERENCE = {};
 	/**
+	* Removes transform styles from an element style object and its pseudo
+	* selector styles, as transforms are for blocks only. Mirror of
+	* `gutenberg_remove_element_transform_styles()` in PHP.
+	*
+	* @param style Element style object.
+	* @return Element style object without transform styles.
+	*/
+	function omitElementTransformStyles(style) {
+		return omitStyle(style, [TRANSFORM_SUPPORT_KEY, ...Object.keys(style).filter((key) => key.startsWith(":")).map((key) => [key, TRANSFORM_SUPPORT_KEY])]);
+	}
+	/**
 	* Generates CSS rules for block element styles (buttons, links, headings, etc.).
 	*
 	* Iterates over supported element types and compiles their styles, including
@@ -119108,6 +119376,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	function getElementCSSRules(blockElementStyles, blockName, baseSelector) {
 		if (!blockElementStyles) return;
+		blockElementStyles = Object.fromEntries(Object.entries(blockElementStyles).map(([element, style]) => [element, omitElementTransformStyles(style)]));
 		const rules = [];
 		elementTypes.forEach(({ elementType, pseudo, elements }) => {
 			if (shouldSkipSerialization(blockName, "color", elementType)) return;
@@ -122011,6 +122280,18 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
+// packages/block-editor/build-module/hooks/use-transform-props.mjs
+/**
+	* Provides the inline styles for a block's transform support attributes.
+	*
+	* @param attributes Block attributes.
+	* @return Transform block support derived inline styles.
+	*/
+	function getTransformClassesAndStyles(attributes) {
+		const transform = attributes.style?.transform || {};
+		return { style: getInlineStyles({ transform }) };
+	}
+
 // packages/block-editor/build-module/hooks/use-cached-truthy.mjs
 /**
 	* Keeps an up-to-date copy of the passed value and returns it. If value becomes falsy, it will return the last truthy copy.
@@ -122977,6 +123258,7 @@ exports.getGradientValueBySlug = getGradientValueBySlug;
 exports.getPxFromCssUnit = get_px_from_css_unit_default;
 exports.getSpacingPresetCssVar = getSpacingPresetCssVar;
 exports.getStyleForState = getStyleForState;
+exports.getTransformClassesAndStyles = getTransformClassesAndStyles;
 exports.getTypographyClassesAndStyles = getTypographyClassesAndStyles;
 exports.isValueSpacingPreset = isValueSpacingPreset;
 exports.privateApis = privateApis;

@@ -958,6 +958,11 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			},
 			useEngine: true
 		},
+		rotate: {
+			value: ["transform", "rotate"],
+			support: ["transform", "rotate"],
+			useEngine: true
+		},
 		textAlign: {
 			value: ["typography", "textAlign"],
 			support: ["typography", "textAlign"],

@@ -24671,7 +24671,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		"styles.shadow": (0, _wordpress_i18n.__)("Shadow"),
 		"styles.outline": (0, _wordpress_i18n.__)("Outline"),
 		"styles.filter": (0, _wordpress_i18n.__)("Filter"),
-		"styles.dimensions": (0, _wordpress_i18n.__)("Dimensions")
+		"styles.dimensions": (0, _wordpress_i18n.__)("Dimensions"),
+		"styles.transform": (0, _wordpress_i18n._x)("Transform", "Visual transform styles such as rotate, move and scale")
 	};
 	const getBlockNames = memize(() => (0, _wordpress_blocks.getBlockTypes)().reduce((accumulator, { name, title }) => {
 		accumulator[name] = title;
@@ -24718,7 +24719,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		"shadow",
 		"outline",
 		"filter",
-		"dimensions"
+		"dimensions",
+		"transform"
 	];
 	/**
 	* Picks the style properties that are compared for changes.

@@ -3260,6 +3260,9 @@ return array(
 				)
 			),
 			'shadow' => true,
+			'transform' => array(
+				'rotate' => true
+			),
 			'spacing' => array(
 				'margin' => array(
 					'top',
@@ -3386,6 +3389,9 @@ return array(
 				'minWidth' => true
 			),
 			'shadow' => true,
+			'transform' => array(
+				'rotate' => true
+			),
 			'spacing' => array(
 				'margin' => true,
 				'padding' => true,
@@ -10239,6 +10245,9 @@ return array(
 			),
 			'shadow' => array(
 				'__experimentalSkipSerialization' => true
+			),
+			'transform' => array(
+				'rotate' => true
 			),
 			'dimensions' => array(
 				'minWidth' => true,

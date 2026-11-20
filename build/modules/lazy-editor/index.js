@@ -153,6 +153,7 @@ const VALID_SETTINGS = [
 	"spacing.margin",
 	"spacing.padding",
 	"spacing.units",
+	"transform.rotate",
 	"typography.fluid",
 	"typography.customFontSize",
 	"typography.defaultFontSizes",
@@ -1787,7 +1788,8 @@ const STYLE_KEYS = [
 	"filter",
 	"outline",
 	"shadow",
-	"background"
+	"background",
+	"transform"
 ];
 function pickStyleKeys(treeToPickFrom, responsiveMediaQueries) {
 	return pickStyleAndPseudoKeys(treeToPickFrom, void 0, responsiveMediaQueries);

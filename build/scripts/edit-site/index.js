@@ -41641,6 +41641,7 @@ Icon: ButtonIcon });
 		"spacing.margin",
 		"spacing.padding",
 		"spacing.units",
+		"transform.rotate",
 		"typography.fluid",
 		"typography.customFontSize",
 		"typography.defaultFontSizes",
@@ -43560,7 +43561,8 @@ Icon: ButtonIcon });
 		"filter",
 		"outline",
 		"shadow",
-		"background"
+		"background",
+		"transform"
 	];
 	function pickStyleKeys(treeToPickFrom, responsiveMediaQueries) {
 		return pickStyleAndPseudoKeys(treeToPickFrom, void 0, responsiveMediaQueries);
@@ -63490,7 +63492,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const { getViewportBreakpoints, getViewportBreakpointValueInPixels } = unlock(privateApis$48);
 
 // packages/global-styles-ui/build-module/screen-block.mjs
-	const { useHasDimensionsPanel: useHasDimensionsPanel$3, useHasTypographyPanel: useHasTypographyPanel$2, useHasBorderPanel: useHasBorderPanel$2, useSettingsForBlockElement: useSettingsForBlockElement$4, useHasColorPanel: useHasColorPanel$1, useHasFiltersPanel, useHasImageSettingsPanel, useHasBackgroundPanel: useHasBackgroundPanel$3, BackgroundPanel: StylesBackgroundPanel$2, BorderPanel: StylesBorderPanel$1, ColorPanel: StylesColorPanel, TypographyPanel: StylesTypographyPanel$1, DimensionsPanel: StylesDimensionsPanel$2, FiltersPanel: StylesFiltersPanel, ImageSettingsPanel, AdvancedPanel: StylesAdvancedPanel$2 } = unlock(_wordpress_block_editor.privateApis);
+	const { useHasDimensionsPanel: useHasDimensionsPanel$3, useHasTypographyPanel: useHasTypographyPanel$2, useHasBorderPanel: useHasBorderPanel$2, useSettingsForBlockElement: useSettingsForBlockElement$4, useHasColorPanel: useHasColorPanel$1, useHasFiltersPanel, useHasImageSettingsPanel, useHasBackgroundPanel: useHasBackgroundPanel$3, useHasTransformPanel: useHasTransformPanel$1, BackgroundPanel: StylesBackgroundPanel$2, BorderPanel: StylesBorderPanel$1, ColorPanel: StylesColorPanel, TypographyPanel: StylesTypographyPanel$1, DimensionsPanel: StylesDimensionsPanel$2, FiltersPanel: StylesFiltersPanel, TransformPanel: StylesTransformPanel, ImageSettingsPanel, AdvancedPanel: StylesAdvancedPanel$2 } = unlock(_wordpress_block_editor.privateApis);
 
 // packages/global-styles-ui/build-module/screen-element.mjs
 	const { useSettingsForBlockElement: useSettingsForBlockElement$3, useHasBackgroundPanel: useHasBackgroundPanel$2, useHasBorderPanel: useHasBorderPanel$1, useHasDimensionsPanel: useHasDimensionsPanel$2, useHasTypographyPanel: useHasTypographyPanel$1, BackgroundPanel: StylesBackgroundPanel$1, BorderPanel: StylesBorderPanel, DimensionsPanel: StylesDimensionsPanel$1, TypographyPanel: StylesTypographyPanel, AdvancedPanel: StylesAdvancedPanel$1, getBlockTypesForElement } = unlock(_wordpress_block_editor.privateApis);
@@ -63554,7 +63556,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/global-styles-ui/build-module/screen-block-list.mjs
-	const { useHasDimensionsPanel: useHasDimensionsPanel$1, useHasTypographyPanel, useHasBorderPanel, useSettingsForBlockElement: useSettingsForBlockElement$2, useHasColorPanel, useHasBackgroundPanel: useHasBackgroundPanel$1, searchItems: searchItems$1 } = unlock(_wordpress_block_editor.privateApis);
+	const { useHasDimensionsPanel: useHasDimensionsPanel$1, useHasTypographyPanel, useHasBorderPanel, useHasTransformPanel, useSettingsForBlockElement: useSettingsForBlockElement$2, useHasColorPanel, useHasBackgroundPanel: useHasBackgroundPanel$1, searchItems: searchItems$1 } = unlock(_wordpress_block_editor.privateApis);
 	const ELEMENT_GROUPS = [
 		{
 			title: (0, _wordpress_i18n.__)("Elements"),
@@ -63656,9 +63658,10 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasBackgroundPanel = useHasBackgroundPanel$1(settings);
 		const hasBorderPanel = useHasBorderPanel(settings);
 		const hasDimensionsPanel = useHasDimensionsPanel$1(settings);
+		const hasTransformPanel = useHasTransformPanel(settings);
 		const hasLayoutPanel = hasBorderPanel || hasDimensionsPanel;
 		const hasVariationsPanel = !!useBlockVariations(blockName)?.length;
-		return hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasVariationsPanel;
+		return hasTypographyPanel || hasColorPanel || hasBackgroundPanel || hasLayoutPanel || hasTransformPanel || hasVariationsPanel;
 	}
 	function ListMenuItem({ path, icon, title }) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NavigationButtonAsItem, {
