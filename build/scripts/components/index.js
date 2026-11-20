@@ -33403,9 +33403,8 @@ VisualLabel });
 	* similar to a how a radio button group would work. If you simply want a toggle to switch between views,
 	* use `Tabs` from `@wordpress/ui` instead.
 	*
-	* Only use this control when you know for sure the labels of items inside won't
-	* wrap. For items with longer labels, you can consider a `SelectControl` or a
-	* `CustomSelectControl` component instead.
+	* Only use this control when you know the labels won't wrap. For items with
+	* longer labels, consider `SelectControl` from `@wordpress/ui`.
 	*
 	* ```jsx
 	* import {
@@ -65824,8 +65823,16 @@ Icon: ButtonIcon });
 	/**
 	* `CustomSelectControl` is a dropdown for selecting a single option from a
 	* list, with support for custom styling.
+	*
+	* @deprecated Use `SelectControl` from `@wordpress/ui` instead.
 	*/
 	function CustomSelectControl(props) {
+		(0, _wordpress_deprecated.default)("wp.components.CustomSelectControl", {
+			since: "7.3",
+			version: "7.6",
+			alternative: "SelectControl from @wordpress/ui",
+			link: "https://wordpress.github.io/gutenberg/?path=/docs/components-customselectcontrol--migration-guide"
+		});
 		const { __next40pxDefaultSize: _next40pxDefaultSize, describedBy, options, onChange, size = "default", value, className: classNameProp, showSelectedHint = false, ...restProps } = useDeprecatedProps$1(props);
 		const descriptionId = (0, _wordpress_compose.useInstanceId)(CustomSelectControl, "custom-select-control__description");
 		const store = useSelectStore({
