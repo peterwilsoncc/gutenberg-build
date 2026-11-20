@@ -89480,7 +89480,7 @@ If there's a particular need for this, please submit a feature request at https:
 				postType: getPostType(getEditedPostAttribute("type"))
 			};
 		}, []);
-		if (!isEnabled || !postType) return null;
+		if (!isEnabled || !postType?.hierarchical) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ParentRow, {});
 	}
 	/**
