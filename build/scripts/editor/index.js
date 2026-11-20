@@ -95959,7 +95959,7 @@ ${content}
         postType: getPostType(getEditedPostAttribute2("type"))
       };
     }, []);
-    if (!isEnabled || !postType2) {
+    if (!isEnabled || !postType2?.hierarchical) {
       return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime499.jsx)(ParentRow, {});
