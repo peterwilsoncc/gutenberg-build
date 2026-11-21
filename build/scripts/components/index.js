@@ -73146,6 +73146,24 @@ The screen with id ${screen.id} will not be added.`);
 		});
 	}
 
+// packages/components/build-module/query-controls/order-by-select.mjs
+	function OrderBySelect({ order, orderBy, orderByOptions, onOrderChange, onOrderByChange }) {
+		useEnableWpCompatOverlaySlot();
+		const sortValue = orderBy === void 0 || order === void 0 ? null : `${orderBy}/${order}`;
+		const selectedOption = orderByOptions.find((option) => option.value === sortValue) ?? null;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
+			label: (0, _wordpress_i18n.__)("Order by"),
+			items: orderByOptions,
+			value: selectedOption,
+			onValueChange: (item) => {
+				if (typeof item?.value !== "string") return;
+				const [newOrderBy, newOrder] = item.value.split("/");
+				if (newOrder !== order) onOrderChange(newOrder);
+				if (newOrderBy !== orderBy) onOrderByChange(newOrderBy);
+			}
+		});
+	}
+
 // packages/components/build-module/query-controls/index.mjs
 	const DEFAULT_MIN_ITEMS = 1;
 	const DEFAULT_MAX_ITEMS = 100;
@@ -73204,16 +73222,12 @@ The screen with id ${screen.id} will not be added.`);
 			spacing: "4",
 			className: "components-query-controls",
 			children: [
-				onOrderChange && onOrderByChange && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
-					label: (0, _wordpress_i18n.__)("Order by"),
-					value: orderBy === void 0 || order === void 0 ? void 0 : `${orderBy}/${order}`,
-					options: orderByOptions,
-					onChange: (value) => {
-						if (typeof value !== "string") return;
-						const [newOrderBy, newOrder] = value.split("/");
-						if (newOrder !== order) onOrderChange(newOrder);
-						if (newOrderBy !== orderBy) onOrderByChange(newOrderBy);
-					}
+				onOrderChange && onOrderByChange && !!orderByOptions?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(OrderBySelect, {
+					order,
+					orderBy,
+					orderByOptions,
+					onOrderChange,
+					onOrderByChange
 				}, "query-controls-order-select"),
 				isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CategorySelect, {
 					categoriesList: props.categoriesList,
