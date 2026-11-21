@@ -66412,7 +66412,7 @@ Icon: ButtonIcon });
 		return parts.join(". ");
 	}
 
-// packages/components/build-module/select-control/index.mjs
+// packages/components/build-module/date-time/time-picker/timezone.mjs
 	const STYLE_HASH_ATTRIBUTE$41 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -66514,118 +66514,45 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$41(targetDocument, hash, css);
 	}
-	registerStyle$41("febe07a6a2", "._118b8ab034d9b594__root{color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));cursor:pointer}._118b8ab034d9b594__root:where(._6eaa18d70340d74d__is-disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b);cursor:default}._118b8ab034d9b594__root._118b8ab034d9b594__root:where(._84d7e9e9acf0d576__is-minimal){display:inline-flex}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input{--_wp-components-select-control-padding:12px;appearance:none;background:transparent;border:none;box-shadow:none!important;box-sizing:border-box;color:currentColor;cursor:inherit;display:block;font-family:inherit;font-size:16px;line-height:1.3;margin:0;max-width:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}@media (min-width:600px){.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input{font-size:13px}}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(._7a474d8020b91063__is-small,._8cbad64b62dca2fd__is-compact){--_wp-components-select-control-padding:8px}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(:not(.ffd3248d187848fa__is-multiple)){height:40px;min-height:40px;padding-block:0}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(:not(.ffd3248d187848fa__is-multiple)):where(._7a474d8020b91063__is-small){height:24px;min-height:24px}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(:not(.ffd3248d187848fa__is-multiple)):where(._8cbad64b62dca2fd__is-compact){height:32px;min-height:32px}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(.ffd3248d187848fa__is-multiple){overflow:auto;padding-block:var(--_wp-components-select-control-padding)}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input{padding-left:var(--_wp-components-select-control-padding);padding-right:calc(var(--_wp-components-select-control-padding) + 18px)}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(._4c3a4e93e29da7c3__is-rtl){padding-left:calc(var(--_wp-components-select-control-padding) + 18px);padding-right:var(--_wp-components-select-control-padding)}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(._84d7e9e9acf0d576__is-minimal){field-sizing:content}.b99f682bf7ca706e__down-arrow{line-height:0;margin-inline-end:-4px}.b1d461dd19555536__suffix{pointer-events:none;position:absolute;right:0}.b1d461dd19555536__suffix:where(._4c3a4e93e29da7c3__is-rtl){left:0;right:auto}");
+	registerStyle$41("e599d79351", ".db7f533dc0e651ba__wrapper{box-sizing:border-box;font-size:var(--wpds-typography-font-size-md,13px)}.d50578409db7d880__fieldset{border:0;margin:0 0 16px;padding:0}.d50578409db7d880__fieldset:last-child{margin-bottom:0}._02ed34aff618fb4f__time-wrapper{direction:ltr;display:flex}._32b93511bda7911f__day-input._32b93511bda7911f__day-input._32b93511bda7911f__day-input .components-input-control__input,._371547def4921730__year-input._371547def4921730__year-input._371547def4921730__year-input .components-input-control__input,.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input .components-input-control__input,.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input .components-input-control__input{padding-left:8px;padding-right:8px;text-align:center}.f676a3c435ce1a41__hours-input{width:36px}.f676a3c435ce1a41__hours-input:focus-within{z-index:1}.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input .components-input-control__input{padding-right:0}.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input .components-input-control__backdrop{border-bottom-right-radius:0;border-right:0;border-top-right-radius:0}.af010720aadd8138__time-separator{border-bottom:1px solid #757575;border-top:1px solid #757575;display:inline-block;font-size:var(--wpds-typography-font-size-md,13px);line-height:34px}.f59b0e7c9125d943__minutes-input{width:36px}.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input .components-input-control__input{padding-left:0}.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input .components-input-control__backdrop{border-bottom-left-radius:0;border-left:0;border-top-left-radius:0}._5d72e2a92cafa40a__month-select-wrapper{flex-grow:1}._32b93511bda7911f__day-input{width:36px}._371547def4921730__year-input{width:56px}._1f5c0cf0e4988dbf__time-zone{text-decoration:underline dotted}");
 	var style_module_default$41 = {
-		"root": "_118b8ab034d9b594__root",
-		"is-disabled": "_6eaa18d70340d74d__is-disabled",
-		"is-minimal": "_84d7e9e9acf0d576__is-minimal",
-		"input": "c1fd3f80ba1b3989__input",
-		"is-small": "_7a474d8020b91063__is-small",
-		"is-compact": "_8cbad64b62dca2fd__is-compact",
-		"is-multiple": "ffd3248d187848fa__is-multiple",
-		"is-rtl": "_4c3a4e93e29da7c3__is-rtl",
-		"down-arrow": "b99f682bf7ca706e__down-arrow",
-		"suffix": "b1d461dd19555536__suffix"
+		"wrapper": "db7f533dc0e651ba__wrapper",
+		"fieldset": "d50578409db7d880__fieldset",
+		"time-wrapper": "_02ed34aff618fb4f__time-wrapper",
+		"hours-input": "f676a3c435ce1a41__hours-input",
+		"minutes-input": "f59b0e7c9125d943__minutes-input",
+		"day-input": "_32b93511bda7911f__day-input",
+		"year-input": "_371547def4921730__year-input",
+		"time-separator": "af010720aadd8138__time-separator",
+		"month-select-wrapper": "_5d72e2a92cafa40a__month-select-wrapper",
+		"time-zone": "_1f5c0cf0e4988dbf__time-zone"
 	};
-	function useUniqueId(idProp) {
-		const id = `inspector-select-control-${(0, _wordpress_compose.useInstanceId)(SelectControl)}`;
-		return idProp || id;
-	}
-	function SelectOptions({ options }) {
-		return options.map(({ id, label, value, ...optionProps }, index) => {
-			const key = id || `${label}-${value}-${index}`;
-			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("option", {
-				value,
-				...optionProps,
-				children: label
-			}, key);
-		});
-	}
-	function UnforwardedSelectControl(props, ref) {
-		const { __nextHasNoMarginBottom: _, __next40pxDefaultSize: _next40pxDefaultSize, __next36pxDefaultSize: _next36pxDefaultSize, className, disabled = false, help, hideLabelFromVision, id: idProp, label, multiple = false, onChange, options = [], size = "default", value: valueProp, labelPosition = "top", children, prefix, suffix, variant = "default", ...restProps } = props;
-		const id = useUniqueId(idProp);
-		const helpId = help ? `${id}__help` : void 0;
-		if (!options?.length && !children) return null;
-		const handleOnChange = (event) => {
-			if (props.multiple) {
-				const newValues = Array.from(event.target.options).filter(({ selected }) => selected).map(({ value }) => value);
-				props.onChange?.(newValues, { event });
-				return;
-			}
-			props.onChange?.(event.target.value, { event });
-		};
-		const classes = clsx("components-select-control", className);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl, {
-			help,
-			id,
-			className: classes,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(input_base_default, {
-				disabled,
-				hideLabelFromVision,
-				id,
-				isBorderless: variant === "minimal",
-				label,
-				size,
-				suffix: suffix || !multiple && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControlChevronDown, {}),
-				prefix,
-				labelPosition,
-				__unstableInputWidth: variant === "minimal" ? "auto" : void 0,
-				className: clsx(style_module_default$41.root, {
-					[style_module_default$41["is-disabled"]]: disabled,
-					[style_module_default$41["is-minimal"]]: variant === "minimal"
-				}),
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PolymorphicElement, {
-					as: "select",
-					...restProps,
-					"aria-describedby": helpId,
-					className: clsx("components-select-control__input", style_module_default$41.input, {
-						[style_module_default$41["is-small"]]: size === "small",
-						[style_module_default$41["is-compact"]]: size === "compact",
-						[style_module_default$41["is-multiple"]]: multiple,
-						[style_module_default$41["is-minimal"]]: variant === "minimal",
-						[style_module_default$41["is-rtl"]]: (0, _wordpress_i18n.isRTL)()
-					}),
-					disabled,
-					id,
-					multiple,
-					onChange: handleOnChange,
-					ref,
-					value: valueProp,
-					children: children || /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectOptions, { options })
-				})
+	/**
+	* Displays timezone information when user timezone is different from site
+	* timezone.
+	*/
+	const TimeZone = () => {
+		const { timezone } = (0, _wordpress_date.getSettings)();
+		const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
+		if (Number(timezone.offset) === userTimezoneOffset) return null;
+		const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
+		const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
+		const prettyTimezoneString = timezone.string.replaceAll("_", " ");
+		const timezoneDetail = "UTC" === timezone.string ? (0, _wordpress_i18n.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
+		return prettyTimezoneString.trim().length === 0 ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			className: clsx("components-datetime__timezone", style_module_default$41["time-zone"]),
+			children: zoneAbbr
+		}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tooltip, {
+			placement: "top",
+			text: timezoneDetail,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: clsx("components-datetime__timezone", style_module_default$41["time-zone"]),
+				children: zoneAbbr
 			})
 		});
-	}
-	/**
-	* `SelectControl` allows users to select from a single or multiple option menu.
-	* It functions as a wrapper around the browser's native `<select>` element.
-	*
-	* ```jsx
-	* import { SelectControl } from '@wordpress/components';
-	* import { useState } from '@wordpress/element';
-	*
-	* const MySelectControl = () => {
-	*   const [ size, setSize ] = useState( '50%' );
-	*
-	*   return (
-	*     <SelectControl
-	*       label="Size"
-	*       value={ size }
-	*       options={ [
-	*         { label: 'Big', value: '100%' },
-	*         { label: 'Medium', value: '50%' },
-	*         { label: 'Small', value: '25%' },
-	*       ] }
-	*       onChange={ setSize }
-	*     />
-	*   );
-	* };
-	* ```
-	*/
-	const SelectControl = (0, _wordpress_element.forwardRef)(UnforwardedSelectControl);
-	SelectControl.displayName = "SelectControl";
+	};
 
-// packages/components/build-module/date-time/time-picker/timezone.mjs
+// packages/components/build-module/date-time/time-picker/time-input/index.mjs
 	const STYLE_HASH_ATTRIBUTE$40 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -66740,32 +66667,113 @@ Icon: ButtonIcon });
 		"month-select-wrapper": "_5d72e2a92cafa40a__month-select-wrapper",
 		"time-zone": "_1f5c0cf0e4988dbf__time-zone"
 	};
-	/**
-	* Displays timezone information when user timezone is different from site
-	* timezone.
-	*/
-	const TimeZone = () => {
-		const { timezone } = (0, _wordpress_date.getSettings)();
-		const userTimezoneOffset = -1 * ((/* @__PURE__ */ new Date()).getTimezoneOffset() / 60);
-		if (Number(timezone.offset) === userTimezoneOffset) return null;
-		const offsetSymbol = Number(timezone.offset) >= 0 ? "+" : "";
-		const zoneAbbr = "" !== timezone.abbr && isNaN(Number(timezone.abbr)) ? timezone.abbr : `UTC${offsetSymbol}${timezone.offsetFormatted}`;
-		const prettyTimezoneString = timezone.string.replaceAll("_", " ");
-		const timezoneDetail = "UTC" === timezone.string ? (0, _wordpress_i18n.__)("Coordinated Universal Time") : `(${zoneAbbr}) ${prettyTimezoneString}`;
-		return prettyTimezoneString.trim().length === 0 ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			className: clsx("components-datetime__timezone", style_module_default$40["time-zone"]),
-			children: zoneAbbr
-		}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tooltip, {
-			placement: "top",
-			text: timezoneDetail,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				className: clsx("components-datetime__timezone", style_module_default$40["time-zone"]),
-				children: zoneAbbr
-			})
+	function TimeInput({ value: valueProp, defaultValue, is12Hour, label, minutesProps, onChange }) {
+		const [value = {
+			hours: (/* @__PURE__ */ new Date()).getHours(),
+			minutes: (/* @__PURE__ */ new Date()).getMinutes()
+		}, setValue] = useControlledValue({
+			value: valueProp,
+			onChange,
+			defaultValue
 		});
-	};
+		const dayPeriod = parseDayPeriod(value.hours);
+		const hours12Format = from24hTo12h(value.hours);
+		const buildNumberControlChangeCallback = (method) => {
+			return (_value, { event }) => {
+				if (!validateInputElementTarget(event)) return;
+				const numberValue = Number(_value);
+				setValue({
+					...value,
+					[method]: method === "hours" && is12Hour ? from12hTo24h(numberValue, dayPeriod === "PM") : numberValue
+				});
+			};
+		};
+		const buildAmPmChangeCallback = (_value) => {
+			return () => {
+				if (dayPeriod === _value) return;
+				setValue({
+					...value,
+					hours: from12hTo24h(hours12Format, _value === "PM")
+				});
+			};
+		};
+		function parseDayPeriod(_hours) {
+			return _hours < 12 ? "AM" : "PM";
+		}
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(label ? "fieldset" : _wordpress_element.Fragment, {
+			...label ? { className: style_module_default$40.fieldset } : {},
+			children: [label && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
+				as: "legend",
+				children: label
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HStack, {
+				alignment: "left",
+				expanded: false,
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+					className: clsx("components-datetime__time-field components-datetime__time-field-time", style_module_default$40["time-wrapper"]),
+					children: [
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
+							className: clsx("components-datetime__time-field-hours-input", style_module_default$40["hours-input"]),
+							label: (0, _wordpress_i18n.__)("Hours"),
+							hideLabelFromVision: true,
+							value: String(is12Hour ? hours12Format : value.hours).padStart(2, "0"),
+							step: 1,
+							min: is12Hour ? 1 : 0,
+							max: is12Hour ? 12 : 23,
+							required: true,
+							spinControls: "none",
+							isPressEnterToChange: true,
+							isDragEnabled: false,
+							isShiftStepEnabled: false,
+							onChange: buildNumberControlChangeCallback("hours"),
+							__unstableStateReducer: buildPadInputStateReducer(2)
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+							className: clsx("components-datetime__time-separator", style_module_default$40["time-separator"]),
+							"aria-hidden": "true",
+							children: ":"
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
+							label: (0, _wordpress_i18n.__)("Minutes"),
+							hideLabelFromVision: true,
+							value: String(value.minutes).padStart(2, "0"),
+							step: 1,
+							min: 0,
+							max: 59,
+							required: true,
+							spinControls: "none",
+							isPressEnterToChange: true,
+							isDragEnabled: false,
+							isShiftStepEnabled: false,
+							onChange: (...args) => {
+								buildNumberControlChangeCallback("minutes")(...args);
+								minutesProps?.onChange?.(...args);
+							},
+							__unstableStateReducer: buildPadInputStateReducer(2),
+							...minutesProps,
+							className: clsx(style_module_default$40["minutes-input"], minutesProps?.className ?? "components-datetime__time-field-minutes-input")
+						})
+					]
+				}), is12Hour && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ToggleGroupControl, {
+					isBlock: true,
+					label: (0, _wordpress_i18n.__)("Select AM or PM"),
+					hideLabelFromVision: true,
+					value: dayPeriod,
+					onChange: (newValue) => {
+						buildAmPmChangeCallback(newValue)();
+					},
+					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToggleGroupControlOption, {
+						value: "AM",
+						label: (0, _wordpress_i18n.__)("AM")
+					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToggleGroupControlOption, {
+						value: "PM",
+						label: (0, _wordpress_i18n.__)("PM")
+					})]
+				})]
+			})]
+		});
+	}
 
-// packages/components/build-module/date-time/time-picker/time-input/index.mjs
+// packages/components/build-module/date-time/time-picker/index.mjs
 	const STYLE_HASH_ATTRIBUTE$39 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -66880,113 +66888,236 @@ Icon: ButtonIcon });
 		"month-select-wrapper": "_5d72e2a92cafa40a__month-select-wrapper",
 		"time-zone": "_1f5c0cf0e4988dbf__time-zone"
 	};
-	function TimeInput({ value: valueProp, defaultValue, is12Hour, label, minutesProps, onChange }) {
-		const [value = {
-			hours: (/* @__PURE__ */ new Date()).getHours(),
-			minutes: (/* @__PURE__ */ new Date()).getMinutes()
-		}, setValue] = useControlledValue({
-			value: valueProp,
-			onChange,
-			defaultValue
-		});
-		const dayPeriod = parseDayPeriod(value.hours);
-		const hours12Format = from24hTo12h(value.hours);
+	const VALID_DATE_ORDERS = [
+		"dmy",
+		"mdy",
+		"ymd"
+	];
+	/**
+	* TimePicker is a React component that renders form inputs for time and date selection. It can be used independently or as part of the `DateTimePicker` component.
+	*
+	* ```jsx
+	* import { TimePicker } from '@wordpress/components';
+	* import { useState } from '@wordpress/element';
+	*
+	* const MyTimePicker = () => {
+	*   const [ time, setTime ] = useState( new Date() );
+	*
+	*   return (
+	*     <TimePicker
+	*       currentTime={ date }
+	*       onChange={ ( newTime ) => setTime( newTime ) }
+	*       is12Hour
+	*     />
+	*   );
+	* };
+	* ```
+	*/
+	function TimePicker({ is12Hour, currentTime, onChange, dateOrder: dateOrderProp, hideLabelFromVision = false }) {
+		useEnableWpCompatOverlaySlot();
+		const [date$1, setDate] = (0, _wordpress_element.useState)(() => startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date())));
+		(0, _wordpress_element.useEffect)(() => {
+			setDate(startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date())));
+		}, [currentTime]);
+		const monthOptions = [
+			{
+				value: "01",
+				label: (0, _wordpress_i18n.__)("January")
+			},
+			{
+				value: "02",
+				label: (0, _wordpress_i18n.__)("February")
+			},
+			{
+				value: "03",
+				label: (0, _wordpress_i18n.__)("March")
+			},
+			{
+				value: "04",
+				label: (0, _wordpress_i18n.__)("April")
+			},
+			{
+				value: "05",
+				label: (0, _wordpress_i18n.__)("May")
+			},
+			{
+				value: "06",
+				label: (0, _wordpress_i18n.__)("June")
+			},
+			{
+				value: "07",
+				label: (0, _wordpress_i18n.__)("July")
+			},
+			{
+				value: "08",
+				label: (0, _wordpress_i18n.__)("August")
+			},
+			{
+				value: "09",
+				label: (0, _wordpress_i18n.__)("September")
+			},
+			{
+				value: "10",
+				label: (0, _wordpress_i18n.__)("October")
+			},
+			{
+				value: "11",
+				label: (0, _wordpress_i18n.__)("November")
+			},
+			{
+				value: "12",
+				label: (0, _wordpress_i18n.__)("December")
+			}
+		];
+		const { day, month, year, minutes, hours } = (0, _wordpress_element.useMemo)(() => ({
+			day: (0, _wordpress_date.date)("d", date$1),
+			month: (0, _wordpress_date.date)("m", date$1),
+			year: (0, _wordpress_date.date)("Y", date$1),
+			minutes: (0, _wordpress_date.date)("i", date$1),
+			hours: (0, _wordpress_date.date)("H", date$1)
+		}), [date$1]);
 		const buildNumberControlChangeCallback = (method) => {
-			return (_value, { event }) => {
+			const callback = (value, { event }) => {
 				if (!validateInputElementTarget(event)) return;
-				const numberValue = Number(_value);
-				setValue({
-					...value,
-					[method]: method === "hours" && is12Hour ? from12hTo24h(numberValue, dayPeriod === "PM") : numberValue
-				});
+				const numberValue = Number(value);
+				const newDate = setInConfiguredTimezone(date$1, { [method]: numberValue });
+				setDate(newDate);
+				onChange?.((0, _wordpress_date.date)(TIMEZONELESS_FORMAT, newDate));
 			};
+			return callback;
 		};
-		const buildAmPmChangeCallback = (_value) => {
-			return () => {
-				if (dayPeriod === _value) return;
-				setValue({
-					...value,
-					hours: from12hTo24h(hours12Format, _value === "PM")
-				});
-			};
+		const onTimeInputChangeCallback = ({ hours: newHours, minutes: newMinutes }) => {
+			const newDate = setInConfiguredTimezone(date$1, {
+				hours: newHours,
+				minutes: newMinutes
+			});
+			setDate(newDate);
+			onChange?.((0, _wordpress_date.date)(TIMEZONELESS_FORMAT, newDate));
 		};
-		function parseDayPeriod(_hours) {
-			return _hours < 12 ? "AM" : "PM";
-		}
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(label ? "fieldset" : _wordpress_element.Fragment, {
-			...label ? { className: style_module_default$39.fieldset } : {},
-			children: [label && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
-				as: "legend",
-				children: label
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HStack, {
-				alignment: "left",
-				expanded: false,
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-					className: clsx("components-datetime__time-field components-datetime__time-field-time", style_module_default$39["time-wrapper"]),
+		const dayField = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
+			className: clsx("components-datetime__time-field components-datetime__time-field-day", style_module_default$39["day-input"]),
+			label: (0, _wordpress_i18n.__)("Day"),
+			hideLabelFromVision: true,
+			value: day,
+			step: 1,
+			min: 1,
+			max: getDaysInMonth(Number(year), Number(month) - 1),
+			required: true,
+			spinControls: "none",
+			isPressEnterToChange: true,
+			isDragEnabled: false,
+			isShiftStepEnabled: false,
+			onChange: buildNumberControlChangeCallback("date")
+		}, "day");
+		const monthField = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			className: style_module_default$39["month-select-wrapper"],
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
+				className: "components-datetime__time-field components-datetime__time-field-month",
+				label: (0, _wordpress_i18n.__)("Month"),
+				hideLabelFromVision: true,
+				items: monthOptions,
+				value: monthOptions.find((item) => item.value === month) ?? null,
+				onValueChange: (item) => {
+					if (!item?.value || item.value === month) return;
+					const newDate = setInConfiguredTimezone(date$1, { month: Number(item.value) - 1 });
+					setDate(newDate);
+					onChange?.((0, _wordpress_date.date)(TIMEZONELESS_FORMAT, newDate));
+				}
+			})
+		}, "month");
+		const yearField = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
+			className: clsx("components-datetime__time-field components-datetime__time-field-year", style_module_default$39["year-input"]),
+			label: (0, _wordpress_i18n.__)("Year"),
+			hideLabelFromVision: true,
+			value: year,
+			step: 1,
+			min: 1,
+			max: 9999,
+			required: true,
+			spinControls: "none",
+			isPressEnterToChange: true,
+			isDragEnabled: false,
+			isShiftStepEnabled: false,
+			onChange: buildNumberControlChangeCallback("year"),
+			__unstableStateReducer: buildPadInputStateReducer(4)
+		}, "year");
+		const defaultDateOrder = is12Hour ? "mdy" : "dmy";
+		const fields = (dateOrderProp && VALID_DATE_ORDERS.includes(dateOrderProp) ? dateOrderProp : defaultDateOrder).split("").map((field) => {
+			switch (field) {
+				case "d": return dayField;
+				case "m": return monthField;
+				case "y": return yearField;
+				default: return null;
+			}
+		});
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+			className: clsx("components-datetime__time", style_module_default$39.wrapper),
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", {
+				className: style_module_default$39.fieldset,
+				children: [hideLabelFromVision ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+					as: "legend",
+					children: (0, _wordpress_i18n.__)("Time")
+				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
+					as: "legend",
+					className: "components-datetime__time-legend",
+					children: (0, _wordpress_i18n.__)("Time")
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HStack, {
+					className: "components-datetime__time-wrapper",
 					children: [
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
-							className: clsx("components-datetime__time-field-hours-input", style_module_default$39["hours-input"]),
-							label: (0, _wordpress_i18n.__)("Hours"),
-							hideLabelFromVision: true,
-							value: String(is12Hour ? hours12Format : value.hours).padStart(2, "0"),
-							step: 1,
-							min: is12Hour ? 1 : 0,
-							max: is12Hour ? 12 : 23,
-							required: true,
-							spinControls: "none",
-							isPressEnterToChange: true,
-							isDragEnabled: false,
-							isShiftStepEnabled: false,
-							onChange: buildNumberControlChangeCallback("hours"),
-							__unstableStateReducer: buildPadInputStateReducer(2)
-						}),
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-							className: clsx("components-datetime__time-separator", style_module_default$39["time-separator"]),
-							"aria-hidden": "true",
-							children: ":"
-						}),
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
-							label: (0, _wordpress_i18n.__)("Minutes"),
-							hideLabelFromVision: true,
-							value: String(value.minutes).padStart(2, "0"),
-							step: 1,
-							min: 0,
-							max: 59,
-							required: true,
-							spinControls: "none",
-							isPressEnterToChange: true,
-							isDragEnabled: false,
-							isShiftStepEnabled: false,
-							onChange: (...args) => {
-								buildNumberControlChangeCallback("minutes")(...args);
-								minutesProps?.onChange?.(...args);
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(TimeInput, {
+							value: {
+								hours: Number(hours),
+								minutes: Number(minutes)
 							},
-							__unstableStateReducer: buildPadInputStateReducer(2),
-							...minutesProps,
-							className: clsx(style_module_default$39["minutes-input"], minutesProps?.className ?? "components-datetime__time-field-minutes-input")
-						})
+							is12Hour,
+							onChange: onTimeInputChangeCallback
+						}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spacer, {}),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(TimeZone, {})
 					]
-				}), is12Hour && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ToggleGroupControl, {
-					isBlock: true,
-					label: (0, _wordpress_i18n.__)("Select AM or PM"),
-					hideLabelFromVision: true,
-					value: dayPeriod,
-					onChange: (newValue) => {
-						buildAmPmChangeCallback(newValue)();
-					},
-					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToggleGroupControlOption, {
-						value: "AM",
-						label: (0, _wordpress_i18n.__)("AM")
-					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToggleGroupControlOption, {
-						value: "PM",
-						label: (0, _wordpress_i18n.__)("PM")
-					})]
+				})]
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", {
+				className: style_module_default$39.fieldset,
+				children: [hideLabelFromVision ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+					as: "legend",
+					children: (0, _wordpress_i18n.__)("Date")
+				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
+					as: "legend",
+					className: "components-datetime__time-legend",
+					children: (0, _wordpress_i18n.__)("Date")
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HStack, {
+					className: "components-datetime__time-wrapper",
+					children: fields
 				})]
 			})]
 		});
 	}
+	/**
+	* A component to input a time.
+	*
+	* Values are passed as an object in 24-hour format (`{ hours: number, minutes: number }`).
+	*
+	* ```jsx
+	* import { TimePicker } from '@wordpress/components';
+	* import { useState } from '@wordpress/element';
+	*
+	* const MyTimeInput = () => {
+	* 	const [ time, setTime ] = useState( { hours: 13, minutes: 30 } );
+	*
+	* 	return (
+	* 		<TimePicker.TimeInput
+	* 			value={ time }
+	* 			onChange={ setTime }
+	* 			label="Time"
+	* 		/>
+	* 	);
+	* };
+	* ```
+	*/
+	TimePicker.TimeInput = TimeInput;
+	Object.assign(TimePicker.TimeInput, { displayName: "TimePicker.TimeInput" });
 
-// packages/components/build-module/date-time/time-picker/index.mjs
+// packages/components/build-module/date-time/date-time/index.mjs
 	const STYLE_HASH_ATTRIBUTE$38 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -67088,247 +67219,62 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$38(targetDocument, hash, css);
 	}
-	registerStyle$38("e599d79351", ".db7f533dc0e651ba__wrapper{box-sizing:border-box;font-size:var(--wpds-typography-font-size-md,13px)}.d50578409db7d880__fieldset{border:0;margin:0 0 16px;padding:0}.d50578409db7d880__fieldset:last-child{margin-bottom:0}._02ed34aff618fb4f__time-wrapper{direction:ltr;display:flex}._32b93511bda7911f__day-input._32b93511bda7911f__day-input._32b93511bda7911f__day-input .components-input-control__input,._371547def4921730__year-input._371547def4921730__year-input._371547def4921730__year-input .components-input-control__input,.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input .components-input-control__input,.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input .components-input-control__input{padding-left:8px;padding-right:8px;text-align:center}.f676a3c435ce1a41__hours-input{width:36px}.f676a3c435ce1a41__hours-input:focus-within{z-index:1}.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input .components-input-control__input{padding-right:0}.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input.f676a3c435ce1a41__hours-input .components-input-control__backdrop{border-bottom-right-radius:0;border-right:0;border-top-right-radius:0}.af010720aadd8138__time-separator{border-bottom:1px solid #757575;border-top:1px solid #757575;display:inline-block;font-size:var(--wpds-typography-font-size-md,13px);line-height:34px}.f59b0e7c9125d943__minutes-input{width:36px}.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input .components-input-control__input{padding-left:0}.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input.f59b0e7c9125d943__minutes-input .components-input-control__backdrop{border-bottom-left-radius:0;border-left:0;border-top-left-radius:0}._5d72e2a92cafa40a__month-select-wrapper{flex-grow:1}._32b93511bda7911f__day-input{width:36px}._371547def4921730__year-input{width:56px}._1f5c0cf0e4988dbf__time-zone{text-decoration:underline dotted}");
-	var style_module_default$38 = {
-		"wrapper": "db7f533dc0e651ba__wrapper",
-		"fieldset": "d50578409db7d880__fieldset",
-		"time-wrapper": "_02ed34aff618fb4f__time-wrapper",
-		"hours-input": "f676a3c435ce1a41__hours-input",
-		"minutes-input": "f59b0e7c9125d943__minutes-input",
-		"day-input": "_32b93511bda7911f__day-input",
-		"year-input": "_371547def4921730__year-input",
-		"time-separator": "af010720aadd8138__time-separator",
-		"month-select-wrapper": "_5d72e2a92cafa40a__month-select-wrapper",
-		"time-zone": "_1f5c0cf0e4988dbf__time-zone"
-	};
-	const VALID_DATE_ORDERS = [
-		"dmy",
-		"mdy",
-		"ymd"
-	];
+	registerStyle$38("8425a128be", ".cebf17fea3c62f87__wrapper{box-sizing:border-box}");
+	var style_module_default$38 = { "wrapper": "cebf17fea3c62f87__wrapper" };
+	const noop$12 = () => {};
+	function UnforwardedDateTimePicker({ currentDate, is12Hour, dateOrder, isInvalidDate, onMonthPreviewed = noop$12, onChange, events, startOfWeek }, ref) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VStack, {
+			ref,
+			className: clsx("components-datetime", style_module_default$38.wrapper),
+			spacing: 4,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(TimePicker, {
+				currentTime: currentDate,
+				onChange,
+				is12Hour,
+				dateOrder
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DatePicker, {
+				currentDate,
+				onChange,
+				isInvalidDate,
+				events,
+				onMonthPreviewed,
+				startOfWeek
+			})] })
+		});
+	}
 	/**
-	* TimePicker is a React component that renders form inputs for time and date selection. It can be used independently or as part of the `DateTimePicker` component.
+	* DateTimePicker is a React component that renders a calendar and clock for
+	* date and time selection. The calendar and clock components can be accessed
+	* individually using the `DatePicker` and `TimePicker` components respectively.
 	*
 	* ```jsx
-	* import { TimePicker } from '@wordpress/components';
+	* import { DateTimePicker } from '@wordpress/components';
 	* import { useState } from '@wordpress/element';
 	*
-	* const MyTimePicker = () => {
-	*   const [ time, setTime ] = useState( new Date() );
+	* const MyDateTimePicker = () => {
+	*   const [ date, setDate ] = useState( new Date() );
 	*
 	*   return (
-	*     <TimePicker
-	*       currentTime={ date }
-	*       onChange={ ( newTime ) => setTime( newTime ) }
+	*     <DateTimePicker
+	*       currentDate={ date }
+	*       onChange={ ( newDate ) => setDate( newDate ) }
 	*       is12Hour
 	*     />
 	*   );
 	* };
 	* ```
 	*/
-	function TimePicker({ is12Hour, currentTime, onChange, dateOrder: dateOrderProp, hideLabelFromVision = false }) {
-		const [date$1, setDate] = (0, _wordpress_element.useState)(() => startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date())));
-		(0, _wordpress_element.useEffect)(() => {
-			setDate(startOfMinute(inputToDate(currentTime ?? /* @__PURE__ */ new Date())));
-		}, [currentTime]);
-		const monthOptions = [
-			{
-				value: "01",
-				label: (0, _wordpress_i18n.__)("January")
-			},
-			{
-				value: "02",
-				label: (0, _wordpress_i18n.__)("February")
-			},
-			{
-				value: "03",
-				label: (0, _wordpress_i18n.__)("March")
-			},
-			{
-				value: "04",
-				label: (0, _wordpress_i18n.__)("April")
-			},
-			{
-				value: "05",
-				label: (0, _wordpress_i18n.__)("May")
-			},
-			{
-				value: "06",
-				label: (0, _wordpress_i18n.__)("June")
-			},
-			{
-				value: "07",
-				label: (0, _wordpress_i18n.__)("July")
-			},
-			{
-				value: "08",
-				label: (0, _wordpress_i18n.__)("August")
-			},
-			{
-				value: "09",
-				label: (0, _wordpress_i18n.__)("September")
-			},
-			{
-				value: "10",
-				label: (0, _wordpress_i18n.__)("October")
-			},
-			{
-				value: "11",
-				label: (0, _wordpress_i18n.__)("November")
-			},
-			{
-				value: "12",
-				label: (0, _wordpress_i18n.__)("December")
-			}
-		];
-		const { day, month, year, minutes, hours } = (0, _wordpress_element.useMemo)(() => ({
-			day: (0, _wordpress_date.date)("d", date$1),
-			month: (0, _wordpress_date.date)("m", date$1),
-			year: (0, _wordpress_date.date)("Y", date$1),
-			minutes: (0, _wordpress_date.date)("i", date$1),
-			hours: (0, _wordpress_date.date)("H", date$1)
-		}), [date$1]);
-		const buildNumberControlChangeCallback = (method) => {
-			const callback = (value, { event }) => {
-				if (!validateInputElementTarget(event)) return;
-				const numberValue = Number(value);
-				const newDate = setInConfiguredTimezone(date$1, { [method]: numberValue });
-				setDate(newDate);
-				onChange?.((0, _wordpress_date.date)(TIMEZONELESS_FORMAT, newDate));
-			};
-			return callback;
-		};
-		const onTimeInputChangeCallback = ({ hours: newHours, minutes: newMinutes }) => {
-			const newDate = setInConfiguredTimezone(date$1, {
-				hours: newHours,
-				minutes: newMinutes
-			});
-			setDate(newDate);
-			onChange?.((0, _wordpress_date.date)(TIMEZONELESS_FORMAT, newDate));
-		};
-		const dayField = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
-			className: clsx("components-datetime__time-field components-datetime__time-field-day", style_module_default$38["day-input"]),
-			label: (0, _wordpress_i18n.__)("Day"),
-			hideLabelFromVision: true,
-			value: day,
-			step: 1,
-			min: 1,
-			max: getDaysInMonth(Number(year), Number(month) - 1),
-			required: true,
-			spinControls: "none",
-			isPressEnterToChange: true,
-			isDragEnabled: false,
-			isShiftStepEnabled: false,
-			onChange: buildNumberControlChangeCallback("date")
-		}, "day");
-		const monthField = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			className: style_module_default$38["month-select-wrapper"],
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl, {
-				className: "components-datetime__time-field components-datetime__time-field-month",
-				label: (0, _wordpress_i18n.__)("Month"),
-				hideLabelFromVision: true,
-				value: month,
-				options: monthOptions,
-				onChange: (value) => {
-					const newDate = setInConfiguredTimezone(date$1, { month: Number(value) - 1 });
-					setDate(newDate);
-					onChange?.((0, _wordpress_date.date)(TIMEZONELESS_FORMAT, newDate));
-				}
-			})
-		}, "month");
-		const yearField = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
-			className: clsx("components-datetime__time-field components-datetime__time-field-year", style_module_default$38["year-input"]),
-			label: (0, _wordpress_i18n.__)("Year"),
-			hideLabelFromVision: true,
-			value: year,
-			step: 1,
-			min: 1,
-			max: 9999,
-			required: true,
-			spinControls: "none",
-			isPressEnterToChange: true,
-			isDragEnabled: false,
-			isShiftStepEnabled: false,
-			onChange: buildNumberControlChangeCallback("year"),
-			__unstableStateReducer: buildPadInputStateReducer(4)
-		}, "year");
-		const defaultDateOrder = is12Hour ? "mdy" : "dmy";
-		const fields = (dateOrderProp && VALID_DATE_ORDERS.includes(dateOrderProp) ? dateOrderProp : defaultDateOrder).split("").map((field) => {
-			switch (field) {
-				case "d": return dayField;
-				case "m": return monthField;
-				case "y": return yearField;
-				default: return null;
-			}
-		});
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: clsx("components-datetime__time", style_module_default$38.wrapper),
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", {
-				className: style_module_default$38.fieldset,
-				children: [hideLabelFromVision ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-					as: "legend",
-					children: (0, _wordpress_i18n.__)("Time")
-				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
-					as: "legend",
-					className: "components-datetime__time-legend",
-					children: (0, _wordpress_i18n.__)("Time")
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HStack, {
-					className: "components-datetime__time-wrapper",
-					children: [
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(TimeInput, {
-							value: {
-								hours: Number(hours),
-								minutes: Number(minutes)
-							},
-							is12Hour,
-							onChange: onTimeInputChangeCallback
-						}),
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spacer, {}),
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(TimeZone, {})
-					]
-				})]
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", {
-				className: style_module_default$38.fieldset,
-				children: [hideLabelFromVision ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-					as: "legend",
-					children: (0, _wordpress_i18n.__)("Date")
-				}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
-					as: "legend",
-					className: "components-datetime__time-legend",
-					children: (0, _wordpress_i18n.__)("Date")
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HStack, {
-					className: "components-datetime__time-wrapper",
-					children: fields
-				})]
-			})]
-		});
-	}
-	/**
-	* A component to input a time.
-	*
-	* Values are passed as an object in 24-hour format (`{ hours: number, minutes: number }`).
-	*
-	* ```jsx
-	* import { TimePicker } from '@wordpress/components';
-	* import { useState } from '@wordpress/element';
-	*
-	* const MyTimeInput = () => {
-	* 	const [ time, setTime ] = useState( { hours: 13, minutes: 30 } );
-	*
-	* 	return (
-	* 		<TimePicker.TimeInput
-	* 			value={ time }
-	* 			onChange={ setTime }
-	* 			label="Time"
-	* 		/>
-	* 	);
-	* };
-	* ```
-	*/
-	TimePicker.TimeInput = TimeInput;
-	Object.assign(TimePicker.TimeInput, { displayName: "TimePicker.TimeInput" });
+	const DateTimePicker = (0, _wordpress_element.forwardRef)(UnforwardedDateTimePicker);
+	DateTimePicker.displayName = "DateTimePicker";
 
-// packages/components/build-module/date-time/date-time/index.mjs
+// packages/components/build-module/date-time/index.mjs
+	var date_time_default = DateTimePicker;
+
+// packages/components/build-module/disabled/context.mjs
+	const Context$1 = (0, _wordpress_element.createContext)(false);
+	Context$1.displayName = "DisabledContext";
+
+// packages/components/build-module/disabled/index.mjs
 	const STYLE_HASH_ATTRIBUTE$37 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -67430,62 +67376,111 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$37(targetDocument, hash, css);
 	}
-	registerStyle$37("8425a128be", ".cebf17fea3c62f87__wrapper{box-sizing:border-box}");
-	var style_module_default$37 = { "wrapper": "cebf17fea3c62f87__wrapper" };
-	const noop$12 = () => {};
-	function UnforwardedDateTimePicker({ currentDate, is12Hour, dateOrder, isInvalidDate, onMonthPreviewed = noop$12, onChange, events, startOfWeek }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VStack, {
-			ref,
-			className: clsx("components-datetime", style_module_default$37.wrapper),
-			spacing: 4,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(TimePicker, {
-				currentTime: currentDate,
-				onChange,
-				is12Hour,
-				dateOrder
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DatePicker, {
-				currentDate,
-				onChange,
-				isInvalidDate,
-				events,
-				onMonthPreviewed,
-				startOfWeek
-			})] })
-		});
-	}
+	registerStyle$37("f48a43371e", "._708798608fbe1290__disabled{pointer-events:none;position:relative}._708798608fbe1290__disabled:after{content:\"\";inset:0;position:absolute}._708798608fbe1290__disabled *{pointer-events:none}");
+	var style_module_default$37 = { "disabled": "_708798608fbe1290__disabled" };
+	const { Consumer, Provider: Provider$2 } = Context$1;
 	/**
-	* DateTimePicker is a React component that renders a calendar and clock for
-	* date and time selection. The calendar and clock components can be accessed
-	* individually using the `DatePicker` and `TimePicker` components respectively.
+	* `Disabled` is a component which disables descendant tabbable elements and
+	* prevents pointer interaction.
+	*
+	* _Note: this component may not behave as expected in browsers that don't
+	* support the `inert` HTML attribute. We recommend adding the official WICG
+	* polyfill when using this component in your project._
+	*
+	* @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
 	*
 	* ```jsx
-	* import { DateTimePicker } from '@wordpress/components';
+	* import { Button, Disabled, TextControl } from '@wordpress/components';
 	* import { useState } from '@wordpress/element';
 	*
-	* const MyDateTimePicker = () => {
-	*   const [ date, setDate ] = useState( new Date() );
+	* const MyDisabled = () => {
+	* 	const [ isDisabled, setIsDisabled ] = useState( true );
 	*
-	*   return (
-	*     <DateTimePicker
-	*       currentDate={ date }
-	*       onChange={ ( newDate ) => setDate( newDate ) }
-	*       is12Hour
-	*     />
-	*   );
+	*	let input = (
+	*		<TextControl
+	*			label="Input"
+	*			onChange={ () => {} }
+	*		/>
+	*	);
+	* 	if ( isDisabled ) {
+	* 		input = <Disabled>{ input }</Disabled>;
+	* 	}
+	*
+	* 	const toggleDisabled = () => {
+	* 		setIsDisabled( ( state ) => ! state );
+	* 	};
+	*
+	* 	return (
+	* 		<div>
+	* 			{ input }
+	* 			<Button variant="primary" onClick={ toggleDisabled }>
+	* 				Toggle Disabled
+	* 			</Button>
+	* 		</div>
+	* 	);
 	* };
 	* ```
 	*/
-	const DateTimePicker = (0, _wordpress_element.forwardRef)(UnforwardedDateTimePicker);
-	DateTimePicker.displayName = "DateTimePicker";
+	function Disabled({ className, children, isDisabled = true, ...props }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Provider$2, {
+			value: isDisabled,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				inert: inertValue(isDisabled),
+				className: clsx(className, isDisabled && [style_module_default$37.disabled, "components-disabled"]) || void 0,
+				...props,
+				children
+			})
+		});
+	}
+	Disabled.Context = Context$1;
+	Disabled.Consumer = Consumer;
 
-// packages/components/build-module/date-time/index.mjs
-	var date_time_default = DateTimePicker;
+// packages/components/build-module/disclosure/index.mjs
+/**
+	* Accessible Disclosure component that controls visibility of a section of
+	* content. It follows the WAI-ARIA Disclosure Pattern.
+	*/
+	const UnforwardedDisclosureContent = ({ visible, children, ...props }, ref) => {
+		const disclosure = useDisclosureStore({ open: visible });
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DisclosureContent$1, {
+			store: disclosure,
+			ref,
+			...props,
+			children
+		});
+	};
+	const DisclosureContent = (0, _wordpress_element.forwardRef)(UnforwardedDisclosureContent);
+	DisclosureContent.displayName = "DisclosureContent";
 
-// packages/components/build-module/disabled/context.mjs
-	const Context$1 = (0, _wordpress_element.createContext)(false);
-	Context$1.displayName = "DisabledContext";
+// packages/components/build-module/divider/deprecated.mjs
+	function UnconnectedDeprecatedDivider(props, forwardedRef) {
+		(0, _wordpress_deprecated.default)("wp.components.__experimentalDivider", {
+			since: "7.2",
+			version: "7.4"
+		});
+		return UnconnectedDivider(props, forwardedRef);
+	}
+	/**
+	* `Divider` is a layout component that separates groups of related content.
+	*
+	* This component is deprecated. Prefer a `Separator` subcomponent such as
+	* `Menu.Separator` when the surrounding component provides one. Otherwise
+	* write your own CSS, preferably using the [design tokens](https://wordpress.github.io/gutenberg/?path=/docs/design-system-tokens-introduction--docs)
+	* available in `@wordpress/theme`.
+	*
+	* @deprecated
+	*
+	* ```jsx
+	* import { __experimentalDivider as Divider } from '@wordpress/components';
+	*
+	* function Example() {
+	* 	return <Divider />;
+	* }
+	* ```
+	*/
+	const DeprecatedDivider = contextConnect(UnconnectedDeprecatedDivider, "Divider");
 
-// packages/components/build-module/disabled/index.mjs
+// packages/components/build-module/draggable/index.mjs
 	const STYLE_HASH_ATTRIBUTE$36 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -67587,220 +67582,14 @@ Icon: ButtonIcon });
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$36(targetDocument, hash, css);
 	}
-	registerStyle$36("f48a43371e", "._708798608fbe1290__disabled{pointer-events:none;position:relative}._708798608fbe1290__disabled:after{content:\"\";inset:0;position:absolute}._708798608fbe1290__disabled *{pointer-events:none}");
-	var style_module_default$36 = { "disabled": "_708798608fbe1290__disabled" };
-	const { Consumer, Provider: Provider$2 } = Context$1;
-	/**
-	* `Disabled` is a component which disables descendant tabbable elements and
-	* prevents pointer interaction.
-	*
-	* _Note: this component may not behave as expected in browsers that don't
-	* support the `inert` HTML attribute. We recommend adding the official WICG
-	* polyfill when using this component in your project._
-	*
-	* @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
-	*
-	* ```jsx
-	* import { Button, Disabled, TextControl } from '@wordpress/components';
-	* import { useState } from '@wordpress/element';
-	*
-	* const MyDisabled = () => {
-	* 	const [ isDisabled, setIsDisabled ] = useState( true );
-	*
-	*	let input = (
-	*		<TextControl
-	*			label="Input"
-	*			onChange={ () => {} }
-	*		/>
-	*	);
-	* 	if ( isDisabled ) {
-	* 		input = <Disabled>{ input }</Disabled>;
-	* 	}
-	*
-	* 	const toggleDisabled = () => {
-	* 		setIsDisabled( ( state ) => ! state );
-	* 	};
-	*
-	* 	return (
-	* 		<div>
-	* 			{ input }
-	* 			<Button variant="primary" onClick={ toggleDisabled }>
-	* 				Toggle Disabled
-	* 			</Button>
-	* 		</div>
-	* 	);
-	* };
-	* ```
-	*/
-	function Disabled({ className, children, isDisabled = true, ...props }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Provider$2, {
-			value: isDisabled,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				inert: inertValue(isDisabled),
-				className: clsx(className, isDisabled && [style_module_default$36.disabled, "components-disabled"]) || void 0,
-				...props,
-				children
-			})
-		});
-	}
-	Disabled.Context = Context$1;
-	Disabled.Consumer = Consumer;
-
-// packages/components/build-module/disclosure/index.mjs
-/**
-	* Accessible Disclosure component that controls visibility of a section of
-	* content. It follows the WAI-ARIA Disclosure Pattern.
-	*/
-	const UnforwardedDisclosureContent = ({ visible, children, ...props }, ref) => {
-		const disclosure = useDisclosureStore({ open: visible });
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DisclosureContent$1, {
-			store: disclosure,
-			ref,
-			...props,
-			children
-		});
-	};
-	const DisclosureContent = (0, _wordpress_element.forwardRef)(UnforwardedDisclosureContent);
-	DisclosureContent.displayName = "DisclosureContent";
-
-// packages/components/build-module/divider/deprecated.mjs
-	function UnconnectedDeprecatedDivider(props, forwardedRef) {
-		(0, _wordpress_deprecated.default)("wp.components.__experimentalDivider", {
-			since: "7.2",
-			version: "7.4"
-		});
-		return UnconnectedDivider(props, forwardedRef);
-	}
-	/**
-	* `Divider` is a layout component that separates groups of related content.
-	*
-	* This component is deprecated. Prefer a `Separator` subcomponent such as
-	* `Menu.Separator` when the surrounding component provides one. Otherwise
-	* write your own CSS, preferably using the [design tokens](https://wordpress.github.io/gutenberg/?path=/docs/design-system-tokens-introduction--docs)
-	* available in `@wordpress/theme`.
-	*
-	* @deprecated
-	*
-	* ```jsx
-	* import { __experimentalDivider as Divider } from '@wordpress/components';
-	*
-	* function Example() {
-	* 	return <Divider />;
-	* }
-	* ```
-	*/
-	const DeprecatedDivider = contextConnect(UnconnectedDeprecatedDivider, "Divider");
-
-// packages/components/build-module/draggable/index.mjs
-	const STYLE_HASH_ATTRIBUTE$35 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$35() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$35(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$35(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$35}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$35) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$35(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$35();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$35(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$35, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$35(targetDocument) {
-		const runtime = getRuntime$35();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$35(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$35(hash, css) {
-		const runtime = getRuntime$35();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$35(targetDocument, hash, css);
-	}
-	registerStyle$35("0e5c181860", ".e4c42312beb32cba__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}.f91f725dd8978caf__clone{background:transparent;padding:0;pointer-events:none;position:fixed}.f91f725dd8978caf__clone:not(.f9eeed97a2a62f5e__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
-	var style_module_default$35 = {
+	registerStyle$36("0e5c181860", ".e4c42312beb32cba__invisible-drag-image{height:50px;left:-1000px;position:fixed;width:50px}.f91f725dd8978caf__clone{background:transparent;padding:0;pointer-events:none;position:fixed}.f91f725dd8978caf__clone:not(.f9eeed97a2a62f5e__is-in-compat-slot){z-index:1000000000}body.is-dragging-components-draggable{cursor:move;cursor:grabbing!important}");
+	var style_module_default$36 = {
 		"invisible-drag-image": "e4c42312beb32cba__invisible-drag-image",
 		"clone": "f91f725dd8978caf__clone",
 		"is-in-compat-slot": "f9eeed97a2a62f5e__is-in-compat-slot"
 	};
-	const dragImageClasses = [style_module_default$35["invisible-drag-image"], "components-draggable__invisible-drag-image"].filter(Boolean);
-	const cloneWrapperClasses = [style_module_default$35.clone, "components-draggable__clone"].filter(Boolean);
+	const dragImageClasses = [style_module_default$36["invisible-drag-image"], "components-draggable__invisible-drag-image"].filter(Boolean);
+	const cloneWrapperClasses = [style_module_default$36.clone, "components-draggable__clone"].filter(Boolean);
 	const bodyClass = "is-dragging-components-draggable";
 	const clonePadding = 0;
 	/**
@@ -67880,7 +67669,7 @@ Icon: ButtonIcon });
 				event.dataTransfer.setDragImage(dragImage, 0, 0);
 			}
 			cloneWrapper.classList.add(...cloneWrapperClasses);
-			const inSlotClass = style_module_default$35["is-in-compat-slot"];
+			const inSlotClass = style_module_default$36["is-in-compat-slot"];
 			if (compatSlot && inSlotClass) cloneWrapper.classList.add(inSlotClass);
 			if (cloneClassname) cloneWrapper.classList.add(cloneClassname);
 			let x = 0;
@@ -68546,6 +68335,175 @@ Icon: ButtonIcon });
 	}
 
 // packages/components/build-module/focal-point-picker/controls.mjs
+	const STYLE_HASH_ATTRIBUTE$35 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$35() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$35(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$35(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$35}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$35) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$35(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$35();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$35(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$35, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$35(targetDocument) {
+		const runtime = getRuntime$35();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$35(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$35(hash, css) {
+		const runtime = getRuntime$35();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$35(targetDocument, hash, css);
+	}
+	registerStyle$35("0ed1e26ed0", "._4f91cfcb0c85cc41__root{border:0;box-sizing:border-box;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:13px;margin:0;padding:0}._4f91cfcb0c85cc41__root *,._4f91cfcb0c85cc41__root :after,._4f91cfcb0c85cc41__root :before{box-sizing:inherit}._8124adaa57f886a6__media-wrapper{background-color:transparent;contain:layout;display:flex;text-align:center;width:100%}._14038b3fb0a03b00__media-container{align-items:center;border-radius:2px;cursor:pointer;display:inline-flex;height:100%;justify-content:center;margin:auto;position:relative}._14038b3fb0a03b00__media-container:after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);content:\"\";inset:0;pointer-events:none;position:absolute}._14038b3fb0a03b00__media-container img,._14038b3fb0a03b00__media-container video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:100%}._278f7ba1e9ea0dbd__media-placeholder{background:#f0f0f0;border-radius:inherit;box-sizing:border-box;height:170px;max-width:280px;min-width:200px;width:100%}._0fd08c338d5d1ae3__unit-control{width:100%}._24e8123162458442__controls{max-width:320px;padding-top:1em}._24e8123162458442__controls:where(._18c8dc3c0d7e4db5__has-help-text){padding-bottom:1em}._1c53809aed7335a6__grid{left:50%;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;transform:translate3d(-50%,-50%,0);z-index:1}@media not (prefers-reduced-motion){._1c53809aed7335a6__grid{transition:opacity .1s linear}}._1c53809aed7335a6__grid:where(._140336f4ad6dd49c__show-overlay){opacity:1}._72bef77b62749ecc__grid-line{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);position:absolute;transform:translateZ(0)}._5e72b27b9deb5c57__grid-line-x{height:1px;inset-inline:1px}.b9c3347d2b89441c__grid-line-y{inset-block:1px;width:1px}.ca89efddd89ad211__pointer{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);border:1px solid hsla(0,0%,100%,.4);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.1);cursor:grab;height:40px;margin-left:-20px;margin-top:-20px;position:absolute;user-select:none;width:40px;will-change:transform;z-index:10000}@media not (prefers-reduced-motion){.ca89efddd89ad211__pointer{transition:transform .1s linear}}.ca89efddd89ad211__pointer:where(.be014e404db56b57__is-dragging){box-shadow:0 0 10px rgba(0,0,0,.12);cursor:grabbing;transform:scale(1.1)}");
+	var style_module_default$35 = {
+		"root": "_4f91cfcb0c85cc41__root",
+		"media-wrapper": "_8124adaa57f886a6__media-wrapper",
+		"media-container": "_14038b3fb0a03b00__media-container",
+		"media-placeholder": "_278f7ba1e9ea0dbd__media-placeholder",
+		"unit-control": "_0fd08c338d5d1ae3__unit-control",
+		"controls": "_24e8123162458442__controls",
+		"has-help-text": "_18c8dc3c0d7e4db5__has-help-text",
+		"grid": "_1c53809aed7335a6__grid",
+		"show-overlay": "_140336f4ad6dd49c__show-overlay",
+		"grid-line": "_72bef77b62749ecc__grid-line",
+		"grid-line-x": "_5e72b27b9deb5c57__grid-line-x",
+		"grid-line-y": "b9c3347d2b89441c__grid-line-y",
+		"pointer": "ca89efddd89ad211__pointer",
+		"is-dragging": "be014e404db56b57__is-dragging"
+	};
+	const TEXTCONTROL_MIN = 0;
+	const TEXTCONTROL_MAX = 100;
+	const noop$10 = () => {};
+	function FocalPointPickerControls({ hasHelpText, onChange = noop$10, point = {
+		x: .5,
+		y: .5
+	} }) {
+		const valueX = fractionToPercentage(point.x);
+		const valueY = fractionToPercentage(point.y);
+		const handleChange = (value, axis) => {
+			if (value === void 0) return;
+			const num = parseInt(value, 10);
+			if (!isNaN(num)) onChange({
+				...point,
+				[axis]: num / 100
+			});
+		};
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Flex, {
+			className: clsx(style_module_default$35.controls, "focal-point-picker__controls", { [style_module_default$35["has-help-text"]]: hasHelpText }),
+			gap: 4,
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(FocalPointUnitControl, {
+				label: (0, _wordpress_i18n.__)("Left"),
+				"aria-label": (0, _wordpress_i18n.__)("Focal point left position"),
+				value: [valueX, "%"].join(""),
+				onChange: ((next) => handleChange(next, "x")),
+				dragDirection: "e"
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FocalPointUnitControl, {
+				label: (0, _wordpress_i18n.__)("Top"),
+				"aria-label": (0, _wordpress_i18n.__)("Focal point top position"),
+				value: [valueY, "%"].join(""),
+				onChange: ((next) => handleChange(next, "y")),
+				dragDirection: "s"
+			})]
+		});
+	}
+	function FocalPointUnitControl(props) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitControl, {
+			className: clsx(style_module_default$35["unit-control"], "focal-point-picker__controls-position-unit-control"),
+			labelPosition: "top",
+			max: TEXTCONTROL_MAX,
+			min: TEXTCONTROL_MIN,
+			step: 1,
+			units: [{
+				value: "%",
+				label: "%"
+			}],
+			...props
+		});
+	}
+
+// packages/components/build-module/focal-point-picker/focal-point.mjs
 	const STYLE_HASH_ATTRIBUTE$34 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -68664,57 +68622,20 @@ Icon: ButtonIcon });
 		"pointer": "ca89efddd89ad211__pointer",
 		"is-dragging": "be014e404db56b57__is-dragging"
 	};
-	const TEXTCONTROL_MIN = 0;
-	const TEXTCONTROL_MAX = 100;
-	const noop$10 = () => {};
-	function FocalPointPickerControls({ hasHelpText, onChange = noop$10, point = {
-		x: .5,
-		y: .5
-	} }) {
-		const valueX = fractionToPercentage(point.x);
-		const valueY = fractionToPercentage(point.y);
-		const handleChange = (value, axis) => {
-			if (value === void 0) return;
-			const num = parseInt(value, 10);
-			if (!isNaN(num)) onChange({
-				...point,
-				[axis]: num / 100
-			});
+	function FocalPoint({ left = "50%", top = "50%", ...props }) {
+		const style = {
+			left,
+			top
 		};
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Flex, {
-			className: clsx(style_module_default$34.controls, "focal-point-picker__controls", { [style_module_default$34["has-help-text"]]: hasHelpText }),
-			gap: 4,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(FocalPointUnitControl, {
-				label: (0, _wordpress_i18n.__)("Left"),
-				"aria-label": (0, _wordpress_i18n.__)("Focal point left position"),
-				value: [valueX, "%"].join(""),
-				onChange: ((next) => handleChange(next, "x")),
-				dragDirection: "e"
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FocalPointUnitControl, {
-				label: (0, _wordpress_i18n.__)("Top"),
-				"aria-label": (0, _wordpress_i18n.__)("Focal point top position"),
-				value: [valueY, "%"].join(""),
-				onChange: ((next) => handleChange(next, "y")),
-				dragDirection: "s"
-			})]
-		});
-	}
-	function FocalPointUnitControl(props) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitControl, {
-			className: clsx(style_module_default$34["unit-control"], "focal-point-picker__controls-position-unit-control"),
-			labelPosition: "top",
-			max: TEXTCONTROL_MAX,
-			min: TEXTCONTROL_MIN,
-			step: 1,
-			units: [{
-				value: "%",
-				label: "%"
-			}],
-			...props
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PolymorphicElement, {
+			as: "div",
+			...props,
+			className: clsx(style_module_default$34.pointer, "components-focal-point-picker__icon_container", { [style_module_default$34["is-dragging"]]: props.isDragging }),
+			style
 		});
 	}
 
-// packages/components/build-module/focal-point-picker/focal-point.mjs
+// packages/components/build-module/focal-point-picker/grid.mjs
 	const STYLE_HASH_ATTRIBUTE$33 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -68833,20 +68754,37 @@ Icon: ButtonIcon });
 		"pointer": "ca89efddd89ad211__pointer",
 		"is-dragging": "be014e404db56b57__is-dragging"
 	};
-	function FocalPoint({ left = "50%", top = "50%", ...props }) {
-		const style = {
-			left,
-			top
-		};
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PolymorphicElement, {
+	function FocalPointPickerGrid({ bounds, ...props }) {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(PolymorphicElement, {
 			as: "div",
 			...props,
-			className: clsx(style_module_default$33.pointer, "components-focal-point-picker__icon_container", { [style_module_default$33["is-dragging"]]: props.isDragging }),
-			style
+			className: clsx(style_module_default$33.grid, "components-focal-point-picker__grid", { [style_module_default$33["show-overlay"]]: props.showOverlay }),
+			style: {
+				width: bounds.width,
+				height: bounds.height
+			},
+			children: [
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: clsx(style_module_default$33["grid-line"], style_module_default$33["grid-line-x"]),
+					style: { top: "33%" }
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: clsx(style_module_default$33["grid-line"], style_module_default$33["grid-line-x"]),
+					style: { top: "66%" }
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: clsx(style_module_default$33["grid-line"], style_module_default$33["grid-line-y"]),
+					style: { left: "33%" }
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+					className: clsx(style_module_default$33["grid-line"], style_module_default$33["grid-line-y"]),
+					style: { left: "66%" }
+				})
+			]
 		});
 	}
 
-// packages/components/build-module/focal-point-picker/grid.mjs
+// packages/components/build-module/focal-point-picker/media.mjs
 	const STYLE_HASH_ATTRIBUTE$32 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -68965,37 +68903,32 @@ Icon: ButtonIcon });
 		"pointer": "ca89efddd89ad211__pointer",
 		"is-dragging": "be014e404db56b57__is-dragging"
 	};
-	function FocalPointPickerGrid({ bounds, ...props }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(PolymorphicElement, {
-			as: "div",
+	function Media({ alt, autoPlay, src, onLoad, mediaRef, muted = true, ...props }) {
+		if (!src) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			className: clsx(style_module_default$32["media-placeholder"], "components-focal-point-picker__media components-focal-point-picker__media--placeholder"),
+			ref: mediaRef,
+			...props
+		});
+		return isVideoType(src) ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("video", {
 			...props,
-			className: clsx(style_module_default$32.grid, "components-focal-point-picker__grid", { [style_module_default$32["show-overlay"]]: props.showOverlay }),
-			style: {
-				width: bounds.width,
-				height: bounds.height
-			},
-			children: [
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: clsx(style_module_default$32["grid-line"], style_module_default$32["grid-line-x"]),
-					style: { top: "33%" }
-				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: clsx(style_module_default$32["grid-line"], style_module_default$32["grid-line-x"]),
-					style: { top: "66%" }
-				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: clsx(style_module_default$32["grid-line"], style_module_default$32["grid-line-y"]),
-					style: { left: "33%" }
-				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: clsx(style_module_default$32["grid-line"], style_module_default$32["grid-line-y"]),
-					style: { left: "66%" }
-				})
-			]
+			autoPlay,
+			className: "components-focal-point-picker__media components-focal-point-picker__media--video",
+			loop: true,
+			muted,
+			onLoadedData: onLoad,
+			ref: mediaRef,
+			src
+		}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
+			...props,
+			alt,
+			className: "components-focal-point-picker__media components-focal-point-picker__media--image",
+			onLoad,
+			ref: mediaRef,
+			src
 		});
 	}
 
-// packages/components/build-module/focal-point-picker/media.mjs
+// packages/components/build-module/focal-point-picker/index.mjs
 	const STYLE_HASH_ATTRIBUTE$31 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -69099,150 +69032,6 @@ Icon: ButtonIcon });
 	}
 	registerStyle$31("0ed1e26ed0", "._4f91cfcb0c85cc41__root{border:0;box-sizing:border-box;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:13px;margin:0;padding:0}._4f91cfcb0c85cc41__root *,._4f91cfcb0c85cc41__root :after,._4f91cfcb0c85cc41__root :before{box-sizing:inherit}._8124adaa57f886a6__media-wrapper{background-color:transparent;contain:layout;display:flex;text-align:center;width:100%}._14038b3fb0a03b00__media-container{align-items:center;border-radius:2px;cursor:pointer;display:inline-flex;height:100%;justify-content:center;margin:auto;position:relative}._14038b3fb0a03b00__media-container:after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);content:\"\";inset:0;pointer-events:none;position:absolute}._14038b3fb0a03b00__media-container img,._14038b3fb0a03b00__media-container video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:100%}._278f7ba1e9ea0dbd__media-placeholder{background:#f0f0f0;border-radius:inherit;box-sizing:border-box;height:170px;max-width:280px;min-width:200px;width:100%}._0fd08c338d5d1ae3__unit-control{width:100%}._24e8123162458442__controls{max-width:320px;padding-top:1em}._24e8123162458442__controls:where(._18c8dc3c0d7e4db5__has-help-text){padding-bottom:1em}._1c53809aed7335a6__grid{left:50%;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;transform:translate3d(-50%,-50%,0);z-index:1}@media not (prefers-reduced-motion){._1c53809aed7335a6__grid{transition:opacity .1s linear}}._1c53809aed7335a6__grid:where(._140336f4ad6dd49c__show-overlay){opacity:1}._72bef77b62749ecc__grid-line{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);position:absolute;transform:translateZ(0)}._5e72b27b9deb5c57__grid-line-x{height:1px;inset-inline:1px}.b9c3347d2b89441c__grid-line-y{inset-block:1px;width:1px}.ca89efddd89ad211__pointer{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);border:1px solid hsla(0,0%,100%,.4);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.1);cursor:grab;height:40px;margin-left:-20px;margin-top:-20px;position:absolute;user-select:none;width:40px;will-change:transform;z-index:10000}@media not (prefers-reduced-motion){.ca89efddd89ad211__pointer{transition:transform .1s linear}}.ca89efddd89ad211__pointer:where(.be014e404db56b57__is-dragging){box-shadow:0 0 10px rgba(0,0,0,.12);cursor:grabbing;transform:scale(1.1)}");
 	var style_module_default$31 = {
-		"root": "_4f91cfcb0c85cc41__root",
-		"media-wrapper": "_8124adaa57f886a6__media-wrapper",
-		"media-container": "_14038b3fb0a03b00__media-container",
-		"media-placeholder": "_278f7ba1e9ea0dbd__media-placeholder",
-		"unit-control": "_0fd08c338d5d1ae3__unit-control",
-		"controls": "_24e8123162458442__controls",
-		"has-help-text": "_18c8dc3c0d7e4db5__has-help-text",
-		"grid": "_1c53809aed7335a6__grid",
-		"show-overlay": "_140336f4ad6dd49c__show-overlay",
-		"grid-line": "_72bef77b62749ecc__grid-line",
-		"grid-line-x": "_5e72b27b9deb5c57__grid-line-x",
-		"grid-line-y": "b9c3347d2b89441c__grid-line-y",
-		"pointer": "ca89efddd89ad211__pointer",
-		"is-dragging": "be014e404db56b57__is-dragging"
-	};
-	function Media({ alt, autoPlay, src, onLoad, mediaRef, muted = true, ...props }) {
-		if (!src) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			className: clsx(style_module_default$31["media-placeholder"], "components-focal-point-picker__media components-focal-point-picker__media--placeholder"),
-			ref: mediaRef,
-			...props
-		});
-		return isVideoType(src) ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("video", {
-			...props,
-			autoPlay,
-			className: "components-focal-point-picker__media components-focal-point-picker__media--video",
-			loop: true,
-			muted,
-			onLoadedData: onLoad,
-			ref: mediaRef,
-			src
-		}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
-			...props,
-			alt,
-			className: "components-focal-point-picker__media components-focal-point-picker__media--image",
-			onLoad,
-			ref: mediaRef,
-			src
-		});
-	}
-
-// packages/components/build-module/focal-point-picker/index.mjs
-	const STYLE_HASH_ATTRIBUTE$30 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$30() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$30(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$30(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$30}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$30) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$30(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$30();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$30(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$30, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$30(targetDocument) {
-		const runtime = getRuntime$30();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$30(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$30(hash, css) {
-		const runtime = getRuntime$30();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$30(targetDocument, hash, css);
-	}
-	registerStyle$30("0ed1e26ed0", "._4f91cfcb0c85cc41__root{border:0;box-sizing:border-box;font-family:var(--wpds-typography-font-family-body,-apple-system,system-ui,\"Segoe UI\",\"Roboto\",\"Oxygen-Sans\",\"Ubuntu\",\"Cantarell\",\"Helvetica Neue\",sans-serif);font-size:13px;margin:0;padding:0}._4f91cfcb0c85cc41__root *,._4f91cfcb0c85cc41__root :after,._4f91cfcb0c85cc41__root :before{box-sizing:inherit}._8124adaa57f886a6__media-wrapper{background-color:transparent;contain:layout;display:flex;text-align:center;width:100%}._14038b3fb0a03b00__media-container{align-items:center;border-radius:2px;cursor:pointer;display:inline-flex;height:100%;justify-content:center;margin:auto;position:relative}._14038b3fb0a03b00__media-container:after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);content:\"\";inset:0;pointer-events:none;position:absolute}._14038b3fb0a03b00__media-container img,._14038b3fb0a03b00__media-container video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:100%}._278f7ba1e9ea0dbd__media-placeholder{background:#f0f0f0;border-radius:inherit;box-sizing:border-box;height:170px;max-width:280px;min-width:200px;width:100%}._0fd08c338d5d1ae3__unit-control{width:100%}._24e8123162458442__controls{max-width:320px;padding-top:1em}._24e8123162458442__controls:where(._18c8dc3c0d7e4db5__has-help-text){padding-bottom:1em}._1c53809aed7335a6__grid{left:50%;opacity:0;overflow:hidden;pointer-events:none;position:absolute;top:50%;transform:translate3d(-50%,-50%,0);z-index:1}@media not (prefers-reduced-motion){._1c53809aed7335a6__grid{transition:opacity .1s linear}}._1c53809aed7335a6__grid:where(._140336f4ad6dd49c__show-overlay){opacity:1}._72bef77b62749ecc__grid-line{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);position:absolute;transform:translateZ(0)}._5e72b27b9deb5c57__grid-line-x{height:1px;inset-inline:1px}.b9c3347d2b89441c__grid-line-y{inset-block:1px;width:1px}.ca89efddd89ad211__pointer{backdrop-filter:blur(16px) saturate(180%);background:hsla(0,0%,100%,.4);border:1px solid hsla(0,0%,100%,.4);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.1);cursor:grab;height:40px;margin-left:-20px;margin-top:-20px;position:absolute;user-select:none;width:40px;will-change:transform;z-index:10000}@media not (prefers-reduced-motion){.ca89efddd89ad211__pointer{transition:transform .1s linear}}.ca89efddd89ad211__pointer:where(.be014e404db56b57__is-dragging){box-shadow:0 0 10px rgba(0,0,0,.12);cursor:grabbing;transform:scale(1.1)}");
-	var style_module_default$30 = {
 		"root": "_4f91cfcb0c85cc41__root",
 		"media-wrapper": "_8124adaa57f886a6__media-wrapper",
 		"media-container": "_14038b3fb0a03b00__media-container",
@@ -69401,7 +69190,7 @@ Icon: ButtonIcon });
 			left: x !== void 0 ? x * bounds.width : .5 * bounds.width,
 			top: y !== void 0 ? y * bounds.height : .5 * bounds.height
 		};
-		const classes = clsx(style_module_default$30.root, "components-focal-point-picker-control", className);
+		const classes = clsx(style_module_default$31.root, "components-focal-point-picker-control", className);
 		useUpdateEffect(() => {
 			setShowGridOverlay(true);
 			const timeout = window.setTimeout(() => {
@@ -69422,9 +69211,9 @@ Icon: ButtonIcon });
 					children: label
 				})),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: clsx(style_module_default$30["media-wrapper"], "components-focal-point-picker-wrapper"),
+					className: clsx(style_module_default$31["media-wrapper"], "components-focal-point-picker-wrapper"),
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-						className: clsx(style_module_default$30["media-container"], "components-focal-point-picker"),
+						className: clsx(style_module_default$31["media-container"], "components-focal-point-picker"),
 						onKeyDown: arrowKeyStep,
 						onPointerDown: (event) => {
 							if (event.button !== 0) return;
@@ -69508,6 +69297,222 @@ Icon: ButtonIcon });
 	}
 
 // packages/components/build-module/font-size-picker/font-size-picker-select.mjs
+	const STYLE_HASH_ATTRIBUTE$30 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$30() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$30(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$30(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$30}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$30) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$30(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$30();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$30(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$30, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$30(targetDocument) {
+		const runtime = getRuntime$30();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$30(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$30(hash, css) {
+		const runtime = getRuntime$30();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$30(targetDocument, hash, css);
+	}
+	registerStyle$30("952e1e22a0", "._4cbb9d9cf799070b__container{border:0;display:contents;margin:0;padding:0}._4a475cc9c22c345d__header{height:16px}._1da87365df749bc1__header-toggle{margin-top:-4px}._23b2b093bcf2cbaf__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._3d3bf3b09dddc213__selected-hint{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);margin-inline-start:8px}");
+	var style_module_default$30 = {
+		"container": "_4cbb9d9cf799070b__container",
+		"header": "_4a475cc9c22c345d__header",
+		"header-toggle": "_1da87365df749bc1__header-toggle",
+		"header-label": "_23b2b093bcf2cbaf__header-label",
+		"selected-hint": "_3d3bf3b09dddc213__selected-hint"
+	};
+	const DEFAULT_OPTION = {
+		value: null,
+		label: (0, _wordpress_i18n.__)("Default")
+	};
+	const FontSizePickerSelect = (props) => {
+		const { fontSizes, value, valueMode = "literal", onChange } = props;
+		useEnableWpCompatOverlaySlot();
+		const descriptionId = (0, _wordpress_compose.useInstanceId)(FontSizePickerSelect, "font-size-picker__description");
+		const options = [DEFAULT_OPTION, ...fontSizes.map((fontSize) => ({
+			value: fontSize.slug,
+			label: fontSize.name || fontSize.slug,
+			size: fontSize.size,
+			description: generateFontSizeHint(fontSize)
+		}))];
+		const selectedOption = (() => {
+			if (value === void 0) return DEFAULT_OPTION;
+			if (valueMode === "slug") {
+				const optionBySlug = options.find((option) => option.value === value);
+				if (optionBySlug) return optionBySlug;
+			}
+			return options.find((option) => option.size === value) ?? DEFAULT_OPTION;
+		})();
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
+			className: "components-font-size-picker__select",
+			label: (0, _wordpress_i18n.__)("Font size"),
+			hideLabelFromVision: true,
+			items: options,
+			value: selectedOption,
+			popupWidth: "anchor",
+			trigger: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Trigger, {
+				"aria-describedby": descriptionId,
+				children: (item) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [item.label, item.description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+					className: style_module_default$30["selected-hint"],
+					"aria-hidden": "true",
+					children: item.description
+				})] })
+			}),
+			onValueChange: (item) => {
+				if (item?.value === selectedOption.value && (item?.value !== null || value === void 0)) return;
+				const matchingFontSize = fontSizes.find((fontSize) => fontSize.slug === item?.value);
+				onChange(matchingFontSize?.size, matchingFontSize);
+			}
+		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+			id: descriptionId,
+			children: selectedOption.description
+		})] });
+	};
+
+// packages/components/build-module/font-size-picker/constants.mjs
+/**
+	* List of T-shirt abbreviations.
+	*
+	* When there are 5 font sizes or fewer, we assume that the font sizes are
+	* ordered by size and show T-shirt labels.
+	*/
+	const T_SHIRT_ABBREVIATIONS = [
+		(0, _wordpress_i18n.__)("S"),
+		(0, _wordpress_i18n.__)("M"),
+		(0, _wordpress_i18n.__)("L"),
+		(0, _wordpress_i18n.__)("XL"),
+		(0, _wordpress_i18n.__)("XXL")
+	];
+	/**
+	* List of T-shirt names.
+	*
+	* When there are 5 font sizes or fewer, we assume that the font sizes are
+	* ordered by size and show T-shirt labels.
+	*/
+	const T_SHIRT_NAMES = [
+		(0, _wordpress_i18n.__)("Small"),
+		(0, _wordpress_i18n.__)("Medium"),
+		(0, _wordpress_i18n.__)("Large"),
+		(0, _wordpress_i18n.__)("Extra Large"),
+		(0, _wordpress_i18n.__)("Extra Extra Large")
+	];
+
+// packages/components/build-module/font-size-picker/font-size-picker-toggle-group.mjs
+	const FontSizePickerToggleGroup = (props) => {
+		const { fontSizes, value, valueMode = "literal", onChange } = props;
+		const currentValue = (() => {
+			if (!value) return;
+			if (valueMode === "slug") return String(value);
+			if (fontSizes.filter((fontSize) => fontSize.size === value).length > 1) return;
+			return fontSizes.find((fontSize) => fontSize.size === value)?.slug;
+		})();
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToggleGroupControl, {
+			label: (0, _wordpress_i18n.__)("Font size"),
+			hideLabelFromVision: true,
+			value: currentValue,
+			onChange: (newSlug) => {
+				if (newSlug === void 0) onChange(void 0);
+				else {
+					const selectedFontSize = fontSizes.find((fontSize) => fontSize.slug === String(newSlug));
+					if (selectedFontSize) onChange(selectedFontSize.size, selectedFontSize);
+				}
+			},
+			isBlock: true,
+			children: fontSizes.map((fontSize, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToggleGroupControlOption, {
+				value: fontSize.slug,
+				label: T_SHIRT_ABBREVIATIONS[index],
+				"aria-label": fontSize.name || T_SHIRT_NAMES[index],
+				showTooltip: true
+			}, fontSize.slug))
+		});
+	};
+
+// packages/components/build-module/font-size-picker/index.mjs
 	const STYLE_HASH_ATTRIBUTE$29 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -69617,222 +69622,6 @@ Icon: ButtonIcon });
 		"header-label": "_23b2b093bcf2cbaf__header-label",
 		"selected-hint": "_3d3bf3b09dddc213__selected-hint"
 	};
-	const DEFAULT_OPTION = {
-		value: null,
-		label: (0, _wordpress_i18n.__)("Default")
-	};
-	const FontSizePickerSelect = (props) => {
-		const { fontSizes, value, valueMode = "literal", onChange } = props;
-		useEnableWpCompatOverlaySlot();
-		const descriptionId = (0, _wordpress_compose.useInstanceId)(FontSizePickerSelect, "font-size-picker__description");
-		const options = [DEFAULT_OPTION, ...fontSizes.map((fontSize) => ({
-			value: fontSize.slug,
-			label: fontSize.name || fontSize.slug,
-			size: fontSize.size,
-			description: generateFontSizeHint(fontSize)
-		}))];
-		const selectedOption = (() => {
-			if (value === void 0) return DEFAULT_OPTION;
-			if (valueMode === "slug") {
-				const optionBySlug = options.find((option) => option.value === value);
-				if (optionBySlug) return optionBySlug;
-			}
-			return options.find((option) => option.size === value) ?? DEFAULT_OPTION;
-		})();
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2, {
-			className: "components-font-size-picker__select",
-			label: (0, _wordpress_i18n.__)("Font size"),
-			hideLabelFromVision: true,
-			items: options,
-			value: selectedOption,
-			popupWidth: "anchor",
-			trigger: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControl$2.Trigger, {
-				"aria-describedby": descriptionId,
-				children: (item) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [item.label, item.description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					className: style_module_default$29["selected-hint"],
-					"aria-hidden": "true",
-					children: item.description
-				})] })
-			}),
-			onValueChange: (item) => {
-				if (item?.value === selectedOption.value && (item?.value !== null || value === void 0)) return;
-				const matchingFontSize = fontSizes.find((fontSize) => fontSize.slug === item?.value);
-				onChange(matchingFontSize?.size, matchingFontSize);
-			}
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-			id: descriptionId,
-			children: selectedOption.description
-		})] });
-	};
-
-// packages/components/build-module/font-size-picker/constants.mjs
-/**
-	* List of T-shirt abbreviations.
-	*
-	* When there are 5 font sizes or fewer, we assume that the font sizes are
-	* ordered by size and show T-shirt labels.
-	*/
-	const T_SHIRT_ABBREVIATIONS = [
-		(0, _wordpress_i18n.__)("S"),
-		(0, _wordpress_i18n.__)("M"),
-		(0, _wordpress_i18n.__)("L"),
-		(0, _wordpress_i18n.__)("XL"),
-		(0, _wordpress_i18n.__)("XXL")
-	];
-	/**
-	* List of T-shirt names.
-	*
-	* When there are 5 font sizes or fewer, we assume that the font sizes are
-	* ordered by size and show T-shirt labels.
-	*/
-	const T_SHIRT_NAMES = [
-		(0, _wordpress_i18n.__)("Small"),
-		(0, _wordpress_i18n.__)("Medium"),
-		(0, _wordpress_i18n.__)("Large"),
-		(0, _wordpress_i18n.__)("Extra Large"),
-		(0, _wordpress_i18n.__)("Extra Extra Large")
-	];
-
-// packages/components/build-module/font-size-picker/font-size-picker-toggle-group.mjs
-	const FontSizePickerToggleGroup = (props) => {
-		const { fontSizes, value, valueMode = "literal", onChange } = props;
-		const currentValue = (() => {
-			if (!value) return;
-			if (valueMode === "slug") return String(value);
-			if (fontSizes.filter((fontSize) => fontSize.size === value).length > 1) return;
-			return fontSizes.find((fontSize) => fontSize.size === value)?.slug;
-		})();
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToggleGroupControl, {
-			label: (0, _wordpress_i18n.__)("Font size"),
-			hideLabelFromVision: true,
-			value: currentValue,
-			onChange: (newSlug) => {
-				if (newSlug === void 0) onChange(void 0);
-				else {
-					const selectedFontSize = fontSizes.find((fontSize) => fontSize.slug === String(newSlug));
-					if (selectedFontSize) onChange(selectedFontSize.size, selectedFontSize);
-				}
-			},
-			isBlock: true,
-			children: fontSizes.map((fontSize, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToggleGroupControlOption, {
-				value: fontSize.slug,
-				label: T_SHIRT_ABBREVIATIONS[index],
-				"aria-label": fontSize.name || T_SHIRT_NAMES[index],
-				showTooltip: true
-			}, fontSize.slug))
-		});
-	};
-
-// packages/components/build-module/font-size-picker/index.mjs
-	const STYLE_HASH_ATTRIBUTE$28 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$28() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$28(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$28(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$28}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$28) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$28(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$28();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$28(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$28, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$28(targetDocument) {
-		const runtime = getRuntime$28();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$28(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$28(hash, css) {
-		const runtime = getRuntime$28();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$28(targetDocument, hash, css);
-	}
-	registerStyle$28("952e1e22a0", "._4cbb9d9cf799070b__container{border:0;display:contents;margin:0;padding:0}._4a475cc9c22c345d__header{height:16px}._1da87365df749bc1__header-toggle{margin-top:-4px}._23b2b093bcf2cbaf__header-label{display:flex;gap:4px;justify-content:flex-start;margin-bottom:0}._3d3bf3b09dddc213__selected-hint{color:var(--wpds-color-foreground-content-neutral-weak,#6e6e6e);margin-inline-start:8px}");
-	var style_module_default$28 = {
-		"container": "_4cbb9d9cf799070b__container",
-		"header": "_4a475cc9c22c345d__header",
-		"header-toggle": "_1da87365df749bc1__header-toggle",
-		"header-label": "_23b2b093bcf2cbaf__header-label",
-		"selected-hint": "_3d3bf3b09dddc213__selected-hint"
-	};
 	const DEFAULT_UNITS = [
 		"px",
 		"em",
@@ -69867,16 +69656,16 @@ Icon: ButtonIcon });
 		const isDisabled = value === void 0;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", {
 			ref,
-			className: clsx("components-font-size-picker", style_module_default$28.container),
+			className: clsx("components-font-size-picker", style_module_default$29.container),
 			"aria-labelledby": labelId,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spacer, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HStack, {
-				className: clsx("components-font-size-picker__header", style_module_default$28.header),
+				className: clsx("components-font-size-picker__header", style_module_default$29.header),
 				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl.VisualLabel, {
 					id: labelId,
-					className: style_module_default$28["header-label"],
+					className: style_module_default$29["header-label"],
 					children: (0, _wordpress_i18n.__)("Font size")
 				}), !disableCustomFontSizes && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button, {
-					className: style_module_default$28["header-toggle"],
+					className: style_module_default$29["header-toggle"],
 					label: currentPickerType === "custom" ? (0, _wordpress_i18n.__)("Use size preset") : (0, _wordpress_i18n.__)("Set custom size"),
 					icon: settings_default,
 					onClick: () => setUserRequestedCustom(!userRequestedCustom),
@@ -70168,7 +69957,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/components/build-module/form-token-field/index.mjs
-	const STYLE_HASH_ATTRIBUTE$27 = "data-wp-hash";
+	const STYLE_HASH_ATTRIBUTE$28 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
 	*
@@ -70177,7 +69966,7 @@ Icon: ButtonIcon });
 	*
 	* @return The shared runtime registry.
 	*/
-	function getRuntime$27() {
+	function getRuntime$28() {
 		const globalScope = globalThis;
 		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 		globalScope.__wpStyleRuntime = {
@@ -70185,7 +69974,7 @@ Icon: ButtonIcon });
 			styles: /* @__PURE__ */ new Map(),
 			injectedStyles: /* @__PURE__ */ new WeakMap()
 		};
-		if (typeof document !== "undefined") registerDocument$27(document);
+		if (typeof document !== "undefined") registerDocument$28(document);
 		return globalScope.__wpStyleRuntime;
 	}
 	/**
@@ -70196,9 +69985,9 @@ Icon: ButtonIcon });
 	*
 	* @return Whether the style hash already exists in the document.
 	*/
-	function documentContainsStyleHash$27(targetDocument, hash) {
+	function documentContainsStyleHash$28(targetDocument, hash) {
 		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$27}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$27) === hash) return true;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$28}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$28) === hash) return true;
 		return false;
 	}
 	/**
@@ -70209,21 +69998,21 @@ Icon: ButtonIcon });
 	* @param hash           Stable hash for the transformed CSS.
 	* @param css            CSS text to inject.
 	*/
-	function injectStyle$27(targetDocument, hash, css) {
+	function injectStyle$28(targetDocument, hash, css) {
 		if (!targetDocument.head) return;
-		const runtime = getRuntime$27();
+		const runtime = getRuntime$28();
 		let injectedStyles = runtime.injectedStyles.get(targetDocument);
 		if (!injectedStyles) {
 			injectedStyles = /* @__PURE__ */ new Set();
 			runtime.injectedStyles.set(targetDocument, injectedStyles);
 		}
 		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$27(targetDocument, hash)) {
+		if (documentContainsStyleHash$28(targetDocument, hash)) {
 			injectedStyles.add(hash);
 			return;
 		}
 		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$27, hash);
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$28, hash);
 		style.appendChild(targetDocument.createTextNode(css));
 		targetDocument.head.appendChild(style);
 		injectedStyles.add(hash);
@@ -70239,10 +70028,10 @@ Icon: ButtonIcon });
 	* @param targetDocument Document to receive registered styles.
 	* @return Cleanup function that unregisters this document registration.
 	*/
-	function registerDocument$27(targetDocument) {
-		const runtime = getRuntime$27();
+	function registerDocument$28(targetDocument) {
+		const runtime = getRuntime$28();
 		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$27(targetDocument, hash, css);
+		for (const [hash, css] of runtime.styles) injectStyle$28(targetDocument, hash, css);
 		return () => {
 			const count = runtime.documents.get(targetDocument);
 			if (count === void 0) return;
@@ -70264,13 +70053,13 @@ Icon: ButtonIcon });
 	* @param hash Stable hash for the transformed CSS.
 	* @param css  CSS text to inject.
 	*/
-	function registerStyle$27(hash, css) {
-		const runtime = getRuntime$27();
+	function registerStyle$28(hash, css) {
+		const runtime = getRuntime$28();
 		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$27(targetDocument, hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$28(targetDocument, hash, css);
 	}
-	registerStyle$27("d027d15409", "._8aacd159e9111ea9__tokens-and-input{box-sizing:border-box;padding:7px}._8aacd159e9111ea9__tokens-and-input *,._8aacd159e9111ea9__tokens-and-input :after,._8aacd159e9111ea9__tokens-and-input :before{box-sizing:inherit}");
-	var style_module_default$27 = { "tokens-and-input": "_8aacd159e9111ea9__tokens-and-input" };
+	registerStyle$28("d027d15409", "._8aacd159e9111ea9__tokens-and-input{box-sizing:border-box;padding:7px}._8aacd159e9111ea9__tokens-and-input *,._8aacd159e9111ea9__tokens-and-input :after,._8aacd159e9111ea9__tokens-and-input :before{box-sizing:inherit}");
+	var style_module_default$28 = { "tokens-and-input": "_8aacd159e9111ea9__tokens-and-input" };
 	const identity = (value) => value;
 	/**
 	* A `FormTokenField` is a field similar to the tags and categories fields in the interim editor chrome,
@@ -70718,7 +70507,7 @@ Icon: ButtonIcon });
 					onMouseDown: onContainerTouched,
 					onTouchStart: onContainerTouched,
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Flex, {
-						className: style_module_default$27["tokens-and-input"],
+						className: style_module_default$28["tokens-and-input"],
 						justify: "flex-start",
 						align: "center",
 						gap: 1,
@@ -71553,7 +71342,7 @@ Icon: ButtonIcon });
 	NavigatorContext.displayName = "NavigatorContext";
 
 // packages/components/build-module/navigator/navigator/component.mjs
-	const STYLE_HASH_ATTRIBUTE$26 = "data-wp-hash";
+	const STYLE_HASH_ATTRIBUTE$27 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
 	*
@@ -71562,7 +71351,7 @@ Icon: ButtonIcon });
 	*
 	* @return The shared runtime registry.
 	*/
-	function getRuntime$26() {
+	function getRuntime$27() {
 		const globalScope = globalThis;
 		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
 		globalScope.__wpStyleRuntime = {
@@ -71570,7 +71359,7 @@ Icon: ButtonIcon });
 			styles: /* @__PURE__ */ new Map(),
 			injectedStyles: /* @__PURE__ */ new WeakMap()
 		};
-		if (typeof document !== "undefined") registerDocument$26(document);
+		if (typeof document !== "undefined") registerDocument$27(document);
 		return globalScope.__wpStyleRuntime;
 	}
 	/**
@@ -71581,9 +71370,9 @@ Icon: ButtonIcon });
 	*
 	* @return Whether the style hash already exists in the document.
 	*/
-	function documentContainsStyleHash$26(targetDocument, hash) {
+	function documentContainsStyleHash$27(targetDocument, hash) {
 		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$26}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$26) === hash) return true;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$27}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$27) === hash) return true;
 		return false;
 	}
 	/**
@@ -71594,21 +71383,21 @@ Icon: ButtonIcon });
 	* @param hash           Stable hash for the transformed CSS.
 	* @param css            CSS text to inject.
 	*/
-	function injectStyle$26(targetDocument, hash, css) {
+	function injectStyle$27(targetDocument, hash, css) {
 		if (!targetDocument.head) return;
-		const runtime = getRuntime$26();
+		const runtime = getRuntime$27();
 		let injectedStyles = runtime.injectedStyles.get(targetDocument);
 		if (!injectedStyles) {
 			injectedStyles = /* @__PURE__ */ new Set();
 			runtime.injectedStyles.set(targetDocument, injectedStyles);
 		}
 		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$26(targetDocument, hash)) {
+		if (documentContainsStyleHash$27(targetDocument, hash)) {
 			injectedStyles.add(hash);
 			return;
 		}
 		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$26, hash);
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$27, hash);
 		style.appendChild(targetDocument.createTextNode(css));
 		targetDocument.head.appendChild(style);
 		injectedStyles.add(hash);
@@ -71624,10 +71413,10 @@ Icon: ButtonIcon });
 	* @param targetDocument Document to receive registered styles.
 	* @return Cleanup function that unregisters this document registration.
 	*/
-	function registerDocument$26(targetDocument) {
-		const runtime = getRuntime$26();
+	function registerDocument$27(targetDocument) {
+		const runtime = getRuntime$27();
 		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$26(targetDocument, hash, css);
+		for (const [hash, css] of runtime.styles) injectStyle$27(targetDocument, hash, css);
 		return () => {
 			const count = runtime.documents.get(targetDocument);
 			if (count === void 0) return;
@@ -71649,13 +71438,13 @@ Icon: ButtonIcon });
 	* @param hash Stable hash for the transformed CSS.
 	* @param css  CSS text to inject.
 	*/
-	function registerStyle$26(hash, css) {
-		const runtime = getRuntime$26();
+	function registerStyle$27(hash, css) {
+		const runtime = getRuntime$27();
 		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$26(targetDocument, hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$27(targetDocument, hash, css);
 	}
-	registerStyle$26("b30a5e7ac2", "._1806275ce8929e7d__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}._4c65901274886a7f__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes _6d09f2ceaa9297af__fade-in{0%{opacity:0}}@keyframes _54a2b781a80e54b0__fade-out{to{opacity:0}}@keyframes _01f0a447f9a87260__slide-from-right{0%{transform:translateX(100px)}}@keyframes _378d3b594da59a81__slide-to-left{to{transform:translateX(-80px)}}@keyframes _1ff6b948a98cfba4__slide-from-left{0%{transform:translateX(-100px)}}@keyframes b58ded70195ed586__slide-to-right{to{transform:translateX(80px)}}.eda03f92d0135c15__screen-animation{z-index:1}.eda03f92d0135c15__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:_6d09f2ceaa9297af__fade-in 70ms linear 70ms both,_01f0a447f9a87260__slide-from-right .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_54a2b781a80e54b0__fade-out 70ms linear 40ms both,_378d3b594da59a81__slide-to-left .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:_6d09f2ceaa9297af__fade-in 70ms linear 70ms both,_1ff6b948a98cfba4__slide-from-left .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_54a2b781a80e54b0__fade-out 70ms linear 40ms both,b58ded70195ed586__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
-	var style_module_default$26 = {
+	registerStyle$27("b30a5e7ac2", "._1806275ce8929e7d__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}._4c65901274886a7f__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes _6d09f2ceaa9297af__fade-in{0%{opacity:0}}@keyframes _54a2b781a80e54b0__fade-out{to{opacity:0}}@keyframes _01f0a447f9a87260__slide-from-right{0%{transform:translateX(100px)}}@keyframes _378d3b594da59a81__slide-to-left{to{transform:translateX(-80px)}}@keyframes _1ff6b948a98cfba4__slide-from-left{0%{transform:translateX(-100px)}}@keyframes b58ded70195ed586__slide-to-right{to{transform:translateX(80px)}}.eda03f92d0135c15__screen-animation{z-index:1}.eda03f92d0135c15__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:_6d09f2ceaa9297af__fade-in 70ms linear 70ms both,_01f0a447f9a87260__slide-from-right .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_54a2b781a80e54b0__fade-out 70ms linear 40ms both,_378d3b594da59a81__slide-to-left .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:_6d09f2ceaa9297af__fade-in 70ms linear 70ms both,_1ff6b948a98cfba4__slide-from-left .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_54a2b781a80e54b0__fade-out 70ms linear 40ms both,b58ded70195ed586__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
+	var style_module_default$27 = {
 		"wrapper": "_1806275ce8929e7d__wrapper",
 		"screen": "_4c65901274886a7f__screen",
 		"screen-animation": "eda03f92d0135c15__screen-animation",
@@ -71805,7 +71594,7 @@ The screen with id ${screen.id} will not be added.`);
 			matchedPath,
 			methods
 		]);
-		const classes = clsx(style_module_default$26.wrapper, className);
+		const classes = clsx(style_module_default$27.wrapper, className);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(View, {
 			ref: forwardedRef,
 			className: classes,
@@ -71819,6 +71608,197 @@ The screen with id ${screen.id} will not be added.`);
 	const Navigator$1 = contextConnect(UnconnectedNavigator, "Navigator");
 
 // packages/components/build-module/navigator/animation.mjs
+	const STYLE_HASH_ATTRIBUTE$26 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$26() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$26(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$26(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$26}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$26) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$26(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$26();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$26(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$26, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$26(targetDocument) {
+		const runtime = getRuntime$26();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$26(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$26(hash, css) {
+		const runtime = getRuntime$26();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$26(targetDocument, hash, css);
+	}
+	registerStyle$26("b30a5e7ac2", "._1806275ce8929e7d__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}._4c65901274886a7f__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes _6d09f2ceaa9297af__fade-in{0%{opacity:0}}@keyframes _54a2b781a80e54b0__fade-out{to{opacity:0}}@keyframes _01f0a447f9a87260__slide-from-right{0%{transform:translateX(100px)}}@keyframes _378d3b594da59a81__slide-to-left{to{transform:translateX(-80px)}}@keyframes _1ff6b948a98cfba4__slide-from-left{0%{transform:translateX(-100px)}}@keyframes b58ded70195ed586__slide-to-right{to{transform:translateX(80px)}}.eda03f92d0135c15__screen-animation{z-index:1}.eda03f92d0135c15__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:_6d09f2ceaa9297af__fade-in 70ms linear 70ms both,_01f0a447f9a87260__slide-from-right .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_54a2b781a80e54b0__fade-out 70ms linear 40ms both,_378d3b594da59a81__slide-to-left .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:_6d09f2ceaa9297af__fade-in 70ms linear 70ms both,_1ff6b948a98cfba4__slide-from-left .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_54a2b781a80e54b0__fade-out 70ms linear 40ms both,b58ded70195ed586__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
+	var style_module_default$26 = {
+		"wrapper": "_1806275ce8929e7d__wrapper",
+		"screen": "_4c65901274886a7f__screen",
+		"screen-animation": "eda03f92d0135c15__screen-animation",
+		"fade-in": "_6d09f2ceaa9297af__fade-in",
+		"slide-from-right": "_01f0a447f9a87260__slide-from-right",
+		"fade-out": "_54a2b781a80e54b0__fade-out",
+		"slide-to-left": "_378d3b594da59a81__slide-to-left",
+		"slide-from-left": "_1ff6b948a98cfba4__slide-from-left",
+		"slide-to-right": "b58ded70195ed586__slide-to-right"
+	};
+	const TOTAL_ANIMATION_DURATION = {
+		IN: 300,
+		OUT: 300
+	};
+	const ANIMATION_END_NAMES = {
+		end: {
+			in: style_module_default$26["slide-from-right"],
+			out: style_module_default$26["slide-to-left"]
+		},
+		start: {
+			in: style_module_default$26["slide-from-left"],
+			out: style_module_default$26["slide-to-right"]
+		}
+	};
+
+// packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.mjs
+	const ANIMATION_TIMEOUT_MARGIN = 1.2;
+	const isEnterAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_IN" && animationName === ANIMATION_END_NAMES[animationDirection].in;
+	const isExitAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_OUT" && animationName === ANIMATION_END_NAMES[animationDirection].out;
+	function useScreenAnimatePresence({ isMatch, skipAnimation, isBack, onAnimationEnd }) {
+		const isRTL$1 = (0, _wordpress_i18n.isRTL)();
+		const prefersReducedMotion = (0, _wordpress_compose.useReducedMotion)();
+		const [animationStatus, setAnimationStatus] = (0, _wordpress_element.useState)("INITIAL");
+		const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
+		const becameUnselected = animationStatus !== "ANIMATING_OUT" && animationStatus !== "OUT" && !isMatch;
+		(0, _wordpress_element.useLayoutEffect)(() => {
+			if (becameSelected) setAnimationStatus(skipAnimation || prefersReducedMotion ? "IN" : "ANIMATING_IN");
+			else if (becameUnselected) setAnimationStatus(skipAnimation || prefersReducedMotion ? "OUT" : "ANIMATING_OUT");
+		}, [
+			becameSelected,
+			becameUnselected,
+			skipAnimation,
+			prefersReducedMotion
+		]);
+		const animationDirection = isRTL$1 && isBack || !isRTL$1 && !isBack ? "end" : "start";
+		const isAnimatingIn = animationStatus === "ANIMATING_IN";
+		const isAnimatingOut = animationStatus === "ANIMATING_OUT";
+		let animationType;
+		if (isAnimatingIn) animationType = "in";
+		else if (isAnimatingOut) animationType = "out";
+		const onScreenAnimationEnd = (0, _wordpress_element.useCallback)((e) => {
+			onAnimationEnd?.(e);
+			if (isExitAnimation(animationDirection, animationStatus, e.animationName)) setAnimationStatus("OUT");
+			else if (isEnterAnimation(animationDirection, animationStatus, e.animationName)) setAnimationStatus("IN");
+		}, [
+			onAnimationEnd,
+			animationStatus,
+			animationDirection
+		]);
+		(0, _wordpress_element.useEffect)(() => {
+			let animationTimeout;
+			if (isAnimatingOut) animationTimeout = window.setTimeout(() => {
+				setAnimationStatus("OUT");
+				animationTimeout = void 0;
+			}, TOTAL_ANIMATION_DURATION.OUT * ANIMATION_TIMEOUT_MARGIN);
+			else if (isAnimatingIn) animationTimeout = window.setTimeout(() => {
+				setAnimationStatus("IN");
+				animationTimeout = void 0;
+			}, TOTAL_ANIMATION_DURATION.IN * ANIMATION_TIMEOUT_MARGIN);
+			return () => {
+				if (animationTimeout) {
+					window.clearTimeout(animationTimeout);
+					animationTimeout = void 0;
+				}
+			};
+		}, [isAnimatingOut, isAnimatingIn]);
+		return {
+			shouldRenderScreen: isMatch || animationStatus === "IN" || animationStatus === "ANIMATING_OUT",
+			screenProps: {
+				onAnimationEnd: onScreenAnimationEnd,
+				"data-animation-direction": animationDirection,
+				"data-animation-type": animationType,
+				"data-skip-animation": skipAnimation || void 0
+			}
+		};
+	}
+
+// packages/components/build-module/navigator/navigator-screen/component.mjs
 	const STYLE_HASH_ATTRIBUTE$25 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -71932,197 +71912,6 @@ The screen with id ${screen.id} will not be added.`);
 		"slide-from-left": "_1ff6b948a98cfba4__slide-from-left",
 		"slide-to-right": "b58ded70195ed586__slide-to-right"
 	};
-	const TOTAL_ANIMATION_DURATION = {
-		IN: 300,
-		OUT: 300
-	};
-	const ANIMATION_END_NAMES = {
-		end: {
-			in: style_module_default$25["slide-from-right"],
-			out: style_module_default$25["slide-to-left"]
-		},
-		start: {
-			in: style_module_default$25["slide-from-left"],
-			out: style_module_default$25["slide-to-right"]
-		}
-	};
-
-// packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.mjs
-	const ANIMATION_TIMEOUT_MARGIN = 1.2;
-	const isEnterAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_IN" && animationName === ANIMATION_END_NAMES[animationDirection].in;
-	const isExitAnimation = (animationDirection, animationStatus, animationName) => animationStatus === "ANIMATING_OUT" && animationName === ANIMATION_END_NAMES[animationDirection].out;
-	function useScreenAnimatePresence({ isMatch, skipAnimation, isBack, onAnimationEnd }) {
-		const isRTL$1 = (0, _wordpress_i18n.isRTL)();
-		const prefersReducedMotion = (0, _wordpress_compose.useReducedMotion)();
-		const [animationStatus, setAnimationStatus] = (0, _wordpress_element.useState)("INITIAL");
-		const becameSelected = animationStatus !== "ANIMATING_IN" && animationStatus !== "IN" && isMatch;
-		const becameUnselected = animationStatus !== "ANIMATING_OUT" && animationStatus !== "OUT" && !isMatch;
-		(0, _wordpress_element.useLayoutEffect)(() => {
-			if (becameSelected) setAnimationStatus(skipAnimation || prefersReducedMotion ? "IN" : "ANIMATING_IN");
-			else if (becameUnselected) setAnimationStatus(skipAnimation || prefersReducedMotion ? "OUT" : "ANIMATING_OUT");
-		}, [
-			becameSelected,
-			becameUnselected,
-			skipAnimation,
-			prefersReducedMotion
-		]);
-		const animationDirection = isRTL$1 && isBack || !isRTL$1 && !isBack ? "end" : "start";
-		const isAnimatingIn = animationStatus === "ANIMATING_IN";
-		const isAnimatingOut = animationStatus === "ANIMATING_OUT";
-		let animationType;
-		if (isAnimatingIn) animationType = "in";
-		else if (isAnimatingOut) animationType = "out";
-		const onScreenAnimationEnd = (0, _wordpress_element.useCallback)((e) => {
-			onAnimationEnd?.(e);
-			if (isExitAnimation(animationDirection, animationStatus, e.animationName)) setAnimationStatus("OUT");
-			else if (isEnterAnimation(animationDirection, animationStatus, e.animationName)) setAnimationStatus("IN");
-		}, [
-			onAnimationEnd,
-			animationStatus,
-			animationDirection
-		]);
-		(0, _wordpress_element.useEffect)(() => {
-			let animationTimeout;
-			if (isAnimatingOut) animationTimeout = window.setTimeout(() => {
-				setAnimationStatus("OUT");
-				animationTimeout = void 0;
-			}, TOTAL_ANIMATION_DURATION.OUT * ANIMATION_TIMEOUT_MARGIN);
-			else if (isAnimatingIn) animationTimeout = window.setTimeout(() => {
-				setAnimationStatus("IN");
-				animationTimeout = void 0;
-			}, TOTAL_ANIMATION_DURATION.IN * ANIMATION_TIMEOUT_MARGIN);
-			return () => {
-				if (animationTimeout) {
-					window.clearTimeout(animationTimeout);
-					animationTimeout = void 0;
-				}
-			};
-		}, [isAnimatingOut, isAnimatingIn]);
-		return {
-			shouldRenderScreen: isMatch || animationStatus === "IN" || animationStatus === "ANIMATING_OUT",
-			screenProps: {
-				onAnimationEnd: onScreenAnimationEnd,
-				"data-animation-direction": animationDirection,
-				"data-animation-type": animationType,
-				"data-skip-animation": skipAnimation || void 0
-			}
-		};
-	}
-
-// packages/components/build-module/navigator/navigator-screen/component.mjs
-	const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$24() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$24(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$24(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$24}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$24) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$24(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$24();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$24(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$24, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$24(targetDocument) {
-		const runtime = getRuntime$24();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$24(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$24(hash, css) {
-		const runtime = getRuntime$24();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
-	}
-	registerStyle$24("b30a5e7ac2", "._1806275ce8929e7d__wrapper{align-items:start;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow-x:clip;position:relative}._4c65901274886a7f__screen{box-sizing:border-box;grid-column:1/-1;grid-row:1/-1;max-height:100%;overflow-x:auto;position:relative}@keyframes _6d09f2ceaa9297af__fade-in{0%{opacity:0}}@keyframes _54a2b781a80e54b0__fade-out{to{opacity:0}}@keyframes _01f0a447f9a87260__slide-from-right{0%{transform:translateX(100px)}}@keyframes _378d3b594da59a81__slide-to-left{to{transform:translateX(-80px)}}@keyframes _1ff6b948a98cfba4__slide-from-left{0%{transform:translateX(-100px)}}@keyframes b58ded70195ed586__slide-to-right{to{transform:translateX(80px)}}.eda03f92d0135c15__screen-animation{z-index:1}.eda03f92d0135c15__screen-animation[data-animation-type=out]{z-index:0}@media not (prefers-reduced-motion){.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=in]{animation:_6d09f2ceaa9297af__fade-in 70ms linear 70ms both,_01f0a447f9a87260__slide-from-right .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=end][data-animation-type=out]{animation:_54a2b781a80e54b0__fade-out 70ms linear 40ms both,_378d3b594da59a81__slide-to-left .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=in]{animation:_6d09f2ceaa9297af__fade-in 70ms linear 70ms both,_1ff6b948a98cfba4__slide-from-left .3s cubic-bezier(.33,0,0,1) both}.eda03f92d0135c15__screen-animation:not([data-skip-animation])[data-animation-direction=start][data-animation-type=out]{animation:_54a2b781a80e54b0__fade-out 70ms linear 40ms both,b58ded70195ed586__slide-to-right .3s cubic-bezier(.33,0,0,1) both}}");
-	var style_module_default$24 = {
-		"wrapper": "_1806275ce8929e7d__wrapper",
-		"screen": "_4c65901274886a7f__screen",
-		"screen-animation": "eda03f92d0135c15__screen-animation",
-		"fade-in": "_6d09f2ceaa9297af__fade-in",
-		"slide-from-right": "_01f0a447f9a87260__slide-from-right",
-		"fade-out": "_54a2b781a80e54b0__fade-out",
-		"slide-to-left": "_378d3b594da59a81__slide-to-left",
-		"slide-from-left": "_1ff6b948a98cfba4__slide-from-left",
-		"slide-to-right": "b58ded70195ed586__slide-to-right"
-	};
 	function UnconnectedNavigatorScreen(props, forwardedRef) {
 		if (!/^\//.test(props.path)) (0, _wordpress_warning.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.");
 		const screenId = (0, _wordpress_element.useId)();
@@ -72151,7 +71940,7 @@ The screen with id ${screen.id} will not be added.`);
 			onAnimationEnd: onAnimationEndProp,
 			skipAnimation: skipAnimationAndFocusRestoration
 		});
-		const classes = clsx(style_module_default$24.screen, style_module_default$24["screen-animation"], className);
+		const classes = clsx(style_module_default$25.screen, style_module_default$25["screen-animation"], className);
 		const locationRef = (0, _wordpress_element.useRef)(location);
 		(0, _wordpress_element.useEffect)(() => {
 			locationRef.current = location;
@@ -72858,6 +72647,196 @@ The screen with id ${screen.id} will not be added.`);
 	}
 
 // packages/components/build-module/progress-bar/index.mjs
+	const STYLE_HASH_ATTRIBUTE$24 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$24() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$24(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$24(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$24}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$24) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$24(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$24();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$24(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$24, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$24(targetDocument) {
+		const runtime = getRuntime$24();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$24(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$24(hash, css) {
+		const runtime = getRuntime$24();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
+	}
+	registerStyle$24("b750609651", "._302459c1e4ecf4c0__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:9999px;height:1.5px;outline:2px solid transparent;outline-offset:2px;overflow:hidden;position:relative}:where(._302459c1e4ecf4c0__track){width:160px}._371656c30c80866d__indicator{background-color:var(--wpds-color-background-indicator-neutral,#1e1e1e);border-radius:9999px;display:inline-block;height:100%;outline:2px solid transparent;outline-offset:-2px;position:absolute;top:0;width:var(--indicator-width)}@media not (prefers-reduced-motion){._371656c30c80866d__indicator{transition:width .4s ease-in-out}}._371656c30c80866d__indicator.c8c112f0c2c410c8__is-indeterminate{--indicator-width:50%;animation:_452b51221f502706__indeterminate-slide 1.5s ease-in-out infinite;transition:none}@media (prefers-reduced-motion:reduce){._371656c30c80866d__indicator.c8c112f0c2c410c8__is-indeterminate{animation-duration:3s;animation-timing-function:steps(4)}}@keyframes _452b51221f502706__indeterminate-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}._42829dd460673be7__progress-element{height:100%;inset-inline-start:0;opacity:0;position:absolute;top:0;width:100%}");
+	var style_module_default$24 = {
+		"track": "_302459c1e4ecf4c0__track",
+		"indicator": "_371656c30c80866d__indicator",
+		"is-indeterminate": "c8c112f0c2c410c8__is-indeterminate",
+		"indeterminate-slide": "_452b51221f502706__indeterminate-slide",
+		"progress-element": "_42829dd460673be7__progress-element"
+	};
+	function UnforwardedProgressBar(props, ref) {
+		(0, _wordpress_deprecated.default)("wp.components.ProgressBar", {
+			since: "7.3",
+			version: "7.5",
+			alternative: "Progress from @wordpress/ui"
+		});
+		const { className, value, ...progressProps } = props;
+		const isIndeterminate = !Number.isFinite(value);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+			className: clsx(style_module_default$24.track, className),
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: clsx(style_module_default$24.indicator, { [style_module_default$24["is-indeterminate"]]: isIndeterminate }),
+				style: { "--indicator-width": !isIndeterminate ? `${value}%` : void 0 }
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("progress", {
+				className: style_module_default$24["progress-element"],
+				max: 100,
+				value,
+				"aria-label": (0, _wordpress_i18n.__)("Loading…"),
+				ref,
+				...progressProps
+			})]
+		});
+	}
+	/**
+	* A simple horizontal progress bar component.
+	*
+	* Supports two modes: determinate and indeterminate. A progress bar is determinate
+	* when a specific progress value has been specified (from 0 to 100), and indeterminate
+	* when a value hasn't been specified.
+	*
+	* @deprecated Use `Progress` from `@wordpress/ui` instead.
+	*
+	* ```jsx
+	* import { ProgressBar } from '@wordpress/components';
+	*
+	* const MyLoadingComponent = () => {
+	* 	return <ProgressBar />;
+	* };
+	* ```
+	*/
+	const ProgressBar = (0, _wordpress_element.forwardRef)(UnforwardedProgressBar);
+	ProgressBar.displayName = "ProgressBar";
+
+// packages/components/build-module/query-controls/terms.mjs
+	const ensureParentsAreDefined = (terms) => {
+		return terms.every((term) => term.parent !== null);
+	};
+	/**
+	* Returns terms in a tree form.
+	*
+	* @param flatTerms Array of terms in flat format.
+	*
+	* @return Terms in tree format.
+	*/
+	function buildTermsTree(flatTerms) {
+		const flatTermsWithParentAndChildren = flatTerms.map((term) => ({
+			children: [],
+			parent: null,
+			...term,
+			id: String(term.id)
+		}));
+		if (!ensureParentsAreDefined(flatTermsWithParentAndChildren)) return flatTermsWithParentAndChildren;
+		const termsByParent = flatTermsWithParentAndChildren.reduce((acc, term) => {
+			const { parent } = term;
+			if (!acc[parent]) acc[parent] = [];
+			acc[parent].push(term);
+			return acc;
+		}, {});
+		const fillWithChildren = (terms) => {
+			return terms.map((term) => {
+				const children = termsByParent[term.id];
+				return {
+					...term,
+					children: children && children.length ? fillWithChildren(children) : []
+				};
+			});
+		};
+		return fillWithChildren(termsByParent["0"] || []);
+	}
+
+// packages/components/build-module/select-control/index.mjs
 	const STYLE_HASH_ATTRIBUTE$23 = "data-wp-hash";
 	/**
 	* Returns the shared style runtime registry.
@@ -72959,93 +72938,116 @@ The screen with id ${screen.id} will not be added.`);
 		runtime.styles.set(hash, css);
 		for (const targetDocument of runtime.documents.keys()) injectStyle$23(targetDocument, hash, css);
 	}
-	registerStyle$23("b750609651", "._302459c1e4ecf4c0__track{background-color:var(--wpds-color-background-track-neutral,#dbdbdb);border-radius:9999px;height:1.5px;outline:2px solid transparent;outline-offset:2px;overflow:hidden;position:relative}:where(._302459c1e4ecf4c0__track){width:160px}._371656c30c80866d__indicator{background-color:var(--wpds-color-background-indicator-neutral,#1e1e1e);border-radius:9999px;display:inline-block;height:100%;outline:2px solid transparent;outline-offset:-2px;position:absolute;top:0;width:var(--indicator-width)}@media not (prefers-reduced-motion){._371656c30c80866d__indicator{transition:width .4s ease-in-out}}._371656c30c80866d__indicator.c8c112f0c2c410c8__is-indeterminate{--indicator-width:50%;animation:_452b51221f502706__indeterminate-slide 1.5s ease-in-out infinite;transition:none}@media (prefers-reduced-motion:reduce){._371656c30c80866d__indicator.c8c112f0c2c410c8__is-indeterminate{animation-duration:3s;animation-timing-function:steps(4)}}@keyframes _452b51221f502706__indeterminate-slide{0%{inset-inline-start:-50%}to{inset-inline-start:100%}}._42829dd460673be7__progress-element{height:100%;inset-inline-start:0;opacity:0;position:absolute;top:0;width:100%}");
+	registerStyle$23("febe07a6a2", "._118b8ab034d9b594__root{color:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));cursor:pointer}._118b8ab034d9b594__root:where(._6eaa18d70340d74d__is-disabled){color:var(--wpds-color-foreground-interactive-neutral-disabled,#8b8b8b);cursor:default}._118b8ab034d9b594__root._118b8ab034d9b594__root:where(._84d7e9e9acf0d576__is-minimal){display:inline-flex}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input{--_wp-components-select-control-padding:12px;appearance:none;background:transparent;border:none;box-shadow:none!important;box-sizing:border-box;color:currentColor;cursor:inherit;display:block;font-family:inherit;font-size:16px;line-height:1.3;margin:0;max-width:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}@media (min-width:600px){.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input{font-size:13px}}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(._7a474d8020b91063__is-small,._8cbad64b62dca2fd__is-compact){--_wp-components-select-control-padding:8px}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(:not(.ffd3248d187848fa__is-multiple)){height:40px;min-height:40px;padding-block:0}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(:not(.ffd3248d187848fa__is-multiple)):where(._7a474d8020b91063__is-small){height:24px;min-height:24px}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(:not(.ffd3248d187848fa__is-multiple)):where(._8cbad64b62dca2fd__is-compact){height:32px;min-height:32px}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(.ffd3248d187848fa__is-multiple){overflow:auto;padding-block:var(--_wp-components-select-control-padding)}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input{padding-left:var(--_wp-components-select-control-padding);padding-right:calc(var(--_wp-components-select-control-padding) + 18px)}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(._4c3a4e93e29da7c3__is-rtl){padding-left:calc(var(--_wp-components-select-control-padding) + 18px);padding-right:var(--_wp-components-select-control-padding)}.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input.c1fd3f80ba1b3989__input:where(._84d7e9e9acf0d576__is-minimal){field-sizing:content}.b99f682bf7ca706e__down-arrow{line-height:0;margin-inline-end:-4px}.b1d461dd19555536__suffix{pointer-events:none;position:absolute;right:0}.b1d461dd19555536__suffix:where(._4c3a4e93e29da7c3__is-rtl){left:0;right:auto}");
 	var style_module_default$23 = {
-		"track": "_302459c1e4ecf4c0__track",
-		"indicator": "_371656c30c80866d__indicator",
-		"is-indeterminate": "c8c112f0c2c410c8__is-indeterminate",
-		"indeterminate-slide": "_452b51221f502706__indeterminate-slide",
-		"progress-element": "_42829dd460673be7__progress-element"
+		"root": "_118b8ab034d9b594__root",
+		"is-disabled": "_6eaa18d70340d74d__is-disabled",
+		"is-minimal": "_84d7e9e9acf0d576__is-minimal",
+		"input": "c1fd3f80ba1b3989__input",
+		"is-small": "_7a474d8020b91063__is-small",
+		"is-compact": "_8cbad64b62dca2fd__is-compact",
+		"is-multiple": "ffd3248d187848fa__is-multiple",
+		"is-rtl": "_4c3a4e93e29da7c3__is-rtl",
+		"down-arrow": "b99f682bf7ca706e__down-arrow",
+		"suffix": "b1d461dd19555536__suffix"
 	};
-	function UnforwardedProgressBar(props, ref) {
-		(0, _wordpress_deprecated.default)("wp.components.ProgressBar", {
-			since: "7.3",
-			version: "7.5",
-			alternative: "Progress from @wordpress/ui"
-		});
-		const { className, value, ...progressProps } = props;
-		const isIndeterminate = !Number.isFinite(value);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: clsx(style_module_default$23.track, className),
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				className: clsx(style_module_default$23.indicator, { [style_module_default$23["is-indeterminate"]]: isIndeterminate }),
-				style: { "--indicator-width": !isIndeterminate ? `${value}%` : void 0 }
-			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("progress", {
-				className: style_module_default$23["progress-element"],
-				max: 100,
+	function useUniqueId(idProp) {
+		const id = `inspector-select-control-${(0, _wordpress_compose.useInstanceId)(SelectControl)}`;
+		return idProp || id;
+	}
+	function SelectOptions({ options }) {
+		return options.map(({ id, label, value, ...optionProps }, index) => {
+			const key = id || `${label}-${value}-${index}`;
+			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("option", {
 				value,
-				"aria-label": (0, _wordpress_i18n.__)("Loading…"),
-				ref,
-				...progressProps
-			})]
+				...optionProps,
+				children: label
+			}, key);
+		});
+	}
+	function UnforwardedSelectControl(props, ref) {
+		const { __nextHasNoMarginBottom: _, __next40pxDefaultSize: _next40pxDefaultSize, __next36pxDefaultSize: _next36pxDefaultSize, className, disabled = false, help, hideLabelFromVision, id: idProp, label, multiple = false, onChange, options = [], size = "default", value: valueProp, labelPosition = "top", children, prefix, suffix, variant = "default", ...restProps } = props;
+		const id = useUniqueId(idProp);
+		const helpId = help ? `${id}__help` : void 0;
+		if (!options?.length && !children) return null;
+		const handleOnChange = (event) => {
+			if (props.multiple) {
+				const newValues = Array.from(event.target.options).filter(({ selected }) => selected).map(({ value }) => value);
+				props.onChange?.(newValues, { event });
+				return;
+			}
+			props.onChange?.(event.target.value, { event });
+		};
+		const classes = clsx("components-select-control", className);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BaseControl, {
+			help,
+			id,
+			className: classes,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(input_base_default, {
+				disabled,
+				hideLabelFromVision,
+				id,
+				isBorderless: variant === "minimal",
+				label,
+				size,
+				suffix: suffix || !multiple && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectControlChevronDown, {}),
+				prefix,
+				labelPosition,
+				__unstableInputWidth: variant === "minimal" ? "auto" : void 0,
+				className: clsx(style_module_default$23.root, {
+					[style_module_default$23["is-disabled"]]: disabled,
+					[style_module_default$23["is-minimal"]]: variant === "minimal"
+				}),
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PolymorphicElement, {
+					as: "select",
+					...restProps,
+					"aria-describedby": helpId,
+					className: clsx("components-select-control__input", style_module_default$23.input, {
+						[style_module_default$23["is-small"]]: size === "small",
+						[style_module_default$23["is-compact"]]: size === "compact",
+						[style_module_default$23["is-multiple"]]: multiple,
+						[style_module_default$23["is-minimal"]]: variant === "minimal",
+						[style_module_default$23["is-rtl"]]: (0, _wordpress_i18n.isRTL)()
+					}),
+					disabled,
+					id,
+					multiple,
+					onChange: handleOnChange,
+					ref,
+					value: valueProp,
+					children: children || /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SelectOptions, { options })
+				})
+			})
 		});
 	}
 	/**
-	* A simple horizontal progress bar component.
-	*
-	* Supports two modes: determinate and indeterminate. A progress bar is determinate
-	* when a specific progress value has been specified (from 0 to 100), and indeterminate
-	* when a value hasn't been specified.
-	*
-	* @deprecated Use `Progress` from `@wordpress/ui` instead.
+	* `SelectControl` allows users to select from a single or multiple option menu.
+	* It functions as a wrapper around the browser's native `<select>` element.
 	*
 	* ```jsx
-	* import { ProgressBar } from '@wordpress/components';
+	* import { SelectControl } from '@wordpress/components';
+	* import { useState } from '@wordpress/element';
 	*
-	* const MyLoadingComponent = () => {
-	* 	return <ProgressBar />;
+	* const MySelectControl = () => {
+	*   const [ size, setSize ] = useState( '50%' );
+	*
+	*   return (
+	*     <SelectControl
+	*       label="Size"
+	*       value={ size }
+	*       options={ [
+	*         { label: 'Big', value: '100%' },
+	*         { label: 'Medium', value: '50%' },
+	*         { label: 'Small', value: '25%' },
+	*       ] }
+	*       onChange={ setSize }
+	*     />
+	*   );
 	* };
 	* ```
 	*/
-	const ProgressBar = (0, _wordpress_element.forwardRef)(UnforwardedProgressBar);
-	ProgressBar.displayName = "ProgressBar";
-
-// packages/components/build-module/query-controls/terms.mjs
-	const ensureParentsAreDefined = (terms) => {
-		return terms.every((term) => term.parent !== null);
-	};
-	/**
-	* Returns terms in a tree form.
-	*
-	* @param flatTerms Array of terms in flat format.
-	*
-	* @return Terms in tree format.
-	*/
-	function buildTermsTree(flatTerms) {
-		const flatTermsWithParentAndChildren = flatTerms.map((term) => ({
-			children: [],
-			parent: null,
-			...term,
-			id: String(term.id)
-		}));
-		if (!ensureParentsAreDefined(flatTermsWithParentAndChildren)) return flatTermsWithParentAndChildren;
-		const termsByParent = flatTermsWithParentAndChildren.reduce((acc, term) => {
-			const { parent } = term;
-			if (!acc[parent]) acc[parent] = [];
-			acc[parent].push(term);
-			return acc;
-		}, {});
-		const fillWithChildren = (terms) => {
-			return terms.map((term) => {
-				const children = termsByParent[term.id];
-				return {
-					...term,
-					children: children && children.length ? fillWithChildren(children) : []
-				};
-			});
-		};
-		return fillWithChildren(termsByParent["0"] || []);
-	}
+	const SelectControl = (0, _wordpress_element.forwardRef)(UnforwardedSelectControl);
+	SelectControl.displayName = "SelectControl";
 
 // packages/components/build-module/tree-select/index.mjs
 	function getSelectOptions(tree, level = 0) {
