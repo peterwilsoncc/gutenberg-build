@@ -35185,7 +35185,7 @@ function DataViewsSelectionCheckbox({ selection, onChangeSelection, item, getIte
 	const id = getItemId(item);
 	const isInSelectionArray = selection.includes(id);
 	const checked = !disabled && isInSelectionArray;
-	const selectionLabel = titleField?.getValue?.({ item }) || (0, import_i18n.__)("(no title)");
+	const selectionLabel = (0, import_i18n.sprintf)((0, import_i18n.__)("Select %s"), titleField?.getValue?.({ item }) || (0, import_i18n.__)("(no title)"));
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Checkbox$2, {
 		className: SELECTION_CHECKBOX_CLASS,
 		"aria-label": selectionLabel,

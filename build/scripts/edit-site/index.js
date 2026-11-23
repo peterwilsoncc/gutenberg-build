@@ -45269,7 +45269,7 @@ Icon: ButtonIcon });
 		const id = getItemId(item);
 		const isInSelectionArray = selection.includes(id);
 		const checked = !disabled && isInSelectionArray;
-		const selectionLabel = titleField?.getValue?.({ item }) || (0, _wordpress_i18n.__)("(no title)");
+		const selectionLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Select %s"), titleField?.getValue?.({ item }) || (0, _wordpress_i18n.__)("(no title)"));
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Checkbox$2, {
 			className: SELECTION_CHECKBOX_CLASS,
 			"aria-label": selectionLabel,
