@@ -30805,8 +30805,8 @@ Icon: ButtonIcon });
 	};
 	function UserControl({ value, onChange }) {
 		const [filterValue, setFilterValue] = (0, _wordpress_element.useState)("");
-		const { authors, isLoading } = (0, _wordpress_data.useSelect)((select) => {
-			const { getUsers, isResolving } = select(_wordpress_core_data.store);
+		const { authors, selectedUser, isLoading } = (0, _wordpress_data.useSelect)((select) => {
+			const { getUser, getUsers, isResolving } = select(_wordpress_core_data.store);
 			const query = { ...AUTHORS_QUERY$2 };
 			if (filterValue) {
 				query.search = filterValue;
@@ -30814,17 +30814,23 @@ Icon: ButtonIcon });
 			}
 			return {
 				authors: getUsers(query),
-				isLoading: isResolving("getUsers", [query])
+				selectedUser: value ? getUser(value, { context: "view" }) : null,
+				isLoading: isResolving("getUsers", [query]) || isResolving("getUser", [value, { context: "view" }])
 			};
-		}, [filterValue]);
+		}, [filterValue, value]);
 		const options = (0, _wordpress_element.useMemo)(() => {
-			return (authors ?? []).map((author) => {
+			const userOptions = (authors ?? []).map((author) => {
 				return {
 					value: author.id,
 					label: (0, _wordpress_html_entities.decodeEntities)(author.name)
 				};
 			});
-		}, [authors]);
+			if (selectedUser && !userOptions.some((option) => option.value === selectedUser.id)) userOptions.unshift({
+				value: selectedUser.id,
+				label: (0, _wordpress_html_entities.decodeEntities)(selectedUser.name)
+			});
+			return userOptions;
+		}, [authors, selectedUser]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ComboboxControl, {
 			label: (0, _wordpress_i18n.__)("User"),
 			help: (0, _wordpress_i18n.__)("Select the avatar user to display, if it is blank it will use the post/page author."),
