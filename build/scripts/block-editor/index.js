@@ -98759,8 +98759,8 @@ If there's a particular need for this, please submit a feature request at https:
 			const blockListPosition = nextPosition;
 			nextPosition += countBlocks(block, expansionState, draggedClientIds, isExpanded);
 			const isDragged = !!draggedClientIds?.includes(clientId);
-			const { itemInView } = fixedListWindow;
-			const blockInView = itemInView(blockListPosition);
+			const { start, end, focusedClientId } = fixedListWindow;
+			const blockInView = blockListPosition >= start && blockListPosition < end;
 			const position = index + 1;
 			const updatedPath = path.length > 0 ? `${path}_${position}` : `${position}`;
 			const hasNestedBlocks = !!innerBlocks?.length;
@@ -98768,7 +98768,7 @@ If there's a particular need for this, please submit a feature request at https:
 			const isSelected = isClientIdSelected(clientId, selectedClientIds);
 			const isSync = isSelected || clientId === insertedBlockClientId;
 			const isSelectedBranch = isBranchSelected || isSelected && hasNestedBlocks;
-			const showBlock = isDragged || blockInView || isSelected && clientId === selectedClientIds[0] || index === 0 || index === blockCount - 1;
+			const showBlock = isDragged || blockInView || clientId === focusedClientId || isSelected && clientId === selectedClientIds[0] || index === 0 || index === blockCount - 1;
 			const showNestedBlocks = hasNestedBlocks && shouldExpand && !isDragged;
 			if (!showBlock) {
 				placeholderRows += 1;
@@ -99387,6 +99387,74 @@ If there's a particular need for this, please submit a feature request at https:
 		return { setSelectedTreeId };
 	}
 
+// packages/block-editor/build-module/components/list-view/use-list-view-window.mjs
+	const MIN_BUFFER_ROWS = 10;
+	const MAX_BUFFER_ROWS = 40;
+	function getVisibleRows(list, scrollContainer) {
+		const { documentElement } = list.ownerDocument;
+		const { top, bottom } = scrollContainer === documentElement ? {
+			top: 0,
+			bottom: documentElement.clientHeight
+		} : scrollContainer.getBoundingClientRect();
+		const listTop = list.getBoundingClientRect().top;
+		return {
+			first: Math.max(0, Math.floor((top - listTop) / 32)),
+			last: Math.max(0, Math.ceil((bottom - listTop) / 32))
+		};
+	}
+	function coversRows({ start, end }, first, last, spareRows) {
+		return (start === 0 || first - start >= spareRows) && end - last >= spareRows;
+	}
+	/**
+	* Tracks which rows of the list view should be rendered.
+	*
+	* @return The ref for the list element, and the window of rows to render.
+	*/
+	function useListViewWindow() {
+		const [fixedListWindow, setFixedListWindow] = (0, _wordpress_element.useState)(() => ({
+			start: 0,
+			end: Math.ceil(window.innerHeight / 32)
+		}));
+		const listWindowRef = (0, _wordpress_element.useRef)(fixedListWindow);
+		return {
+			ref: (0, _wordpress_compose.useRefEffect)((list) => {
+				const { ownerDocument } = list;
+				const defaultView = ownerDocument.defaultView;
+				const updateWindow = (spareRows) => {
+					const { first, last } = getVisibleRows(list, (0, _wordpress_dom.getScrollContainer)(list) ?? ownerDocument.documentElement);
+					const listWindow = listWindowRef.current;
+					if (coversRows(listWindow, first, last, spareRows)) return;
+					const focusedRow = ownerDocument.activeElement?.closest("[data-block]");
+					const nextWindow = {
+						start: Math.max(0, first - MAX_BUFFER_ROWS),
+						end: last + MAX_BUFFER_ROWS,
+						focusedClientId: focusedRow && list.contains(focusedRow) ? focusedRow.dataset.block : void 0
+					};
+					listWindowRef.current = nextWindow;
+					if (coversRows(listWindow, first, last, 0)) setFixedListWindow(nextWindow);
+					else (0, _wordpress_element.flushSync)(() => setFixedListWindow(nextWindow));
+				};
+				const fillViewport = () => updateWindow(0);
+				const resizeObserver = new ResizeObserver(fillViewport);
+				const onScroll = (event) => {
+					if (event.target.contains(list)) updateWindow(MIN_BUFFER_ROWS);
+				};
+				ownerDocument.addEventListener("scroll", onScroll, {
+					capture: true,
+					passive: true
+				});
+				defaultView.addEventListener("resize", fillViewport);
+				for (let node = list; node; node = node.parentElement) resizeObserver.observe(node);
+				return () => {
+					resizeObserver.disconnect();
+					defaultView.removeEventListener("resize", fillViewport);
+					ownerDocument.removeEventListener("scroll", onScroll, { capture: true });
+				};
+			}, []),
+			fixedListWindow
+		};
+	}
+
 // packages/block-editor/build-module/components/list-view/use-clipboard-handler.mjs
 	function useClipboardHandler({ selectBlock }) {
 		const registry = (0, _wordpress_data.useRegistry)();
@@ -99504,11 +99572,6 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const blockIndexes = useListViewBlockIndexes(clientIdsTree);
 		const { getBlock, getSelectedBlockClientIds } = (0, _wordpress_data.useSelect)(store);
-		const { visibleBlockCount } = (0, _wordpress_data.useSelect)((select) => {
-			const { getGlobalBlockCount, getClientIdsOfDescendants } = select(store);
-			const draggedBlockCount = draggedClientIds?.length > 0 ? getClientIdsOfDescendants(draggedClientIds).length + 1 : 0;
-			return { visibleBlockCount: getGlobalBlockCount() - draggedBlockCount };
-		}, [draggedClientIds]);
 		const { updateBlockSelection } = useBlockSelection();
 		const [expansionState, updateExpansion] = (0, _wordpress_element.useReducer)(expansion, {});
 		const [insertedBlockClientId, setInsertedBlockClientId] = (0, _wordpress_element.useState)(null);
@@ -99531,6 +99594,7 @@ If there's a particular need for this, please submit a feature request at https:
 			updateExpansion
 		});
 		const elementRef = (0, _wordpress_element.useRef)(null);
+		const { ref: listWindowRef, fixedListWindow } = useListViewWindow();
 		const clipBoardRef = useClipboardHandler({ selectBlock: selectEditorBlock });
 		const focusOnMountRef = (0, _wordpress_compose.useRefEffect)((node) => {
 			if (!focusOnMount) return;
@@ -99558,6 +99622,7 @@ If there's a particular need for this, please submit a feature request at https:
 			clipBoardRef,
 			focusOnMountRef,
 			elementRef,
+			listWindowRef,
 			dropZoneRef,
 			ref
 		]);
@@ -99632,11 +99697,6 @@ If there's a particular need for this, please submit a feature request at https:
 			expansionState,
 			firstDraggedBlockIndex
 		]);
-		const [fixedListWindow] = (0, _wordpress_compose.__experimentalUseFixedWindowList)(elementRef, 32, visibleBlockCount, {
-			expandedState: expansionState,
-			useWindowing: true,
-			windowOverscan: 40
-		});
 		if (!clientIdsTree.length && !showAppender) return null;
 		const describedById = description && `block-editor-list-view-description-${instanceId}`;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_data.AsyncModeProvider, {
