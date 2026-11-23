@@ -2367,6 +2367,7 @@ button.font-library__upload-area {
   left: var(--wpds-dimension-padding-sm, 8px);
   z-index: 1;
   opacity: 0;
+  box-shadow: 0 0 0 var(--wpds-border-width-sm, 2px) var(--wpds-color-background-surface-neutral-strong, #fff);
 }
 
 @media not (prefers-reduced-motion) {
@@ -3289,6 +3290,7 @@ div.dataviews-view-list {
   top: -9999em;
   left: var(--wpds-dimension-padding-sm, 8px);
   z-index: 1;
+  box-shadow: 0 0 0 var(--wpds-border-width-sm, 2px) var(--wpds-color-background-surface-neutral-strong, #fff);
 }
 
 @media (hover: none) {
