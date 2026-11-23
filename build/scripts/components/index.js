@@ -46761,7 +46761,7 @@ get: (_target, key) => {
 		return getOptimalTextColor(backgroundColor) === "#000000" ? "dark" : "light";
 	}
 
-// node_modules/.store/highlight-words-core@1.2.2-V8mfhTd10PD1GySAOmFhHA/node_modules/highlight-words-core/dist/index.js
+// node_modules/.store/highlight-words-core@1.2.3-PBoe4o55OsWvhEO4FGGEVg/node_modules/highlight-words-core/dist/index.js
 	var require_dist = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 		module.exports = (function(modules) {
 			var installedModules = {};
@@ -46841,7 +46841,7 @@ get: (_target, key) => {
 						if (processedChunks.length === 0) return [nextChunk];
 						else {
 							var prevChunk = processedChunks.pop();
-							if (nextChunk.start <= prevChunk.end) {
+							if (nextChunk.start < prevChunk.end) {
 								var endIndex = Math.max(prevChunk.end, nextChunk.end);
 								processedChunks.push({
 									highlight: false,
