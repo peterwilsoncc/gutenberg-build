@@ -234,7 +234,7 @@
   max-width: 100%;
   font-size: var(--wpds-typography-font-size-sm, 12px);
   font-weight: 400;
-  line-height: 20px;
+  line-height: var(--wpds-typography-line-height-sm, 20px);
 }
 
 .components-badge__icon {

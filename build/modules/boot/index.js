@@ -10362,12 +10362,12 @@ function registerStyle$8(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$8(targetDocument, hash, css);
 }
-registerStyle$8("587e8bd148", "._8ee768104cd6989d__screen{padding-block-end:4px}._8ee768104cd6989d__screen .components-text{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}._86eaeab8cbb71ab3__title-icon{padding-block-end:8px;padding-block-start:12px;padding-inline-end:16px;padding-inline-start:16px;position:sticky;top:0}.c70a3969756ff3ce__title{flex-grow:1;overflow-wrap:break-word}.c70a3969756ff3ce__title.c70a3969756ff3ce__title,.c70a3969756ff3ce__title.c70a3969756ff3ce__title .c70a3969756ff3ce__title{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);line-height:32px}.f21c64ba84799e5c__actions{display:flex;flex-shrink:0}");
+registerStyle$8("238635cb9f", "._0b9fa044c30b3008__screen{padding-block-end:4px}._0b9fa044c30b3008__screen .components-text{color:var(--wpds-color-foreground-content-neutral,#1e1e1e)}.b175c7232dd81174__title-icon{padding-block-end:8px;padding-block-start:12px;padding-inline-end:16px;padding-inline-start:16px;position:sticky;top:0}.b2dc4838239d6dd4__title{flex-grow:1;overflow-wrap:break-word}.b2dc4838239d6dd4__title.b2dc4838239d6dd4__title,.b2dc4838239d6dd4__title.b2dc4838239d6dd4__title .b2dc4838239d6dd4__title{color:var(--wpds-color-foreground-content-neutral,#1e1e1e);line-height:var(--wpds-typography-line-height-xl,32px)}._19318fbfc6c5a033__actions{display:flex;flex-shrink:0}");
 var style_module_default$8 = {
-	"screen": "_8ee768104cd6989d__screen",
-	"title-icon": "_86eaeab8cbb71ab3__title-icon",
-	"title": "c70a3969756ff3ce__title",
-	"actions": "f21c64ba84799e5c__actions"
+	"screen": "_0b9fa044c30b3008__screen",
+	"title-icon": "b175c7232dd81174__title-icon",
+	"title": "b2dc4838239d6dd4__title",
+	"actions": "_19318fbfc6c5a033__actions"
 };
 const ANIMATION_DURATION = .3;
 const slideVariants = {

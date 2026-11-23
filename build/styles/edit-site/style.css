@@ -4861,7 +4861,7 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   overflow-wrap: break-word;
 }
 .edit-site-sidebar-navigation-screen__title.edit-site-sidebar-navigation-screen__title, .edit-site-sidebar-navigation-screen__title.edit-site-sidebar-navigation-screen__title .edit-site-sidebar-navigation-screen__title {
-  line-height: 32px;
+  line-height: var(--wpds-typography-line-height-xl, 32px);
 }
 
 .edit-site-sidebar-navigation-screen__actions {

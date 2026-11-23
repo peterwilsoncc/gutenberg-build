@@ -5577,7 +5577,7 @@ mark.wp-note {
 .editor-avatar__name {
   font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
-  line-height: 20px;
+  line-height: var(--wpds-typography-line-height-sm, 20px);
   color: var(--editor-avatar-name-color, #fff);
   min-width: 0;
   padding-bottom: 2px;
@@ -5696,7 +5696,7 @@ mark.wp-note {
   margin-inline-start: 4px;
   margin-inline-end: 4px;
   font-size: var(--wpds-typography-font-size-sm, 12px);
-  line-height: 20px;
+  line-height: var(--wpds-typography-line-height-sm, 20px);
   color: #1e1e1e;
   white-space: nowrap;
 }
@@ -5720,7 +5720,7 @@ mark.wp-note {
 .editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-header-title {
   font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
-  line-height: 20px;
+  line-height: var(--wpds-typography-line-height-sm, 20px);
   display: flex;
   gap: 4px;
 }
@@ -5774,7 +5774,7 @@ mark.wp-note {
 .editor-collaborators-presence__list.components-popover .editor-collaborators-presence__list-item-name {
   font-size: var(--wpds-typography-font-size-md, 13px);
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
-  line-height: 20px;
+  line-height: var(--wpds-typography-line-height-sm, 20px);
   color: #1e1e1e;
   overflow: hidden;
   text-overflow: ellipsis;
