@@ -27170,9 +27170,9 @@ function Root$10({ children, open: openProp, onOpenChange, defaultOpen, onConfir
 	});
 }
 
-// node_modules/.store/tabbable@6.4.0-49g9Jwl_jIng6IFnC6-0hg/node_modules/tabbable/dist/index.esm.js
+// node_modules/.store/tabbable@6.5.2-HJ10wRNH4dM0nFDF6CUZWg/node_modules/tabbable/dist/index.esm.js
 /*!
-* tabbable 6.4.0
+* tabbable 6.5.2
 * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
 */
 var candidateSelectors = [
@@ -27180,6 +27180,7 @@ var candidateSelectors = [
 	"select:not([inert]):not([inert] *)",
 	"textarea:not([inert]):not([inert] *)",
 	"a[href]:not([inert]):not([inert] *)",
+	"area[href]:not([inert]):not([inert] *)",
 	"button:not([inert]):not([inert] *)",
 	"[tabindex]:not(slot):not([inert]):not([inert] *)",
 	"audio[controls]:not([inert]):not([inert] *)",
@@ -27192,10 +27193,9 @@ var candidateSelector = /* #__PURE__ */ candidateSelectors.join(",");
 var NoElement = typeof Element === "undefined";
 var matches = NoElement ? function() {} : Element.prototype.matches || Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 var getRootNode = !NoElement && Element.prototype.getRootNode ? function(element) {
-	var _element$getRootNode;
-	return element === null || element === void 0 ? void 0 : (_element$getRootNode = element.getRootNode) === null || _element$getRootNode === void 0 ? void 0 : _element$getRootNode.call(element);
+	return element == null || element.getRootNode == null ? void 0 : element.getRootNode();
 } : function(element) {
-	return element === null || element === void 0 ? void 0 : element.ownerDocument;
+	return element == null ? void 0 : element.ownerDocument;
 };
 /**
 * Determines if a node is inert or in an inert ancestor.
@@ -27206,9 +27206,8 @@ var getRootNode = !NoElement && Element.prototype.getRootNode ? function(element
 *  False if `node` is falsy.
 */
 var _isInert = function isInert(node, lookUp) {
-	var _node$getAttribute;
 	if (lookUp === void 0) lookUp = true;
-	var inertAtt = node === null || node === void 0 ? void 0 : (_node$getAttribute = node.getAttribute) === null || _node$getAttribute === void 0 ? void 0 : _node$getAttribute.call(node, "inert");
+	var inertAtt = node == null || node.getAttribute == null ? void 0 : node.getAttribute("inert");
 	return inertAtt === "" || inertAtt === "true" || lookUp && node && (typeof node.closest === "function" ? node.closest("[inert]") : _isInert(node.parentNode));
 };
 /**
@@ -27217,9 +27216,9 @@ var _isInert = function isInert(node, lookUp) {
 * @returns True if it's content-editable; false if it's not or `node` is falsy.
 */
 var isContentEditable = function isContentEditable(node) {
-	var _node$getAttribute2;
-	var attValue = node === null || node === void 0 ? void 0 : (_node$getAttribute2 = node.getAttribute) === null || _node$getAttribute2 === void 0 ? void 0 : _node$getAttribute2.call(node, "contenteditable");
-	return attValue === "" || attValue === "true";
+	var _node$getAttribute;
+	var attValue = node == null || node.getAttribute == null || (_node$getAttribute = node.getAttribute("contenteditable")) == null ? void 0 : _node$getAttribute.toLowerCase();
+	return attValue === "" || attValue === "true" || attValue === "plaintext-only";
 };
 /**
 * @param {Element} el container to check in
@@ -27369,23 +27368,6 @@ var isRadio = function isRadio(node) {
 var isNonTabbableRadio = function isNonTabbableRadio(node) {
 	return isRadio(node) && !isTabbableRadio(node);
 };
-var isNodeAttached = function isNodeAttached(node) {
-	var _nodeRoot;
-	var nodeRoot = node && getRootNode(node);
-	var nodeRootHost = (_nodeRoot = nodeRoot) === null || _nodeRoot === void 0 ? void 0 : _nodeRoot.host;
-	var attached = false;
-	if (nodeRoot && nodeRoot !== node) {
-		var _nodeRootHost, _nodeRootHost$ownerDo, _node$ownerDocument;
-		attached = !!((_nodeRootHost = nodeRootHost) !== null && _nodeRootHost !== void 0 && (_nodeRootHost$ownerDo = _nodeRootHost.ownerDocument) !== null && _nodeRootHost$ownerDo !== void 0 && _nodeRootHost$ownerDo.contains(nodeRootHost) || node !== null && node !== void 0 && (_node$ownerDocument = node.ownerDocument) !== null && _node$ownerDocument !== void 0 && _node$ownerDocument.contains(node));
-		while (!attached && nodeRootHost) {
-			var _nodeRoot2, _nodeRootHost2, _nodeRootHost2$ownerD;
-			nodeRoot = getRootNode(nodeRootHost);
-			nodeRootHost = (_nodeRoot2 = nodeRoot) === null || _nodeRoot2 === void 0 ? void 0 : _nodeRoot2.host;
-			attached = !!((_nodeRootHost2 = nodeRootHost) !== null && _nodeRootHost2 !== void 0 && (_nodeRootHost2$ownerD = _nodeRootHost2.ownerDocument) !== null && _nodeRootHost2$ownerD !== void 0 && _nodeRootHost2$ownerD.contains(nodeRootHost));
-		}
-	}
-	return attached;
-};
 var isZeroArea = function isZeroArea(node) {
 	var _node$getBoundingClie = node.getBoundingClientRect(), width = _node$getBoundingClie.width, height = _node$getBoundingClie.height;
 	return width === 0 && height === 0;
@@ -27401,7 +27383,8 @@ var isHidden$1 = function isHidden(node, _ref) {
 			checkVisibilityCSS: true
 		});
 	}
-	if (getComputedStyle(node).visibility === "hidden") return true;
+	var visibility = getComputedStyle(node).visibility;
+	if (visibility === "hidden" || visibility === "collapse") return true;
 	var nodeUnderDetails = matches.call(node, "details>summary:first-of-type") ? node.parentElement : node;
 	if (matches.call(nodeUnderDetails, "details:not([open]) *")) return true;
 	if (!displayCheck || displayCheck === "full" || displayCheck === "full-native" || displayCheck === "legacy-full") {
@@ -27417,7 +27400,7 @@ var isHidden$1 = function isHidden(node, _ref) {
 			}
 			node = originalNode;
 		}
-		if (isNodeAttached(node)) return !node.getClientRects().length;
+		if (node.isConnected) return !node.getClientRects().length;
 		if (displayCheck !== "legacy-full") return true;
 	} else if (displayCheck === "non-zero-area") return isZeroArea(node);
 	return false;
