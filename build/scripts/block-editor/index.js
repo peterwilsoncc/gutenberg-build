@@ -65013,7 +65013,8 @@ Icon: ButtonIcon });
 					return;
 				}
 				const selection = node.ownerDocument.defaultView.getSelection();
-				if (!getSelectionEditableElement(selection, node)) event.preventDefault();
+				const editable = getSelectionEditableElement(selection, node);
+				if (!editable || event.getTargetRanges().some(({ startContainer, endContainer }) => !editable.contains(startContainer) || !editable.contains(endContainer))) event.preventDefault();
 			}
 			function onKeyDown(event) {
 				if (event.defaultPrevented) return;
