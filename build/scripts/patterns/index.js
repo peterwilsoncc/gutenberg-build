@@ -112,6 +112,21 @@ react = __toESM(react, 1);
 		return await dispatch.createPattern(parsedContent.title, parsedContent.syncStatus, parsedContent.content, categories);
 	};
 	/**
+	* Returns the bindings of a block that outlive detaching its pattern.
+	*
+	* Pattern overrides only apply while a block is part of a synced pattern, so
+	* detaching drops them. Bindings to other sources, such as post meta, are kept.
+	*
+	* @param bindings The `metadata.bindings` of a block, which is untyped.
+	*
+	* @return The remaining bindings, or `undefined` when none remain.
+	*/
+	function getBindingsToKeep(bindings) {
+		if (!bindings || typeof bindings !== "object" || Array.isArray(bindings)) return;
+		const kept = Object.fromEntries(Object.entries(bindings).filter(([, binding]) => binding?.source !== PATTERN_OVERRIDES_BINDING_SOURCE));
+		return Object.keys(kept).length > 0 ? kept : void 0;
+	}
+	/**
 	* Returns a generator converting a synced pattern block into a static block.
 	*
 	* @param clientId The client ID of the block to attach.
@@ -119,23 +134,25 @@ react = __toESM(react, 1);
 	const convertSyncedPatternToStatic = (clientId) => ({ registry }) => {
 		const patternBlock = registry.select(_wordpress_block_editor.store).getBlock(clientId);
 		const existingOverrides = patternBlock.attributes?.content;
-		function cloneBlocksAndRemoveBindings(blocks) {
+		function cloneBlocksAndRemoveOverrideBindings(blocks) {
 			return blocks.map((block) => {
 				let metadata = block.attributes.metadata;
 				if (metadata) {
 					metadata = { ...metadata };
 					delete metadata.id;
-					delete metadata.bindings;
+					const bindings = getBindingsToKeep(metadata.bindings);
+					if (bindings) metadata.bindings = bindings;
+					else delete metadata.bindings;
 					if (existingOverrides?.[metadata.name]) for (const [attributeName, value] of Object.entries(existingOverrides[metadata.name])) {
 						if (!(0, _wordpress_blocks.getBlockType)(block.name)?.attributes[attributeName]) continue;
 						block.attributes[attributeName] = value;
 					}
 				}
-				return (0, _wordpress_blocks.cloneBlock)(block, { metadata: metadata && Object.keys(metadata).length > 0 ? metadata : void 0 }, cloneBlocksAndRemoveBindings(block.innerBlocks));
+				return (0, _wordpress_blocks.cloneBlock)(block, { metadata: metadata && Object.keys(metadata).length > 0 ? metadata : void 0 }, cloneBlocksAndRemoveOverrideBindings(block.innerBlocks));
 			});
 		}
 		const patternInnerBlocks = registry.select(_wordpress_block_editor.store).getBlocks(patternBlock.clientId);
-		registry.dispatch(_wordpress_block_editor.store).replaceBlocks(patternBlock.clientId, cloneBlocksAndRemoveBindings(patternInnerBlocks));
+		registry.dispatch(_wordpress_block_editor.store).replaceBlocks(patternBlock.clientId, cloneBlocksAndRemoveOverrideBindings(patternInnerBlocks));
 	};
 	/**
 	* Returns an action descriptor for SET_EDITING_PATTERN action.
