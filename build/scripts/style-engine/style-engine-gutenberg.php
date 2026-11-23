@@ -158,5 +158,10 @@ function gutenberg_style_engine_get_stylesheet_from_context( $context, $options 
 		return '';
 	}
 
-	return WP_Style_Engine_Gutenberg::compile_stylesheet_from_css_rules( WP_Style_Engine_Gutenberg::get_store( $context )->get_all_rules(), $options );
+	$store = WP_Style_Engine_Gutenberg::get_store( $context );
+	if ( ! $store ) {
+		return '';
+	}
+
+	return WP_Style_Engine_Gutenberg::compile_stylesheet_from_css_rules( $store->get_all_rules(), $options );
 }
