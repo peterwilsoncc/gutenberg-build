@@ -64819,6 +64819,35 @@ Icon: ButtonIcon });
 		]);
 	}
 
+// packages/block-editor/build-module/components/writing-flow/use-undo-keyboard-slide.mjs
+/**
+	* iOS slides the whole page up to reveal the caret above the keyboard, taking
+	* the editor's header and block toolbar off screen. Once the canvas stops
+	* scrolling, move that slide into the canvas, so the header comes back.
+	*/
+	function useUndoKeyboardSlide() {
+		return (0, _wordpress_compose.useRefEffect)((node) => {
+			const { ownerDocument } = node;
+			const defaultView = ownerDocument.defaultView;
+			const view = defaultView.frameElement?.ownerDocument.defaultView ?? defaultView;
+			function onScrollEnd() {
+				const slide = view.scrollY;
+				if (!slide || view.visualViewport?.scale !== 1) return;
+				if (!ownerDocument.hasFocus() || !node.contains(ownerDocument.activeElement)) return;
+				const page = view.document.scrollingElement;
+				if (page.scrollHeight > page.clientHeight) return;
+				const canvas = (0, _wordpress_dom.getScrollContainer)(node);
+				const { scrollTop } = canvas;
+				canvas.scrollTop += slide;
+				view.scrollBy(0, scrollTop - canvas.scrollTop);
+			}
+			ownerDocument.addEventListener("scrollend", onScrollEnd, true);
+			return () => {
+				ownerDocument.removeEventListener("scrollend", onScrollEnd, true);
+			};
+		}, []);
+	}
+
 // packages/block-editor/build-module/components/writing-flow/use-restore-tap-caret.mjs
 /**
 	* Puts the caret back when iOS moves it out of a field right after focus
@@ -66012,6 +66041,7 @@ Icon: ButtonIcon });
 				useDragSelection(),
 				useRestoreTapCaret(),
 				useSelectionObserver(),
+				useUndoKeyboardSlide(),
 				usePreventFocusCapture(),
 				useClickSelection(),
 				useMultiSelection(),
