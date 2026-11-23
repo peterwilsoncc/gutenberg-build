@@ -64819,6 +64819,46 @@ Icon: ButtonIcon });
 		]);
 	}
 
+// packages/block-editor/build-module/components/writing-flow/use-restore-tap-caret.mjs
+/**
+	* Puts the caret back when iOS moves it out of a field right after focus
+	* moved there from the wrapper, as the editing host. Moving focus soon after
+	* a tap makes WebKit reset its text gestures, and UIKit then repeats the tap
+	* at the top left corner of the page, moving the caret there. Focus stays in
+	* the field, so only that repeat leaves the caret outside it.
+	*/
+	function useRestoreTapCaret() {
+		return (0, _wordpress_compose.useRefEffect)((node) => {
+			const { ownerDocument } = node;
+			const selection = ownerDocument.defaultView.getSelection();
+			let caret;
+			function onFocusIn(event) {
+				caret = event.relatedTarget === node && selection.rangeCount && event.target.contains(selection.anchorNode) ? selection.getRangeAt(0).cloneRange() : void 0;
+			}
+			function forget() {
+				caret = void 0;
+			}
+			function onSelectionChange() {
+				const { activeElement } = ownerDocument;
+				if (caret && selection.anchorNode && !activeElement?.contains(selection.anchorNode)) {
+					selection.removeAllRanges();
+					selection.addRange(caret);
+					caret = void 0;
+				}
+			}
+			node.addEventListener("focusin", onFocusIn);
+			ownerDocument.addEventListener("pointerdown", forget, true);
+			ownerDocument.addEventListener("keydown", forget, true);
+			ownerDocument.addEventListener("selectionchange", onSelectionChange);
+			return () => {
+				node.removeEventListener("focusin", onFocusIn);
+				ownerDocument.removeEventListener("pointerdown", forget, true);
+				ownerDocument.removeEventListener("keydown", forget, true);
+				ownerDocument.removeEventListener("selectionchange", onSelectionChange);
+			};
+		}, []);
+	}
+
 // packages/block-editor/build-module/components/writing-flow/use-prevent-focus-capture.mjs
 	const { subscribeDelegatedListener: subscribeDelegatedListener$3 } = unlock$2(_wordpress_compose.privateApis);
 	/**
@@ -64872,25 +64912,19 @@ Icon: ButtonIcon });
 			let clickCollapseClientId;
 			function onPointerDown(event) {
 				pointerType = event.pointerType;
-				if (node.contentEditable !== "true") return;
-				const clientId = getBlockClientId(event.target);
-				if (!clientId || canHostEditableRoot(clientId)) return;
-				const field = getSelectionEditableElement(node.ownerDocument.defaultView.getSelection(), node);
-				if (!field) return;
-				setContentEditableWrapper(node, false);
-				field.focus({ preventScroll: true });
-				if (pointerType !== "touch") return;
-				function onPointerCancel() {
-					setContentEditableWrapper(node, true);
-				}
-				node.addEventListener("pointercancel", onPointerCancel, { once: true });
-				node.addEventListener("pointerup", () => node.removeEventListener("pointercancel", onPointerCancel), { once: true });
 			}
 			function onMouseDown(event) {
+				const clickedClientId = getBlockClientId(event.target);
+				if (node.contentEditable === "true" && clickedClientId && !canHostEditableRoot(clickedClientId)) {
+					const field = getSelectionEditableElement(node.ownerDocument.defaultView.getSelection(), node);
+					if (field) {
+						setContentEditableWrapper(node, false);
+						field.focus({ preventScroll: true });
+					}
+				}
 				clickCollapseClientId = void 0;
 				if (!isSelectionEnabled() || event.button !== 0) return;
 				const startClientId = getBlockSelectionStart();
-				const clickedClientId = getBlockClientId(event.target);
 				if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && node.matches(":focus")) {
 					event.preventDefault();
 					return;
@@ -65973,6 +66007,7 @@ Icon: ButtonIcon });
 				useEditableRoot(),
 				useHomeEnd(),
 				useDragSelection(),
+				useRestoreTapCaret(),
 				useSelectionObserver(),
 				usePreventFocusCapture(),
 				useClickSelection(),
