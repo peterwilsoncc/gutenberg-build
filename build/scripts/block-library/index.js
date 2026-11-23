@@ -85411,7 +85411,7 @@ Icon: ButtonIcon });
 	function insertRow(state, { sectionName, rowIndex, columnCount }) {
 		const firstRow = getFirstRow(state);
 		const cellCount = columnCount === void 0 ? firstRow?.cells?.length : columnCount;
-		if (!cellCount) return state;
+		if (!cellCount || !state[sectionName]) return state;
 		return { [sectionName]: [
 			...state[sectionName].slice(0, rowIndex),
 			{ cells: Array.from({ length: cellCount }).map((_, index) => {
@@ -85436,6 +85436,7 @@ Icon: ButtonIcon });
 	* @return {Object} New table state.
 	*/
 	function deleteRow(state, { sectionName, rowIndex }) {
+		if (!state[sectionName]) return state;
 		return { [sectionName]: state[sectionName].filter((row, index) => index !== rowIndex) };
 	}
 	/**
@@ -85710,11 +85711,12 @@ Icon: ButtonIcon });
 		*/
 		function onInsertColumn(delta = 0) {
 			if (!selectedCell) return;
-			const { columnIndex } = selectedCell;
+			const { sectionName, rowIndex, columnIndex } = selectedCell;
 			const newColumnIndex = columnIndex + delta;
 			setAttributes(insertColumn(attributes, { columnIndex: newColumnIndex }));
 			setSelectedCell({
-				rowIndex: 0,
+				sectionName,
+				rowIndex,
 				columnIndex: newColumnIndex,
 				type: "cell"
 			});
