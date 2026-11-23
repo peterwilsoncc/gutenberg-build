@@ -61192,6 +61192,17 @@ Icon: ButtonIcon });
 		return blockNode.id.slice(6);
 	}
 	/**
+	* Whether an element is a block's own element outside its fields, such as a
+	* list item's bullet. Fields keep their own `contentEditable`.
+	*
+	* @param element Element.
+	*
+	* @return Whether the element is a block's own element outside its fields.
+	*/
+	function isBlockElementOutsideFields(element) {
+		return element?.contentEditable === "inherit" && element.hasAttribute("data-block");
+	}
+	/**
 	* Calculates the union of two rectangles.
 	*
 	* @param rect1 First rectangle.
@@ -61345,7 +61356,7 @@ Icon: ButtonIcon });
 				}
 				const target = event.target;
 				timeoutId = setTimeout(() => {
-					node.classList.toggle("is-hovered-draggable", !target.isContentEditable);
+					node.classList.toggle("is-hovered-draggable", !target.isContentEditable || isBlockElementOutsideFields(target));
 				}, 100);
 			}
 			const unsubscribeOut = subscribeDelegatedListener$5(node, "mouseout", listener);
@@ -64040,7 +64051,7 @@ Icon: ButtonIcon });
 			const selection = node.ownerDocument.defaultView.getSelection();
 			const isFieldFocused = activeElement !== node && activeElement?.isContentEditable && node.contains(activeElement) && getBlockClientId(activeElement) === getSelectedBlockClientId();
 			if (isFieldFocused && selection.anchorNode && !activeElement.contains(selection.anchorNode)) selection.removeAllRanges();
-			if (!setContentEditableWrapper(node, true, { focus: false })) return;
+			if (!isBlockElementOutsideFields(activeElement) && !setContentEditableWrapper(node, true, { focus: false })) return;
 			if (isFieldFocused && selection.anchorNode && activeElement.contains(selection.anchorNode)) node.focus();
 			return () => {
 				if (hasMultiSelection() || isMultiSelecting()) return;
@@ -64682,7 +64693,7 @@ Icon: ButtonIcon });
 				const isClickShift = event.shiftKey && event.type === "mouseup";
 				if (selection.isCollapsed && !isClickShift) {
 					const collapsedClientId = getBlockClientId(selection.anchorNode);
-					if (!isMultiSelecting() && collapsedClientId && canHostEditableRoot(collapsedClientId)) {
+					if (!isMultiSelecting() && collapsedClientId && canHostEditableRoot(collapsedClientId) && !isBlockElementOutsideFields(ownerDocument.activeElement)) {
 						setContentEditableWrapper(node, true);
 						const { activeElement } = ownerDocument;
 						if (activeElement !== node && activeElement?.isContentEditable && node.contains(activeElement) && getBlockClientId(activeElement) === collapsedClientId) node.focus();
@@ -64948,6 +64959,7 @@ Icon: ButtonIcon });
 			function onPointerDown(event) {
 				pointerType = event.pointerType;
 				isFocusedOnPointerDown = node.matches(":focus");
+				if (isBlockElementOutsideFields(event.target)) setContentEditableWrapper(node, false);
 			}
 			function onMouseDown(event) {
 				const clickedClientId = getBlockClientId(event.target);
