@@ -46692,7 +46692,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 
-// node_modules/.store/colord@2.10.0-Qx66Amv6c9C3nDPQDizV6Q/node_modules/colord/index.mjs
+// node_modules/.store/colord@2.14.0-l37iZ_K9lPRna74pjFTSEA/node_modules/colord/index.mjs
 	for (var r = {
 		grad: .9,
 		turn: 360,
@@ -46701,146 +46701,153 @@ If there's a particular need for this, please submit a feature request at https:
 		return "string" == typeof r ? r.length > 0 : "number" == typeof r;
 	}, n = function(r, t, n) {
 		return void 0 === t && (t = 0), void 0 === n && (n = Math.pow(10, t)), Math.round(n * r) / n + 0;
+	}, e = function(r) {
+		var t = Math.round(100 * r) / 100;
+		return Math.round(255 * t) === 255 * r ? t : Math.round(1e3 * r) / 1e3;
 	}, u = function(r, t, n) {
 		return void 0 === t && (t = 0), void 0 === n && (n = 1), r > n ? n : r > t ? r : t;
-	}, e = function(r) {
+	}, o = function(r) {
 		return (r = isFinite(r) ? r % 360 : 0) < 0 ? r + 360 : r;
-	}, o = function(r, t) {
+	}, a = function(r, t) {
 		return void 0 === t && (t = 0), n(r, t) % 360;
-	}, a = function(r) {
+	}, i = function(r) {
 		return {
 			r: u(r.r, 0, 255),
 			g: u(r.g, 0, 255),
 			b: u(r.b, 0, 255),
 			a: u(r.a)
 		};
-	}, i = function(r) {
+	}, s = function(r) {
 		return {
 			r: n(r.r),
 			g: n(r.g),
 			b: n(r.b),
-			a: n(r.a, 3)
+			a: e(r.a)
 		};
-	}, s = /^#([0-9a-f]{3,8})$/i, d = function(r, t) {
+	}, d = /^#([0-9a-f]{3,8})$/i, h = function(r, t) {
 		var n = r.charCodeAt(t);
 		return (15 & n) + 9 * (n >> 6);
-	}, h = function(r, t) {
-		return d(r, t) << 4 | d(r, t + 1);
-	}, b = [], f = 0; f < 256; f++) b.push((f < 16 ? "0" : "") + f.toString(16));
-	var g = function(r) {
+	}, f = function(r, t) {
+		return h(r, t) << 4 | h(r, t + 1);
+	}, b = [], l = 0; l < 256; l++) b.push((l < 16 ? "0" : "") + l.toString(16));
+	var v = function(r) {
 		return b[u(r, 0, 255)];
 	};
 	var c = function(r) {
-		var t = r.r, n = r.g, u = r.b, e = r.a, o = Math.max(t, n, u), a = o - Math.min(t, n, u), i = a ? o === t ? (n - u) / a : o === n ? 2 + (u - t) / a : 4 + (t - n) / a : 0;
+		var t = r.r, n = r.g, e = r.b, u = r.a, o = Math.max(t, n, e), a = o - Math.min(t, n, e), i = a ? o === t ? (n - e) / a : o === n ? 2 + (e - t) / a : 4 + (t - n) / a : 0;
 		return {
 			h: 60 * (i < 0 ? i + 6 : i),
 			s: o ? a / o * 100 : 0,
 			v: o / 255 * 100,
-			a: e
+			a: u
 		};
 	};
-	var v = function(r) {
-		var t = r.h, n = r.s, u = r.v, e = r.a;
-		t = t / 360 * 6, n /= 100, u /= 100;
-		var o = Math.floor(t), a = u * (1 - n), i = u * (1 - (t - o) * n), s = u * (1 - (1 - t + o) * n), d = o % 6;
+	var g = function(r) {
+		var t = r.h, n = r.s, e = r.v, u = r.a;
+		t = t / 360 * 6, n /= 100, e /= 100;
+		var o = Math.floor(t), a = e * (1 - n), i = e * (1 - (t - o) * n), s = e * (1 - (1 - t + o) * n), d = o % 6, h = function(r) {
+			return Math.round(255e9 * r) / 1e9 + 0;
+		};
 		return {
-			r: 255 * [
-				u,
+			r: h([
+				e,
 				i,
 				a,
 				a,
 				s,
-				u
-			][d],
-			g: 255 * [
+				e
+			][d]),
+			g: h([
 				s,
-				u,
-				u,
+				e,
+				e,
 				i,
 				a,
 				a
-			][d],
-			b: 255 * [
+			][d]),
+			b: h([
 				a,
 				a,
 				s,
-				u,
-				u,
+				e,
+				e,
 				i
-			][d],
-			a: e
-		};
-	};
-	var l = function(r) {
-		return {
-			h: e(r.h),
-			s: u(r.s, 0, 100),
-			l: u(r.l, 0, 100),
-			a: u(r.a)
+			][d]),
+			a: u
 		};
 	};
 	var p = function(r) {
 		return {
 			h: o(r.h),
-			s: n(r.s),
-			l: n(r.l),
-			a: n(r.a, 3)
+			s: u(r.s, 0, 100),
+			l: u(r.l, 0, 100),
+			a: u(r.a)
 		};
 	};
 	var m = function(r) {
-		return v((n = (t = r).s, {
-			h: t.h,
-			s: (n *= ((u = t.l) < 50 ? u : 100 - u) / 100) > 0 ? 2 * n / (u + n) * 100 : 0,
-			v: u + n,
-			a: t.a
-		}));
-		var t, n, u;
+		return {
+			h: a(r.h),
+			s: n(r.s),
+			l: n(r.l),
+			a: e(r.a)
+		};
 	};
 	var y = function(r) {
+		return g((n = (t = r).s, {
+			h: t.h,
+			s: (n *= ((e = t.l) < 50 ? e : 100 - e) / 100) > 0 ? 2 * n / (e + n) * 100 : 0,
+			v: e + n,
+			a: t.a
+		}));
+		var t, n, e;
+	};
+	var N = function(r) {
 		return {
 			h: (t = c(r)).h,
-			s: (e = (200 - (n = t.s)) * (u = t.v) / 100) > 0 && e < 200 ? n * u / 100 / (e <= 100 ? e : 200 - e) * 100 : 0,
-			l: e / 2,
+			s: (u = (200 - (n = t.s)) * (e = t.v) / 100) > 0 && u < 200 ? n * e / 100 / (u <= 100 ? u : 200 - u) * 100 : 0,
+			l: u / 2,
 			a: t.a
 		};
-		var t, n, u, e;
+		var t, n, e, u;
 	};
-	var N = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*,\s*([+-]?(?:\d*\.\d+|\d+))%\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-	var x = /^hsla?\(\s*([+-]?(?:\d*\.\d+|\d+))(deg|rad|grad|turn)?\s+([+-]?(?:\d*\.\d+|\d+))%\s+([+-]?(?:\d*\.\d+|\d+))%\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-	var M = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:,\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-	var H = /^rgba?\(\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s+([+-]?(?:\d*\.\d+|\d+))(%)?\s*(?:\/\s*([+-]?(?:\d*\.\d+|\d+))(%)?\s*)?\)$/i;
-	var $ = {
+	var M = /^hsla?\(\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(deg|rad|grad|turn)?\s*,\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)%\s*,\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)%\s*(?:,\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s*)?\)$/i;
+	var x = /^hsla?\(\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(deg|rad|grad|turn)?\s+([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)%?\s+([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)%?\s*(?:\/\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s*)?\)$/i;
+	var H = /^rgba?\(\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s*,\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s*,\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s*(?:,\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s*)?\)$/i;
+	var $ = /^rgba?\(\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s+([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s+([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s*(?:\/\s*([+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)(%)?\s*)?\)$/i;
+	var w = {
 		string: [
 			[function(r) {
-				if (!s.test(r)) return null;
+				if (!d.test(r)) return null;
 				var t = r.length;
 				return t <= 5 ? {
-					r: 17 * d(r, 1),
-					g: 17 * d(r, 2),
-					b: 17 * d(r, 3),
-					a: 5 === t ? n(17 * d(r, 4) / 255, 2) : 1
+					r: 17 * h(r, 1),
+					g: 17 * h(r, 2),
+					b: 17 * h(r, 3),
+					a: 5 === t ? 17 * h(r, 4) / 255 : 1
 				} : 7 === t || 9 === t ? {
-					r: h(r, 1),
-					g: h(r, 3),
-					b: h(r, 5),
-					a: 9 === t ? n(h(r, 7) / 255, 2) : 1
+					r: f(r, 1),
+					g: f(r, 3),
+					b: f(r, 5),
+					a: 9 === t ? f(r, 7) / 255 : 1
 				} : null;
 			}, "hex"],
 			[function(r) {
-				var t = M.exec(r) || H.exec(r);
-				return t ? t[2] !== t[4] || t[4] !== t[6] ? null : a({
-					r: Number(t[1]) / (t[2] ? 100 / 255 : 1),
-					g: Number(t[3]) / (t[4] ? 100 / 255 : 1),
-					b: Number(t[5]) / (t[6] ? 100 / 255 : 1),
-					a: void 0 === t[7] ? 1 : Number(t[7]) / (t[8] ? 100 : 1)
+				var t = H.exec(r);
+				if (t && (t[2] !== t[4] || t[4] !== t[6])) return null;
+				var n = t || $.exec(r);
+				return n ? i({
+					r: Number(n[1]) / (n[2] ? 100 / 255 : 1),
+					g: Number(n[3]) / (n[4] ? 100 / 255 : 1),
+					b: Number(n[5]) / (n[6] ? 100 / 255 : 1),
+					a: void 0 === n[7] ? 1 : Number(n[7]) / (n[8] ? 100 : 1)
 				}) : null;
 			}, "rgb"],
 			[function(t) {
-				var n = N.exec(t) || x.exec(t);
+				var n = M.exec(t) || x.exec(t);
 				if (!n) return null;
-				var u, e;
-				return m(l({
-					h: (u = n[1], e = n[2], void 0 === e && (e = "deg"), Number(u) * (r[e] || 1)),
+				var e, u;
+				return y(p({
+					h: (e = n[1], u = n[2], void 0 === u && (u = "deg"), Number(e) * (r[u.toLowerCase()] || 1)),
 					s: Number(n[3]),
 					l: Number(n[4]),
 					a: void 0 === n[5] ? 1 : Number(n[5]) / (n[6] ? 100 : 1)
@@ -46849,37 +46856,37 @@ If there's a particular need for this, please submit a feature request at https:
 		],
 		object: [
 			[function(r) {
-				var n = r.r, u = r.g, e = r.b, o = r.a, i = void 0 === o ? 1 : o;
-				return t(n) && t(u) && t(e) ? a({
+				var n = r.r, e = r.g, u = r.b, o = r.a, a = void 0 === o ? 1 : o;
+				return t(n) && t(e) && t(u) ? i({
 					r: Number(n),
-					g: Number(u),
-					b: Number(e),
-					a: Number(i)
+					g: Number(e),
+					b: Number(u),
+					a: Number(a)
 				}) : null;
 			}, "rgb"],
 			[function(r) {
-				var n = r.h, u = r.s, e = r.l, o = r.a, a = void 0 === o ? 1 : o;
-				if (!t(n) || !t(u) || !t(e)) return null;
-				return m(l({
+				var n = r.h, e = r.s, u = r.l, o = r.a, a = void 0 === o ? 1 : o;
+				if (!t(n) || !t(e) || !t(u)) return null;
+				return y(p({
 					h: Number(n),
-					s: Number(u),
-					l: Number(e),
+					s: Number(e),
+					l: Number(u),
 					a: Number(a)
 				}));
 			}, "hsl"],
 			[function(r) {
-				var n = r.h, o = r.s, a = r.v, i = r.a, s = void 0 === i ? 1 : i;
-				if (!t(n) || !t(o) || !t(a)) return null;
-				return v(function(r) {
+				var n = r.h, e = r.s, a = r.v, i = r.a, s = void 0 === i ? 1 : i;
+				if (!t(n) || !t(e) || !t(a)) return null;
+				return g(function(r) {
 					return {
-						h: e(r.h),
+						h: o(r.h),
 						s: u(r.s, 0, 100),
 						v: u(r.v, 0, 100),
 						a: u(r.a)
 					};
 				}({
 					h: Number(n),
-					s: Number(o),
+					s: Number(e),
 					v: Number(a),
 					a: Number(s)
 				}));
@@ -46888,38 +46895,38 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 	var j = function(r, t) {
 		for (var n = 0; n < t.length; n++) {
-			var u = t[n][0](r);
-			if (u) return [u, t[n][1]];
+			var e = t[n][0](r);
+			if (e) return [e, t[n][1]];
 		}
 		return [null, void 0];
 	};
-	var w = function(r) {
-		return "string" == typeof r ? j(r.trim(), $.string) : "object" == typeof r && null !== r ? j(r, $.object) : [null, void 0];
+	var S = function(r) {
+		return "string" == typeof r ? j(r.trim(), w.string) : "object" == typeof r && null !== r ? j(r, w.object) : [null, void 0];
 	};
-	var k = function(r, t) {
-		var n = y(r);
+	var C = function(r, t, n) {
+		var e = N(r);
 		return {
-			h: n.h,
-			s: u(n.s + 100 * t, 0, 100),
-			l: n.l,
-			a: n.a
+			h: e.h,
+			s: u(e.s + t * (n ? e.s : 100), 0, 100),
+			l: e.l,
+			a: e.a
 		};
 	};
 	var E = function(r) {
 		return (299 * r.r + 587 * r.g + 114 * r.b) / 1e3 / 255;
 	};
-	var R = function(r, t) {
-		var n = y(r);
+	var L = function(r, t, n) {
+		var e = N(r);
 		return {
-			h: n.h,
-			s: n.s,
-			l: u(n.l + 100 * t, 0, 100),
-			a: n.a
+			h: e.h,
+			s: e.s,
+			l: u(e.l + t * (n ? e.l : 100), 0, 100),
+			a: e.a
 		};
 	};
-	var q = function() {
+	var R = function() {
 		function r(r) {
-			this.parsed = w(r)[0], this.rgba = this.parsed || {
+			this.parsed = S(r)[0], this.rgba = this.parsed || {
 				r: 0,
 				g: 0,
 				b: 0,
@@ -46935,73 +46942,73 @@ If there's a particular need for this, please submit a feature request at https:
 		}, r.prototype.isLight = function() {
 			return E(this.rgba) >= .5;
 		}, r.prototype.toHex = function() {
-			return r = i(this.rgba), t = r.r, u = r.g, e = r.b, a = (o = r.a) < 1 ? g(n(255 * o)) : "", "#" + g(t) + g(u) + g(e) + a;
-			var r, t, u, e, o, a;
+			return r = s(this.rgba), t = r.r, e = r.g, u = r.b, a = (o = r.a) < 1 ? v(n(255 * o)) : "", "#" + v(t) + v(e) + v(u) + a;
+			var r, t, e, u, o, a;
 		}, r.prototype.toRgb = function() {
-			return i(this.rgba);
+			return s(this.rgba);
 		}, r.prototype.toRgbString = function() {
-			return r = i(this.rgba), t = r.r, n = r.g, u = r.b, (e = r.a) < 1 ? "rgba(" + t + ", " + n + ", " + u + ", " + e + ")" : "rgb(" + t + ", " + n + ", " + u + ")";
-			var r, t, n, u, e;
+			return r = s(this.rgba), t = r.r, n = r.g, e = r.b, (u = r.a) < 1 ? "rgba(" + t + ", " + n + ", " + e + ", " + u + ")" : "rgb(" + t + ", " + n + ", " + e + ")";
+			var r, t, n, e, u;
 		}, r.prototype.toHsl = function() {
-			return p(y(this.rgba));
+			return m(N(this.rgba));
 		}, r.prototype.toHslString = function() {
-			return r = p(y(this.rgba)), t = r.h, n = r.s, u = r.l, (e = r.a) < 1 ? "hsla(" + t + ", " + n + "%, " + u + "%, " + e + ")" : "hsl(" + t + ", " + n + "%, " + u + "%)";
-			var r, t, n, u, e;
+			return r = m(N(this.rgba)), t = r.h, n = r.s, e = r.l, (u = r.a) < 1 ? "hsla(" + t + ", " + n + "%, " + e + "%, " + u + ")" : "hsl(" + t + ", " + n + "%, " + e + "%)";
+			var r, t, n, e, u;
 		}, r.prototype.toHsv = function() {
 			return r = c(this.rgba), {
-				h: o(r.h),
+				h: a(r.h),
 				s: n(r.s),
 				v: n(r.v),
-				a: n(r.a, 3)
+				a: e(r.a)
 			};
 			var r;
 		}, r.prototype.invert = function() {
-			return A({
+			return q({
 				r: 255 - (r = this.rgba).r,
 				g: 255 - r.g,
 				b: 255 - r.b,
 				a: r.a
 			});
 			var r;
-		}, r.prototype.saturate = function(r) {
-			return void 0 === r && (r = .1), A(k(this.rgba, r));
-		}, r.prototype.desaturate = function(r) {
-			return void 0 === r && (r = .1), A(k(this.rgba, -r));
+		}, r.prototype.saturate = function(r, t) {
+			return void 0 === r && (r = .1), q(C(this.rgba, r, null == t ? void 0 : t.relative));
+		}, r.prototype.desaturate = function(r, t) {
+			return void 0 === r && (r = .1), q(C(this.rgba, -r, null == t ? void 0 : t.relative));
 		}, r.prototype.grayscale = function() {
-			return A(k(this.rgba, -1));
-		}, r.prototype.lighten = function(r) {
-			return void 0 === r && (r = .1), A(R(this.rgba, r));
-		}, r.prototype.darken = function(r) {
-			return void 0 === r && (r = .1), A(R(this.rgba, -r));
+			return q(C(this.rgba, -1));
+		}, r.prototype.lighten = function(r, t) {
+			return void 0 === r && (r = .1), q(L(this.rgba, r, null == t ? void 0 : t.relative));
+		}, r.prototype.darken = function(r, t) {
+			return void 0 === r && (r = .1), q(L(this.rgba, -r, null == t ? void 0 : t.relative));
 		}, r.prototype.rotate = function(r) {
-			return void 0 === r && (r = 15), this.hue(y(this.rgba).h + r);
+			return void 0 === r && (r = 15), this.hue(N(this.rgba).h + r);
 		}, r.prototype.alpha = function(r) {
-			return "number" == typeof r ? A({
+			return "number" == typeof r ? q({
 				r: (t = this.rgba).r,
 				g: t.g,
 				b: t.b,
 				a: r
-			}) : n(this.rgba.a, 3);
+			}) : e(this.rgba.a);
 			var t;
 		}, r.prototype.hue = function(r) {
-			var t = y(this.rgba);
-			return "number" == typeof r ? A({
+			var t = N(this.rgba);
+			return "number" == typeof r ? q({
 				h: r,
 				s: t.s,
 				l: t.l,
 				a: t.a
-			}) : o(t.h);
+			}) : a(t.h);
 		}, r.prototype.isEqual = function(r) {
-			return this.toHex() === A(r).toHex();
+			return this.toHex() === q(r).toHex();
 		}, r;
 	}();
-	var A = function(r) {
-		return r instanceof q ? r : new q(r);
+	var q = function(r) {
+		return r instanceof R ? r : new R(r);
 	};
 
 // packages/dataviews/build-module/components/dataform-controls/color.mjs
 	const ColorPickerDropdown = ({ color, onColorChange, disabled }) => {
-		const validColor = color && A(color).isValid() ? color : "#ffffff";
+		const validColor = color && q(color).isValid() ? color : "#ffffff";
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Dropdown, {
 			className: "dataviews-controls__color-picker-dropdown",
 			popoverProps: { resize: false },
@@ -47930,7 +47937,7 @@ If there's a particular need for this, please submit a feature request at https:
 			item,
 			field
 		});
-		if (!value || !A(value).isValid()) return value;
+		if (!value || !q(value).isValid()) return value;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			style: {
 				display: "flex",
@@ -47953,12 +47960,12 @@ If there's a particular need for this, please submit a feature request at https:
 			void 0,
 			"",
 			null
-		].includes(value) && !A(value).isValid()) return (0, _wordpress_i18n.__)("Value must be a valid color.");
+		].includes(value) && !q(value).isValid()) return (0, _wordpress_i18n.__)("Value must be a valid color.");
 		return null;
 	}
 	const sort$1 = (a, b, direction) => {
-		const colorA = A(a);
-		const colorB = A(b);
+		const colorA = q(a);
+		const colorB = q(b);
 		if (!colorA.isValid() && !colorB.isValid()) return 0;
 		if (!colorA.isValid()) return direction === "asc" ? 1 : -1;
 		if (!colorB.isValid()) return direction === "asc" ? -1 : 1;
