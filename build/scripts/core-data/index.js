@@ -24073,6 +24073,17 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 
 // packages/core-data/build-module/footnotes/index.mjs
 	let oldFootnotes = {};
+	/**
+	* Checks whether an item of the parsed footnotes meta can be used as a
+	* footnote.
+	*
+	* @param value An item of the parsed footnotes meta.
+	* @return Whether the item has a non-empty string `id`.
+	*/
+	function isFootnote(value) {
+		const id = value?.id;
+		return typeof id === "string" && id !== "";
+	}
 	function updateFootnotesFromMeta(blocks, meta) {
 		const output = { blocks };
 		if (!meta) return output;
@@ -24083,8 +24094,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			parsed = JSON.parse(meta.footnotes || "[]");
 		} catch {}
 		let footnotes = [];
-		if (Array.isArray(parsed)) footnotes = parsed;
-		else (0, _wordpress_warning.default)("Footnotes post meta is not a JSON array; ignoring it.");
+		if (Array.isArray(parsed)) {
+			footnotes = parsed.filter(isFootnote);
+			if (footnotes.length !== parsed.length) (0, _wordpress_warning.default)("Footnotes post meta has items that are not footnotes; ignoring them.");
+		} else (0, _wordpress_warning.default)("Footnotes post meta is not a JSON array; ignoring it.");
 		if (footnotes.map((fn) => fn.id).join("") === newOrder.join("")) return output;
 		const newFootnotes = newOrder.map((fnId) => footnotes.find((fn) => fn.id === fnId) || oldFootnotes[fnId] || {
 			id: fnId,

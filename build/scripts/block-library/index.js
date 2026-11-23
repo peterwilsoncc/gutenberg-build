@@ -91292,6 +91292,7 @@ Icon: ButtonIcon });
 	});
 
 // packages/block-library/build-module/footnotes/edit.mjs
+	const isFootnote = (footnote) => typeof footnote?.id === "string" && footnote.id !== "";
 	function FootnotesEdit({ context: { postType, postId } }) {
 		const [meta, updateMeta] = (0, _wordpress_core_data.useEntityProp)("postType", postType, "meta", postId);
 		const footnotesSupported = "string" === typeof meta?.footnotes;
@@ -91299,7 +91300,7 @@ Icon: ButtonIcon });
 		try {
 			parsed = JSON.parse(meta?.footnotes || "[]");
 		} catch {}
-		const footnotes = Array.isArray(parsed) ? parsed : [];
+		const footnotes = Array.isArray(parsed) ? parsed.filter(isFootnote) : [];
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)();
 		if (!footnotesSupported) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			...blockProps,
