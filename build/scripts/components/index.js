@@ -55458,7 +55458,7 @@ VisualLabel });
 				max: 100,
 				label: (0, _wordpress_i18n.__)("Alpha (RGB A value)"),
 				abbreviation: "A",
-				value: Math.trunc(a * 100),
+				value: Math.round(a * 100),
 				onChange: (nextA) => onChange(A$1({
 					r,
 					g,
@@ -55513,7 +55513,7 @@ VisualLabel });
 				max: 100,
 				label: (0, _wordpress_i18n.__)("Alpha (HSL A value)"),
 				abbreviation: "A",
-				value: Math.trunc(100 * hsla.a),
+				value: Math.round(100 * hsla.a),
 				onChange: (nextA) => {
 					updateHSLAValue({ a: nextA / 100 });
 				}
