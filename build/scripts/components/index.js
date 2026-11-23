@@ -60240,10 +60240,8 @@ VisualLabel });
 		return modifiedSides.filter((s) => allowedSides.has(s));
 	}
 	function BoxInputControl({ onChange = noop$15, onFocus = noop$15, values, selectedUnits, setSelectedUnits, units, sides, side, min = 0, presets, presetKey, placeholder: placeholderProp, ...props }) {
+		useEnableWpCompatOverlaySlot();
 		const defaultValuesToModify = getSidesToModify(side, sides);
-		const handleOnFocus = (event) => {
-			onFocus(event, { side });
-		};
 		const handleOnChange = (nextValues) => {
 			onChange(nextValues);
 		};
@@ -60283,6 +60281,10 @@ VisualLabel });
 		const resolvedUnit = parsedUnit ?? selectedUnits[defaultValuesToModify[0]];
 		const computedUnit = resolvedUnit ?? units?.[0]?.value ?? "px";
 		const inputId = [(0, _wordpress_compose.useInstanceId)(BoxInputControl, "box-control-input"), side].join("-");
+		const handleOnFocus = (event) => {
+			onFocus(event, { side });
+			if (event.target.id !== inputId) event.preventBaseUIHandler?.();
+		};
 		const isMixedUnit = defaultValuesToModify.length > 1 && mergedValue === void 0 && defaultValuesToModify.some((s) => selectedUnits[s] !== resolvedUnit);
 		const usedValue = mergedValue ?? computedUnit;
 		const mixedPlaceholder = isMixed || isMixedUnit ? (0, _wordpress_i18n.__)("Mixed") : void 0;
@@ -60308,10 +60310,9 @@ VisualLabel });
 					side,
 					sides
 				}),
-				showCustomValueControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tooltip, {
-					placement: "top-end",
-					text: LABELS[side],
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitControl, {
+				showCustomValueControl && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$3, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$3, {
+					id: inputId,
+					render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitControl, {
 						...props,
 						min,
 						units,
@@ -60327,7 +60328,13 @@ VisualLabel });
 						placeholder: mixedPlaceholder ?? placeholderProp,
 						hideLabelFromVision: true
 					})
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RangeControl, {
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, {
+					positioner: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner$2, {
+						side: "top",
+						align: "end"
+					}),
+					children: LABELS[side]
+				})] }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(RangeControl, {
 					className: style_module_default$68["range-control"],
 					"aria-controls": inputId,
 					label: LABELS[side],
@@ -60572,7 +60579,7 @@ VisualLabel });
 		};
 		const sidesToRender = getAllowedSides(sides);
 		if (presets && !presetKey || !presets && presetKey) (0, _wordpress_warning.default)(`wp.components.BoxControl: the '${presets ? "presetKey" : "presets"}' prop is required when the '${presets ? "presets" : "presetKey"}' prop is defined.`);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Grid, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Provider$3, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Grid, {
 			id,
 			columns: 3,
 			templateColumns: "1fr min-content min-content",
@@ -60615,7 +60622,7 @@ VisualLabel });
 					children: (0, _wordpress_i18n.__)("Reset")
 				})
 			]
-		});
+		}) });
 	}
 
 // packages/components/build-module/button-group/index.mjs
