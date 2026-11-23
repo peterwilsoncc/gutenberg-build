@@ -51514,7 +51514,7 @@ Icon: ButtonIcon });
 	});
 
 // packages/block-library/build-module/heading/deprecated.mjs
-	const blockSupports = {
+	const blockSupports$1 = {
 		className: false,
 		anchor: true
 	};
@@ -51554,7 +51554,7 @@ Icon: ButtonIcon });
 		} : attributes;
 	};
 	const v1 = {
-		supports: blockSupports,
+		supports: blockSupports$1,
 		attributes: {
 			...blockAttributes$3,
 			customTextColor: { type: "string" },
@@ -51599,10 +51599,10 @@ Icon: ButtonIcon });
 				value: content
 			});
 		},
-		supports: blockSupports
+		supports: blockSupports$1
 	};
 	const v3$1 = {
-		supports: blockSupports,
+		supports: blockSupports$1,
 		attributes: {
 			...blockAttributes$3,
 			customTextColor: { type: "string" },
@@ -90498,10 +90498,18 @@ Icon: ButtonIcon });
 				"minWidth": true,
 				"minHeight": true,
 				"__experimentalSkipSerialization": true
+			},
+			"__experimentalBorder": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true,
+				"__experimentalSkipSerialization": true
 			}
 		},
 		selectors: {
 			"dimensions": ".wp-block-video video",
+			"border": ".wp-block-video video, .wp-block-video .components-placeholder",
 			"shadow": ".wp-block-video video",
 			"filter": { "duotone": ".wp-block-video video" }
 		},
@@ -90518,8 +90526,44 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/video/deprecated.mjs
-	const { attributes: blockAttributes } = block_default$1;
+	const { attributes: blockAttributes, supports: blockSupports } = block_default$1;
 	const deprecated = [{
+		attributes: blockAttributes,
+		supports: blockSupports,
+		save({ attributes }) {
+			const { autoplay, caption, controls, loop, muted, poster, preload, src, playsInline, tracks, width, height } = attributes;
+			const aspectRatio = width && height ? `${width} / ${height}` : void 0;
+			const borderProps = (0, _wordpress_block_editor.__experimentalGetBorderClassesAndStyles)(attributes);
+			const videoStyle = {
+				...aspectRatio && { aspectRatio },
+				...(0, _wordpress_block_editor.__experimentalGetDimensionsClassesAndStyles)(attributes).style,
+				...(0, _wordpress_block_editor.__experimentalGetShadowClassesAndStyles)(attributes).style,
+				...borderProps.style
+			};
+			return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("figure", {
+				..._wordpress_block_editor.useBlockProps.save(),
+				children: [src && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("video", {
+					autoPlay: autoplay,
+					controls,
+					loop,
+					muted,
+					poster,
+					preload: preload !== "metadata" ? preload : void 0,
+					src,
+					className: borderProps.className,
+					playsInline,
+					width,
+					height,
+					style: Object.keys(videoStyle).length ? videoStyle : void 0,
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tracks, { tracks })
+				}), !_wordpress_block_editor.RichText.isEmpty(caption) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichText.Content, {
+					className: (0, _wordpress_block_editor.__experimentalGetElementClassName)("caption"),
+					tagName: "figcaption",
+					value: caption
+				})]
+			});
+		}
+	}, {
 		attributes: blockAttributes,
 		save({ attributes }) {
 			const { autoplay, caption, controls, loop, muted, poster, preload, src, playsInline, tracks } = attributes;
@@ -90937,11 +90981,13 @@ Icon: ButtonIcon });
 	const ALLOWED_MEDIA_TYPES = ["video"];
 	function VideoEdit({ isSelected: isSingleSelected, attributes, className, setAttributes, insertBlocksAfter, onReplace }) {
 		const { id, controls, poster, src, tracks, width, height, autoplay, loop, muted, playsInline } = attributes;
-		const aspectRatio = width && height ? `${width} / ${height}` : void 0;
+		const aspectRatio = width && height ? `auto ${width} / ${height}` : void 0;
+		const borderProps = (0, _wordpress_block_editor.__experimentalUseBorderProps)(attributes);
 		const videoStyle = {
 			...aspectRatio && { aspectRatio },
 			...(0, _wordpress_block_editor.__experimentalGetDimensionsClassesAndStyles)(attributes).style,
-			...(0, _wordpress_block_editor.__experimentalGetShadowClassesAndStyles)(attributes).style
+			...(0, _wordpress_block_editor.__experimentalGetShadowClassesAndStyles)(attributes).style,
+			...borderProps.style
 		};
 		const [temporaryURL, setTemporaryURL] = (0, _wordpress_element.useState)(attributes.blob);
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -91008,11 +91054,12 @@ Icon: ButtonIcon });
 		}
 		const placeholder = (content) => {
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Placeholder, {
-				className: "block-editor-media-placeholder",
+				className: clsx("block-editor-media-placeholder", borderProps.className),
 				withIllustration: !isSingleSelected,
 				icon: video_default,
 				label: (0, _wordpress_i18n.__)("Video"),
 				instructions: (0, _wordpress_i18n.__)("Drag and drop a video, upload, or choose from your library."),
+				style: borderProps.style,
 				children: content
 			});
 		};
@@ -91081,6 +91128,7 @@ Icon: ButtonIcon });
 						inert: inertValue(!isSingleSelected),
 						poster,
 						src: src || temporaryURL,
+						className: borderProps.className,
 						ref: videoRef,
 						autoPlay: autoplay && !prefersReducedMotion,
 						loop,
@@ -91108,11 +91156,13 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/video/save.mjs
 	function save({ attributes }) {
 		const { autoplay, caption, controls, loop, muted, poster, preload, src, playsInline, tracks, width, height } = attributes;
-		const aspectRatio = width && height ? `${width} / ${height}` : void 0;
+		const aspectRatio = width && height ? `auto ${width} / ${height}` : void 0;
+		const borderProps = (0, _wordpress_block_editor.__experimentalGetBorderClassesAndStyles)(attributes);
 		const videoStyle = {
 			...aspectRatio && { aspectRatio },
 			...(0, _wordpress_block_editor.__experimentalGetDimensionsClassesAndStyles)(attributes).style,
-			...(0, _wordpress_block_editor.__experimentalGetShadowClassesAndStyles)(attributes).style
+			...(0, _wordpress_block_editor.__experimentalGetShadowClassesAndStyles)(attributes).style,
+			...borderProps.style
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("figure", {
 			..._wordpress_block_editor.useBlockProps.save(),
@@ -91124,6 +91174,7 @@ Icon: ButtonIcon });
 				poster,
 				preload: preload !== "metadata" ? preload : void 0,
 				src,
+				className: borderProps.className,
 				playsInline,
 				width,
 				height,

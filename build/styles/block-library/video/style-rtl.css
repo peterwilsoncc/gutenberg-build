@@ -97,6 +97,7 @@
   box-sizing: border-box;
 }
 .wp-block-video video {
+  box-sizing: border-box;
   width: 100%;
   height: auto;
   vertical-align: middle;

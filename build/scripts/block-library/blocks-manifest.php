@@ -10261,10 +10261,18 @@ return array(
 				'minWidth' => true,
 				'minHeight' => true,
 				'__experimentalSkipSerialization' => true
+			),
+			'__experimentalBorder' => array(
+				'color' => true,
+				'radius' => true,
+				'style' => true,
+				'width' => true,
+				'__experimentalSkipSerialization' => true
 			)
 		),
 		'selectors' => array(
 			'dimensions' => '.wp-block-video video',
+			'border' => '.wp-block-video video, .wp-block-video .components-placeholder',
 			'shadow' => '.wp-block-video video',
 			'filter' => array(
 				'duotone' => '.wp-block-video video'
