@@ -2355,7 +2355,8 @@ button.font-library__upload-area {
   }
 }
 .dataviews-view-grid__field-value:empty,
-.dataviews-view-grid__field:empty {
+.dataviews-view-grid__field:empty,
+.dataviews-view-grid__badge-fields .dataviews-view-grid__field-value:has(> :only-child:empty) {
   display: none;
 }
 
@@ -3279,7 +3280,8 @@ div.dataviews-view-list {
 }
 
 .dataviews-view-picker-grid__field-value:empty,
-.dataviews-view-picker-grid__field:empty {
+.dataviews-view-picker-grid__field:empty,
+.dataviews-view-picker-grid__badge-fields .dataviews-view-picker-grid__field-value:has(> :only-child:empty) {
   display: none;
 }
 
