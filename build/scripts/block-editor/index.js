@@ -64909,9 +64909,11 @@ Icon: ButtonIcon });
 		const { isSelectionEnabled, getBlockSelectionStart, getSelectionStart, hasMultiSelection, isBlockMultiSelected, isAncestorMultiSelected, __unstableIsFullySelected, canMoveBlocks, getSelectedBlockClientIds, canHostEditableRoot } = unlock$2((0, _wordpress_data.useSelect)(store));
 		return (0, _wordpress_compose.useRefEffect)((node) => {
 			let pointerType;
+			let isFocusedOnPointerDown = false;
 			let clickCollapseClientId;
 			function onPointerDown(event) {
 				pointerType = event.pointerType;
+				isFocusedOnPointerDown = node.matches(":focus");
 			}
 			function onMouseDown(event) {
 				const clickedClientId = getBlockClientId(event.target);
@@ -64925,7 +64927,7 @@ Icon: ButtonIcon });
 				clickCollapseClientId = void 0;
 				if (!isSelectionEnabled() || event.button !== 0) return;
 				const startClientId = getBlockSelectionStart();
-				if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && node.matches(":focus")) {
+				if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && isFocusedOnPointerDown) {
 					event.preventDefault();
 					return;
 				}
