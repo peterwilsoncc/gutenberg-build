@@ -49219,7 +49219,7 @@ If there's a particular need for this, please submit a feature request at https:
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
 						ref: imgRef,
 						onLoad: handleLoad,
-						alt: (0, _wordpress_i18n.__)("Author avatar"),
+						alt: "",
 						src: imageUrl
 					})
 				}),

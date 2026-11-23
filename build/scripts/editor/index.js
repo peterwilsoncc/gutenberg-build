@@ -111771,7 +111771,7 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 					className: clsx("editor-post-revisions-timeline__author-avatar", { "is-loaded": isImageLoaded }),
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
 						onLoad: () => setIsImageLoaded(true),
-						alt: (0, _wordpress_i18n.__)("Author avatar"),
+						alt: "",
 						src: imageUrl
 					})
 				}),
