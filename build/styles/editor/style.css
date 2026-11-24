@@ -4098,14 +4098,14 @@ div.dataviews-view-list {
 }
 
 /**
- * Colors
- */
-/**
  * SCSS Variables.
  *
  * Please use variables from this sheet to ensure consistency across the UI.
  * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
  * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
+ */
+/**
+ * Colors
  */
 /**
  * Fonts & basic variables.
@@ -4216,39 +4216,15 @@ div.dataviews-view-list {
   border-radius: 2px;
 }
 
-.media-editor-preview__file-info {
-  text-align: center;
-  background: #f0f0f0;
-  padding: 24px;
-  border-radius: 2px;
-}
-
 .media-editor-preview__file-name {
-  font-weight: var(--wpds-typography-font-weight-emphasis, 600);
-  margin-bottom: 8px;
+  overflow-wrap: anywhere;
 }
 
-.media-editor-preview__mime-type {
-  color: #757575;
-  font-size: 0.9em;
-  margin-bottom: 16px;
-}
-
-.media-editor-preview__download-link {
-  display: inline-block;
-  margin-top: 8px;
-}
-
-.media-editor-preview--error, .media-editor-preview--empty {
-  color: #757575;
-  text-align: center;
-}
-
-.media-editor-preview__url {
-  font-size: 0.9em;
-  color: #949494;
-  word-break: break-all;
-  margin-top: 8px;
+.media-editor-preview__actions {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--wpds-dimension-gap-sm, 8px);
 }
 
 /* stylelint-disable plugin-wpds/no-token-fallback-values -- This SCSS also works when the design tokens are not loaded. */
@@ -4607,6 +4583,10 @@ div.dataviews-view-list {
   height: 100%;
 }
 
+.media-editor .media-editor__canvas-area:has(.media-editor-preview.is-placeholder) {
+  background: none;
+}
+
 .media-editor .media-editor__canvas-area img,
 .media-editor .media-editor__canvas-area video {
   max-width: 100%;
@@ -4640,6 +4620,11 @@ div.dataviews-view-list {
   .media-editor .media-editor__sidebar {
     flex: none;
     width: var(--wpds-dimension-surface-width-sm, 320px);
+  }
+}
+@media (min-width: 600px) {
+  .media-editor .media-editor__body:has(.media-editor-preview.is-placeholder) .media-editor__sidebar {
+    border-inline-start: var(--wpds-border-width-xs, 1px) solid var(--wpds-color-stroke-surface-neutral-weak, #f0f0f0);
   }
 }
 .media-editor .media-editor__tabs {
@@ -4676,7 +4661,7 @@ div.dataviews-view-list {
 @media (min-width: 600px) {
   .media-editor .media-editor__body.has-panel-open .media-editor__content {
     display: flex;
-    margin: 0 0 0 24px;
+    margin-right: 0;
   }
 }
 .media-editor__snackbar {
