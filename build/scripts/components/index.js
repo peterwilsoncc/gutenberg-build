@@ -76503,6 +76503,18 @@ The screen with id ${screen.id} will not be added.`);
 		};
 	}
 	/**
+	* Returns how a single element's own computed style rotates and scales it.
+	*
+	* @param style The element's computed style.
+	*
+	* @return The linear transform from the element's axes to its parent's.
+	*/
+	function getStyleTransform(style) {
+		let matrix = getRotate(style.rotate || "none");
+		matrix = multiply(matrix, getScale(style.scale || "none"));
+		return multiply(matrix, getTransform(style.transform || "none"));
+	}
+	/**
 	* Returns how an element and its ancestors rotate and scale it on screen.
 	* Translation is left out, since it moves the element without changing
 	* which way its edges face.
@@ -76515,13 +76527,7 @@ The screen with id ${screen.id} will not be added.`);
 		const view = element.ownerDocument.defaultView;
 		let matrix = IDENTITY;
 		if (!view) return matrix;
-		for (let node = element; node; node = node.parentElement) {
-			const style = view.getComputedStyle(node);
-			let own = getRotate(style.rotate || "none");
-			own = multiply(own, getScale(style.scale || "none"));
-			own = multiply(own, getTransform(style.transform || "none"));
-			matrix = multiply(own, matrix);
-		}
+		for (let node = element; node; node = node.parentElement) matrix = multiply(getStyleTransform(view.getComputedStyle(node)), matrix);
 		return matrix;
 	}
 	/**
@@ -82852,6 +82858,7 @@ The screen with id ${screen.id} will not be added.`);
 		__experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
 		ComponentsContext,
 		getScreenTransform,
+		getStyleTransform,
 		Tabs,
 		get Menu() {
 			(0, _wordpress_deprecated.default)("`privateApis.Menu` from `@wordpress/components`", {

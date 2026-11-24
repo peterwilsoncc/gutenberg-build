@@ -7813,8 +7813,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	const { lock: lock$1, unlock: unlock$1 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$31 = {};
-	lock$1(privateApis$31, {
+	const privateApis$32 = {};
+	lock$1(privateApis$32, {
 		getResponsiveMediaQueries: getResponsiveMediaQueries$5,
 		getViewportBreakpoints: getViewportBreakpoints$4,
 		getViewportBreakpointValueInPixels,
@@ -8069,7 +8069,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		shouldRenderBlockListView: () => shouldRenderBlockListView
 	}, 1);
 	const { isContentBlock: isContentBlock$2, editableRootKey: editableRootKey$1 } = unlock$2(_wordpress_blocks.privateApis);
-	const { getViewportBreakpoints: getViewportBreakpoints$3 } = unlock$2(privateApis$31);
+	const { getViewportBreakpoints: getViewportBreakpoints$3 } = unlock$2(privateApis$32);
 	function isViewportAvailable(state, viewport) {
 		if (viewport === BLOCK_VISIBILITY_VIEWPORTS.desktop.key) return true;
 		return getViewportBreakpoints$3(getSettings$7(state)?.__experimentalFeatures?.viewport)[viewport] !== void 0;
@@ -61128,6 +61128,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-editor/build-module/utils/dom.mjs
+	const { getStyleTransform } = unlock$2(_wordpress_components.privateApis);
 	const BLOCK_SELECTOR = ".block-editor-block-list__block";
 	const APPENDER_SELECTOR = ".block-list-appender";
 	const BLOCK_APPENDER_CLASS = ".block-editor-button-block-appender";
@@ -61192,6 +61193,36 @@ Icon: ButtonIcon });
 		return blockNode.id.slice(6);
 	}
 	/**
+	* Returns whether a computed style rotates or skews an element, so that its
+	* edges are no longer parallel to the viewport. Translating and scaling keep
+	* them parallel, so they don't count.
+	*
+	* @param style The computed style of the element.
+	* @return Whether the element is rotated or skewed.
+	*/
+	function isStyleRotated(style) {
+		const { a, b, c, d } = getStyleTransform(style);
+		return !(Math.abs(b) < 1e-5 && Math.abs(c) < 1e-5 || Math.abs(a) < 1e-5 && Math.abs(d) < 1e-5);
+	}
+	/**
+	* Returns the outermost block element containing the given element that is
+	* rotated or skewed, if any.
+	*
+	* @param element Element.
+	* @return The outermost rotated ancestor block element.
+	*/
+	function getOutermostRotatedAncestorBlock(element) {
+		const view = element.ownerDocument.defaultView;
+		if (!view) return;
+		let rotatedAncestor;
+		let ancestor = element.parentElement?.closest(BLOCK_SELECTOR);
+		while (ancestor) {
+			if (isStyleRotated(view.getComputedStyle(ancestor))) rotatedAncestor = ancestor;
+			ancestor = ancestor.parentElement?.closest(BLOCK_SELECTOR);
+		}
+		return rotatedAncestor;
+	}
+	/**
 	* Whether an element is a block's own element outside its fields, such as a
 	* list item's bullet. Fields keep their own `contentEditable`.
 	*
@@ -61215,6 +61246,17 @@ Icon: ButtonIcon });
 		const bottom = Math.max(rect1.bottom, rect2.bottom);
 		const top = Math.min(rect1.top, rect2.top);
 		return new window.DOMRectReadOnly(left, top, right - left, bottom - top);
+	}
+	/**
+	* Extends a rectangle upwards to a given top, keeping its horizontal extent.
+	*
+	* @param rect Rectangle.
+	* @param top  The top to extend to.
+	* @return The extended rectangle, or the original one if it is already higher.
+	*/
+	function extendRectToTop(rect, top) {
+		if (top >= rect.top) return rect;
+		return new window.DOMRectReadOnly(rect.left, top, rect.width, rect.bottom - top);
 	}
 	/**
 	* Returns whether an element is visible.
@@ -62345,7 +62387,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-editor/build-module/components/block-visibility/use-block-visibility.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$2 } = unlock$2(privateApis$31);
+	const { getViewportBreakpoints: getViewportBreakpoints$2 } = unlock$2(privateApis$32);
 	/**
 	* Returns the viewport the block visibility rules apply to.
 	*
@@ -90581,9 +90623,10 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/block-editor/build-module/components/block-popover/index.mjs
 	const MAX_POPOVER_RECOMPUTE_COUNTER = Number.MAX_SAFE_INTEGER;
-	function BlockPopover({ clientId, bottomClientId, children, __unstablePopoverSlot, __unstableContentRef, shift = true, ...props }, ref) {
+	function BlockPopover({ clientId, bottomClientId, topEdgeClientId, children, __unstablePopoverSlot, __unstableContentRef, shift = true, ...props }, ref) {
 		const selectedElement = useBlockElement(clientId);
 		const lastSelectedElement = useBlockElement(bottomClientId ?? clientId);
+		const topEdgeElement = useBlockElement(topEdgeClientId ?? clientId);
 		const mergedRefs = (0, _wordpress_compose.useMergeRefs)([ref, usePopoverScroll(__unstableContentRef)]);
 		const [popoverDimensionsRecomputeCounter, forceRecomputePopoverDimensions] = (0, _wordpress_element.useReducer)((s) => (s + 1) % MAX_POPOVER_RECOMPUTE_COUNTER, 0);
 		(0, _wordpress_element.useLayoutEffect)(() => {
@@ -90606,7 +90649,8 @@ If there's a particular need for this, please submit a feature request at https:
 			if (popoverDimensionsRecomputeCounter < 0 || !selectedElement || bottomClientId && !lastSelectedElement) return;
 			return {
 				getBoundingClientRect() {
-					return lastSelectedElement ? rectUnion(getElementBounds(selectedElement), getElementBounds(lastSelectedElement)) : getElementBounds(selectedElement);
+					const bounds = lastSelectedElement ? rectUnion(getElementBounds(selectedElement), getElementBounds(lastSelectedElement)) : getElementBounds(selectedElement);
+					return topEdgeClientId && topEdgeElement ? extendRectToTop(bounds, getElementBounds(topEdgeElement).top) : bounds;
 				},
 				contextElement: selectedElement
 			};
@@ -90614,7 +90658,9 @@ If there's a particular need for this, please submit a feature request at https:
 			popoverDimensionsRecomputeCounter,
 			selectedElement,
 			bottomClientId,
-			lastSelectedElement
+			lastSelectedElement,
+			topEdgeClientId,
+			topEdgeElement
 		]);
 		if (!selectedElement || bottomClientId && !lastSelectedElement) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Popover, {
@@ -93014,7 +93060,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/position.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$4 } = unlock$2(privateApis$31);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$4 } = unlock$2(privateApis$32);
 	const POSITION_SUPPORT_KEY = "position";
 	const DEFAULT_OPTION = {
 		value: "__default",
@@ -95376,7 +95422,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/block-visibility/utils.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock$2(privateApis$31);
+	const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock$2(privateApis$32);
 	function getBlockVisibilityViewportEntries(viewportSettings) {
 		const breakpoints = getViewportBreakpoints$1(viewportSettings);
 		return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.filter(([viewport]) => (viewport !== BLOCK_VISIBILITY_VIEWPORTS.tablet.key || breakpoints.tablet !== void 0) && (viewport !== BLOCK_VISIBILITY_VIEWPORTS.mobile.key || breakpoints.mobile !== void 0));
@@ -96205,7 +96251,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/block-toolbar/switch-section-style.mjs
-	const { getVariationStyle: getVariationStyle$1 } = unlock$2(privateApis$31);
+	const { getVariationStyle: getVariationStyle$1 } = unlock$2(privateApis$32);
 	const styleIcon = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.SVG, {
 		viewBox: "0 0 24 24",
 		xmlns: "http://www.w3.org/2000/svg",
@@ -97206,6 +97252,9 @@ If there's a particular need for this, please submit a feature request at https:
 			isToolbarForcedRef.current = false;
 		});
 		const clientIdToPositionOver = capturingClientId || clientId;
+		const selectedElement = useBlockElement(clientId);
+		const rotatedAncestorElement = selectedElement ? getOutermostRotatedAncestorBlock(selectedElement) : void 0;
+		const topEdgeClientId = rotatedAncestorElement ? getBlockClientId(rotatedAncestorElement) : void 0;
 		const popoverProps = useBlockToolbarPopoverProps({
 			contentElement: __unstableContentRef?.current,
 			clientId: clientIdToPositionOver
@@ -97213,6 +97262,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return !isTyping && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PrivateBlockPopover, {
 			clientId: clientIdToPositionOver,
 			bottomClientId: lastClientId,
+			topEdgeClientId,
 			className: clsx("block-editor-block-list__block-popover", { "is-insertion-point-visible": isInsertionPointVisible }),
 			resize: false,
 			...popoverProps,
@@ -109745,7 +109795,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/block-style-variation.mjs
-	const { getVariationStyle, transformToStylesWithTextClipBase } = unlock$2(privateApis$31);
+	const { getVariationStyle, transformToStylesWithTextClipBase } = unlock$2(privateApis$32);
 	const VARIATION_PREFIX$1 = "is-style-";
 	function getVariationMatches(className) {
 		if (!className) return [];
@@ -109900,7 +109950,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/block-editor/build-module/components/global-styles/inherited-value-context.mjs
-	const { resolveStyle } = unlock$2(privateApis$31);
+	const { resolveStyle } = unlock$2(privateApis$32);
 	/**
 	* Reads the Global Styles payload and returns it as a `GlobalStylesConfig`
 	* (`{ styles, _links }`), the shape `resolveStyle` expects. `_links` carries
@@ -114580,7 +114630,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/states.mjs
-	const { getViewportBreakpoints } = unlock$2(privateApis$31);
+	const { getViewportBreakpoints } = unlock$2(privateApis$32);
 	const PSEUDO_STATE_LABELS = {
 		":hover": (0, _wordpress_i18n._x)("Hover", "Name for the CSS pseudo-class selector"),
 		":focus": (0, _wordpress_i18n._x)("Focus", "Name for the CSS pseudo-class selector"),
@@ -118958,7 +119008,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/style.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$3 } = unlock$2(privateApis$31);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$3 } = unlock$2(privateApis$32);
 	const BORDER_SIDES = [
 		"Top",
 		"Right",
@@ -119757,7 +119807,7 @@ If there's a particular need for this, please submit a feature request at https:
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/settings/addAttribute", addAttribute$1);
 
 // packages/block-editor/build-module/hooks/duotone.mjs
-	const { getDuotoneFilter: getDuotoneFilter$1, getDuotoneStylesheet, getDuotoneUnsetStylesheet } = unlock$2(privateApis$31);
+	const { getDuotoneFilter: getDuotoneFilter$1, getDuotoneStylesheet, getDuotoneUnsetStylesheet } = unlock$2(privateApis$32);
 	const EMPTY_ARRAY = [];
 	const isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
 	D([e]);
@@ -119984,7 +120034,7 @@ If there's a particular need for this, please submit a feature request at https:
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/textShadow/addAttribute", addAttributes);
 
 // packages/block-editor/build-module/hooks/custom-css.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$2 } = unlock$2(privateApis$31);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$2 } = unlock$2(privateApis$32);
 	const CUSTOM_CSS_INSTANCE_REFERENCE = {};
 	const EMPTY_STYLE = {};
 	function hasCustomCSSString(node) {
@@ -120192,7 +120242,7 @@ If there's a particular need for this, please submit a feature request at https:
 		"rowStart",
 		"rowSpan"
 	];
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$2(privateApis$31);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$2(privateApis$32);
 	function getDefaultLayout(layoutBlockSupport = {}, blockVariation) {
 		const defaultBlockLayout = layoutBlockSupport?.default;
 		return blockVariation?.attributes?.layout ?? defaultBlockLayout;
@@ -121580,7 +121630,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/layout-child.mjs
-	const { getResponsiveMediaQueries } = unlock$2(privateApis$31);
+	const { getResponsiveMediaQueries } = unlock$2(privateApis$32);
 	const LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
 	const FLEX_CHILD_LAYOUT_VALUES = {
 		fit: "fit",
@@ -123327,7 +123377,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/private-apis.mjs
-	const { getDuotoneFilter } = unlock$2(privateApis$31);
+	const { getDuotoneFilter } = unlock$2(privateApis$32);
 	/**
 	* Private `@wordpress/block-editor` APIs.
 	*/
