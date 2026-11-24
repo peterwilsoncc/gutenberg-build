@@ -3109,6 +3109,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
   right: calc(50% - 8px);
   box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)), 0 1px 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02), 0 3px 3px rgba(0, 0, 0, 0.02), 0 4px 4px rgba(0, 0, 0, 0.01);
   outline: 2px solid transparent;
+  scale: var(--wp-components-resizable-box-handle-dot-scale);
 }
 
 .components-resizable-box__side-handle::before {

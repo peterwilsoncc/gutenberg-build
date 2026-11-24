@@ -7813,8 +7813,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	const { lock: lock$1, unlock: unlock$1 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$30 = {};
-	lock$1(privateApis$30, {
+	const privateApis$31 = {};
+	lock$1(privateApis$31, {
 		getResponsiveMediaQueries: getResponsiveMediaQueries$5,
 		getViewportBreakpoints: getViewportBreakpoints$4,
 		getViewportBreakpointValueInPixels,
@@ -8069,7 +8069,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		shouldRenderBlockListView: () => shouldRenderBlockListView
 	}, 1);
 	const { isContentBlock: isContentBlock$2, editableRootKey: editableRootKey$1 } = unlock$2(_wordpress_blocks.privateApis);
-	const { getViewportBreakpoints: getViewportBreakpoints$3 } = unlock$2(privateApis$30);
+	const { getViewportBreakpoints: getViewportBreakpoints$3 } = unlock$2(privateApis$31);
 	function isViewportAvailable(state, viewport) {
 		if (viewport === BLOCK_VISIBILITY_VIEWPORTS.desktop.key) return true;
 		return getViewportBreakpoints$3(getSettings$7(state)?.__experimentalFeatures?.viewport)[viewport] !== void 0;
@@ -62345,7 +62345,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-editor/build-module/components/block-visibility/use-block-visibility.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$2 } = unlock$2(privateApis$30);
+	const { getViewportBreakpoints: getViewportBreakpoints$2 } = unlock$2(privateApis$31);
 	/**
 	* Returns the viewport the block visibility rules apply to.
 	*
@@ -90650,6 +90650,7 @@ If there's a particular need for this, please submit a feature request at https:
 	var block_popover_default = (0, _wordpress_element.forwardRef)(PublicBlockPopover);
 
 // packages/block-editor/build-module/components/block-popover/cover.mjs
+	const { getScreenTransform } = unlock$2(_wordpress_components.privateApis);
 	function BlockPopoverCover({ clientId, bottomClientId, children, shift = false, additionalStyles, ...props }, ref) {
 		bottomClientId ??= clientId;
 		const selectedElement = useBlockElement(clientId);
@@ -90669,24 +90670,49 @@ If there's a particular need for this, please submit a feature request at https:
 	function CoverContainer({ selectedElement, additionalStyles = {}, children }) {
 		const [width, setWidth] = (0, _wordpress_element.useState)(selectedElement.offsetWidth);
 		const [height, setHeight] = (0, _wordpress_element.useState)(selectedElement.offsetHeight);
+		const [matrix, setMatrix] = (0, _wordpress_element.useState)(() => getScreenTransform(selectedElement));
 		(0, _wordpress_element.useEffect)(() => {
-			const observer = new window.ResizeObserver(() => {
+			const update = () => {
 				setWidth(selectedElement.offsetWidth);
 				setHeight(selectedElement.offsetHeight);
+				setMatrix(getScreenTransform(selectedElement));
+			};
+			const resizeObserver = new window.ResizeObserver(update);
+			resizeObserver.observe(selectedElement, { box: "border-box" });
+			const mutationObserver = new window.MutationObserver(update);
+			mutationObserver.observe(selectedElement, {
+				attributes: true,
+				attributeFilter: ["style", "class"]
 			});
-			observer.observe(selectedElement, { box: "border-box" });
-			return () => observer.disconnect();
+			return () => {
+				resizeObserver.disconnect();
+				mutationObserver.disconnect();
+			};
 		}, [selectedElement]);
 		const style = (0, _wordpress_element.useMemo)(() => {
-			return {
+			const { a, b, c, d } = matrix;
+			if (a === 1 && b === 0 && c === 0 && d === 1) return {
 				position: "absolute",
 				width,
 				height,
 				...additionalStyles
 			};
+			const boundsWidth = Math.abs(a) * width + Math.abs(c) * height;
+			const boundsHeight = Math.abs(b) * width + Math.abs(d) * height;
+			return {
+				position: "absolute",
+				width,
+				height,
+				left: (boundsWidth - width) / 2,
+				top: (boundsHeight - height) / 2,
+				transform: `matrix(${a}, ${b}, ${c}, ${d}, 0, 0)`,
+				transformOrigin: "center",
+				...additionalStyles
+			};
 		}, [
 			width,
 			height,
+			matrix,
 			additionalStyles
 		]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
@@ -92988,7 +93014,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/position.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$4 } = unlock$2(privateApis$30);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$4 } = unlock$2(privateApis$31);
 	const POSITION_SUPPORT_KEY = "position";
 	const DEFAULT_OPTION = {
 		value: "__default",
@@ -95350,7 +95376,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/block-visibility/utils.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock$2(privateApis$30);
+	const { getViewportBreakpoints: getViewportBreakpoints$1 } = unlock$2(privateApis$31);
 	function getBlockVisibilityViewportEntries(viewportSettings) {
 		const breakpoints = getViewportBreakpoints$1(viewportSettings);
 		return BLOCK_VISIBILITY_VIEWPORT_ENTRIES.filter(([viewport]) => (viewport !== BLOCK_VISIBILITY_VIEWPORTS.tablet.key || breakpoints.tablet !== void 0) && (viewport !== BLOCK_VISIBILITY_VIEWPORTS.mobile.key || breakpoints.mobile !== void 0));
@@ -96179,7 +96205,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/components/block-toolbar/switch-section-style.mjs
-	const { getVariationStyle: getVariationStyle$1 } = unlock$2(privateApis$30);
+	const { getVariationStyle: getVariationStyle$1 } = unlock$2(privateApis$31);
 	const styleIcon = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.SVG, {
 		viewBox: "0 0 24 24",
 		xmlns: "http://www.w3.org/2000/svg",
@@ -109719,7 +109745,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/block-style-variation.mjs
-	const { getVariationStyle, transformToStylesWithTextClipBase } = unlock$2(privateApis$30);
+	const { getVariationStyle, transformToStylesWithTextClipBase } = unlock$2(privateApis$31);
 	const VARIATION_PREFIX$1 = "is-style-";
 	function getVariationMatches(className) {
 		if (!className) return [];
@@ -109874,7 +109900,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/block-editor/build-module/components/global-styles/inherited-value-context.mjs
-	const { resolveStyle } = unlock$2(privateApis$30);
+	const { resolveStyle } = unlock$2(privateApis$31);
 	/**
 	* Reads the Global Styles payload and returns it as a `GlobalStylesConfig`
 	* (`{ styles, _links }`), the shape `resolveStyle` expects. `_links` carries
@@ -114554,7 +114580,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/states.mjs
-	const { getViewportBreakpoints } = unlock$2(privateApis$30);
+	const { getViewportBreakpoints } = unlock$2(privateApis$31);
 	const PSEUDO_STATE_LABELS = {
 		":hover": (0, _wordpress_i18n._x)("Hover", "Name for the CSS pseudo-class selector"),
 		":focus": (0, _wordpress_i18n._x)("Focus", "Name for the CSS pseudo-class selector"),
@@ -118932,7 +118958,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/style.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$3 } = unlock$2(privateApis$30);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$3 } = unlock$2(privateApis$31);
 	const BORDER_SIDES = [
 		"Top",
 		"Right",
@@ -119731,7 +119757,7 @@ If there's a particular need for this, please submit a feature request at https:
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/settings/addAttribute", addAttribute$1);
 
 // packages/block-editor/build-module/hooks/duotone.mjs
-	const { getDuotoneFilter: getDuotoneFilter$1, getDuotoneStylesheet, getDuotoneUnsetStylesheet } = unlock$2(privateApis$30);
+	const { getDuotoneFilter: getDuotoneFilter$1, getDuotoneStylesheet, getDuotoneUnsetStylesheet } = unlock$2(privateApis$31);
 	const EMPTY_ARRAY = [];
 	const isSafari = window?.navigator.userAgent && window.navigator.userAgent.includes("Safari") && !window.navigator.userAgent.includes("Chrome") && !window.navigator.userAgent.includes("Chromium");
 	D([e]);
@@ -119958,7 +119984,7 @@ If there's a particular need for this, please submit a feature request at https:
 	(0, _wordpress_hooks.addFilter)("blocks.registerBlockType", "core/textShadow/addAttribute", addAttributes);
 
 // packages/block-editor/build-module/hooks/custom-css.mjs
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$2 } = unlock$2(privateApis$30);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$2 } = unlock$2(privateApis$31);
 	const CUSTOM_CSS_INSTANCE_REFERENCE = {};
 	const EMPTY_STYLE = {};
 	function hasCustomCSSString(node) {
@@ -120166,7 +120192,7 @@ If there's a particular need for this, please submit a feature request at https:
 		"rowStart",
 		"rowSpan"
 	];
-	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$2(privateApis$30);
+	const { getResponsiveMediaQueries: getResponsiveMediaQueries$1 } = unlock$2(privateApis$31);
 	function getDefaultLayout(layoutBlockSupport = {}, blockVariation) {
 		const defaultBlockLayout = layoutBlockSupport?.default;
 		return blockVariation?.attributes?.layout ?? defaultBlockLayout;
@@ -121554,7 +121580,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/hooks/layout-child.mjs
-	const { getResponsiveMediaQueries } = unlock$2(privateApis$30);
+	const { getResponsiveMediaQueries } = unlock$2(privateApis$31);
 	const LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
 	const FLEX_CHILD_LAYOUT_VALUES = {
 		fit: "fit",
@@ -123301,7 +123327,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/block-editor/build-module/private-apis.mjs
-	const { getDuotoneFilter } = unlock$2(privateApis$30);
+	const { getDuotoneFilter } = unlock$2(privateApis$31);
 	/**
 	* Private `@wordpress/block-editor` APIs.
 	*/

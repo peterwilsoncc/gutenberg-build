@@ -7268,7 +7268,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function unwrapElement(element) {
 		return !isElement$1(element) ? element.contextElement : element;
 	}
-	function getScale$1(element) {
+	function getScale$2(element) {
 		const domElement = unwrapElement(element);
 		if (!isHTMLElement(domElement)) return createCoords(1);
 		const rect = domElement.getBoundingClientRect();
@@ -7303,8 +7303,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		let scale = createCoords(1);
 		if (includeScale) {
 			if (offsetParent) {
-				if (isElement$1(offsetParent)) scale = getScale$1(offsetParent);
-			} else scale = getScale$1(element);
+				if (isElement$1(offsetParent)) scale = getScale$2(offsetParent);
+			} else scale = getScale$2(element);
 		}
 		const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
 		let x = (clientRect.left + visualOffsets.x) / scale.x;
@@ -7317,7 +7317,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			let currentWin = win;
 			let currentIFrame = getFrameElement(currentWin);
 			while (currentIFrame && offsetWin !== currentWin) {
-				const iframeScale = getScale$1(currentIFrame);
+				const iframeScale = getScale$2(currentIFrame);
 				const iframeRect = currentIFrame.getBoundingClientRect();
 				const css = getComputedStyle$2(currentIFrame);
 				const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
@@ -7368,7 +7368,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) scroll = getNodeScroll(offsetParent);
 			if (isOffsetParentAnElement) {
 				const offsetRect = getBoundingClientRect(offsetParent);
-				scale = getScale$1(offsetParent);
+				scale = getScale$2(offsetParent);
 				offsets.x = offsetRect.x + offsetParent.clientLeft;
 				offsets.y = offsetRect.y + offsetParent.clientTop;
 			}
@@ -7446,7 +7446,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
 		const top = clientRect.top + element.clientTop;
 		const left = clientRect.left + element.clientLeft;
-		const scale = getScale$1(element);
+		const scale = getScale$2(element);
 		return {
 			width: element.clientWidth * scale.x,
 			height: element.clientHeight * scale.y,
@@ -7595,7 +7595,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		getElementRects,
 		getClientRects,
 		getDimensions,
-		getScale: getScale$1,
+		getScale: getScale$2,
 		isElement: isElement$1,
 		isRTL: isRTL$23
 	};
@@ -13082,7 +13082,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				store.context.handleScrollArrowVisibility(scroller);
 				return;
 			}
-			const scale = getScale(positionerElement);
+			const scale = getScale$1(positionerElement);
 			const currentHeight = normalizeSize(positionerElement.getBoundingClientRect().height, "y", scale);
 			const doc = ownerDocument(positionerElement);
 			const win = getWindow$1(positionerElement);
@@ -13174,7 +13174,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				const positionerStyles = win.getComputedStyle(positionerElement);
 				const popupStyles = win.getComputedStyle(popupElement);
 				const doc = ownerDocument(triggerElement);
-				const scale = getScale(triggerElement);
+				const scale = getScale$1(triggerElement);
 				const triggerRect = normalizeRect(triggerElement.getBoundingClientRect(), scale);
 				const positionerRect = normalizeRect(positionerElement.getBoundingClientRect(), scale);
 				const triggerHeight = triggerRect.height;
@@ -13317,7 +13317,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function getMaxScrollTop(scroller) {
 		return getMaxScrollOffset(scroller.scrollHeight, scroller.clientHeight);
 	}
-	function getScale(element) {
+	function getScale$1(element) {
 		return platform.getScale(element);
 	}
 	function normalizeSize(size, axis, scale) {
@@ -23382,7 +23382,7 @@ Icon: ButtonIcon });
 	*   return <div {...props} ref={useMergeRefs(internalRef, ref)} />;
 	* });
 	*/
-	function useMergeRefs$25(...refs) {
+	function useMergeRefs$26(...refs) {
 		return (0, react$1.useMemo)(() => {
 			if (!refs.some(Boolean)) return;
 			return (value) => {
@@ -23521,7 +23521,7 @@ Icon: ButtonIcon });
 	function usePortalRef(portalProp = false, portalRefProp) {
 		const [portalNode, setPortalNode] = (0, react$1.useState)(null);
 		return {
-			portalRef: useMergeRefs$25(setPortalNode, portalRefProp),
+			portalRef: useMergeRefs$26(setPortalNode, portalRefProp),
 			portalNode,
 			domReady: !portalProp || portalNode
 		};
@@ -23599,7 +23599,7 @@ Icon: ButtonIcon });
 	*/
 	function createElement$5(Type, props) {
 		const { wrapElement, render, ...rest } = props;
-		const mergedRef = useMergeRefs$25(props.ref, getRefProperty(render));
+		const mergedRef = useMergeRefs$26(props.ref, getRefProperty(render));
 		let element;
 		if (react$1.isValidElement(render)) {
 			const renderProps = {
@@ -23727,7 +23727,7 @@ Icon: ButtonIcon });
 		]);
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref)
+			ref: useMergeRefs$26(ref, props.ref)
 		};
 		return props;
 	});
@@ -24065,7 +24065,7 @@ Icon: ButtonIcon });
 			"aria-disabled": disabled || void 0,
 			...props,
 			...metadataProps,
-			ref: useMergeRefs$25(ref, autoFocusRef, props.ref),
+			ref: useMergeRefs$26(ref, autoFocusRef, props.ref),
 			style,
 			tabIndex: getTabIndex({
 				focusable,
@@ -24224,7 +24224,7 @@ Icon: ButtonIcon });
 			type: isNativeButton ? "button" : void 0,
 			...metadataProps,
 			...props,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onKeyDown,
 			onKeyUp,
 			onBlur
@@ -26107,7 +26107,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"data-active-item": isActiveItem || void 0,
 			...props,
 			id,
-			ref: useMergeRefs$25(ref, markUnmountingRef, props.ref),
+			ref: useMergeRefs$26(ref, markUnmountingRef, props.ref),
 			tabIndex: isTabbable ? props.tabIndex : -1,
 			onFocus,
 			onBlurCapture,
@@ -26693,7 +26693,7 @@ If there's a particular need for this, please submit a feature request at https:
 				return getEnabledItem(store, activeId)?.id;
 			}),
 			...props,
-			ref: useMergeRefs$25(ref, setCompositeElement, props.ref),
+			ref: useMergeRefs$26(ref, setCompositeElement, props.ref),
 			onKeyDownCapture,
 			onKeyUpCapture,
 			onFocusCapture,
@@ -26978,7 +26978,7 @@ If there's a particular need for this, please submit a feature request at https:
 			hidden,
 			...props,
 			id,
-			ref: useMergeRefs$25(id ? store.setContentElement : null, ref, props.ref),
+			ref: useMergeRefs$26(id ? store.setContentElement : null, ref, props.ref),
 			style
 		};
 		return removeUndefinedValues(props);
@@ -27245,7 +27245,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...props,
 			id,
 			children: unmountOnHide && !mounted ? null : props.children,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onKeyDown
 		};
 		props = useFocusable({
@@ -28102,7 +28102,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	const usePortal = createHook(function usePortal({ preserveTabOrder, preserveTabOrderAnchor, portalElement, portalRef, portal = true, ...props }) {
 		const ref = (0, react$1.useRef)(null);
-		const refProp = useMergeRefs$25(ref, props.ref);
+		const refProp = useMergeRefs$26(ref, props.ref);
 		const context = (0, react$1.useContext)(PortalContext);
 		const [portalNode, setPortalNode] = (0, react$1.useState)(null);
 		const [anchorPortalNode, setAnchorPortalNode] = (0, react$1.useState)(null);
@@ -28707,7 +28707,7 @@ If there's a particular need for this, please submit a feature request at https:
 			onElementChange?.();
 		}, [backdropElement, onElementChange]);
 		const props = useDisclosureContent({
-			ref: useMergeRefs$25(setBackdropElement, backdropRef),
+			ref: useMergeRefs$26(setBackdropElement, backdropRef),
 			store: disclosure,
 			role: "presentation",
 			"data-backdrop": contentElement?.id || "",
@@ -30126,7 +30126,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...props,
 			"data-dialog-portal": hasDefaultModalPortal ? portalNode?.id : void 0,
 			id,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onFocusCapture,
 			onKeyDown,
 			onKeyDownCapture
@@ -30968,7 +30968,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}), [store, registerNestedHovercard]);
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref)
+			ref: useMergeRefs$26(ref, props.ref)
 		};
 		props = useAutoFocusOnHide({
 			store,
@@ -31221,7 +31221,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [store, setAnchorElement]);
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onMouseMove,
 			onClick
 		};
@@ -31626,7 +31626,7 @@ If there's a particular need for this, please submit a feature request at https:
 		props = {
 			role: !isNativeButton && tagName !== "a" ? "button" : void 0,
 			...props,
-			ref: useMergeRefs$25(ref, props.ref)
+			ref: useMergeRefs$26(ref, props.ref)
 		};
 		props = useCommand(props);
 		return props;
@@ -31714,7 +31714,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"aria-controls": useStoreState(store, "contentElement")?.id,
 			...metadataProps,
 			...props,
-			ref: useMergeRefs$25(setDisclosureElement, props.ref),
+			ref: useMergeRefs$26(setDisclosureElement, props.ref),
 			onClick
 		};
 		props = useButton(props);
@@ -32025,7 +32025,7 @@ If there's a particular need for this, please submit a feature request at https:
 			...props,
 			disabled: disabled || void 0,
 			id,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onChange,
 			onClick,
 			onFocus
@@ -32610,7 +32610,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"data-name": name,
 			children,
 			...props,
-			ref: useMergeRefs$25(store.setSelectElement, props.ref),
+			ref: useMergeRefs$26(store.setSelectElement, props.ref),
 			onKeyDown
 		};
 		props = usePopoverDisclosure({
@@ -32809,7 +32809,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}, []);
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onMouseMove,
 			onMouseLeave
 		};
@@ -33145,7 +33145,7 @@ If there's a particular need for this, please submit a feature request at https:
 		props = {
 			...props,
 			id,
-			ref: useMergeRefs$25(store.setLabelElement, props.ref),
+			ref: useMergeRefs$26(store.setLabelElement, props.ref),
 			onClick,
 			style: {
 				cursor: "default",
@@ -33267,7 +33267,7 @@ If there's a particular need for this, please submit a feature request at https:
 			hidden,
 			...props,
 			id,
-			ref: useMergeRefs$25(setElement, props.ref),
+			ref: useMergeRefs$26(setElement, props.ref),
 			style,
 			onKeyDown
 		};
@@ -33715,7 +33715,7 @@ If there's a particular need for this, please submit a feature request at https:
 			type: nativeCheckbox ? "checkbox" : void 0,
 			"aria-checked": checked,
 			...props,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onChange,
 			onClick
 		};
@@ -33895,7 +33895,7 @@ If there's a particular need for this, please submit a feature request at https:
 			hidden,
 			...props,
 			id,
-			ref: useMergeRefs$25(id ? store.setContentElement : null, props.ref),
+			ref: useMergeRefs$26(id ? store.setContentElement : null, props.ref),
 			style,
 			onKeyDown
 		};
@@ -33986,7 +33986,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const modal = hasParentMenu ? false : modalProp;
 		props = {
 			...props,
-			ref: useMergeRefs$25(ref, props.ref)
+			ref: useMergeRefs$26(ref, props.ref)
 		};
 		const { "aria-labelledby": ariaLabelledBy, ...menuListProps } = useMenuList({
 			store,
@@ -34259,7 +34259,7 @@ If there's a particular need for this, please submit a feature request at https:
 			"aria-haspopup": getPopupRole(contentElement, hasCombobox ? "dialog" : "menu"),
 			...props,
 			id,
-			ref: useMergeRefs$25(ref, props.ref),
+			ref: useMergeRefs$26(ref, props.ref),
 			onFocus,
 			onKeyDown,
 			onClick
@@ -50182,7 +50182,7 @@ VisualLabel });
 	*
 	* @return The product of values.
 	*/
-	function multiply(...args) {
+	function multiply$1(...args) {
 		if (!args.length) return 0;
 		const precision = args.reduce((total, arg) => total + getPrecision(getNumber(arg)), 0);
 		const product = args.reduce((total, arg, index) => {
@@ -50523,7 +50523,7 @@ VisualLabel });
 		const mergedRef = (0, _wordpress_compose.useMergeRefs)([inputRef, forwardedRef]);
 		const isStepAny = step === "any";
 		const baseStep = isStepAny ? 1 : ensureNumber(step);
-		const baseSpin = multiply(ensureNumber(spinFactor), baseStep);
+		const baseSpin = multiply$1(ensureNumber(spinFactor), baseStep);
 		const constrainValue = (value, stepOverride) => {
 			if (!isStepAny) value = ensureValidStep(value, min, stepOverride ?? baseStep);
 			return `${clamp$1(value, min, max)}`;
@@ -50535,7 +50535,7 @@ VisualLabel });
 		const spinValue = (value, direction, event) => {
 			event?.preventDefault();
 			const shift = event?.shiftKey && isShiftStepEnabled;
-			const delta = shift ? multiply(ensureNumber(shiftStep), baseSpin) : baseSpin;
+			const delta = shift ? multiply$1(ensureNumber(shiftStep), baseSpin) : baseSpin;
 			let nextValue = isValueEmpty(value) ? baseValue : value;
 			if (direction === "up") nextValue = add(nextValue, delta);
 			else if (direction === "down") nextValue = subtract(nextValue, delta);
@@ -50563,7 +50563,7 @@ VisualLabel });
 			if (type === "DRAG" && isDragEnabled) {
 				const [x, y] = payload.delta;
 				const enableShift = payload.shiftKey && isShiftStepEnabled;
-				const modifier = enableShift ? multiply(ensureNumber(shiftStep), baseSpin) : baseSpin;
+				const modifier = enableShift ? multiply$1(ensureNumber(shiftStep), baseSpin) : baseSpin;
 				let directionModifier;
 				let delta;
 				switch (dragDirection) {
@@ -50585,7 +50585,7 @@ VisualLabel });
 				}
 				if (delta !== 0) {
 					delta = Math.ceil(Math.abs(delta)) * Math.sign(delta);
-					const distance = multiply(delta, modifier, directionModifier);
+					const distance = multiply$1(delta, modifier, directionModifier);
 					nextState.value = constrainValue(add(currentValue, distance), enableShift ? modifier : void 0);
 				}
 			}
@@ -58316,7 +58316,7 @@ VisualLabel });
 		if (step === void 0) {
 			const unitStep = (units?.find((option) => option.value === unit))?.step ?? 1;
 			step = "any";
-			spinFactor = multiply(props.spinFactor ?? 1, unitStep);
+			spinFactor = multiply$1(props.spinFactor ?? 1, unitStep);
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
 			...props,
@@ -75237,6 +75237,408 @@ The screen with id ${screen.id} will not be added.`);
 		});
 	}
 
+// packages/components/build-module/resizable-box/resize-tooltip/utils.mjs
+	const noop$3 = () => {};
+	const POSITIONS = {
+		bottom: "bottom",
+		corner: "corner"
+	};
+	/**
+	* Custom hook that manages resize listener events. It also provides a label
+	* based on current resize width x height values.
+	*
+	* @param props
+	* @param props.axis        Only shows the label corresponding to the axis.
+	* @param props.fadeTimeout Duration (ms) before deactivating the resize label.
+	* @param props.onResize    Callback when a resize occurs. Provides { width, height } callback.
+	* @param props.position    Adjusts label value.
+	* @param props.showPx      Whether to add `PX` to the label.
+	*
+	* @return Properties for hook.
+	*/
+	function useResizeLabel({ axis, fadeTimeout = 180, onResize = noop$3, position = POSITIONS.bottom, showPx = false }) {
+		const [resizeListener, sizes] = (0, _wordpress_compose.useResizeObserver)();
+		const isAxisControlled = !!axis;
+		const [moveX, setMoveX] = (0, _wordpress_element.useState)(false);
+		const [moveY, setMoveY] = (0, _wordpress_element.useState)(false);
+		const { width, height } = sizes;
+		const heightRef = (0, _wordpress_element.useRef)(height);
+		const widthRef = (0, _wordpress_element.useRef)(width);
+		const moveTimeoutRef = (0, _wordpress_element.useRef)(void 0);
+		(0, _wordpress_element.useEffect)(() => {
+			return () => window.clearTimeout(moveTimeoutRef.current);
+		}, []);
+		const debounceUnsetMoveXY = (0, _wordpress_element.useCallback)(() => {
+			const unsetMoveXY = () => {
+				if (isAxisControlled) return;
+				setMoveX(false);
+				setMoveY(false);
+			};
+			if (moveTimeoutRef.current) window.clearTimeout(moveTimeoutRef.current);
+			moveTimeoutRef.current = window.setTimeout(unsetMoveXY, fadeTimeout);
+		}, [fadeTimeout, isAxisControlled]);
+		(0, _wordpress_element.useEffect)(() => {
+			if (!(width !== null || height !== null)) return;
+			const didWidthChange = width !== widthRef.current;
+			const didHeightChange = height !== heightRef.current;
+			if (!didWidthChange && !didHeightChange) return;
+			if (width && !widthRef.current && height && !heightRef.current) {
+				widthRef.current = width;
+				heightRef.current = height;
+				return;
+			}
+			if (didWidthChange) {
+				setMoveX(true);
+				widthRef.current = width;
+			}
+			if (didHeightChange) {
+				setMoveY(true);
+				heightRef.current = height;
+			}
+			onResize({
+				width,
+				height
+			});
+			debounceUnsetMoveXY();
+		}, [
+			width,
+			height,
+			onResize,
+			debounceUnsetMoveXY
+		]);
+		return {
+			label: getSizeLabel({
+				axis,
+				height,
+				moveX,
+				moveY,
+				position,
+				showPx,
+				width
+			}),
+			resizeListener
+		};
+	}
+	/**
+	* Gets the resize label based on width and height values (as well as recent changes).
+	*
+	* @param props
+	* @param props.axis     Only shows the label corresponding to the axis.
+	* @param props.height   Height value.
+	* @param props.moveX    Recent width (x axis) changes.
+	* @param props.moveY    Recent width (y axis) changes.
+	* @param props.position Adjusts label value.
+	* @param props.showPx   Whether to add `PX` to the label.
+	* @param props.width    Width value.
+	*
+	* @return The rendered label.
+	*/
+	function getSizeLabel({ axis, height, moveX = false, moveY = false, position = POSITIONS.bottom, showPx = false, width }) {
+		if (!moveX && !moveY) return;
+		if (position === POSITIONS.corner) return `${width} x ${height}`;
+		const labelUnit = showPx ? " px" : "";
+		if (axis) {
+			if (axis === "x" && moveX) return `${width}${labelUnit}`;
+			if (axis === "y" && moveY) return `${height}${labelUnit}`;
+		}
+		if (moveX && moveY) return `${width} x ${height}`;
+		if (moveX) return `${width}${labelUnit}`;
+		if (moveY) return `${height}${labelUnit}`;
+	}
+
+// packages/components/build-module/resizable-box/resize-tooltip/label.mjs
+	const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$22() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$22(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$22(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$22}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$22) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$22(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$22();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$22(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$22, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$22(targetDocument) {
+		const runtime = getRuntime$22();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$22(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$22(hash, css) {
+		const runtime = getRuntime$22();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
+	}
+	registerStyle$22("6e006a24aa", "._1c1ced8318f2bc2c__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}._8cef07a52be3218c__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.bb4bf3d46b98e6af__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}._4d78eb0c1876660d__label-text._4d78eb0c1876660d__label-text._4d78eb0c1876660d__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
+	var style_module_default$22 = {
+		"root": "_1c1ced8318f2bc2c__root",
+		"tooltip-wrapper": "_8cef07a52be3218c__tooltip-wrapper",
+		"tooltip": "bb4bf3d46b98e6af__tooltip",
+		"label-text": "_4d78eb0c1876660d__label-text"
+	};
+	const CORNER_OFFSET = 4;
+	function Label({ label, position = POSITIONS.corner, zIndex = 1e3, ...props }, ref) {
+		const showLabel = !!label;
+		const isBottom = position === POSITIONS.bottom;
+		const isCorner = position === POSITIONS.corner;
+		if (!showLabel) return null;
+		let style = {
+			opacity: showLabel ? 1 : void 0,
+			zIndex
+		};
+		let labelStyle = {};
+		if (isBottom) {
+			style = {
+				...style,
+				position: "absolute",
+				bottom: -10,
+				left: "50%",
+				transform: "translate(-50%, 0)"
+			};
+			labelStyle = { transform: `translate(0, 100%)` };
+		}
+		if (isCorner) style = {
+			...style,
+			position: "absolute",
+			top: CORNER_OFFSET,
+			right: (0, _wordpress_i18n.isRTL)() ? void 0 : CORNER_OFFSET,
+			left: (0, _wordpress_i18n.isRTL)() ? CORNER_OFFSET : void 0
+		};
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			"aria-hidden": "true",
+			className: clsx("components-resizable-tooltip__tooltip-wrapper", style_module_default$22["tooltip-wrapper"]),
+			ref,
+			style,
+			...props,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				className: clsx("components-resizable-tooltip__tooltip", style_module_default$22.tooltip),
+				style: labelStyle,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
+					as: "span",
+					className: style_module_default$22["label-text"],
+					children: label
+				})
+			})
+		});
+	}
+	const ForwardedComponent$1 = (0, _wordpress_element.forwardRef)(Label);
+
+// packages/components/build-module/resizable-box/resize-tooltip/index.mjs
+	const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
+	/**
+	* Returns the shared style runtime registry.
+	*
+	* The registry is stored on `globalThis` so separately bundled copies of this
+	* package can coordinate through the same document and style maps.
+	*
+	* @return The shared runtime registry.
+	*/
+	function getRuntime$21() {
+		const globalScope = globalThis;
+		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
+		globalScope.__wpStyleRuntime = {
+			documents: /* @__PURE__ */ new Map(),
+			styles: /* @__PURE__ */ new Map(),
+			injectedStyles: /* @__PURE__ */ new WeakMap()
+		};
+		if (typeof document !== "undefined") registerDocument$21(document);
+		return globalScope.__wpStyleRuntime;
+	}
+	/**
+	* Checks whether a document already contains a style tag for a hash.
+	*
+	* @param targetDocument Document to inspect.
+	* @param hash           Stable hash for the transformed CSS.
+	*
+	* @return Whether the style hash already exists in the document.
+	*/
+	function documentContainsStyleHash$21(targetDocument, hash) {
+		if (!targetDocument.head) return false;
+		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$21}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$21) === hash) return true;
+		return false;
+	}
+	/**
+	* Injects a registered style into a document, unless that document already
+	* contains a style tag for the same hash.
+	*
+	* @param targetDocument Document to inject the style into.
+	* @param hash           Stable hash for the transformed CSS.
+	* @param css            CSS text to inject.
+	*/
+	function injectStyle$21(targetDocument, hash, css) {
+		if (!targetDocument.head) return;
+		const runtime = getRuntime$21();
+		let injectedStyles = runtime.injectedStyles.get(targetDocument);
+		if (!injectedStyles) {
+			injectedStyles = /* @__PURE__ */ new Set();
+			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		}
+		if (injectedStyles.has(hash)) return;
+		if (documentContainsStyleHash$21(targetDocument, hash)) {
+			injectedStyles.add(hash);
+			return;
+		}
+		const style = targetDocument.createElement("style");
+		style.setAttribute(STYLE_HASH_ATTRIBUTE$21, hash);
+		style.appendChild(targetDocument.createTextNode(css));
+		targetDocument.head.appendChild(style);
+		injectedStyles.add(hash);
+	}
+	/**
+	* Registers a document as a style injection target.
+	*
+	* Existing registered styles are replayed into the document immediately.
+	* Documents are reference-counted so multiple providers can safely register the
+	* same document without one cleanup removing it while another registration is
+	* still active.
+	*
+	* @param targetDocument Document to receive registered styles.
+	* @return Cleanup function that unregisters this document registration.
+	*/
+	function registerDocument$21(targetDocument) {
+		const runtime = getRuntime$21();
+		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
+		for (const [hash, css] of runtime.styles) injectStyle$21(targetDocument, hash, css);
+		return () => {
+			const count = runtime.documents.get(targetDocument);
+			if (count === void 0) return;
+			if (count <= 1) {
+				runtime.documents.delete(targetDocument);
+				return;
+			}
+			runtime.documents.set(targetDocument, count - 1);
+		};
+	}
+	/**
+	* Registers a style and injects it into all registered documents.
+	*
+	* The hash is used as the deduplication key, so calling this repeatedly with
+	* the same hash will not add duplicate style tags to a document.
+	* Registered styles are retained for the lifetime of the page so they can be
+	* replayed into documents that are registered later.
+	*
+	* @param hash Stable hash for the transformed CSS.
+	* @param css  CSS text to inject.
+	*/
+	function registerStyle$21(hash, css) {
+		const runtime = getRuntime$21();
+		runtime.styles.set(hash, css);
+		for (const targetDocument of runtime.documents.keys()) injectStyle$21(targetDocument, hash, css);
+	}
+	registerStyle$21("6e006a24aa", "._1c1ced8318f2bc2c__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}._8cef07a52be3218c__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.bb4bf3d46b98e6af__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}._4d78eb0c1876660d__label-text._4d78eb0c1876660d__label-text._4d78eb0c1876660d__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
+	var style_module_default$21 = {
+		"root": "_1c1ced8318f2bc2c__root",
+		"tooltip-wrapper": "_8cef07a52be3218c__tooltip-wrapper",
+		"tooltip": "bb4bf3d46b98e6af__tooltip",
+		"label-text": "_4d78eb0c1876660d__label-text"
+	};
+	const noop$2 = () => {};
+	function ResizeTooltip({ as = "div", axis, className, fadeTimeout = 180, isVisible = true, labelRef, onResize = noop$2, position = POSITIONS.bottom, showPx = true, zIndex = 1e3, ...props }, ref) {
+		const { label, resizeListener } = useResizeLabel({
+			axis,
+			fadeTimeout,
+			onResize,
+			showPx,
+			position
+		});
+		if (!isVisible) return null;
+		const classes = clsx("components-resize-tooltip", style_module_default$21.root, className);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(PolymorphicElement, {
+			"aria-hidden": "true",
+			as,
+			...props,
+			className: classes,
+			ref,
+			children: [resizeListener, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ForwardedComponent$1, {
+				"aria-hidden": props["aria-hidden"],
+				label,
+				position,
+				ref: labelRef,
+				zIndex
+			})]
+		});
+	}
+	const ForwardedComponent = (0, _wordpress_element.forwardRef)(ResizeTooltip);
+
 // node_modules/.store/re-resizable@6.11.2--pqjxATea960vZjT2lthEA/node_modules/re-resizable/lib/resizer.js
 	var __assign$1 = void 0 && (void 0).__assign || function() {
 		__assign$1 = Object.assign || function(t) {
@@ -76018,407 +76420,390 @@ The screen with id ${screen.id} will not be added.`);
 		return Resizable;
 	}(react.PureComponent);
 
-// packages/components/build-module/resizable-box/resize-tooltip/utils.mjs
-	const noop$3 = () => {};
-	const POSITIONS = {
-		bottom: "bottom",
-		corner: "corner"
+// packages/components/build-module/resizable-box/utils.mjs
+	const IDENTITY = {
+		a: 1,
+		b: 0,
+		c: 0,
+		d: 1
 	};
-	/**
-	* Custom hook that manages resize listener events. It also provides a label
-	* based on current resize width x height values.
-	*
-	* @param props
-	* @param props.axis        Only shows the label corresponding to the axis.
-	* @param props.fadeTimeout Duration (ms) before deactivating the resize label.
-	* @param props.onResize    Callback when a resize occurs. Provides { width, height } callback.
-	* @param props.position    Adjusts label value.
-	* @param props.showPx      Whether to add `PX` to the label.
-	*
-	* @return Properties for hook.
-	*/
-	function useResizeLabel({ axis, fadeTimeout = 180, onResize = noop$3, position = POSITIONS.bottom, showPx = false }) {
-		const [resizeListener, sizes] = (0, _wordpress_compose.useResizeObserver)();
-		const isAxisControlled = !!axis;
-		const [moveX, setMoveX] = (0, _wordpress_element.useState)(false);
-		const [moveY, setMoveY] = (0, _wordpress_element.useState)(false);
-		const { width, height } = sizes;
-		const heightRef = (0, _wordpress_element.useRef)(height);
-		const widthRef = (0, _wordpress_element.useRef)(width);
-		const moveTimeoutRef = (0, _wordpress_element.useRef)(void 0);
-		(0, _wordpress_element.useEffect)(() => {
-			return () => window.clearTimeout(moveTimeoutRef.current);
-		}, []);
-		const debounceUnsetMoveXY = (0, _wordpress_element.useCallback)(() => {
-			const unsetMoveXY = () => {
-				if (isAxisControlled) return;
-				setMoveX(false);
-				setMoveY(false);
-			};
-			if (moveTimeoutRef.current) window.clearTimeout(moveTimeoutRef.current);
-			moveTimeoutRef.current = window.setTimeout(unsetMoveXY, fadeTimeout);
-		}, [fadeTimeout, isAxisControlled]);
-		(0, _wordpress_element.useEffect)(() => {
-			if (!(width !== null || height !== null)) return;
-			const didWidthChange = width !== widthRef.current;
-			const didHeightChange = height !== heightRef.current;
-			if (!didWidthChange && !didHeightChange) return;
-			if (width && !widthRef.current && height && !heightRef.current) {
-				widthRef.current = width;
-				heightRef.current = height;
-				return;
-			}
-			if (didWidthChange) {
-				setMoveX(true);
-				widthRef.current = width;
-			}
-			if (didHeightChange) {
-				setMoveY(true);
-				heightRef.current = height;
-			}
-			onResize({
-				width,
-				height
-			});
-			debounceUnsetMoveXY();
-		}, [
-			width,
-			height,
-			onResize,
-			debounceUnsetMoveXY
-		]);
+	const ANGLE_UNITS = {
+		deg: Math.PI / 180,
+		grad: Math.PI / 200,
+		rad: 1,
+		turn: 2 * Math.PI
+	};
+	function multiply(m, n) {
 		return {
-			label: getSizeLabel({
-				axis,
-				height,
-				moveX,
-				moveY,
-				position,
-				showPx,
-				width
-			}),
-			resizeListener
+			a: m.a * n.a + m.c * n.b,
+			b: m.b * n.a + m.d * n.b,
+			c: m.a * n.c + m.c * n.d,
+			d: m.b * n.c + m.d * n.d
+		};
+	}
+	function parseAngle(value) {
+		const match = value.match(/^(-?[\d.]+(?:e-?\d+)?)(deg|grad|rad|turn)$/);
+		return match ? parseFloat(match[1]) * ANGLE_UNITS[match[2]] : void 0;
+	}
+	/**
+	* Reads the computed `rotate` property. Only a turn around the z axis keeps
+	* the element flat, so any other axis is treated as no rotation.
+	*
+	* @param value Computed `rotate` value.
+	*/
+	function getRotate(value) {
+		const parts = value.trim().split(/\s+/);
+		const angle = parseAngle(parts[parts.length - 1]);
+		const axis = parts.slice(0, -1).join(" ");
+		if (angle === void 0 || ![
+			"",
+			"z",
+			"0 0 1"
+		].includes(axis)) return IDENTITY;
+		const cos = Math.cos(angle);
+		const sin = Math.sin(angle);
+		return {
+			a: cos,
+			b: sin,
+			c: -sin,
+			d: cos
+		};
+	}
+	function getScale(value) {
+		const [x, y = x] = value.trim().split(/\s+/).map((part) => part.endsWith("%") ? parseFloat(part) / 100 : parseFloat(part));
+		if (!Number.isFinite(x) || !Number.isFinite(y)) return IDENTITY;
+		return {
+			a: x,
+			b: 0,
+			c: 0,
+			d: y
 		};
 	}
 	/**
-	* Gets the resize label based on width and height values (as well as recent changes).
+	* Reads the computed `transform` property, which is always `none`,
+	* `matrix()` or `matrix3d()`.
 	*
-	* @param props
-	* @param props.axis     Only shows the label corresponding to the axis.
-	* @param props.height   Height value.
-	* @param props.moveX    Recent width (x axis) changes.
-	* @param props.moveY    Recent width (y axis) changes.
-	* @param props.position Adjusts label value.
-	* @param props.showPx   Whether to add `PX` to the label.
-	* @param props.width    Width value.
-	*
-	* @return The rendered label.
+	* @param value Computed `transform` value.
 	*/
-	function getSizeLabel({ axis, height, moveX = false, moveY = false, position = POSITIONS.bottom, showPx = false, width }) {
-		if (!moveX && !moveY) return;
-		if (position === POSITIONS.corner) return `${width} x ${height}`;
-		const labelUnit = showPx ? " px" : "";
-		if (axis) {
-			if (axis === "x" && moveX) return `${width}${labelUnit}`;
-			if (axis === "y" && moveY) return `${height}${labelUnit}`;
+	function getTransform(value) {
+		const match = value.match(/^matrix(3d)?\((.+)\)$/);
+		if (!match) return IDENTITY;
+		const numbers = match[2].split(",").map(parseFloat);
+		const [a, b, c, d] = match[1] ? [
+			numbers[0],
+			numbers[1],
+			numbers[4],
+			numbers[5]
+		] : numbers;
+		return {
+			a,
+			b,
+			c,
+			d
+		};
+	}
+	/**
+	* Returns how an element and its ancestors rotate and scale it on screen.
+	* Translation is left out, since it moves the element without changing
+	* which way its edges face.
+	*
+	* @param element The element to measure.
+	*
+	* @return The linear transform from the element's axes to screen axes.
+	*/
+	function getScreenTransform(element) {
+		const view = element.ownerDocument.defaultView;
+		let matrix = IDENTITY;
+		if (!view) return matrix;
+		for (let node = element; node; node = node.parentElement) {
+			const style = view.getComputedStyle(node);
+			let own = getRotate(style.rotate || "none");
+			own = multiply(own, getScale(style.scale || "none"));
+			own = multiply(own, getTransform(style.transform || "none"));
+			matrix = multiply(own, matrix);
 		}
-		if (moveX && moveY) return `${width} x ${height}`;
-		if (moveX) return `${width}${labelUnit}`;
-		if (moveY) return `${height}${labelUnit}`;
+		return matrix;
+	}
+	/**
+	* Maps a pointer movement on screen into an element's own axes.
+	*
+	* @param matrix The element's screen transform.
+	* @param x      Horizontal movement on screen.
+	* @param y      Vertical movement on screen.
+	*
+	* @return The movement along the element's own axes.
+	*/
+	function toLocalDelta(matrix, x, y) {
+		const determinant = matrix.a * matrix.d - matrix.b * matrix.c;
+		if (!determinant) return {
+			x,
+			y
+		};
+		return {
+			x: (matrix.d * x - matrix.c * y) / determinant,
+			y: (matrix.a * y - matrix.b * x) / determinant
+		};
+	}
+	const HANDLE_VECTORS = {
+		top: [0, -1],
+		right: [1, 0],
+		bottom: [0, 1],
+		left: [-1, 0],
+		topRight: [1, -1],
+		bottomRight: [1, 1],
+		bottomLeft: [-1, 1],
+		topLeft: [-1, -1]
+	};
+	const RESIZE_CURSORS = [
+		"ew-resize",
+		"nwse-resize",
+		"ns-resize",
+		"nesw-resize"
+	];
+	function getCursorIndex(x, y) {
+		const angle = Math.atan2(y, x) * 180 / Math.PI;
+		return (Math.round(angle / 45) % 4 + 4) % 4;
+	}
+	/**
+	* Returns the resize cursor nearest to the way a handle points on screen.
+	*
+	* @param matrix    The box's screen transform.
+	* @param direction The handle.
+	*
+	* @return The cursor, or `undefined` when the handle's default cursor already
+	* points the same way.
+	*/
+	function getHandleCursor(matrix, direction) {
+		const [x, y] = HANDLE_VECTORS[direction];
+		const index = getCursorIndex(matrix.a * x + matrix.c * y, matrix.b * x + matrix.d * y);
+		return index === getCursorIndex(x, y) ? void 0 : RESIZE_CURSORS[index];
+	}
+	/**
+	* Returns how much the box's own x and y axes are stretched on screen.
+	*
+	* @param matrix The box's screen transform.
+	*
+	* @return The scale along each of the box's axes.
+	*/
+	function getAxisScale(matrix) {
+		return {
+			x: Math.hypot(matrix.a, matrix.b),
+			y: Math.hypot(matrix.c, matrix.d)
+		};
+	}
+	/**
+	* Returns the way a handle points in the box's own axes.
+	*
+	* @param direction The handle.
+	*
+	* @return `-1`, `0` or `1` along each axis.
+	*/
+	function getHandleVector(direction) {
+		return HANDLE_VECTORS[direction];
+	}
+	function isIdentity({ a, b, c, d }) {
+		return a === 1 && b === 0 && c === 0 && d === 1;
+	}
+	/**
+	* Returns how much a box must grow to bring its handle to the pointer.
+	*
+	* @param matrix    The box's screen transform.
+	* @param direction The dragged handle.
+	* @param offset    From the handle to the pointer, on screen.
+	* @param offset.x  Horizontal offset.
+	* @param offset.y  Vertical offset.
+	* @param gain      How far the handle moves on screen per pixel of growth,
+	*                  relative to what `matrix` predicts.
+	*
+	* @return The change in width and height.
+	*/
+	function getResizeStep(matrix, direction, offset, gain) {
+		const [x, y] = getHandleVector(direction);
+		const local = toLocalDelta(matrix, offset.x, offset.y);
+		return {
+			width: x ? x * local.x / gain : 0,
+			height: y ? y * local.y / gain : 0
+		};
+	}
+	/**
+	* Measures how far a handle moved on screen for a change in size, relative
+	* to what `matrix` predicts. A transform origin at the box's centre, the
+	* usual case, moves while the box grows, so the handle covers less ground.
+	*
+	* @param matrix            The box's screen transform.
+	* @param direction         The dragged handle.
+	* @param sizeChange        The change in width and height.
+	* @param sizeChange.width  Change in width.
+	* @param sizeChange.height Change in height.
+	* @param handleMove        How far the handle moved on screen.
+	* @param handleMove.x      Horizontal movement.
+	* @param handleMove.y      Vertical movement.
+	*
+	* @return The gain, or `undefined` when the size barely changed.
+	*/
+	function measureGain(matrix, direction, sizeChange, handleMove) {
+		const [x, y] = HANDLE_VECTORS[direction];
+		const localX = x * sizeChange.width;
+		const localY = y * sizeChange.height;
+		const expectedX = matrix.a * localX + matrix.c * localY;
+		const expectedY = matrix.b * localX + matrix.d * localY;
+		const length = expectedX * expectedX + expectedY * expectedY;
+		if (length < 1) return;
+		return (handleMove.x * expectedX + handleMove.y * expectedY) / length;
+	}
+	const DOT_SCALE_PROPERTY = "--wp-components-resizable-box-handle-dot-scale";
+	function inverse(scale) {
+		return scale > .01 && Math.abs(scale - 1) > .001 ? Math.round(1e4 / scale) / 1e4 : 1;
+	}
+	/**
+	* Returns inline styles that turn each handle's cursor with the box and keep
+	* the handles the same size on screen when the box is scaled.
+	*
+	* @param matrix The box's screen transform.
+	*
+	* @return Styles by handle, or `undefined` for an untransformed box.
+	*/
+	function getTransformedHandleStyles(matrix) {
+		if (isIdentity(matrix)) return;
+		const scale = getAxisScale(matrix);
+		const x = inverse(scale.x);
+		const y = inverse(scale.y);
+		const styles = {};
+		for (const direction of Object.keys(HANDLE_VECTORS)) {
+			const style = {};
+			const cursor = getHandleCursor(matrix, direction);
+			if (cursor) style.cursor = cursor;
+			if (x !== 1 || y !== 1) {
+				const [vx, vy] = HANDLE_VECTORS[direction];
+				if (vx && vy) style.scale = `${x} ${y}`;
+				else if (vy) {
+					style.scale = `1 ${y}`;
+					style[DOT_SCALE_PROPERTY] = `${x} 1`;
+				} else {
+					style.scale = `${x} 1`;
+					style[DOT_SCALE_PROPERTY] = `1 ${y}`;
+				}
+			}
+			styles[direction] = style;
+		}
+		return styles;
 	}
 
-// packages/components/build-module/resizable-box/resize-tooltip/label.mjs
-	const STYLE_HASH_ATTRIBUTE$22 = "data-wp-hash";
+// packages/components/build-module/resizable-box/transform-aware-resizable.mjs
+	const MIN_GAIN = .2;
+	const MAX_GAIN = 2;
+	const MAX_SETTLES = 10;
 	/**
-	* Returns the shared style runtime registry.
+	* Keeps the dragged handle under the pointer when the box or an ancestor is
+	* rotated or scaled.
 	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
+	* `re-resizable` reads pointer movement in screen axes and has no option for
+	* a rotation, which mixes the axes. Its `scale` and `resizeRatio` props only
+	* stretch each axis. So this overrides `calculateNewSizeFromDirection()`,
+	* which is public but undocumented, and feeds it a pointer position that
+	* gives the size wanted.
 	*
-	* @return The shared runtime registry.
+	* The size comes from where the handle is on screen, not from the transform
+	* alone. A transform origin at the block's centre moves as the block grows,
+	* so the handle covers less ground than the box grows. The gain between the
+	* two is measured on each move, and the box grows until the handle meets the
+	* pointer.
 	*/
-	function getRuntime$22() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$22(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$22(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$22}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$22) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$22(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$22();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
-		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$22(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
-		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$22, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$22(targetDocument) {
-		const runtime = getRuntime$22();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$22(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
-			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$22(hash, css) {
-		const runtime = getRuntime$22();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$22(targetDocument, hash, css);
-	}
-	registerStyle$22("6e006a24aa", "._1c1ced8318f2bc2c__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}._8cef07a52be3218c__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.bb4bf3d46b98e6af__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}._4d78eb0c1876660d__label-text._4d78eb0c1876660d__label-text._4d78eb0c1876660d__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
-	var style_module_default$22 = {
-		"root": "_1c1ced8318f2bc2c__root",
-		"tooltip-wrapper": "_8cef07a52be3218c__tooltip-wrapper",
-		"tooltip": "bb4bf3d46b98e6af__tooltip",
-		"label-text": "_4d78eb0c1876660d__label-text"
-	};
-	const CORNER_OFFSET = 4;
-	function Label({ label, position = POSITIONS.corner, zIndex = 1e3, ...props }, ref) {
-		const showLabel = !!label;
-		const isBottom = position === POSITIONS.bottom;
-		const isCorner = position === POSITIONS.corner;
-		if (!showLabel) return null;
-		let style = {
-			opacity: showLabel ? 1 : void 0,
-			zIndex
-		};
-		let labelStyle = {};
-		if (isBottom) {
-			style = {
-				...style,
-				position: "absolute",
-				bottom: -10,
-				left: "50%",
-				transform: "translate(-50%, 0)"
+	var TransformAwareResizable = class extends Resizable {
+		transformedDrag;
+		onResizeStart(event, direction) {
+			super.onResizeStart(event, direction);
+			this.stopTransformedDrag();
+			if (!this.resizable || (this.props.scale ?? 1) !== 1) return;
+			const matrix = getScreenTransform(this.resizable);
+			if (!isIdentity(matrix)) this.transformedDrag = {
+				matrix,
+				handleElement: event.currentTarget,
+				gain: 1,
+				settles: 0,
+				isSettling: false
 			};
-			labelStyle = { transform: `translate(0, 100%)` };
 		}
-		if (isCorner) style = {
-			...style,
-			position: "absolute",
-			top: CORNER_OFFSET,
-			right: (0, _wordpress_i18n.isRTL)() ? void 0 : CORNER_OFFSET,
-			left: (0, _wordpress_i18n.isRTL)() ? CORNER_OFFSET : void 0
-		};
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			"aria-hidden": "true",
-			className: clsx("components-resizable-tooltip__tooltip-wrapper", style_module_default$22["tooltip-wrapper"]),
-			ref,
-			style,
-			...props,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-				className: clsx("components-resizable-tooltip__tooltip", style_module_default$22.tooltip),
-				style: labelStyle,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
-					as: "span",
-					className: style_module_default$22["label-text"],
-					children: label
-				})
-			})
-		});
-	}
-	const ForwardedComponent$1 = (0, _wordpress_element.forwardRef)(Label);
-
-// packages/components/build-module/resizable-box/resize-tooltip/index.mjs
-	const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
-	/**
-	* Returns the shared style runtime registry.
-	*
-	* The registry is stored on `globalThis` so separately bundled copies of this
-	* package can coordinate through the same document and style maps.
-	*
-	* @return The shared runtime registry.
-	*/
-	function getRuntime$21() {
-		const globalScope = globalThis;
-		if (globalScope.__wpStyleRuntime) return globalScope.__wpStyleRuntime;
-		globalScope.__wpStyleRuntime = {
-			documents: /* @__PURE__ */ new Map(),
-			styles: /* @__PURE__ */ new Map(),
-			injectedStyles: /* @__PURE__ */ new WeakMap()
-		};
-		if (typeof document !== "undefined") registerDocument$21(document);
-		return globalScope.__wpStyleRuntime;
-	}
-	/**
-	* Checks whether a document already contains a style tag for a hash.
-	*
-	* @param targetDocument Document to inspect.
-	* @param hash           Stable hash for the transformed CSS.
-	*
-	* @return Whether the style hash already exists in the document.
-	*/
-	function documentContainsStyleHash$21(targetDocument, hash) {
-		if (!targetDocument.head) return false;
-		for (const style of targetDocument.head.querySelectorAll(`style[${STYLE_HASH_ATTRIBUTE$21}]`)) if (style.getAttribute(STYLE_HASH_ATTRIBUTE$21) === hash) return true;
-		return false;
-	}
-	/**
-	* Injects a registered style into a document, unless that document already
-	* contains a style tag for the same hash.
-	*
-	* @param targetDocument Document to inject the style into.
-	* @param hash           Stable hash for the transformed CSS.
-	* @param css            CSS text to inject.
-	*/
-	function injectStyle$21(targetDocument, hash, css) {
-		if (!targetDocument.head) return;
-		const runtime = getRuntime$21();
-		let injectedStyles = runtime.injectedStyles.get(targetDocument);
-		if (!injectedStyles) {
-			injectedStyles = /* @__PURE__ */ new Set();
-			runtime.injectedStyles.set(targetDocument, injectedStyles);
+		onMouseUp(event) {
+			this.stopTransformedDrag();
+			super.onMouseUp(event);
 		}
-		if (injectedStyles.has(hash)) return;
-		if (documentContainsStyleHash$21(targetDocument, hash)) {
-			injectedStyles.add(hash);
-			return;
+		componentWillUnmount() {
+			this.stopTransformedDrag();
+			super.componentWillUnmount();
 		}
-		const style = targetDocument.createElement("style");
-		style.setAttribute(STYLE_HASH_ATTRIBUTE$21, hash);
-		style.appendChild(targetDocument.createTextNode(css));
-		targetDocument.head.appendChild(style);
-		injectedStyles.add(hash);
-	}
-	/**
-	* Registers a document as a style injection target.
-	*
-	* Existing registered styles are replayed into the document immediately.
-	* Documents are reference-counted so multiple providers can safely register the
-	* same document without one cleanup removing it while another registration is
-	* still active.
-	*
-	* @param targetDocument Document to receive registered styles.
-	* @return Cleanup function that unregisters this document registration.
-	*/
-	function registerDocument$21(targetDocument) {
-		const runtime = getRuntime$21();
-		runtime.documents.set(targetDocument, (runtime.documents.get(targetDocument) ?? 0) + 1);
-		for (const [hash, css] of runtime.styles) injectStyle$21(targetDocument, hash, css);
-		return () => {
-			const count = runtime.documents.get(targetDocument);
-			if (count === void 0) return;
-			if (count <= 1) {
-				runtime.documents.delete(targetDocument);
-				return;
+		stopTransformedDrag() {
+			if (this.transformedDrag?.frame) this.window?.cancelAnimationFrame(this.transformedDrag.frame);
+			this.transformedDrag = void 0;
+		}
+		calculateNewSizeFromDirection(clientX, clientY) {
+			const drag = this.transformedDrag;
+			if (!drag || !this.resizable) return super.calculateNewSizeFromDirection(clientX, clientY);
+			const { direction, original } = this.state;
+			const rect = drag.handleElement.getBoundingClientRect();
+			const handle = {
+				x: rect.x + rect.width / 2,
+				y: rect.y + rect.height / 2
+			};
+			if (!drag.isSettling) drag.settles = 0;
+			drag.grab ??= {
+				x: original.x - handle.x,
+				y: original.y - handle.y
+			};
+			drag.pointer = {
+				x: clientX,
+				y: clientY
+			};
+			const size = {
+				width: this.resizable.offsetWidth,
+				height: this.resizable.offsetHeight
+			};
+			if (drag.last) {
+				const gain = measureGain(drag.matrix, direction, {
+					width: size.width - drag.last.size.width,
+					height: size.height - drag.last.size.height
+				}, {
+					x: handle.x - drag.last.handle.x,
+					y: handle.y - drag.last.handle.y
+				});
+				if (gain !== void 0 && gain < MIN_GAIN) drag.cannotFollow = true;
+				else if (gain !== void 0 && gain <= MAX_GAIN) drag.gain = gain;
 			}
-			runtime.documents.set(targetDocument, count - 1);
-		};
-	}
-	/**
-	* Registers a style and injects it into all registered documents.
-	*
-	* The hash is used as the deduplication key, so calling this repeatedly with
-	* the same hash will not add duplicate style tags to a document.
-	* Registered styles are retained for the lifetime of the page so they can be
-	* replayed into documents that are registered later.
-	*
-	* @param hash Stable hash for the transformed CSS.
-	* @param css  CSS text to inject.
-	*/
-	function registerStyle$21(hash, css) {
-		const runtime = getRuntime$21();
-		runtime.styles.set(hash, css);
-		for (const targetDocument of runtime.documents.keys()) injectStyle$21(targetDocument, hash, css);
-	}
-	registerStyle$21("6e006a24aa", "._1c1ced8318f2bc2c__root{box-sizing:border-box;inset:0;pointer-events:none;position:absolute}._8cef07a52be3218c__tooltip-wrapper{align-items:center;box-sizing:border-box;display:inline-flex;justify-content:center;opacity:0;pointer-events:none;transition:opacity .12s linear}.bb4bf3d46b98e6af__tooltip{background:var(--wp-components-color-foreground,var(--wpds-color-foreground-content-neutral,#1e1e1e));border-radius:2px;box-sizing:border-box;color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));font-family:-apple-system,system-ui,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;font-size:12px;padding:4px 8px;position:relative}._4d78eb0c1876660d__label-text._4d78eb0c1876660d__label-text._4d78eb0c1876660d__label-text{color:var(--wp-components-color-foreground-inverted,var(--wpds-color-background-surface-neutral,#fcfcfc));display:block;font-size:13px;line-height:1.4;white-space:nowrap}");
-	var style_module_default$21 = {
-		"root": "_1c1ced8318f2bc2c__root",
-		"tooltip-wrapper": "_8cef07a52be3218c__tooltip-wrapper",
-		"tooltip": "bb4bf3d46b98e6af__tooltip",
-		"label-text": "_4d78eb0c1876660d__label-text"
+			drag.last = {
+				size,
+				handle
+			};
+			if (drag.cannotFollow) {
+				const local = toLocalDelta(drag.matrix, clientX - original.x, clientY - original.y);
+				return super.calculateNewSizeFromDirection(original.x + local.x, original.y + local.y);
+			}
+			const step = getResizeStep(drag.matrix, direction, {
+				x: clientX - drag.grab.x - handle.x,
+				y: clientY - drag.grab.y - handle.y
+			}, drag.gain);
+			if (Math.abs(step.width) >= .5 || Math.abs(step.height) >= .5) this.scheduleSettle(drag);
+			const [ratioX, ratioY] = Array.isArray(this.props.resizeRatio) ? this.props.resizeRatio : [this.props.resizeRatio ?? 1, this.props.resizeRatio ?? 1];
+			const [x, y] = getHandleVector(direction);
+			return super.calculateNewSizeFromDirection(original.x + x * (size.width + step.width - original.width) / ratioX, original.y + y * (size.height + step.height - original.height) / ratioY);
+		}
+		scheduleSettle(drag) {
+			const view = this.window;
+			if (!view || drag.frame || drag.settles >= MAX_SETTLES) return;
+			drag.frame = view.requestAnimationFrame(() => {
+				drag.frame = view.requestAnimationFrame(() => {
+					drag.frame = void 0;
+					if (this.transformedDrag !== drag || !drag.pointer) return;
+					drag.settles++;
+					drag.isSettling = true;
+					this.onMouseMove(new view.MouseEvent("mousemove", {
+						clientX: drag.pointer.x,
+						clientY: drag.pointer.y
+					}));
+					drag.isSettling = false;
+				});
+			});
+		}
 	};
-	const noop$2 = () => {};
-	function ResizeTooltip({ as = "div", axis, className, fadeTimeout = 180, isVisible = true, labelRef, onResize = noop$2, position = POSITIONS.bottom, showPx = true, zIndex = 1e3, ...props }, ref) {
-		const { label, resizeListener } = useResizeLabel({
-			axis,
-			fadeTimeout,
-			onResize,
-			showPx,
-			position
-		});
-		if (!isVisible) return null;
-		const classes = clsx("components-resize-tooltip", style_module_default$21.root, className);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(PolymorphicElement, {
-			"aria-hidden": "true",
-			as,
-			...props,
-			className: classes,
-			ref,
-			children: [resizeListener, /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ForwardedComponent$1, {
-				"aria-hidden": props["aria-hidden"],
-				label,
-				position,
-				ref: labelRef,
-				zIndex
-			})]
-		});
-	}
-	const ForwardedComponent = (0, _wordpress_element.forwardRef)(ResizeTooltip);
 
 // packages/components/build-module/resizable-box/index.mjs
 	const HANDLE_CLASS_NAME = "components-resizable-box__handle";
@@ -76453,13 +76838,42 @@ The screen with id ${screen.id} will not be added.`);
 		bottomRight: HANDLE_STYLES_OVERRIDES,
 		bottomLeft: HANDLE_STYLES_OVERRIDES
 	};
+	function isSameTransform(m, n) {
+		return Math.abs(m.a - n.a) < 1e-6 && Math.abs(m.b - n.b) < 1e-6 && Math.abs(m.c - n.c) < 1e-6 && Math.abs(m.d - n.d) < 1e-6;
+	}
+	function useHandleStyles(resizableRef, showHandle) {
+		const [matrix, setMatrix] = (0, _wordpress_element.useState)({
+			a: 1,
+			b: 0,
+			c: 0,
+			d: 1
+		});
+		(0, _wordpress_element.useLayoutEffect)(() => {
+			if (!showHandle || resizableRef.current?.state.isResizing) return;
+			const element = resizableRef.current?.resizable;
+			if (!element) return;
+			const next = getScreenTransform(element);
+			setMatrix((current) => isSameTransform(current, next) ? current : next);
+		});
+		return (0, _wordpress_element.useMemo)(() => {
+			const transformed = getTransformedHandleStyles(matrix);
+			if (!transformed) return HANDLE_STYLES;
+			return Object.fromEntries(Object.entries(HANDLE_STYLES).map(([direction, style]) => [direction, {
+				...style,
+				...transformed[direction]
+			}]));
+		}, [matrix]);
+	}
 	function UnforwardedResizableBox({ className, children, showHandle = true, __experimentalShowTooltip: showTooltip = false, __experimentalTooltipProps: tooltipProps = {}, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Resizable, {
+		const resizableRef = (0, _wordpress_element.useRef)(null);
+		const mergedRef = (0, _wordpress_compose.useMergeRefs)([ref, resizableRef]);
+		const handleStyles = useHandleStyles(resizableRef, showHandle);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(TransformAwareResizable, {
 			className: clsx("components-resizable-box__container", showHandle && "has-show-handle", className),
 			handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map((key) => [key, /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { tabIndex: -1 }, key)])),
 			handleClasses: HANDLE_CLASSES,
-			handleStyles: HANDLE_STYLES,
-			ref,
+			handleStyles,
+			ref: mergedRef,
 			...props,
 			children: [children, showTooltip && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ForwardedComponent, { ...tooltipProps })]
 		});
@@ -82437,6 +82851,7 @@ The screen with id ${screen.id} will not be added.`);
 		ContentEditableControl,
 		__experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
 		ComponentsContext,
+		getScreenTransform,
 		Tabs,
 		get Menu() {
 			(0, _wordpress_deprecated.default)("`privateApis.Menu` from `@wordpress/components`", {
