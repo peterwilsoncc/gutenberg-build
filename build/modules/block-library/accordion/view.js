@@ -18,6 +18,7 @@ const { actions } = store("core/accordion", {
 		toggle: () => {
 			const { id, autoclose, accordionItems } = getContext();
 			const accordionItem = accordionItems.find((item) => item.id === id);
+			if (!accordionItem) return;
 			if (autoclose) accordionItems.forEach((item) => {
 				item.isOpen = item.id === id ? !accordionItem.isOpen : false;
 			});
