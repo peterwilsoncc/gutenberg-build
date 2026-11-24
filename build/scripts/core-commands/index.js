@@ -79,7 +79,11 @@
 	function useAdminNavigationCommands(menuCommands) {
 		const commands = (0, _wordpress_element.useMemo)(() => {
 			return (menuCommands ?? []).map((menuCommand) => {
-				const label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Go to: %s"), menuCommand.label);
+				const label = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: menu label */
+					(0, _wordpress_i18n.__)("Go to: %s"),
+					menuCommand.label
+				);
 				return {
 					name: menuCommand.name,
 					label,

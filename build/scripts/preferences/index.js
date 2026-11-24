@@ -315,10 +315,18 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const { toggle } = (0, _wordpress_data.useDispatch)(store);
 		const speakMessage = () => {
 			if (isActive) {
-				const message = messageDeactivated || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Preference deactivated - %s"), label);
+				const message = messageDeactivated || (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: preference name, e.g. 'Fullscreen mode' */
+					(0, _wordpress_i18n.__)("Preference deactivated - %s"),
+					label
+				);
 				(0, _wordpress_a11y.speak)(message);
 			} else {
-				const message = messageActivated || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Preference activated - %s"), label);
+				const message = messageActivated || (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: preference name, e.g. 'Fullscreen mode' */
+					(0, _wordpress_i18n.__)("Preference activated - %s"),
+					label
+				);
 				(0, _wordpress_a11y.speak)(message);
 			}
 		};

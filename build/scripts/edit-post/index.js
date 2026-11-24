@@ -10129,7 +10129,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		const navigateRegionsProps = (0, _wordpress_components.__unstableUseNavigateRegions)();
 		const className = clsx("edit-post-layout", "is-mode-" + mode, { "has-metaboxes": hasActiveMetaboxes });
 		function onPluginAreaError(name) {
-			createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."), name));
+			createErrorNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: plugin name */
+				(0, _wordpress_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."),
+				name
+			));
 		}
 		const { createSuccessNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const onActionPerformed = (0, _wordpress_element.useCallback)((actionId, items) => {
@@ -10150,7 +10154,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 				case "duplicate-post": {
 					const newItem = items[0];
 					const title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
-					createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("\"%s\" successfully created."), (0, _wordpress_html_entities.decodeEntities)(title) || (0, _wordpress_i18n.__)("(no title)")), {
+					createSuccessNotice((0, _wordpress_i18n.sprintf)(
+						/** translators: %s: Title of the created post or template, e.g: "Hello world". */
+						(0, _wordpress_i18n.__)("\"%s\" successfully created."),
+						(0, _wordpress_html_entities.decodeEntities)(title) || (0, _wordpress_i18n.__)("(no title)")
+					), {
 						type: "snackbar",
 						id: "duplicate-post-action",
 						actions: [{

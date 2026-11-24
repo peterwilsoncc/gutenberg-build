@@ -8258,7 +8258,9 @@ const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children,
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$7["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -8407,7 +8409,9 @@ const Stack = (0, import_element.forwardRef)(function UnforwardedStack({ directi
 const fieldExtensions$10 = {
 	description: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-			href: (0, import_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
+			href: 
+			/** translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations. */
+			(0, import_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
 			openInNewTab: true,
 			children: (0, import_i18n.__)("Describe the purpose of the image.")
 		}),
@@ -9127,10 +9131,15 @@ const EB_IN_BYTES = 1024 * PB_IN_BYTES;
 const ZB_IN_BYTES = 1024 * EB_IN_BYTES;
 const YB_IN_BYTES = 1024 * ZB_IN_BYTES;
 function getBytesString(bytes, unitSymbol, decimals = 2) {
-	return (0, import_i18n.sprintf)((0, import_i18n._x)("%1$s %2$s", "file size"), bytes.toLocaleString(void 0, {
-		minimumFractionDigits: 0,
-		maximumFractionDigits: decimals
-	}), unitSymbol);
+	return (0, import_i18n.sprintf)(
+		/** translators: 1: Actual bytes of a file. 2: The unit symbol (e.g. MB). */
+		(0, import_i18n._x)("%1$s %2$s", "file size"),
+		bytes.toLocaleString(void 0, {
+			minimumFractionDigits: 0,
+			maximumFractionDigits: decimals
+		}),
+		unitSymbol
+	);
 }
 /**
 * Converts bytes to a human-readable file size string with a specified number of decimal places.
@@ -9144,15 +9153,51 @@ function getBytesString(bytes, unitSymbol, decimals = 2) {
 function formatFileSize(bytes, decimals = 2) {
 	if (bytes === 0) return getBytesString(0, (0, import_i18n._x)("B", "unit symbol"), decimals);
 	const quant = {
-		[(0, import_i18n._x)("YB", "unit symbol")]: YB_IN_BYTES,
-		[(0, import_i18n._x)("ZB", "unit symbol")]: ZB_IN_BYTES,
-		[(0, import_i18n._x)("EB", "unit symbol")]: EB_IN_BYTES,
-		[(0, import_i18n._x)("PB", "unit symbol")]: PB_IN_BYTES,
-		[(0, import_i18n._x)("TB", "unit symbol")]: TB_IN_BYTES,
-		[(0, import_i18n._x)("GB", "unit symbol")]: GB_IN_BYTES,
-		[(0, import_i18n._x)("MB", "unit symbol")]: MB_IN_BYTES,
-		[(0, import_i18n._x)("KB", "unit symbol")]: KB_IN_BYTES,
-		[(0, import_i18n._x)("B", "unit symbol")]: 1
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for yottabyte. */
+			"YB",
+			"unit symbol"
+		)]: YB_IN_BYTES,
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for zettabyte. */
+			"ZB",
+			"unit symbol"
+		)]: ZB_IN_BYTES,
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for exabyte. */
+			"EB",
+			"unit symbol"
+		)]: EB_IN_BYTES,
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for petabyte. */
+			"PB",
+			"unit symbol"
+		)]: PB_IN_BYTES,
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for terabyte. */
+			"TB",
+			"unit symbol"
+		)]: TB_IN_BYTES,
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for gigabyte. */
+			"GB",
+			"unit symbol"
+		)]: GB_IN_BYTES,
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for megabyte. */
+			"MB",
+			"unit symbol"
+		)]: MB_IN_BYTES,
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for kilobyte. */
+			"KB",
+			"unit symbol"
+		)]: KB_IN_BYTES,
+		[(0, import_i18n._x)(
+			/** translators: Unit symbol for byte. */
+			"B",
+			"unit symbol"
+		)]: 1
 	};
 	for (const [unit, mag] of Object.entries(quant)) if (bytes >= mag) return getBytesString(bytes / mag, unit, decimals);
 	return "";
@@ -9170,7 +9215,12 @@ const fieldExtensions$4 = {
 * The JavaScript parts of the dimensions field; its data is in `field.php`.
 */
 const fieldExtensions$3 = {
-	getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n.sprintf)((0, import_i18n._x)("%1$s × %2$s", "image dimensions"), item.media_details.width.toString(), item.media_details.height.toString()) : "",
+	getValue: ({ item }) => item?.media_details?.width && item?.media_details?.height ? (0, import_i18n.sprintf)(
+		/** translators: 1: Width. 2: Height. */
+		(0, import_i18n._x)("%1$s × %2$s", "image dimensions"),
+		item.media_details.width.toString(),
+		item.media_details.height.toString()
+	) : "",
 	isVisible: (item) => !!(item?.media_details?.width && item?.media_details?.height)
 };
 

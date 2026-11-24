@@ -299,10 +299,22 @@
 				[COMMAND]: isApple ? "Command" : "Control",
 				[CTRL]: "Control",
 				["alt"]: isApple ? "Option" : "Alt",
-				",": (0, _wordpress_i18n.__)("Comma"),
-				".": (0, _wordpress_i18n.__)("Period"),
-				"`": (0, _wordpress_i18n.__)("Backtick"),
-				"~": (0, _wordpress_i18n.__)("Tilde")
+				",": (0, _wordpress_i18n.__)(
+					/** translators: comma as in the character ',' */
+					"Comma"
+				),
+				".": (0, _wordpress_i18n.__)(
+					/** translators: period as in the character '.' */
+					"Period"
+				),
+				"`": (0, _wordpress_i18n.__)(
+					/** translators: backtick as in the character '`' */
+					"Backtick"
+				),
+				"~": (0, _wordpress_i18n.__)(
+					/** translators: tilde as in the character '~' */
+					"Tilde"
+				)
 			};
 			return [...modifier(_isApple), character].map((key) => capitaliseFirstCharacter(replacementKeyMap[key] ?? key)).join(isApple ? " " : " + ");
 		};

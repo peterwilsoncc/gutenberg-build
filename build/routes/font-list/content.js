@@ -14036,7 +14036,11 @@ const KeyboardShortcutDescription = (0, import_element.forwardRef)(function Unfo
 		id: descriptionId,
 		"aria-hidden": "true",
 		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { ref }),
-		children: (0, import_i18n.sprintf)((0, import_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+		children: (0, import_i18n.sprintf)(
+			/** translators: %s: keyboard shortcut. */
+			(0, import_i18n.__)("Keyboard shortcut: %s"),
+			shortcut.label ?? shortcut.ariaKeyShortcut
+		)
 	});
 });
 /**
@@ -16055,7 +16059,9 @@ const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children,
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$12["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -23386,7 +23392,11 @@ function BlockAndElementList({ filterValue, styleFilter }) {
 		if (!filterValue && styleFilter === "all") return;
 		const blockCount = hasBlockResults ? blockTypesListRef.current?.childElementCount || 0 : 0;
 		const count = elementCount + blockCount;
-		const resultsFoundMessage = (0, import_i18n.sprintf)((0, import_i18n._n)("%d result found.", "%d results found.", count), count);
+		const resultsFoundMessage = (0, import_i18n.sprintf)(
+			/** translators: %d: number of results. */
+			(0, import_i18n._n)("%d result found.", "%d results found.", count),
+			count
+		);
 		debouncedSpeak(resultsFoundMessage, "polite");
 	}, [
 		filterValue,
@@ -23472,7 +23482,12 @@ function Variation({ variation, children, isPill = false, properties, showToolti
 	};
 	const isActive = (0, import_element.useMemo)(() => areGlobalStylesEqual(user, variation), [user, variation]);
 	let label = variation?.title;
-	if (variation?.description) label = (0, import_i18n.sprintf)((0, import_i18n._x)("%1$s (%2$s)", "variation label"), variation?.title, variation?.description);
+	if (variation?.description) label = (0, import_i18n.sprintf)(
+		/** translators: 1: variation title. 2: variation description. */
+		(0, import_i18n._x)("%1$s (%2$s)", "variation label"),
+		variation?.title,
+		variation?.description
+	);
 	const content = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx("global-styles-ui-variations_item", { "is-active": isActive }),
 		role: "button",
@@ -24206,7 +24221,11 @@ function FontCard({ font, onClick, variantsText, navigatorPath, shouldFocus }) {
 				justify: "flex-end",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, {
 					className: "font-library__font-card__count",
-					children: variantsText || (0, import_i18n.sprintf)((0, import_i18n._n)("%d variant", "%d variants", variantsCount), variantsCount)
+					children: variantsText || (0, import_i18n.sprintf)(
+						/** translators: %d: Number of font variants. */
+						(0, import_i18n._n)("%d variant", "%d variants", variantsCount),
+						variantsCount
+					)
 				}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.FlexItem, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(icon_default, { icon: (0, import_i18n.isRTL)() ? chevron_left_default : chevron_right_default }) })]
 			})]
 		})
@@ -24329,7 +24348,11 @@ function InstalledFonts() {
 		} catch (error) {
 			setNotice({
 				type: "error",
-				message: (0, import_i18n.sprintf)((0, import_i18n.__)("There was an error updating the font family. %s"), error.message)
+				message: (0, import_i18n.sprintf)(
+					/** translators: %s: error message */
+					(0, import_i18n.__)("There was an error updating the font family. %s"),
+					error.message
+				)
 			});
 		}
 	};
@@ -24345,7 +24368,12 @@ function InstalledFonts() {
 	const getFontCardVariantsText = (font) => {
 		const variantsInstalled = font?.fontFace && (font?.fontFace?.length ?? 0) > 0 ? font.fontFace.length : 1;
 		const variantsActive = getFontFacesActivated(font.slug, font.source).length;
-		return (0, import_i18n.sprintf)((0, import_i18n.__)("%1$d of %2$d active"), variantsActive, variantsInstalled);
+		return (0, import_i18n.sprintf)(
+			/** translators: 1: Active font variants, 2: Total font variants. */
+			(0, import_i18n.__)("%1$d of %2$d active"),
+			variantsActive,
+			variantsInstalled
+		);
 	};
 	(0, import_element.useEffect)(() => {
 		handleSetLibraryFontSelected(libraryFontSelected);
@@ -24398,7 +24426,11 @@ function InstalledFonts() {
 						}),
 						baseThemeFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 							className: "font-library__fonts-title",
-							children: (0, import_i18n._x)("Theme", "font source")
+							children: (0, import_i18n._x)(
+								/** translators: Heading for a list of fonts provided by the theme. */
+								"Theme",
+								"font source"
+							)
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
 							role: "list",
 							className: "font-library__fonts-list",
@@ -24418,7 +24450,11 @@ function InstalledFonts() {
 						})] }),
 						baseCustomFonts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 							className: "font-library__fonts-title",
-							children: (0, import_i18n._x)("Custom", "font source")
+							children: (0, import_i18n._x)(
+								/** translators: Heading for a list of fonts installed by the user. */
+								"Custom",
+								"font source"
+							)
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
 							role: "list",
 							className: "font-library__fonts-list",
@@ -24563,7 +24599,11 @@ function ConfirmDeleteDialog({ font, isOpen, setIsOpen, setNotice, uninstallFont
 		onCancel: handleCancelUninstall,
 		onConfirm: handleConfirmUninstall,
 		size: "medium",
-		children: font && (0, import_i18n.sprintf)((0, import_i18n.__)("Are you sure you want to delete \"%s\" font and all its variants and assets?"), font.name)
+		children: font && (0, import_i18n.sprintf)(
+			/** translators: %s: Name of the font. */
+			(0, import_i18n.__)("Are you sure you want to delete \"%s\" font and all its variants and assets?"),
+			font.name
+		)
 	});
 }
 
@@ -24738,7 +24778,11 @@ function FontCollection({ slug }) {
 	const hasFilters = filters.search !== void 0 || filters.category !== void 0;
 	(0, import_element.useEffect)(() => {
 		if (!hasFilters) return;
-		speak(fonts.length ? (0, import_i18n.sprintf)((0, import_i18n._n)("%d font found.", "%d fonts found.", fonts.length), fonts.length) : (0, import_i18n.__)("No fonts found. Try with a different search term."));
+		speak(fonts.length ? (0, import_i18n.sprintf)(
+			/** translators: %d: number of fonts found. */
+			(0, import_i18n._n)("%d font found.", "%d fonts found.", fonts.length),
+			fonts.length
+		) : (0, import_i18n.__)("No fonts found. Try with a different search term."));
 	}, [hasFilters, fonts]);
 	const windowHeight = Math.max(window.innerHeight, MIN_WINDOW_HEIGHT);
 	const pageSize = Math.floor((windowHeight - 417) / 61);
@@ -24988,7 +25032,12 @@ function FontCollection({ slug }) {
 					expanded: false,
 					spacing: 1,
 					className: "font-library__page-selection",
-					children: (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"), "<CurrentPage />", totalPages), {
+					children: (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+						/** translators: 1: Current page number, 2: Total number of pages. */
+						(0, import_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
+						"<CurrentPage />",
+						totalPages
+					), {
 						div: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { "aria-hidden": true }),
 						CurrentPage: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root, {
 							value: page.toString(),
@@ -34082,7 +34131,11 @@ function UploadFonts() {
 		const font = (await new Promise((resolve) => fontObj.onload = resolve)).detail.font;
 		const { name } = font.opentype.tables;
 		const fontName = name?.get(16) || name?.get(1);
-		if (!fontName) throw new Error((0, import_i18n.sprintf)((0, import_i18n.__)("%s cannot be installed because it does not include a font family name. Try a different version of this font, for example one downloaded from the font's official source."), fontFile.name));
+		if (!fontName) throw new Error((0, import_i18n.sprintf)(
+			/** translators: %s: Name of the uploaded font file. */
+			(0, import_i18n.__)("%s cannot be installed because it does not include a font family name. Try a different version of this font, for example one downloaded from the font's official source."),
+			fontFile.name
+		));
 		const isItalic = (name?.get(2) || "").toLowerCase().includes("italic");
 		const fontWeight = font.opentype.tables["OS/2"]?.usWeightClass || "normal";
 		const weightAxis = font.opentype.tables.fvar?.axes.find(({ tag }) => tag === "wght");

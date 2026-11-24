@@ -18335,7 +18335,11 @@ Icon: ButtonIcon });
 			id: descriptionId,
 			"aria-hidden": "true",
 			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { ref }),
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: keyboard shortcut. */
+				(0, _wordpress_i18n.__)("Keyboard shortcut: %s"),
+				shortcut.label ?? shortcut.ariaKeyShortcut
+			)
 		});
 	});
 	/**
@@ -21333,7 +21337,9 @@ Icon: ButtonIcon });
 				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: style_module_default$27["link-icon"],
 					role: "img",
-					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+					"aria-label": 
+					/** translators: accessibility text appended to link text */
+					(0, _wordpress_i18n.__)("(opens in a new tab)")
 				})] })
 			})
 		});
@@ -30079,7 +30085,12 @@ Icon: ButtonIcon });
 		let ariaLabel = props["aria-label"];
 		if (!hasExplicitLabel && defaultAriaLabel && role === "application") {
 			const currentMonth = months[0];
-			ariaLabel = currentMonth ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s, %2$s"), defaultAriaLabel, labels.labelGrid(currentMonth.date)) : defaultAriaLabel;
+			ariaLabel = currentMonth ? (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Calendar type. 2: Current month and year. */
+				(0, _wordpress_i18n.__)("%1$s, %2$s"),
+				defaultAriaLabel,
+				labels.labelGrid(currentMonth.date)
+			) : defaultAriaLabel;
 		}
 		const mergedRef = (0, _wordpress_compose.useMergeRefs)([rootRef ?? null, ref ?? null]);
 		return useRender({
@@ -30473,7 +30484,11 @@ Icon: ButtonIcon });
 					labelGridcell: (date, modifiers) => {
 						const formattedDate = fullDateFormatter.format(date);
 						let label = formattedDate;
-						if (modifiers?.today) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Today, %s"), formattedDate);
+						if (modifiers?.today) label = (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+							(0, _wordpress_i18n.__)("Today, %s"),
+							formattedDate
+						);
 						return label;
 					},
 					/** The label for the "next month" button. */
@@ -30488,9 +30503,21 @@ Icon: ButtonIcon });
 					labelDayButton: (date, modifiers) => {
 						const formattedDate = fullDateFormatter.format(date);
 						let label = formattedDate;
-						if (modifiers?.today && modifiers?.selected) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Today, %s, selected"), formattedDate);
-						if (modifiers?.today) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Today, %s"), formattedDate);
-						if (modifiers?.selected) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s, selected"), formattedDate);
+						if (modifiers?.today && modifiers?.selected) return (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+							(0, _wordpress_i18n.__)("Today, %s, selected"),
+							formattedDate
+						);
+						if (modifiers?.today) label = (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+							(0, _wordpress_i18n.__)("Today, %s"),
+							formattedDate
+						);
+						if (modifiers?.selected) label = (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+							(0, _wordpress_i18n.__)("%s, selected"),
+							formattedDate
+						);
 						return label;
 					},
 					/**
@@ -40695,14 +40722,30 @@ Icon: ButtonIcon });
 		const disabled = isSaving || !hasDirtyEntities && !isPreviewingTheme();
 		const getLabel = () => {
 			if (isPreviewingTheme()) {
-				if (isSaving) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Activating %s"), previewingThemeName);
+				if (isSaving) return (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The name of theme to be activated. */
+					(0, _wordpress_i18n.__)("Activating %s"),
+					previewingThemeName
+				);
 				else if (disabled) return (0, _wordpress_i18n.__)("Saved");
-				else if (hasDirtyEntities) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Activate %s & Save"), previewingThemeName);
-				return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Activate %s"), previewingThemeName);
+				else if (hasDirtyEntities) return (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The name of theme to be activated. */
+					(0, _wordpress_i18n.__)("Activate %s & Save"),
+					previewingThemeName
+				);
+				return (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The name of theme to be activated. */
+					(0, _wordpress_i18n.__)("Activate %s"),
+					previewingThemeName
+				);
 			}
 			if (isSaving) return (0, _wordpress_i18n.__)("Saving");
 			if (disabled) return (0, _wordpress_i18n.__)("Saved");
-			if (!isOnlyCurrentEntityDirty && showReviewMessage) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Review %d change…", "Review %d changes…", dirtyEntityRecords.length), dirtyEntityRecords.length);
+			if (!isOnlyCurrentEntityDirty && showReviewMessage) return (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: number of unsaved changes (number). */
+				(0, _wordpress_i18n._n)("Review %d change…", "Review %d changes…", dirtyEntityRecords.length),
+				dirtyEntityRecords.length
+			);
 			return (0, _wordpress_i18n.__)("Save");
 		};
 		const label = getLabel();
@@ -40799,7 +40842,12 @@ Icon: ButtonIcon });
 		}
 		const currentTheme = useActualCurrentTheme();
 		const previewingTheme = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).getCurrentTheme(), []);
-		const additionalPrompt = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Saving your changes will change your active theme from %1$s to %2$s."), currentTheme?.name?.rendered ?? "...", previewingTheme?.name?.rendered ?? "...") });
+		const additionalPrompt = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: The name of active theme, 2: The name of theme to be activated. */
+			(0, _wordpress_i18n.__)("Saving your changes will change your active theme from %1$s to %2$s."),
+			currentTheme?.name?.rendered ?? "...",
+			previewingTheme?.name?.rendered ?? "..."
+		) });
 		const activateTheme = useActivateTheme();
 		const onSave = async () => {
 			await activateTheme();
@@ -41017,7 +41065,11 @@ Icon: ButtonIcon });
 		const themeColors = (0, _wordpress_element.useMemo)(getAdminThemeColors, []);
 		const { createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		function onPluginAreaError(name) {
-			createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."), name));
+			createErrorNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: plugin name */
+				(0, _wordpress_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."),
+				name
+			));
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.SlotFillProvider, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Provider, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_plugins.PluginArea, { onError: onPluginAreaError }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_theme.ThemeProvider, {
 			isRoot: true,
@@ -41228,7 +41280,11 @@ Icon: ButtonIcon });
 						className: "edit-site-sidebar-navigation-screen__preview-badge",
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Badge, {
 							intent: "informational",
-							children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Previewing %s"), previewingThemeName)
+							children: (0, _wordpress_i18n.sprintf)(
+								/** translators: %s: theme name. */
+								(0, _wordpress_i18n.__)("Previewing %s"),
+								previewingThemeName
+							)
 						})
 					}),
 					description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
@@ -44748,7 +44804,12 @@ Icon: ButtonIcon });
 		(0, _wordpress_element.useEffect)(() => {
 			if (isInitialLocationRef.current) return;
 			if (title && siteTitle) {
-				const formattedTitle = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s ‹ %2$s ‹ Editor — WordPress"), (0, _wordpress_html_entities.decodeEntities)(title), (0, _wordpress_html_entities.decodeEntities)(siteTitle));
+				const formattedTitle = (0, _wordpress_i18n.sprintf)(
+					/** translators: Admin document title. 1: Admin screen name, 2: Network or site name. */
+					(0, _wordpress_i18n.__)("%1$s ‹ %2$s ‹ Editor — WordPress"),
+					(0, _wordpress_html_entities.decodeEntities)(title),
+					(0, _wordpress_html_entities.decodeEntities)(siteTitle)
+				);
 				document.title = formattedTitle;
 				(0, _wordpress_a11y.speak)(title, "assertive");
 			}
@@ -44782,7 +44843,12 @@ Icon: ButtonIcon });
 			};
 		}, [postType, postId]);
 		let editorTitle;
-		if (isLoaded) editorTitle = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s ‹ %2$s", "breadcrumb trail"), (0, _wordpress_html_entities.decodeEntities)(title), POST_TYPE_LABELS[postType] ?? POST_TYPE_LABELS["wp_template"]);
+		if (isLoaded) editorTitle = (0, _wordpress_i18n.sprintf)(
+			/** translators: A breadcrumb trail for the Admin document title. 1: title of template being edited, 2: type of template (Template or Template Part). */
+			(0, _wordpress_i18n._x)("%1$s ‹ %2$s", "breadcrumb trail"),
+			(0, _wordpress_html_entities.decodeEntities)(title),
+			POST_TYPE_LABELS[postType] ?? POST_TYPE_LABELS["wp_template"]
+		);
 		useTitle(isLoaded && editorTitle);
 	}
 
@@ -45084,7 +45150,11 @@ Icon: ButtonIcon });
 				case "duplicate-post": {
 					const newItem = items[0];
 					const _title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
-					createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("\"%s\" successfully created."), (0, _wordpress_html_entities.decodeEntities)(_title) || (0, _wordpress_i18n.__)("(no title)")), {
+					createSuccessNotice((0, _wordpress_i18n.sprintf)(
+						/** translators: %s: Title of the created post or template, e.g: "Hello world". */
+						(0, _wordpress_i18n.__)("\"%s\" successfully created."),
+						(0, _wordpress_html_entities.decodeEntities)(_title) || (0, _wordpress_i18n.__)("(no title)")
+					), {
 						type: "snackbar",
 						id: "duplicate-post-action",
 						actions: [{
@@ -45286,7 +45356,11 @@ Icon: ButtonIcon });
 		const id = getItemId(item);
 		const isInSelectionArray = selection.includes(id);
 		const checked = !disabled && isInSelectionArray;
-		const selectionLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Select %s"), titleField?.getValue?.({ item }) || (0, _wordpress_i18n.__)("(no title)"));
+		const selectionLabel = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: The title of the item. */
+			(0, _wordpress_i18n.__)("Select %s"),
+			titleField?.getValue?.({ item }) || (0, _wordpress_i18n.__)("(no title)")
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Checkbox$2, {
 			className: SELECTION_CHECKBOX_CLASS,
 			"aria-label": selectionLabel,
@@ -45387,7 +45461,11 @@ Icon: ButtonIcon });
 		const label = typeof action.label === "string" ? action.label : action.label(items);
 		if (context === "button") return label.replace(TRAILING_ELLIPSIS, "");
 		if (!("RenderModal" in action) || TRAILING_ELLIPSIS.test(label)) return label;
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s…", "menu item requiring further input"), label);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Action label. Use the ellipsis and spacing appropriate for your language. */
+			(0, _wordpress_i18n._x)("%s…", "menu item requiring further input"),
+			label
+		);
 	}
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
@@ -45542,9 +45620,22 @@ Icon: ButtonIcon });
 	* @return               - The footer message.
 	*/
 	function getFooterMessage(selectionCount, itemsCount, totalItems, onlyTotalCount = false) {
-		if (selectionCount > 0) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s item selected", "%s items selected", selectionCount), selectionCount.toLocaleString());
-		if (onlyTotalCount || totalItems <= itemsCount) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s item", "%s items", totalItems), totalItems.toLocaleString());
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%1$s of %2$s item", "%1$s of %2$s items", totalItems), itemsCount.toLocaleString(), totalItems.toLocaleString());
+		if (selectionCount > 0) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: formatted number of items. */
+			(0, _wordpress_i18n._n)("%s item selected", "%s items selected", selectionCount),
+			selectionCount.toLocaleString()
+		);
+		if (onlyTotalCount || totalItems <= itemsCount) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: formatted number of items. */
+			(0, _wordpress_i18n._n)("%s item", "%s items", totalItems),
+			totalItems.toLocaleString()
+		);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %1$s: formatted number of items. %2$s: formatted total number of items. */
+			(0, _wordpress_i18n._n)("%1$s of %2$s item", "%1$s of %2$s items", totalItems),
+			itemsCount.toLocaleString(),
+			totalItems.toLocaleString()
+		);
 	}
 
 // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
@@ -46687,7 +46778,12 @@ Icon: ButtonIcon });
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
 							colSpan: columnCount,
 							className: "dataviews-view-table__group-header-cell",
-							children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+							children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)(
+								/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+								(0, _wordpress_i18n.__)("%1$s: %2$s"),
+								groupField.label,
+								groupName
+							)
 						})
 					}), groupItems.map((item, index) => {
 						const id = getItemId(item) || index.toString();
@@ -47087,7 +47183,11 @@ Icon: ButtonIcon });
 				render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					role: "row",
 					"aria-rowindex": i + 1,
-					"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Row %d"), i + 1),
+					"aria-label": (0, _wordpress_i18n.sprintf)(
+						/** translators: %d: The row number in the grid */
+						(0, _wordpress_i18n.__)("Row %d"),
+						i + 1
+					),
 					className: "dataviews-view-grid__row",
 					style: { gridTemplateColumns: `repeat( ${gridColumns}, minmax(0, 1fr) )` }
 				}),
@@ -47186,7 +47286,12 @@ Icon: ButtonIcon });
 					gap: "sm",
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", {
 						className: "dataviews-view-grid__group-header",
-						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)(
+							/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+							(0, _wordpress_i18n.__)("%1$s: %2$s"),
+							groupField.label,
+							groupName
+						)
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CompositeGrid, {
 						...gridProps,
 						data: groupItems,
@@ -47506,7 +47611,12 @@ Icon: ButtonIcon });
 					direction: "column",
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", {
 						className: "dataviews-view-list__group-header",
-						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)(
+							/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+							(0, _wordpress_i18n.__)("%1$s: %2$s"),
+							groupField.label,
+							groupName
+						)
 					}), groupItems.map((item) => {
 						const id = generateCompositeItemIdPrefix(item);
 						return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ListItem, {
@@ -47556,7 +47666,10 @@ Icon: ButtonIcon });
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
 	function ActivityGroup({ groupName, groupData, groupField, showLabel = true, children }) {
-		const groupHeader = showLabel ? (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s: <groupName />"), groupField.label).trim(), { groupName: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(groupField.render, {
+		const groupHeader = showLabel ? (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+			/** translators: %s: The label of the field e.g. "Status". */
+			"%s: <groupName />"
+		), groupField.label).trim(), { groupName: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(groupField.render, {
 			item: groupData[0],
 			field: groupField
 		}) }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(groupField.render, {
@@ -47805,7 +47918,12 @@ Icon: ButtonIcon });
 			return {
 				value: page.toString(),
 				label: page.toString(),
-				"aria-label": currentPage === page ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Page %1$d of %2$d"), currentPage, totalPages) : page.toString()
+				"aria-label": currentPage === page ? (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: current page number. 2: total number of pages. */
+					(0, _wordpress_i18n.__)("Page %1$d of %2$d"),
+					currentPage,
+					totalPages
+				) : page.toString()
 			};
 		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
@@ -47814,7 +47932,12 @@ Icon: ButtonIcon });
 			align: "center",
 			gap: "xs",
 			className: clsx("dataviews-pagination__page-select", className),
-			children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"), "<CurrentPage />", totalPages), {
+			children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Current page number, 2: Total number of pages. */
+				(0, _wordpress_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
+				"<CurrentPage />",
+				totalPages
+			), {
 				div: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { "aria-hidden": true }),
 				CurrentPage: hasPageInput ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PageNumberInput, {
 					currentPage,
@@ -48028,7 +48151,12 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", {
 				className: "dataviews-view-picker-grid-group__header",
 				id: headerId,
-				children: showLabel ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName) : groupName
+				children: showLabel ? (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+					(0, _wordpress_i18n.__)("%1$s: %2$s"),
+					groupField.label,
+					groupName
+				) : groupName
 			}), children]
 		}, groupName);
 	}
@@ -48394,7 +48522,12 @@ Icon: ButtonIcon });
 						colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + 1,
 						className: "dataviews-view-table__group-header-cell",
 						role: "presentation",
-						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)(
+							/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+							(0, _wordpress_i18n.__)("%1$s: %2$s"),
+							groupField.label,
+							groupName
+						)
 					})
 				}), groupItems.map((item, index) => {
 					const id = getItemId(item) || index.toString();
@@ -48553,7 +48686,12 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", {
 				className: "dataviews-view-picker-activity-group__header",
 				id: headerId,
-				children: showLabel ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName) : groupName
+				children: showLabel ? (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+					(0, _wordpress_i18n.__)("%1$s: %2$s"),
+					groupField.label,
+					groupName
+				) : groupName
 			}), children]
 		});
 	}
@@ -55496,7 +55634,11 @@ If there's a particular need for this, please submit a feature request at https:
 			setActiveId: setActiveCompositeId,
 			role: "listbox",
 			className: "dataviews-filters__search-widget-listbox",
-			"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("List of: %1$s"), filter.name),
+			"aria-label": (0, _wordpress_i18n.sprintf)(
+				/** translators: List of items for a filter. 1: Filter name. e.g.: "List of: Author". */
+				(0, _wordpress_i18n.__)("List of: %1$s"),
+				filter.name
+			),
 			onFocusVisible: () => {
 				if (!activeCompositeId && filter.elements.length) setActiveCompositeId(generateFilterElementCompositeItemId(baseId, filter.elements[0].value));
 			},
@@ -55755,8 +55897,16 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 	}
 	const isNoneOperatorDefinition = {
-		label: (0, _wordpress_i18n.__)("Is none of"),
-		filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+		label: (0, _wordpress_i18n.__)(
+			/** translators: DataViews operator name */
+			"Is none of"
+		),
+		filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
+			(0, _wordpress_i18n.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements.map((element) => element.label).join(", ")
+		), filterTextWrappers),
 		filter: ((item, field, filterValue) => {
 			if (!filterValue?.length) return true;
 			const fieldValue = field.getValue({ item });
@@ -55769,8 +55919,16 @@ If there's a particular need for this, please submit a feature request at https:
 	const OPERATORS = [
 		{
 			name: OPERATOR_IS_ANY,
-			label: (0, _wordpress_i18n.__)("Includes"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Includes"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
+				(0, _wordpress_i18n.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements.map((element) => element.label).join(", ")
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (!filterValue?.length) return true;
 				const fieldValue = field.getValue({ item });
@@ -55786,8 +55944,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_IS_ALL,
-			label: (0, _wordpress_i18n.__)("Includes all"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Includes all"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
+				(0, _wordpress_i18n.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements.map((element) => element.label).join(", ")
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (!filterValue?.length) return true;
 				const fieldValue = field.getValue({ item });
@@ -55802,8 +55968,17 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_BETWEEN,
-			label: (0, _wordpress_i18n.__)("Between (inc)"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"), filter.name, activeElements[0].label[0], activeElements[0].label[1]), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Between (inc)"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
+				(0, _wordpress_i18n.__)("<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"),
+				filter.name,
+				activeElements[0].label[0],
+				activeElements[0].label[1]
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (!Array.isArray(filterValue) || filterValue.length !== 2 || filterValue.includes(void 0) || filterValue.includes("") || filterValue.includes(null)) return true;
 				const fieldValue = field.getValue({ item });
@@ -55819,8 +55994,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_IN_THE_PAST,
-			label: (0, _wordpress_i18n.__)("In the past"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is in the past: </Name><Value>%2$s</Value>"), filter.name, `${activeElements[0].value.value} ${activeElements[0].value.unit}`), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"In the past"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is in the past: </Name><Value>%2$s</Value>"),
+				filter.name,
+				`${activeElements[0].value.value} ${activeElements[0].value.unit}`
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue?.value === void 0 || filterValue?.unit === void 0) return true;
 				const targetDate = getRelativeDate(filterValue.value, filterValue.unit);
@@ -55831,8 +56014,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_OVER,
-			label: (0, _wordpress_i18n.__)("Over"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"), filter.name, `${activeElements[0].value.value} ${activeElements[0].value.unit}`), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Over"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
+				filter.name,
+				`${activeElements[0].value.value} ${activeElements[0].value.unit}`
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue?.value === void 0 || filterValue?.unit === void 0) return true;
 				const targetDate = getRelativeDate(filterValue.value, filterValue.unit);
@@ -55842,8 +56033,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: "is",
-			label: (0, _wordpress_i18n.__)("Is"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Is"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				return filterValue === field.getValue({ item }) || filterValue === void 0;
 			},
@@ -55851,8 +56050,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_IS_NOT,
-			label: (0, _wordpress_i18n.__)("Is not"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Is not"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				return filterValue !== field.getValue({ item });
 			},
@@ -55860,8 +56067,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_LESS_THAN,
-			label: (0, _wordpress_i18n.__)("Less than"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Less than"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				return field.getValue({ item }) < filterValue;
@@ -55870,8 +56085,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_GREATER_THAN,
-			label: (0, _wordpress_i18n.__)("Greater than"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is greater than: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Greater than"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is greater than: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				return field.getValue({ item }) > filterValue;
@@ -55880,8 +56103,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_LESS_THAN_OR_EQUAL,
-			label: (0, _wordpress_i18n.__)("Less than or equal"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Less than or equal"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				return field.getValue({ item }) <= filterValue;
@@ -55890,8 +56121,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_GREATER_THAN_OR_EQUAL,
-			label: (0, _wordpress_i18n.__)("Greater than or equal"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Greater than or equal"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				return field.getValue({ item }) >= filterValue;
@@ -55900,8 +56139,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_BEFORE,
-			label: (0, _wordpress_i18n.__)("Before"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Before"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -55911,8 +56158,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_AFTER,
-			label: (0, _wordpress_i18n.__)("After"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"After"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -55922,8 +56177,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_BEFORE_INC,
-			label: (0, _wordpress_i18n.__)("Before (inc)"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is on or before: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Before (inc)"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is on or before: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -55933,8 +56196,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_AFTER_INC,
-			label: (0, _wordpress_i18n.__)("After (inc)"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is on or after: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"After (inc)"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is on or after: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -55944,8 +56215,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_CONTAINS,
-			label: (0, _wordpress_i18n.__)("Contains"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Contains"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
+				(0, _wordpress_i18n.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const fieldValue = field.getValue({ item });
@@ -55955,8 +56234,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_NOT_CONTAINS,
-			label: (0, _wordpress_i18n.__)("Doesn't contain"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Doesn't contain"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
+				(0, _wordpress_i18n.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const fieldValue = field.getValue({ item });
@@ -55966,8 +56253,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_STARTS_WITH,
-			label: (0, _wordpress_i18n.__)("Starts with"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Starts with"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
+				(0, _wordpress_i18n.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const fieldValue = field.getValue({ item });
@@ -55977,8 +56272,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: "on",
-			label: (0, _wordpress_i18n.__)("On"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"On"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -55988,8 +56291,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_NOT_ON,
-			label: (0, _wordpress_i18n.__)("Not on"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Not on"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -56010,7 +56321,11 @@ If there's a particular need for this, please submit a feature request at https:
 		if (activeElements === void 0 || activeElements.length === 0) return filter.name;
 		const operator = getOperatorByName(filterInView?.operator);
 		if (operator !== void 0) return operator.filterText(filter, activeElements);
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Unknown status for %1$s"), filter.name);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: Filter name e.g.: "Unknown status for Author". */
+			(0, _wordpress_i18n.__)("Unknown status for %1$s"),
+			filter.name
+		);
 	};
 	function OperatorSelector({ filter, view, onChangeView }) {
 		const operatorOptions = filter.operators?.map((operator) => ({
@@ -56167,7 +56482,11 @@ If there's a particular need for this, please submit a feature request at https:
 						filterInView,
 						filter
 					})
-				}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$1, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Filter by: %1$s"), filter.name.toLowerCase()) })] }), canResetOrRemove && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$8, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$3, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
+				}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$1, { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: Filter name. */
+					(0, _wordpress_i18n.__)("Filter by: %1$s"),
+					filter.name.toLowerCase()
+				) })] }), canResetOrRemove && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$8, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$3, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
 					className: clsx("dataviews-filters__summary-chip-remove", { "has-values": hasValues }),
 					"aria-label": resetOrRemoveLabel,
 					onClick: () => {
@@ -57178,7 +57497,11 @@ If there's a particular need for this, please submit a feature request at https:
 		let timezoneDetail = zoneAbbr;
 		if ("UTC" === timezone.string) timezoneDetail = (0, _wordpress_i18n.__)("Coordinated Universal Time");
 		else if (prettyTimezoneString.trim().length > 0) timezoneDetail = `(${zoneAbbr}) ${prettyTimezoneString}`;
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Timezone: %s"), timezoneDetail);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: timezone detail, e.g. "(CEST) Europe/Madrid" or "UTC+3". */
+			(0, _wordpress_i18n.__)("Timezone: %s"),
+			timezoneDetail
+		);
 	}
 
 // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
@@ -60348,7 +60671,15 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const controlId = (0, _wordpress_compose.useInstanceId)(SummaryButton, "dataforms-layouts-panel__field-control");
 		const errorId = `${controlId}-error`;
-		const ariaLabel = showError ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Edit %s (has errors)", "field"), fieldLabel || "") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Edit %s", "field"), fieldLabel || "");
+		const ariaLabel = showError ? (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Field name. */
+			(0, _wordpress_i18n._x)("Edit %s (has errors)", "field"),
+			fieldLabel || ""
+		) : (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Field name. */
+			(0, _wordpress_i18n._x)("Edit %s", "field"),
+			fieldLabel || ""
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className,
 			children: [
@@ -61093,7 +61424,11 @@ If there's a particular need for this, please submit a feature request at https:
 	function getValidationMessage(validity) {
 		const invalidCount = countInvalidFields(validity);
 		if (invalidCount === 0) return;
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d field needs attention", "%d fields need attention", invalidCount), invalidCount);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %d: Number of fields that need attention */
+			(0, _wordpress_i18n._n)("%d field needs attention", "%d fields need attention", invalidCount),
+			invalidCount
+		);
 	}
 
 // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
@@ -61834,7 +62169,11 @@ If there's a particular need for this, please submit a feature request at https:
 							setTargetItemId(attachmentNumericId);
 							open();
 						},
-						label: !isBlob ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Replace %s"), (0, _wordpress_html_entities.decodeEntities)(attachment.title.rendered)) : (0, _wordpress_i18n.__)("Replace"),
+						label: !isBlob ? (0, _wordpress_i18n.sprintf)(
+							/** translators: %s: The title of the media item. */
+							(0, _wordpress_i18n.__)("Replace %s"),
+							(0, _wordpress_html_entities.decodeEntities)(attachment.title.rendered)
+						) : (0, _wordpress_i18n.__)("Replace"),
 						showTooltip: true,
 						onFilesDrop,
 						attachment,
@@ -62153,7 +62492,11 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!canUpload) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("fieldset", {
 			className: "fields__media-edit",
 			"data-field-id": field.id,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s: To edit this field, you need permission to upload media."), field.label) })
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, { children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The field label. */
+				(0, _wordpress_i18n.__)("%s: To edit this field, you need permission to upload media."),
+				field.label
+			) })
 		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 			direction: "column",
@@ -63770,7 +64113,11 @@ If there's a particular need for this, please submit a feature request at https:
 			if (!filterValue && styleFilter === "all") return;
 			const blockCount = hasBlockResults ? blockTypesListRef.current?.childElementCount || 0 : 0;
 			const count = elementCount + blockCount;
-			const resultsFoundMessage = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found.", "%d results found.", count), count);
+			const resultsFoundMessage = (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: number of results. */
+				(0, _wordpress_i18n._n)("%d result found.", "%d results found.", count),
+				count
+			);
 			debouncedSpeak(resultsFoundMessage, "polite");
 		}, [
 			filterValue,
@@ -63850,7 +64197,12 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		const isActive = (0, _wordpress_element.useMemo)(() => areGlobalStylesEqual(user, variation), [user, variation]);
 		let label = variation?.title;
-		if (variation?.description) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s (%2$s)", "variation label"), variation?.title, variation?.description);
+		if (variation?.description) label = (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: variation title. 2: variation description. */
+			(0, _wordpress_i18n._x)("%1$s (%2$s)", "variation label"),
+			variation?.title,
+			variation?.description
+		);
 		const content = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: clsx("global-styles-ui-variations_item", { "is-active": isActive }),
 			role: "button",
@@ -73184,7 +73536,11 @@ If there's a particular need for this, please submit a feature request at https:
 				icon: backup_default,
 				...hrefProps,
 				...otherProps,
-				children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d Revision", "%d Revisions", revisionsCount), revisionsCount)
+				children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %d: Number of Styles revisions. */
+					(0, _wordpress_i18n._n)("%d Revision", "%d Revisions", revisionsCount),
+					revisionsCount
+				)
 			})
 		});
 	}
@@ -73492,14 +73848,22 @@ If there's a particular need for this, please submit a feature request at https:
 		const { path } = useLocation$8();
 		const { clientId } = props;
 		const { moveBlocksDown, moveBlocksUp, removeBlocks } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
-		const removeLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Remove %s"), (0, _wordpress_block_editor.BlockTitle)({
-			clientId,
-			maximumLength: 25
-		}));
-		const goToLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Go to %s"), (0, _wordpress_block_editor.BlockTitle)({
-			clientId,
-			maximumLength: 25
-		}));
+		const removeLabel = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block name */
+			(0, _wordpress_i18n.__)("Remove %s"),
+			(0, _wordpress_block_editor.BlockTitle)({
+				clientId,
+				maximumLength: 25
+			})
+		);
+		const goToLabel = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block name */
+			(0, _wordpress_i18n.__)("Go to %s"),
+			(0, _wordpress_block_editor.BlockTitle)({
+				clientId,
+				maximumLength: 25
+			})
+		);
 		const { rootClientId, blockName, attributes } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockRootClientId, getBlockName, getBlockAttributes } = select(_wordpress_block_editor.store);
 			return {
@@ -73660,9 +74024,16 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/build-navigation-label.mjs
 	function buildNavigationLabel(title, id, status) {
-		if (!title?.rendered) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("(no title %s)"), id);
+		if (!title?.rendered)
+ /** translators: %s: the index of the menu in the list of menus. */
+		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("(no title %s)"), id);
 		if (status === "publish") return (0, _wordpress_html_entities.decodeEntities)(title?.rendered);
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s (%2$s)", "menu label"), (0, _wordpress_html_entities.decodeEntities)(title?.rendered), status);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: title of the menu. 2: status of the menu (draft, pending, etc.). */
+			(0, _wordpress_i18n._x)("%1$s (%2$s)", "menu label"),
+			(0, _wordpress_html_entities.decodeEntities)(title?.rendered),
+			status
+		);
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/single-navigation-menu.mjs
@@ -73732,7 +74103,11 @@ If there's a particular need for this, please submit a feature request at https:
 				createSuccessNotice((0, _wordpress_i18n.__)("Navigation Menu successfully deleted."), { type: "snackbar" });
 				history.navigate("/navigation");
 			} catch (error) {
-				createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Unable to delete Navigation Menu (%s).`), error?.message), { type: "snackbar" });
+				createErrorNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message describing why the navigation menu could not be deleted. */
+					(0, _wordpress_i18n.__)(`Unable to delete Navigation Menu (%s).`),
+					error?.message
+				), { type: "snackbar" });
 			}
 		};
 		return handleDelete;
@@ -73755,7 +74130,11 @@ If there's a particular need for this, please submit a feature request at https:
 				createSuccessNotice((0, _wordpress_i18n.__)("Renamed Navigation Menu"), { type: "snackbar" });
 			} catch (error) {
 				editEntityRecord("postType", postType, postId, originalRecord);
-				createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Unable to rename Navigation Menu (%s).`), error?.message), { type: "snackbar" });
+				createErrorNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message describing why the navigation menu could not be renamed. */
+					(0, _wordpress_i18n.__)(`Unable to rename Navigation Menu (%s).`),
+					error?.message
+				), { type: "snackbar" });
 			}
 		};
 		return handleSave;
@@ -73768,7 +74147,11 @@ If there's a particular need for this, please submit a feature request at https:
 			const menuTitle = navigationMenu?.title?.rendered || navigationMenu?.slug;
 			try {
 				const savedRecord = await saveEntityRecord("postType", postType, {
-					title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s (Copy)", "navigation menu"), menuTitle),
+					title: (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: Navigation menu title */
+						(0, _wordpress_i18n._x)("%s (Copy)", "navigation menu"),
+						menuTitle
+					),
 					content: navigationMenu?.content?.raw,
 					status: "publish"
 				}, { throwOnError: true });
@@ -73777,7 +74160,11 @@ If there's a particular need for this, please submit a feature request at https:
 					history.navigate(`/wp_navigation/${savedRecord.id}`);
 				}
 			} catch (error) {
-				createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Unable to duplicate Navigation Menu (%s).`), error?.message), { type: "snackbar" });
+				createErrorNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message describing why the navigation menu could not be deleted. */
+					(0, _wordpress_i18n.__)(`Unable to duplicate Navigation Menu (%s).`),
+					error?.message
+				), { type: "snackbar" });
 			}
 		};
 		return handleDuplicate;
@@ -73792,9 +74179,16 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/index.mjs
 	function buildMenuLabel(title, id, status) {
-		if (!title) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("(no title %s)"), id);
+		if (!title)
+ /** translators: %s: the index of the menu in the list of menus. */
+		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("(no title %s)"), id);
 		if (status === "publish") return (0, _wordpress_html_entities.decodeEntities)(title);
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s (%2$s)", "menu label"), (0, _wordpress_html_entities.decodeEntities)(title), status);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: title of the menu. 2: status of the menu (draft, pending, etc.). */
+			(0, _wordpress_i18n._x)("%1$s (%2$s)", "menu label"),
+			(0, _wordpress_html_entities.decodeEntities)(title),
+			status
+		);
 	}
 	function SidebarNavigationScreenNavigationMenus({ backPath }) {
 		const { records: navigationMenus, isResolving: isResolvingNavigationMenus, hasResolved: hasResolvedNavigationMenus } = (0, _wordpress_core_data.useEntityRecords)("postType", NAVIGATION_POST_TYPE, PRELOADED_NAVIGATION_MENUS_QUERY);
@@ -74417,7 +74811,11 @@ If there's a particular need for this, please submit a feature request at https:
 						}
 						const pattern = await createPatternFromFile(file, currentCategoryId ? [currentCategoryId] : void 0);
 						if (!currentCategoryId && location.query.categoryId !== "my-patterns") history.navigate(`/pattern?categoryId=${PATTERN_DEFAULT_CATEGORY}`);
-						createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Imported \"%s\" from JSON."), pattern.title.raw), {
+						createSuccessNotice((0, _wordpress_i18n.sprintf)(
+							/** translators: %s: The imported pattern's title. */
+							(0, _wordpress_i18n.__)("Imported \"%s\" from JSON."),
+							pattern.title.raw
+						), {
 							type: "snackbar",
 							id: "import-pattern-success"
 						});
@@ -74482,7 +74880,11 @@ If there's a particular need for this, please submit a feature request at https:
 					PATTERN_TYPES.user,
 					{ per_page: -1 }
 				]);
-				createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("\"%s\" deleted.", "pattern category"), category.label), {
+				createSuccessNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The pattern category's name */
+					(0, _wordpress_i18n._x)("\"%s\" deleted.", "pattern category"),
+					category.label
+				), {
 					type: "snackbar",
 					id: "pattern-category-delete"
 				});
@@ -74506,10 +74908,18 @@ If there's a particular need for this, please submit a feature request at https:
 			onCancel: () => setIsModalOpen(false),
 			confirmButtonText: (0, _wordpress_i18n.__)("Delete"),
 			className: "edit-site-patterns__delete-modal",
-			title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Delete \"%s\"?", "pattern category"), (0, _wordpress_html_entities.decodeEntities)(category.label)),
+			title: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The pattern category's name. */
+				(0, _wordpress_i18n._x)("Delete \"%s\"?", "pattern category"),
+				(0, _wordpress_html_entities.decodeEntities)(category.label)
+			),
 			size: "medium",
 			__experimentalHideHeader: false,
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Are you sure you want to delete the category \"%s\"? The patterns will not be deleted."), (0, _wordpress_html_entities.decodeEntities)(category.label))
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The pattern category's name. */
+				(0, _wordpress_i18n.__)("Are you sure you want to delete the category \"%s\"? The patterns will not be deleted."),
+				(0, _wordpress_html_entities.decodeEntities)(category.label)
+			)
 		})] });
 	}
 
@@ -74943,11 +75353,24 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [postTypeLabels]);
 		return (0, _wordpress_element.useMemo)(() => postTypesWithArchives?.filter((postType) => !(existingTemplates || []).some((existingTemplate) => existingTemplate.slug === "archive-" + postType.slug)).map((postType) => {
 			let title;
-			if (needsUniqueIdentifier(postType)) title = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Archive: %1$s (%2$s)"), postType.labels.singular_name, postType.slug);
-			else title = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Archive: %s"), postType.labels.singular_name);
+			if (needsUniqueIdentifier(postType)) title = (0, _wordpress_i18n.sprintf)(
+				/** translators: %1s: Name of the post type e.g: "Post"; %2s: Slug of the post type e.g: "book". */
+				(0, _wordpress_i18n.__)("Archive: %1$s (%2$s)"),
+				postType.labels.singular_name,
+				postType.slug
+			);
+			else title = (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Name of the post type e.g: "Post". */
+				(0, _wordpress_i18n.__)("Archive: %s"),
+				postType.labels.singular_name
+			);
 			return {
 				slug: "archive-" + postType.slug,
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Displays an archive with the latest posts of type: %s."), postType.labels.singular_name),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Name of the post type e.g: "Post". */
+					(0, _wordpress_i18n.__)("Displays an archive with the latest posts of type: %s."),
+					postType.labels.singular_name
+				),
 				title,
 				icon: typeof postType.icon === "string" && postType.icon.startsWith("dashicons-") ? postType.icon.slice(10) : archive_default,
 				templatePrefix: "archive"
@@ -74985,15 +75408,33 @@ If there's a particular need for this, please submit a feature request at https:
 			const defaultTemplateType = defaultTemplateTypes?.find(({ slug: _slug }) => _slug === generalTemplateSlug);
 			const hasGeneralTemplate = existingTemplateSlugs?.includes(generalTemplateSlug);
 			const _needsUniqueIdentifier = needsUniqueIdentifier(postType);
-			let menuItemTitle = labels.template_name || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Single item: %s"), labels.singular_name);
-			if (_needsUniqueIdentifier) menuItemTitle = labels.template_name ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s (%2$s)", "post type menu label"), labels.template_name, slug) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Single item: %1$s (%2$s)", "post type menu label"), labels.singular_name, slug);
+			let menuItemTitle = labels.template_name || (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Name of the post type e.g: "Post". */
+				(0, _wordpress_i18n.__)("Single item: %s"),
+				labels.singular_name
+			);
+			if (_needsUniqueIdentifier) menuItemTitle = labels.template_name ? (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Name of the template e.g: "Single Item: Post". 2: Slug of the post type e.g: "book". */
+				(0, _wordpress_i18n._x)("%1$s (%2$s)", "post type menu label"),
+				labels.template_name,
+				slug
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Name of the post type e.g: "Post". 2: Slug of the post type e.g: "book". */
+				(0, _wordpress_i18n._x)("Single item: %1$s (%2$s)", "post type menu label"),
+				labels.singular_name,
+				slug
+			);
 			const menuItem = defaultTemplateType ? {
 				...defaultTemplateType,
 				templatePrefix: templatePrefixes[slug]
 			} : {
 				slug: generalTemplateSlug,
 				title: menuItemTitle,
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Displays a single item: %s."), labels.singular_name),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Name of the post type e.g: "Post". */
+					(0, _wordpress_i18n.__)("Displays a single item: %s."),
+					labels.singular_name
+				),
 				icon: typeof icon === "string" && icon.startsWith("dashicons-") ? icon.slice(10) : post_default,
 				templatePrefix: templatePrefixes[slug]
 			};
@@ -75069,14 +75510,28 @@ If there's a particular need for this, please submit a feature request at https:
 			const hasGeneralTemplate = existingTemplateSlugs?.includes(generalTemplateSlug);
 			const _needsUniqueIdentifier = needsUniqueIdentifier(labels, slug);
 			let menuItemTitle = labels.template_name || labels.singular_name;
-			if (_needsUniqueIdentifier) menuItemTitle = labels.template_name ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s (%2$s)", "taxonomy template menu label"), labels.template_name, slug) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s (%2$s)", "taxonomy menu label"), labels.singular_name, slug);
+			if (_needsUniqueIdentifier) menuItemTitle = labels.template_name ? (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat". */
+				(0, _wordpress_i18n._x)("%1$s (%2$s)", "taxonomy template menu label"),
+				labels.template_name,
+				slug
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat". */
+				(0, _wordpress_i18n._x)("%1$s (%2$s)", "taxonomy menu label"),
+				labels.singular_name,
+				slug
+			);
 			const menuItem = defaultTemplateType ? {
 				...defaultTemplateType,
 				templatePrefix: templatePrefixes[slug]
 			} : {
 				slug: generalTemplateSlug,
 				title: menuItemTitle,
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Displays taxonomy: %s."), labels.singular_name),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Name of the taxonomy e.g: "Product Categories". */
+					(0, _wordpress_i18n.__)("Displays taxonomy: %s."),
+					labels.singular_name
+				),
 				icon: block_meta_default,
 				templatePrefix: templatePrefixes[slug]
 			};
@@ -75401,7 +75856,10 @@ If there's a particular need for this, please submit a feature request at https:
 						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, {
 							as: "span",
 							lineHeight: 1.53846153846,
-							children: (0, _wordpress_i18n.__)("For all items")
+							children: (0, _wordpress_i18n.__)(
+								/** translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one. */
+								"For all items"
+							)
 						})]
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.FlexItem, {
 						isBlock: true,
@@ -75417,7 +75875,10 @@ If there's a particular need for this, please submit a feature request at https:
 						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, {
 							as: "span",
 							lineHeight: 1.53846153846,
-							children: (0, _wordpress_i18n.__)("For a specific item")
+							children: (0, _wordpress_i18n.__)(
+								/** translators: The user is given the choice to set up a template for all items of a post type or taxonomy, or just a specific one. */
+								"For a specific item"
+							)
 						})]
 					})]
 				}),
@@ -75606,7 +76067,11 @@ If there's a particular need for this, please submit a feature request at https:
 					is_wp_suggestion: isWPSuggestion
 				}, { throwOnError: true });
 				history.navigate(`/${TEMPLATE_POST_TYPE}/${newTemplate.id}?canvas=edit`);
-				createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("\"%s\" successfully created."), (0, _wordpress_html_entities.decodeEntities)(newTemplate.title?.rendered || title) || (0, _wordpress_i18n.__)("(no title)")), { type: "snackbar" });
+				createSuccessNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Title of the created post or template, e.g: "Hello world". */
+					(0, _wordpress_i18n.__)("\"%s\" successfully created."),
+					(0, _wordpress_html_entities.decodeEntities)(newTemplate.title?.rendered || title) || (0, _wordpress_i18n.__)("(no title)")
+				), { type: "snackbar" });
 			} catch (error) {
 				const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, _wordpress_i18n.__)("An error occurred while creating the template.");
 				createErrorNotice(errorMessage, { type: "snackbar" });
@@ -75619,7 +76084,11 @@ If there's a particular need for this, please submit a feature request at https:
 			setModalContent(modalContentMap.templatesList);
 		};
 		let modalTitle = (0, _wordpress_i18n.__)("Add template");
-		if (modalContent === modalContentMap.customTemplate) modalTitle = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Add template: %s"), entityForSuggestions.labels.singular_name);
+		if (modalContent === modalContentMap.customTemplate) modalTitle = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Name of the post type e.g: "Post". */
+			(0, _wordpress_i18n.__)("Add template: %s"),
+			entityForSuggestions.labels.singular_name
+		);
 		else if (modalContent === modalContentMap.customGenericTemplate) modalTitle = (0, _wordpress_i18n.__)("Create custom template");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Modal, {
 			title: modalTitle,
@@ -75929,7 +76398,11 @@ If there's a particular need for this, please submit a feature request at https:
 					content: !!postTypeObject.template && postTypeObject.template.length ? (0, _wordpress_blocks.serialize)((0, _wordpress_blocks.synchronizeBlocksWithTemplate)([], postTypeObject.template)) : void 0
 				}, { throwOnError: true });
 				onSave(newPage);
-				createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("\"%s\" successfully created."), (0, _wordpress_html_entities.decodeEntities)(newPage.title?.rendered || title) || (0, _wordpress_i18n.__)("(no title)")), { type: "snackbar" });
+				createSuccessNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Title of the created post or template, e.g: "Hello world". */
+					(0, _wordpress_i18n.__)("\"%s\" successfully created."),
+					(0, _wordpress_html_entities.decodeEntities)(newPage.title?.rendered || title) || (0, _wordpress_i18n.__)("(no title)")
+				), { type: "snackbar" });
 			} catch (error) {
 				const errorMessage = error.message && error.code !== "unknown_error" ? error.message : (0, _wordpress_i18n.__)("An error occurred while creating the item.");
 				createErrorNotice(errorMessage, { type: "snackbar" });
@@ -75938,7 +76411,10 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
-			title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Draft new: %s"), labels?.singular_name),
+			title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+				/** translators: %s: post type singular_name label e.g: "Page". */
+				"Draft new: %s"
+			), labels?.singular_name),
 			onRequestClose: onClose,
 			focusOnMount: "firstContentElement",
 			size: "small",

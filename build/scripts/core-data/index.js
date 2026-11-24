@@ -24807,13 +24807,36 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				return acc;
 			}, {})).map(([key, changeValues]) => {
 				const changeValuesLength = changeValues.length;
-				const joinedChangesValue = changeValues.join((0, _wordpress_i18n.__)(", "));
+				const joinedChangesValue = changeValues.join(
+					/** translators: Used between list items, there is a space after the comma. */
+					(0, _wordpress_i18n.__)(", ")
+				);
 				switch (key) {
-					case "blocks": return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s block.", "%s blocks.", changeValuesLength), joinedChangesValue);
-					case "elements": return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s element.", "%s elements.", changeValuesLength), joinedChangesValue);
-					case "settings": return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s settings."), joinedChangesValue);
-					case "styles": return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s styles."), joinedChangesValue);
-					default: return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s."), joinedChangesValue);
+					case "blocks": return (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: a list of block names separated by a comma. */
+						(0, _wordpress_i18n._n)("%s block.", "%s blocks.", changeValuesLength),
+						joinedChangesValue
+					);
+					case "elements": return (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: a list of element names separated by a comma. */
+						(0, _wordpress_i18n._n)("%s element.", "%s elements.", changeValuesLength),
+						joinedChangesValue
+					);
+					case "settings": return (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: a list of theme.json setting labels separated by a comma. */
+						(0, _wordpress_i18n.__)("%s settings."),
+						joinedChangesValue
+					);
+					case "styles": return (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: a list of theme.json top-level styles labels separated by a comma. */
+						(0, _wordpress_i18n.__)("%s styles."),
+						joinedChangesValue
+					);
+					default: return (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: a list of global styles changes separated by a comma. */
+						(0, _wordpress_i18n.__)("%s."),
+						joinedChangesValue
+					);
 				}
 			});
 		}
@@ -25074,7 +25097,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 						id: renderDialog ? dialogDescriptionId : void 0,
 						children: [additionalPrompt, /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 							className: "entities-saved-states__text-prompt--changes-count",
-							children: isDirty ? (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("There is <strong>%d site change</strong> waiting to be saved.", "There are <strong>%d site changes</strong> waiting to be saved.", dirtyEntityRecords.length), dirtyEntityRecords.length), { strong: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("strong", {}) }) : selectItemsToSaveDescription
+							children: isDirty ? (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+								/** translators: %d: number of site changes waiting to be saved. */
+								(0, _wordpress_i18n._n)("There is <strong>%d site change</strong> waiting to be saved.", "There are <strong>%d site changes</strong> waiting to be saved.", dirtyEntityRecords.length),
+								dirtyEntityRecords.length
+							), { strong: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("strong", {}) }) : selectItemsToSaveDescription
 						})]
 					})]
 				}),

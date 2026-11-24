@@ -12337,7 +12337,16 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		});
 		const blockCount = select.getSelectedBlockCount();
 		const nestedBlockCount = select.getClientIdsOfDescendants(select.getMultiSelectedBlockClientIds()).length;
-		(0, _wordpress_a11y.speak)(nestedBlockCount ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%1$s block selected, %2$s including nested blocks.", "%1$s blocks selected, %2$s including nested blocks.", blockCount), blockCount, blockCount + nestedBlockCount) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s block selected.", "%s blocks selected.", blockCount), blockCount), "assertive");
+		(0, _wordpress_a11y.speak)(nestedBlockCount ? (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: number of selected blocks. 2: number of blocks including nested blocks. */
+			(0, _wordpress_i18n._n)("%1$s block selected, %2$s including nested blocks.", "%1$s blocks selected, %2$s including nested blocks.", blockCount),
+			blockCount,
+			blockCount + nestedBlockCount
+		) : (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: number of selected blocks */
+			(0, _wordpress_i18n._n)("%s block selected.", "%s blocks selected.", blockCount),
+			blockCount
+		), "assertive");
 	};
 	/**
 	* Action that clears the block selection.
@@ -14031,8 +14040,12 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		const { contentSize, wideSize, type = "default" } = layout;
 		const alignmentInfo = {};
 		const sizeRegex = /^(?!0)\d+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cqw|cqh|cqi|cqb|cqmin|cqmax)?$/i;
-		if (sizeRegex.test(contentSize) && type === "constrained") alignmentInfo.none = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Max %s wide"), contentSize);
-		if (sizeRegex.test(wideSize)) alignmentInfo.wide = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Max %s wide"), wideSize);
+		if (sizeRegex.test(contentSize) && type === "constrained")
+ /** translators: %s: container size (i.e. 600px etc) */
+		alignmentInfo.none = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Max %s wide"), contentSize);
+		if (sizeRegex.test(wideSize))
+ /** translators: %s: container size (i.e. 600px etc) */
+		alignmentInfo.wide = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Max %s wide"), wideSize);
 		return alignmentInfo;
 	}
 	/**
@@ -34126,7 +34139,11 @@ Icon: ButtonIcon });
 			id: descriptionId,
 			"aria-hidden": "true",
 			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { ref }),
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: keyboard shortcut. */
+				(0, _wordpress_i18n.__)("Keyboard shortcut: %s"),
+				shortcut.label ?? shortcut.ariaKeyShortcut
+			)
 		});
 	});
 	/**
@@ -35515,7 +35532,9 @@ Icon: ButtonIcon });
 		const externalLinkIndicator = openInNewTab || /^_blank$/i.test(target ?? "") ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 			className: style_module_default$49["external-link-indicator"],
 			role: "img",
-			"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+			"aria-label": 
+			/** translators: accessibility text appended to link text */
+			(0, _wordpress_i18n.__)("(opens in a new tab)")
 		}) : null;
 		const { contentChildren, contentContextValue, itemAriaProps, shortcutDescriptionId } = useItemContent(children, {
 			"aria-describedby": ariaDescribedBy,
@@ -38458,7 +38477,9 @@ Icon: ButtonIcon });
 				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: style_module_default$35["link-icon"],
 					role: "img",
-					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+					"aria-label": 
+					/** translators: accessibility text appended to link text */
+					(0, _wordpress_i18n.__)("(opens in a new tab)")
 				})] })
 			})
 		});
@@ -39237,7 +39258,11 @@ Icon: ButtonIcon });
 		const collapsedKeySet = new Set(responsiveState.collapsedKeys);
 		const collapsedItems = displayedAncestors.filter((item) => collapsedKeySet.has(item.itemKey));
 		const visibleAncestors = displayedAncestors.filter((item) => !collapsedKeySet.has(item.itemKey));
-		const overflowLabel = collapsedItems.length ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Show %d hidden breadcrumb item", "Show %d hidden breadcrumb items", collapsedItems.length), collapsedItems.length) : "";
+		const overflowLabel = collapsedItems.length ? (0, _wordpress_i18n.sprintf)(
+			/** translators: %d: number of breadcrumb ancestors hidden in the overflow menu. */
+			(0, _wordpress_i18n._n)("Show %d hidden breadcrumb item", "Show %d hidden breadcrumb items", collapsedItems.length),
+			collapsedItems.length
+		) : "";
 		let visiblePosition = 0;
 		const renderVisibleItem = (item) => {
 			const showSeparator = visiblePosition > 0;
@@ -49654,7 +49679,12 @@ Icon: ButtonIcon });
 		let ariaLabel = props["aria-label"];
 		if (!hasExplicitLabel && defaultAriaLabel && role === "application") {
 			const currentMonth = months[0];
-			ariaLabel = currentMonth ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s, %2$s"), defaultAriaLabel, labels.labelGrid(currentMonth.date)) : defaultAriaLabel;
+			ariaLabel = currentMonth ? (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Calendar type. 2: Current month and year. */
+				(0, _wordpress_i18n.__)("%1$s, %2$s"),
+				defaultAriaLabel,
+				labels.labelGrid(currentMonth.date)
+			) : defaultAriaLabel;
 		}
 		const mergedRef = (0, _wordpress_compose.useMergeRefs)([rootRef ?? null, ref ?? null]);
 		return useRender({
@@ -50048,7 +50078,11 @@ Icon: ButtonIcon });
 					labelGridcell: (date, modifiers) => {
 						const formattedDate = fullDateFormatter.format(date);
 						let label = formattedDate;
-						if (modifiers?.today) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Today, %s"), formattedDate);
+						if (modifiers?.today) label = (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+							(0, _wordpress_i18n.__)("Today, %s"),
+							formattedDate
+						);
 						return label;
 					},
 					/** The label for the "next month" button. */
@@ -50063,9 +50097,21 @@ Icon: ButtonIcon });
 					labelDayButton: (date, modifiers) => {
 						const formattedDate = fullDateFormatter.format(date);
 						let label = formattedDate;
-						if (modifiers?.today && modifiers?.selected) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Today, %s, selected"), formattedDate);
-						if (modifiers?.today) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Today, %s"), formattedDate);
-						if (modifiers?.selected) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s, selected"), formattedDate);
+						if (modifiers?.today && modifiers?.selected) return (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+							(0, _wordpress_i18n.__)("Today, %s, selected"),
+							formattedDate
+						);
+						if (modifiers?.today) label = (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+							(0, _wordpress_i18n.__)("Today, %s"),
+							formattedDate
+						);
+						if (modifiers?.selected) label = (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+							(0, _wordpress_i18n.__)("%s, selected"),
+							formattedDate
+						);
 						return label;
 					},
 					/**
@@ -57910,7 +57956,11 @@ Icon: ButtonIcon });
 			}
 		}), [block, replaceBlock]);
 		const secondaryActions = (0, _wordpress_element.useMemo)(() => [{
-			title: (0, _wordpress_i18n._x)("Resolve", "imperative verb"),
+			title: (0, _wordpress_i18n._x)(
+				/** translators: Button to fix block content */
+				"Resolve",
+				"imperative verb"
+			),
 			onClick: () => setCompare(true)
 		}, canInsertHTMLBlock && {
 			title: (0, _wordpress_i18n.__)("Convert to HTML"),
@@ -57926,7 +57976,9 @@ Icon: ButtonIcon });
 			secondaryActions,
 			children: (0, _wordpress_i18n.__)("Block contains unexpected or invalid content.")
 		}), compare && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
-			title: (0, _wordpress_i18n.__)("Resolve Block"),
+			title: 
+			/** translators: Dialog title to fix block content */
+			(0, _wordpress_i18n.__)("Resolve Block"),
 			onRequestClose: onCompareClose,
 			className: "block-editor-block-compare",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockCompare, {
@@ -62212,7 +62264,11 @@ Icon: ButtonIcon });
 		const { clientId, className, wrapperProps = {}, isAligned, index, mode, name, blockApiVersion, blockTitle, isSelected, isSubtreeDisabled, hasOverlay, initialPosition, blockEditingMode, isHighlighted, isMultiSelected, isPartiallySelected, isReusable, isDragging, hasChildSelected, isEditingDisabled, hasEditableOutline, isEditingContentOnlySection, defaultClassName, isSectionBlock, isWithinSectionBlock, canMove, isBlockCurrentlyHidden, ariaLabel, ghostBlock, rootClientId } = (0, _wordpress_element.useContext)(PrivateBlockContext);
 		const ghostRef = useGhostMaterialize(rootClientId, ghostBlock);
 		useRegisterBlockEventHandlers(clientId, wrapperProps);
-		const blockLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block: %s"), blockTitle);
+		const blockLabel = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Type of block (i.e. Text, Image etc) */
+			(0, _wordpress_i18n.__)("Block: %s"),
+			blockTitle
+		);
 		const htmlSuffix = mode === "html" && !__unstableIsHtml ? "-visual" : "";
 		const ffDragRef = useFirefoxDraggableCompatibility();
 		const isHoverEnabled = !isWithinSectionBlock;
@@ -62964,7 +63020,11 @@ Icon: ButtonIcon });
 						children: [
 							parentBlockClientId && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 								onClick: () => selectBlock(parentBlockClientId),
-								label: parentBlockName ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Go to \"%s\" block"), (0, _wordpress_blocks.getBlockType)(parentBlockName)?.title) : (0, _wordpress_i18n.__)("Go to parent block"),
+								label: parentBlockName ? (0, _wordpress_i18n.sprintf)(
+									/** translators: %s: The name of the parent block. */
+									(0, _wordpress_i18n.__)("Go to \"%s\" block"),
+									(0, _wordpress_blocks.getBlockType)(parentBlockName)?.title
+								) : (0, _wordpress_i18n.__)("Go to parent block"),
 								style: {
 									minWidth: 24,
 									padding: 0
@@ -65220,10 +65280,26 @@ Icon: ButtonIcon });
 			else if (selectedBlockClientIds.length === 1) {
 				const clientId = selectedBlockClientIds[0];
 				const title = getBlockType(getBlockName(clientId))?.title;
-				if (eventType === "copy") notice = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Copied \"%s\" to clipboard."), title);
-				else notice = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Moved \"%s\" to clipboard."), title);
-			} else if (eventType === "copy") notice = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Copied %d block to clipboard.", "Copied %d blocks to clipboard.", selectedBlockClientIds.length), selectedBlockClientIds.length);
-			else notice = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Moved %d block to clipboard.", "Moved %d blocks to clipboard.", selectedBlockClientIds.length), selectedBlockClientIds.length);
+				if (eventType === "copy") notice = (0, _wordpress_i18n.sprintf)(
+					/** Translators: %s: Name of the block being copied, e.g. "Paragraph". */
+					(0, _wordpress_i18n.__)("Copied \"%s\" to clipboard."),
+					title
+				);
+				else notice = (0, _wordpress_i18n.sprintf)(
+					/** Translators: %s: Name of the block being cut, e.g. "Paragraph". */
+					(0, _wordpress_i18n.__)("Moved \"%s\" to clipboard."),
+					title
+				);
+			} else if (eventType === "copy") notice = (0, _wordpress_i18n.sprintf)(
+				/** Translators: %d: Number of blocks being copied. */
+				(0, _wordpress_i18n._n)("Copied %d block to clipboard.", "Copied %d blocks to clipboard.", selectedBlockClientIds.length),
+				selectedBlockClientIds.length
+			);
+			else notice = (0, _wordpress_i18n.sprintf)(
+				/** Translators: %d: Number of blocks being moved. */
+				(0, _wordpress_i18n._n)("Moved %d block to clipboard.", "Moved %d blocks to clipboard.", selectedBlockClientIds.length),
+				selectedBlockClientIds.length
+			);
 			createSuccessNotice(notice, { type: "snackbar" });
 		}, [
 			createSuccessNotice,
@@ -65680,7 +65756,10 @@ Icon: ButtonIcon });
 				const hasActive = allProps.some(({ isActive }) => isActive);
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
 					icon: chevron_down_default,
-					label: (0, _wordpress_i18n.__)("More"),
+					label: (0, _wordpress_i18n.__)(
+						/** translators: button label text should, if possible, be under 16 characters. */
+						"More"
+					),
 					toggleProps: {
 						...toggleProps,
 						className: clsx(toggleProps.className, { "is-pressed": hasActive }),
@@ -65837,7 +65916,10 @@ Icon: ButtonIcon });
 			__unstableSlotName: "block-toolbar",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NavigableToolbar, {
 				className: "block-editor-rich-text__inline-format-toolbar-group",
-				"aria-label": (0, _wordpress_i18n.__)("Format tools"),
+				"aria-label": (0, _wordpress_i18n.__)(
+					/** translators: accessibility text for the inline format toolbar */
+					"Format tools"
+				),
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FormatToolbar, {}) })
 			})
 		});
@@ -71639,7 +71721,11 @@ Icon: ButtonIcon });
 					justify: "center",
 					className: "block-editor-block-draggable-chip__content",
 					children: [
-						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, { children: icon ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(block_icon_default, { icon }) : patternLabel || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d block", "%d blocks", count), count) }),
+						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, { children: icon ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(block_icon_default, { icon }) : patternLabel || (0, _wordpress_i18n.sprintf)(
+							/** translators: %d: Number of blocks. */
+							(0, _wordpress_i18n._n)("%d block", "%d blocks", count),
+							count
+						) }),
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(block_icon_default, { icon: drag_handle_default }) }),
 						fadeWhenDisabled && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexItem, {
 							className: "block-editor-block-draggable-chip__disabled",
@@ -71995,7 +72081,11 @@ Icon: ButtonIcon });
 			className: "block-editor-patterns__grid-pagination-wrapper",
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, {
 				variant: "muted",
-				children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s item", "%s items", totalItems), totalItems)
+				children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Total number of patterns. */
+					(0, _wordpress_i18n._n)("%s item", "%s items", totalItems),
+					totalItems
+				)
 			}), numPages > 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
 				expanded: false,
 				spacing: 3,
@@ -72028,7 +72118,12 @@ Icon: ButtonIcon });
 					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, {
 						variant: "muted",
-						children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s of %2$s", "paging"), currentPage, numPages)
+						children: (0, _wordpress_i18n.sprintf)(
+							/** translators: 1: Current page number. 2: Total number of pages. */
+							(0, _wordpress_i18n._x)("%1$s of %2$s", "paging"),
+							currentPage,
+							numPages
+						)
 					}),
 					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
 						expanded: false,
@@ -72279,7 +72374,11 @@ Icon: ButtonIcon });
 					const names = (Array.isArray(blocks) ? blocks : [blocks]).map((block) => block.name);
 					_rootClientId = getClosestAllowedInsertionPoint(names, destination.destinationRootClientId);
 					if (_rootClientId === null) {
-						createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block \"%s\" can't be inserted."), (0, _wordpress_blocks.getBlockType)(names[0])?.title ?? names[0]), {
+						createErrorNotice((0, _wordpress_i18n.sprintf)(
+							/** translators: %s: block title. */
+							(0, _wordpress_i18n.__)("Block \"%s\" can't be inserted."),
+							(0, _wordpress_blocks.getBlockType)(names[0])?.title ?? names[0]
+						), {
 							type: "snackbar",
 							id: "inserter-notice"
 						});
@@ -72294,7 +72393,11 @@ Icon: ButtonIcon });
 					registry
 				}), isAppender ? destination.destinationRootClientId : _rootClientId, selectBlockOnInsert, shouldFocusBlock || shouldForceFocusBlock ? 0 : null, meta);
 				const blockLength = Array.isArray(blocks) ? blocks.length : 1;
-				const message = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d block added.", "%d blocks added.", blockLength), blockLength);
+				const message = (0, _wordpress_i18n.sprintf)(
+					/** translators: %d: Number of blocks added. */
+					(0, _wordpress_i18n._n)("%d block added.", "%d blocks added.", blockLength),
+					blockLength
+				);
 				(0, _wordpress_a11y.speak)(message);
 				if (onSelect) onSelect(blocks);
 			}, [
@@ -72398,7 +72501,11 @@ Icon: ButtonIcon });
 					if (metadata?.categories?.includes(selectedCategory)) metadata.categories = [selectedCategory];
 					return clonedBlock;
 				}), pattern.name, false, destinationRootClientId);
-				createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Pattern \"%s\" inserted."), pattern.title), {
+				createSuccessNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: block pattern title. */
+					(0, _wordpress_i18n.__)("Pattern \"%s\" inserted."),
+					pattern.title
+				), {
 					type: "snackbar",
 					id: "inserter-notice"
 				});
@@ -72487,7 +72594,11 @@ Icon: ButtonIcon });
 		(0, _wordpress_element.useEffect)(() => {
 			if (!searchValue) return;
 			const count = filteredBlockPatterns.length;
-			const resultsFoundMessage = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found.", "%d results found.", count), count);
+			const resultsFoundMessage = (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: number of results. */
+				(0, _wordpress_i18n._n)("%d result found.", "%d results found.", count),
+				count
+			);
 			debouncedSpeak(resultsFoundMessage);
 		}, [
 			searchValue,
@@ -72531,7 +72642,11 @@ Icon: ButtonIcon });
 				name: allPatternsCategory.name,
 				label: allPatternsCategory.label
 			});
-			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d category button displayed.", "%d category buttons displayed.", categories.length), categories.length));
+			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)(
+				/** translators: %d: number of categories . */
+				(0, _wordpress_i18n._n)("%d category button displayed.", "%d category buttons displayed.", categories.length),
+				categories.length
+			));
 			return categories;
 		}, [allCategories, filteredPatterns]);
 	}
@@ -73233,7 +73348,11 @@ Icon: ButtonIcon });
 		const id = getItemId(item);
 		const isInSelectionArray = selection.includes(id);
 		const checked = !disabled && isInSelectionArray;
-		const selectionLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Select %s"), titleField?.getValue?.({ item }) || (0, _wordpress_i18n.__)("(no title)"));
+		const selectionLabel = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: The title of the item. */
+			(0, _wordpress_i18n.__)("Select %s"),
+			titleField?.getValue?.({ item }) || (0, _wordpress_i18n.__)("(no title)")
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Checkbox$2, {
 			className: SELECTION_CHECKBOX_CLASS,
 			"aria-label": selectionLabel,
@@ -73276,7 +73395,11 @@ Icon: ButtonIcon });
 		const label = typeof action.label === "string" ? action.label : action.label(items);
 		if (context === "button") return label.replace(TRAILING_ELLIPSIS, "");
 		if (!("RenderModal" in action) || TRAILING_ELLIPSIS.test(label)) return label;
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s…", "menu item requiring further input"), label);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Action label. Use the ellipsis and spacing appropriate for your language. */
+			(0, _wordpress_i18n._x)("%s…", "menu item requiring further input"),
+			label
+		);
 	}
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
@@ -73431,9 +73554,22 @@ Icon: ButtonIcon });
 	* @return               - The footer message.
 	*/
 	function getFooterMessage(selectionCount, itemsCount, totalItems, onlyTotalCount = false) {
-		if (selectionCount > 0) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s item selected", "%s items selected", selectionCount), selectionCount.toLocaleString());
-		if (onlyTotalCount || totalItems <= itemsCount) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s item", "%s items", totalItems), totalItems.toLocaleString());
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%1$s of %2$s item", "%1$s of %2$s items", totalItems), itemsCount.toLocaleString(), totalItems.toLocaleString());
+		if (selectionCount > 0) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: formatted number of items. */
+			(0, _wordpress_i18n._n)("%s item selected", "%s items selected", selectionCount),
+			selectionCount.toLocaleString()
+		);
+		if (onlyTotalCount || totalItems <= itemsCount) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: formatted number of items. */
+			(0, _wordpress_i18n._n)("%s item", "%s items", totalItems),
+			totalItems.toLocaleString()
+		);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %1$s: formatted number of items. %2$s: formatted total number of items. */
+			(0, _wordpress_i18n._n)("%1$s of %2$s item", "%1$s of %2$s items", totalItems),
+			itemsCount.toLocaleString(),
+			totalItems.toLocaleString()
+		);
 	}
 
 // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
@@ -74576,7 +74712,12 @@ Icon: ButtonIcon });
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("td", {
 							colSpan: columnCount,
 							className: "dataviews-view-table__group-header-cell",
-							children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+							children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)(
+								/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+								(0, _wordpress_i18n.__)("%1$s: %2$s"),
+								groupField.label,
+								groupName
+							)
 						})
 					}), groupItems.map((item, index) => {
 						const id = getItemId(item) || index.toString();
@@ -74976,7 +75117,11 @@ Icon: ButtonIcon });
 				render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					role: "row",
 					"aria-rowindex": i + 1,
-					"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Row %d"), i + 1),
+					"aria-label": (0, _wordpress_i18n.sprintf)(
+						/** translators: %d: The row number in the grid */
+						(0, _wordpress_i18n.__)("Row %d"),
+						i + 1
+					),
 					className: "dataviews-view-grid__row",
 					style: { gridTemplateColumns: `repeat( ${gridColumns}, minmax(0, 1fr) )` }
 				}),
@@ -75075,7 +75220,12 @@ Icon: ButtonIcon });
 					gap: "sm",
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", {
 						className: "dataviews-view-grid__group-header",
-						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)(
+							/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+							(0, _wordpress_i18n.__)("%1$s: %2$s"),
+							groupField.label,
+							groupName
+						)
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CompositeGrid, {
 						...gridProps,
 						data: groupItems,
@@ -75395,7 +75545,12 @@ Icon: ButtonIcon });
 					direction: "column",
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", {
 						className: "dataviews-view-list__group-header",
-						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)(
+							/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+							(0, _wordpress_i18n.__)("%1$s: %2$s"),
+							groupField.label,
+							groupName
+						)
 					}), groupItems.map((item) => {
 						const id = generateCompositeItemIdPrefix(item);
 						return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ListItem, {
@@ -75445,7 +75600,10 @@ Icon: ButtonIcon });
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
 	function ActivityGroup({ groupName, groupData, groupField, showLabel = true, children }) {
-		const groupHeader = showLabel ? (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s: <groupName />"), groupField.label).trim(), { groupName: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(groupField.render, {
+		const groupHeader = showLabel ? (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+			/** translators: %s: The label of the field e.g. "Status". */
+			"%s: <groupName />"
+		), groupField.label).trim(), { groupName: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(groupField.render, {
 			item: groupData[0],
 			field: groupField
 		}) }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(groupField.render, {
@@ -75694,7 +75852,12 @@ Icon: ButtonIcon });
 			return {
 				value: page.toString(),
 				label: page.toString(),
-				"aria-label": currentPage === page ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Page %1$d of %2$d"), currentPage, totalPages) : page.toString()
+				"aria-label": currentPage === page ? (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: current page number. 2: total number of pages. */
+					(0, _wordpress_i18n.__)("Page %1$d of %2$d"),
+					currentPage,
+					totalPages
+				) : page.toString()
 			};
 		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
@@ -75703,7 +75866,12 @@ Icon: ButtonIcon });
 			align: "center",
 			gap: "xs",
 			className: clsx("dataviews-pagination__page-select", className),
-			children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"), "<CurrentPage />", totalPages), {
+			children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Current page number, 2: Total number of pages. */
+				(0, _wordpress_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
+				"<CurrentPage />",
+				totalPages
+			), {
 				div: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { "aria-hidden": true }),
 				CurrentPage: hasPageInput ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PageNumberInput, {
 					currentPage,
@@ -75917,7 +76085,12 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", {
 				className: "dataviews-view-picker-grid-group__header",
 				id: headerId,
-				children: showLabel ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName) : groupName
+				children: showLabel ? (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+					(0, _wordpress_i18n.__)("%1$s: %2$s"),
+					groupField.label,
+					groupName
+				) : groupName
 			}), children]
 		}, groupName);
 	}
@@ -76283,7 +76456,12 @@ Icon: ButtonIcon });
 						colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + 1,
 						className: "dataviews-view-table__group-header-cell",
 						role: "presentation",
-						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+						children: view.groupBy?.showLabel === false ? groupName : (0, _wordpress_i18n.sprintf)(
+							/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+							(0, _wordpress_i18n.__)("%1$s: %2$s"),
+							groupField.label,
+							groupName
+						)
 					})
 				}), groupItems.map((item, index) => {
 					const id = getItemId(item) || index.toString();
@@ -76442,7 +76620,12 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", {
 				className: "dataviews-view-picker-activity-group__header",
 				id: headerId,
-				children: showLabel ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s: %2$s"), groupField.label, groupName) : groupName
+				children: showLabel ? (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+					(0, _wordpress_i18n.__)("%1$s: %2$s"),
+					groupField.label,
+					groupName
+				) : groupName
 			}), children]
 		});
 	}
@@ -82904,7 +83087,11 @@ If there's a particular need for this, please submit a feature request at https:
 			setActiveId: setActiveCompositeId,
 			role: "listbox",
 			className: "dataviews-filters__search-widget-listbox",
-			"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("List of: %1$s"), filter.name),
+			"aria-label": (0, _wordpress_i18n.sprintf)(
+				/** translators: List of items for a filter. 1: Filter name. e.g.: "List of: Author". */
+				(0, _wordpress_i18n.__)("List of: %1$s"),
+				filter.name
+			),
 			onFocusVisible: () => {
 				if (!activeCompositeId && filter.elements.length) setActiveCompositeId(generateFilterElementCompositeItemId(baseId, filter.elements[0].value));
 			},
@@ -83163,8 +83350,16 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 	}
 	const isNoneOperatorDefinition = {
-		label: (0, _wordpress_i18n.__)("Is none of"),
-		filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+		label: (0, _wordpress_i18n.__)(
+			/** translators: DataViews operator name */
+			"Is none of"
+		),
+		filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
+			(0, _wordpress_i18n.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements.map((element) => element.label).join(", ")
+		), filterTextWrappers),
 		filter: ((item, field, filterValue) => {
 			if (!filterValue?.length) return true;
 			const fieldValue = field.getValue({ item });
@@ -83177,8 +83372,16 @@ If there's a particular need for this, please submit a feature request at https:
 	const OPERATORS = [
 		{
 			name: OPERATOR_IS_ANY,
-			label: (0, _wordpress_i18n.__)("Includes"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Includes"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
+				(0, _wordpress_i18n.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements.map((element) => element.label).join(", ")
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (!filterValue?.length) return true;
 				const fieldValue = field.getValue({ item });
@@ -83194,8 +83397,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_IS_ALL,
-			label: (0, _wordpress_i18n.__)("Includes all"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Includes all"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
+				(0, _wordpress_i18n.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements.map((element) => element.label).join(", ")
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (!filterValue?.length) return true;
 				const fieldValue = field.getValue({ item });
@@ -83210,8 +83421,17 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_BETWEEN,
-			label: (0, _wordpress_i18n.__)("Between (inc)"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"), filter.name, activeElements[0].label[0], activeElements[0].label[1]), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Between (inc)"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
+				(0, _wordpress_i18n.__)("<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"),
+				filter.name,
+				activeElements[0].label[0],
+				activeElements[0].label[1]
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (!Array.isArray(filterValue) || filterValue.length !== 2 || filterValue.includes(void 0) || filterValue.includes("") || filterValue.includes(null)) return true;
 				const fieldValue = field.getValue({ item });
@@ -83227,8 +83447,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_IN_THE_PAST,
-			label: (0, _wordpress_i18n.__)("In the past"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is in the past: </Name><Value>%2$s</Value>"), filter.name, `${activeElements[0].value.value} ${activeElements[0].value.unit}`), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"In the past"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is in the past: </Name><Value>%2$s</Value>"),
+				filter.name,
+				`${activeElements[0].value.value} ${activeElements[0].value.unit}`
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue?.value === void 0 || filterValue?.unit === void 0) return true;
 				const targetDate = getRelativeDate(filterValue.value, filterValue.unit);
@@ -83239,8 +83467,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_OVER,
-			label: (0, _wordpress_i18n.__)("Over"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"), filter.name, `${activeElements[0].value.value} ${activeElements[0].value.unit}`), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Over"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
+				filter.name,
+				`${activeElements[0].value.value} ${activeElements[0].value.unit}`
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue?.value === void 0 || filterValue?.unit === void 0) return true;
 				const targetDate = getRelativeDate(filterValue.value, filterValue.unit);
@@ -83250,8 +83486,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: "is",
-			label: (0, _wordpress_i18n.__)("Is"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Is"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				return filterValue === field.getValue({ item }) || filterValue === void 0;
 			},
@@ -83259,8 +83503,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_IS_NOT,
-			label: (0, _wordpress_i18n.__)("Is not"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Is not"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				return filterValue !== field.getValue({ item });
 			},
@@ -83268,8 +83520,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_LESS_THAN,
-			label: (0, _wordpress_i18n.__)("Less than"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Less than"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				return field.getValue({ item }) < filterValue;
@@ -83278,8 +83538,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_GREATER_THAN,
-			label: (0, _wordpress_i18n.__)("Greater than"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is greater than: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Greater than"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is greater than: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				return field.getValue({ item }) > filterValue;
@@ -83288,8 +83556,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_LESS_THAN_OR_EQUAL,
-			label: (0, _wordpress_i18n.__)("Less than or equal"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Less than or equal"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				return field.getValue({ item }) <= filterValue;
@@ -83298,8 +83574,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_GREATER_THAN_OR_EQUAL,
-			label: (0, _wordpress_i18n.__)("Greater than or equal"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Greater than or equal"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				return field.getValue({ item }) >= filterValue;
@@ -83308,8 +83592,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_BEFORE,
-			label: (0, _wordpress_i18n.__)("Before"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Before"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -83319,8 +83611,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_AFTER,
-			label: (0, _wordpress_i18n.__)("After"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"After"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -83330,8 +83630,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_BEFORE_INC,
-			label: (0, _wordpress_i18n.__)("Before (inc)"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is on or before: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Before (inc)"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is on or before: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -83341,8 +83649,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_AFTER_INC,
-			label: (0, _wordpress_i18n.__)("After (inc)"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is on or after: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"After (inc)"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is on or after: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -83352,8 +83668,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_CONTAINS,
-			label: (0, _wordpress_i18n.__)("Contains"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Contains"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
+				(0, _wordpress_i18n.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const fieldValue = field.getValue({ item });
@@ -83363,8 +83687,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_NOT_CONTAINS,
-			label: (0, _wordpress_i18n.__)("Doesn't contain"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Doesn't contain"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
+				(0, _wordpress_i18n.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const fieldValue = field.getValue({ item });
@@ -83374,8 +83706,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_STARTS_WITH,
-			label: (0, _wordpress_i18n.__)("Starts with"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Starts with"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
+				(0, _wordpress_i18n.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const fieldValue = field.getValue({ item });
@@ -83385,8 +83725,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: "on",
-			label: (0, _wordpress_i18n.__)("On"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"On"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -83396,8 +83744,16 @@ If there's a particular need for this, please submit a feature request at https:
 		},
 		{
 			name: OPERATOR_NOT_ON,
-			label: (0, _wordpress_i18n.__)("Not on"),
-			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: DataViews operator name */
+				"Not on"
+			),
+			filterText: (filter, activeElements) => (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
+				(0, _wordpress_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+				filter.name,
+				activeElements[0].label
+			), filterTextWrappers),
 			filter(item, field, filterValue) {
 				if (filterValue === void 0) return true;
 				const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -83418,7 +83774,11 @@ If there's a particular need for this, please submit a feature request at https:
 		if (activeElements === void 0 || activeElements.length === 0) return filter.name;
 		const operator = getOperatorByName(filterInView?.operator);
 		if (operator !== void 0) return operator.filterText(filter, activeElements);
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Unknown status for %1$s"), filter.name);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: Filter name e.g.: "Unknown status for Author". */
+			(0, _wordpress_i18n.__)("Unknown status for %1$s"),
+			filter.name
+		);
 	};
 	function OperatorSelector({ filter, view, onChangeView }) {
 		const operatorOptions = filter.operators?.map((operator) => ({
@@ -83575,7 +83935,11 @@ If there's a particular need for this, please submit a feature request at https:
 						filterInView,
 						filter
 					})
-				}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Filter by: %1$s"), filter.name.toLowerCase()) })] }), canResetOrRemove && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
+				}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: Filter name. */
+					(0, _wordpress_i18n.__)("Filter by: %1$s"),
+					filter.name.toLowerCase()
+				) })] }), canResetOrRemove && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$12, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, { render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
 					className: clsx("dataviews-filters__summary-chip-remove", { "has-values": hasValues }),
 					"aria-label": resetOrRemoveLabel,
 					onClick: () => {
@@ -84586,7 +84950,11 @@ If there's a particular need for this, please submit a feature request at https:
 		let timezoneDetail = zoneAbbr;
 		if ("UTC" === timezone.string) timezoneDetail = (0, _wordpress_i18n.__)("Coordinated Universal Time");
 		else if (prettyTimezoneString.trim().length > 0) timezoneDetail = `(${zoneAbbr}) ${prettyTimezoneString}`;
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Timezone: %s"), timezoneDetail);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: timezone detail, e.g. "(CEST) Europe/Madrid" or "UTC+3". */
+			(0, _wordpress_i18n.__)("Timezone: %s"),
+			timezoneDetail
+		);
 	}
 
 // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs
@@ -87756,7 +88124,15 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const controlId = (0, _wordpress_compose.useInstanceId)(SummaryButton, "dataforms-layouts-panel__field-control");
 		const errorId = `${controlId}-error`;
-		const ariaLabel = showError ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Edit %s (has errors)", "field"), fieldLabel || "") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Edit %s", "field"), fieldLabel || "");
+		const ariaLabel = showError ? (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Field name. */
+			(0, _wordpress_i18n._x)("Edit %s (has errors)", "field"),
+			fieldLabel || ""
+		) : (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Field name. */
+			(0, _wordpress_i18n._x)("Edit %s", "field"),
+			fieldLabel || ""
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className,
 			children: [
@@ -88501,7 +88877,11 @@ If there's a particular need for this, please submit a feature request at https:
 	function getValidationMessage(validity) {
 		const invalidCount = countInvalidFields(validity);
 		if (invalidCount === 0) return;
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d field needs attention", "%d fields need attention", invalidCount), invalidCount);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %d: Number of fields that need attention */
+			(0, _wordpress_i18n._n)("%d field needs attention", "%d fields need attention", invalidCount),
+			invalidCount
+		);
 	}
 
 // packages/dataviews/build-module/components/dataform-layouts/validation-badge.mjs
@@ -88973,7 +89353,13 @@ If there's a particular need for this, please submit a feature request at https:
 	function getItemRange({ page, perPage, totalItems }) {
 		if (!totalItems) return;
 		const start = (page - 1) * perPage + 1;
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$d–%2$d of %3$d"), start, Math.min(page * perPage, totalItems), totalItems);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: The first item shown on the page. 2: The last item shown on the page. 3: The total number of items. */
+			(0, _wordpress_i18n.__)("%1$d–%2$d of %3$d"),
+			start,
+			Math.min(page * perPage, totalItems),
+			totalItems
+		);
 	}
 	/**
 	* The redesigned media panel body: a DataViews grid with search above and a
@@ -89203,7 +89589,11 @@ If there's a particular need for this, please submit a feature request at https:
 	* The body of the "Detach" action's confirmation modal.
 	*/
 	function DetachConfirmation({ postTypeLabel, onCancel, onConfirm }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: postTypeLabel ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Detach this image from the current %s? The image will remain in the Media Library."), postTypeLabel) : (0, _wordpress_i18n.__)("Detach this image from the current post? The image will remain in the Media Library.") }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: postTypeLabel ? (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Name of the post type e.g: "Page". */
+			(0, _wordpress_i18n.__)("Detach this image from the current %s? The image will remain in the Media Library."),
+			postTypeLabel
+		) : (0, _wordpress_i18n.__)("Detach this image from the current post? The image will remain in the Media Library.") }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "block-editor-inserter__media-panel-detach-actions",
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 				__next40pxDefaultSize: true,
@@ -89262,7 +89652,16 @@ If there's a particular need for this, please submit a feature request at https:
 					return;
 				}
 				refresh();
-				createSuccessNotice(category.postTypeLabel ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%1$d image attached to %2$s.", "%1$d images attached to %2$s.", attachedCount), attachedCount, category.postTypeLabel) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d image attached to post.", "%d images attached to post.", attachedCount), attachedCount), {
+				createSuccessNotice(category.postTypeLabel ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %1$d: Number of images attached. %2$s: Name of the post type e.g: "Page". */
+					(0, _wordpress_i18n._n)("%1$d image attached to %2$s.", "%1$d images attached to %2$s.", attachedCount),
+					attachedCount,
+					category.postTypeLabel
+				) : (0, _wordpress_i18n.sprintf)(
+					/** translators: %d: Number of images attached to the post. */
+					(0, _wordpress_i18n._n)("%d image attached to post.", "%d images attached to post.", attachedCount),
+					attachedCount
+				), {
 					type: "snackbar",
 					id: "inserter-notice"
 				});
@@ -89285,7 +89684,11 @@ If there's a particular need for this, please submit a feature request at https:
 			try {
 				await detach(media);
 				refresh();
-				createSuccessNotice(category.postTypeLabel ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Image detached from %s."), category.postTypeLabel) : (0, _wordpress_i18n.__)("Image detached from post."), {
+				createSuccessNotice(category.postTypeLabel ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Name of the post type e.g: "Page". */
+					(0, _wordpress_i18n.__)("Image detached from %s."),
+					category.postTypeLabel
+				) : (0, _wordpress_i18n.__)("Image detached from post."), {
 					type: "snackbar",
 					id: "inserter-notice"
 				});
@@ -89307,7 +89710,11 @@ If there's a particular need for this, please submit a feature request at https:
 				const list = [];
 				if (category.getReportUrl) list.push({
 					id: "report",
-					label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Report %s"), category.mediaType),
+					label: (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: The media type to report e.g: "image", "video", "audio" */
+						(0, _wordpress_i18n.__)("Report %s"),
+						category.mediaType
+					),
 					icon: external_default,
 					callback: ([media]) => {
 						window.open(category.getReportUrl?.(media), "_blank")?.focus();
@@ -89315,7 +89722,11 @@ If there's a particular need for this, please submit a feature request at https:
 				});
 				if (detach) list.push({
 					id: "detach",
-					label: category.postTypeLabel ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Detach from %s"), category.postTypeLabel) : (0, _wordpress_i18n.__)("Detach from post"),
+					label: category.postTypeLabel ? (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: Name of the post type e.g: "Page". */
+						(0, _wordpress_i18n.__)("Detach from %s"),
+						category.postTypeLabel
+					) : (0, _wordpress_i18n.__)("Detach from post"),
 					icon: link_off_default,
 					modalHeader: (0, _wordpress_i18n.__)("Detach image"),
 					RenderModal: ({ items, closeModal }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DetachConfirmation, {
@@ -89675,7 +90086,11 @@ If there's a particular need for this, please submit a feature request at https:
 		(0, _wordpress_element.useEffect)(() => {
 			if (!filterValue) return;
 			const count = filteredBlockTypes.length + filteredBlockPatterns.length;
-			const resultsFoundMessage = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found.", "%d results found.", count), count);
+			const resultsFoundMessage = (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: number of results. */
+				(0, _wordpress_i18n._n)("%d result found.", "%d results found.", count),
+				count
+			);
 			debouncedSpeak(resultsFoundMessage);
 		}, [
 			filterValue,
@@ -90217,7 +90632,11 @@ If there's a particular need for this, please submit a feature request at https:
 		const { as: Wrapper = _wordpress_components.Button, label: labelProp, onClick, ...rest } = toggleProps;
 		let label = labelProp;
 		if (!label && appenderLabel) label = appenderLabel;
-		else if (!label && hasSingleBlockType) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Add %s", "directly add the only allowed block"), blockTitle.toLowerCase());
+		else if (!label && hasSingleBlockType) label = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: the name of the block when there is only one */
+			(0, _wordpress_i18n._x)("Add %s", "directly add the only allowed block"),
+			blockTitle.toLowerCase()
+		);
 		else if (!label) label = (0, _wordpress_i18n._x)("Add block", "Generic label for block inserter button");
 		function handleClick(event) {
 			if (onToggle) onToggle(event);
@@ -90304,7 +90723,11 @@ If there's a particular need for this, please submit a feature request at https:
 				if (blockLabelToInsert === blockTypeToInsert.title) blockLabelToInsert = getActiveBlockVariation(blockName, newBlock.attributes)?.title || blockLabelToInsert;
 			}
 			if (blockLabelToInsert) {
-				const message = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s block added"), blockLabelToInsert);
+				const message = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: the name of the block that has been added */
+					(0, _wordpress_i18n.__)("%s block added"),
+					blockLabelToInsert
+				);
 				(0, _wordpress_a11y.speak)(message);
 			}
 		}
@@ -90423,7 +90846,11 @@ If there's a particular need for this, please submit a feature request at https:
 				const isToggleButton = !hasSingleBlockType;
 				let label;
 				if (appenderLabel) label = appenderLabel;
-				else if (hasSingleBlockType) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Add %s", "directly add the only allowed block"), blockTitle.toLowerCase());
+				else if (hasSingleBlockType) label = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: the name of the block when there is only one */
+					(0, _wordpress_i18n._x)("Add %s", "directly add the only allowed block"),
+					blockTitle.toLowerCase()
+				);
 				else label = (0, _wordpress_i18n._x)("Add block", "Generic label for block inserter button");
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 					__next40pxDefaultSize: true,
@@ -93232,7 +93659,11 @@ If there's a particular need for this, please submit a feature request at https:
 		const stateStyle = isViewportState ? getStyleForState(style, selectedState) : void 0;
 		const value = isViewportState ? stateStyle?.position?.type ?? style?.position?.type : style?.position?.type;
 		const blockInformation = useBlockDisplayInformation(firstParentClientId);
-		const stickyHelpText = allowSticky && value === STICKY_OPTION.value && blockInformation ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("The block will stick to the scrollable area of the parent %s block."), blockInformation.title) : null;
+		const stickyHelpText = allowSticky && value === STICKY_OPTION.value && blockInformation ? (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: the name of the parent block. */
+			(0, _wordpress_i18n.__)("The block will stick to the scrollable area of the parent %s block."),
+			blockInformation.title
+		) : null;
 		const options = (0, _wordpress_element.useMemo)(() => {
 			const availableOptions = [DEFAULT_OPTION];
 			if (allowSticky || value === STICKY_OPTION.value) availableOptions.push(STICKY_OPTION);
@@ -93656,30 +94087,94 @@ If there's a particular need for this, please submit a feature request at https:
 	function getBlockMoverDescription(selectedCount, type, firstIndex, isFirst, isLast, dir, orientation) {
 		const position = firstIndex + 1;
 		if (selectedCount > 1) return getMultiBlockMoverDescription(selectedCount, firstIndex, isFirst, isLast, dir, orientation);
-		if (isFirst && isLast) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %s is the only block, and cannot be moved"), type);
+		if (isFirst && isLast) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Type of block (i.e. Text, Image etc) */
+			(0, _wordpress_i18n.__)("Block %s is the only block, and cannot be moved"),
+			type
+		);
 		if (dir > 0 && !isLast) {
 			const movementDirection = getMovementDirection("down", orientation);
-			if (movementDirection === "down") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$s block from position %2$d down to position %3$d"), type, position, position + 1);
-			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$s block from position %2$d left to position %3$d"), type, position, position + 1);
-			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$s block from position %2$d right to position %3$d"), type, position, position + 1);
+			if (movementDirection === "down") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc), 2: Position of selected block, 3: New position */
+				(0, _wordpress_i18n.__)("Move %1$s block from position %2$d down to position %3$d"),
+				type,
+				position,
+				position + 1
+			);
+			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc), 2: Position of selected block, 3: New position */
+				(0, _wordpress_i18n.__)("Move %1$s block from position %2$d left to position %3$d"),
+				type,
+				position,
+				position + 1
+			);
+			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc), 2: Position of selected block, 3: New position */
+				(0, _wordpress_i18n.__)("Move %1$s block from position %2$d right to position %3$d"),
+				type,
+				position,
+				position + 1
+			);
 		}
 		if (dir > 0 && isLast) {
 			const movementDirection = getMovementDirection("down", orientation);
-			if (movementDirection === "down") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %1$s is at the end of the content and can’t be moved down"), type);
-			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %1$s is at the end of the content and can’t be moved left"), type);
-			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %1$s is at the end of the content and can’t be moved right"), type);
+			if (movementDirection === "down") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc) */
+				(0, _wordpress_i18n.__)("Block %1$s is at the end of the content and can’t be moved down"),
+				type
+			);
+			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc) */
+				(0, _wordpress_i18n.__)("Block %1$s is at the end of the content and can’t be moved left"),
+				type
+			);
+			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc) */
+				(0, _wordpress_i18n.__)("Block %1$s is at the end of the content and can’t be moved right"),
+				type
+			);
 		}
 		if (dir < 0 && !isFirst) {
 			const movementDirection = getMovementDirection("up", orientation);
-			if (movementDirection === "up") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$s block from position %2$d up to position %3$d"), type, position, position - 1);
-			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$s block from position %2$d left to position %3$d"), type, position, position - 1);
-			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$s block from position %2$d right to position %3$d"), type, position, position - 1);
+			if (movementDirection === "up") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc), 2: Position of selected block, 3: New position */
+				(0, _wordpress_i18n.__)("Move %1$s block from position %2$d up to position %3$d"),
+				type,
+				position,
+				position - 1
+			);
+			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc), 2: Position of selected block, 3: New position */
+				(0, _wordpress_i18n.__)("Move %1$s block from position %2$d left to position %3$d"),
+				type,
+				position,
+				position - 1
+			);
+			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc), 2: Position of selected block, 3: New position */
+				(0, _wordpress_i18n.__)("Move %1$s block from position %2$d right to position %3$d"),
+				type,
+				position,
+				position - 1
+			);
 		}
 		if (dir < 0 && isFirst) {
 			const movementDirection = getMovementDirection("up", orientation);
-			if (movementDirection === "up") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %1$s is at the beginning of the content and can’t be moved up"), type);
-			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %1$s is at the beginning of the content and can’t be moved left"), type);
-			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %1$s is at the beginning of the content and can’t be moved right"), type);
+			if (movementDirection === "up") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc) */
+				(0, _wordpress_i18n.__)("Block %1$s is at the beginning of the content and can’t be moved up"),
+				type
+			);
+			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc) */
+				(0, _wordpress_i18n.__)("Block %1$s is at the beginning of the content and can’t be moved left"),
+				type
+			);
+			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Type of block (i.e. Text, Image etc) */
+				(0, _wordpress_i18n.__)("Block %1$s is at the beginning of the content and can’t be moved right"),
+				type
+			);
 		}
 	}
 	/**
@@ -93701,9 +94196,24 @@ If there's a particular need for this, please submit a feature request at https:
 		if (isFirst && isLast) return (0, _wordpress_i18n.__)("All blocks are selected, and cannot be moved");
 		if (dir > 0 && !isLast) {
 			const movementDirection = getMovementDirection("down", orientation);
-			if (movementDirection === "down") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d down by one place"), selectedCount, position);
-			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d left by one place"), selectedCount, position);
-			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d right by one place"), selectedCount, position);
+			if (movementDirection === "down") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Number of selected blocks, 2: Position of selected blocks */
+				(0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d down by one place"),
+				selectedCount,
+				position
+			);
+			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Number of selected blocks, 2: Position of selected blocks */
+				(0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d left by one place"),
+				selectedCount,
+				position
+			);
+			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Number of selected blocks, 2: Position of selected blocks */
+				(0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d right by one place"),
+				selectedCount,
+				position
+			);
 		}
 		if (dir > 0 && isLast) {
 			const movementDirection = getMovementDirection("down", orientation);
@@ -93713,9 +94223,24 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 		if (dir < 0 && !isFirst) {
 			const movementDirection = getMovementDirection("up", orientation);
-			if (movementDirection === "up") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d up by one place"), selectedCount, position);
-			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d left by one place"), selectedCount, position);
-			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d right by one place"), selectedCount, position);
+			if (movementDirection === "up") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Number of selected blocks, 2: Position of selected blocks */
+				(0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d up by one place"),
+				selectedCount,
+				position
+			);
+			if (movementDirection === "left") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Number of selected blocks, 2: Position of selected blocks */
+				(0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d left by one place"),
+				selectedCount,
+				position
+			);
+			if (movementDirection === "right") return (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Number of selected blocks, 2: Position of selected blocks */
+				(0, _wordpress_i18n.__)("Move %1$d blocks from position %2$d right by one place"),
+				selectedCount,
+				position
+			);
 		}
 		if (dir < 0 && isFirst) {
 			const movementDirection = getMovementDirection("up", orientation);
@@ -93800,7 +94325,12 @@ If there's a particular need for this, please submit a feature request at https:
 			shortcut: _wordpress_keycodes.displayShortcut.secondary(keyCharacter)
 		}), hasBlocks && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
 			id: descriptionId,
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s (%2$s)"), getBlockMoverDescription(blocksCount, blockType && blockType.title, firstIndex, isFirst, isLast, direction === "up" ? -1 : 1, orientation), _wordpress_keycodes.shortcutAriaLabel.secondary(keyCharacter))
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: Description of the block movement. 2: Keyboard shortcut. */
+				(0, _wordpress_i18n.__)("%1$s (%2$s)"),
+				getBlockMoverDescription(blocksCount, blockType && blockType.title, firstIndex, isFirst, isLast, direction === "up" ? -1 : 1, orientation),
+				_wordpress_keycodes.shortcutAriaLabel.secondary(keyCharacter)
+			)
 		})] });
 	});
 	const BlockMoverUpButton = (0, _wordpress_element.forwardRef)((props, ref) => {
@@ -94547,7 +95077,11 @@ If there's a particular need for this, please submit a feature request at https:
 		const parentButton = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
 			className: "block-editor-block-parent-selector__button",
 			onClick: () => selectBlock(parentClientId),
-			label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Select parent block: %s"), blockInformation?.title),
+			label: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Name of the block's parent. */
+				(0, _wordpress_i18n.__)("Select parent block: %s"),
+				blockInformation?.title
+			),
 			showTooltip: true,
 			icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(block_icon_default, { icon: blockInformation?.icon })
 		});
@@ -94566,7 +95100,11 @@ If there's a particular need for this, please submit a feature request at https:
 					onClick: onToggle,
 					"aria-expanded": isOpen,
 					disabled,
-					label: hasSingleBlockType ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Add %s", "directly add the only allowed block"), blockTitle.toLowerCase()) : (0, _wordpress_i18n._x)("Add block", "Generic label for block inserter button"),
+					label: hasSingleBlockType ? (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: the name of the block when there is only one */
+						(0, _wordpress_i18n._x)("Add %s", "directly add the only allowed block"),
+						blockTitle.toLowerCase()
+					) : (0, _wordpress_i18n._x)("Add block", "Generic label for block inserter button"),
 					showTooltip: true,
 					icon: plus_default
 				})
@@ -94842,8 +95380,16 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 			if (targetBlocks.length === 1) {
 				const title = (0, _wordpress_blocks.getBlockType)(targetBlocks[0].name)?.title;
-				createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Pasted styles to %s."), title), { type: "snackbar" });
-			} else createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Pasted styles to %d blocks."), targetBlocks.length), { type: "snackbar" });
+				createSuccessNotice((0, _wordpress_i18n.sprintf)(
+					/** Translators: %s: Name of the block being pasted, e.g. "Paragraph". */
+					(0, _wordpress_i18n.__)("Pasted styles to %s."),
+					title
+				), { type: "snackbar" });
+			} else createSuccessNotice((0, _wordpress_i18n.sprintf)(
+				/** Translators: %d: The number of the blocks. */
+				(0, _wordpress_i18n.__)("Pasted styles to %d blocks."),
+				targetBlocks.length
+			), { type: "snackbar" });
 		}, [
 			registry.batch,
 			updateBlockAttributes,
@@ -95147,7 +95693,11 @@ If there's a particular need for this, please submit a feature request at https:
 		const isMixed = Object.values(lock$1).some(Boolean) && !isAllChecked;
 		const isDirty = lock$1.move !== isMoveLocked || lock$1.remove !== isRemoveLocked || allowsEditLocking && lock$1.edit !== isEditLocked || canApplyTemplateLock && applyTemplateLock !== !!templateLock;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
-			title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Lock %s"), blockInformation.title),
+			title: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Name of the block. */
+				(0, _wordpress_i18n.__)("Lock %s"),
+				blockInformation.title
+			),
 			overlayClassName: "block-editor-block-lock-modal",
 			onRequestClose: onClose,
 			size: "small",
@@ -95348,7 +95898,15 @@ If there's a particular need for this, please submit a feature request at https:
 		const autoSelectInputText = (event) => event.target.select();
 		const handleSubmit = () => {
 			const newName = nameIsOriginal || nameIsEmpty ? void 0 : editedBlockName;
-			const message = nameIsOriginal || nameIsEmpty ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block name reset to: \"%s\"."), editedBlockName) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block name changed to: \"%s\"."), editedBlockName);
+			const message = nameIsOriginal || nameIsEmpty ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: new name/label for the block */
+				(0, _wordpress_i18n.__)("Block name reset to: \"%s\"."),
+				editedBlockName
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: new name/label for the block */
+				(0, _wordpress_i18n.__)("Block name changed to: \"%s\"."),
+				editedBlockName
+			);
 			(0, _wordpress_a11y.speak)(message, "assertive");
 			updateBlockAttributes([clientId], { metadata: cleanEmptyObject({
 				...metadata,
@@ -95485,7 +96043,11 @@ If there's a particular need for this, please submit a feature request at https:
 		if (blockVisibility === false) return (0, _wordpress_i18n.__)("Block is hidden");
 		if (blockVisibility?.viewport) {
 			const hiddenViewports = getBlockVisibilityViewportEntries(viewportSettings).filter(([key]) => blockVisibility.viewport?.[key] === false).map(([, viewport]) => viewport.label);
-			if (hiddenViewports.length > 0) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block is hidden on %s"), hiddenViewports.join(", "));
+			if (hiddenViewports.length > 0) return (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: comma-separated list of viewport names (Desktop, Tablet, Mobile) */
+				(0, _wordpress_i18n.__)("Block is hidden on %s"),
+				hiddenViewports.join(", ")
+			);
 		}
 		return null;
 	}
@@ -95541,8 +96103,18 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 		}, [viewportChecked]);
 		const noticeMessage = (0, _wordpress_element.useMemo)(() => {
-			if (!hideEverywhere) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block visibility settings updated. You can access them via the List View (%s)."), listViewShortcut);
-			const message = blocks?.length > 1 ? (0, _wordpress_i18n.__)("Blocks hidden. You can access them via the List View (%s).") : (0, _wordpress_i18n.__)("Block hidden. You can access it via the List View (%s).");
+			if (!hideEverywhere) return (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The shortcut key to access the List View. */
+				(0, _wordpress_i18n.__)("Block visibility settings updated. You can access them via the List View (%s)."),
+				listViewShortcut
+			);
+			const message = blocks?.length > 1 ? (0, _wordpress_i18n.__)(
+				/** translators: %s: The shortcut key to access the List View. */
+				"Blocks hidden. You can access them via the List View (%s)."
+			) : (0, _wordpress_i18n.__)(
+				/** translators: %s: The shortcut key to access the List View. */
+				"Block hidden. You can access it via the List View (%s)."
+			);
 			return (0, _wordpress_i18n.sprintf)(message, listViewShortcut);
 		}, [
 			hideEverywhere,
@@ -95618,7 +96190,11 @@ If there's a particular need for this, please submit a feature request at https:
 								children: viewportEntries.map(([, { label, icon, key }]) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("li", {
 									className: "block-editor-block-visibility-modal__options-item",
 									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.CheckboxControl, {
-										label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Hide on %s"), label),
+										label: (0, _wordpress_i18n.sprintf)(
+											/** translators: %s: The viewport name. */
+											(0, _wordpress_i18n.__)("Hide on %s"),
+											label
+										),
 										checked: viewportChecked[key] ?? false,
 										indeterminate: viewportChecked[key] === null,
 										onChange: (checked) => handleViewportCheckboxChange(key, checked)
@@ -95636,11 +96212,19 @@ If there's a particular need for this, please submit a feature request at https:
 					}),
 					!hasMultipleBlocks && hideEverywhere === true && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 						className: "block-editor-block-visibility-modal__description",
-						children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block will be hidden in the editor, and omitted from the published markup on the frontend. You can configure it again by selecting it in the List View (%s)."), listViewShortcut)
+						children: (0, _wordpress_i18n.sprintf)(
+							/** translators: %s: The shortcut key to access the List View. */
+							(0, _wordpress_i18n.__)("Block will be hidden in the editor, and omitted from the published markup on the frontend. You can configure it again by selecting it in the List View (%s)."),
+							listViewShortcut
+						)
 					}),
 					!hasMultipleBlocks && !hideEverywhere && isAnyViewportChecked && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 						className: "block-editor-block-visibility-modal__description",
-						children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block will be hidden according to the selected viewports. It will be <strong>included in the published markup on the frontend</strong>. You can configure it again by selecting it in the List View (%s)."), listViewShortcut), { strong: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("strong", {}) })
+						children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+							/** translators: %s: The shortcut key to access the List View */
+							(0, _wordpress_i18n.__)("Block will be hidden according to the selected viewports. It will be <strong>included in the published markup on the frontend</strong>. You can configure it again by selecting it in the List View (%s)."),
+							listViewShortcut
+						), { strong: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("strong", {}) })
 					})
 				] }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Flex, {
 					className: "block-editor-block-visibility-modal__actions",
@@ -95747,13 +96331,21 @@ If there's a particular need for this, please submit a feature request at https:
 			if (currentBlockVisibility === false) label = (0, _wordpress_i18n.__)("Hidden");
 			else {
 				const viewportLabel = BLOCK_VISIBILITY_VIEWPORTS[currentViewport]?.label || currentViewport;
-				label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Hidden on %s"), viewportLabel);
+				label = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: viewport name (Desktop, Tablet, Mobile) */
+					(0, _wordpress_i18n.__)("Hidden on %s"),
+					viewportLabel
+				);
 			}
 		}
 		if (hasParentHiddenEverywhere) label = (0, _wordpress_i18n.__)("Parent hidden");
 		else if (isBlockParentHiddenAtViewport) {
 			const viewportLabel = BLOCK_VISIBILITY_VIEWPORTS[currentViewport]?.label || currentViewport;
-			label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Parent hidden on %s"), viewportLabel);
+			label = (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: viewport name (Desktop, Tablet, Mobile) */
+				(0, _wordpress_i18n.__)("Parent hidden on %s"),
+				viewportLabel
+			);
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Root$7, {
 			className: "block-editor-block-visibility-info",
@@ -95840,7 +96432,11 @@ If there's a particular need for this, please submit a feature request at https:
 			ref: menuItemRef,
 			icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(block_icon_default, { icon: parentBlockType.icon }),
 			onClick: () => selectBlock(parentClientId),
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Select parent block (%s)"), parentBlockType.title)
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Name of the block's parent. */
+				(0, _wordpress_i18n.__)("Select parent block (%s)"),
+				parentBlockType.title
+			)
 		});
 	}
 
@@ -96346,7 +96942,13 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
 			onClick: handleClick,
-			children: isEditing ? (0, _wordpress_i18n.__)("Exit pattern") : (0, _wordpress_i18n.__)("Edit pattern")
+			children: isEditing ? (0, _wordpress_i18n.__)(
+				/** translators: Button label to leave pattern editing mode. */
+				"Exit pattern"
+			) : (0, _wordpress_i18n.__)(
+				/** translators: Button label to enter pattern editing mode. */
+				"Edit pattern"
+			)
 		}) });
 	}
 
@@ -96875,7 +97477,11 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 	}
 	const BlockSwitcher = ({ children, clientIds, label, text }) => {
-		const blockSwitcherDescription = clientIds.length === 1 ? (0, _wordpress_i18n.__)("Change block type or style") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Change type of %d block", "Change type of %d blocks", clientIds.length), clientIds.length);
+		const blockSwitcherDescription = clientIds.length === 1 ? (0, _wordpress_i18n.__)("Change block type or style") : (0, _wordpress_i18n.sprintf)(
+			/** translators: %d: number of blocks. */
+			(0, _wordpress_i18n._n)("Change type of %d block", "Change type of %d blocks", clientIds.length),
+			clientIds.length
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarGroup, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, { children: (toggleProps) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
 			className: "block-editor-block-switcher",
 			label,
@@ -96940,7 +97546,12 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [clientIds]);
 		const isSingleBlock = clientIds.length === 1;
 		let description;
-		if (isSingleBlock && blockMetaName) description = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("This %1$s is editable using the \"%2$s\" override."), blockTitle.toLowerCase(), blockMetaName);
+		if (isSingleBlock && blockMetaName) description = (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: The block type's name. 2: The block's user-provided name (the same as the override name). */
+			(0, _wordpress_i18n.__)("This %1$s is editable using the \"%2$s\" override."),
+			blockTitle.toLowerCase(),
+			blockMetaName
+		);
 		else description = (0, _wordpress_i18n.__)("These blocks are editable using overrides.");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text$1, { children: description });
 	}
@@ -97149,7 +97760,10 @@ If there's a particular need for this, please submit a feature request at https:
 			focusEditorOnEscape: true,
 			shouldUseKeyboardFocusShortcut: !isPlaceholder,
 			className: classes,
-			"aria-label": (0, _wordpress_i18n.__)("Block tools"),
+			"aria-label": (0, _wordpress_i18n.__)(
+				/** translators: accessibility text for the block toolbar */
+				"Block tools"
+			),
 			variant: variant === "toolbar" ? void 0 : variant,
 			focusOnMount,
 			__experimentalInitialIndex,
@@ -97400,7 +98014,11 @@ If there's a particular need for this, please submit a feature request at https:
 					if ((isMatch("core/block-editor/move-up", event) ? "up" : "down") === "up") moveBlocksUp(clientIds, rootClientId);
 					else moveBlocksDown(clientIds, rootClientId);
 					if (getBlockIndex(firstClientId) === previousIndex) return;
-					const message = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d block moved.", "%d blocks moved.", clientIds.length), clientIds.length);
+					const message = (0, _wordpress_i18n.sprintf)(
+						/** translators: %d: Number of blocks moved. */
+						(0, _wordpress_i18n._n)("%d block moved.", "%d blocks moved.", clientIds.length),
+						clientIds.length
+					);
 					(0, _wordpress_a11y.speak)(message);
 				}
 			} else if (isMatch("core/block-editor/duplicate", event)) {
@@ -97710,7 +98328,10 @@ If there's a particular need for this, please submit a feature request at https:
 				const blockIcon = !icon?.src || icon?.src === "block-default" ? { src: block_default_default } : icon;
 				return {
 					name: "core/block-editor/transform-to-" + (id || name).replace(/\//g, "-"),
-					label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Transform to %s"), title),
+					label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+						/** translators: %s: Block or block variation name. */
+						"Transform to %s"
+					), title),
 					icon: blockIcon?.src,
 					category: "command",
 					callback: ({ close }) => {
@@ -98099,11 +98720,21 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		(0, _wordpress_element.useEffect)(() => {
 			if (!insertedBlockTitle?.length) return;
-			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s block inserted"), insertedBlockTitle), "assertive");
+			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: name of block being inserted (i.e. Paragraph, Image, Group etc) */
+				(0, _wordpress_i18n.__)("%s block inserted"),
+				insertedBlockTitle
+			), "assertive");
 		}, [insertedBlockTitle]);
 		if (hideInserter) return null;
 		const descriptionId = `list-view-appender__${instanceId}`;
-		const description = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Append to %1$s block at position %2$d, Level %3$d"), blockTitle, blockCount + 1, nestingLevel);
+		const description = (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: The name of the block. 2: The numerical position of the block. 3: The level of nesting for the block. */
+			(0, _wordpress_i18n.__)("Append to %1$s block at position %2$d, Level %3$d"),
+			blockTitle,
+			blockCount + 1,
+			nestingLevel
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "list-view-appender",
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Inserter, {
@@ -98386,8 +99017,18 @@ If there's a particular need for this, please submit a feature request at https:
 	});
 
 // packages/block-editor/build-module/components/list-view/utils.mjs
-	const getBlockPositionDescription = (position, siblingCount, level) => (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %1$d of %2$d, Level %3$d."), position, siblingCount, level);
-	const getBlockPropertiesDescription = (positionLabel, isLocked) => [positionLabel ? `${(0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Position: %s"), positionLabel)}.` : void 0, isLocked ? (0, _wordpress_i18n.__)("This block is locked.") : void 0].filter(Boolean).join(" ");
+	const getBlockPositionDescription = (position, siblingCount, level) => (0, _wordpress_i18n.sprintf)(
+		/** translators: 1: The numerical position of the block. 2: The total number of blocks. 3. The level of nesting for the block. */
+		(0, _wordpress_i18n.__)("Block %1$d of %2$d, Level %3$d."),
+		position,
+		siblingCount,
+		level
+	);
+	const getBlockPropertiesDescription = (positionLabel, isLocked) => [positionLabel ? `${(0, _wordpress_i18n.sprintf)(
+		/** translators: %s: Position of selected block, e.g. "Sticky" or "Fixed". */
+		(0, _wordpress_i18n.__)("Position: %s"),
+		positionLabel
+	)}.` : void 0, isLocked ? (0, _wordpress_i18n.__)("This block is locked.") : void 0].filter(Boolean).join(" ");
 	/**
 	* Returns true if the client ID occurs within the block selection or multi-selection,
 	* or false otherwise.
@@ -99180,8 +99821,16 @@ If there's a particular need for this, please submit a feature request at https:
 			let label;
 			if (selectionDiff.length === 1) {
 				const title = getBlockType(getBlockName(selectionDiff[0]))?.title;
-				if (title) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s deselected."), title);
-			} else if (selectionDiff.length > 1) label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s blocks deselected."), selectionDiff.length);
+				if (title) label = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: block name */
+					(0, _wordpress_i18n.__)("%s deselected."),
+					title
+				);
+			} else if (selectionDiff.length > 1) label = (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: number of deselected blocks */
+				(0, _wordpress_i18n.__)("%s blocks deselected."),
+				selectionDiff.length
+			);
 			if (label) (0, _wordpress_a11y.speak)(label, "assertive");
 		}, [
 			clearSelectedBlock,
@@ -99934,7 +100583,10 @@ If there's a particular need for this, please submit a feature request at https:
 			"aria-expanded": isOpen,
 			"aria-haspopup": "true",
 			onClick: isEnabled ? onToggle : void 0,
-			label: (0, _wordpress_i18n.__)("List view"),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: button label text should, if possible, be under 16 characters. */
+				"List view"
+			),
 			className: "block-editor-block-navigation",
 			"aria-disabled": !isEnabled
 		});
@@ -100135,7 +100787,11 @@ If there's a particular need for this, please submit a feature request at https:
 				const isActive = targetLevel === value;
 				return {
 					icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HeadingLevelIcon, { level: targetLevel }),
-					title: targetLevel === 0 ? (0, _wordpress_i18n.__)("Paragraph") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Heading %d"), targetLevel),
+					title: targetLevel === 0 ? (0, _wordpress_i18n.__)("Paragraph") : (0, _wordpress_i18n.sprintf)(
+						/** translators: %d: heading level e.g: "1", "2", "3" */
+						(0, _wordpress_i18n.__)("Heading %d"),
+						targetLevel
+					),
 					isActive,
 					onClick() {
 						onChange(targetLevel);
@@ -100403,7 +101059,11 @@ If there's a particular need for this, please submit a feature request at https:
 					showColors: true
 				}),
 				isPressed: selectedValue === variation.name,
-				label: selectedValue === variation.name ? variation.title : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Transform to %s"), variation.title),
+				label: selectedValue === variation.name ? variation.title : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Block or block variation name. */
+					(0, _wordpress_i18n.__)("Transform to %s"),
+					variation.title
+				),
 				onClick: () => onSelectVariation(variation.name),
 				"aria-label": variation.title,
 				showTooltip: true
@@ -100450,7 +101110,11 @@ If there's a particular need for this, please submit a feature request at https:
 						showColors: true
 					}),
 					value: variation.name,
-					label: selectedValue === variation.name ? variation.title : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Transform to %s"), variation.title)
+					label: selectedValue === variation.name ? variation.title : (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: Block or block variation name. */
+						(0, _wordpress_i18n.__)("Transform to %s"),
+						variation.title
+					)
 				}, variation.name))
 			})
 		});
@@ -100935,7 +101599,10 @@ If there's a particular need for this, please submit a feature request at https:
 		let selectListOptions = presets;
 		if (showCustomValueInSelectList) {
 			selectListOptions = [...presets, {
-				name: !isMixed ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Custom (%s)"), value) : (0, _wordpress_i18n.__)("Mixed"),
+				name: !isMixed ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+					/** translators: %s: A custom measurement, e.g. a number followed by a unit like 12px. */
+					"Custom (%s)"
+				), value) : (0, _wordpress_i18n.__)("Mixed"),
 				slug: "custom",
 				size: value
 			}];
@@ -101451,7 +102118,15 @@ If there's a particular need for this, please submit a feature request at https:
 					speakMessage = messageOverride;
 					break;
 				}
-				message = backgroundColorBrightness < colordTextColor.brightness() ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("This color combination may be hard for people to read. Try using a darker background color and/or a brighter %s."), item.description) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("This color combination may be hard for people to read. Try using a brighter background color and/or a darker %s."), item.description);
+				message = backgroundColorBrightness < colordTextColor.brightness() ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %s is a type of text color, e.g., "text color" or "link color". */
+					(0, _wordpress_i18n.__)("This color combination may be hard for people to read. Try using a darker background color and/or a brighter %s."),
+					item.description
+				) : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s is a type of text color, e.g., "text color" or "link color". */
+					(0, _wordpress_i18n.__)("This color combination may be hard for people to read. Try using a brighter background color and/or a darker %s."),
+					item.description
+				);
 				speakMessage = (0, _wordpress_i18n.__)("This color combination may be hard for people to read.");
 				break;
 			}
@@ -101524,12 +102199,36 @@ If there's a particular need for this, please submit a feature request at https:
 	function NonDefaultControls({ format, onChange }) {
 		const suggestedOptions = [...[.../* @__PURE__ */ new Set([
 			"Y-m-d",
-			(0, _wordpress_i18n._x)("n/j/Y", "short date format"),
-			(0, _wordpress_i18n._x)("n/j/Y g:i A", "short date format with time"),
-			(0, _wordpress_i18n._x)("M j, Y", "medium date format"),
-			(0, _wordpress_i18n._x)("M j, Y g:i A", "medium date format with time"),
-			(0, _wordpress_i18n._x)("F j, Y", "long date format"),
-			(0, _wordpress_i18n._x)("M j", "short date format without the year")
+			(0, _wordpress_i18n._x)(
+				/** translators: See https://www.php.net/manual/datetime.format.php */
+				"n/j/Y",
+				"short date format"
+			),
+			(0, _wordpress_i18n._x)(
+				/** translators: See https://www.php.net/manual/datetime.format.php */
+				"n/j/Y g:i A",
+				"short date format with time"
+			),
+			(0, _wordpress_i18n._x)(
+				/** translators: See https://www.php.net/manual/datetime.format.php */
+				"M j, Y",
+				"medium date format"
+			),
+			(0, _wordpress_i18n._x)(
+				/** translators: See https://www.php.net/manual/datetime.format.php */
+				"M j, Y g:i A",
+				"medium date format with time"
+			),
+			(0, _wordpress_i18n._x)(
+				/** translators: See https://www.php.net/manual/datetime.format.php */
+				"F j, Y",
+				"long date format"
+			),
+			(0, _wordpress_i18n._x)(
+				/** translators: See https://www.php.net/manual/datetime.format.php */
+				"M j",
+				"short date format without the year"
+			)
 		])].map((suggestedFormat) => ({
 			value: suggestedFormat,
 			label: (0, _wordpress_date.dateI18n)(suggestedFormat, exampleDate)
@@ -101827,7 +102526,12 @@ If there's a particular need for this, please submit a feature request at https:
 		fontWeights = fontWeights.length === 0 ? FONT_WEIGHTS : fontWeights;
 		fontStyles.forEach(({ name: styleName, value: styleValue }) => {
 			fontWeights.forEach(({ name: weightName, value: weightValue }) => {
-				const optionName = styleValue === "normal" ? weightName : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s %2$s", "font"), weightName ?? "", styleName ?? "");
+				const optionName = styleValue === "normal" ? weightName : (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: Font weight name. 2: Font style name. */
+					(0, _wordpress_i18n._x)("%1$s %2$s", "font"),
+					weightName ?? "",
+					styleName ?? ""
+				);
 				combinedStyleAndWeightOptions.push({
 					key: `${styleValue}-${weightValue}`,
 					name: optionName ?? "",
@@ -104446,7 +105150,11 @@ If there's a particular need for this, please submit a feature request at https:
 					});
 				}
 			} catch (error) {
-				createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Could not edit image. %s"), (0, _wordpress_dom.__unstableStripHTML)(error.message)), {
+				createErrorNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Error message. */
+					(0, _wordpress_i18n.__)("Could not edit image. %s"),
+					(0, _wordpress_dom.__unstableStripHTML)(error.message)
+				), {
 					id: "image-editing-error",
 					type: "snackbar"
 				});
@@ -104921,7 +105629,11 @@ If there's a particular need for this, please submit a feature request at https:
 				children: IMAGE_SIZE_PRESETS.map((scale) => {
 					return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
 						value: scale,
-						label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%d%%"), scale)
+						label: (0, _wordpress_i18n.sprintf)(
+							/** translators: %d: Percentage value. */
+							(0, _wordpress_i18n.__)("%d%%"),
+							scale
+						)
 					}, scale);
 				})
 			})] })]
@@ -105053,7 +105765,11 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!searchTerm) return null;
 		let text;
 		if (buttonText) text = typeof buttonText === "function" ? buttonText(searchTerm) : buttonText;
-		else text = (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Create: <mark>%s</mark>"), searchTerm), { mark: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("mark", {}) });
+		else text = (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+			/** translators: %s: search term. */
+			(0, _wordpress_i18n.__)("Create: <mark>%s</mark>"),
+			searchTerm
+		), { mark: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("mark", {}) });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
 			...itemProps,
 			iconPosition: "left",
@@ -105187,7 +105903,11 @@ If there's a particular need for this, please submit a feature request at https:
 		const isSingleDirectEntryResult = suggestions.length === 1 && LINK_ENTRY_TYPES.includes(suggestions[0].type);
 		const shouldShowCreateSuggestion = withCreateSuggestion && !isSingleDirectEntryResult && !isInitialSuggestions;
 		const shouldShowSuggestionsTypes = !suggestionsQuery?.type;
-		const labelText = isInitialSuggestions ? (0, _wordpress_i18n.__)("Suggestions") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Search results for \"%s\""), currentInputValue);
+		const labelText = isInitialSuggestions ? (0, _wordpress_i18n.__)("Suggestions") : (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: search term. */
+			(0, _wordpress_i18n.__)("Search results for \"%s\""),
+			currentInputValue
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "block-editor-link-control__search-results-wrapper",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
@@ -105499,7 +106219,9 @@ If there's a particular need for this, please submit a feature request at https:
 					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Flex, {
 						className: "block-editor-link-control__link-information",
 						role: "figure",
-						"aria-label": (0, _wordpress_i18n.__)("Link information"),
+						"aria-label": 
+						/** translators: Accessibility text for the link preview when editing a link. */
+						(0, _wordpress_i18n.__)("Link information"),
 						justify: "start",
 						align: "flex-start",
 						children: [value?.image ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Flex, {
@@ -106055,7 +106777,11 @@ If there's a particular need for this, please submit a feature request at https:
 						isEntity && helpTextId && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 							id: helpTextId,
 							className: "block-editor-link-control__help",
-							children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Synced with the selected %s."), internalControlValue?.type || "item")
+							children: (0, _wordpress_i18n.sprintf)(
+								/** translators: %s: entity type (e.g., page, post) */
+								(0, _wordpress_i18n.__)("Synced with the selected %s."),
+								internalControlValue?.type || "item"
+							)
 						})
 					]
 				}), errorMessage && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Notice, {
@@ -106520,7 +107246,11 @@ If there's a particular need for this, please submit a feature request at https:
 				setSuggestionsValue(search);
 				setIsLoading(false);
 				setIsSuggestionsListOpen(!!nextSuggestions.length);
-				if (nextSuggestions.length) debouncedSpeak((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", nextSuggestions.length), nextSuggestions.length), "assertive");
+				if (nextSuggestions.length) debouncedSpeak((0, _wordpress_i18n.sprintf)(
+					/** translators: %d: number of results. */
+					(0, _wordpress_i18n._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", nextSuggestions.length),
+					nextSuggestions.length
+				), "assertive");
 				else debouncedSpeak((0, _wordpress_i18n.__)("No results."), "assertive");
 			}).catch(() => {
 				if (suggestionsRequestRef.current !== request) return;
@@ -107776,8 +108506,16 @@ If there's a particular need for this, please submit a feature request at https:
 					context: blockBindingsContext
 				})?.find((item) => (0, import_es6.default)(item.args, relatedBinding?.args))?.label;
 				const bindingKey = clientSideFieldLabel ?? blockBindingsSource?.label;
-				const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Add %s"), bindingKey);
-				const _bindingsLabel = _disableBoundBlock ? relatedBinding?.args?.key || blockBindingsSource?.label : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Empty %s; start writing to edit its value"), relatedBinding?.args?.key || blockBindingsSource?.label);
+				const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: connected field label or source label */
+					(0, _wordpress_i18n.__)("Add %s"),
+					bindingKey
+				);
+				const _bindingsLabel = _disableBoundBlock ? relatedBinding?.args?.key || blockBindingsSource?.label : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: source label or key */
+					(0, _wordpress_i18n.__)("Empty %s; start writing to edit its value"),
+					relatedBinding?.args?.key || blockBindingsSource?.label
+				);
 				return {
 					disableBoundBlock: _disableBoundBlock,
 					bindingsPlaceholder: blockAttributes?.placeholder || _bindingsPlaceholder,
@@ -108132,7 +108870,12 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/block-editor/build-module/components/responsive-block-control/label.mjs
 	function ResponsiveBlockControlLabel({ property, viewport, desc }) {
 		const instanceId = (0, _wordpress_compose.useInstanceId)(ResponsiveBlockControlLabel);
-		const accessibleLabel = desc || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Controls the %1$s property for %2$s viewports.", "Text labelling a interface as controlling a given layout property (eg: margin) for a given screen size."), property, viewport.label);
+		const accessibleLabel = desc || (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: property name. 2: viewport name. */
+			(0, _wordpress_i18n._x)("Controls the %1$s property for %2$s viewports.", "Text labelling a interface as controlling a given layout property (eg: margin) for a given screen size."),
+			property,
+			viewport.label
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 			"aria-describedby": `rbc-desc-${instanceId}`,
 			children: viewport.label
@@ -108163,7 +108906,11 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		] } = props;
 		if (!title || !property || !renderDefaultControl) return null;
-		const toggleControlLabel = toggleLabel || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Use the same %s on all screen sizes."), property);
+		const toggleControlLabel = toggleLabel || (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: Property value for the control (eg: margin, padding, etc.). */
+			(0, _wordpress_i18n.__)("Use the same %s on all screen sizes."),
+			property
+		);
 		const toggleHelpText = (0, _wordpress_i18n.__)("Choose whether to use the same value for all screen sizes or a unique value for each screen size.");
 		const defaultControl = renderDefaultControl(/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ResponsiveBlockControlLabel, {
 			property,
@@ -108548,7 +109295,12 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [spacingSizes]);
 		const sideLabel = (ALL_SIDES.includes(side) || ["vertical", "horizontal"].includes(side)) && showSideInLabel ? LABELS[side] : "";
 		const typeLabel = showSideInLabel ? type?.toLowerCase() : type;
-		const ariaLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s %2$s", "spacing"), sideLabel, typeLabel).trim();
+		const ariaLabel = (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: The side of the block being modified (top, bottom, left etc.). 2. Type of spacing being modified (padding, margin, etc). */
+			(0, _wordpress_i18n._x)("%1$s %2$s", "spacing"),
+			sideLabel,
+			typeLabel
+		).trim();
 		const selectedUnit = units[0]?.value || "px";
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PresetInputControl, {
 			allowNegativeOnDrag: minimumCustomValue < 0,
@@ -108754,7 +109506,12 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 		};
 		const sideLabel = ALL_SIDES.includes(view) && showSideInLabel ? LABELS[view] : "";
-		const label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s %2$s", "spacing control label"), labelProp, sideLabel).trim();
+		const label = (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: Type of spacing being modified (Padding, Margin, etc.). 2: The side of the block being modified (Top, Bottom, Left, etc.). */
+			(0, _wordpress_i18n._x)("%1$s %2$s", "spacing control label"),
+			labelProp,
+			sideLabel
+		).trim();
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("fieldset", {
 			className: "spacing-sizes-control",
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
@@ -108810,7 +109567,13 @@ If there's a particular need for this, please submit a feature request at https:
 				__next40pxDefaultSize: true,
 				variant: "secondary",
 				onClick: handleClick,
-				children: editedContentOnlySection ? (0, _wordpress_i18n.__)("Exit pattern") : (0, _wordpress_i18n.__)("Edit pattern")
+				children: editedContentOnlySection ? (0, _wordpress_i18n.__)(
+					/** translators: Button label to leave pattern editing mode. */
+					"Exit pattern"
+				) : (0, _wordpress_i18n.__)(
+					/** translators: Button label to enter pattern editing mode. */
+					"Edit pattern"
+				)
 			})
 		});
 	}
@@ -108885,10 +109648,18 @@ If there's a particular need for this, please submit a feature request at https:
 				direction: "column",
 				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					className: "block-editor-multi-selection-inspector__card-title",
-					children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d Block", "%d Blocks", selectedBlockCount), selectedBlockCount)
+					children: (0, _wordpress_i18n.sprintf)(
+						/** translators: %d: number of blocks */
+						(0, _wordpress_i18n._n)("%d Block", "%d Blocks", selectedBlockCount),
+						selectedBlockCount
+					)
 				}), totalBlockCount > selectedBlockCount && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					className: "block-editor-multi-selection-inspector__card-description",
-					children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d including nested block", "%d including nested blocks", totalBlockCount), totalBlockCount)
+					children: (0, _wordpress_i18n.sprintf)(
+						/** translators: %d: number of blocks including nested blocks */
+						(0, _wordpress_i18n._n)("%d including nested block", "%d including nested blocks", totalBlockCount),
+						totalBlockCount
+					)
 				})]
 			})]
 		});
@@ -110846,7 +111617,11 @@ If there's a particular need for this, please submit a feature request at https:
 					children: label
 				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
 					render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {}),
-					children: imgUrl ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Background image: %s"), filename || label) : (0, _wordpress_i18n.__)("No background image selected")
+					children: imgUrl ? (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: file name */
+						(0, _wordpress_i18n.__)("Background image: %s"),
+						filename || label
+					) : (0, _wordpress_i18n.__)("No background image selected")
 				})] })]
 			});
 		};
@@ -114548,7 +115323,11 @@ If there's a particular need for this, please submit a feature request at https:
 					size: showText ? "compact" : "small",
 					icon: showText ? chevron_down_default : more_vertical_default,
 					iconPosition: "right",
-					label: showText ? triggerLabel : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("State: %s"), currentStateLabel),
+					label: showText ? triggerLabel : (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: Current state (e.g. "Hover", "Focus") */
+						(0, _wordpress_i18n.__)("State: %s"),
+						currentStateLabel
+					),
 					showTooltip: true,
 					children: showText ? triggerLabel : void 0
 				}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Popup$3, {
@@ -114601,12 +115380,20 @@ If there's a particular need for this, please submit a feature request at https:
 		if (selectedViewport) activeStates.push({
 			key: `viewport-${selectedViewport.value}`,
 			label: selectedViewport.label,
-			description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Style changes apply to the %s viewport."), selectedViewport.label)
+			description: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: viewport name, e.g. "Tablet". */
+				(0, _wordpress_i18n.__)("Style changes apply to the %s viewport."),
+				selectedViewport.label
+			)
 		});
 		if (selectedPseudoState) activeStates.push({
 			key: `pseudo-${selectedPseudoState.value}`,
 			label: selectedPseudoState.label,
-			description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Style changes apply to the %s state."), selectedPseudoState.label)
+			description: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: pseudo state name, e.g. "Hover". */
+				(0, _wordpress_i18n.__)("Style changes apply to the %s state."),
+				selectedPseudoState.label
+			)
 		});
 		if (!activeStates.length) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
@@ -114974,7 +115761,10 @@ If there's a particular need for this, please submit a feature request at https:
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text$1, {
 						variant: "body-sm",
 						className: "block-editor-block-inspector__state-badges-text",
-						children: (0, _wordpress_i18n.__)("Editing:")
+						children: (0, _wordpress_i18n.__)(
+							/** translators: Instructive text shown before the style state badges in the block inspector; the badges indicate the style states the user is currently editing. */
+							"Editing:"
+						)
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockStateBadges, {
 						name: blockName,
 						value: selectedBlockStyleState,
@@ -115904,7 +116694,11 @@ If there's a particular need for this, please submit a feature request at https:
 		return {
 			description: (0, _wordpress_i18n.__)("Its layout limits widths"),
 			action: {
-				label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Select %s"), parentInfo.title),
+				label: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: title of the containing block, e.g. "Group". */
+					(0, _wordpress_i18n.__)("Select %s"),
+					parentInfo.title
+				),
 				icon: parentInfo.icon,
 				onClick: () => selectBlock(parentClientId)
 			}
@@ -116067,7 +116861,11 @@ If there's a particular need for this, please submit a feature request at https:
 		(0, _wordpress_element.useEffect)(() => {
 			if (!search) return;
 			const count = filteredBlockTypes.length;
-			const resultsFoundMessage = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found.", "%d results found.", count), count);
+			const resultsFoundMessage = (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: number of results. */
+				(0, _wordpress_i18n._n)("%d result found.", "%d results found.", count),
+				count
+			);
 			debouncedSpeak(resultsFoundMessage);
 		}, [
 			filteredBlockTypes?.length,
@@ -120131,7 +120929,11 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 			setAttributes({ style: isStateSelected ? setStyleForState(style, selectedState, cleanedStyle) : cleanedStyle });
 		}
-		const cssHelpText = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Add your own CSS to customize the appearance of the %s block. You do not need to include a CSS selector, just add the property and value, e.g. color: red;."), blockType?.title);
+		const cssHelpText = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: is the name of a block e.g., 'Image' or 'Quote'. */
+			(0, _wordpress_i18n.__)("Add your own CSS to customize the appearance of the %s block. You do not need to include a CSS selector, just add the property and value, e.g. color: red;."),
+			blockType?.title
+		);
 		const panel = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AdvancedPanel, {
 			value: stateStyle,
 			onChange,
@@ -123162,7 +123964,11 @@ If there's a particular need for this, please submit a feature request at https:
 			if (option.value === "main" && hasMainElementElsewhere && tagName !== "main") return {
 				...option,
 				disabled: true,
-				label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s (Already in use)"), option.label)
+				label: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: HTML element name */
+					(0, _wordpress_i18n.__)("%s (Already in use)"),
+					option.label
+				)
 			};
 			return option;
 		});

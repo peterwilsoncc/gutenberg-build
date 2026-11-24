@@ -152,7 +152,11 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		});
 	}
 	function DefaultErrorResponsePlaceholder({ message, className }) {
-		const errorMessage = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error loading block: %s"), message || (0, _wordpress_i18n.__)("Unknown error"));
+		const errorMessage = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: error message describing the problem */
+			(0, _wordpress_i18n.__)("Error loading block: %s"),
+			message || (0, _wordpress_i18n.__)("Unknown error")
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Placeholder, {
 			className,
 			children: errorMessage

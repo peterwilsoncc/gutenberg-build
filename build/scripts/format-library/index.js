@@ -10899,7 +10899,9 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: style_module_default$8["link-icon"],
 					role: "img",
-					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+					"aria-label": 
+					/** translators: accessibility text appended to link text */
+					(0, _wordpress_i18n.__)("(opens in a new tab)")
 				})] })
 			})
 		});
@@ -14035,7 +14037,9 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 							help: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Link, {
 									openInNewTab: true,
-									href: (0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
+									href: 
+									/** translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations. */
+									(0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
 									children: (0, _wordpress_i18n.__)("Describe the purpose of the image.")
 								}),
 								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("br", {}),
@@ -14467,7 +14471,11 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			};
 		}
 		function createButtonText(searchTerm) {
-			return (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Create page: <mark>%s</mark>"), searchTerm), { mark: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("mark", {}) });
+			return (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: search term. */
+				(0, _wordpress_i18n.__)("Create page: <mark>%s</mark>"),
+				searchTerm
+			), { mark: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("mark", {}) });
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Popover, {
 			anchor: popoverAnchor,

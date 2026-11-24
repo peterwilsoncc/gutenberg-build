@@ -22382,7 +22382,11 @@ Icon: ButtonIcon });
 			id: descriptionId,
 			"aria-hidden": "true",
 			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { ref }),
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: keyboard shortcut. */
+				(0, _wordpress_i18n.__)("Keyboard shortcut: %s"),
+				shortcut.label ?? shortcut.ariaKeyShortcut
+			)
 		});
 	});
 	/**
@@ -23397,7 +23401,9 @@ Icon: ButtonIcon });
 				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: style_module_default$18["link-icon"],
 					role: "img",
-					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+					"aria-label": 
+					/** translators: accessibility text appended to link text */
+					(0, _wordpress_i18n.__)("(opens in a new tab)")
 				})] })
 			})
 		});
@@ -29966,7 +29972,12 @@ Icon: ButtonIcon });
 	}
 	function getInputSelectionHint(selectedCount) {
 		if (selectedCount === 0) return;
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%1$d item selected. From the start of the input, press %2$s to move to the selected item.", "%1$d items selected. From the start of the input, press %2$s to move to the selected items.", selectedCount), selectedCount, (0, _wordpress_i18n.isRTL)() ? (0, _wordpress_i18n.__)("Right Arrow") : (0, _wordpress_i18n.__)("Left Arrow"));
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: number of selected items. 2: arrow key name ("Left Arrow" or "Right Arrow"). */
+			(0, _wordpress_i18n._n)("%1$d item selected. From the start of the input, press %2$s to move to the selected item.", "%1$d items selected. From the start of the input, press %2$s to move to the selected items.", selectedCount),
+			selectedCount,
+			(0, _wordpress_i18n.isRTL)() ? (0, _wordpress_i18n.__)("Right Arrow") : (0, _wordpress_i18n.__)("Left Arrow")
+		);
 	}
 	/**
 	* A low-level primitive for a searchable multi-selection field with chips, with
@@ -30661,7 +30672,11 @@ Icon: ButtonIcon });
 			}),
 			status === "error" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error: %s"), error) })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message returned when rendering the block. */
+					(0, _wordpress_i18n.__)("Error: %s"),
+					error
+				) })
 			}),
 			status === "success" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
 				wrapperProps: blockProps,
@@ -30775,7 +30790,10 @@ Icon: ButtonIcon });
 			src: avatarUrls ? avatarUrls[avatarUrls.length - 1] : defaultAvatar,
 			minSize,
 			maxSize,
-			alt: authorName ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s Avatar"), authorName) : (0, _wordpress_i18n.__)("Default Avatar")
+			alt: authorName ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+				/** translators: %s: Author name. */
+				"%s Avatar"
+			), authorName) : (0, _wordpress_i18n.__)("Default Avatar")
 		};
 	}
 	function useUserAvatar({ userId, postId, postType }) {
@@ -30796,7 +30814,10 @@ Icon: ButtonIcon });
 			src: avatarUrls ? avatarUrls[avatarUrls.length - 1] : defaultAvatar,
 			minSize,
 			maxSize,
-			alt: authorDetails ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s Avatar"), authorDetails?.name) : (0, _wordpress_i18n.__)("Default Avatar")
+			alt: authorDetails ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+				/** translators: %s: Author name. */
+				"%s Avatar"
+			), authorDetails?.name) : (0, _wordpress_i18n.__)("Default Avatar")
 		};
 	}
 
@@ -32320,7 +32341,11 @@ Icon: ButtonIcon });
 			})),
 			status === "error" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error: %s"), error) })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message returned when rendering the block. */
+					(0, _wordpress_i18n.__)("Error: %s"),
+					error
+				) })
 			}),
 			showPlaceholder && placeholder,
 			!showPlaceholder && status === "success" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
@@ -33783,7 +33808,11 @@ Icon: ButtonIcon });
 			});
 		}
 		if (hasBinding && !isEntityAvailable) badges.push({
-			label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Missing %s"), type),
+			label: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s is the entity type (e.g., "page", "post", "category") */
+				(0, _wordpress_i18n.__)("Missing %s"),
+				type
+			),
 			intent: "high"
 		});
 		else if (!url) badges.push({
@@ -34176,7 +34205,11 @@ Icon: ButtonIcon });
 			};
 		}
 		function createButtonText(searchTerm) {
-			return (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Create page: <mark>%s</mark>"), searchTerm), { mark: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("mark", {}) });
+			return (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: search term. */
+				(0, _wordpress_i18n.__)("Create page: <mark>%s</mark>"),
+				searchTerm
+			), { mark: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("mark", {}) });
 		}
 		function startEditing(event) {
 			event.preventDefault();
@@ -34951,7 +34984,11 @@ Icon: ButtonIcon });
 			}),
 			status === "error" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error: %s"), error) })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message returned when rendering the block. */
+					(0, _wordpress_i18n.__)("Error: %s"),
+					error
+				) })
 			}),
 			status === "success" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
 				wrapperProps: blockProps,
@@ -35170,7 +35207,11 @@ Icon: ButtonIcon });
 				children: label ? label : taxonomy?.name
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("select", {
 				id: selectId,
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("option", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Select %s"), taxonomy?.labels?.singular_name) }), categoriesList.map((category) => renderCategoryDropdownItem(category, 0))]
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("option", { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: taxonomy's singular name */
+					(0, _wordpress_i18n.__)("Select %s"),
+					taxonomy?.labels?.singular_name
+				) }), categoriesList.map((category) => renderCategoryDropdownItem(category, 0))]
 			})] });
 		};
 		const renderCategoryDropdownItem = (category, level) => {
@@ -35735,7 +35776,10 @@ Icon: ButtonIcon });
 	const { name: name$204 } = block_default$101;
 	const settings$102 = {
 		icon: code_default,
-		example: { attributes: { content: (0, _wordpress_i18n.__)("// A “block” is the abstract term used\n// to describe units of markup that\n// when composed together, form the\n// content or layout of a page.\nregisterBlockType( name, settings );") } },
+		example: { attributes: { content: (0, _wordpress_i18n.__)(
+			/** translators: Preserve \n markers for line breaks */
+			"// A “block” is the abstract term used\n// to describe units of markup that\n// when composed together, form the\n// content or layout of a page.\nregisterBlockType( name, settings );"
+		) } },
 		merge(attributes, attributesToMerge) {
 			return { content: attributes.content + "\n\n" + attributesToMerge.content };
 		},
@@ -35854,7 +35898,13 @@ Icon: ButtonIcon });
 		});
 		const columnsCount = columnsIds.length;
 		const currentColumnPosition = columnsIds.indexOf(clientId) + 1;
-		const label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s (%2$d of %3$d)"), blockProps["aria-label"], currentColumnPosition, columnsCount);
+		const label = (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: Block label (i.e. "Block: Column"), 2: Position of the selected block, 3: Total number of sibling blocks of the same type */
+			(0, _wordpress_i18n.__)("%1$s (%2$d of %3$d)"),
+			blockProps["aria-label"],
+			currentColumnPosition,
+			columnsCount
+		);
 		const innerBlocksProps = (0, _wordpress_block_editor.useInnerBlocksProps)({
 			...blockProps,
 			"aria-label": label
@@ -36716,7 +36766,10 @@ Icon: ButtonIcon });
 				innerBlocks: [
 					{
 						name: "core/paragraph",
-						attributes: { content: (0, _wordpress_i18n.__)("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et eros eu felis.") }
+						attributes: { content: (0, _wordpress_i18n.__)(
+							/** translators: example text. */
+							"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et eros eu felis."
+						) }
 					},
 					{
 						name: "core/image",
@@ -36724,17 +36777,26 @@ Icon: ButtonIcon });
 					},
 					{
 						name: "core/paragraph",
-						attributes: { content: (0, _wordpress_i18n.__)("Suspendisse commodo neque lacus, a dictum orci interdum et.") }
+						attributes: { content: (0, _wordpress_i18n.__)(
+							/** translators: example text. */
+							"Suspendisse commodo neque lacus, a dictum orci interdum et."
+						) }
 					}
 				]
 			}, {
 				name: "core/column",
 				innerBlocks: [{
 					name: "core/paragraph",
-					attributes: { content: (0, _wordpress_i18n.__)("Etiam et egestas lorem. Vivamus sagittis sit amet dolor quis lobortis. Integer sed fermentum arcu, id vulputate lacus. Etiam fermentum sem eu quam hendrerit.") }
+					attributes: { content: (0, _wordpress_i18n.__)(
+						/** translators: example text. */
+						"Etiam et egestas lorem. Vivamus sagittis sit amet dolor quis lobortis. Integer sed fermentum arcu, id vulputate lacus. Etiam fermentum sem eu quam hendrerit."
+					) }
 				}, {
 					name: "core/paragraph",
-					attributes: { content: (0, _wordpress_i18n.__)("Nam risus massa, ullamcorper consectetur eros fermentum, porta aliquet ligula. Sed vel mauris nec enim.") }
+					attributes: { content: (0, _wordpress_i18n.__)(
+						/** translators: example text. */
+						"Nam risus massa, ullamcorper consectetur eros fermentum, porta aliquet ligula. Sed vel mauris nec enim."
+					) }
 				}]
 			}]
 		},
@@ -36937,7 +36999,11 @@ Icon: ButtonIcon });
 					actions,
 					children: (0, _wordpress_i18n.__)("Post Comments Form block: Comments are not enabled for this item.")
 				});
-			} else if (!postTypeSupportsComments) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Post Comments Form block: Comments are not enabled for this post type (%s)."), postType) });
+			} else if (!postTypeSupportsComments) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Post type (i.e. "post", "page") */
+				(0, _wordpress_i18n.__)("Post Comments Form block: Comments are not enabled for this post type (%s)."),
+				postType
+			) });
 			else if ("open" !== defaultCommentStatus) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.__)("Post Comments Form block: Comments are not enabled.") });
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CommentsFormPlaceholder, {});
@@ -36952,7 +37018,10 @@ Icon: ButtonIcon });
 			className: "wp-block-comments__legacy-placeholder",
 			inert: inertValue(true),
 			children: [
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("One response to %s"), postTitle) }),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("h3", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+					/** translators: %s: Post title. */
+					"One response to %s"
+				), postTitle) }),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 					className: "navigation",
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
@@ -37041,7 +37110,11 @@ Icon: ButtonIcon });
 										className: "comment-reply-link",
 										href: "#top",
 										"aria-label": (0, _wordpress_i18n.__)("Reply to A WordPress Commenter"),
-										children: (0, _wordpress_i18n._x)("Reply", "verb")
+										children: (0, _wordpress_i18n._x)(
+											/** translators: Comment reply button text. */
+											"Reply",
+											"verb"
+										)
 									})
 								})
 							]
@@ -38111,7 +38184,11 @@ Icon: ButtonIcon });
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
 				href: "#comment-reply-pseudo-link",
 				onClick: (event) => event.preventDefault(),
-				children: (0, _wordpress_i18n._x)("Reply", "verb")
+				children: (0, _wordpress_i18n._x)(
+					/** translators: Comment reply button text. */
+					"Reply",
+					"verb"
+				)
 			})
 		}) });
 	}
@@ -39102,13 +39179,30 @@ Icon: ButtonIcon });
 		let placeholder;
 		if (showCommentsCount && commentsCount !== void 0) {
 			if (showPostTitle) {
-				if (commentsCount === 1) placeholder = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("One response to \"%s\""), postTitle);
-				else placeholder = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%1$s response to \"%2$s\"", "%1$s responses to \"%2$s\"", commentsCount), commentsCount, postTitle);
+				if (commentsCount === 1) placeholder = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Post title. */
+					(0, _wordpress_i18n.__)("One response to \"%s\""),
+					postTitle
+				);
+				else placeholder = (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: Number of comments, 2: Post title. */
+					(0, _wordpress_i18n._n)("%1$s response to \"%2$s\"", "%1$s responses to \"%2$s\"", commentsCount),
+					commentsCount,
+					postTitle
+				);
 			} else if (commentsCount === 1) placeholder = (0, _wordpress_i18n.__)("One response");
-			else placeholder = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s response", "%s responses", commentsCount), commentsCount);
+			else placeholder = (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Number of comments. */
+				(0, _wordpress_i18n._n)("%s response", "%s responses", commentsCount),
+				commentsCount
+			);
 		} else if (showPostTitle) {
-			if (commentsCount === 1) placeholder = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Response to \"%s\""), postTitle);
-			else placeholder = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Responses to \"%s\""), postTitle);
+			if (commentsCount === 1)
+ /** translators: %s: Post title. */
+			placeholder = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Response to \"%s\""), postTitle);
+			else
+ /** translators: %s: Post title. */
+			placeholder = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Responses to \"%s\""), postTitle);
 		} else if (commentsCount === 1) placeholder = (0, _wordpress_i18n.__)("Response");
 		else placeholder = (0, _wordpress_i18n.__)("Responses");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
@@ -40890,7 +40984,11 @@ Icon: ButtonIcon });
 								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 									id: descriptionId,
 									hidden: true,
-									children: poster ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("The current poster image url is %s."), poster) : (0, _wordpress_i18n.__)("There is no poster image currently selected.")
+									children: poster ? (0, _wordpress_i18n.sprintf)(
+										/** translators: %s: poster image URL. */
+										(0, _wordpress_i18n.__)("The current poster image url is %s."),
+										poster
+									) : (0, _wordpress_i18n.__)("There is no poster image currently selected.")
 								}),
 								!!poster && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 									__next40pxDefaultSize: true,
@@ -41172,7 +41270,9 @@ Icon: ButtonIcon });
 							help: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 								/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Link, {
 									openInNewTab: true,
-									href: (0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
+									href: 
+									/** translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations. */
+									(0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
 									children: (0, _wordpress_i18n.__)("Describe the purpose of the image.")
 								}),
 								/* @__PURE__ */ (0, react_jsx_runtime.jsx)("br", {}),
@@ -43707,7 +43807,11 @@ Icon: ButtonIcon });
 			const hasSummary = summary?.trim().length > 0;
 			if (context === "list-view" && (customName || hasSummary)) return customName || summary;
 			if (context === "breadcrumb" && customName) return customName;
-			if (context === "accessibility") return !hasSummary ? (0, _wordpress_i18n.__)("Details. Empty.") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Details. %s"), summary);
+			if (context === "accessibility") return !hasSummary ? (0, _wordpress_i18n.__)("Details. Empty.") : (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: accessibility text; summary title. */
+				(0, _wordpress_i18n.__)("Details. %s"),
+				summary
+			);
 		},
 		save: save$37,
 		edit: DetailsEdit,
@@ -44057,7 +44161,11 @@ Icon: ButtonIcon });
 		const { scripts } = preview;
 		const html = "photo" === type ? getPhotoHtml(preview) : preview.html;
 		const embedSourceUrl = (0, _wordpress_url.getAuthority)(url);
-		const iframeTitle = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Embedded content from %s"), embedSourceUrl);
+		const iframeTitle = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: host providing embed content e.g: www.youtube.com */
+			(0, _wordpress_i18n.__)("Embedded content from %s"),
+			embedSourceUrl
+		);
 		const sandboxClassnames = clsx(type, className, "wp-block-embed__wrapper");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: previewable ? "wp-embed" === type ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WpEmbedPreview, { html }) : /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "wp-block-embed__wrapper",
@@ -44086,7 +44194,11 @@ Icon: ButtonIcon });
 				})
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 				className: "components-placeholder__error",
-				children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Embedded content from %s can't be previewed in the editor."), embedSourceUrl)
+				children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: host providing embed content e.g: www.youtube.com */
+					(0, _wordpress_i18n.__)("Embedded content from %s can't be previewed in the editor."),
+					embedSourceUrl
+				)
 			})]
 		}) });
 	}
@@ -44171,6 +44283,7 @@ Icon: ButtonIcon });
 			...blockProps,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(EmbedLoading, {})
 		});
+		/** translators: %s: type of embed e.g: "YouTube", "Twitter", etc. "Embed" is used when no specific type exists */
 		const label = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s URL"), title);
 		if (!preview || cannotEmbed || isEditingURL) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			...blockProps,
@@ -44312,7 +44425,11 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/embed/variations.mjs
 /** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
 	function getTitle(providerName) {
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s Embed"), providerName);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: provider name */
+			(0, _wordpress_i18n.__)("%s Embed"),
+			providerName
+		);
 	}
 	/**
 	* The embed provider services.
@@ -44954,7 +45071,11 @@ Icon: ButtonIcon });
 			},
 			save({ attributes }) {
 				const { href, fileId, fileName, textLinkHref, textLinkTarget, showDownloadButton, downloadButtonText, displayPreview, previewHeight } = attributes;
-				const pdfEmbedLabel = _wordpress_block_editor.RichText.isEmpty(fileName) ? (0, _wordpress_i18n.__)("PDF embed") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Embed of %s."), fileName);
+				const pdfEmbedLabel = _wordpress_block_editor.RichText.isEmpty(fileName) ? (0, _wordpress_i18n.__)("PDF embed") : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: filename. */
+					(0, _wordpress_i18n.__)("Embed of %s."),
+					fileName
+				);
 				const hasFilename = !_wordpress_block_editor.RichText.isEmpty(fileName);
 				const describedById = hasFilename ? fileId : void 0;
 				return href && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
@@ -45036,7 +45157,11 @@ Icon: ButtonIcon });
 			},
 			save({ attributes }) {
 				const { href, fileId, fileName, textLinkHref, textLinkTarget, showDownloadButton, downloadButtonText, displayPreview, previewHeight } = attributes;
-				const pdfEmbedLabel = _wordpress_block_editor.RichText.isEmpty(fileName) ? (0, _wordpress_i18n.__)("PDF embed") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Embed of %s."), fileName);
+				const pdfEmbedLabel = _wordpress_block_editor.RichText.isEmpty(fileName) ? (0, _wordpress_i18n.__)("PDF embed") : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: filename. */
+					(0, _wordpress_i18n.__)("Embed of %s."),
+					fileName
+				);
 				const hasFilename = !_wordpress_block_editor.RichText.isEmpty(fileName);
 				const describedById = hasFilename ? fileId : void 0;
 				return href && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
@@ -45112,7 +45237,11 @@ Icon: ButtonIcon });
 			},
 			save({ attributes }) {
 				const { href, fileName, textLinkHref, textLinkTarget, showDownloadButton, downloadButtonText, displayPreview, previewHeight } = attributes;
-				const pdfEmbedLabel = _wordpress_block_editor.RichText.isEmpty(fileName) ? (0, _wordpress_i18n.__)("PDF embed") : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Embed of %s."), fileName);
+				const pdfEmbedLabel = _wordpress_block_editor.RichText.isEmpty(fileName) ? (0, _wordpress_i18n.__)("PDF embed") : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: filename. */
+					(0, _wordpress_i18n.__)("Embed of %s."),
+					fileName
+				);
 				return href && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 					..._wordpress_block_editor.useBlockProps.save(),
 					children: [
@@ -49116,11 +49245,17 @@ Icon: ButtonIcon });
 			value: "date/asc"
 		},
 		{
-			label: (0, _wordpress_i18n.__)("A → Z"),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: Label for ordering images by title in ascending order. */
+				"A → Z"
+			),
 			value: "title/asc"
 		},
 		{
-			label: (0, _wordpress_i18n.__)("Z → A"),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: Label for ordering images by title in descending order. */
+				"Z → A"
+			),
 			value: "title/desc"
 		}
 	];
@@ -49520,7 +49655,11 @@ Icon: ButtonIcon });
 			setAttributes({ sizeSlug: newSizeSlug });
 			updateInnerImages((block, media) => getImageSizeAttributes(media, newSizeSlug));
 			const imageSize = imageSizeOptions.find((size) => size.value === newSizeSlug);
-			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery image sizes updated to: %s"), imageSize?.label ?? newSizeSlug), {
+			createSuccessNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: image size settings */
+				(0, _wordpress_i18n.__)("All gallery image sizes updated to: %s"),
+				imageSize?.label ?? newSizeSlug
+			), {
 				id: "gallery-attributes-sizeSlug",
 				type: "snackbar"
 			});
@@ -49545,7 +49684,16 @@ Icon: ButtonIcon });
 			}
 			const noticeValue = value ?? baseAspectRatio;
 			const aspectRatioText = aspectRatioOptions.find((option) => option.value === noticeValue);
-			const noticeText = isViewportStyleState ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Gallery images in the %1$s viewport updated to aspect ratio: %2$s"), viewport.replace("@", ""), aspectRatioText?.label || noticeValue) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery images updated to aspect ratio: %s"), aspectRatioText?.label || noticeValue);
+			const noticeText = isViewportStyleState ? (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: viewport name, 2: aspect ratio setting */
+				(0, _wordpress_i18n.__)("Gallery images in the %1$s viewport updated to aspect ratio: %2$s"),
+				viewport.replace("@", ""),
+				aspectRatioText?.label || noticeValue
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: aspect ratio setting */
+				(0, _wordpress_i18n.__)("All gallery images updated to aspect ratio: %s"),
+				aspectRatioText?.label || noticeValue
+			);
 			createSuccessNotice(noticeText, {
 				id: "gallery-attributes-aspectRatio",
 				type: "snackbar"
@@ -49927,7 +50075,12 @@ Icon: ButtonIcon });
 				className: "wp-block-gallery__source-notice",
 				status: "warning",
 				isDismissible: false,
-				children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Only the first %1$d of %2$d images will be displayed."), 100, dynamicMediaTotal)
+				children: (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: number of images shown. 2: total number of matching images. */
+					(0, _wordpress_i18n.__)("Only the first %1$d of %2$d images will be displayed."),
+					100,
+					dynamicMediaTotal
+				)
 			})]
 		}), isConfirmingDetach && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DetachGalleryDialog, {
 			onConfirm: () => {
@@ -50172,7 +50325,11 @@ Icon: ButtonIcon });
 			setAttributes({ linkTo: value });
 			updateInnerImages((block, media) => getHrefAndDestination(media, value, false, block.attributes, lightboxSetting));
 			const linkToText = [...linkOptions].find((linkType) => linkType.value === value);
-			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("All gallery image links updated to: %s"), linkToText.noticeText), {
+			createSuccessNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: image size settings */
+				(0, _wordpress_i18n.__)("All gallery image links updated to: %s"),
+				linkToText.noticeText
+			), {
 				id: "gallery-attributes-linkTo",
 				type: "snackbar"
 			});
@@ -52057,7 +52214,11 @@ Icon: ButtonIcon });
 					6
 				].map((level) => ({
 					name: `core/block-editor/transform-to-heading-${level}`,
-					description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Transform the selected block into a heading %d."), level),
+					description: (0, _wordpress_i18n.sprintf)(
+						/** translators: %d: heading level e.g: "1", "2", "3" */
+						(0, _wordpress_i18n.__)("Transform the selected block into a heading %d."),
+						level
+					),
 					keyCombination: {
 						modifier: "access",
 						character: `${level}`
@@ -52182,7 +52343,11 @@ Icon: ButtonIcon });
 		6
 	].map((level) => ({
 		name: `h${level}`,
-		title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Heading %d"), level),
+		title: (0, _wordpress_i18n.sprintf)(
+			/** translators: %d: heading level e.g: "1", "2", "3" */
+			(0, _wordpress_i18n.__)("Heading %d"),
+			level
+		),
 		description: (0, _wordpress_i18n.__)("Introduce new sections and organize content to help visitors (and search engines) understand the structure of your content."),
 		icon: LEVEL_ICONS[level - 1],
 		attributes: { level },
@@ -52191,7 +52356,11 @@ Icon: ButtonIcon });
 		isActive: (blockAttributes) => blockAttributes.level === level,
 		shortcut: {
 			name: `core/block-editor/transform-to-heading-${level}`,
-			description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Transform the selected block into a heading %d."), level),
+			description: (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: heading level e.g: "1", "2", "3" */
+				(0, _wordpress_i18n.__)("Transform the selected block into a heading %d."),
+				level
+			),
 			keyCombination: {
 				modifier: "access",
 				character: `${level}`
@@ -52222,7 +52391,16 @@ Icon: ButtonIcon });
 			const hasContent = content?.trim().length > 0;
 			if (context === "list-view" && (customName || hasContent)) return customName || content;
 			if (context === "breadcrumb" && customName) return customName;
-			if (context === "accessibility") return !hasContent ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Level %s. Empty."), level) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Level %1$s. %2$s"), level, content);
+			if (context === "accessibility") return !hasContent ? (0, _wordpress_i18n.sprintf)(
+				/** translators: accessibility text. %s: heading level. */
+				(0, _wordpress_i18n.__)("Level %s. Empty."),
+				level
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: accessibility text. 1: heading level. 2: heading content. */
+				(0, _wordpress_i18n.__)("Level %1$s. %2$s"),
+				level,
+				content
+			);
 		},
 		transforms: transforms$28,
 		deprecated: deprecated$13,
@@ -53124,7 +53302,11 @@ Icon: ButtonIcon });
 					context,
 					args: iconBinding.args
 				}),
-				iconBindingReadOnlyMessage: blockBindingsSource?.label ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Connected to %s"), blockBindingsSource.label) : (0, _wordpress_i18n.__)("Connected to dynamic data")
+				iconBindingReadOnlyMessage: blockBindingsSource?.label ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Label of the bindings source. */
+					(0, _wordpress_i18n.__)("Connected to %s"),
+					blockBindingsSource.label
+				) : (0, _wordpress_i18n.__)("Connected to dynamic data")
 			};
 		}, [
 			context,
@@ -54673,7 +54855,10 @@ Icon: ButtonIcon });
 				ref: setPopoverAnchor,
 				children: (toggleProps) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
 					icon: chevron_down_default,
-					label: (0, _wordpress_i18n.__)("More"),
+					label: (0, _wordpress_i18n.__)(
+						/** translators: button label text should, if possible, be under 16 characters. */
+						"More"
+					),
 					toggleProps: {
 						...toggleProps,
 						description: (0, _wordpress_i18n.__)("Displays more controls.")
@@ -54712,7 +54897,9 @@ Icon: ButtonIcon });
 						disabled: lockAltControls,
 						help: lockAltControls ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: lockAltControlsMessage }) : /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 							/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ExternalLink, {
-								href: (0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
+								href: 
+								/** translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations. */
+								(0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
 								children: (0, _wordpress_i18n.__)("Describe the purpose of the image.")
 							}),
 							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("br", {}),
@@ -55037,13 +55224,21 @@ Icon: ButtonIcon });
 					context,
 					args: altBinding?.args
 				}),
-				lockAltControlsMessage: altBindingSource?.label ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Connected to %s"), altBindingSource.label) : (0, _wordpress_i18n.__)("Connected to dynamic data"),
+				lockAltControlsMessage: altBindingSource?.label ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Label of the bindings source. */
+					(0, _wordpress_i18n.__)("Connected to %s"),
+					altBindingSource.label
+				) : (0, _wordpress_i18n.__)("Connected to dynamic data"),
 				lockTitleControls: !!titleBinding && !titleBindingSource?.canUserEditValue?.({
 					select,
 					context,
 					args: titleBinding?.args
 				}),
-				lockTitleControlsMessage: titleBindingSource?.label ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Connected to %s"), titleBindingSource.label) : (0, _wordpress_i18n.__)("Connected to dynamic data")
+				lockTitleControlsMessage: titleBindingSource?.label ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Label of the bindings source. */
+					(0, _wordpress_i18n.__)("Connected to %s"),
+					titleBindingSource.label
+				) : (0, _wordpress_i18n.__)("Connected to dynamic data")
 			};
 		}, [
 			arePatternOverridesEnabled,
@@ -55157,7 +55352,9 @@ Icon: ButtonIcon });
 								onChange: updateAlt,
 								readOnly: lockAltControls,
 								help: lockAltControls ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: lockAltControlsMessage }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ExternalLink, {
-									href: (0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
+									href: 
+									/** translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations. */
+									(0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
 									children: (0, _wordpress_i18n.__)("Describe the purpose of the image.")
 								})
 							})
@@ -55239,9 +55436,17 @@ Icon: ButtonIcon });
 		] });
 		const filename = (0, _wordpress_url.getFilename)(url);
 		let defaultedAlt;
-		if (isDecorative) defaultedAlt = filename ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("This image has been marked as decorative; its file name is %s"), filename) : (0, _wordpress_i18n.__)("This image has been marked as decorative.");
+		if (isDecorative) defaultedAlt = filename ? (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: file name */
+			(0, _wordpress_i18n.__)("This image has been marked as decorative; its file name is %s"),
+			filename
+		) : (0, _wordpress_i18n.__)("This image has been marked as decorative.");
 		else if (alt) defaultedAlt = alt;
-		else if (filename) defaultedAlt = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("This image has an empty alt attribute; its file name is %s"), filename);
+		else if (filename) defaultedAlt = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: file name */
+			(0, _wordpress_i18n.__)("This image has an empty alt attribute; its file name is %s"),
+			filename
+		);
 		else defaultedAlt = (0, _wordpress_i18n.__)("This image has an empty alt attribute");
 		const borderProps = (0, _wordpress_block_editor.__experimentalUseBorderProps)(attributes);
 		const shadowProps = (0, _wordpress_block_editor.__experimentalGetShadowClassesAndStyles)(attributes);
@@ -55590,7 +55795,11 @@ Icon: ButtonIcon });
 					context,
 					args: metadata?.bindings?.url?.args
 				}),
-				lockUrlControlsMessage: blockBindingsSource?.label ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Connected to %s"), blockBindingsSource.label) : (0, _wordpress_i18n.__)("Connected to dynamic data")
+				lockUrlControlsMessage: blockBindingsSource?.label ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Label of the bindings source. */
+					(0, _wordpress_i18n.__)("Connected to %s"),
+					blockBindingsSource.label
+				) : (0, _wordpress_i18n.__)("Connected to dynamic data")
 			};
 		}, [
 			context,
@@ -56107,7 +56316,10 @@ Icon: ButtonIcon });
 		example: { attributes: {
 			sizeSlug: "large",
 			url: "https://s.w.org/images/core/5.3/MtBlanc1.jpg",
-			caption: (0, _wordpress_i18n.__)("Mont Blanc appears—still, snowy, and serene.")
+			caption: (0, _wordpress_i18n.__)(
+				/** translators: Caption accompanying an image of the Mont Blanc, which serves as an example for the Image block. */
+				"Mont Blanc appears—still, snowy, and serene."
+			)
 		} },
 		__experimentalLabel(attributes, { context }) {
 			const customName = attributes?.metadata?.name;
@@ -56328,7 +56540,11 @@ Icon: ButtonIcon });
 			}),
 			status === "error" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error: %s"), error) })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message returned when rendering the block. */
+					(0, _wordpress_i18n.__)("Error: %s"),
+					error
+				) })
 			}),
 			status === "success" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
 				wrapperProps: blockProps,
@@ -57043,7 +57259,11 @@ Icon: ButtonIcon });
 							maxHeight: featuredImageSizeHeight
 						}
 					});
-					const postExcerpt = excerptLength < excerpt.trim().split(" ").length && post.excerpt.raw === "" ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [excerpt.trim().split(" ", excerptLength).join(" "), (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("… <a>Read more<span>: %1$s</span></a>"), titleTrimmed || (0, _wordpress_i18n.__)("(no title)")), {
+					const postExcerpt = excerptLength < excerpt.trim().split(" ").length && post.excerpt.raw === "" ? /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [excerpt.trim().split(" ", excerptLength).join(" "), (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+						/** translators: 1: Hidden accessibility text: Post title */
+						(0, _wordpress_i18n.__)("… <a>Read more<span>: %1$s</span></a>"),
+						titleTrimmed || (0, _wordpress_i18n.__)("(no title)")
+					), {
 						a: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("a", {
 							className: "wp-block-latest-posts__read-more",
 							href: post.link,
@@ -57069,7 +57289,11 @@ Icon: ButtonIcon });
 						}),
 						displayAuthor && currentAuthor && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 							className: "wp-block-latest-posts__post-author",
-							children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("by %s"), currentAuthor.name)
+							children: (0, _wordpress_i18n.sprintf)(
+								/** translators: byline. %s: author. */
+								(0, _wordpress_i18n.__)("by %s"),
+								currentAuthor.name
+							)
 						}),
 						displayPostDate && post.date_gmt && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("time", {
 							dateTime: (0, _wordpress_date.format)("c", post.date_gmt),
@@ -59755,7 +59979,9 @@ Icon: ButtonIcon });
 						onChange: onMediaAltChange,
 						help: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 							/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ExternalLink, {
-								href: (0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
+								href: 
+								/** translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations. */
+								(0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
 								children: (0, _wordpress_i18n.__)("Describe the purpose of the image.")
 							}),
 							/* @__PURE__ */ (0, react_jsx_runtime.jsx)("br", {}),
@@ -60229,9 +60455,17 @@ Icon: ButtonIcon });
 				actions.push(convertToHtmlButton);
 			} else messageHTML = (0, _wordpress_i18n.__)("It appears you are trying to use the deprecated Classic block. You can leave this block intact, or remove it entirely. Alternatively, if you have unsaved changes, you can save them and refresh to use the Classic block.");
 		} else if (hasContent && hasHTMLBlock) {
-			messageHTML = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Your site doesn’t include support for the \"%s\" block. You can leave it as-is, convert it to custom HTML, or remove it."), originalName);
+			messageHTML = (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: block name */
+				(0, _wordpress_i18n.__)("Your site doesn’t include support for the \"%s\" block. You can leave it as-is, convert it to custom HTML, or remove it."),
+				originalName
+			);
 			actions.push(convertToHtmlButton);
-		} else messageHTML = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Your site doesn’t include support for the \"%s\" block. You can leave it as-is or remove it."), originalName);
+		} else messageHTML = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block name */
+			(0, _wordpress_i18n.__)("Your site doesn’t include support for the \"%s\" block. You can leave it as-is or remove it."),
+			originalName
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			...(0, _wordpress_block_editor.useBlockProps)({ className: "has-warning" }),
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, {
@@ -60655,11 +60889,19 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/navigation/edit/navigation-menu-selector.mjs
 	function buildMenuLabel(title, id, status) {
-		if (!title) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("(no title %s)"), id);
+		if (!title)
+ /** translators: %s: the index of the menu in the list of menus. */
+		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("(no title %s)"), id);
 		if (status === "publish") return (0, _wordpress_html_entities.decodeEntities)(title);
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s (%2$s)"), (0, _wordpress_html_entities.decodeEntities)(title), status);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: title of the menu. 2: status of the menu (draft, pending, etc.). */
+			(0, _wordpress_i18n.__)("%1$s (%2$s)"),
+			(0, _wordpress_html_entities.decodeEntities)(title),
+			status
+		);
 	}
 	function NavigationMenuSelector({ currentMenuId, onSelectNavigationMenu, onSelectClassicMenu, onCreateNew, actionLabel }) {
+		/** translators: %s: The name of a menu. */
 		const createActionLabel = (0, _wordpress_i18n.__)("Create from '%s'");
 		const [isUpdatingMenuRef, setIsUpdatingMenuRef] = (0, _wordpress_element.useState)(false);
 		actionLabel = actionLabel || createActionLabel;
@@ -61314,7 +61556,11 @@ Icon: ButtonIcon });
 				};
 			});
 			if (overlay && !selectedTemplatePart) templatePartOptions.unshift({
-				label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s (missing)"), overlay),
+				label: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Overlay slug. */
+					(0, _wordpress_i18n.__)("%s (missing)"),
+					overlay
+				),
 				value: overlay
 			});
 			return [...baseOptions, ...templatePartOptions];
@@ -61383,7 +61629,11 @@ Icon: ButtonIcon });
 			return (0, _wordpress_i18n.__)("Select an overlay for navigation.");
 		}, [overlayTemplateParts.length, hasResolved]);
 		const editButtonLabel = (0, _wordpress_element.useMemo)(() => {
-			return selectedTemplatePart ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Edit overlay: %s"), selectedTemplatePart.title?.rendered ? (0, _wordpress_html_entities.decodeEntities)(selectedTemplatePart.title.rendered) : selectedTemplatePart.slug) : (0, _wordpress_i18n.__)("Edit overlay");
+			return selectedTemplatePart ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Overlay title. */
+				(0, _wordpress_i18n.__)("Edit overlay: %s"),
+				selectedTemplatePart.title?.rendered ? (0, _wordpress_html_entities.decodeEntities)(selectedTemplatePart.title.rendered) : selectedTemplatePart.slug
+			) : (0, _wordpress_i18n.__)("Edit overlay");
 		}, [selectedTemplatePart]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "wp-block-navigation__overlay-selector",
@@ -61923,9 +62173,17 @@ Icon: ButtonIcon });
 					context: "view"
 				});
 			} catch (err) {
-				throw new Error((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Unable to fetch classic menu "%s" from API.`), menuName), { cause: err });
+				throw new Error((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The name of a menu (e.g. Header menu). */
+					(0, _wordpress_i18n.__)(`Unable to fetch classic menu "%s" from API.`),
+					menuName
+				), { cause: err });
 			}
-			if (classicMenuItems === null) throw new Error((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Unable to fetch classic menu "%s" from API.`), menuName));
+			if (classicMenuItems === null) throw new Error((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The name of a menu (e.g. Header menu). */
+				(0, _wordpress_i18n.__)(`Unable to fetch classic menu "%s" from API.`),
+				menuName
+			));
 			const { innerBlocks } = menuItemsToBlocks(classicMenuItems);
 			try {
 				navigationMenu = await createNavigationMenu(menuName, innerBlocks, postStatus);
@@ -61938,7 +62196,11 @@ Icon: ButtonIcon });
 				*/
 				await editEntityRecord("postType", "wp_navigation", navigationMenu.id, { status: "publish" }, { throwOnError: true });
 			} catch (err) {
-				throw new Error((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Unable to create Navigation Menu "%s".`), menuName), { cause: err });
+				throw new Error((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The name of a menu (e.g. Header menu). */
+					(0, _wordpress_i18n.__)(`Unable to create Navigation Menu "%s".`),
+					menuName
+				), { cause: err });
 			}
 			return navigationMenu;
 		}, [
@@ -61965,7 +62227,11 @@ Icon: ButtonIcon });
 					setError(err?.message);
 					setStatus(CLASSIC_MENU_CONVERSION_ERROR);
 					classicMenuBeingConvertedId = null;
-					if (throwOnError) throw new Error((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Unable to create Navigation Menu "%s".`), menuName), { cause: err });
+					if (throwOnError) throw new Error((0, _wordpress_i18n.sprintf)(
+						/** translators: %s: The name of a menu (e.g. Header menu). */
+						(0, _wordpress_i18n.__)(`Unable to create Navigation Menu "%s".`),
+						menuName
+					), { cause: err });
 				});
 			}, [convertClassicMenuToBlockMenu, throwOnError]),
 			status,
@@ -62035,7 +62301,14 @@ Icon: ButtonIcon });
 			if (isDisabled) return "";
 			const { getEntityRecords } = registry.resolveSelect(_wordpress_core_data.store);
 			const [draftNavigationMenus, navigationMenus] = await Promise.all([getEntityRecords(...DRAFT_MENU_PARAMS), getEntityRecords(...PUBLISHED_MENU_PARAMS)]);
-			const title = area ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s menu"), area) : (0, _wordpress_i18n.__)("Menu");
+			const title = area ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: the name of a menu (e.g. Header menu). */
+				(0, _wordpress_i18n.__)("%s menu"),
+				area
+			) : (0, _wordpress_i18n.__)(
+				/** translators: 'menu' as in website navigation menu. */
+				"Menu"
+			);
 			const matchingMenuTitleCount = [...draftNavigationMenus, ...navigationMenus].reduce((count, menu) => menu?.title?.raw?.startsWith(title) ? count + 1 : count, 0);
 			return (matchingMenuTitleCount > 0 ? `${title} ${matchingMenuTitleCount + 1}` : title) || "";
 		}, [
@@ -62182,10 +62455,14 @@ Icon: ButtonIcon });
 	}
 	function LeafMoreMenu({ clientId, updateExpansion, setInsertedBlockClientId, ...props }) {
 		const { moveBlocksDown, moveBlocksUp, removeBlocks, duplicateBlocks, insertBeforeBlock, insertAfterBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
-		const removeLabel = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Remove %s"), (0, _wordpress_block_editor.BlockTitle)({
-			clientId,
-			maximumLength: 25
-		}));
+		const removeLabel = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block name */
+			(0, _wordpress_i18n.__)("Remove %s"),
+			(0, _wordpress_block_editor.BlockTitle)({
+				clientId,
+				maximumLength: 25
+			})
+		);
 		const { blockName, rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockRootClientId, getBlockName, canInsertBlockType, getDirectInsertBlock, getBlockIndex, getBlockCount } = select(_wordpress_block_editor.store);
 			const { getDefaultBlockName } = select(_wordpress_blocks.store);
@@ -62737,7 +63014,11 @@ Icon: ButtonIcon });
 	*/
 	function getDraftHelpText({ type, kind }) {
 		const entityType = getEntityTypeName(type, kind);
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("This link is to a draft %1$s and will not appear on your site until the %1$s is published."), entityType);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: %1$s is the entity type (e.g., "page", "post", "category") */
+			(0, _wordpress_i18n.__)("This link is to a draft %1$s and will not appear on your site until the %1$s is published."),
+			entityType
+		);
 	}
 
 // packages/block-library/build-module/navigation-link/link-ui/dialog-wrapper.mjs
@@ -62834,7 +63115,11 @@ Icon: ButtonIcon });
 						url: savedRecord.link,
 						kind: "post-type"
 					};
-					createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s page created successfully."), (0, _wordpress_html_entities.decodeEntities)(savedRecord.title.rendered)), {
+					createSuccessNotice((0, _wordpress_i18n.sprintf)(
+						/** translators: %s: the name of the new page being created. */
+						(0, _wordpress_i18n.__)("%s page created successfully."),
+						(0, _wordpress_html_entities.decodeEntities)(savedRecord.title.rendered)
+					), {
 						type: "snackbar",
 						id: "page-created-success"
 					});
@@ -63144,7 +63429,13 @@ Icon: ButtonIcon });
 	*/
 	function InvalidDraftDisplay({ label, isInvalid, isDraft, className = "wp-block-navigation-link__label" }) {
 		if (!isInvalid && !isDraft) return null;
-		const statusText = isInvalid ? (0, _wordpress_i18n.__)("Invalid") : (0, _wordpress_i18n.__)("Draft");
+		const statusText = isInvalid ? (0, _wordpress_i18n.__)(
+			/** translators: Indicating that the navigation link is Invalid. */
+			"Invalid"
+		) : (0, _wordpress_i18n.__)(
+			/** translators: Indicating that the navigation link is a Draft. */
+			"Draft"
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: clsx("wp-block-navigation-link__placeholder-text", className, {
 				"is-invalid": isInvalid,
@@ -63339,7 +63630,11 @@ Icon: ButtonIcon });
 				insertBlock(block, index, rootClientId);
 				onClose?.();
 			} else replaceBlock(clientId, block);
-			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s block added."), item.title));
+			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The title of the block that was added. */
+				(0, _wordpress_i18n.__)("%s block added."),
+				item.title
+			));
 		};
 		return {
 			transformSuggestions: isEnabled ? transformSuggestions : void 0,
@@ -63404,7 +63699,10 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/navigation/edit/navigation-list-view-header.mjs
 	const { useBlockDisplayTitle: useBlockDisplayTitle$1 } = unlock$1(_wordpress_block_editor.privateApis);
-	const actionLabel$1 = (0, _wordpress_i18n.__)("Switch to '%s'");
+	const actionLabel$1 = (0, _wordpress_i18n.__)(
+		/** translators: %s: The name of a menu. */
+		"Switch to '%s'"
+	);
 	function NavigationListViewHeader({ clientId, blockEditingMode, currentMenuId, onSelectClassicMenu, onSelectNavigationMenu, onCreateNew, isManageMenusButtonDisabled }) {
 		const blockTitle = useBlockDisplayTitle$1({
 			clientId,
@@ -63428,7 +63726,10 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/navigation/edit/menu-inspector-controls.mjs
-	const actionLabel = (0, _wordpress_i18n.__)("Switch to '%s'");
+	const actionLabel = (0, _wordpress_i18n.__)(
+		/** translators: %s: The name of a menu. */
+		"Switch to '%s'"
+	);
 	const { PrivateListView, PrivateBlockContext, useListViewPanelState, useBlockDisplayTitle } = unlock$1(_wordpress_block_editor.privateApis);
 	const MainContent = ({ clientId, currentMenuId, isLoading, isNavigationMenuMissing, onCreateNew, expandRevision }) => {
 		const hasChildren = (0, _wordpress_data.useSelect)((select) => {
@@ -63441,7 +63742,11 @@ Icon: ButtonIcon });
 			isNotice: true
 		});
 		if (isLoading) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {});
-		const description = navigationMenu ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Structure for Navigation Menu: %s"), navigationMenu?.title || (0, _wordpress_i18n.__)("Untitled menu")) : (0, _wordpress_i18n.__)("You have not yet created any menus. Displaying a list of your Pages");
+		const description = navigationMenu ? (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: The name of a menu. */
+			(0, _wordpress_i18n.__)("Structure for Navigation Menu: %s"),
+			navigationMenu?.title || (0, _wordpress_i18n.__)("Untitled menu")
+		) : (0, _wordpress_i18n.__)("You have not yet created any menus. Displaying a list of your Pages");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "wp-block-navigation__menu-inspector-controls",
 			children: [!hasChildren && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
@@ -63518,6 +63823,7 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/navigation/edit/accessible-menu-description.mjs
 	function AccessibleMenuDescription({ id }) {
 		const [menuTitle] = (0, _wordpress_core_data.useEntityProp)("postType", "wp_navigation", "title");
+		/** translators: %s: Title of a Navigation Menu post. */
 		const description = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Navigation Menu: "%s"`), menuTitle);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(AccessibleDescription, {
 			id,
@@ -64673,21 +64979,30 @@ Icon: ButtonIcon });
 				{
 					name: "core/navigation-link",
 					attributes: {
-						label: (0, _wordpress_i18n.__)("Home"),
+						label: (0, _wordpress_i18n.__)(
+							/** translators: 'Home' as in a website's home page. */
+							"Home"
+						),
 						url: "https://make.wordpress.org/"
 					}
 				},
 				{
 					name: "core/navigation-link",
 					attributes: {
-						label: (0, _wordpress_i18n.__)("About"),
+						label: (0, _wordpress_i18n.__)(
+							/** translators: 'About' as in a website's about page. */
+							"About"
+						),
 						url: "https://make.wordpress.org/"
 					}
 				},
 				{
 					name: "core/navigation-link",
 					attributes: {
-						label: (0, _wordpress_i18n.__)("Contact"),
+						label: (0, _wordpress_i18n.__)(
+							/** translators: 'Contact' as in a website's contact page. */
+							"Contact"
+						),
 						url: "https://make.wordpress.org/"
 					}
 				}
@@ -64831,18 +65146,24 @@ Icon: ButtonIcon });
 		let missingText = "";
 		switch (type) {
 			case "post":
+				/** translators: label for missing post in navigation link block */
 				missingText = (0, _wordpress_i18n.__)("Select post");
 				break;
 			case "page":
+				/** translators: label for missing page in navigation link block */
 				missingText = (0, _wordpress_i18n.__)("Select page");
 				break;
 			case "category":
+				/** translators: label for missing category in navigation link block */
 				missingText = (0, _wordpress_i18n.__)("Select category");
 				break;
 			case "tag":
+				/** translators: label for missing tag in navigation link block */
 				missingText = (0, _wordpress_i18n.__)("Select tag");
 				break;
-			default: missingText = (0, _wordpress_i18n.__)("Add link");
+			default:
+ /** translators: label for missing values in navigation link block */
+			missingText = (0, _wordpress_i18n.__)("Add link");
 		}
 		return missingText;
 	}
@@ -65262,7 +65583,11 @@ Icon: ButtonIcon });
 			if (context === "list-view") return attributes?.label;
 			if (context === "appender") {
 				const type = attributes?.type || "link";
-				return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Add %s", "add default block type"), type);
+				return (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: block type (e.g., 'page', 'post', 'category') */
+					(0, _wordpress_i18n._x)("Add %s", "add default block type"),
+					type
+				);
 			}
 			return attributes?.label;
 		},
@@ -66090,7 +66415,11 @@ Icon: ButtonIcon });
 		const props = (0, _wordpress_block_editor.useBlockProps)();
 		if (hasRecursionError) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			...props,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Pattern \"%s\" cannot be rendered inside itself."), selectedPattern?.name) })
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.sprintf)(
+				/** translators: A warning in which %s is the name of a pattern. */
+				(0, _wordpress_i18n.__)("Pattern \"%s\" cannot be rendered inside itself."),
+				selectedPattern?.name
+			) })
 		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", { ...props });
 	};
@@ -66323,7 +66652,11 @@ Icon: ButtonIcon });
 			const parentPageDetails = pages.find((page) => page.id === parentPageID);
 			if (parentPageDetails?.title?.rendered) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Page List: \"%s\" page has no children."), parentPageDetails.title.rendered) })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Page title. */
+					(0, _wordpress_i18n.__)("Page List: \"%s\" page has no children."),
+					parentPageDetails.title.rendered
+				) })
 			});
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				...blockProps,
@@ -69337,7 +69670,11 @@ Icon: ButtonIcon });
 					waveformStyle,
 					labels: {
 						seek: (0, _wordpress_i18n.__)("Seek"),
-						seekValueText: (0, _wordpress_i18n._x)("%1$s of %2$s", "audio current time of total duration")
+						seekValueText: (0, _wordpress_i18n._x)(
+							/** translators: %1$s: current audio time, %2$s: total audio duration. */
+							"%1$s of %2$s",
+							"audio current time of total duration"
+						)
 					},
 					onEnded: () => onEndedEvent?.(),
 					showPlayButtonArtwork
@@ -70229,7 +70566,9 @@ Icon: ButtonIcon });
 						onChange: (value) => setAttributes({ imageAlt: value }),
 						help: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Link, {
 							openInNewTab: true,
-							href: (0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
+							href: 
+							/** translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations. */
+							(0, _wordpress_i18n.__)("https://www.w3.org/WAI/tutorials/images/decision-tree/"),
 							children: (0, _wordpress_i18n.__)("Describe the purpose of the image.")
 						})
 					})
@@ -70274,7 +70613,10 @@ Icon: ButtonIcon });
 							children: [
 								length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 									className: "screen-reader-text",
-									children: (0, _wordpress_i18n.__)("Duration:")
+									children: (0, _wordpress_i18n.__)(
+										/** translators: Visually hidden label for the track duration (screen reader text). */
+										"Duration:"
+									)
 								}),
 								length,
 								!!temporaryURL && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, { className: "wp-block-playlist-track__spinner" })
@@ -70552,7 +70894,11 @@ Icon: ButtonIcon });
 		const showAuthorControl = !!postId && !isDescendentOfQueryLoop && canAssignAuthor;
 		if (!supportsAuthor && postType !== void 0) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			...blockProps,
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("This post type (%s) does not support the author."), postType)
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Name of the post type e.g: "post". */
+				(0, _wordpress_i18n.__)("This post type (%s) does not support the author."),
+				postType
+			)
 		});
 		function transformBlock() {
 			replaceBlock(clientId, recreateWithRecommendedBlocks(attributes, blockTypes));
@@ -70849,7 +71195,11 @@ Icon: ButtonIcon });
 			})]
 		}) }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			...blockProps,
-			children: !supportsAuthor && postType !== void 0 ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("This post type (%s) does not support the author."), postType) : displayAuthor
+			children: !supportsAuthor && postType !== void 0 ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Name of the post type e.g: "post". */
+				(0, _wordpress_i18n.__)("This post type (%s) does not support the author."),
+				postType
+			) : displayAuthor
 		})] });
 	}
 
@@ -71537,7 +71887,11 @@ Icon: ButtonIcon });
 		if (commentsCount !== null) {
 			const commentsNumber = parseInt(commentsCount);
 			if (commentsNumber === 0) commentsText = (0, _wordpress_i18n.__)("No comments");
-			else commentsText = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s comment", "%s comments", commentsNumber), commentsNumber.toLocaleString());
+			else commentsText = (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Number of comments */
+				(0, _wordpress_i18n._n)("%s comment", "%s comments", commentsNumber),
+				commentsNumber.toLocaleString()
+			);
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			...blockProps,
@@ -71996,7 +72350,9 @@ Icon: ButtonIcon });
 						onChange: (newDatetime) => setAttributes({ datetime: newDatetime }),
 						is12Hour: is12HourFormat(siteTimeFormat),
 						onClose,
-						dateOrder: (0, _wordpress_i18n._x)("dmy", "date order")
+						dateOrder: 
+						/** translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
+						(0, _wordpress_i18n._x)("dmy", "date order")
 					}),
 					renderToggle: ({ isOpen, onToggle }) => {
 						const openOnArrowDown = (event) => {
@@ -72037,11 +72393,19 @@ Icon: ButtonIcon });
 					})
 				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: () => isLink !== false,
-					label: postType?.labels?.singular_name ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Link to %s"), postType.labels.singular_name.toLowerCase()) : (0, _wordpress_i18n.__)("Link to post"),
+					label: postType?.labels?.singular_name ? (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: Name of the post type e.g: "post". */
+						(0, _wordpress_i18n.__)("Link to %s"),
+						postType.labels.singular_name.toLowerCase()
+					) : (0, _wordpress_i18n.__)("Link to post"),
 					onDeselect: () => setAttributes({ isLink: false }),
 					isShownByDefault: true,
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
-						label: postType?.labels?.singular_name ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Link to %s"), postType.labels.singular_name.toLowerCase()) : (0, _wordpress_i18n.__)("Link to post"),
+						label: postType?.labels?.singular_name ? (0, _wordpress_i18n.sprintf)(
+							/** translators: %s: Name of the post type e.g: "post". */
+							(0, _wordpress_i18n.__)("Link to %s"),
+							postType.labels.singular_name.toLowerCase()
+						) : (0, _wordpress_i18n.__)("Link to post"),
 						onChange: () => setAttributes({ isLink: !isLink }),
 						checked: isLink
 					})
@@ -73120,7 +73484,11 @@ Icon: ButtonIcon });
 				dropdownMenuProps,
 				children: [
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-						label: postType?.labels?.singular_name ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Link to %s"), postType.labels.singular_name) : (0, _wordpress_i18n.__)("Link to post"),
+						label: postType?.labels?.singular_name ? (0, _wordpress_i18n.sprintf)(
+							/** translators: %s: Name of the post type e.g: "post". */
+							(0, _wordpress_i18n.__)("Link to %s"),
+							postType.labels.singular_name
+						) : (0, _wordpress_i18n.__)("Link to post"),
 						isShownByDefault: true,
 						hasValue: () => !!isLink,
 						onDeselect: () => setAttributes({ isLink: false }),
@@ -73222,7 +73590,11 @@ Icon: ButtonIcon });
 		else image = !media && !temporaryURL ? placeholder() : /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
 			className: borderProps.className,
 			src: temporaryURL || mediaUrl,
-			alt: media && media?.alt_text ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Featured image: %s"), media.alt_text) : (0, _wordpress_i18n.__)("Featured image"),
+			alt: media && media?.alt_text ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The image's alt text. */
+				(0, _wordpress_i18n.__)("Featured image: %s"),
+				media.alt_text
+			) : (0, _wordpress_i18n.__)("Featured image"),
 			style: imageStyles
 		}), temporaryURL && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})] });
 		/**
@@ -73388,7 +73760,13 @@ Icon: ButtonIcon });
 			arrow: isNext ? "→" : "←",
 			chevron: isNext ? "»" : "«"
 		}[arrow];
-		if (showTitle) placeholder = isNext ? (0, _wordpress_i18n.__)("Next: ") : (0, _wordpress_i18n.__)("Previous: ");
+		if (showTitle) placeholder = isNext ? (0, _wordpress_i18n.__)(
+			/** translators: Label before for next and previous post. There is a space after the colon. */
+			"Next: "
+		) : (0, _wordpress_i18n.__)(
+			/** translators: Label before for next and previous post. There is a space after the colon. */
+			"Previous: "
+		);
 		const ariaLabel = isNext ? (0, _wordpress_i18n.__)("Next post") : (0, _wordpress_i18n.__)("Previous post");
 		const backgroundProps = (0, _wordpress_block_editor.useBackgroundProps)(attributes);
 		const borderProps = (0, _wordpress_block_editor.__experimentalUseBorderProps)(attributes);
@@ -74315,6 +74693,11 @@ Icon: ButtonIcon });
 			if (contentStructure instanceof Function) content = contentStructure({ blocks });
 			else if (blocks) content = (0, _wordpress_blocks.__unstableSerializeAndClean)(blocks);
 			else content = contentStructure;
+			/**
+			* translators: If your word count is based on single characters (e.g. East Asian characters),
+			* enter 'characters_excluding_spaces' or 'characters_including_spaces'. Otherwise, enter 'words'.
+			* Do not translate into your own language.
+			*/
 			const wordCountType = (0, _wordpress_i18n._x)("words", "Word count type. Do not translate!");
 			const totalWords = (0, _wordpress_wordcount.count)(content || "", wordCountType);
 			if (displayMode === "time") {
@@ -74322,13 +74705,26 @@ Icon: ButtonIcon });
 					let maxMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 1.2));
 					const minMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * .8));
 					if (minMinutes === maxMinutes) maxMinutes = maxMinutes + 1;
+					/** translators: %1$s: minimum minutes, %2$s: maximum minutes to read the post. */
 					const rangeLabel = (0, _wordpress_i18n._x)("%1$s–%2$s minutes", "Range of minutes to read");
 					return (0, _wordpress_i18n.sprintf)(rangeLabel, minMinutes, maxMinutes);
 				}
 				const minutesToRead = Math.max(1, Math.round(totalWords / averageReadingSpeed));
-				return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s minute", "%s minutes", minutesToRead), minutesToRead);
+				return (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: the number of minutes to read the post. */
+					(0, _wordpress_i18n._n)("%s minute", "%s minutes", minutesToRead),
+					minutesToRead
+				);
 			}
-			if (displayMode === "words") return wordCountType === "words" ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s word", "%s words", totalWords), totalWords.toLocaleString()) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%s character", "%s characters", totalWords), totalWords.toLocaleString());
+			if (displayMode === "words") return wordCountType === "words" ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: the number of words in the post. */
+				(0, _wordpress_i18n._n)("%s word", "%s words", totalWords),
+				totalWords.toLocaleString()
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: the number of characters in the post. */
+				(0, _wordpress_i18n._n)("%s character", "%s characters", totalWords),
+				totalWords.toLocaleString()
+			);
 		}, [
 			contentStructure,
 			blocks,
@@ -74967,7 +75363,10 @@ Icon: ButtonIcon });
 	const { name: name$78 } = block_default$39;
 	const settings$39 = {
 		icon: preformatted_default,
-		example: { attributes: { content: (0, _wordpress_i18n.__)("EXT. XANADU - FAINT DAWN - 1940 (MINIATURE)\nWindow, very small in the distance, illuminated.\nAll around this is an almost totally black screen. Now, as the camera moves slowly towards the window which is almost a postage stamp in the frame, other forms appear;") } },
+		example: { attributes: { content: (0, _wordpress_i18n.__)(
+			/** translators: Sample content for the Preformatted block. Can be replaced with a more locale-adequate work. */
+			"EXT. XANADU - FAINT DAWN - 1940 (MINIATURE)\nWindow, very small in the distance, illuminated.\nAll around this is an almost totally black screen. Now, as the camera moves slowly towards the window which is almost a postage stamp in the frame, other forms appear;"
+		) } },
 		transforms: transforms$12,
 		edit: PreformattedEdit,
 		save: save$17,
@@ -75482,14 +75881,18 @@ Icon: ButtonIcon });
 				value,
 				onChange: (nextValue) => setAttributes({ value: nextValue }),
 				"aria-label": (0, _wordpress_i18n.__)("Pullquote text"),
-				placeholder: (0, _wordpress_i18n.__)("Add quote")
+				placeholder: 
+				/** translators: placeholder text used for the quote */
+				(0, _wordpress_i18n.__)("Add quote")
 			}), shouldShowCitation && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.RichText, {
 				identifier: "citation",
 				tagName: "cite",
 				style: { display: "block" },
 				value: citation,
 				"aria-label": (0, _wordpress_i18n.__)("Pullquote citation text"),
-				placeholder: (0, _wordpress_i18n.__)("Add citation"),
+				placeholder: 
+				/** translators: placeholder text used for the citation */
+				(0, _wordpress_i18n.__)("Add citation"),
 				onChange: (nextCitation) => setAttributes({ citation: nextCitation }),
 				className: "wp-block-pullquote__citation",
 				__unstableOnSplitAtEnd: insertBlocksAfter ? () => insertBlocksAfter((0, _wordpress_blocks.createBlock)((0, _wordpress_blocks.getDefaultBlockName)())) : void 0
@@ -75662,7 +76065,9 @@ Icon: ButtonIcon });
 	const settings$38 = {
 		icon: pullquote_default,
 		example: { attributes: {
-			value: (0, _wordpress_i18n.__)("One of the hardest things to do in technology is disrupt yourself."),
+			value: 
+			/** translators: Quote serving as example for the Pullquote block. Attributed to Matt Mullenweg. */
+			(0, _wordpress_i18n.__)("One of the hardest things to do in technology is disrupt yourself."),
 			citation: (0, _wordpress_i18n.__)("Matt Mullenweg")
 		} },
 		transforms: transforms$11,
@@ -75903,19 +76308,31 @@ Icon: ButtonIcon });
 					value: "date/asc"
 				},
 				{
-					label: (0, _wordpress_i18n.__)("A → Z"),
+					label: (0, _wordpress_i18n.__)(
+						/** translators: Label for ordering posts by title in ascending order. */
+						"A → Z"
+					),
 					value: "title/asc"
 				},
 				{
-					label: (0, _wordpress_i18n.__)("Z → A"),
+					label: (0, _wordpress_i18n.__)(
+						/** translators: Label for ordering posts by title in descending order. */
+						"Z → A"
+					),
 					value: "title/desc"
 				}
 			];
 			if (supportsCustomOrder) orderByOptions.push({
-				label: (0, _wordpress_i18n.__)("Ascending by order"),
+				label: (0, _wordpress_i18n.__)(
+					/** translators: Label for ordering posts by ascending menu order. */
+					"Ascending by order"
+				),
 				value: "menu_order/asc"
 			}, {
-				label: (0, _wordpress_i18n.__)("Descending by order"),
+				label: (0, _wordpress_i18n.__)(
+					/** translators: Label for ordering posts by descending menu order. */
+					"Descending by order"
+				),
 				value: "menu_order/desc"
 			});
 			return orderByOptions;
@@ -76101,7 +76518,14 @@ Icon: ButtonIcon });
 	function EnhancedPaginationControl({ enhancedPagination, setAttributes, clientId }) {
 		const unsupportedBlocks = useUnsupportedBlocks(clientId);
 		let help = (0, _wordpress_i18n.__)("Reload the full page—instead of just the posts list—when visitors navigate between pages.");
-		if (unsupportedBlocks.length) help = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`Some blocks aren't supported: %s. Remove them to change this setting.`), unsupportedBlocks.join((0, _wordpress_i18n.__)(", ")));
+		if (unsupportedBlocks.length) help = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: A list of block titles. */
+			(0, _wordpress_i18n.__)(`Some blocks aren't supported: %s. Remove them to change this setting.`),
+			unsupportedBlocks.join(
+				/** translators: Used between list items, there is a space after the comma. */
+				(0, _wordpress_i18n.__)(", ")
+			)
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
 			label: (0, _wordpress_i18n.__)("Reload full page"),
 			help,
@@ -76124,11 +76548,17 @@ Icon: ButtonIcon });
 			value: "date/asc"
 		},
 		{
-			label: (0, _wordpress_i18n.__)("A → Z"),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: Label for ordering posts by title in ascending order. */
+				"A → Z"
+			),
 			value: "title/asc"
 		},
 		{
-			label: (0, _wordpress_i18n.__)("Z → A"),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: Label for ordering posts by title in descending order. */
+				"Z → A"
+			),
 			value: "title/desc"
 		}
 	];
@@ -76317,7 +76747,11 @@ Icon: ButtonIcon });
 	function ListedTermCount() {
 		const count = SearchableChipSelectControl.useFilteredItems().length;
 		if (!count) return null;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found.", "%d results found.", count), count) });
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { children: (0, _wordpress_i18n.sprintf)(
+			/** translators: %d: number of terms found. */
+			(0, _wordpress_i18n._n)("%d result found.", "%d results found.", count),
+			count
+		) });
 	}
 	/**
 	* Explains that the server returned only part of the matching terms, and how to find more.
@@ -76328,8 +76762,17 @@ Icon: ButtonIcon });
 	* @param {number}  props.total    The number of matching terms.
 	*/
 	function LimitedTermCount({ isSearch, shown, total }) {
-		if (!isSearch) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Showing the first %d. Search to find more."), shown);
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Showing %1$d of %2$d result. Refine your search to see more.", "Showing %1$d of %2$d results. Refine your search to see more.", total), shown, total);
+		if (!isSearch) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %d: number of terms shown. */
+			(0, _wordpress_i18n.__)("Showing the first %d. Search to find more."),
+			shown
+		);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: number of terms shown. 2: number of matching terms. */
+			(0, _wordpress_i18n._n)("Showing %1$d of %2$d result. Refine your search to see more.", "Showing %1$d of %2$d results. Refine your search to see more.", total),
+			shown,
+			total
+		);
 	}
 	const termToItem = (term) => ({
 		value: String(term.id),
@@ -76357,7 +76800,12 @@ Icon: ButtonIcon });
 			items.set(term.id, {
 				value: String(term.id),
 				label: (0, _wordpress_html_entities.decodeEntities)(term.name),
-				description: ancestors.length ? ancestors.reduce((path, ancestor) => (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s › %2$s", "term ancestors"), path, ancestor)) : void 0
+				description: ancestors.length ? ancestors.reduce((path, ancestor) => (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: a term. 2: the term it holds. */
+					(0, _wordpress_i18n._x)("%1$s › %2$s", "term ancestors"),
+					path,
+					ancestor
+				)) : void 0
 			});
 		}
 		return items;
@@ -76371,7 +76819,12 @@ Icon: ButtonIcon });
 	*/
 	function renderTreeChips(selected) {
 		return selected.map((item) => /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(SearchableChipSelectControl.ChipWithRemove, {
-			"aria-label": item.description ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s (%2$s)", "term"), item.label, item.description) : void 0,
+			"aria-label": item.description ? (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: term name. 2: the terms it sits under, from the top level down. */
+				(0, _wordpress_i18n._x)("%1$s (%2$s)", "term"),
+				item.label,
+				item.description
+			) : void 0,
 			children: [item.label, item.description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 				className: "block-library-query-inspector__taxonomy-control-path",
 				children: item.description
@@ -76410,7 +76863,10 @@ Icon: ButtonIcon });
 					termIds: excludeTermIds,
 					oppositeTermIds: includeTermIds,
 					onChange: (value) => onChangeTaxQuery(value, "exclude"),
-					label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Exclude: %s"), taxonomy.name)
+					label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+						/** translators: %s: taxonomy name */
+						"Exclude: %s"
+					), taxonomy.name)
 				})] }, taxonomy.slug);
 			})
 		});
@@ -76534,7 +76990,15 @@ Icon: ButtonIcon });
 		const onTermsChange = (newValue) => {
 			if (newValue.length !== value.length) {
 				const singularName = taxonomy.labels?.singular_name ?? (0, _wordpress_i18n.__)("Term");
-				(0, _wordpress_a11y.speak)(newValue.length > value.length ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s added", "term"), singularName) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s removed", "term"), singularName), "assertive");
+				(0, _wordpress_a11y.speak)(newValue.length > value.length ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: taxonomy singular name, e.g. "Tag". */
+					(0, _wordpress_i18n._x)("%s added", "term"),
+					singularName
+				) : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: taxonomy singular name, e.g. "Tag". */
+					(0, _wordpress_i18n._x)("%s removed", "term"),
+					singularName
+				), "assertive");
 			}
 			debouncedSearch.cancel();
 			setInputValue("");
@@ -77012,7 +77476,11 @@ Icon: ButtonIcon });
 						onDeselect: () => setQuery({ excludeCurrent: null }),
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
 							label: (0, _wordpress_i18n.__)("Exclude current"),
-							help: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Exclude the current %s from the query."), postTypeSingularName),
+							help: (0, _wordpress_i18n.sprintf)(
+								/** translators: %s: the post type singular name */
+								(0, _wordpress_i18n.__)("Exclude the current %s from the query."),
+								postTypeSingularName
+							),
 							checked: !!excludeCurrent,
 							onChange: (value) => {
 								setQuery({ excludeCurrent: !!value });
@@ -77173,7 +77641,14 @@ Icon: ButtonIcon });
 			if (enhancedPagination && unsupportedBlocks.length) {
 				__unstableMarkNextChangeAsNotPersistent();
 				setAttributes({ enhancedPagination: false });
-				const message = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(`"Reload full page" was enabled because some blocks inside the Query block aren't supported: %s.`), unsupportedBlocks.join((0, _wordpress_i18n.__)(", ")));
+				const message = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: A list of block titles. */
+					(0, _wordpress_i18n.__)(`"Reload full page" was enabled because some blocks inside the Query block aren't supported: %s.`),
+					unsupportedBlocks.join(
+						/** translators: Used between list items, there is a space after the comma. */
+						(0, _wordpress_i18n.__)(", ")
+					)
+				);
 				createNotice("info", message, {
 					type: "snackbar",
 					id: "query-enhanced-pagination-disabled"
@@ -78721,10 +79196,23 @@ Icon: ButtonIcon });
 			let title;
 			if (archiveTypeLabel) {
 				if (showPrefix) {
-					if (archiveNameLabel) title = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%1$s: %2$s", "archive label"), archiveTypeLabel, archiveNameLabel);
-					else title = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s: Name"), archiveTypeLabel);
+					if (archiveNameLabel) title = (0, _wordpress_i18n.sprintf)(
+						/** translators: 1: Archive type title e.g: "Category", 2: Label of the archive e.g: "Shoes" */
+						(0, _wordpress_i18n._x)("%1$s: %2$s", "archive label"),
+						archiveTypeLabel,
+						archiveNameLabel
+					);
+					else title = (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: Archive type title e.g: "Category", "Tag"... */
+						(0, _wordpress_i18n.__)("%s: Name"),
+						archiveTypeLabel
+					);
 				} else if (archiveNameLabel) title = archiveNameLabel;
-				else title = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s name"), archiveTypeLabel);
+				else title = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Archive type title e.g: "Category", "Tag"... */
+					(0, _wordpress_i18n.__)("%s name"),
+					archiveTypeLabel
+				);
 			} else title = showPrefix ? (0, _wordpress_i18n.__)("Archive type: Name") : (0, _wordpress_i18n.__)("Archive title");
 			titleElement = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanel, {
 				label: (0, _wordpress_i18n.__)("Settings"),
@@ -78768,7 +79256,11 @@ Icon: ButtonIcon });
 		if (type === "post-type") {
 			let title;
 			if (postTypeLabel) {
-				if (showPrefix) title = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Post Type: \"%s\""), postTypeLabel);
+				if (showPrefix) title = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: Singular post type name of the queried object */
+					(0, _wordpress_i18n.__)("Post Type: \"%s\""),
+					postTypeLabel
+				);
 				else title = postTypeLabel;
 			} else title = showPrefix ? (0, _wordpress_i18n.__)("Post Type: Name") : (0, _wordpress_i18n.__)("Name");
 			titleElement = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.InspectorControls, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanel, {
@@ -80446,7 +80938,11 @@ Icon: ButtonIcon });
 			}),
 			status === "error" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error: %s"), error) })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message returned when rendering the block. */
+					(0, _wordpress_i18n.__)("Error: %s"),
+					error
+				) })
 			}),
 			status === "success" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
 				wrapperProps: blockProps,
@@ -80878,7 +81374,11 @@ Icon: ButtonIcon });
 						children: PERCENTAGE_WIDTHS.map((widthValue) => {
 							return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToggleGroupControlOption, {
 								value: widthValue,
-								label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%d%%"), widthValue)
+								label: (0, _wordpress_i18n.sprintf)(
+									/** translators: %d: Percentage value. */
+									(0, _wordpress_i18n.__)("%d%%"),
+									widthValue
+								)
 							}, widthValue);
 						})
 					})] })
@@ -87725,7 +88225,11 @@ Icon: ButtonIcon });
 			}),
 			status === "error" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 				...blockProps,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error: %s"), error) })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: error message returned when rendering the block. */
+					(0, _wordpress_i18n.__)("Error: %s"),
+					error
+				) })
 			}),
 			status === "success" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
 				wrapperProps: blockProps,
@@ -87873,7 +88377,11 @@ Icon: ButtonIcon });
 			onSubmit(title);
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
-			title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Create new %s"), areaLabel.toLowerCase()),
+			title: (0, _wordpress_i18n.sprintf)(
+				/** Translators: %s as template part area title ("Header", "Footer", etc.). */
+				(0, _wordpress_i18n.__)("Create new %s"),
+				areaLabel.toLowerCase()
+			),
 			onRequestClose: onClose,
 			focusOnMount: "firstContentElement",
 			size: "small",
@@ -87930,7 +88438,15 @@ Icon: ButtonIcon });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Placeholder, {
 			icon: getTemplatePartIcon(areaObject.icon),
 			label: areaObject.label,
-			instructions: isBlockBasedTheme ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Choose an existing %s or create a new one."), areaObject.label.toLowerCase()) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Choose an existing %s."), areaObject.label.toLowerCase()),
+			instructions: isBlockBasedTheme ? (0, _wordpress_i18n.sprintf)(
+				/** Translators: %s as template part area title ("Header", "Footer", etc.). */
+				(0, _wordpress_i18n.__)("Choose an existing %s or create a new one."),
+				areaObject.label.toLowerCase()
+			) : (0, _wordpress_i18n.sprintf)(
+				/** Translators: %s as template part area title ("Header", "Footer", etc.). */
+				(0, _wordpress_i18n.__)("Choose an existing %s."),
+				areaObject.label.toLowerCase()
+			),
 			children: [
 				isResolving && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {}),
 				!isResolving && !!(templateParts.length || blockPatterns.length) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
@@ -87992,7 +88508,11 @@ Icon: ButtonIcon });
 				theme: templatePart.theme,
 				area: void 0
 			});
-			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Template Part \"%s\" inserted."), templatePart.title?.rendered || templatePart.slug), { type: "snackbar" });
+			createSuccessNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: template part title. */
+				(0, _wordpress_i18n.__)("Template Part \"%s\" inserted."),
+				templatePart.title?.rendered || templatePart.slug
+			), { type: "snackbar" });
 			onClose();
 		};
 		const hasTemplateParts = !!filteredTemplateParts.length;
@@ -88122,8 +88642,15 @@ Icon: ButtonIcon });
 				}
 				return block;
 			});
-			await createFromBlocks(blocks, (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Widget area: %s"), sidebar.label));
-			if (skippedWidgets.size) createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Unable to import the following widgets: %s."), Array.from(skippedWidgets).join(", ")), { type: "snackbar" });
+			await createFromBlocks(blocks, (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+				/** translators: %s: name of the widget area */
+				"Widget area: %s"
+			), sidebar.label));
+			if (skippedWidgets.size) createErrorNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: the list of widgets */
+				(0, _wordpress_i18n.__)("Unable to import the following widgets: %s."),
+				Array.from(skippedWidgets).join(", ")
+			), { type: "snackbar" });
 			setIsBusy(false);
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalSpacer, {
@@ -88184,7 +88711,11 @@ Icon: ButtonIcon });
 				clientId,
 				options: [
 					{
-						label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Default based on area (%s)"), `<${defaultWrapper}>`),
+						label: (0, _wordpress_i18n.sprintf)(
+							/** translators: %s: HTML tag based on area. */
+							(0, _wordpress_i18n.__)("Default based on area (%s)"),
+							`<${defaultWrapper}>`
+						),
 						value: DEFAULT_TAG_NAME
 					},
 					{
@@ -88392,11 +88923,19 @@ Icon: ButtonIcon });
 				blocks: pattern.blocks,
 				content: (0, _wordpress_blocks.serialize)(pattern.blocks)
 			});
-			createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Template Part \"%s\" updated."), title || slug), { type: "snackbar" });
+			createSuccessNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: template part title. */
+				(0, _wordpress_i18n.__)("Template Part \"%s\" updated."),
+				title || slug
+			), { type: "snackbar" });
 		};
 		if (!hasInnerBlocks && (slug && !theme || slug && isMissing)) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TagName, {
 			...blockProps,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Template part has been deleted or is unavailable: %s"), slug) })
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.Warning, { children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Template part slug. */
+				(0, _wordpress_i18n.__)("Template part has been deleted or is unavailable: %s"),
+				slug
+			) })
 		});
 		if (isEntityAvailable && hasAlreadyRendered) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TagName, {
 			...blockProps,
@@ -88478,7 +89017,11 @@ Icon: ButtonIcon });
 			]
 		}), isTemplatePartSelectionOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Modal, {
 			overlayClassName: "block-editor-template-part__selection-modal",
-			title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Choose a %s"), areaObject.label.toLowerCase()),
+			title: (0, _wordpress_i18n.sprintf)(
+				/** Translators: %s as template part area title ("Header", "Footer", etc.). */
+				(0, _wordpress_i18n.__)("Choose a %s"),
+				areaObject.label.toLowerCase()
+			),
 			onRequestClose: () => setIsTemplatePartSelectionOpen(false),
 			isFullScreen: true,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TemplatePartSelectionModal, {
@@ -90053,7 +90596,11 @@ Icon: ButtonIcon });
 									...content.slice(index + 1)
 								] });
 							},
-							"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Column %d text"), index + 1),
+							"aria-label": (0, _wordpress_i18n.sprintf)(
+								/** translators: %d: column index (starting with 1) */
+								(0, _wordpress_i18n.__)("Column %d text"),
+								index + 1
+							),
 							placeholder: (0, _wordpress_i18n.__)("New Column")
 						})
 					}, `column-${index}`);
@@ -90417,7 +90964,10 @@ Icon: ButtonIcon });
 	const { name: name$4 } = block_default$2;
 	const settings$2 = {
 		icon: verse_default,
-		example: { attributes: { content: (0, _wordpress_i18n.__)("WHAT was he doing, the great god Pan,\n	Down in the reeds by the river?\nSpreading ruin and scattering ban,\nSplashing and paddling with hoofs of a goat,\nAnd breaking the golden lilies afloat\n    With the dragon-fly on the river.") } },
+		example: { attributes: { content: (0, _wordpress_i18n.__)(
+			/** translators: Sample content for the Verse block. Can be replaced with a more locale-adequate work. */
+			"WHAT was he doing, the great god Pan,\n	Down in the reeds by the river?\nSpreading ruin and scattering ban,\nSplashing and paddling with hoofs of a goat,\nAnd breaking the golden lilies afloat\n    With the dragon-fly on the river."
+		) } },
 		transforms: transforms$1,
 		deprecated: deprecated_default,
 		merge(attributes, attributesToMerge) {
@@ -90742,7 +91292,10 @@ Icon: ButtonIcon });
 					setAttributes({ playsInline: false });
 				},
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToggleControl, {
-					label: (0, _wordpress_i18n.__)("Play inline"),
+					label: (0, _wordpress_i18n.__)(
+						/** translators: Setting to play videos within the webpage on mobile browsers rather than opening in a fullscreen player. */
+						"Play inline"
+					),
 					onChange: toggleFactory.playsInline,
 					checked: !!playsInline,
 					disabled: autoplay,
@@ -90811,7 +91364,11 @@ Icon: ButtonIcon });
 						__next40pxDefaultSize: true,
 						variant: "tertiary",
 						onClick: () => onEditPress(index),
-						"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("Edit %s", "text tracks"), track.label),
+						"aria-label": (0, _wordpress_i18n.sprintf)(
+							/** translators: %s: Label of the video text track e.g: "French subtitles". */
+							(0, _wordpress_i18n._x)("Edit %s", "text tracks"),
+							track.label
+						),
 						children: (0, _wordpress_i18n.__)("Edit")
 					})]
 				})]
@@ -91316,7 +91873,10 @@ Icon: ButtonIcon });
 		icon: video_default,
 		example: { attributes: {
 			src: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Wood_thrush_in_Central_Park_switch_sides_%2816510%29.webm",
-			caption: (0, _wordpress_i18n.__)("Wood thrush singing in Central Park, NYC.")
+			caption: (0, _wordpress_i18n.__)(
+				/** translators: Caption accompanying a video of the wood thrush singing, which serves as an example for the Video block. */
+				"Wood thrush singing in Central Park, NYC."
+			)
 		} },
 		transforms,
 		deprecated,
@@ -91813,7 +92373,11 @@ Icon: ButtonIcon });
 					});
 					if (status === "error") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 						...blockProps,
-						children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Error loading block: %s"), error)
+						children: (0, _wordpress_i18n.sprintf)(
+							/** translators: %s: error message describing the problem */
+							(0, _wordpress_i18n.__)("Error loading block: %s"),
+							error
+						)
 					});
 					return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HtmlRenderer, {
 						wrapperProps: blockProps,

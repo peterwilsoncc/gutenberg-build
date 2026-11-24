@@ -11538,7 +11538,9 @@ const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children,
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$23["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -15510,7 +15512,11 @@ function DateEdit({ data, field, onChange, hideLabelFromVision, operator }) {
 			item: data,
 			value: newValue
 		}));
-		if (!isFilter && newValue) speak((0, import_i18n.sprintf)((0, import_i18n.__)("Publish date set to %s."), (0, import_date.dateI18n)((0, import_date.getSettings)().formats.datetime, (0, import_date.getDate)(newValue))), "assertive");
+		if (!isFilter && newValue) speak((0, import_i18n.sprintf)(
+			/** translators: %s: The new publish date and time, e.g. "June 3, 2025 12:00 pm". */
+			(0, import_i18n.__)("Publish date set to %s."),
+			(0, import_date.dateI18n)((0, import_date.getSettings)().formats.datetime, (0, import_date.getDate)(newValue))
+		), "assertive");
 	};
 	const onReset = () => {
 		onChange(field.setValue({
@@ -15532,7 +15538,9 @@ function DateEdit({ data, field, onChange, hideLabelFromVision, operator }) {
 				currentDate: value,
 				onChange: onPick,
 				is12Hour: is12HourTime(),
-				dateOrder: (0, import_i18n._x)("dmy", "date order"),
+				dateOrder: 
+				/** translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
+				(0, import_i18n._x)("dmy", "date order"),
 				startOfWeek: (0, import_date.getSettings)().l10n.startOfWeek,
 				events,
 				onMonthPreviewed: (date) => setPreviewedMonth(new Date(date))
@@ -15558,20 +15566,36 @@ function DateEdit({ data, field, onChange, hideLabelFromVision, operator }) {
 // packages/core-fields/build-module/post_type_supports/date/view.mjs
 const getFormattedDate = (dateToDisplay) => (0, import_date.dateI18n)((0, import_date.getSettings)().formats.datetimeAbbreviated, (0, import_date.getDate)(dateToDisplay));
 const DateView = ({ item }) => {
-	if (["draft", "private"].includes(item.status ?? "")) return (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<span>Modified: <time>%s</time></span>"), getFormattedDate(item.date ?? null)), {
+	if (["draft", "private"].includes(item.status ?? "")) return (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+		/** translators: %s: page creation or modification date. */
+		(0, import_i18n.__)("<span>Modified: <time>%s</time></span>"),
+		getFormattedDate(item.date ?? null)
+	), {
 		span: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {}),
 		time: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("time", {})
 	});
-	if (item.status === "future") return (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<span>Scheduled: <time>%s</time></span>"), getFormattedDate(item.date ?? null)), {
+	if (item.status === "future") return (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+		/** translators: %s: page creation date */
+		(0, import_i18n.__)("<span>Scheduled: <time>%s</time></span>"),
+		getFormattedDate(item.date ?? null)
+	), {
 		span: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {}),
 		time: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("time", {})
 	});
-	if (item.status === "publish") return (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<span>Published: <time>%s</time></span>"), getFormattedDate(item.date ?? null)), {
+	if (item.status === "publish") return (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+		/** translators: %s: page creation time */
+		(0, import_i18n.__)("<span>Published: <time>%s</time></span>"),
+		getFormattedDate(item.date ?? null)
+	), {
 		span: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {}),
 		time: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("time", {})
 	});
 	const dateToDisplay = (0, import_date.getDate)(item.modified ?? null) > (0, import_date.getDate)(item.date ?? null) ? item.modified : item.date;
-	if (item.status === "pending") return (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<span>Modified: <time>%s</time></span>"), getFormattedDate(dateToDisplay ?? null)), {
+	if (item.status === "pending") return (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+		/** translators: %s: page creation or modification date. */
+		(0, import_i18n.__)("<span>Modified: <time>%s</time></span>"),
+		getFormattedDate(dateToDisplay ?? null)
+	), {
 		span: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {}),
 		time: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("time", {})
 	});
@@ -15975,7 +15999,11 @@ const fieldExtensions$12 = {
 // packages/core-fields/build-module/post_type_supports/last_edited_date/view.mjs
 function LastEditedDateView({ item }) {
 	if (!item.modified) return null;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, { children: (0, import_i18n.sprintf)((0, import_i18n.__)("Last edited %s."), (0, import_date.humanTimeDiff)(item.modified)) });
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, { children: (0, import_i18n.sprintf)(
+		/** translators: %s: Human-readable time difference, e.g. "2 days ago". */
+		(0, import_i18n.__)("Last edited %s."),
+		(0, import_date.humanTimeDiff)(item.modified)
+	) });
 }
 
 // packages/core-fields/build-module/post_type_supports/last_edited_date/field.mjs
@@ -16731,7 +16759,11 @@ const ParentEdit = ({ data, field, onChange }) => {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("fieldset", {
 		className: style_module_default$5.parent,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-			(0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("Child pages inherit characteristics from their parent, such as URL structure. For instance, if \"Pricing\" is a child of \"Services\", its URL would be %1$s<wbr />/services<wbr />/pricing."), (0, import_url.filterURLForDisplay)(homeUrl).replace(/([/.])/g, "<wbr />$1")), { wbr: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("wbr", {}) }),
+			(0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+				/** translators: %1$s The home URL of the WordPress installation without the scheme. */
+				(0, import_i18n.__)("Child pages inherit characteristics from their parent, such as URL structure. For instance, if \"Pricing\" is a child of \"Services\", its URL would be %1$s<wbr />/services<wbr />/pricing."),
+				(0, import_url.filterURLForDisplay)(homeUrl).replace(/([/.])/g, "<wbr />$1")
+			), { wbr: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("wbr", {}) }),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: (0, import_element.createInterpolateElement)((0, import_i18n.__)("They also show up as sub-items in the default navigation menu. <a>Learn more.</a>"), { a: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 				href: (0, import_i18n.__)("https://wordpress.org/documentation/article/page-post-settings-sidebar/#page-attributes"),
 				openInNewTab: true
@@ -17034,6 +17066,11 @@ function PostContentInfoView({ item }) {
 	let content = "";
 	if (typeof item.content === "string") content = item.content;
 	else if (typeof item.content === "function") content = item.content(item);
+	/**
+	* translators: If your word count is based on single characters (e.g. East Asian characters),
+	* enter 'characters_excluding_spaces' or 'characters_including_spaces'. Otherwise, enter 'words'.
+	* Do not translate into your own language.
+	*/
 	const wordCountType = (0, import_i18n._x)("words", "Word count type. Do not translate!");
 	const wordsCounted = (0, import_element.useMemo)(() => content ? (0, import_wordcount.count)(content, wordCountType) : 0, [content, wordCountType]);
 	const modified = item.modified;
@@ -17041,9 +17078,22 @@ function PostContentInfoView({ item }) {
 	let contentInfoText;
 	if (wordsCounted) {
 		const readingTime = Math.round(wordsCounted / AVERAGE_READING_RATE);
-		const wordsCountText = (0, import_i18n.sprintf)((0, import_i18n._n)("%s word", "%s words", wordsCounted), wordsCounted.toLocaleString());
-		const minutesText = readingTime <= 1 ? (0, import_i18n.__)("1 minute") : (0, import_i18n.sprintf)((0, import_i18n._n)("%s minute", "%s minutes", readingTime), readingTime.toLocaleString());
-		contentInfoText = (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s, %2$s read time."), wordsCountText, minutesText);
+		const wordsCountText = (0, import_i18n.sprintf)(
+			/** translators: %s: the number of words in the post. */
+			(0, import_i18n._n)("%s word", "%s words", wordsCounted),
+			wordsCounted.toLocaleString()
+		);
+		const minutesText = readingTime <= 1 ? (0, import_i18n.__)("1 minute") : (0, import_i18n.sprintf)(
+			/** translators: %s: the number of minutes to read the post. */
+			(0, import_i18n._n)("%s minute", "%s minutes", readingTime),
+			readingTime.toLocaleString()
+		);
+		contentInfoText = (0, import_i18n.sprintf)(
+			/** translators: 1: How many words a post has. 2: the number of minutes to read the post (e.g. 130 words, 2 minutes read time.) */
+			(0, import_i18n.__)("%1$s, %2$s read time."),
+			wordsCountText,
+			minutesText
+		);
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
 		direction: "column",
@@ -17053,7 +17103,11 @@ function PostContentInfoView({ item }) {
 			children: contentInfoText
 		}), modified && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Text, {
 			className: style_module_default$3.text,
-			children: (0, import_i18n.sprintf)((0, import_i18n.__)("Last edited %s."), (0, import_date.humanTimeDiff)(modified))
+			children: (0, import_i18n.sprintf)(
+				/** translators: %s: Human-readable time difference, e.g. "2 days ago". */
+				(0, import_i18n.__)("Last edited %s."),
+				(0, import_date.humanTimeDiff)(modified)
+			)
 		})]
 	});
 }
@@ -17076,7 +17130,11 @@ const fieldExtensions$7 = { render: PostContentInfoView };
 function getFullPublishDateLabel(dateAttribute) {
 	const date = (0, import_date.getDate)(dateAttribute);
 	const timezoneAbbreviation = getTimezoneAbbreviation();
-	const formattedDate = (0, import_date.dateI18n)((0, import_i18n._x)("F j, Y g:i\xA0a", "post schedule full date format"), date);
+	const formattedDate = (0, import_date.dateI18n)(
+		/** translators: Use a non-breaking space between 'g:i' and 'a' if appropriate. */
+		(0, import_i18n._x)("F j, Y g:i\xA0a", "post schedule full date format"),
+		date
+	);
 	return (0, import_i18n.isRTL)() ? `${timezoneAbbreviation} ${formattedDate}` : `${formattedDate} ${timezoneAbbreviation}`;
 }
 /**
@@ -17100,12 +17158,36 @@ function getPublishDateLabel(dateAttribute, { isFloating = false, now = /* @__PU
 	if (!dateAttribute || isFloating) return (0, import_i18n.__)("Immediately");
 	if (!isTimezoneSameAsSiteTimezone(now)) return getFullPublishDateLabel(dateAttribute);
 	const date = (0, import_date.getDate)(dateAttribute);
-	if (isSameDay(date, now)) return (0, import_i18n.sprintf)((0, import_i18n.__)("Today at %s"), (0, import_date.dateI18n)((0, import_i18n._x)("g:i\xA0a", "post schedule time format"), date));
+	if (isSameDay(date, now)) return (0, import_i18n.sprintf)(
+		/** translators: %s: Time of day the post is scheduled for. */
+		(0, import_i18n.__)("Today at %s"),
+		(0, import_date.dateI18n)((0, import_i18n._x)(
+			/** translators: If using a space between 'g:i' and 'a', use a non-breaking space. */
+			"g:i\xA0a",
+			"post schedule time format"
+		), date)
+	);
 	const tomorrow = new Date(now);
 	tomorrow.setDate(tomorrow.getDate() + 1);
-	if (isSameDay(date, tomorrow)) return (0, import_i18n.sprintf)((0, import_i18n.__)("Tomorrow at %s"), (0, import_date.dateI18n)((0, import_i18n._x)("g:i\xA0a", "post schedule time format"), date));
-	if (date.getFullYear() === now.getFullYear()) return (0, import_date.dateI18n)((0, import_i18n._x)("F j g:i\xA0a", "post schedule date format without year"), date);
-	return (0, import_date.dateI18n)((0, import_i18n._x)("F j, Y g:i\xA0a", "post schedule full date format"), date);
+	if (isSameDay(date, tomorrow)) return (0, import_i18n.sprintf)(
+		/** translators: %s: Time of day the post is scheduled for. */
+		(0, import_i18n.__)("Tomorrow at %s"),
+		(0, import_date.dateI18n)((0, import_i18n._x)(
+			/** translators: If using a space between 'g:i' and 'a', use a non-breaking space. */
+			"g:i\xA0a",
+			"post schedule time format"
+		), date)
+	);
+	if (date.getFullYear() === now.getFullYear()) return (0, import_date.dateI18n)(
+		/** translators: If using a space between 'g:i' and 'a', use a non-breaking space. */
+		(0, import_i18n._x)("F j g:i\xA0a", "post schedule date format without year"),
+		date
+	);
+	return (0, import_date.dateI18n)(
+		/** translators: Use a non-breaking space between 'g:i' and 'a' if appropriate. */
+		(0, import_i18n._x)("F j, Y g:i\xA0a", "post schedule full date format"),
+		date
+	);
 }
 function getTimezoneAbbreviation() {
 	const { timezone } = (0, import_date.getSettings)();
@@ -17171,7 +17253,9 @@ function ScheduledDateEdit({ data, field, onChange, hideLabelFromVision }) {
 					value: newValue
 				})),
 				is12Hour: is12HourTime(),
-				dateOrder: (0, import_i18n._x)("dmy", "date order")
+				dateOrder: 
+				/** translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
+				(0, import_i18n._x)("dmy", "date order")
 			}),
 			isImmediate && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldsetDescription, { children: (0, import_i18n.__)("Publishes immediately.") })
 		]

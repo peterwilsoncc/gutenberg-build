@@ -8874,7 +8874,11 @@ Icon: ButtonIcon });
 			id: descriptionId,
 			"aria-hidden": "true",
 			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { ref }),
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: keyboard shortcut. */
+				(0, _wordpress_i18n.__)("Keyboard shortcut: %s"),
+				shortcut.label ?? shortcut.ariaKeyShortcut
+			)
 		});
 	});
 	/**
@@ -9689,7 +9693,9 @@ Icon: ButtonIcon });
 				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: style_module_default$9["link-icon"],
 					role: "img",
-					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+					"aria-label": 
+					/** translators: accessibility text appended to link text */
+					(0, _wordpress_i18n.__)("(opens in a new tab)")
 				})] })
 			})
 		});

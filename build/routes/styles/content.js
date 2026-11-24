@@ -7952,7 +7952,9 @@ const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children,
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$5["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -8778,7 +8780,11 @@ function getPreviewedStylesheet() {
 * @param themeName The previewed theme's decoded name, when known.
 */
 function getPreviewTitle(themeName) {
-	return themeName ? (0, import_i18n.sprintf)((0, import_i18n.__)("Previewing %s"), themeName) : (0, import_i18n.__)("Theme Preview");
+	return themeName ? (0, import_i18n.sprintf)(
+		/** translators: %s: Theme name. */
+		(0, import_i18n.__)("Previewing %s"),
+		themeName
+	) : (0, import_i18n.__)("Theme Preview");
 }
 
 // routes/styles/activate-panel.tsx
@@ -8828,7 +8834,12 @@ function ActivatePanel({ themeName, onClose }) {
 		successNoticeContent = (0, import_i18n.__)("Theme activated.");
 	}
 	const currentTheme = useActualCurrentTheme();
-	const additionalPrompt = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: (0, import_i18n.sprintf)((0, import_i18n.__)("Saving your changes will change your active theme from %1$s to %2$s."), currentTheme?.name?.rendered ?? "...", themeName ?? "...") });
+	const additionalPrompt = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: (0, import_i18n.sprintf)(
+		/** translators: 1: The name of active theme, 2: The name of theme to be activated. */
+		(0, import_i18n.__)("Saving your changes will change your active theme from %1$s to %2$s."),
+		currentTheme?.name?.rendered ?? "...",
+		themeName ?? "..."
+	) });
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EntitiesSavedStatesExtensible, {
 		...isDirtyProps,
 		additionalPrompt,
@@ -12766,7 +12777,11 @@ function BlockAndElementList({ filterValue, styleFilter }) {
 		if (!filterValue && styleFilter === "all") return;
 		const blockCount = hasBlockResults ? blockTypesListRef.current?.childElementCount || 0 : 0;
 		const count = elementCount + blockCount;
-		const resultsFoundMessage = (0, import_i18n.sprintf)((0, import_i18n._n)("%d result found.", "%d results found.", count), count);
+		const resultsFoundMessage = (0, import_i18n.sprintf)(
+			/** translators: %d: number of results. */
+			(0, import_i18n._n)("%d result found.", "%d results found.", count),
+			count
+		);
 		debouncedSpeak(resultsFoundMessage, "polite");
 	}, [
 		filterValue,
@@ -12852,7 +12867,12 @@ function Variation({ variation, children, isPill = false, properties, showToolti
 	};
 	const isActive = (0, import_element.useMemo)(() => areGlobalStylesEqual(user, variation), [user, variation]);
 	let label = variation?.title;
-	if (variation?.description) label = (0, import_i18n.sprintf)((0, import_i18n._x)("%1$s (%2$s)", "variation label"), variation?.title, variation?.description);
+	if (variation?.description) label = (0, import_i18n.sprintf)(
+		/** translators: 1: variation title. 2: variation description. */
+		(0, import_i18n._x)("%1$s (%2$s)", "variation label"),
+		variation?.title,
+		variation?.description
+	);
 	const content = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: clsx("global-styles-ui-variations_item", { "is-active": isActive }),
 		role: "button",

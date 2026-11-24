@@ -13134,7 +13134,11 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 				onChangeHasPreview,
 				onError(error) {
 					window.console.error(error);
-					createNotice("error", (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("The \"%s\" block was affected by errors and may not function properly. Check the developer tools for more details."), idBase || id));
+					createNotice("error", (0, _wordpress_i18n.sprintf)(
+						/** translators: %s: the name of the affected block. */
+						(0, _wordpress_i18n.__)("The \"%s\" block was affected by errors and may not function properly. Check the developer tools for more details."),
+						idBase || id
+					));
 				}
 			});
 			ref.current.appendChild(control.element);

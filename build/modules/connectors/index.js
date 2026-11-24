@@ -264,14 +264,24 @@ function ConnectorSettingsFooter({ readOnly, onRemove, canSave, isSaving, onSave
 function DefaultConnectorSettings({ onSave, onRemove, initialValue = "", helpUrl, helpLabel, readOnly = false, keySource }) {
 	const [apiKey, setApiKey] = (0, import_element.useState)(initialValue);
 	const { isSaving, saveError, setSaveError, handleSave } = useConnectorSettingsSave(onSave, (0, import_i18n.__)("It was not possible to connect to the provider using this key."));
-	const helpLink = createConnectorHelpLink(helpUrl, helpLabel, (0, import_i18n.__)("Get your API key at %s"));
+	const helpLink = createConnectorHelpLink(
+		helpUrl,
+		helpLabel,
+		/** translators: %s: Link to provider settings. */
+		(0, import_i18n.__)("Get your API key at %s")
+	);
 	const isExternallyConfigured = keySource === "env" || keySource === "constant";
 	const getHelp = () => {
 		if (isExternallyConfigured) {
 			if (keySource === "env") return (0, import_i18n.__)("This API key is configured using an environment variable.");
 			if (keySource === "constant") return (0, import_i18n.__)("This API key is configured as a constant.");
 		}
-		if (readOnly) return helpUrl ? createConnectorHelpLink(helpUrl, helpLabel, (0, import_i18n.__)("Your API key is stored securely. You can manage it at %s")) : (0, import_i18n.__)("Your API key is stored securely.");
+		if (readOnly) return helpUrl ? createConnectorHelpLink(
+			helpUrl,
+			helpLabel,
+			/** translators: %s: Link to provider settings. */
+			(0, import_i18n.__)("Your API key is stored securely. You can manage it at %s")
+		) : (0, import_i18n.__)("Your API key is stored securely.");
 		if (saveError) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			role: "alert",
 			className: "connector-settings__error",
@@ -316,7 +326,12 @@ function ApplicationPasswordConnectorSettings({ onSave, onRemove, initialUsernam
 	const [username, setUsername] = (0, import_element.useState)(initialUsername);
 	const [applicationPassword, setApplicationPassword] = (0, import_element.useState)("");
 	const { isSaving, saveError, setSaveError, handleSave } = useConnectorSettingsSave(onSave, (0, import_i18n.__)("It was not possible to save these credentials."));
-	let applicationPasswordHelp = createConnectorHelpLink(helpUrl, helpLabel, (0, import_i18n.__)("Create an application password at %s"));
+	let applicationPasswordHelp = createConnectorHelpLink(
+		helpUrl,
+		helpLabel,
+		/** translators: %s: Link to the remote site's application passwords screen. */
+		(0, import_i18n.__)("Create an application password at %s")
+	);
 	if (keySource === "env") applicationPasswordHelp = (0, import_i18n.__)("These credentials are configured using an environment variable.");
 	else if (keySource === "constant") applicationPasswordHelp = (0, import_i18n.__)("These credentials are configured as a constant.");
 	else if (readOnly) applicationPasswordHelp = (0, import_i18n.__)("Your application password is stored securely.");

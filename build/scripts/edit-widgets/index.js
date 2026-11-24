@@ -5311,12 +5311,32 @@ Icon: ButtonIcon });
 		};
 		useHTMLClass("interface-interface-skeleton__html-container");
 		const mergedLabels = {
-			header: (0, _wordpress_i18n._x)("Header", "header landmark area"),
-			body: (0, _wordpress_i18n.__)("Content"),
-			secondarySidebar: (0, _wordpress_i18n.__)("Block Library"),
-			sidebar: (0, _wordpress_i18n._x)("Settings", "settings landmark area"),
-			actions: (0, _wordpress_i18n.__)("Publish"),
-			footer: (0, _wordpress_i18n.__)("Footer"),
+			header: (0, _wordpress_i18n._x)(
+				/** translators: accessibility text for the top bar landmark region. */
+				"Header",
+				"header landmark area"
+			),
+			body: (0, _wordpress_i18n.__)(
+				/** translators: accessibility text for the content landmark region. */
+				"Content"
+			),
+			secondarySidebar: (0, _wordpress_i18n.__)(
+				/** translators: accessibility text for the secondary sidebar landmark region. */
+				"Block Library"
+			),
+			sidebar: (0, _wordpress_i18n._x)(
+				/** translators: accessibility text for the settings landmark region. */
+				"Settings",
+				"settings landmark area"
+			),
+			actions: (0, _wordpress_i18n.__)(
+				/** translators: accessibility text for the publish landmark region. */
+				"Publish"
+			),
+			footer: (0, _wordpress_i18n.__)(
+				/** translators: accessibility text for the footer landmark region. */
+				"Footer"
+			),
 			...labels
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
@@ -5566,7 +5586,10 @@ Icon: ButtonIcon });
 			await dispatch.saveWidgetAreas(editedWidgetAreas);
 			registry.dispatch(_wordpress_notices.store).createSuccessNotice((0, _wordpress_i18n.__)("Widgets saved."), { type: "snackbar" });
 		} catch (e) {
-			registry.dispatch(_wordpress_notices.store).createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("There was an error. %s"), e.message), { type: "snackbar" });
+			registry.dispatch(_wordpress_notices.store).createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+				/** translators: %s: The error message. */
+				"There was an error. %s"
+			), e.message), { type: "snackbar" });
 		}
 	};
 	/**
@@ -5648,7 +5671,11 @@ Icon: ButtonIcon });
 			if (registry.select(_wordpress_core_data.store).getLastEntitySaveError("root", "widget", widget.id)) failedWidgetNames.push(block.attributes?.name || block?.name);
 			if (!sidebarWidgetsIds[position]) sidebarWidgetsIds[position] = widget.id;
 		}
-		if (failedWidgetNames.length) throw new Error((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Could not save the following widgets: %s."), failedWidgetNames.join(", ")));
+		if (failedWidgetNames.length) throw new Error((0, _wordpress_i18n.sprintf)(
+			/** translators: %s: List of widget names */
+			(0, _wordpress_i18n.__)("Could not save the following widgets: %s."),
+			failedWidgetNames.join(", ")
+		));
 		registry.dispatch(_wordpress_core_data.store).editEntityRecord(KIND, WIDGET_AREA_ENTITY_TYPE, widgetAreaId, { widgets: sidebarWidgetsIds }, { undoIgnore: true });
 		dispatch(trySaveWidgetArea(widgetAreaId));
 		registry.dispatch(_wordpress_core_data.store).receiveEntityRecords(KIND, POST_TYPE, post, void 0);
@@ -6662,7 +6689,10 @@ Icon: ButtonIcon });
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SidebarHeader, { selectedWidgetAreaBlock })
 			}),
 			headerClassName: "edit-widgets-sidebar__panel-tabs",
-			title: (0, _wordpress_i18n.__)("Settings"),
+			title: (0, _wordpress_i18n.__)(
+				/** translators: button label text should, if possible, be under 16 characters. */
+				"Settings"
+			),
 			closeLabel: (0, _wordpress_i18n.__)("Close Settings"),
 			scope: "core/edit-widgets",
 			identifier: currentArea,
@@ -6790,7 +6820,12 @@ Icon: ButtonIcon });
 				},
 				onClick: toggleInserterSidebar,
 				icon: plus_default,
-				label: (0, _wordpress_i18n._x)("Block Inserter", "Generic label for block inserter button"),
+				label: (0, _wordpress_i18n._x)(
+					/** translators: button label text should, if possible, be under 16
+					characters. */
+					"Block Inserter",
+					"Generic label for block inserter button"
+				),
 				size: "compact"
 			}), isMediumViewport && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, { as: undo_default }),
@@ -6800,7 +6835,10 @@ Icon: ButtonIcon });
 					className: "edit-widgets-header-toolbar__list-view-toggle",
 					icon: list_view_default,
 					isPressed: isListViewOpen,
-					label: (0, _wordpress_i18n.__)("List View"),
+					label: (0, _wordpress_i18n.__)(
+						/** translators: button label text should, if possible, be under 16 characters. */
+						"List View"
+					),
 					onClick: toggleListView,
 					ref: listViewToggleRef,
 					size: "compact"
@@ -7015,7 +7053,10 @@ Icon: ButtonIcon });
 					additionalShortcuts: [{
 						keyCombination: { character: "/" },
 						description: (0, _wordpress_i18n.__)("Change the block type after adding a new paragraph."),
-						ariaLabel: (0, _wordpress_i18n.__)("Forward-slash")
+						ariaLabel: (0, _wordpress_i18n.__)(
+							/** translators: The forward-slash character. e.g. '/'. */
+							"Forward-slash"
+						)
 					}]
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ShortcutSection, {
@@ -7086,7 +7127,10 @@ Icon: ButtonIcon });
 							target: "_blank",
 							children: [(0, _wordpress_i18n.__)("Help"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
 								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {}),
-								children: (0, _wordpress_i18n.__)("(opens in a new tab)")
+								children: (0, _wordpress_i18n.__)(
+									/** translators: accessibility text */
+									"(opens in a new tab)"
+								)
 							})]
 						}),
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ToolsMoreMenuGroup.Slot, { fillProps: { onClose } })
@@ -7312,10 +7356,22 @@ Icon: ButtonIcon });
 
 // packages/edit-widgets/build-module/components/layout/interface.mjs
 	const interfaceLabels = {
-		header: (0, _wordpress_i18n.__)("Widgets top bar"),
-		body: (0, _wordpress_i18n.__)("Widgets and blocks"),
-		sidebar: (0, _wordpress_i18n.__)("Widgets settings"),
-		footer: (0, _wordpress_i18n.__)("Widgets footer")
+		header: (0, _wordpress_i18n.__)(
+			/** translators: accessibility text for the widgets screen top bar landmark region. */
+			"Widgets top bar"
+		),
+		body: (0, _wordpress_i18n.__)(
+			/** translators: accessibility text for the widgets screen content landmark region. */
+			"Widgets and blocks"
+		),
+		sidebar: (0, _wordpress_i18n.__)(
+			/** translators: accessibility text for the widgets screen settings landmark region. */
+			"Widgets settings"
+		),
+		footer: (0, _wordpress_i18n.__)(
+			/** translators: accessibility text for the widgets screen footer landmark region. */
+			"Widgets footer"
+		)
 	};
 	function Interface({ blockEditorSettings }) {
 		const isMobileViewport = (0, _wordpress_compose.useViewportMatch)("medium", "<");
@@ -7419,7 +7475,11 @@ Icon: ButtonIcon });
 						children: (0, _wordpress_i18n.__)("Welcome to block Widgets")
 					}), isEntirelyBlockWidgets ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 						className: "edit-widgets-welcome-guide__text",
-						children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Your theme provides %s “block” area for you to add and edit content.\xA0Try adding a search bar, social icons, or other types of blocks here and see how they’ll look on your site.", "Your theme provides %s different “block” areas for you to add and edit content.\xA0Try adding a search bar, social icons, or other types of blocks here and see how they’ll look on your site.", numWidgetAreas), numWidgetAreas)
+						children: (0, _wordpress_i18n.sprintf)(
+							/** Translators: %s: Number of block areas in the current theme. */
+							(0, _wordpress_i18n._n)("Your theme provides %s “block” area for you to add and edit content.\xA0Try adding a search bar, social icons, or other types of blocks here and see how they’ll look on your site.", "Your theme provides %s different “block” areas for you to add and edit content.\xA0Try adding a search bar, social icons, or other types of blocks here and see how they’ll look on your site.", numWidgetAreas),
+							numWidgetAreas
+						)
 					}) }) : /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 						className: "edit-widgets-welcome-guide__text",
 						children: (0, _wordpress_i18n.__)("You can now add any block to your site’s widget areas. Don’t worry, all of your favorite widgets still work flawlessly.")
@@ -7500,7 +7560,11 @@ Icon: ButtonIcon });
 	function Layout({ blockEditorSettings }) {
 		const { createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		function onPluginAreaError(name) {
-			createErrorNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."), name));
+			createErrorNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s: plugin name */
+				(0, _wordpress_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."),
+				name
+			));
 		}
 		const navigateRegionsProps = (0, _wordpress_components.__unstableUseNavigateRegions)();
 		const adminPrimary = (0, _wordpress_element.useMemo)(() => getAdminThemeColors().primary, []);

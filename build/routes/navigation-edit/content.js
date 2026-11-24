@@ -866,7 +866,9 @@ const Link$1 = (0, import_element.forwardRef)(function UnforwardedLink({ childre
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$6["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -1728,10 +1730,14 @@ const POPOVER_PROPS = {
 };
 function LeafMoreMenu({ clientId, ...props }) {
 	const { moveBlocksDown, moveBlocksUp, removeBlocks, duplicateBlocks, insertBeforeBlock, insertAfterBlock } = (0, import_data.useDispatch)(import_block_editor.store);
-	const removeLabel = (0, import_i18n.sprintf)((0, import_i18n.__)("Remove %s"), (0, import_block_editor.BlockTitle)({
-		clientId,
-		maximumLength: 25
-	}));
+	const removeLabel = (0, import_i18n.sprintf)(
+		/** translators: %s: block name */
+		(0, import_i18n.__)("Remove %s"),
+		(0, import_block_editor.BlockTitle)({
+			clientId,
+			maximumLength: 25
+		})
+	);
 	const { rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, import_data.useSelect)((select) => {
 		const { getBlockRootClientId, getBlockName, canInsertBlockType, getDirectInsertBlock, getBlockIndex, getBlockCount } = select(import_block_editor.store);
 		const { getDefaultBlockName } = select(import_blocks.store);

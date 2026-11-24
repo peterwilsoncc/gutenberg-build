@@ -1266,9 +1266,17 @@ react = __toESM(react, 1);
 			content: pattern.content,
 			defaultCategories: getTermLabels(pattern, categories),
 			defaultSyncType: pattern.type !== PATTERN_TYPES.user ? PATTERN_SYNC_TYPES.unsynced : pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full,
-			defaultTitle: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s (Copy)", "pattern"), typeof pattern.title === "string" ? pattern.title : pattern.title.raw),
+			defaultTitle: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: Existing pattern title */
+				(0, _wordpress_i18n._x)("%s (Copy)", "pattern"),
+				typeof pattern.title === "string" ? pattern.title : pattern.title.raw
+			),
 			onSuccess: ({ pattern: newPattern }) => {
-				createSuccessNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("\"%s\" duplicated.", "pattern"), newPattern.title.raw), {
+				createSuccessNotice((0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The new pattern's title e.g. 'Call to action (copy)'. */
+					(0, _wordpress_i18n._x)("\"%s\" duplicated.", "pattern"),
+					newPattern.title.raw
+				), {
 					type: "snackbar",
 					id: "patterns-create"
 				});
@@ -1605,7 +1613,15 @@ react = __toESM(react, 1);
 				replaceBlocks(clientIds, newBlock);
 				setEditingPattern(newBlock.clientId, true);
 			}
-			createSuccessNotice(pattern.wp_pattern_sync_status === PATTERN_SYNC_TYPES.unsynced ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Unsynced pattern created: %s"), pattern.title.raw) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Synced pattern created: %s"), pattern.title.raw), {
+			createSuccessNotice(pattern.wp_pattern_sync_status === PATTERN_SYNC_TYPES.unsynced ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: the name the user has given to the pattern. */
+				(0, _wordpress_i18n.__)("Unsynced pattern created: %s"),
+				pattern.title.raw
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: the name the user has given to the pattern. */
+				(0, _wordpress_i18n.__)("Synced pattern created: %s"),
+				pattern.title.raw
+			), {
 				type: "snackbar",
 				id: "convert-to-pattern-success"
 			});
@@ -1817,7 +1833,11 @@ react = __toESM(react, 1);
 		const isNameValid = !!editedBlockName.trim();
 		const handleSubmit = () => {
 			if (editedBlockName !== initialName) {
-				const message = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block name changed to: \"%s\"."), editedBlockName);
+				const message = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: new name/label for the block */
+					(0, _wordpress_i18n.__)("Block name changed to: \"%s\"."),
+					editedBlockName
+				);
 				(0, _wordpress_a11y.speak)(message, "assertive");
 			}
 			onSave(editedBlockName);

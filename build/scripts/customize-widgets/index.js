@@ -4925,7 +4925,10 @@ Icon: ButtonIcon });
 					additionalShortcuts: [{
 						keyCombination: { character: "/" },
 						description: (0, _wordpress_i18n.__)("Change the block type after adding a new paragraph."),
-						ariaLabel: (0, _wordpress_i18n.__)("Forward-slash")
+						ariaLabel: (0, _wordpress_i18n.__)(
+							/** translators: The forward-slash character. e.g. '/'. */
+							"Forward-slash"
+						)
 					}]
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ShortcutSection, {
@@ -4986,7 +4989,10 @@ Icon: ButtonIcon });
 							target: "_blank",
 							children: [(0, _wordpress_i18n.__)("Help"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
 								render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {}),
-								children: (0, _wordpress_i18n.__)("(opens in a new tab)")
+								children: (0, _wordpress_i18n.__)(
+									/** translators: accessibility text */
+									"(opens in a new tab)"
+								)
 							})]
 						})
 					]
@@ -5027,7 +5033,10 @@ Icon: ButtonIcon });
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, {
 						as: _wordpress_components.Button,
 						icon: !(0, _wordpress_i18n.isRTL)() ? undo_default : redo_default,
-						label: (0, _wordpress_i18n.__)("Undo"),
+						label: (0, _wordpress_i18n.__)(
+							/** translators: button label text should, if possible, be under 16 characters. */
+							"Undo"
+						),
 						shortcut: _wordpress_keycodes.displayShortcut.primary("z"),
 						"aria-disabled": !hasUndo,
 						onClick: hasUndo ? sidebar.undo : void 0,
@@ -5037,7 +5046,10 @@ Icon: ButtonIcon });
 					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, {
 						as: _wordpress_components.Button,
 						icon: !(0, _wordpress_i18n.isRTL)() ? redo_default : undo_default,
-						label: (0, _wordpress_i18n.__)("Redo"),
+						label: (0, _wordpress_i18n.__)(
+							/** translators: button label text should, if possible, be under 16 characters. */
+							"Redo"
+						),
 						shortcut,
 						"aria-disabled": !hasRedo,
 						onClick: hasRedo ? sidebar.redo : void 0,

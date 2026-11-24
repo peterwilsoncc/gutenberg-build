@@ -884,7 +884,9 @@ const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children,
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$2["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -1418,7 +1420,11 @@ function Banner() {
 					className: banner_module_default["banner-link"],
 					href: "/wp-admin/about.php",
 					variant: "unstyled",
-					children: (0, import_i18n.sprintf)((0, import_i18n.__)("Learn more about the %s version."), DISPLAY_VERSION)
+					children: (0, import_i18n.sprintf)(
+						/** translators: %s: Current WordPress version. */
+						(0, import_i18n.__)("Learn more about the %s version."),
+						DISPLAY_VERSION
+					)
 				})
 			})]
 		})]

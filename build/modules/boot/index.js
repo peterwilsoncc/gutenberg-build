@@ -7316,7 +7316,11 @@ const KeyboardShortcutDescription = (0, import_element.forwardRef)(function Unfo
 		id: descriptionId,
 		"aria-hidden": "true",
 		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { ref }),
-		children: (0, import_i18n.sprintf)((0, import_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+		children: (0, import_i18n.sprintf)(
+			/** translators: %s: keyboard shortcut. */
+			(0, import_i18n.__)("Keyboard shortcut: %s"),
+			shortcut.label ?? shortcut.ariaKeyShortcut
+		)
 	});
 });
 /**
@@ -8148,7 +8152,9 @@ const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children,
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$22["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -10823,7 +10829,11 @@ function SaveButton() {
 	const disabled = isSaving || isInSavedState;
 	const getLabel = () => {
 		if (isInSavedState) return (0, import_i18n.__)("Saved");
-		return (0, import_i18n.sprintf)((0, import_i18n._n)("Review %d change…", "Review %d changes…", dirtyEntityRecordsCount), dirtyEntityRecordsCount);
+		return (0, import_i18n.sprintf)(
+			/** translators: %d: number of unsaved changes (number). */
+			(0, import_i18n._n)("Review %d change…", "Review %d changes…", dirtyEntityRecordsCount),
+			dirtyEntityRecordsCount
+		);
 	};
 	const label = getLabel();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$2, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger, {
@@ -11309,7 +11319,11 @@ function useActionPerformed(postType) {
 				const to = getEntityLink(newItem.type, newItem.id);
 				if (!to) break;
 				const title = typeof newItem.title === "string" ? newItem.title : newItem.title?.rendered;
-				createSuccessNotice((0, import_i18n.sprintf)((0, import_i18n.__)("\"%s\" successfully created."), (0, import_html_entities.decodeEntities)(title ?? "") || (0, import_i18n.__)("(no title)")), {
+				createSuccessNotice((0, import_i18n.sprintf)(
+					/** translators: %s: Title of the created post, e.g: "Hello world". */
+					(0, import_i18n.__)("\"%s\" successfully created."),
+					(0, import_html_entities.decodeEntities)(title ?? "") || (0, import_i18n.__)("(no title)")
+				), {
 					type: "snackbar",
 					id: "duplicate-post-action",
 					actions: [{
@@ -11654,7 +11668,11 @@ var import_plugins = require_plugins();
 function PluginArea() {
 	const { createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_plugins.PluginArea, { onError: (name) => {
-		createErrorNotice((0, import_i18n.sprintf)((0, import_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."), name));
+		createErrorNotice((0, import_i18n.sprintf)(
+			/** translators: %s: plugin name */
+			(0, import_i18n.__)("The \"%s\" plugin has encountered an error and cannot be rendered."),
+			name
+		));
 	} });
 }
 
@@ -11680,7 +11698,12 @@ function useRouteTitle() {
 		if (routeTitle && typeof routeTitle === "string" && siteTitle && typeof siteTitle === "string") {
 			const decodedRouteTitle = (0, import_html_entities.decodeEntities)(routeTitle);
 			const decodedSiteTitle = (0, import_html_entities.decodeEntities)(siteTitle);
-			const formattedTitle = (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s ‹ %2$s — WordPress"), decodedRouteTitle, decodedSiteTitle);
+			const formattedTitle = (0, import_i18n.sprintf)(
+				/** translators: Admin document title. 1: Admin screen name, 2: Site name. */
+				(0, import_i18n.__)("%1$s ‹ %2$s — WordPress"),
+				decodedRouteTitle,
+				decodedSiteTitle
+			);
 			document.title = formattedTitle;
 			if (decodedRouteTitle) speak(decodedRouteTitle, "assertive");
 		}

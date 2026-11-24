@@ -1815,14 +1815,45 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 		const hasPosition = position !== void 0;
 		const hasLabel = label && label !== title;
 		if (hasPosition && direction === "vertical") {
-			if (hasLabel) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s Block. Row %2$d. %3$s"), title, position, label);
-			return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s Block. Row %2$d"), title, position);
+			if (hasLabel) return (0, _wordpress_i18n.sprintf)(
+				/** translators: accessibility text. 1: The block title. 2: The block row number. 3: The block label.. */
+				(0, _wordpress_i18n.__)("%1$s Block. Row %2$d. %3$s"),
+				title,
+				position,
+				label
+			);
+			return (0, _wordpress_i18n.sprintf)(
+				/** translators: accessibility text. 1: The block title. 2: The block row number. */
+				(0, _wordpress_i18n.__)("%1$s Block. Row %2$d"),
+				title,
+				position
+			);
 		} else if (hasPosition && direction === "horizontal") {
-			if (hasLabel) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s Block. Column %2$d. %3$s"), title, position, label);
-			return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s Block. Column %2$d"), title, position);
+			if (hasLabel) return (0, _wordpress_i18n.sprintf)(
+				/** translators: accessibility text. 1: The block title. 2: The block column number. 3: The block label.. */
+				(0, _wordpress_i18n.__)("%1$s Block. Column %2$d. %3$s"),
+				title,
+				position,
+				label
+			);
+			return (0, _wordpress_i18n.sprintf)(
+				/** translators: accessibility text. 1: The block title. 2: The block column number. */
+				(0, _wordpress_i18n.__)("%1$s Block. Column %2$d"),
+				title,
+				position
+			);
 		}
-		if (hasLabel) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s Block. %2$s"), title, label);
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s Block"), title);
+		if (hasLabel) return (0, _wordpress_i18n.sprintf)(
+			/** translators: accessibility text. 1: The block title. 2: The block label. */
+			(0, _wordpress_i18n.__)("%1$s Block. %2$s"),
+			title,
+			label
+		);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: accessibility text. %s: The block title. */
+			(0, _wordpress_i18n.__)("%s Block"),
+			title
+		);
 	}
 	function getDefault(attributeSchema) {
 		if (attributeSchema.default !== void 0) return attributeSchema.default;

@@ -55,7 +55,11 @@ function isThemePreviewAdminPage() {
 * @param themeName The previewed theme's decoded name, when known.
 */
 function getPreviewTitle(themeName) {
-	return themeName ? (0, import_i18n.sprintf)((0, import_i18n.__)("Previewing %s"), themeName) : (0, import_i18n.__)("Theme Preview");
+	return themeName ? (0, import_i18n.sprintf)(
+		/** translators: %s: Theme name. */
+		(0, import_i18n.__)("Previewing %s"),
+		themeName
+	) : (0, import_i18n.__)("Theme Preview");
 }
 
 // routes/styles/route.ts

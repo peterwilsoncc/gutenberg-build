@@ -1866,10 +1866,14 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	function toggleFormat(value, format) {
 		if (getActiveFormat(value, format.type)) {
-			if (format.title) (0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s removed."), format.title), "assertive");
+			if (format.title)
+ /** translators: %s: title of the formatting control */
+			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s removed."), format.title), "assertive");
 			return removeFormat(value, format.type);
 		}
-		if (format.title) (0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s applied."), format.title), "assertive");
+		if (format.title)
+ /** translators: %s: title of the formatting control */
+		(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s applied."), format.title), "assertive");
 		return applyFormat(value, format);
 	}
 

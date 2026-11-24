@@ -15134,7 +15134,11 @@ Icon: ButtonIcon });
 			id: descriptionId,
 			"aria-hidden": "true",
 			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { ref }),
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: keyboard shortcut. */
+				(0, _wordpress_i18n.__)("Keyboard shortcut: %s"),
+				shortcut.label ?? shortcut.ariaKeyShortcut
+			)
 		});
 	});
 	/**
@@ -52527,8 +52531,16 @@ VisualLabel });
 		function announce(options) {
 			if (!debouncedSpeak) return;
 			if (!!options.length) {
-				if (filterValue) debouncedSpeak((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", options.length), options.length), "assertive");
-				else debouncedSpeak((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Initial %d result loaded. Type to filter all available results. Use up and down arrow keys to navigate.", "Initial %d results loaded. Type to filter all available results. Use up and down arrow keys to navigate.", options.length), options.length), "assertive");
+				if (filterValue) debouncedSpeak((0, _wordpress_i18n.sprintf)(
+					/** translators: %d: number of results. */
+					(0, _wordpress_i18n._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", options.length),
+					options.length
+				), "assertive");
+				else debouncedSpeak((0, _wordpress_i18n.sprintf)(
+					/** translators: %d: number of results. */
+					(0, _wordpress_i18n._n)("Initial %d result loaded. Type to filter all available results. Use up and down arrow keys to navigate.", "Initial %d results loaded. Type to filter all available results. Use up and down arrow keys to navigate.", options.length),
+					options.length
+				), "assertive");
 			} else debouncedSpeak((0, _wordpress_i18n.__)("No results."), "assertive");
 		}
 		(0, _wordpress_element.useLayoutEffect)(() => {
@@ -57037,6 +57049,7 @@ VisualLabel });
 			}
 			if (normalizedCurrentValue === (currentValueIsSimpleColor ? q$1(colorValue).toHex() : colorValue)) return colorName;
 		}
+		/** translators: shown when the user has picked a custom color (i.e not in the palette of colors). */
 		return (0, _wordpress_i18n.__)("Custom");
 	};
 	const isMultiplePaletteObject = (obj) => Array.isArray(obj.colors) && !("color" in obj);
@@ -57171,7 +57184,10 @@ VisualLabel });
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(circular_option_picker_default.Option, {
 					isSelected,
 					selectedIconProps: isSelected ? { color: colordColor.contrast() > colordColor.contrast("#000") ? "#fff" : "#000" } : {},
-					tooltipText: name || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Color code: %s"), color),
+					tooltipText: name || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+						/** translators: %s: color hex code e.g: "#f00". */
+						"Color code: %s"
+					), color),
 					style: {
 						backgroundColor: color,
 						color
@@ -57265,7 +57281,12 @@ VisualLabel });
 		});
 		const isHex = value?.startsWith("#");
 		const displayValue = value?.replace(/^var\((.+)\)$/, "$1");
-		const customColorAccessibleLabel = !!displayValue ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Custom color picker. The currently selected color is called \"%1$s\" and has a value of \"%2$s\"."), buttonLabelName, displayValue) : (0, _wordpress_i18n.__)("Custom color picker");
+		const customColorAccessibleLabel = !!displayValue ? (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: The name of the color e.g: "vivid red". 2: The color's hex code e.g: "#f00". */
+			(0, _wordpress_i18n.__)("Custom color picker. The currently selected color is called \"%1$s\" and has a value of \"%2$s\"."),
+			buttonLabelName,
+			displayValue
+		) : (0, _wordpress_i18n.__)("Custom color picker");
 		const { metaProps, labelProps, resolvedPresentation } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby, presentation);
 		const paletteCommonProps = {
 			clearColor,
@@ -57924,16 +57945,45 @@ VisualLabel });
 		if (isStyleEnabled) {
 			if (colorObject) {
 				const ariaLabelValue = getAriaLabelColorValue(colorObject.color);
-				return style ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Border color and style picker. The currently selected color is called \"%1$s\" and has a value of \"%2$s\". The currently selected style is \"%3$s\"."), colorObject.name, ariaLabelValue, style) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Border color and style picker. The currently selected color is called \"%1$s\" and has a value of \"%2$s\"."), colorObject.name, ariaLabelValue);
+				return style ? (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: The name of the color e.g. "vivid red". 2: The color's hex code e.g.: "#f00:". 3: The current border style selection e.g. "solid". */
+					(0, _wordpress_i18n.__)("Border color and style picker. The currently selected color is called \"%1$s\" and has a value of \"%2$s\". The currently selected style is \"%3$s\"."),
+					colorObject.name,
+					ariaLabelValue,
+					style
+				) : (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: The name of the color e.g. "vivid red". 2: The color's hex code e.g.: "#f00:". */
+					(0, _wordpress_i18n.__)("Border color and style picker. The currently selected color is called \"%1$s\" and has a value of \"%2$s\"."),
+					colorObject.name,
+					ariaLabelValue
+				);
 			}
 			if (colorValue) {
 				const ariaLabelValue = getAriaLabelColorValue(colorValue);
-				return style ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Border color and style picker. The currently selected color has a value of \"%1$s\". The currently selected style is \"%2$s\"."), ariaLabelValue, style) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Border color and style picker. The currently selected color has a value of \"%s\"."), ariaLabelValue);
+				return style ? (0, _wordpress_i18n.sprintf)(
+					/** translators: 1: The color's hex code e.g.: "#f00:". 2: The current border style selection e.g. "solid". */
+					(0, _wordpress_i18n.__)("Border color and style picker. The currently selected color has a value of \"%1$s\". The currently selected style is \"%2$s\"."),
+					ariaLabelValue,
+					style
+				) : (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The color's hex code e.g: "#f00". */
+					(0, _wordpress_i18n.__)("Border color and style picker. The currently selected color has a value of \"%s\"."),
+					ariaLabelValue
+				);
 			}
 			return (0, _wordpress_i18n.__)("Border color and style picker.");
 		}
-		if (colorObject) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Border color picker. The currently selected color is called \"%1$s\" and has a value of \"%2$s\"."), colorObject.name, getAriaLabelColorValue(colorObject.color));
-		if (colorValue) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Border color picker. The currently selected color has a value of \"%s\"."), getAriaLabelColorValue(colorValue));
+		if (colorObject) return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: The name of the color e.g. "vivid red". 2: The color's hex code e.g: "#f00". */
+			(0, _wordpress_i18n.__)("Border color picker. The currently selected color is called \"%1$s\" and has a value of \"%2$s\"."),
+			colorObject.name,
+			getAriaLabelColorValue(colorObject.color)
+		);
+		if (colorValue) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: The color's hex code e.g: "#f00". */
+			(0, _wordpress_i18n.__)("Border color picker. The currently selected color has a value of \"%s\"."),
+			getAriaLabelColorValue(colorValue)
+		);
 		return (0, _wordpress_i18n.__)("Border color picker.");
 	};
 	const BorderControlDropdown = (props, forwardedRef) => {
@@ -63350,7 +63400,12 @@ VisualLabel });
 	function ControlPointButton({ isOpen, position, color, disablePositioning, ...additionalProps }) {
 		const descriptionId = `components-custom-gradient-picker__control-point-button-description-${(0, _wordpress_compose.useInstanceId)(ControlPointButton)}`;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button, {
-			"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Gradient control point at position %1$d%% with color code %2$s."), position, color),
+			"aria-label": (0, _wordpress_i18n.sprintf)(
+				/** translators: 1: gradient position e.g: 70. 2: gradient color code e.g: rgb(52,121,151). */
+				(0, _wordpress_i18n.__)("Gradient control point at position %1$d%% with color code %2$s."),
+				position,
+				color
+			),
 			"aria-describedby": descriptionId,
 			"aria-haspopup": "true",
 			"aria-expanded": isOpen,
@@ -64769,13 +64824,22 @@ VisualLabel });
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(circular_option_picker_default.Option, {
 					value: gradient,
 					isSelected,
-					tooltipText: name || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Gradient code: %s"), gradient),
+					tooltipText: name || (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+						/** translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);". */
+						"Gradient code: %s"
+					), gradient),
 					style: {
 						color: "rgba( 0,0,0,0 )",
 						background: gradient
 					},
 					onClick: isSelected ? clearGradient : () => onChange(gradient, index, slug),
-					"aria-label": name ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Gradient: %s"), name) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Gradient code: %s"), gradient)
+					"aria-label": name ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+						/** translators: %s: The name of the gradient e.g: "Angular red to blue". */
+						"Gradient: %s"
+					), name) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)(
+						/** translators: %s: gradient code e.g: "linear-gradient(90deg, rgba(98,16,153,1) 0%, rgba(172,110,22,1) 100%);". */
+						"Gradient code: %s"
+					), gradient)
 				}, slug);
 			});
 		}, [
@@ -65103,8 +65167,16 @@ VisualLabel });
 				background: getGradientFromCSSColors(colors, "135deg"),
 				color: "transparent"
 			};
-			const tooltipText = name ?? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Duotone code: %s"), slug);
-			const label = name ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Duotone: %s"), name) : tooltipText;
+			const tooltipText = name ?? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: duotone code e.g: "dark-grayscale" or "7f7f7f-ffffff". */
+				(0, _wordpress_i18n.__)("Duotone code: %s"),
+				slug
+			);
+			const label = name ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The name of the option e.g: "Dark grayscale". */
+				(0, _wordpress_i18n.__)("Duotone: %s"),
+				name
+			) : tooltipText;
 			const isSelected = resolvedPresentation !== "command-buttons" && (selectedSlug ? slug === selectedSlug : (0, import_es6.default)(colors, value));
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(circular_option_picker_default.Option, {
 				value: colors,
@@ -65351,7 +65423,13 @@ VisualLabel });
 	* @param variant The kind of preset being edited.
 	*/
 	function getRemoveLabelFormat(variant) {
-		return variant === "duotone" ? (0, _wordpress_i18n.__)("Remove duotone: %s") : (0, _wordpress_i18n.__)("Remove color: %s");
+		return variant === "duotone" ? (0, _wordpress_i18n.__)(
+			/** translators: %s is a duotone name, e.g. "Purple and yellow". */
+			"Remove duotone: %s"
+		) : (0, _wordpress_i18n.__)(
+			/** translators: %s is a color or gradient name, e.g. "Red". */
+			"Remove color: %s"
+		);
 	}
 	/**
 	* Returns the label for the button that adds a new palette element.
@@ -65460,7 +65538,15 @@ VisualLabel });
 			return previousValue;
 		}, 1);
 		return {
-			name: variant === "duotone" ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Duotone %d"), position) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Color %d"), position),
+			name: variant === "duotone" ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: is an id for a custom duotone */
+				(0, _wordpress_i18n.__)("Duotone %d"),
+				position
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: is an id for a custom color */
+				(0, _wordpress_i18n.__)("Color %d"),
+				position
+			),
 			slug: `${slugPrefix}${stem}-${position}`
 		};
 	}
@@ -65482,7 +65568,11 @@ VisualLabel });
 		}), [receivedPopoverProps]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Popover, {
 			role: "dialog",
-			"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Edit: %s"), element.name.trim().length ? element.name : getElementValue(element, variant) || ""),
+			"aria-label": (0, _wordpress_i18n.sprintf)(
+				/** translators: %s is a color, gradient or duotone name, e.g. "Red". */
+				(0, _wordpress_i18n.__)("Edit: %s"),
+				element.name.trim().length ? element.name : getElementValue(element, variant) || ""
+			),
 			...popoverProps,
 			onClose,
 			children: [
@@ -65561,7 +65651,11 @@ VisualLabel });
 						onClick: () => {
 							setIsEditingColor(true);
 						},
-						"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Edit: %s"), element.name.trim().length ? element.name : value || ""),
+						"aria-label": (0, _wordpress_i18n.sprintf)(
+							/** translators: %s is a color, gradient or duotone name, e.g. "Red". */
+							(0, _wordpress_i18n.__)("Edit: %s"),
+							element.name.trim().length ? element.name : value || ""
+						),
 						style: { padding: 0 },
 						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ColorIndicator, {
 							className: style_module_default$50.indicator,
@@ -66340,7 +66434,11 @@ VisualLabel });
 		(0, _wordpress_element.useEffect)(() => {
 			const hasMatchingSuggestions = matchingSuggestions.length > 0;
 			if (isExpanded) {
-				const message = hasMatchingSuggestions ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length), matchingSuggestions.length) : (0, _wordpress_i18n.__)("No results.");
+				const message = hasMatchingSuggestions ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %d: number of results. */
+					(0, _wordpress_i18n._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length),
+					matchingSuggestions.length
+				) : (0, _wordpress_i18n.__)("No results.");
 				(0, _wordpress_a11y.speak)(message, "polite");
 			}
 		}, [matchingSuggestions, isExpanded]);
@@ -67611,6 +67709,7 @@ VisualLabel });
 	}
 	function getDescribedBy(currentName, describedBy) {
 		if (describedBy) return describedBy;
+		/** translators: %s: The selected option. */
 		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Currently selected: %s"), currentName);
 	}
 	/**
@@ -68201,7 +68300,11 @@ VisualLabel });
 		const parts = [(0, _wordpress_date.dateI18n)(formats.date, date, -date.getTimezoneOffset())];
 		if (isSelected) parts.push((0, _wordpress_i18n.__)("Selected"));
 		if (isToday) parts.push((0, _wordpress_i18n.__)("Today"));
-		if (numEvents > 0) parts.push((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("There is %d event", "There are %d events", numEvents), numEvents));
+		if (numEvents > 0) parts.push((0, _wordpress_i18n.sprintf)(
+			/** translators: %d: Number of events on the calendar date. */
+			(0, _wordpress_i18n._n)("There is %d event", "There are %d events", numEvents),
+			numEvents
+		));
 		return parts.join(". ");
 	}
 
@@ -68341,7 +68444,11 @@ VisualLabel });
 			openOnHover: true,
 			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$2, { variant: "unstyled" }),
 			className: clsx("components-datetime__timezone", style_module_default$41["time-zone-trigger"]),
-			"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Timezone: %s"), zoneAbbr),
+			"aria-label": (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: timezone abbreviation, e.g. "CEST" or "UTC+3". */
+				(0, _wordpress_i18n.__)("Timezone: %s"),
+				zoneAbbr
+			),
 			children: zoneAbbr
 		}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Popup$1, {
 			positioner: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Positioner$1, { side: "top" }),
@@ -70072,7 +70179,9 @@ VisualLabel });
 				children
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 				className: clsx("components-external-link__icon", "wp-exclude-emoji"),
-				"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)"),
+				"aria-label": 
+				/** translators: accessibility text */
+				(0, _wordpress_i18n.__)("(opens in a new tab)"),
 				children: (0, _wordpress_i18n.isRTL)() ? "↖" : "↗"
 			})]
 		});
@@ -71266,11 +71375,26 @@ VisualLabel });
 	* ordered by size and show T-shirt labels.
 	*/
 	const T_SHIRT_ABBREVIATIONS = [
-		(0, _wordpress_i18n.__)("S"),
-		(0, _wordpress_i18n.__)("M"),
-		(0, _wordpress_i18n.__)("L"),
-		(0, _wordpress_i18n.__)("XL"),
-		(0, _wordpress_i18n.__)("XXL")
+		(0, _wordpress_i18n.__)(
+			/** translators: S stands for 'small' and is a size label. */
+			"S"
+		),
+		(0, _wordpress_i18n.__)(
+			/** translators: M stands for 'medium' and is a size label. */
+			"M"
+		),
+		(0, _wordpress_i18n.__)(
+			/** translators: L stands for 'large' and is a size label. */
+			"L"
+		),
+		(0, _wordpress_i18n.__)(
+			/** translators: XL stands for 'extra large' and is a size label. */
+			"XL"
+		),
+		(0, _wordpress_i18n.__)(
+			/** translators: XXL stands for 'extra extra large' and is a size label. */
+			"XXL"
+		)
 	];
 	/**
 	* List of T-shirt names.
@@ -71732,7 +71856,13 @@ VisualLabel });
 		});
 		const onClick = () => onClickRemove({ value });
 		const transformedValue = displayTransform(value);
-		const termPositionAndCount = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s (%2$d of %3$d)"), transformedValue, termPosition, termsCount);
+		const termPositionAndCount = (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: term name, 2: term position in a set of terms, 3: total term set count. */
+			(0, _wordpress_i18n.__)("%1$s (%2$d of %3$d)"),
+			transformedValue,
+			termPosition,
+			termsCount
+		);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
 			className: tokenClasses,
 			onMouseEnter,
@@ -72233,7 +72363,11 @@ VisualLabel });
 				}
 			}
 			if (inputHasMinimumChars) {
-				const message = hasMatchingSuggestions ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length), matchingSuggestions.length) : (0, _wordpress_i18n.__)("No results.");
+				const message = hasMatchingSuggestions ? (0, _wordpress_i18n.sprintf)(
+					/** translators: %d: number of results. */
+					(0, _wordpress_i18n._n)("%d result found, use up and down arrow keys to navigate.", "%d results found, use up and down arrow keys to navigate.", matchingSuggestions.length),
+					matchingSuggestions.length
+				) : (0, _wordpress_i18n.__)("No results.");
 				debouncedSpeak(message, "assertive");
 			}
 		}
@@ -72403,7 +72537,12 @@ VisualLabel });
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button, {
 					size: "small",
 					icon: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PageControlIcon, {}),
-					"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Page %1$d of %2$d"), page + 1, numberOfPages),
+					"aria-label": (0, _wordpress_i18n.sprintf)(
+						/** translators: 1: current page number 2: total number of pages */
+						(0, _wordpress_i18n.__)("Page %1$d of %2$d"),
+						page + 1,
+						numberOfPages
+					),
 					onClick: () => setCurrentPage(page)
 				}, page)
 			}, page))
@@ -74990,11 +75129,17 @@ The screen with id ${screen.id} will not be added.`);
 			value: "date/asc"
 		},
 		{
-			label: (0, _wordpress_i18n.__)("A → Z"),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: Label for ordering posts by title in ascending order. */
+				"A → Z"
+			),
 			value: "title/asc"
 		},
 		{
-			label: (0, _wordpress_i18n.__)("Z → A"),
+			label: (0, _wordpress_i18n.__)(
+				/** translators: Label for ordering posts by title in descending order. */
+				"Z → A"
+			),
 			value: "title/desc"
 		}
 	];
@@ -78678,10 +78823,18 @@ The screen with id ${screen.id} will not be added.`);
 			if (hasValue) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuItem, {
 				className: itemClassName,
 				role: "menuitem",
-				label: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s, reset to default"), label),
+				label: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the reset action, to match the visible menu label order. */
+					(0, _wordpress_i18n.__)("%s, reset to default"),
+					label
+				),
 				onClick: () => {
 					toggleItem(label);
-					(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s reset to default"), label), "assertive");
+					(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)(
+						/** translators: %s: The name of the control being reset e.g. "Padding". */
+						(0, _wordpress_i18n.__)("%s reset to default"),
+						label
+					), "assertive");
 				},
 				suffix: resetSuffix,
 				children: label
@@ -78699,14 +78852,30 @@ The screen with id ${screen.id} will not be added.`);
 	const OptionalControlsGroup = ({ items, toggleItem }) => {
 		if (!items.length) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: items.map(([label, isSelected]) => {
-			const itemLabel = isSelected ? (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s, hide and reset"), label) : (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s, show", "input control"), label);
+			const itemLabel = isSelected ? (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the hide and reset action. */
+				(0, _wordpress_i18n.__)("%s, hide and reset"),
+				label
+			) : (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: The control name, e.g. "Padding". Keep the control name first, followed by the show action. */
+				(0, _wordpress_i18n._x)("%s, show", "input control"),
+				label
+			);
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuItem, {
 				icon: isSelected ? check_default : null,
 				isSelected,
 				label: itemLabel,
 				onClick: () => {
-					if (isSelected) (0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s hidden and reset to default"), label), "assertive");
-					else (0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s is now visible"), label), "assertive");
+					if (isSelected) (0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)(
+						/** translators: %s: The name of the control being reset e.g. "Padding". */
+						(0, _wordpress_i18n.__)("%s hidden and reset to default"),
+						label
+					), "assertive");
+					else (0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)(
+						/** translators: %s: The name of the control being reset e.g. "Padding". */
+						(0, _wordpress_i18n.__)("%s is now visible"),
+						label
+					), "assertive");
 					toggleItem(label);
 				},
 				role: "menuitemcheckbox",
@@ -78720,7 +78889,11 @@ The screen with id ${screen.id} will not be added.`);
 		const defaultItems = Object.entries(menuItems?.default || {});
 		const optionalItems = Object.entries(menuItems?.optional || {});
 		const dropDownMenuIcon = areAllOptionalControlsHidden ? plus_default : more_vertical_default;
-		const dropDownMenuLabelText = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._x)("%s options", "Button label to reveal tool panel options"), labelText);
+		const dropDownMenuLabelText = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: The name of the tool e.g. "Color" or "Typography". */
+			(0, _wordpress_i18n._x)("%s options", "Button label to reveal tool panel options"),
+			labelText
+		);
 		const dropdownMenuDescriptionText = areAllOptionalControlsHidden ? (0, _wordpress_i18n.__)("All options are currently hidden") : void 0;
 		const canResetAll = [...defaultItems, ...optionalItems].some(([, isSelected]) => isSelected);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HStack, {

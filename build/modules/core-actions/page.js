@@ -176,14 +176,24 @@ function SetSitePageModal({ setting, items, closeModal, getText, submitLabel, su
 const getText$1 = ({ pageTitle, currentPage, siteSettings }) => {
 	let warning = "";
 	if ("posts" === siteSettings?.show_on_front) warning = (0, import_i18n.__)("This will replace the current homepage which is set to display latest posts.");
-	else if (currentPage) warning = (0, import_i18n.sprintf)((0, import_i18n.__)("This will replace the current homepage: \"%s\""), getItemTitle(currentPage, ""));
-	return (0, import_i18n.sprintf)((0, import_i18n.__)("Set \"%1$s\" as the site homepage? %2$s"), pageTitle, warning).trim();
+	else if (currentPage) warning = (0, import_i18n.sprintf)(
+		/** translators: %s: title of the current home page. */
+		(0, import_i18n.__)("This will replace the current homepage: \"%s\""),
+		getItemTitle(currentPage, "")
+	);
+	return (0, import_i18n.sprintf)(
+		/** translators: %1$s: title of the page to be set as the homepage, %2$s: homepage replacement warning message. */
+		(0, import_i18n.__)("Set \"%1$s\" as the site homepage? %2$s"),
+		pageTitle,
+		warning
+	).trim();
 };
 const setAsHomepage = {
 	isEligible(post) {
 		return post.status === "publish" && hasActionLink(post, "wp:action-set-homepage");
 	},
 	RenderModal: ({ items, closeModal }) => {
+		/** translators: Button label to confirm setting the specified page as the homepage. */
 		const submitLabel = (0, import_i18n.__)("Set homepage");
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SetSitePageModal, {
 			setting: "page_on_front",
@@ -202,12 +212,22 @@ const setAsHomepage = {
 * The question of the modal, with a warning about the current posts page, or
 * about the latest posts the page will show.
 */
-const getText = ({ pageTitle, currentPage }) => (0, import_i18n.sprintf)((0, import_i18n.__)("Set \"%1$s\" as the posts page? %2$s"), pageTitle, currentPage ? (0, import_i18n.sprintf)((0, import_i18n.__)("This will replace the current posts page: \"%s\""), getItemTitle(currentPage, "")) : (0, import_i18n.__)("This page will show the latest posts."));
+const getText = ({ pageTitle, currentPage }) => (0, import_i18n.sprintf)(
+	/** translators: %1$s: title of the page to be set as the posts page, %2$s: posts page replacement warning message. */
+	(0, import_i18n.__)("Set \"%1$s\" as the posts page? %2$s"),
+	pageTitle,
+	currentPage ? (0, import_i18n.sprintf)(
+		/** translators: %s: title of the current posts page. */
+		(0, import_i18n.__)("This will replace the current posts page: \"%s\""),
+		getItemTitle(currentPage, "")
+	) : (0, import_i18n.__)("This page will show the latest posts.")
+);
 const setAsPostsPage = {
 	isEligible(post) {
 		return post.status === "publish" && hasActionLink(post, "wp:action-set-posts-page");
 	},
 	RenderModal: ({ items, closeModal }) => {
+		/** translators: Button label to confirm setting the specified page as the posts page. */
 		const submitLabel = (0, import_i18n.__)("Set posts page");
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SetSitePageModal, {
 			setting: "page_for_posts",

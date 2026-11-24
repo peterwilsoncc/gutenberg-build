@@ -217,7 +217,15 @@ const deletePost = {
 		const isResetting = items.every((item) => isTemplateOrTemplatePart(item) && item?.has_theme_file);
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, {
 			spacing: "5",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: items.length > 1 ? (0, import_i18n.sprintf)((0, import_i18n._n)("Delete %d item?", "Delete %d items?", items.length), items.length) : (0, import_i18n.sprintf)((0, import_i18n._x)("Delete \"%s\"?", "template part"), getItemTitle(items[0])) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: items.length > 1 ? (0, import_i18n.sprintf)(
+				/** translators: %d: number of items to delete. */
+				(0, import_i18n._n)("Delete %d item?", "Delete %d items?", items.length),
+				items.length
+			) : (0, import_i18n.sprintf)(
+				/** translators: %s: The template or template part's title */
+				(0, import_i18n._x)("Delete \"%s\"?", "template part"),
+				getItemTitle(items[0])
+			) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
 				justify: "right",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 					variant: "tertiary",
@@ -233,7 +241,15 @@ const deletePost = {
 						await deletePostWithNotices(items, {
 							success: { messages: {
 								getMessage: (item) => {
-									return isResetting ? (0, import_i18n.sprintf)((0, import_i18n.__)("\"%s\" reset."), (0, import_html_entities.decodeEntities)(getItemTitle(item))) : (0, import_i18n.sprintf)((0, import_i18n._x)("\"%s\" deleted.", "template part"), (0, import_html_entities.decodeEntities)(getItemTitle(item)));
+									return isResetting ? (0, import_i18n.sprintf)(
+										/** translators: %s: The template/part's name. */
+										(0, import_i18n.__)("\"%s\" reset."),
+										(0, import_html_entities.decodeEntities)(getItemTitle(item))
+									) : (0, import_i18n.sprintf)(
+										/** translators: %s: The template/part's name. */
+										(0, import_i18n._x)("\"%s\" deleted.", "template part"),
+										(0, import_html_entities.decodeEntities)(getItemTitle(item))
+									);
 								},
 								getBatchMessage: () => {
 									return isResetting ? (0, import_i18n.__)("Items reset.") : (0, import_i18n.__)("Items deleted.");
@@ -246,8 +262,24 @@ const deletePost = {
 								},
 								getBatchMessage: (errors) => {
 									if (errors.size === 0) return isResetting ? (0, import_i18n.__)("An error occurred while reverting the items.") : (0, import_i18n.__)("An error occurred while deleting the items.");
-									if (errors.size === 1) return isResetting ? (0, import_i18n.sprintf)((0, import_i18n.__)("An error occurred while reverting the items: %s"), [...errors][0]) : (0, import_i18n.sprintf)((0, import_i18n.__)("An error occurred while deleting the items: %s"), [...errors][0]);
-									return isResetting ? (0, import_i18n.sprintf)((0, import_i18n.__)("Some errors occurred while reverting the items: %s"), [...errors].join(",")) : (0, import_i18n.sprintf)((0, import_i18n.__)("Some errors occurred while deleting the items: %s"), [...errors].join(","));
+									if (errors.size === 1) return isResetting ? (0, import_i18n.sprintf)(
+										/** translators: %s: an error message */
+										(0, import_i18n.__)("An error occurred while reverting the items: %s"),
+										[...errors][0]
+									) : (0, import_i18n.sprintf)(
+										/** translators: %s: an error message */
+										(0, import_i18n.__)("An error occurred while deleting the items: %s"),
+										[...errors][0]
+									);
+									return isResetting ? (0, import_i18n.sprintf)(
+										/** translators: %s: a list of comma separated error messages */
+										(0, import_i18n.__)("Some errors occurred while reverting the items: %s"),
+										[...errors].join(",")
+									) : (0, import_i18n.sprintf)(
+										/** translators: %s: a list of comma separated error messages */
+										(0, import_i18n.__)("Some errors occurred while deleting the items: %s"),
+										[...errors].join(",")
+									);
 								}
 							} }
 						}, { onActionPerformed });
@@ -273,7 +305,11 @@ const duplicatePost = {
 	RenderModal: ({ items, closeModal, onActionPerformed }) => {
 		const [item, setItem] = (0, import_element.useState)({
 			...items[0],
-			title: (0, import_i18n.sprintf)((0, import_i18n._x)("%s (Copy)", "post"), getItemTitle(items[0]))
+			title: (0, import_i18n.sprintf)(
+				/** translators: %s: Existing post title */
+				(0, import_i18n._x)("%s (Copy)", "post"),
+				getItemTitle(items[0])
+			)
 		});
 		const [isCreatingPage, setIsCreatingPage] = (0, import_element.useState)(false);
 		const { saveEntityRecord } = (0, import_data.useDispatch)(import_core_data.store);
@@ -304,7 +340,11 @@ const duplicatePost = {
 			setIsCreatingPage(true);
 			try {
 				const newItem = await saveEntityRecord("postType", item.type, newItemObject, { throwOnError: true });
-				createSuccessNotice((0, import_i18n.sprintf)((0, import_i18n.__)("\"%s\" successfully created."), getItemTitle(newItem)), {
+				createSuccessNotice((0, import_i18n.sprintf)(
+					/** translators: %s: Title of the created post, e.g: "Hello world". */
+					(0, import_i18n.__)("\"%s\" successfully created."),
+					getItemTitle(newItem)
+				), {
 					id: "duplicate-post-action",
 					type: "snackbar"
 				});
@@ -383,7 +423,15 @@ const trashPost = {
 		const { deleteEntityRecord } = (0, import_data.useDispatch)(import_core_data.store);
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, {
 			spacing: "5",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: items.length === 1 ? (0, import_i18n.sprintf)((0, import_i18n.__)("Are you sure you want to move \"%s\" to the trash?"), getItemTitle(items[0])) : (0, import_i18n.sprintf)((0, import_i18n._n)("Are you sure you want to move %d item to the trash?", "Are you sure you want to move %d items to the trash?", items.length), items.length) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: items.length === 1 ? (0, import_i18n.sprintf)(
+				/** translators: %s: The item's title. */
+				(0, import_i18n.__)("Are you sure you want to move \"%s\" to the trash?"),
+				getItemTitle(items[0])
+			) : (0, import_i18n.sprintf)(
+				/** translators: %d: The number of items (2 or more). */
+				(0, import_i18n._n)("Are you sure you want to move %d item to the trash?", "Are you sure you want to move %d items to the trash?", items.length),
+				items.length
+			) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
 				justify: "right",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 					__next40pxDefaultSize: true,
@@ -400,8 +448,16 @@ const trashPost = {
 						const promiseResult = await Promise.allSettled(items.map((item) => deleteEntityRecord("postType", item.type, item.id.toString(), {}, { throwOnError: true })));
 						if (promiseResult.every(({ status }) => status === "fulfilled")) {
 							let successMessage;
-							if (promiseResult.length === 1) successMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("\"%s\" moved to the trash."), getItemTitle(items[0]));
-							else successMessage = (0, import_i18n.sprintf)((0, import_i18n._n)("%d item moved to the trash.", "%d items moved to the trash.", items.length), items.length);
+							if (promiseResult.length === 1) successMessage = (0, import_i18n.sprintf)(
+								/** translators: %s: The item's title. */
+								(0, import_i18n.__)("\"%s\" moved to the trash."),
+								getItemTitle(items[0])
+							);
+							else successMessage = (0, import_i18n.sprintf)(
+								/** translators: %d: The number of items. */
+								(0, import_i18n._n)("%d item moved to the trash.", "%d items moved to the trash.", items.length),
+								items.length
+							);
 							createSuccessNotice(successMessage, {
 								type: "snackbar",
 								id: "move-to-trash-action"
@@ -420,8 +476,16 @@ const trashPost = {
 									if (typedError.reason?.message) errorMessages.add(typedError.reason.message);
 								}
 								if (errorMessages.size === 0) errorMessage = (0, import_i18n.__)("An error occurred while moving the items to the trash.");
-								else if (errorMessages.size === 1) errorMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("An error occurred while moving the item to the trash: %s"), [...errorMessages][0]);
-								else errorMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("Some errors occurred while moving the items to the trash: %s"), [...errorMessages].join(","));
+								else if (errorMessages.size === 1) errorMessage = (0, import_i18n.sprintf)(
+									/** translators: %s: an error message */
+									(0, import_i18n.__)("An error occurred while moving the item to the trash: %s"),
+									[...errorMessages][0]
+								);
+								else errorMessage = (0, import_i18n.sprintf)(
+									/** translators: %s: a list of comma separated error messages */
+									(0, import_i18n.__)("Some errors occurred while moving the items to the trash: %s"),
+									[...errorMessages].join(",")
+								);
 							}
 							createErrorNotice(errorMessage, { type: "snackbar" });
 						}
@@ -525,7 +589,15 @@ const permanentlyDeletePost = {
 		const { deleteEntityRecord } = (0, import_data.useDispatch)(import_core_data.store);
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, {
 			spacing: "5",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: items.length > 1 ? (0, import_i18n.sprintf)((0, import_i18n._n)("Are you sure you want to permanently delete %d item?", "Are you sure you want to permanently delete %d items?", items.length), items.length) : (0, import_i18n.sprintf)((0, import_i18n.__)("Are you sure you want to permanently delete \"%s\"?"), (0, import_html_entities.decodeEntities)(getItemTitle(items[0]))) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: items.length > 1 ? (0, import_i18n.sprintf)(
+				/** translators: %d: number of items to delete. */
+				(0, import_i18n._n)("Are you sure you want to permanently delete %d item?", "Are you sure you want to permanently delete %d items?", items.length),
+				items.length
+			) : (0, import_i18n.sprintf)(
+				/** translators: %s: The post's title */
+				(0, import_i18n.__)("Are you sure you want to permanently delete \"%s\"?"),
+				(0, import_html_entities.decodeEntities)(getItemTitle(items[0]))
+			) }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
 				justify: "right",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
 					variant: "tertiary",
@@ -541,7 +613,11 @@ const permanentlyDeletePost = {
 						const promiseResult = await Promise.allSettled(items.map((post) => deleteEntityRecord("postType", post.type, post.id, { force: true }, { throwOnError: true })));
 						if (promiseResult.every(({ status }) => status === "fulfilled")) {
 							let successMessage;
-							if (promiseResult.length === 1) successMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("\"%s\" permanently deleted."), getItemTitle(items[0]));
+							if (promiseResult.length === 1) successMessage = (0, import_i18n.sprintf)(
+								/** translators: %s: The posts's title. */
+								(0, import_i18n.__)("\"%s\" permanently deleted."),
+								getItemTitle(items[0])
+							);
 							else successMessage = (0, import_i18n.__)("The items were permanently deleted.");
 							createSuccessNotice(successMessage, {
 								type: "snackbar",
@@ -562,8 +638,16 @@ const permanentlyDeletePost = {
 									if (typedError.reason?.message) errorMessages.add(typedError.reason.message);
 								}
 								if (errorMessages.size === 0) errorMessage = (0, import_i18n.__)("An error occurred while permanently deleting the items.");
-								else if (errorMessages.size === 1) errorMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("An error occurred while permanently deleting the items: %s"), [...errorMessages][0]);
-								else errorMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("Some errors occurred while permanently deleting the items: %s"), [...errorMessages].join(","));
+								else if (errorMessages.size === 1) errorMessage = (0, import_i18n.sprintf)(
+									/** translators: %s: an error message */
+									(0, import_i18n.__)("An error occurred while permanently deleting the items: %s"),
+									[...errorMessages][0]
+								);
+								else errorMessage = (0, import_i18n.sprintf)(
+									/** translators: %s: a list of comma separated error messages */
+									(0, import_i18n.__)("Some errors occurred while permanently deleting the items: %s"),
+									[...errorMessages].join(",")
+								);
 							}
 							createErrorNotice(errorMessage, { type: "snackbar" });
 						}
@@ -744,7 +828,15 @@ const resetPostAction = {
 					await revertTemplate(template, { allowUndo: false });
 					await saveEditedEntityRecord("postType", template.type, template.id);
 				}
-				createSuccessNotice(items.length > 1 ? (0, import_i18n.sprintf)((0, import_i18n.__)("%d items reset."), items.length) : (0, import_i18n.sprintf)((0, import_i18n.__)("\"%s\" reset."), getItemTitle(items[0])), {
+				createSuccessNotice(items.length > 1 ? (0, import_i18n.sprintf)(
+					/** translators: %d: The number of items. */
+					(0, import_i18n.__)("%d items reset."),
+					items.length
+				) : (0, import_i18n.sprintf)(
+					/** translators: %s: The template/part's name. */
+					(0, import_i18n.__)("\"%s\" reset."),
+					getItemTitle(items[0])
+				), {
 					type: "snackbar",
 					id: "revert-template-action"
 				});
@@ -805,9 +897,21 @@ const restorePost = {
 		}));
 		if (promiseResult.every(({ status }) => status === "fulfilled")) {
 			let successMessage;
-			if (posts.length === 1) successMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("\"%s\" has been restored."), getItemTitle(posts[0]));
-			else if (posts[0].type === "page") successMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("%d pages have been restored."), posts.length);
-			else successMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("%d posts have been restored."), posts.length);
+			if (posts.length === 1) successMessage = (0, import_i18n.sprintf)(
+				/** translators: %s: The number of posts. */
+				(0, import_i18n.__)("\"%s\" has been restored."),
+				getItemTitle(posts[0])
+			);
+			else if (posts[0].type === "page") successMessage = (0, import_i18n.sprintf)(
+				/** translators: %d: The number of posts. */
+				(0, import_i18n.__)("%d pages have been restored."),
+				posts.length
+			);
+			else successMessage = (0, import_i18n.sprintf)(
+				/** translators: %d: The number of posts. */
+				(0, import_i18n.__)("%d posts have been restored."),
+				posts.length
+			);
 			createSuccessNotice(successMessage, {
 				type: "snackbar",
 				id: "restore-post-action"
@@ -827,8 +931,16 @@ const restorePost = {
 					if (typedError.reason?.message) errorMessages.add(typedError.reason.message);
 				}
 				if (errorMessages.size === 0) errorMessage = (0, import_i18n.__)("An error occurred while restoring the posts.");
-				else if (errorMessages.size === 1) errorMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("An error occurred while restoring the posts: %s"), [...errorMessages][0]);
-				else errorMessage = (0, import_i18n.sprintf)((0, import_i18n.__)("Some errors occurred while restoring the posts: %s"), [...errorMessages].join(","));
+				else if (errorMessages.size === 1) errorMessage = (0, import_i18n.sprintf)(
+					/** translators: %s: an error message */
+					(0, import_i18n.__)("An error occurred while restoring the posts: %s"),
+					[...errorMessages][0]
+				);
+				else errorMessage = (0, import_i18n.sprintf)(
+					/** translators: %s: a list of comma separated error messages */
+					(0, import_i18n.__)("Some errors occurred while restoring the posts: %s"),
+					[...errorMessages].join(",")
+				);
 			}
 			createErrorNotice(errorMessage, { type: "snackbar" });
 		}
@@ -852,7 +964,11 @@ const viewPost = {
 const viewPostRevisions = {
 	label(items) {
 		const revisionsCount = items[0]._links?.["version-history"]?.[0]?.count ?? 0;
-		return (0, import_i18n.sprintf)((0, import_i18n.__)("View revisions (%d)"), revisionsCount);
+		return (0, import_i18n.sprintf)(
+			/** translators: %d: number of revisions. */
+			(0, import_i18n.__)("View revisions (%d)"),
+			revisionsCount
+		);
 	},
 	isEligible(post) {
 		if (post.status === "trash") return false;

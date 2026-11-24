@@ -16484,7 +16484,11 @@ const KeyboardShortcutDescription = (0, import_element.forwardRef)(function Unfo
 		id: descriptionId,
 		"aria-hidden": "true",
 		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { ref }),
-		children: (0, import_i18n.sprintf)((0, import_i18n.__)("Keyboard shortcut: %s"), shortcut.label ?? shortcut.ariaKeyShortcut)
+		children: (0, import_i18n.sprintf)(
+			/** translators: %s: keyboard shortcut. */
+			(0, import_i18n.__)("Keyboard shortcut: %s"),
+			shortcut.label ?? shortcut.ariaKeyShortcut
+		)
 	});
 });
 /**
@@ -19484,7 +19488,9 @@ const Link$1 = (0, import_element.forwardRef)(function UnforwardedLink({ childre
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$17["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -26885,7 +26891,12 @@ function Root$2({ rootRef, ...props }) {
 	let ariaLabel = props["aria-label"];
 	if (!hasExplicitLabel && defaultAriaLabel && role === "application") {
 		const currentMonth = months[0];
-		ariaLabel = currentMonth ? (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s, %2$s"), defaultAriaLabel, labels.labelGrid(currentMonth.date)) : defaultAriaLabel;
+		ariaLabel = currentMonth ? (0, import_i18n.sprintf)(
+			/** translators: 1: Calendar type. 2: Current month and year. */
+			(0, import_i18n.__)("%1$s, %2$s"),
+			defaultAriaLabel,
+			labels.labelGrid(currentMonth.date)
+		) : defaultAriaLabel;
 	}
 	const mergedRef = (0, import_compose.useMergeRefs)([rootRef ?? null, ref ?? null]);
 	return useRender({
@@ -27279,7 +27290,11 @@ const useLocalizationProps = ({ locale, timeZone, mode }) => {
 				labelGridcell: (date, modifiers) => {
 					const formattedDate = fullDateFormatter.format(date);
 					let label = formattedDate;
-					if (modifiers?.today) label = (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s"), formattedDate);
+					if (modifiers?.today) label = (0, import_i18n.sprintf)(
+						/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+						(0, import_i18n.__)("Today, %s"),
+						formattedDate
+					);
 					return label;
 				},
 				/** The label for the "next month" button. */
@@ -27294,9 +27309,21 @@ const useLocalizationProps = ({ locale, timeZone, mode }) => {
 				labelDayButton: (date, modifiers) => {
 					const formattedDate = fullDateFormatter.format(date);
 					let label = formattedDate;
-					if (modifiers?.today && modifiers?.selected) return (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s, selected"), formattedDate);
-					if (modifiers?.today) label = (0, import_i18n.sprintf)((0, import_i18n.__)("Today, %s"), formattedDate);
-					if (modifiers?.selected) label = (0, import_i18n.sprintf)((0, import_i18n.__)("%s, selected"), formattedDate);
+					if (modifiers?.today && modifiers?.selected) return (0, import_i18n.sprintf)(
+						/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+						(0, import_i18n.__)("Today, %s, selected"),
+						formattedDate
+					);
+					if (modifiers?.today) label = (0, import_i18n.sprintf)(
+						/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+						(0, import_i18n.__)("Today, %s"),
+						formattedDate
+					);
+					if (modifiers?.selected) label = (0, import_i18n.sprintf)(
+						/** translators: %s is the full date (e.g. "Monday, April 29, 2025") */
+						(0, import_i18n.__)("%s, selected"),
+						formattedDate
+					);
 					return label;
 				},
 				/**
@@ -33528,7 +33555,11 @@ function DataViewsSelectionCheckbox({ selection, onChangeSelection, item, getIte
 	const id = getItemId(item);
 	const isInSelectionArray = selection.includes(id);
 	const checked = !disabled && isInSelectionArray;
-	const selectionLabel = (0, import_i18n.sprintf)((0, import_i18n.__)("Select %s"), titleField?.getValue?.({ item }) || (0, import_i18n.__)("(no title)"));
+	const selectionLabel = (0, import_i18n.sprintf)(
+		/** translators: %s: The title of the item. */
+		(0, import_i18n.__)("Select %s"),
+		titleField?.getValue?.({ item }) || (0, import_i18n.__)("(no title)")
+	);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Checkbox$2, {
 		className: SELECTION_CHECKBOX_CLASS,
 		"aria-label": selectionLabel,
@@ -33629,7 +33660,11 @@ function getActionLabel(action, items, context = "button") {
 	const label = typeof action.label === "string" ? action.label : action.label(items);
 	if (context === "button") return label.replace(TRAILING_ELLIPSIS, "");
 	if (!("RenderModal" in action) || TRAILING_ELLIPSIS.test(label)) return label;
-	return (0, import_i18n.sprintf)((0, import_i18n._x)("%s…", "menu item requiring further input"), label);
+	return (0, import_i18n.sprintf)(
+		/** translators: %s: Action label. Use the ellipsis and spacing appropriate for your language. */
+		(0, import_i18n._x)("%s…", "menu item requiring further input"),
+		label
+	);
 }
 
 // packages/dataviews/build-module/components/dataviews-item-actions/index.mjs
@@ -33785,9 +33820,22 @@ function PrimaryActions({ item, actions, registry, buttonVariant }) {
 * @return               - The footer message.
 */
 function getFooterMessage(selectionCount, itemsCount, totalItems, onlyTotalCount = false) {
-	if (selectionCount > 0) return (0, import_i18n.sprintf)((0, import_i18n._n)("%s item selected", "%s items selected", selectionCount), selectionCount.toLocaleString());
-	if (onlyTotalCount || totalItems <= itemsCount) return (0, import_i18n.sprintf)((0, import_i18n._n)("%s item", "%s items", totalItems), totalItems.toLocaleString());
-	return (0, import_i18n.sprintf)((0, import_i18n._n)("%1$s of %2$s item", "%1$s of %2$s items", totalItems), itemsCount.toLocaleString(), totalItems.toLocaleString());
+	if (selectionCount > 0) return (0, import_i18n.sprintf)(
+		/** translators: %s: formatted number of items. */
+		(0, import_i18n._n)("%s item selected", "%s items selected", selectionCount),
+		selectionCount.toLocaleString()
+	);
+	if (onlyTotalCount || totalItems <= itemsCount) return (0, import_i18n.sprintf)(
+		/** translators: %s: formatted number of items. */
+		(0, import_i18n._n)("%s item", "%s items", totalItems),
+		totalItems.toLocaleString()
+	);
+	return (0, import_i18n.sprintf)(
+		/** translators: %1$s: formatted number of items. %2$s: formatted total number of items. */
+		(0, import_i18n._n)("%1$s of %2$s item", "%1$s of %2$s items", totalItems),
+		itemsCount.toLocaleString(),
+		totalItems.toLocaleString()
+	);
 }
 
 // packages/dataviews/build-module/components/dataviews-bulk-actions/index.mjs
@@ -34931,7 +34979,12 @@ function ViewTable({ actions, data, fields, getItemId, getItemLevel, isLoading =
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 						colSpan: columnCount,
 						className: "dataviews-view-table__group-header-cell",
-						children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+						children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n.sprintf)(
+							/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+							(0, import_i18n.__)("%1$s: %2$s"),
+							groupField.label,
+							groupName
+						)
 					})
 				}), groupItems.map((item, index) => {
 					const id = getItemId(item) || index.toString();
@@ -35331,7 +35384,11 @@ function CompositeGrid({ data, isInfiniteScroll, className, inert = false, isLoa
 			render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				role: "row",
 				"aria-rowindex": i + 1,
-				"aria-label": (0, import_i18n.sprintf)((0, import_i18n.__)("Row %d"), i + 1),
+				"aria-label": (0, import_i18n.sprintf)(
+					/** translators: %d: The row number in the grid */
+					(0, import_i18n.__)("Row %d"),
+					i + 1
+				),
 				className: "dataviews-view-grid__row",
 				style: { gridTemplateColumns: `repeat( ${gridColumns}, minmax(0, 1fr) )` }
 			}),
@@ -35430,7 +35487,12 @@ function ViewGrid({ actions, data, fields, getItemId, isLoading, onChangeSelecti
 				gap: "sm",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 					className: "dataviews-view-grid__group-header",
-					children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+					children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n.sprintf)(
+						/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+						(0, import_i18n.__)("%1$s: %2$s"),
+						groupField.label,
+						groupName
+					)
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CompositeGrid, {
 					...gridProps,
 					data: groupItems,
@@ -35750,7 +35812,12 @@ function ViewList(props) {
 				direction: "column",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 					className: "dataviews-view-list__group-header",
-					children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+					children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n.sprintf)(
+						/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+						(0, import_i18n.__)("%1$s: %2$s"),
+						groupField.label,
+						groupName
+					)
 				}), groupItems.map((item) => {
 					const id = generateCompositeItemIdPrefix(item);
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ListItem, {
@@ -35800,7 +35867,10 @@ function ViewList(props) {
 
 // packages/dataviews/build-module/components/dataviews-layouts/activity/activity-group.mjs
 function ActivityGroup({ groupName, groupData, groupField, showLabel = true, children }) {
-	const groupHeader = showLabel ? (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("%s: <groupName />"), groupField.label).trim(), { groupName: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(groupField.render, {
+	const groupHeader = showLabel ? (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)(
+		/** translators: %s: The label of the field e.g. "Status". */
+		"%s: <groupName />"
+	), groupField.label).trim(), { groupName: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(groupField.render, {
 		item: groupData[0],
 		field: groupField
 	}) }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(groupField.render, {
@@ -36049,7 +36119,12 @@ function DataViewsPageSelect({ className }) {
 		return {
 			value: page.toString(),
 			label: page.toString(),
-			"aria-label": currentPage === page ? (0, import_i18n.sprintf)((0, import_i18n.__)("Page %1$d of %2$d"), currentPage, totalPages) : page.toString()
+			"aria-label": currentPage === page ? (0, import_i18n.sprintf)(
+				/** translators: 1: current page number. 2: total number of pages. */
+				(0, import_i18n.__)("Page %1$d of %2$d"),
+				currentPage,
+				totalPages
+			) : page.toString()
 		};
 	});
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stack, {
@@ -36058,7 +36133,12 @@ function DataViewsPageSelect({ className }) {
 		align: "center",
 		gap: "xs",
 		className: clsx("dataviews-pagination__page-select", className),
-		children: (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"), "<CurrentPage />", totalPages), {
+		children: (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Current page number, 2: Total number of pages. */
+			(0, import_i18n._x)("<div>Page</div>%1$s<div>of %2$d</div>", "paging"),
+			"<CurrentPage />",
+			totalPages
+		), {
 			div: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { "aria-hidden": true }),
 			CurrentPage: hasPageInput ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PageNumberInput, {
 				currentPage,
@@ -36272,7 +36352,12 @@ function GridGroup({ groupName, groupField, showLabel = true, children }) {
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 			className: "dataviews-view-picker-grid-group__header",
 			id: headerId,
-			children: showLabel ? (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s: %2$s"), groupField.label, groupName) : groupName
+			children: showLabel ? (0, import_i18n.sprintf)(
+				/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+				(0, import_i18n.__)("%1$s: %2$s"),
+				groupField.label,
+				groupName
+			) : groupName
 		}), children]
 	}, groupName);
 }
@@ -36638,7 +36723,12 @@ function ViewPickerTable({ actions, data, fields, getItemId, isLoading = false, 
 					colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + 1,
 					className: "dataviews-view-table__group-header-cell",
 					role: "presentation",
-					children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s: %2$s"), groupField.label, groupName)
+					children: view.groupBy?.showLabel === false ? groupName : (0, import_i18n.sprintf)(
+						/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+						(0, import_i18n.__)("%1$s: %2$s"),
+						groupField.label,
+						groupName
+					)
 				})
 			}), groupItems.map((item, index) => {
 				const id = getItemId(item) || index.toString();
@@ -36797,7 +36887,12 @@ function PickerActivityGroup({ groupName, groupField, showLabel = true, children
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 			className: "dataviews-view-picker-activity-group__header",
 			id: headerId,
-			children: showLabel ? (0, import_i18n.sprintf)((0, import_i18n.__)("%1$s: %2$s"), groupField.label, groupName) : groupName
+			children: showLabel ? (0, import_i18n.sprintf)(
+				/** translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022". */
+				(0, import_i18n.__)("%1$s: %2$s"),
+				groupField.label,
+				groupName
+			) : groupName
 		}), children]
 	});
 }
@@ -43740,7 +43835,11 @@ function ListBox({ view, filter, onChangeView }) {
 		setActiveId: setActiveCompositeId,
 		role: "listbox",
 		className: "dataviews-filters__search-widget-listbox",
-		"aria-label": (0, import_i18n.sprintf)((0, import_i18n.__)("List of: %1$s"), filter.name),
+		"aria-label": (0, import_i18n.sprintf)(
+			/** translators: List of items for a filter. 1: Filter name. e.g.: "List of: Author". */
+			(0, import_i18n.__)("List of: %1$s"),
+			filter.name
+		),
 		onFocusVisible: () => {
 			if (!activeCompositeId && filter.elements.length) setActiveCompositeId(generateFilterElementCompositeItemId(baseId, filter.elements[0].value));
 		},
@@ -44053,8 +44152,16 @@ function getRelativeDate(value, unit) {
 	}
 }
 const isNoneOperatorDefinition = {
-	label: (0, import_i18n.__)("Is none of"),
-	filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+	label: (0, import_i18n.__)(
+		/** translators: DataViews operator name */
+		"Is none of"
+	),
+	filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+		/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is none of: Admin, Editor". */
+		(0, import_i18n.__)("<Name>%1$s is none of: </Name><Value>%2$s</Value>"),
+		filter.name,
+		activeElements.map((element) => element.label).join(", ")
+	), filterTextWrappers),
 	filter: ((item, field, filterValue) => {
 		if (!filterValue?.length) return true;
 		const fieldValue = field.getValue({ item });
@@ -44067,8 +44174,16 @@ const isNoneOperatorDefinition = {
 const OPERATORS = [
 	{
 		name: OPERATOR_IS_ANY,
-		label: (0, import_i18n.__)("Includes"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Includes"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is any: Admin, Editor". */
+			(0, import_i18n.__)("<Name>%1$s includes: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements.map((element) => element.label).join(", ")
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (!filterValue?.length) return true;
 			const fieldValue = field.getValue({ item });
@@ -44084,8 +44199,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_IS_ALL,
-		label: (0, import_i18n.__)("Includes all"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"), filter.name, activeElements.map((element) => element.label).join(", ")), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Includes all"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author includes all: Admin, Editor". */
+			(0, import_i18n.__)("<Name>%1$s includes all: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements.map((element) => element.label).join(", ")
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (!filterValue?.length) return true;
 			const fieldValue = field.getValue({ item });
@@ -44100,8 +44223,17 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_BETWEEN,
-		label: (0, import_i18n.__)("Between (inc)"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"), filter.name, activeElements[0].label[0], activeElements[0].label[1]), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Between (inc)"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Item count"). 2: Filter value min. 3: Filter value max. e.g.: "Item count between (inc): 10 and 180". */
+			(0, import_i18n.__)("<Name>%1$s between (inc): </Name><Value>%2$s and %3$s</Value>"),
+			filter.name,
+			activeElements[0].label[0],
+			activeElements[0].label[1]
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (!Array.isArray(filterValue) || filterValue.length !== 2 || filterValue.includes(void 0) || filterValue.includes("") || filterValue.includes(null)) return true;
 			const fieldValue = field.getValue({ item });
@@ -44117,8 +44249,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_IN_THE_PAST,
-		label: (0, import_i18n.__)("In the past"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is in the past: </Name><Value>%2$s</Value>"), filter.name, `${activeElements[0].value.value} ${activeElements[0].value.unit}`), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"In the past"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is in the past: 7 days". */
+			(0, import_i18n.__)("<Name>%1$s is in the past: </Name><Value>%2$s</Value>"),
+			filter.name,
+			`${activeElements[0].value.value} ${activeElements[0].value.unit}`
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue?.value === void 0 || filterValue?.unit === void 0) return true;
 			const targetDate = getRelativeDate(filterValue.value, filterValue.unit);
@@ -44129,8 +44269,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_OVER,
-		label: (0, import_i18n.__)("Over"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"), filter.name, `${activeElements[0].value.value} ${activeElements[0].value.unit}`), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Over"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "7 days"): "Date is over: 7 days". */
+			(0, import_i18n.__)("<Name>%1$s is over: </Name><Value>%2$s</Value>"),
+			filter.name,
+			`${activeElements[0].value.value} ${activeElements[0].value.unit}`
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue?.value === void 0 || filterValue?.unit === void 0) return true;
 			const targetDate = getRelativeDate(filterValue.value, filterValue.unit);
@@ -44140,8 +44288,16 @@ const OPERATORS = [
 	},
 	{
 		name: "is",
-		label: (0, import_i18n.__)("Is"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Is"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is: Admin". */
+			(0, import_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			return filterValue === field.getValue({ item }) || filterValue === void 0;
 		},
@@ -44149,8 +44305,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_IS_NOT,
-		label: (0, import_i18n.__)("Is not"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Is not"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Author"). 2: Filter value (e.g. "Admin"): "Author is not: Admin". */
+			(0, import_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			return filterValue !== field.getValue({ item });
 		},
@@ -44158,8 +44322,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_LESS_THAN,
-		label: (0, import_i18n.__)("Less than"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Less than"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than: 10". */
+			(0, import_i18n.__)("<Name>%1$s is less than: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			return field.getValue({ item }) < filterValue;
@@ -44168,8 +44340,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_GREATER_THAN,
-		label: (0, import_i18n.__)("Greater than"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is greater than: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Greater than"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than: 10". */
+			(0, import_i18n.__)("<Name>%1$s is greater than: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			return field.getValue({ item }) > filterValue;
@@ -44178,8 +44358,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_LESS_THAN_OR_EQUAL,
-		label: (0, import_i18n.__)("Less than or equal"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Less than or equal"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is less than or equal to: 10". */
+			(0, import_i18n.__)("<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			return field.getValue({ item }) <= filterValue;
@@ -44188,8 +44376,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_GREATER_THAN_OR_EQUAL,
-		label: (0, import_i18n.__)("Greater than or equal"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Greater than or equal"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Count"). 2: Filter value (e.g. "10"): "Count is greater than or equal to: 10". */
+			(0, import_i18n.__)("<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			return field.getValue({ item }) >= filterValue;
@@ -44198,8 +44394,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_BEFORE,
-		label: (0, import_i18n.__)("Before"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Before"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is before: 2024-01-01". */
+			(0, import_i18n.__)("<Name>%1$s is before: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -44209,8 +44413,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_AFTER,
-		label: (0, import_i18n.__)("After"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"After"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is after: 2024-01-01". */
+			(0, import_i18n.__)("<Name>%1$s is after: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -44220,8 +44432,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_BEFORE_INC,
-		label: (0, import_i18n.__)("Before (inc)"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is on or before: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Before (inc)"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or before: 2024-01-01". */
+			(0, import_i18n.__)("<Name>%1$s is on or before: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -44231,8 +44451,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_AFTER_INC,
-		label: (0, import_i18n.__)("After (inc)"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is on or after: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"After (inc)"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is on or after: 2024-01-01". */
+			(0, import_i18n.__)("<Name>%1$s is on or after: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -44242,8 +44470,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_CONTAINS,
-		label: (0, import_i18n.__)("Contains"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Contains"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title contains: Hello". */
+			(0, import_i18n.__)("<Name>%1$s contains: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const fieldValue = field.getValue({ item });
@@ -44253,8 +44489,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_NOT_CONTAINS,
-		label: (0, import_i18n.__)("Doesn't contain"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Doesn't contain"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title doesn't contain: Hello". */
+			(0, import_i18n.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const fieldValue = field.getValue({ item });
@@ -44264,8 +44508,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_STARTS_WITH,
-		label: (0, import_i18n.__)("Starts with"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Starts with"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Title"). 2: Filter value (e.g. "Hello"): "Title starts with: Hello". */
+			(0, import_i18n.__)("<Name>%1$s starts with: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const fieldValue = field.getValue({ item });
@@ -44275,8 +44527,16 @@ const OPERATORS = [
 	},
 	{
 		name: "on",
-		label: (0, import_i18n.__)("On"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"On"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is: 2024-01-01". */
+			(0, import_i18n.__)("<Name>%1$s is: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -44286,8 +44546,16 @@ const OPERATORS = [
 	},
 	{
 		name: OPERATOR_NOT_ON,
-		label: (0, import_i18n.__)("Not on"),
-		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)((0, import_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers),
+		label: (0, import_i18n.__)(
+			/** translators: DataViews operator name */
+			"Not on"
+		),
+		filterText: (filter, activeElements) => (0, import_element.createInterpolateElement)((0, import_i18n.sprintf)(
+			/** translators: 1: Filter name (e.g. "Date"). 2: Filter value (e.g. "2024-01-01"): "Date is not: 2024-01-01". */
+			(0, import_i18n.__)("<Name>%1$s is not: </Name><Value>%2$s</Value>"),
+			filter.name,
+			activeElements[0].label
+		), filterTextWrappers),
 		filter(item, field, filterValue) {
 			if (filterValue === void 0) return true;
 			const [fieldTemporal, filterTemporal] = toComparableTemporals(field.getValue({ item }), filterValue);
@@ -44308,7 +44576,11 @@ const FilterText = ({ activeElements, filterInView, filter }) => {
 	if (activeElements === void 0 || activeElements.length === 0) return filter.name;
 	const operator = getOperatorByName(filterInView?.operator);
 	if (operator !== void 0) return operator.filterText(filter, activeElements);
-	return (0, import_i18n.sprintf)((0, import_i18n.__)("Unknown status for %1$s"), filter.name);
+	return (0, import_i18n.sprintf)(
+		/** translators: 1: Filter name e.g.: "Unknown status for Author". */
+		(0, import_i18n.__)("Unknown status for %1$s"),
+		filter.name
+	);
 };
 function OperatorSelector({ filter, view, onChangeView }) {
 	const operatorOptions = filter.operators?.map((operator) => ({
@@ -44465,7 +44737,11 @@ function Filter({ addFilterRef, openedFilter, fields, ...commonProps }) {
 					filterInView,
 					filter
 				})
-			}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$1, { children: (0, import_i18n.sprintf)((0, import_i18n.__)("Filter by: %1$s"), filter.name.toLowerCase()) })] }), canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$1, { children: (0, import_i18n.sprintf)(
+				/** translators: 1: Filter name. */
+				(0, import_i18n.__)("Filter by: %1$s"),
+				filter.name.toLowerCase()
+			) })] }), canResetOrRemove && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$4, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$2, { render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 				className: clsx("dataviews-filters__summary-chip-remove", { "has-values": hasValues }),
 				"aria-label": resetOrRemoveLabel,
 				onClick: () => {
@@ -45476,7 +45752,11 @@ function getTimezoneDescription() {
 	let timezoneDetail = zoneAbbr;
 	if ("UTC" === timezone.string) timezoneDetail = (0, import_i18n.__)("Coordinated Universal Time");
 	else if (prettyTimezoneString.trim().length > 0) timezoneDetail = `(${zoneAbbr}) ${prettyTimezoneString}`;
-	return (0, import_i18n.sprintf)((0, import_i18n.__)("Timezone: %s"), timezoneDetail);
+	return (0, import_i18n.sprintf)(
+		/** translators: %s: timezone detail, e.g. "(CEST) Europe/Madrid" or "UTC+3". */
+		(0, import_i18n.__)("Timezone: %s"),
+		timezoneDetail
+	);
 }
 
 // packages/dataviews/build-module/field-types/utils/parse-date-time.mjs

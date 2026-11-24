@@ -1525,7 +1525,11 @@
 		});
 		if (file.type && !isAllowedType) throw new UploadError({
 			code: ErrorCode.MIME_TYPE_NOT_SUPPORTED,
-			message: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s: Sorry, this file type is not supported here."), file.name),
+			message: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: file name. */
+				(0, _wordpress_i18n.__)("%s: Sorry, this file type is not supported here."),
+				file.name
+			),
 			file
 		});
 	}
@@ -1562,7 +1566,11 @@
 		const isAllowedMimeTypeForUser = allowedMimeTypesForUser.includes(file.type);
 		if (file.type && !isAllowedMimeTypeForUser) throw new UploadError({
 			code: ErrorCode.MIME_TYPE_NOT_ALLOWED_FOR_USER,
-			message: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s: Sorry, you are not allowed to upload this file type."), file.name),
+			message: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: file name. */
+				(0, _wordpress_i18n.__)("%s: Sorry, you are not allowed to upload this file type."),
+				file.name
+			),
 			file
 		});
 	}
@@ -1577,12 +1585,20 @@
 	function validateFileSize(file, maxUploadFileSize) {
 		if (file.size <= 0) throw new UploadError({
 			code: ErrorCode.EMPTY_FILE,
-			message: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s: This file is empty."), file.name),
+			message: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: file name. */
+				(0, _wordpress_i18n.__)("%s: This file is empty."),
+				file.name
+			),
 			file
 		});
 		if (maxUploadFileSize && file.size > maxUploadFileSize) throw new UploadError({
 			code: ErrorCode.SIZE_ABOVE_LIMIT,
-			message: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s: This file exceeds the maximum upload size for this site."), file.name),
+			message: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: file name. */
+				(0, _wordpress_i18n.__)("%s: This file exceeds the maximum upload size for this site."),
+				file.name
+			),
 			file
 		});
 	}
@@ -2495,9 +2511,21 @@
 		let cause;
 		if (platform === "linux") cause = (0, _wordpress_i18n.__)("HEIC photos can't be decoded on Linux, so unfortunately we couldn't convert this one.");
 		else if (family === "firefox") cause = (0, _wordpress_i18n.__)("Firefox can't read HEIC photos, so we couldn't convert this one.");
-		else if (browserName && platform === "windows") cause = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s couldn't decode HEIC on this PC, so we couldn't convert this one."), browserName);
-		else if (browserName && platform === "macos") cause = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s couldn't decode HEIC on this Mac, so we couldn't convert this one."), browserName);
-		else if (browserName) cause = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s couldn't decode HEIC on this device, so we couldn't convert this one."), browserName);
+		else if (browserName && platform === "windows") cause = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: browser name, e.g. "Chrome". */
+			(0, _wordpress_i18n.__)("%s couldn't decode HEIC on this PC, so we couldn't convert this one."),
+			browserName
+		);
+		else if (browserName && platform === "macos") cause = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: browser name, e.g. "Safari". */
+			(0, _wordpress_i18n.__)("%s couldn't decode HEIC on this Mac, so we couldn't convert this one."),
+			browserName
+		);
+		else if (browserName) cause = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: browser name, e.g. "Chrome". */
+			(0, _wordpress_i18n.__)("%s couldn't decode HEIC on this device, so we couldn't convert this one."),
+			browserName
+		);
 		else cause = (0, _wordpress_i18n.__)("This browser can't read HEIC photos, so we couldn't convert this one.");
 		return `${cause} ${getHeicConversionAdvice()}`;
 	}
@@ -3949,57 +3977,101 @@
 		return {
 			[ErrorCode.EMPTY_FILE]: {
 				title: (0, _wordpress_i18n.__)("Empty file"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("\"%s\" is empty."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("\"%s\" is empty."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("Please choose a different file.")
 			},
 			[ErrorCode.SIZE_ABOVE_LIMIT]: {
 				title: (0, _wordpress_i18n.__)("File too large"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("\"%s\" exceeds the maximum upload size."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("\"%s\" exceeds the maximum upload size."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("Please reduce the file size and try again.")
 			},
 			[ErrorCode.MIME_TYPE_NOT_SUPPORTED]: {
 				title: (0, _wordpress_i18n.__)("Unsupported file type"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("\"%s\" is not a supported file type."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("\"%s\" is not a supported file type."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("Please upload a different file format.")
 			},
 			[ErrorCode.MIME_TYPE_NOT_ALLOWED_FOR_USER]: {
 				title: (0, _wordpress_i18n.__)("File type not allowed"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("You are not allowed to upload \"%s\"."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("You are not allowed to upload \"%s\"."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("Please contact your site administrator.")
 			},
 			[ErrorCode.HEIC_DECODE_ERROR]: {
 				title: (0, _wordpress_i18n.__)("HEIC decode failed"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Failed to decode HEIC file \"%s\"."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("Failed to decode HEIC file \"%s\"."),
+					fileName
+				),
 				action: getHeicConversionAdvice()
 			},
 			[ErrorCode.IMAGE_TRANSCODING_ERROR]: {
 				title: (0, _wordpress_i18n.__)("Image processing failed"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Failed to process \"%s\"."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("Failed to process \"%s\"."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("The image may be corrupted. Try a different file.")
 			},
 			[ErrorCode.IMAGE_ROTATION_ERROR]: {
 				title: (0, _wordpress_i18n.__)("Image rotation failed"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Failed to rotate \"%s\"."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("Failed to rotate \"%s\"."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("The image may be corrupted. Try a different file.")
 			},
 			[ErrorCode.MEDIA_TRANSCODING_ERROR]: {
 				title: (0, _wordpress_i18n.__)("Media processing failed"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Failed to convert \"%s\" to the target format."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("Failed to convert \"%s\" to the target format."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("The file may be corrupted. Try a different file.")
 			},
 			[ErrorCode.MEDIA_FINALIZE_ERROR]: {
 				title: (0, _wordpress_i18n.__)("Upload failed"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Could not finalize the upload of \"%s\"."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("Could not finalize the upload of \"%s\"."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("Please try again.")
 			},
 			[ErrorCode.GENERAL]: {
 				title: (0, _wordpress_i18n.__)("Upload failed"),
-				description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Failed to upload \"%s\"."), fileName),
+				description: (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: file name */
+					(0, _wordpress_i18n.__)("Failed to upload \"%s\"."),
+					fileName
+				),
 				action: (0, _wordpress_i18n.__)("Please try again.")
 			}
 		}[code] || {
 			title: (0, _wordpress_i18n.__)("Upload failed"),
-			description: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Failed to upload \"%s\"."), fileName),
+			description: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: file name */
+				(0, _wordpress_i18n.__)("Failed to upload \"%s\"."),
+				fileName
+			),
 			action: (0, _wordpress_i18n.__)("Please try again.")
 		};
 	}

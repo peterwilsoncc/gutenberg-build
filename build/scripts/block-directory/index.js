@@ -410,7 +410,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 			});
 			await loadAssets();
 			if (!registry.select(_wordpress_blocks.store).getBlockTypes().some((i) => i.name === name)) throw new Error((0, _wordpress_i18n.__)("Error registering block. Try reloading the page."));
-			registry.dispatch(_wordpress_notices.store).createInfoNotice((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Block %s installed and added."), block.title), {
+			registry.dispatch(_wordpress_notices.store).createInfoNotice((0, _wordpress_i18n.sprintf)(
+				/** translators: %s is the block title. */
+				(0, _wordpress_i18n.__)("Block %s installed and added."),
+				block.title
+			), {
 				speak: true,
 				type: "snackbar"
 			});
@@ -8611,7 +8615,9 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 				}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: style_module_default$4["link-icon"],
 					role: "img",
-					"aria-label": (0, _wordpress_i18n.__)("(opens in a new tab)")
+					"aria-label": 
+					/** translators: accessibility text appended to link text */
+					(0, _wordpress_i18n.__)("(opens in a new tab)")
 				})] })
 			})
 		});
@@ -9183,7 +9189,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		const halfStarCount = Math.ceil(rating - fullStarCount);
 		const emptyStarCount = 5 - (fullStarCount + halfStarCount);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("span", {
-			"aria-label": (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%s out of 5 stars"), stars),
+			"aria-label": (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: number of stars. */
+				(0, _wordpress_i18n.__)("%s out of 5 stars"),
+				stars
+			),
 			children: [
 				Array.from({ length: fullStarCount }).map((_, i) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default, {
 					className: "block-directory-block-ratings__star-full",
@@ -9240,11 +9250,33 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 // packages/block-directory/build-module/components/downloadable-block-list-item/index.mjs
 	function getDownloadableBlockLabel({ title, rating, ratingCount }, { hasNotice, isInstalled, isInstalling }) {
 		const stars = Math.round(rating / .5) * .5;
-		if (!isInstalled && hasNotice) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Retry installing %s."), (0, _wordpress_html_entities.decodeEntities)(title));
-		if (isInstalled) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Add %s."), (0, _wordpress_html_entities.decodeEntities)(title));
-		if (isInstalling) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Installing %s."), (0, _wordpress_html_entities.decodeEntities)(title));
-		if (ratingCount < 1) return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Install %s."), (0, _wordpress_html_entities.decodeEntities)(title));
-		return (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Install %1$s. %2$s stars with %3$s review.", "Install %1$s. %2$s stars with %3$s reviews.", ratingCount), (0, _wordpress_html_entities.decodeEntities)(title), stars, ratingCount);
+		if (!isInstalled && hasNotice) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block title */
+			(0, _wordpress_i18n.__)("Retry installing %s."),
+			(0, _wordpress_html_entities.decodeEntities)(title)
+		);
+		if (isInstalled) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block title */
+			(0, _wordpress_i18n.__)("Add %s."),
+			(0, _wordpress_html_entities.decodeEntities)(title)
+		);
+		if (isInstalling) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block title */
+			(0, _wordpress_i18n.__)("Installing %s."),
+			(0, _wordpress_html_entities.decodeEntities)(title)
+		);
+		if (ratingCount < 1) return (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block title */
+			(0, _wordpress_i18n.__)("Install %s."),
+			(0, _wordpress_html_entities.decodeEntities)(title)
+		);
+		return (0, _wordpress_i18n.sprintf)(
+			/** translators: 1: block title, 2: average rating, 3: total ratings count. */
+			(0, _wordpress_i18n._n)("Install %1$s. %2$s stars with %3$s review.", "Install %1$s. %2$s stars with %3$s reviews.", ratingCount),
+			(0, _wordpress_html_entities.decodeEntities)(title),
+			stars,
+			ratingCount
+		);
 	}
 	function DownloadableBlockListItem({ item, onClick }) {
 		const { author, description, icon, rating, title } = item;
@@ -9291,7 +9323,12 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 				className: "block-directory-downloadable-block-list-item__details",
 				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: "block-directory-downloadable-block-list-item__title",
-					children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("%1$s <span>by %2$s</span>"), (0, _wordpress_html_entities.decodeEntities)(title), author), { span: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { className: "block-directory-downloadable-block-list-item__author" }) })
+					children: (0, _wordpress_element.createInterpolateElement)((0, _wordpress_i18n.sprintf)(
+						/** translators: 1: block title. 2: author name. */
+						(0, _wordpress_i18n.__)("%1$s <span>by %2$s</span>"),
+						(0, _wordpress_html_entities.decodeEntities)(title),
+						author
+					), { span: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { className: "block-directory-downloadable-block-list-item__author" }) })
 				}), hasNotice ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(DownloadableBlockNotice, { block: item }) : /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 					className: "block-directory-downloadable-block-list-item__desc",
 					children: !!statusText ? statusText : (0, _wordpress_html_entities.decodeEntities)(description)
@@ -9329,7 +9366,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 	function DownloadableBlocksInserterPanel({ children, downloadableItems, hasLocalBlocks }) {
 		const count = downloadableItems.length;
 		(0, _wordpress_element.useEffect)(() => {
-			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("%d additional block is available to install.", "%d additional blocks are available to install.", count), count));
+			(0, _wordpress_a11y.speak)((0, _wordpress_i18n.sprintf)(
+				/** translators: %d: number of available blocks. */
+				(0, _wordpress_i18n._n)("%d additional block is available to install.", "%d additional blocks are available to install.", count),
+				count
+			));
 		}, [count]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			!hasLocalBlocks && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
@@ -9454,7 +9495,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 						children: title
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 						className: "block-directory-compact-list__item-author",
-						children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("By %s"), author)
+						children: (0, _wordpress_i18n.sprintf)(
+							/** translators: %s: Name of the block author. */
+							(0, _wordpress_i18n.__)("By %s"),
+							author
+						)
 					})]
 				})]
 			}, id))
@@ -9466,7 +9511,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		const newBlockTypes = (0, _wordpress_data.useSelect)((select) => select(store).getNewBlockTypes(), []);
 		if (!newBlockTypes.length) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_editor.PluginPrePublishPanel, {
-			title: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n._n)("Added: %d block", "Added: %d blocks", newBlockTypes.length), newBlockTypes.length),
+			title: (0, _wordpress_i18n.sprintf)(
+				/** translators: %d: number of blocks (number). */
+				(0, _wordpress_i18n._n)("Added: %d block", "Added: %d blocks", newBlockTypes.length),
+				newBlockTypes.length
+			),
 			initialOpen: true,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 				className: "installed-blocks-pre-publish-panel__copy",
@@ -9493,7 +9542,11 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 			disabled: isInstallingBlock,
 			isBusy: isInstallingBlock,
 			variant: "primary",
-			children: (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Install %s"), block.title)
+			children: (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: block name */
+				(0, _wordpress_i18n.__)("Install %s"),
+				block.title
+			)
 		});
 	}
 
@@ -9525,14 +9578,22 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 			const { canInsertBlockType, getBlockRootClientId } = select(_wordpress_block_editor.store);
 			return canInsertBlockType("core/html", getBlockRootClientId(clientId));
 		}, [clientId]);
-		let messageHTML = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Your site doesn’t include support for the %s block. You can try installing the block or remove it entirely."), originalBlock.title || originalName);
+		let messageHTML = (0, _wordpress_i18n.sprintf)(
+			/** translators: %s: block name */
+			(0, _wordpress_i18n.__)("Your site doesn’t include support for the %s block. You can try installing the block or remove it entirely."),
+			originalBlock.title || originalName
+		);
 		const actions = [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(InstallButton, {
 			block: originalBlock,
 			attributes: props.attributes,
 			clientId: props.clientId
 		}, "install")];
 		if (hasContent && hasHTMLBlock) {
-			messageHTML = (0, _wordpress_i18n.sprintf)((0, _wordpress_i18n.__)("Your site doesn’t include support for the %s block. You can try installing the block, convert it to a Custom HTML block, or remove it entirely."), originalBlock.title || originalName);
+			messageHTML = (0, _wordpress_i18n.sprintf)(
+				/** translators: %s: block name */
+				(0, _wordpress_i18n.__)("Your site doesn’t include support for the %s block. You can try installing the block, convert it to a Custom HTML block, or remove it entirely."),
+				originalBlock.title || originalName
+			);
 			actions.push(/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
 				__next40pxDefaultSize: true,
 				onClick: convertToHTML,

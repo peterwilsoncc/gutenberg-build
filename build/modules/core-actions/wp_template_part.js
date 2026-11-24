@@ -81,7 +81,11 @@ const duplicateTemplatePart = {
 		}, [item.content, item.blocks]);
 		const { createSuccessNotice } = (0, import_data.useDispatch)(import_notices.store);
 		function onTemplatePartSuccess(templatePart) {
-			createSuccessNotice((0, import_i18n.sprintf)((0, import_i18n._x)("\"%s\" duplicated.", "template part"), getItemTitle(templatePart)), {
+			createSuccessNotice((0, import_i18n.sprintf)(
+				/** translators: %s: The new template part's title e.g. 'Call to action (copy)'. */
+				(0, import_i18n._x)("\"%s\" duplicated.", "template part"),
+				getItemTitle(templatePart)
+			), {
 				type: "snackbar",
 				id: "edit-site-patterns-success"
 			});
@@ -90,7 +94,11 @@ const duplicateTemplatePart = {
 		return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CreateTemplatePartModalContents, {
 			blocks,
 			defaultArea: item.area,
-			defaultTitle: (0, import_i18n.sprintf)((0, import_i18n._x)("%s (Copy)", "template part"), getItemTitle(item)),
+			defaultTitle: (0, import_i18n.sprintf)(
+				/** translators: %s: Existing template part title */
+				(0, import_i18n._x)("%s (Copy)", "template part"),
+				getItemTitle(item)
+			),
 			onCreate: onTemplatePartSuccess,
 			onError: closeModal,
 			confirmLabel: (0, import_i18n._x)("Duplicate", "action label"),

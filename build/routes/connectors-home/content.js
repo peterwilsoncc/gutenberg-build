@@ -903,7 +903,9 @@ const Link = (0, import_element.forwardRef)(function UnforwardedLink({ children,
 			}) : children, shouldShowNewTabIndicator && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 				className: style_module_default$7["link-icon"],
 				role: "img",
-				"aria-label": (0, import_i18n.__)("(opens in a new tab)")
+				"aria-label": 
+				/** translators: accessibility text appended to link text */
+				(0, import_i18n.__)("(opens in a new tab)")
 			})] })
 		})
 	});
@@ -2166,19 +2168,31 @@ function useConnectorPlugin({ file: pluginFileFromServer, settingName, connector
 	const { createSuccessNotice, createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
 	const saveConnectorSetting = (value) => saveEntityRecord("root", "site", { [settingName]: value }, { throwOnError: true });
 	const createConnectedNotice = () => {
-		createSuccessNotice((0, import_i18n.sprintf)((0, import_i18n.__)("%s connected successfully."), connectorName), {
+		createSuccessNotice((0, import_i18n.sprintf)(
+			/** translators: %s: Name of the connector (e.g. "OpenAI"). */
+			(0, import_i18n.__)("%s connected successfully."),
+			connectorName
+		), {
 			id: "connector-connect-success",
 			type: "snackbar"
 		});
 	};
 	const createDisconnectedNotice = () => {
-		createSuccessNotice((0, import_i18n.sprintf)((0, import_i18n.__)("%s disconnected."), connectorName), {
+		createSuccessNotice((0, import_i18n.sprintf)(
+			/** translators: %s: Name of the connector (e.g. "OpenAI"). */
+			(0, import_i18n.__)("%s disconnected."),
+			connectorName
+		), {
 			id: "connector-disconnect-success",
 			type: "snackbar"
 		});
 	};
 	const createDisconnectErrorNotice = () => {
-		createErrorNotice((0, import_i18n.sprintf)((0, import_i18n.__)("Failed to disconnect %s."), connectorName), {
+		createErrorNotice((0, import_i18n.sprintf)(
+			/** translators: %s: Name of the connector (e.g. "OpenAI"). */
+			(0, import_i18n.__)("Failed to disconnect %s."),
+			connectorName
+		), {
 			id: "connector-disconnect-error",
 			type: "snackbar"
 		});
@@ -2209,12 +2223,20 @@ function useConnectorPlugin({ file: pluginFileFromServer, settingName, connector
 			setPluginStatusOverride("active");
 			invalidateResolution("getEntityRecord", ["root", "site"]);
 			setIsExpanded(true);
-			createSuccessNotice((0, import_i18n.sprintf)((0, import_i18n.__)("Plugin for %s installed and activated successfully."), connectorName), {
+			createSuccessNotice((0, import_i18n.sprintf)(
+				/** translators: %s: Name of the connector (e.g. "OpenAI"). */
+				(0, import_i18n.__)("Plugin for %s installed and activated successfully."),
+				connectorName
+			), {
 				id: "connector-plugin-install-success",
 				type: "snackbar"
 			});
 		} catch {
-			createErrorNotice((0, import_i18n.sprintf)((0, import_i18n.__)("Failed to install plugin for %s."), connectorName), {
+			createErrorNotice((0, import_i18n.sprintf)(
+				/** translators: %s: Name of the connector (e.g. "OpenAI"). */
+				(0, import_i18n.__)("Failed to install plugin for %s."),
+				connectorName
+			), {
 				id: "connector-plugin-install-error",
 				type: "snackbar"
 			});
@@ -2233,12 +2255,20 @@ function useConnectorPlugin({ file: pluginFileFromServer, settingName, connector
 			setPluginStatusOverride("active");
 			invalidateResolution("getEntityRecord", ["root", "site"]);
 			setIsExpanded(true);
-			createSuccessNotice((0, import_i18n.sprintf)((0, import_i18n.__)("Plugin for %s activated successfully."), connectorName), {
+			createSuccessNotice((0, import_i18n.sprintf)(
+				/** translators: %s: Name of the connector (e.g. "OpenAI"). */
+				(0, import_i18n.__)("Plugin for %s activated successfully."),
+				connectorName
+			), {
 				id: "connector-plugin-activate-success",
 				type: "snackbar"
 			});
 		} catch {
-			createErrorNotice((0, import_i18n.sprintf)((0, import_i18n.__)("Failed to activate plugin for %s."), connectorName), {
+			createErrorNotice((0, import_i18n.sprintf)(
+				/** translators: %s: Name of the connector (e.g. "OpenAI"). */
+				(0, import_i18n.__)("Failed to activate plugin for %s."),
+				connectorName
+			), {
 				id: "connector-plugin-activate-error",
 				type: "snackbar"
 			});
@@ -2514,7 +2544,11 @@ const ConnectedBadge = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span",
 	children: (0, import_i18n.__)("Connected")
 });
 const PluginDirectoryLink = ({ slug }) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-	href: (0, import_i18n.sprintf)((0, import_i18n.__)("https://wordpress.org/plugins/%s/"), slug),
+	href: (0, import_i18n.sprintf)(
+		/** translators: %s: plugin slug. */
+		(0, import_i18n.__)("https://wordpress.org/plugins/%s/"),
+		slug
+	),
 	openInNewTab: true,
 	children: (0, import_i18n.__)("Learn more")
 });
