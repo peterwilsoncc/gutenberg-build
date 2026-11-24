@@ -11228,9 +11228,11 @@ const { useCanGoBack, useRouter } = unlock(privateApis);
 * gates the inspector's edit affordance and `onNavigateToPreviousEntityRecord`
 * gates the document bar's back button.
 *
+* @param postType Post type rendered in the canvas, if the route names one.
+* @param postId   Post ID rendered in the canvas, if the route names one.
 * @return The two callbacks, for spreading into the editor settings.
 */
-function useNavigateToEntityRecord() {
+function useNavigateToEntityRecord(postType, postId) {
 	const navigate = useNavigate();
 	const search = useSearch({ strict: false });
 	const registry = (0, import_data.useRegistry)();
@@ -11238,9 +11240,10 @@ function useNavigateToEntityRecord() {
 	const router = useRouter();
 	const canGoBack = useCanGoBack();
 	const onNavigateToEntityRecord = (0, import_element.useCallback)((params) => {
-		const currentPostType = registry.select(import_editor.store).getCurrentPostType();
-		const currentPostId = registry.select(import_editor.store).getCurrentPostId();
-		const selectedBlock = registry.select(import_core_data.store).getEntityRecordEdits("postType", currentPostType, currentPostId)?.selection?.selectionStart?.clientId;
+		const homePage = postType || postId ? null : unlock(registry.select(import_core_data.store)).getHomePage();
+		const currentPostType = postType || homePage?.postType;
+		const currentPostId = postId || homePage?.postId;
+		const selectedBlock = (currentPostType && currentPostId ? registry.select(import_core_data.store).getEntityRecordEdits("postType", currentPostType, currentPostId) : void 0)?.selection?.selectionStart?.clientId;
 		if (selectedBlock) navigate({
 			search: (previous) => ({
 				...previous,
@@ -11261,7 +11264,9 @@ function useNavigateToEntityRecord() {
 	}, [
 		navigate,
 		registry,
-		getEntityLink
+		getEntityLink,
+		postType,
+		postId
 	]);
 	const isFocusMode = !!search.focusMode;
 	return {
@@ -11334,7 +11339,7 @@ function useActionPerformed(postType) {
 function Canvas({ canvas }) {
 	const [Editor, setEditor] = (0, import_element.useState)(null);
 	const navigate = useNavigate();
-	const { onNavigateToEntityRecord, onNavigateToPreviousEntityRecord } = useNavigateToEntityRecord();
+	const { onNavigateToEntityRecord, onNavigateToPreviousEntityRecord } = useNavigateToEntityRecord(canvas.postType, canvas.postId);
 	const onActionPerformed = useActionPerformed(canvas.postType);
 	const viewport = useSearch({
 		strict: false,
