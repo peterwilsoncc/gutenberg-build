@@ -53709,10 +53709,14 @@ createStates() {
 			}
 		})] });
 	}
+	function isImage(attachment) {
+		if (attachment.mime_type) return attachment.mime_type.startsWith("image");
+		return "media_type" in attachment && attachment.media_type === "image";
+	}
 	function MediaPreview({ attachment, getPreviewUrl }) {
 		const url = getPreviewUrl && !(0, _wordpress_blob.isBlobURL)(attachment.source_url) ? getPreviewUrl(attachment) : attachment.source_url;
 		const mimeType = attachment.mime_type || "";
-		if (mimeType.startsWith("image")) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
+		if (isImage(attachment)) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
 			className: "media-edit__thumbnail",
 			alt: attachment.alt_text || "",
 			src: url
@@ -53741,7 +53745,7 @@ createStates() {
 				"is-empty": !allItems?.length
 			}),
 			children: [allItems?.map((attachment, index) => {
-				const hasPreviewImage = attachment.mime_type?.startsWith("image");
+				const hasPreviewImage = isImage(attachment);
 				const isBlob = (0, _wordpress_blob.isBlobURL)(attachment.source_url);
 				const attachmentNumericId = attachment.id;
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(AnimatedMediaItem, {
