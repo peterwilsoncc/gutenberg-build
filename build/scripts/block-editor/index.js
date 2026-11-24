@@ -72470,7 +72470,10 @@ var wp;
           return;
         }
         const selection2 = node.ownerDocument.defaultView.getSelection();
-        if (!getSelectionEditableElement(selection2, node)) {
+        const editable = getSelectionEditableElement(selection2, node);
+        if (!editable || event.getTargetRanges().some(
+          ({ startContainer, endContainer }) => !editable.contains(startContainer) || !editable.contains(endContainer)
+        )) {
           event.preventDefault();
         }
       }
