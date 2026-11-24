@@ -98882,7 +98882,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	const noop$10 = () => {};
 	function ListViewBranch(props) {
-		const { blocks, selectBlock = noop$10, showBlockMovers, selectedClientIds, level = 1, path = "", isBranchSelected = false, listPosition = 0, fixedListWindow, isExpanded, parentId, isSyncedBranch = false, showAppender: showAppenderProp = true } = props;
+		const { blocks, selectBlock = noop$10, showBlockMovers, selectedClientIds, level = 1, path = "", isBranchSelected = false, listPosition = 0, fixedListWindow, isExpanded, parentId, isSyncedBranch = false, showAppender: showAppenderProp = true, isLastBranch = true } = props;
 		const { canParentExpand, isParentSynced } = (0, _wordpress_data.useSelect)((select) => {
 			if (!parentId) return {
 				canParentExpand: true,
@@ -98921,7 +98921,7 @@ If there's a particular need for this, please submit a feature request at https:
 			nextPosition += countBlocks(block, expansionState, draggedClientIds, isExpanded);
 			const isDragged = !!draggedClientIds?.includes(clientId);
 			const { start, end, focusedClientId } = fixedListWindow;
-			const blockInView = blockListPosition >= start && blockListPosition < end;
+			const blockInView = blockListPosition < end && nextPosition > start;
 			const position = index + 1;
 			const updatedPath = path.length > 0 ? `${path}_${position}` : `${position}`;
 			const hasNestedBlocks = !!innerBlocks?.length;
@@ -98929,7 +98929,9 @@ If there's a particular need for this, please submit a feature request at https:
 			const isSelected = isClientIdSelected(clientId, selectedClientIds);
 			const isSync = isSelected || clientId === insertedBlockClientId;
 			const isSelectedBranch = isBranchSelected || isSelected && hasNestedBlocks;
-			const showBlock = isDragged || blockInView || clientId === focusedClientId || isSelected && clientId === selectedClientIds[0] || index === 0 || index === blockCount - 1;
+			const isFirstSelected = clientId === selectedClientIds[0];
+			const isLastInList = isLastBranch && index === blockCount - 1;
+			const showBlock = blockInView || isDragged || clientId === focusedClientId || isFirstSelected || level === 1 && index === 0 || isLastInList;
 			const showNestedBlocks = hasNestedBlocks && shouldExpand && !isDragged;
 			if (!showBlock) {
 				placeholderRows += 1;
@@ -98977,7 +98979,8 @@ If there's a particular need for this, please submit a feature request at https:
 					isBranchSelected: isSelectedBranch,
 					selectedClientIds,
 					isExpanded,
-					isSyncedBranch: syncedBranch
+					isSyncedBranch: syncedBranch,
+					isLastBranch: isLastInList
 				})]
 			}, clientId));
 		});
