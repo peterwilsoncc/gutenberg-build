@@ -2900,9 +2900,14 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		return pseudoSelectors.flatMap((pseudoSelector) => {
 			const pseudoStyles = styles?.[pseudoSelector];
 			if (!pseudoStyles || typeof pseudoStyles !== "object") return [];
+			const defaultPseudoStyles = name && mediaQuery ? baseStyles?.[0]?.[pseudoSelector] : null;
 			return [{
 				styles: JSON.parse(JSON.stringify(pseudoStyles)),
-				baseStyles: [sourceStyles ?? styles, ...baseStyles ?? []],
+				baseStyles: [
+					...defaultPseudoStyles ? [defaultPseudoStyles] : [],
+					sourceStyles ?? styles,
+					...baseStyles ?? []
+				],
 				sourceStyles: sourceStyles?.[pseudoSelector],
 				selector,
 				selectorSuffix: pseudoSelector,

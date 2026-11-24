@@ -7033,9 +7033,14 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		return pseudoSelectors.flatMap((pseudoSelector) => {
 			const pseudoStyles = styles?.[pseudoSelector];
 			if (!pseudoStyles || typeof pseudoStyles !== "object") return [];
+			const defaultPseudoStyles = name && mediaQuery ? baseStyles?.[0]?.[pseudoSelector] : null;
 			return [{
 				styles: JSON.parse(JSON.stringify(pseudoStyles)),
-				baseStyles: [sourceStyles ?? styles, ...baseStyles ?? []],
+				baseStyles: [
+					...defaultPseudoStyles ? [defaultPseudoStyles] : [],
+					sourceStyles ?? styles,
+					...baseStyles ?? []
+				],
 				sourceStyles: sourceStyles?.[pseudoSelector],
 				selector,
 				selectorSuffix: pseudoSelector,
@@ -119107,26 +119112,70 @@ If there's a particular need for this, please submit a feature request at https:
 		return rootStyles;
 	}
 	/**
+	* Returns the Global Styles a block instance state layers over: its block
+	* type's, then those of the block style variation applied to it.
+	*
+	* Each includes the Global Styles for the same state, so a state only
+	* escapes a text clip that applies there. A breakpoint pseudo state layers
+	* over the root, the breakpoint, the pseudo state, then both, as output.
+	*
+	* Mirror of `gutenberg_get_block_state_global_base_style` in
+	* lib/block-supports/states.php.
+	*
+	* @param globalBlockStyles Global Styles for the block type.
+	* @param className         Block class name, which names any applied variation.
+	* @param stateKeys         Pseudo-state and breakpoint keys to leave out.
+	* @param statePath         State the styles are for, e.g. `[ '@mobile', ':hover' ]`.
+	* @return Root-only style object.
+	*/
+	function getGlobalBlockBaseStyle(globalBlockStyles, className, stateKeys, statePath = []) {
+		if (!globalBlockStyles) return;
+		const nestedKeys = [
+			"elements",
+			"blocks",
+			"variations",
+			...stateKeys
+		];
+		const layerPaths = [
+			[],
+			...statePath.map((state) => [state]),
+			...statePath.length > 1 ? [statePath] : []
+		];
+		const getLayers = (styles) => layerPaths.reduce((merged, layerPath) => {
+			const layer = layerPath.reduce((value, key) => value?.[key], styles);
+			return layer ? mergeStyleObjects(merged, getRootStateStyles(layer, nestedKeys)) : merged;
+		}, void 0);
+		const baseStyle = getLayers(globalBlockStyles);
+		const variations = globalBlockStyles.variations;
+		const variationStyles = getVariationMatches(className).map((variation) => variations?.[variation]).find((styles) => styles && Object.keys(styles).length);
+		return variationStyles ? mergeStyleObjects(baseStyle, getLayers(variationStyles)) : baseStyle;
+	}
+	/**
 	* Generates CSS rules for supported pseudo-state styles.
 	*
-	* @param style        Block style object containing pseudo-state styles.
-	* @param name         Block name.
-	* @param baseSelector Base selector used to scope generated CSS.
-	* @param baseStyle    Styles these pseudo states layer over.
+	* @param style              Block style object containing pseudo-state styles.
+	* @param name               Block name.
+	* @param baseSelector       Base selector used to scope generated CSS.
+	* @param baseStyle          Block instance styles these pseudo states layer over.
+	* @param defaultStyles      For breakpoint pseudo states, the block style object
+	*                           whose default pseudo states they also layer over.
+	* @param getGlobalBaseStyle Returns the Global Styles a state layers over.
+	* @param viewport           For breakpoint pseudo states, the breakpoint.
 	* @return Generated CSS rule strings.
 	*/
-	function getPseudoStateCSSRules(style, name, baseSelector, baseStyle) {
+	function getPseudoStateCSSRules(style, name, baseSelector, baseStyle, defaultStyles, getGlobalBaseStyle, viewport) {
 		const validPseudoStates = VALID_BLOCK_PSEUDO_STATES[name];
 		if (!validPseudoStates) return [];
 		const cssRules = [];
 		validPseudoStates.forEach((pseudoState) => {
 			const stateStyles = style?.[pseudoState];
 			if (stateStyles) {
+				const defaultPseudoStyles = defaultStyles?.[pseudoState];
 				const css = getBlockStateStylesCSS(stateStyles, {
 					name,
 					baseSelector,
 					state: pseudoState,
-					baseStyle
+					baseStyle: mergeStyleObjects(mergeStyleObjects(getGlobalBaseStyle?.(viewport ? [viewport, pseudoState] : [pseudoState]), baseStyle), defaultPseudoStyles)
 				});
 				if (css) cssRules.push(css);
 			}
@@ -119140,13 +119189,14 @@ If there's a particular need for this, please submit a feature request at https:
 	* pseudo-state styles. Generated rules are wrapped in the matching breakpoint
 	* media query.
 	*
-	* @param style            Block style object containing responsive states.
-	* @param name             Block name.
-	* @param baseSelector     Base selector used to scope generated CSS.
-	* @param viewportSettings Viewport breakpoint settings.
+	* @param style              Block style object containing responsive states.
+	* @param name               Block name.
+	* @param baseSelector       Base selector used to scope generated CSS.
+	* @param viewportSettings   Viewport breakpoint settings.
+	* @param getGlobalBaseStyle Returns the Global Styles a state layers over.
 	* @return Generated CSS rule strings.
 	*/
-	function getResponsiveStateCSSRules(style, name, baseSelector, viewportSettings) {
+	function getResponsiveStateCSSRules(style, name, baseSelector, viewportSettings, getGlobalBaseStyle) {
 		const cssRules = [];
 		const nestedStateKeys = ["elements", ...VALID_BLOCK_PSEUDO_STATES[name] ?? []];
 		const defaultRootStyles = getRootStateStyles(style, nestedStateKeys);
@@ -119162,12 +119212,12 @@ If there's a particular need for this, please submit a feature request at https:
 			const rootCSS = getBlockStateStylesCSS(viewportRootStyles, {
 				name,
 				baseSelector,
-				baseStyle: defaultRootStyles
+				baseStyle: mergeStyleObjects(getGlobalBaseStyle?.([viewport]), defaultRootStyles)
 			});
 			if (rootCSS) viewportCSSRules.push(rootCSS);
 			const elementCSS = getElementCSSRules(viewportStyles.elements, name, baseSelector);
 			if (elementCSS) viewportCSSRules.push(elementCSS);
-			viewportCSSRules.push(...getPseudoStateCSSRules(viewportStyles, name, baseSelector, mergeStyleObjects(defaultRootStyles, viewportRootStyles)));
+			viewportCSSRules.push(...getPseudoStateCSSRules(viewportStyles, name, baseSelector, mergeStyleObjects(defaultRootStyles, viewportRootStyles), style, getGlobalBaseStyle, viewport));
 			if (viewportCSSRules.length) cssRules.push(`${mediaQuery}{${viewportCSSRules.join("")}}`);
 		});
 		return cssRules;
@@ -119388,11 +119438,13 @@ If there's a particular need for this, please submit a feature request at https:
 	function BlockStyleControls({ clientId, name, setAttributes, style, __unstableParentLayout }) {
 		const settings = useBlockSettings(name, __unstableParentLayout);
 		const blockEditingMode = useBlockEditingMode();
-		const { globalBlockStyles, selectedState, showStateOnCanvas } = (0, _wordpress_data.useSelect)((select) => {
+		const [viewportSettings] = useSettings("viewport");
+		const { globalBlockStyles, className, selectedState, showStateOnCanvas } = (0, _wordpress_data.useSelect)((select) => {
 			const blockEditorSelect = select(store);
 			const { getSelectedBlockStyleState, isSelectedBlockStyleStateShownOnCanvas } = unlock$2(blockEditorSelect);
 			return {
 				globalBlockStyles: blockEditorSelect.getSettings()?.[globalStylesDataKey]?.blocks?.[name],
+				className: blockEditorSelect.getBlockAttributes(clientId)?.className,
 				selectedState: getSelectedBlockStyleState(clientId),
 				showStateOnCanvas: isSelectedBlockStyleStateShownOnCanvas(clientId)
 			};
@@ -119407,15 +119459,18 @@ If there's a particular need for this, please submit a feature request at https:
 			else if (instanceStateValue) stateValue = instanceStateValue;
 			else if (globalStateValue) stateValue = globalStateValue;
 			else return;
+			const pseudoStates = VALID_BLOCK_PSEUDO_STATES[name] ?? [];
 			return getBlockStateStylesCSS(stateValue, {
 				name,
 				baseSelector: `[data-block="${clientId}"]`,
-				baseStyle: getRootStateStyles(style, ["elements", ...VALID_BLOCK_PSEUDO_STATES[name] ?? []])
+				baseStyle: mergeStyleObjects(getGlobalBlockBaseStyle(globalBlockStyles, className, [...pseudoStates, ...Object.keys(getResponsiveMediaQueries$3(viewportSettings))]), getRootStateStyles(style, ["elements", ...pseudoStates]))
 			});
 		}, [
 			showStateOnCanvas,
 			isPseudoSelectorState,
 			globalBlockStyles,
+			className,
+			viewportSettings,
 			style,
 			selectedState,
 			clientId,
@@ -119522,16 +119577,28 @@ If there's a particular need for this, please submit a feature request at https:
 		const baseElementSelector = `.${blockElementsContainerIdentifier}`;
 		const blockElementStyles = style?.elements;
 		const [viewportSettings] = useSettings("viewport");
+		const { globalBlockStyles, className } = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlockAttributes, getSettings } = select(store);
+			return {
+				globalBlockStyles: getSettings()?.[globalStylesDataKey]?.blocks?.[name],
+				className: getBlockAttributes(clientId)?.className
+			};
+		}, [clientId, name]);
 		const styles = (0, _wordpress_element.useMemo)(() => {
 			const cssRules = [];
+			const pseudoStates = VALID_BLOCK_PSEUDO_STATES[name] ?? [];
+			const stateKeys = [...pseudoStates, ...Object.keys(getResponsiveMediaQueries$3(viewportSettings))];
+			const getGlobalBaseStyle = (statePath) => getGlobalBlockBaseStyle(globalBlockStyles, className, stateKeys, statePath);
 			const elementCSS = getElementCSSRules(blockElementStyles, name, baseElementSelector);
 			if (elementCSS) cssRules.push(elementCSS);
-			cssRules.push(...getPseudoStateCSSRules(style, name, baseElementSelector, getRootStateStyles(style, ["elements", ...VALID_BLOCK_PSEUDO_STATES[name] ?? []])));
-			cssRules.push(...getResponsiveStateCSSRules(style, name, baseElementSelector, viewportSettings));
+			cssRules.push(...getPseudoStateCSSRules(style, name, baseElementSelector, getRootStateStyles(style, ["elements", ...pseudoStates]), void 0, getGlobalBaseStyle));
+			cssRules.push(...getResponsiveStateCSSRules(style, name, baseElementSelector, viewportSettings, getGlobalBaseStyle));
 			return cssRules.length > 0 ? cssRules.join("") : void 0;
 		}, [
 			baseElementSelector,
 			blockElementStyles,
+			className,
+			globalBlockStyles,
 			name,
 			style,
 			viewportSettings
