@@ -48879,13 +48879,13 @@ function registerStyle$18(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$18(targetDocument, hash, css);
 }
-registerStyle$18("aeb041d5fa", ".fa75498a401a0843__widget-footer{border-block-start-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-block-start-style:solid;border-block-start-width:var(--wpds-border-width-xs,1px);box-sizing:border-box;min-block-size:calc(var(--wpds-typography-line-height-sm, 20px) + var(--wpds-dimension-padding-md, 12px)*2);padding-block-end:var(--wpds-dimension-padding-xs,4px);padding-block-start:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-card-padding)}.aaed5cb0b2dfc5a5__compact-actions{margin-inline-start:auto}._46006e230cfe85ca__link-action{align-items:center;display:inline-flex}._8ff36ecb7692d55a__prefixed-action{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);text-decoration:inherit}._09247aac5861cd2c__icon-action{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}");
+registerStyle$18("8d5dda6574", "._526abf450fd3c43c__widget-footer{border-block-start-color:var(--wpds-color-stroke-surface-neutral-weak,#f0f0f0);border-block-start-style:solid;border-block-start-width:var(--wpds-border-width-xs,1px);box-sizing:border-box;min-block-size:calc(var(--wpds-typography-line-height-sm, 20px) + var(--wpds-dimension-padding-md, 12px)*2);padding-block-end:var(--wpds-dimension-padding-xs,4px);padding-block-start:var(--wpds-dimension-padding-xs,4px);padding-inline:var(--wp-ui-card-padding)}._4d11b9b38be7bc9b__compact-actions{margin-inline-start:auto}.c7c638d3f165bff3__link-action{align-items:center;display:inline-flex}.cc453ea59d6d643c__prefixed-action{align-items:center;display:flex;gap:var(--wpds-dimension-gap-xs,4px);text-decoration:inherit}.bd9b9c051b3fe58c__icon-action{--wp-ui-button-aspect-ratio:1;--wp-ui-button-padding-inline:0px;--wp-ui-button-min-width:unset}");
 var widget_footer_module_default = {
-	"widget-footer": "fa75498a401a0843__widget-footer",
-	"compact-actions": "aaed5cb0b2dfc5a5__compact-actions",
-	"link-action": "_46006e230cfe85ca__link-action",
-	"prefixed-action": "_8ff36ecb7692d55a__prefixed-action",
-	"icon-action": "_09247aac5861cd2c__icon-action"
+	"widget-footer": "_526abf450fd3c43c__widget-footer",
+	"compact-actions": "_4d11b9b38be7bc9b__compact-actions",
+	"link-action": "c7c638d3f165bff3__link-action",
+	"prefixed-action": "cc453ea59d6d643c__prefixed-action",
+	"icon-action": "bd9b9c051b3fe58c__icon-action"
 };
 /**
 * Icon-only link. `openInNewTab` mounts the target on the anchor rather
@@ -49099,11 +49099,11 @@ function registerStyle$17(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$17(targetDocument, hash, css);
 }
-registerStyle$17("956024aae9", "._5c10244c65cad3ca__content{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto}._9d98669ff25ae4a1__bleed-content{padding:0}._4e95e7c97e8a4469__loading{height:100%}");
+registerStyle$17("745dbf7f8d", "._561bac96498b395e__content{flex:1;height:100%;min-height:0;min-width:0;overflow-y:auto;padding-block-end:var(--wp-ui-card-padding)}._98cee9bc45a906e5__bleed-content{padding:0}._66a361b0f5b4459b__loading{height:100%}");
 var widget_frame_module_default = {
-	"content": "_5c10244c65cad3ca__content",
-	"bleed-content": "_9d98669ff25ae4a1__bleed-content",
-	"loading": "_4e95e7c97e8a4469__loading"
+	"content": "_561bac96498b395e__content",
+	"bleed-content": "_98cee9bc45a906e5__bleed-content",
+	"loading": "_66a361b0f5b4459b__loading"
 };
 var WidgetErrorBoundary = class extends import_element.Component {
 	state = { hasError: false };
