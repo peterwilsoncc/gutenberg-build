@@ -63928,7 +63928,7 @@ var wp;
   var import_components23 = __toESM(require_components(), 1);
   var import_data32 = __toESM(require_data(), 1);
   var import_compose35 = __toESM(require_compose(), 1);
-  var import_dom42 = __toESM(require_dom(), 1);
+  var import_dom43 = __toESM(require_dom(), 1);
 
   // packages/block-editor/build-module/components/block-list/block-invalid-warning.mjs
   var import_i18n35 = __toESM(require_i18n(), 1);
@@ -67256,6 +67256,9 @@ var wp;
     }
     return blockNode.id.slice("block-".length);
   }
+  function isBlockElementOutsideFields(element) {
+    return element?.contentEditable === "inherit" && element.hasAttribute("data-block");
+  }
   function rectUnion(rect1, rect2) {
     const left = Math.min(rect1.left, rect2.left);
     const right = Math.max(rect1.right, rect2.right);
@@ -67400,7 +67403,7 @@ var wp;
           timeoutId = setTimeout(() => {
             node.classList.toggle(
               "is-hovered-draggable",
-              !target.isContentEditable
+              !target.isContentEditable || isBlockElementOutsideFields(target)
             );
           }, 100);
         }
@@ -67646,7 +67649,7 @@ var wp;
 
   // packages/block-editor/build-module/components/block-list/use-block-props/use-selected-block-event-handlers.mjs
   var import_blocks22 = __toESM(require_blocks(), 1);
-  var import_dom41 = __toESM(require_dom(), 1);
+  var import_dom42 = __toESM(require_dom(), 1);
   var import_keycodes2 = __toESM(require_keycodes(), 1);
   var import_data25 = __toESM(require_data(), 1);
   var import_compose28 = __toESM(require_compose(), 1);
@@ -67683,7 +67686,7 @@ var wp;
           if (keyCode !== import_keycodes2.ENTER && keyCode !== import_keycodes2.BACKSPACE && keyCode !== import_keycodes2.DELETE) {
             return;
           }
-          if (target !== node || (0, import_dom41.isTextField)(target)) {
+          if (target !== node || (0, import_dom42.isTextField)(target)) {
             return;
           }
           if (keyCode === import_keycodes2.ENTER) {
@@ -69103,7 +69106,7 @@ var wp;
       const saveContent = __unstableBlockSource ? (0, import_blocks25.serializeRawBlock)(__unstableBlockSource) : (0, import_blocks25.getSaveContent)(blockType, attributes);
       block = /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(Block, { className: "has-warning", children: [
         /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(BlockInvalidWarning, { clientId }),
-        /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_element172.RawHTML, { children: (0, import_dom42.safeHTML)(saveContent) })
+        /* @__PURE__ */ (0, import_jsx_runtime337.jsx)(import_element172.RawHTML, { children: (0, import_dom43.safeHTML)(saveContent) })
       ] });
     } else if (mode2 === "html") {
       block = /* @__PURE__ */ (0, import_jsx_runtime337.jsxs)(import_jsx_runtime337.Fragment, { children: [
@@ -70917,11 +70920,11 @@ var wp;
 
   // packages/block-editor/build-module/components/writing-flow/utils.mjs
   var import_i18n47 = __toESM(require_i18n(), 1);
-  var import_dom44 = __toESM(require_dom(), 1);
+  var import_dom45 = __toESM(require_dom(), 1);
   var import_blocks29 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/utils/pasting.mjs
-  var import_dom43 = __toESM(require_dom(), 1);
+  var import_dom44 = __toESM(require_dom(), 1);
   function removeWindowsFragments(html) {
     const startStr = "<!--StartFragment-->";
     const startIdx = html.indexOf(startStr);
@@ -70957,7 +70960,7 @@ var wp;
     }
     html = removeWindowsFragments(html);
     html = removeCharsetMetaTag(html);
-    const files = (0, import_dom43.getFilesFromDataTransfer)(clipboardData);
+    const files = (0, import_dom44.getFilesFromDataTransfer)(clipboardData);
     if (files.length && !shouldDismissPastedFiles(files, html)) {
       return { files };
     }
@@ -71037,7 +71040,7 @@ var wp;
   }
   function toPlainText(html) {
     html = html.replace(/<br>/g, "\n");
-    const plainText = (0, import_dom44.__unstableStripHTML)(html).trim();
+    const plainText = (0, import_dom45.__unstableStripHTML)(html).trim();
     return plainText.replace(/\n\n+/g, "\n\n");
   }
   function setContentEditableWrapper(node, value, { focus: focus9 = true } = {}) {
@@ -71087,7 +71090,12 @@ var wp;
         if (isFieldFocused && selection2.anchorNode && !activeElement2.contains(selection2.anchorNode)) {
           selection2.removeAllRanges();
         }
-        if (!setContentEditableWrapper(node, true, { focus: false })) {
+        if (
+          // Not while a block's own element outside its fields has
+          // focus, as after a press on a bullet: it is dragged from
+          // there. Still return the cleanup for editing that starts later.
+          !isBlockElementOutsideFields(activeElement2) && !setContentEditableWrapper(node, true, { focus: false })
+        ) {
           return;
         }
         if (isFieldFocused && selection2.anchorNode && activeElement2.contains(selection2.anchorNode)) {
@@ -71219,7 +71227,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/use-tab-nav.mjs
-  var import_dom47 = __toESM(require_dom(), 1);
+  var import_dom48 = __toESM(require_dom(), 1);
   var import_keycodes4 = __toESM(require_keycodes(), 1);
   var import_i18n48 = __toESM(require_i18n(), 1);
   var import_data42 = __toESM(require_data(), 1);
@@ -71280,7 +71288,7 @@ var wp;
           containerRef.current.focus();
         }
       } else {
-        const tabbables = import_dom47.focus.tabbable.find(containerRef.current);
+        const tabbables = import_dom48.focus.tabbable.find(containerRef.current);
         if (tabbables.length) {
           tabbables[0].focus();
         } else {
@@ -71300,7 +71308,7 @@ var wp;
       }
       if (key === "Tab" && !event.shiftKey) {
         event.preventDefault();
-        import_dom47.focus.tabbable.findNext(focusCaptureAfterRef.current)?.focus();
+        import_dom48.focus.tabbable.findNext(focusCaptureAfterRef.current)?.focus();
       }
     }
     function onStopFocus() {
@@ -71378,14 +71386,14 @@ var wp;
         }
         const { target, shiftKey: isShift } = event;
         const direction = isShift ? "findPrevious" : "findNext";
-        const nextTabbable = import_dom47.focus.tabbable[direction](
+        const nextTabbable = import_dom48.focus.tabbable[direction](
           target
         );
         const currentBlock = target.closest(
           "[data-block]"
         );
         const isElementPartOfSelectedBlock = currentBlock && nextTabbable && (isInSameBlock(currentBlock, nextTabbable) || isInsideRootBlock(currentBlock, nextTabbable));
-        if ((0, import_dom47.isFormElement)(nextTabbable) && isElementPartOfSelectedBlock) {
+        if ((0, import_dom48.isFormElement)(nextTabbable) && isElementPartOfSelectedBlock) {
           return;
         }
         const next = isShift ? focusCaptureBeforeRef : focusCaptureAfterRef;
@@ -71446,7 +71454,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/use-arrow-nav.mjs
-  var import_dom49 = __toESM(require_dom(), 1);
+  var import_dom50 = __toESM(require_dom(), 1);
   var import_keycodes6 = __toESM(require_keycodes(), 1);
   var import_data44 = __toESM(require_data(), 1);
   var import_compose42 = __toESM(require_compose(), 1);
@@ -71487,7 +71495,7 @@ var wp;
     return tagName !== "TEXTAREA";
   }
   function getClosestTabbable(target, isReverse, containerElement, onlyVertical) {
-    let focusableNodes = import_dom49.focus.focusable.find(containerElement);
+    let focusableNodes = import_dom50.focus.focusable.find(containerElement);
     if (isReverse) {
       focusableNodes.reverse();
     }
@@ -71506,10 +71514,10 @@ var wp;
       const blockType = (0, import_blocks30.getBlockType)(
         node.getAttribute("data-type")
       );
-      if (node.contentEditable !== "true" && getBlockClientId(node) && blockType && (blockType.merge || (0, import_blocks30.hasBlockSupport)(blockType, "__experimentalOnMerge")) && import_dom49.focus.focusable.find(node).filter((element) => !(0, import_dom49.isFormElement)(element)).length !== 0) {
+      if (node.contentEditable !== "true" && getBlockClientId(node) && blockType && (blockType.merge || (0, import_blocks30.hasBlockSupport)(blockType, "__experimentalOnMerge")) && import_dom50.focus.focusable.find(node).filter((element) => !(0, import_dom50.isFormElement)(element)).length !== 0) {
         return false;
       }
-      if (!import_dom49.focus.tabbable.isTabbableIndex(node)) {
+      if (!import_dom50.focus.tabbable.isTabbableIndex(node)) {
         return false;
       }
       if (node.isContentEditable && node.contentEditable !== "true" && getBlockClientId(node.closest('[contenteditable="true"]'))) {
@@ -71571,7 +71579,7 @@ var wp;
         const isVertical = isUp || isDown;
         const isNav = isHorizontal || isVertical;
         const hasModifier = shiftKey || ctrlKey || altKey || metaKey;
-        const isNavEdge = isVertical ? import_dom49.isVerticalEdge : import_dom49.isHorizontalEdge;
+        const isNavEdge = isVertical ? import_dom50.isVerticalEdge : import_dom50.isHorizontalEdge;
         const { ownerDocument: ownerDocument2 } = node;
         const { defaultView } = ownerDocument2;
         if (!isNav) {
@@ -71620,9 +71628,9 @@ var wp;
         if (!isVertical) {
           verticalRect = null;
         } else if (!verticalRect) {
-          verticalRect = (0, import_dom49.computeCaretRect)(defaultView);
+          verticalRect = (0, import_dom50.computeCaretRect)(defaultView);
         }
-        const isReverseDir = (0, import_dom49.isRTL)(target) ? !isReverse : isReverse;
+        const isReverseDir = (0, import_dom50.isRTL)(target) ? !isReverse : isReverse;
         const { keepCaretInsideBlock } = getSettings9();
         if (shiftKey) {
           if (isNavEdge(target, isReverse)) {
@@ -71637,9 +71645,9 @@ var wp;
               event.preventDefault();
             }
           }
-        } else if (isVertical && (0, import_dom49.isVerticalEdge)(target, isReverse) && // When Alt is pressed, only intercept if the caret is also at
+        } else if (isVertical && (0, import_dom50.isVerticalEdge)(target, isReverse) && // When Alt is pressed, only intercept if the caret is also at
         // the horizontal edge.
-        (altKey ? (0, import_dom49.isHorizontalEdge)(target, isReverseDir) : true) && !keepCaretInsideBlock) {
+        (altKey ? (0, import_dom50.isHorizontalEdge)(target, isReverseDir) : true) && !keepCaretInsideBlock) {
           const closestTabbable = getClosestTabbable(
             target,
             isReverse,
@@ -71647,7 +71655,7 @@ var wp;
             true
           );
           if (closestTabbable) {
-            (0, import_dom49.placeCaretAtVerticalEdge)(
+            (0, import_dom50.placeCaretAtVerticalEdge)(
               closestTabbable,
               // When Alt is pressed, place the caret at the furthest
               // horizontal edge and the furthest vertical edge.
@@ -71657,13 +71665,13 @@ var wp;
             );
             event.preventDefault();
           }
-        } else if (isHorizontal && defaultView.getSelection().isCollapsed && (0, import_dom49.isHorizontalEdge)(target, isReverseDir) && !keepCaretInsideBlock) {
+        } else if (isHorizontal && defaultView.getSelection().isCollapsed && (0, import_dom50.isHorizontalEdge)(target, isReverseDir) && !keepCaretInsideBlock) {
           const closestTabbable = getClosestTabbable(
             target,
             isReverseDir,
             node
           );
-          (0, import_dom49.placeCaretAtHorizontalEdge)(
+          (0, import_dom50.placeCaretAtHorizontalEdge)(
             closestTabbable,
             isReverse
           );
@@ -71745,7 +71753,7 @@ var wp;
   }
 
   // packages/block-editor/build-module/components/writing-flow/use-select-all.mjs
-  var import_dom51 = __toESM(require_dom(), 1);
+  var import_dom52 = __toESM(require_dom(), 1);
   var import_data46 = __toESM(require_data(), 1);
   var import_keyboard_shortcuts6 = __toESM(require_keyboard_shortcuts(), 1);
   var import_compose44 = __toESM(require_compose(), 1);
@@ -71763,7 +71771,7 @@ var wp;
         const selection2 = ownerDocument2.defaultView.getSelection();
         const editable = event.target === node && getSelectionEditableElement(selection2, node) || // Key events reach the listener from elements.
         event.target;
-        if (selectedClientIds.length < 2 && !(0, import_dom51.isEntirelySelected)(editable)) {
+        if (selectedClientIds.length < 2 && !(0, import_dom52.isEntirelySelected)(editable)) {
           if (event.target === node && editable !== node) {
             event.preventDefault();
             const range2 = ownerDocument2.createRange();
@@ -71916,7 +71924,7 @@ var wp;
   var import_data48 = __toESM(require_data(), 1);
   var import_compose46 = __toESM(require_compose(), 1);
   var import_rich_text4 = __toESM(require_rich_text(), 1);
-  var import_dom53 = __toESM(require_dom(), 1);
+  var import_dom54 = __toESM(require_dom(), 1);
   var { ownsSelection } = unlock(import_rich_text4.privateApis);
   function extractSelectionStartNode(selection2) {
     const { anchorNode, anchorOffset } = selection2;
@@ -71936,7 +71944,7 @@ var wp;
     if (focusOffset === focusNode.childNodes.length) {
       return focusNode;
     }
-    if (focusOffset === 0 && (0, import_dom53.isSelectionForward)(selection2) && isTripleClick) {
+    if (focusOffset === 0 && (0, import_dom54.isSelectionForward)(selection2) && isTripleClick) {
       let node = focusNode;
       while (!node.previousSibling && node.parentNode) {
         node = node.parentNode;
@@ -72009,7 +72017,12 @@ var wp;
             const collapsedClientId = getBlockClientId(
               selection2.anchorNode
             );
-            if (!isMultiSelecting3() && collapsedClientId && canHostEditableRoot2(collapsedClientId)) {
+            if (!isMultiSelecting3() && collapsedClientId && canHostEditableRoot2(collapsedClientId) && // Not when a press on a block's own element, such as a
+            // list item's bullet, focused it: WebKit then leaves
+            // the caret in the nearest text.
+            !isBlockElementOutsideFields(
+              ownerDocument2.activeElement
+            )) {
               setContentEditableWrapper(node, true);
               const { activeElement: activeElement2 } = ownerDocument2;
               if (activeElement2 !== node && activeElement2?.isContentEditable && node.contains(activeElement2) && getBlockClientId(activeElement2) === collapsedClientId) {
@@ -72243,7 +72256,7 @@ var wp;
 
   // packages/block-editor/build-module/components/writing-flow/use-undo-keyboard-slide.mjs
   var import_compose47 = __toESM(require_compose(), 1);
-  var import_dom55 = __toESM(require_dom(), 1);
+  var import_dom56 = __toESM(require_dom(), 1);
   function useUndoKeyboardSlide() {
     return (0, import_compose47.useRefEffect)((node) => {
       const { ownerDocument: ownerDocument2 } = node;
@@ -72261,7 +72274,7 @@ var wp;
         if (page.scrollHeight > page.clientHeight) {
           return;
         }
-        const canvas = (0, import_dom55.getScrollContainer)(node);
+        const canvas = (0, import_dom56.getScrollContainer)(node);
         const { scrollTop } = canvas;
         canvas.scrollTop += slide;
         view.scrollBy(0, scrollTop - canvas.scrollTop);
@@ -72336,6 +72349,9 @@ var wp;
         function onPointerDown(event) {
           pointerType = event.pointerType;
           isFocusedOnPointerDown = node.matches(":focus");
+          if (isBlockElementOutsideFields(event.target)) {
+            setContentEditableWrapper(node, false);
+          }
         }
         function onMouseDown(event) {
           const clickedClientId = getBlockClientId(
@@ -72679,7 +72695,7 @@ var wp;
 
   // packages/block-editor/build-module/components/writing-flow/use-clipboard-handler.mjs
   var import_blocks33 = __toESM(require_blocks(), 1);
-  var import_dom58 = __toESM(require_dom(), 1);
+  var import_dom59 = __toESM(require_dom(), 1);
   var import_data52 = __toESM(require_data(), 1);
   var import_compose52 = __toESM(require_compose(), 1);
 
@@ -72879,7 +72895,7 @@ var wp;
       return false;
     }
     const blockElement = ownerDocument2.getElementById(`block-${clientId}`);
-    return !!blockElement?.isContentEditable && (0, import_dom58.isEntirelySelected)(blockElement);
+    return !!blockElement?.isContentEditable && (0, import_dom59.isEntirelySelected)(blockElement);
   }
   function useClipboardHandler() {
     const registry = (0, import_data52.useRegistry)();
@@ -72952,7 +72968,7 @@ var wp;
         );
         if (!hasMultiSelection2()) {
           const { ownerDocument: ownerDocument2 } = event.target;
-          const hasSelection = event.type === "copy" || event.type === "cut" ? (0, import_dom58.documentHasUncollapsedSelection)(ownerDocument2) : (0, import_dom58.documentHasSelection)(ownerDocument2) && !ownerDocument2.activeElement.isContentEditable;
+          const hasSelection = event.type === "copy" || event.type === "cut" ? (0, import_dom59.documentHasUncollapsedSelection)(ownerDocument2) : (0, import_dom59.documentHasSelection)(ownerDocument2) && !ownerDocument2.activeElement.isContentEditable;
           if (hasSelection && !isWholeSingleBlockCopy) {
             return;
           }
@@ -73383,7 +73399,7 @@ var wp;
   var import_element185 = __toESM(require_element(), 1);
   var import_data53 = __toESM(require_data(), 1);
   var import_deprecated7 = __toESM(require_deprecated(), 1);
-  var import_dom60 = __toESM(require_dom(), 1);
+  var import_dom61 = __toESM(require_dom(), 1);
   var import_keyboard_shortcuts7 = __toESM(require_keyboard_shortcuts(), 1);
   var import_keycodes9 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime349 = __toESM(require_jsx_runtime(), 1);
@@ -73402,7 +73418,7 @@ var wp;
     return container.contains(container.ownerDocument.activeElement);
   }
   function focusFirstTabbableIn(container) {
-    const [firstTabbable] = import_dom60.focus.tabbable.find(container);
+    const [firstTabbable] = import_dom61.focus.tabbable.find(container);
     if (firstTabbable) {
       firstTabbable.focus({
         // When focusing newly mounted toolbars,
@@ -73418,7 +73434,7 @@ var wp;
       initialAccessibleToolbarState
     );
     const determineIsAccessibleToolbar = (0, import_element185.useCallback)(() => {
-      const tabbables = import_dom60.focus.tabbable.find(toolbarRef.current).filter(
+      const tabbables = import_dom61.focus.tabbable.find(toolbarRef.current).filter(
         (element) => !element.hasAttribute("data-base-ui-focus-guard")
       );
       if (tabbables.length === 0) {
@@ -76682,7 +76698,7 @@ var wp;
   // packages/block-editor/build-module/components/inserter/hooks/use-patterns-paging.mjs
   var import_element205 = __toESM(require_element(), 1);
   var import_compose62 = __toESM(require_compose(), 1);
-  var import_dom61 = __toESM(require_dom(), 1);
+  var import_dom62 = __toESM(require_dom(), 1);
   var PAGE_SIZE = 20;
   function usePatternsPaging(currentCategoryPatterns, currentCategory, scrollContainerRef, currentFilter = "") {
     const [currentPage, setCurrentPage] = (0, import_element205.useState)(1);
@@ -76701,7 +76717,7 @@ var wp;
     }, [pageIndex, currentCategoryPatterns]);
     const numPages = Math.ceil(currentCategoryPatterns.length / PAGE_SIZE);
     const changePage = (page) => {
-      const scrollContainer = (0, import_dom61.getScrollContainer)(
+      const scrollContainer = (0, import_dom62.getScrollContainer)(
         scrollContainerRef?.current
       );
       scrollContainer?.scrollTo(0, 0);
@@ -76709,7 +76725,7 @@ var wp;
     };
     (0, import_element205.useEffect)(
       function scrollToTopOnCategoryChange() {
-        const scrollContainer = (0, import_dom61.getScrollContainer)(
+        const scrollContainer = (0, import_dom62.getScrollContainer)(
           scrollContainerRef?.current
         );
         scrollContainer?.scrollTo(0, 0);
@@ -77724,7 +77740,7 @@ var wp;
   var import_components112 = __toESM(require_components(), 1);
   var import_element301 = __toESM(require_element(), 1);
   var import_compose93 = __toESM(require_compose(), 1);
-  var import_dom62 = __toESM(require_dom(), 1);
+  var import_dom63 = __toESM(require_dom(), 1);
 
   // packages/block-editor/build-module/components/inserter/media-tab/media-grid.mjs
   var import_element298 = __toESM(require_element(), 1);
@@ -97132,7 +97148,7 @@ If there's a particular need for this, please submit a feature request at https:
       setPage(numPages);
     }
     const changePage = (0, import_element301.useCallback)((nextPage) => {
-      (0, import_dom62.getScrollContainer)(panelRef.current)?.scrollTo?.(0, 0);
+      (0, import_dom63.getScrollContainer)(panelRef.current)?.scrollTo?.(0, 0);
       setPage(nextPage);
     }, []);
     const {
@@ -98604,7 +98620,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-popover/use-popover-scroll.mjs
   var import_compose96 = __toESM(require_compose(), 1);
-  var import_dom63 = __toESM(require_dom(), 1);
+  var import_dom64 = __toESM(require_dom(), 1);
   var scrollContainerCache = /* @__PURE__ */ new WeakMap();
   function usePopoverScroll(contentRef) {
     const effect = (0, import_compose96.useRefEffect)(
@@ -98614,10 +98630,10 @@ If there's a particular need for this, please submit a feature request at https:
           const contentEl = contentRef.current;
           let scrollContainer = scrollContainerCache.get(contentEl);
           if (!scrollContainer) {
-            scrollContainer = (0, import_dom63.getScrollContainer)(contentEl);
+            scrollContainer = (0, import_dom64.getScrollContainer)(contentEl);
             scrollContainerCache.set(contentEl, scrollContainer);
           }
-          const eventScrollContainer = (0, import_dom63.getScrollContainer)(
+          const eventScrollContainer = (0, import_dom64.getScrollContainer)(
             target
           );
           if (!node.contains(eventScrollContainer)) {
@@ -99663,7 +99679,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element317 = __toESM(require_element(), 1);
   var import_blocks48 = __toESM(require_blocks(), 1);
   var import_data87 = __toESM(require_data(), 1);
-  var import_dom65 = __toESM(require_dom(), 1);
+  var import_dom66 = __toESM(require_dom(), 1);
   function parseDropEvent(event) {
     let result = {
       srcRootClientId: null,
@@ -99908,7 +99924,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const _onHTMLDrop = onHTMLDrop(insertOrReplaceBlocks);
     return (event) => {
-      const files = (0, import_dom65.getFilesFromDataTransfer)(event.dataTransfer);
+      const files = (0, import_dom66.getFilesFromDataTransfer)(event.dataTransfer);
       const html = event.dataTransfer.getData("text/html");
       if (html) {
         _onHTMLDrop(html);
@@ -100882,7 +100898,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-tools/index.mjs
   var import_data132 = __toESM(require_data(), 1);
-  var import_dom69 = __toESM(require_dom(), 1);
+  var import_dom70 = __toESM(require_dom(), 1);
   var import_components168 = __toESM(require_components(), 1);
   var import_keyboard_shortcuts11 = __toESM(require_keyboard_shortcuts(), 1);
   var import_element355 = __toESM(require_element(), 1);
@@ -100893,7 +100909,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-tools/use-block-toolbar-popover-props.mjs
   var import_compose109 = __toESM(require_compose(), 1);
   var import_data96 = __toESM(require_data(), 1);
-  var import_dom66 = __toESM(require_dom(), 1);
+  var import_dom67 = __toESM(require_dom(), 1);
   var import_element330 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/hooks/position.mjs
@@ -101776,7 +101792,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!contentElement) {
         return;
       }
-      return (0, import_dom66.getScrollContainer)(contentElement);
+      return (0, import_dom67.getScrollContainer)(contentElement);
     }, [contentElement]);
     const [props, setProps] = (0, import_element330.useState)(
       () => getProps(
@@ -101937,7 +101953,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_compose110 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/block-draggable/use-scroll-when-dragging.mjs
-  var import_dom68 = __toESM(require_dom(), 1);
+  var import_dom69 = __toESM(require_dom(), 1);
   var import_element331 = __toESM(require_element(), 1);
   var SCROLL_INACTIVE_DISTANCE_PX = 50;
   var SCROLL_INTERVAL_MS = 25;
@@ -101959,7 +101975,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const startScrolling = (0, import_element331.useCallback)((event) => {
       dragStartYRef.current = event.clientY;
-      scrollParentYRef.current = (0, import_dom68.getScrollContainer)(event.target);
+      scrollParentYRef.current = (0, import_dom69.getScrollContainer)(event.target);
       scrollEditorIntervalRef.current = setInterval(() => {
         if (scrollParentYRef.current && velocityYRef.current) {
           const newTop = scrollParentYRef.current.scrollTop + velocityYRef.current;
@@ -106576,7 +106592,7 @@ If there's a particular need for this, please submit a feature request at https:
           selectBlock2(clientIds[0]);
         }
       } else if (isMatch("core/block-editor/collapse-list-view", event)) {
-        if ((0, import_dom69.isTextField)(event.target) || (0, import_dom69.isTextField)(
+        if ((0, import_dom70.isTextField)(event.target) || (0, import_dom70.isTextField)(
           event.target?.contentWindow?.document?.activeElement
         )) {
           return;
@@ -106711,7 +106727,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/observe-typing/index.mjs
   var import_compose117 = __toESM(require_compose(), 1);
   var import_data133 = __toESM(require_data(), 1);
-  var import_dom70 = __toESM(require_dom(), 1);
+  var import_dom71 = __toESM(require_dom(), 1);
   var import_keycodes16 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime550 = __toESM(require_jsx_runtime(), 1);
   var KEY_DOWN_ELIGIBLE_KEY_CODES = /* @__PURE__ */ new Set([
@@ -106775,7 +106791,7 @@ If there's a particular need for this, please submit a feature request at https:
           let stopTypingOnNonTextField2 = function(event) {
             const { target } = event;
             timerId = defaultView.setTimeout(() => {
-              if (!(0, import_dom70.isTextField)(target)) {
+              if (!(0, import_dom71.isTextField)(target)) {
                 stopTyping2();
               }
             });
@@ -106817,7 +106833,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
         function startTypingInTextField(event) {
           const { type, target } = event;
-          if (!(0, import_dom70.isTextField)(target) || !node.contains(target)) {
+          if (!(0, import_dom71.isTextField)(target) || !node.contains(target)) {
             return;
           }
           if (type === "keydown" && !isKeyDownEligibleForStartTyping(event)) {
@@ -107470,7 +107486,7 @@ If there's a particular need for this, please submit a feature request at https:
   var leaf_default = ListViewLeaf;
 
   // packages/block-editor/build-module/components/list-view/use-list-view-scroll-into-view.mjs
-  var import_dom71 = __toESM(require_dom(), 1);
+  var import_dom72 = __toESM(require_dom(), 1);
   var import_element360 = __toESM(require_element(), 1);
   function useListViewScrollIntoView({
     isSelected: isSelected2,
@@ -107482,7 +107498,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!isSelected2 || !isSingleSelection || !rowItemRef.current) {
         return;
       }
-      const scrollContainer = (0, import_dom71.getScrollContainer)(rowItemRef.current);
+      const scrollContainer = (0, import_dom72.getScrollContainer)(rowItemRef.current);
       const { ownerDocument: ownerDocument2 } = rowItemRef.current;
       const windowScroll = scrollContainer === ownerDocument2.body || scrollContainer === ownerDocument2.documentElement;
       if (windowScroll || !scrollContainer) {
@@ -107827,7 +107843,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/list-view/utils.mjs
   var import_i18n179 = __toESM(require_i18n(), 1);
-  var import_dom72 = __toESM(require_dom(), 1);
+  var import_dom73 = __toESM(require_dom(), 1);
   var BLOCK_LIST_ITEM_HEIGHT = 32;
   var getBlockPositionDescription = (position, siblingCount, level) => (0, import_i18n179.sprintf)(
     /* translators: 1: The numerical position of the block. 2: The total number of blocks. 3. The level of nesting for the block. */
@@ -107895,7 +107911,7 @@ If there's a particular need for this, please submit a feature request at https:
         return;
       }
       if (element && element.isConnected) {
-        import_dom72.focus.focusable.find(element)?.[0]?.focus();
+        import_dom73.focus.focusable.find(element)?.[0]?.focus();
       }
     });
   }
@@ -108696,7 +108712,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/list-view/drop-indicator.mjs
   var import_components175 = __toESM(require_components(), 1);
-  var import_dom73 = __toESM(require_dom(), 1);
+  var import_dom74 = __toESM(require_dom(), 1);
   var import_element366 = __toESM(require_element(), 1);
   var import_i18n181 = __toESM(require_i18n(), 1);
   var import_jsx_runtime560 = __toESM(require_jsx_runtime(), 1);
@@ -108731,7 +108747,7 @@ If there's a particular need for this, please submit a feature request at https:
           return 0;
         }
         let width = targetElement.offsetWidth;
-        const scrollContainer = (0, import_dom73.getScrollContainer)(
+        const scrollContainer = (0, import_dom74.getScrollContainer)(
           targetElement,
           "horizontal"
         );
@@ -108770,7 +108786,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!targetElement) {
         return {};
       }
-      const scrollContainer = (0, import_dom73.getScrollContainer)(targetElement);
+      const scrollContainer = (0, import_dom74.getScrollContainer)(targetElement);
       const ownerDocument2 = targetElement.ownerDocument;
       const windowScroll = scrollContainer === ownerDocument2.body || scrollContainer === ownerDocument2.documentElement;
       if (scrollContainer && !windowScroll) {
@@ -108817,7 +108833,7 @@ If there's a particular need for this, please submit a feature request at https:
           const rect = targetElement.getBoundingClientRect();
           let left = rect.left;
           let top = 0;
-          const scrollContainer = (0, import_dom73.getScrollContainer)(
+          const scrollContainer = (0, import_dom74.getScrollContainer)(
             targetElement,
             "horizontal"
           );
@@ -114584,7 +114600,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_element387 = __toESM(require_element(), 1);
   var import_i18n214 = __toESM(require_i18n(), 1);
   var import_notices9 = __toESM(require_notices(), 1);
-  var import_dom74 = __toESM(require_dom(), 1);
+  var import_dom75 = __toESM(require_dom(), 1);
   var messages = {
     crop: (0, import_i18n214.__)("Image cropped."),
     rotate: (0, import_i18n214.__)("Image rotated."),
@@ -114688,7 +114704,7 @@ If there's a particular need for this, please submit a feature request at https:
             /* translators: %s: Error message. */
             (0, import_i18n214.__)("Could not edit image. %s"),
             // Media edit rejections carry a message.
-            (0, import_dom74.__unstableStripHTML)(error2.message)
+            (0, import_dom75.__unstableStripHTML)(error2.message)
           ),
           {
             id: "image-editing-error",
@@ -115453,7 +115469,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n230 = __toESM(require_i18n(), 1);
   var import_element398 = __toESM(require_element(), 1);
   var import_compose135 = __toESM(require_compose(), 1);
-  var import_dom77 = __toESM(require_dom(), 1);
+  var import_dom78 = __toESM(require_dom(), 1);
   var import_keycodes22 = __toESM(require_keycodes(), 1);
   var import_is_shallow_equal4 = __toESM(require_is_shallow_equal(), 1);
   var import_data158 = __toESM(require_data(), 1);
@@ -115567,7 +115583,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/link-control/search-item.mjs
   var import_i18n223 = __toESM(require_i18n(), 1);
   var import_components213 = __toESM(require_components(), 1);
-  var import_dom75 = __toESM(require_dom(), 1);
+  var import_dom76 = __toESM(require_dom(), 1);
   var import_url6 = __toESM(require_url(), 1);
   var import_compose133 = __toESM(require_compose(), 1);
   var import_deprecated18 = __toESM(require_deprecated(), 1);
@@ -115681,7 +115697,7 @@ If there's a particular need for this, please submit a feature request at https:
         children: /* @__PURE__ */ (0, import_jsx_runtime606.jsx)(
           import_components213.TextHighlight,
           {
-            text: (0, import_dom75.__unstableStripHTML)(suggestion.title),
+            text: (0, import_dom76.__unstableStripHTML)(suggestion.title),
             highlight: searchTerm
           }
         )
@@ -116062,7 +116078,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components216 = __toESM(require_components(), 1);
   var import_compose134 = __toESM(require_compose(), 1);
   var import_url8 = __toESM(require_url(), 1);
-  var import_dom76 = __toESM(require_dom(), 1);
+  var import_dom77 = __toESM(require_dom(), 1);
   var import_data157 = __toESM(require_data(), 1);
   var import_notices10 = __toESM(require_notices(), 1);
   var import_preferences2 = __toESM(require_preferences(), 1);
@@ -116161,7 +116177,7 @@ If there's a particular need for this, please submit a feature request at https:
     const displayURL = value && // An empty URL shows the empty link notice instead.
     (0, import_url8.filterURLForDisplay)((0, import_url8.safeDecodeURI)(value.url), 24) || "";
     const isEmptyURL = !value?.url?.length;
-    const displayTitle = !isEmptyURL && (0, import_dom76.__unstableStripHTML)(
+    const displayTitle = !isEmptyURL && (0, import_dom77.__unstableStripHTML)(
       value?.entityTitle || richData?.title || value?.title || displayURL
     );
     let icon;
@@ -116566,7 +116582,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       const nextFocusTarget = (
         // The wrapper is mounted once the editing state changes.
-        import_dom77.focus.focusable.find(wrapperNode.current)[0] || wrapperNode.current
+        import_dom78.focus.focusable.find(wrapperNode.current)[0] || wrapperNode.current
       );
       nextFocusTarget.focus();
     }, [isEditingLink, isCreatingPage]);
@@ -117056,7 +117072,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data159 = __toESM(require_data(), 1);
   var import_keycodes23 = __toESM(require_keycodes(), 1);
   var import_compose136 = __toESM(require_compose(), 1);
-  var import_dom78 = __toESM(require_dom(), 1);
+  var import_dom79 = __toESM(require_dom(), 1);
   var import_notices11 = __toESM(require_notices(), 1);
   var import_element399 = __toESM(require_element(), 1);
 
@@ -117140,7 +117156,7 @@ If there's a particular need for this, please submit a feature request at https:
       [allowedTypes, allowedMimeTypes, accept]
     );
     const onUploadError = (message2) => {
-      const safeMessage = (0, import_dom78.__unstableStripHTML)(message2);
+      const safeMessage = (0, import_dom79.__unstableStripHTML)(message2);
       if (onError) {
         onError(safeMessage);
         return;
@@ -120101,7 +120117,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/url-popover/image-url-input-ui.mjs
   var import_i18n242 = __toESM(require_i18n(), 1);
   var import_element413 = __toESM(require_element(), 1);
-  var import_dom79 = __toESM(require_dom(), 1);
+  var import_dom80 = __toESM(require_dom(), 1);
   var import_components232 = __toESM(require_components(), 1);
   var import_url13 = __toESM(require_url(), 1);
   var import_jsx_runtime632 = __toESM(require_jsx_runtime(), 1);
@@ -120140,7 +120156,7 @@ If there's a particular need for this, please submit a feature request at https:
       if (!wrapperRef.current) {
         return;
       }
-      const nextFocusTarget = import_dom79.focus.focusable.find(wrapperRef.current)[0] || wrapperRef.current;
+      const nextFocusTarget = import_dom80.focus.focusable.find(wrapperRef.current)[0] || wrapperRef.current;
       nextFocusTarget.focus();
     }, [isEditingLink, url, lightboxEnabled]);
     const startEditLink = () => {
@@ -122828,7 +122844,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_url14 = __toESM(require_url(), 1);
   var import_element424 = __toESM(require_element(), 1);
   var import_data173 = __toESM(require_data(), 1);
-  var import_dom80 = __toESM(require_dom(), 1);
+  var import_dom81 = __toESM(require_dom(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
   var import_jsx_runtime650 = __toESM(require_jsx_runtime(), 1);
   var IMAGE_BACKGROUND_TYPE = "image";
@@ -122836,7 +122852,7 @@ If there's a particular need for this, please submit a feature request at https:
   };
   var focusToggleButton = (containerRef) => {
     window.requestAnimationFrame(() => {
-      const [toggleButton] = import_dom80.focus.tabbable.find(containerRef?.current);
+      const [toggleButton] = import_dom81.focus.tabbable.find(containerRef?.current);
       if (!toggleButton) {
         return;
       }
@@ -128379,7 +128395,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/typewriter/index.mjs
   var import_compose147 = __toESM(require_compose(), 1);
-  var import_dom81 = __toESM(require_dom(), 1);
+  var import_dom82 = __toESM(require_dom(), 1);
   var import_keycodes29 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime675 = __toESM(require_jsx_runtime(), 1);
   var isIE = window.navigator.userAgent.indexOf("Trident") !== -1;
@@ -128414,7 +128430,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (!isSelectionEligibleForScroll()) {
           return;
         }
-        const currentCaretRect = (0, import_dom81.computeCaretRect)(defaultView);
+        const currentCaretRect = (0, import_dom82.computeCaretRect)(defaultView);
         if (!currentCaretRect) {
           return;
         }
@@ -128430,7 +128446,7 @@ If there's a particular need for this, please submit a feature request at https:
         if (diff === 0) {
           return;
         }
-        const scrollContainer = (0, import_dom81.getScrollContainer)(node);
+        const scrollContainer = (0, import_dom82.getScrollContainer)(node);
         if (!scrollContainer) {
           return;
         }
@@ -128472,7 +128488,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
       function computeCaretRectangle() {
         if (isSelectionEligibleForScroll()) {
-          caretRect = (0, import_dom81.computeCaretRect)(defaultView);
+          caretRect = (0, import_dom82.computeCaretRect)(defaultView);
         }
       }
       function isSelectionEligibleForScroll() {
@@ -137917,7 +137933,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
   var import_components301 = __toESM(require_components(), 1);
-  var import_dom82 = __toESM(require_dom(), 1);
+  var import_dom83 = __toESM(require_dom(), 1);
   var import_jsx_runtime721 = __toESM(require_jsx_runtime(), 1);
   function LinkPreview2({ title, url, image, badges }) {
     return /* @__PURE__ */ (0, import_jsx_runtime721.jsxs)(import_components301.__experimentalHStack, { justify: "space-between", alignment: "top", children: [
@@ -137941,7 +137957,7 @@ If there's a particular need for this, please submit a feature request at https:
                 {
                   numberOfLines: 1,
                   className: "link-preview-button__title",
-                  children: (0, import_dom82.__unstableStripHTML)(title)
+                  children: (0, import_dom83.__unstableStripHTML)(title)
                 }
               ),
               url && /* @__PURE__ */ (0, import_jsx_runtime721.jsx)(
@@ -138078,7 +138094,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/inner-content/index.mjs
   var import_element478 = __toESM(require_element(), 1);
   var import_data211 = __toESM(require_data(), 1);
-  var import_dom83 = __toESM(require_dom(), 1);
+  var import_dom84 = __toESM(require_dom(), 1);
   var import_jsx_runtime723 = __toESM(require_jsx_runtime(), 1);
   var SLOT_TAG_NAME = "wp-inner-block-slot";
   var LAYOUT = { type: "default", alignments: [] };
@@ -138104,7 +138120,7 @@ If there's a particular need for this, please submit a feature request at https:
     const [slots, setSlots] = (0, import_element478.useState)([]);
     (0, import_element478.useLayoutEffect)(() => {
       const container = containerRef.current;
-      container.innerHTML = (0, import_dom83.safeHTML)(html);
+      container.innerHTML = (0, import_dom84.safeHTML)(html);
       setSlots(
         Array.from(container.querySelectorAll(SLOT_TAG_NAME)).sort(
           (a, b) => Number(a.dataset.slotIndex) - Number(b.dataset.slotIndex)
