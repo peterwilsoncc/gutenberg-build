@@ -97538,13 +97538,6 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/image-editor/build-module/get-image-edit.mjs
 /**
-	* Tolerance (a fraction of the image) used to decide whether a crop rect
-	* is effectively full-frame. Sub-pixel / float-ulp deltas below this
-	* value are treated as no crop. Matches the historical threshold used by
-	* the legacy `use-save-image.js` (which compared against `99.9` percent).
-	*/
-	const CROP_TOLERANCE = .001;
-	/**
 	* The person's edit, described against the image loaded in `state.image`.
 	*
 	* The editor's state describes what the canvas shows: where the image sits
@@ -97588,7 +97581,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function getImageEdit(state) {
 		const edit = {};
 		const { image } = state;
-		if (!image || image.naturalWidth === 0 || image.naturalHeight === 0) return null;
+		if (!image || !(image.naturalWidth > 0 && image.naturalHeight > 0)) return null;
 		const imageSize = {
 			width: image.naturalWidth,
 			height: image.naturalHeight
@@ -97620,7 +97613,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const y = fullY / fullH;
 		const width = widthPx / fullW;
 		const height = heightPx / fullH;
-		if (!(x <= CROP_TOLERANCE && y <= CROP_TOLERANCE && width >= .999 && height >= .999)) edit.crop = {
+		if (!(x <= .001 && y <= .001 && width >= .999 && height >= .999)) edit.crop = {
 			x,
 			y,
 			width,
@@ -97644,7 +97637,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	function getOutputSize(state) {
 		const { image } = state;
-		if (!image || image.naturalWidth === 0 || image.naturalHeight === 0) return null;
+		if (!image || !(image.naturalWidth > 0 && image.naturalHeight > 0)) return null;
 		const edit = getImageEdit(state);
 		if (!edit) return null;
 		const rotated = getRotatedBBox(image.naturalWidth, image.naturalHeight, edit.rotation ?? 0);
