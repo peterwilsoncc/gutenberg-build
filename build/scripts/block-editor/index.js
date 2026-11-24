@@ -72299,9 +72299,11 @@ var wp;
     return (0, import_compose48.useRefEffect)(
       (node) => {
         let pointerType;
+        let isFocusedOnPointerDown = false;
         let clickCollapseClientId;
         function onPointerDown(event) {
           pointerType = event.pointerType;
+          isFocusedOnPointerDown = node.matches(":focus");
         }
         function onMouseDown(event) {
           const clickedClientId = getBlockClientId(
@@ -72326,7 +72328,7 @@ var wp;
           if (placesCaretOnTap && pointerType === "touch" && clickedClientId && clickedClientId === startClientId && node.contentEditable === "true" && // Not `activeElement`: with nothing focused, as after the
           // keyboard is hidden, it falls back to the body, which in
           // the iframe is this wrapper.
-          node.matches(":focus")) {
+          isFocusedOnPointerDown) {
             event.preventDefault();
             return;
           }
