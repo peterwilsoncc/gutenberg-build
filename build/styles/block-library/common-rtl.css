@@ -382,3 +382,13 @@ html :where(.is-position-sticky) {
     border-bottom: 0.065em solid;
   }
 }
+@property --wp--style--translate-x {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --wp--style--translate-y {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0;
+}

@@ -19670,6 +19670,7 @@ const VALID_SETTINGS = [
 	"spacing.padding",
 	"spacing.units",
 	"transform.rotate",
+	"transform.translate",
 	"typography.fluid",
 	"typography.customFontSize",
 	"typography.defaultFontSizes",

@@ -51236,7 +51236,10 @@ Icon: ButtonIcon });
 				}
 			},
 			"shadow": true,
-			"transform": { "rotate": true },
+			"transform": {
+				"rotate": true,
+				"translate": true
+			},
 			"spacing": {
 				"margin": ["top", "bottom"],
 				"padding": true,
@@ -51980,7 +51983,10 @@ Icon: ButtonIcon });
 				"minWidth": true
 			},
 			"shadow": true,
-			"transform": { "rotate": true },
+			"transform": {
+				"rotate": true,
+				"translate": true
+			},
 			"spacing": {
 				"margin": true,
 				"padding": true,
@@ -90528,7 +90534,10 @@ Icon: ButtonIcon });
 				"interactive": true
 			},
 			"shadow": { "__experimentalSkipSerialization": true },
-			"transform": { "rotate": true },
+			"transform": {
+				"rotate": true,
+				"translate": true
+			},
 			"dimensions": {
 				"minWidth": true,
 				"minHeight": true,

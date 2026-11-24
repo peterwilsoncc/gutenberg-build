@@ -690,6 +690,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		"spacing.padding",
 		"spacing.units",
 		"transform.rotate",
+		"transform.translate",
 		"typography.fluid",
 		"typography.customFontSize",
 		"typography.defaultFontSizes",
@@ -56039,6 +56040,7 @@ Icon: ButtonIcon });
 			hasTransformPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(StylesTransformPanel, {
 				inheritedValue: inheritedStyle,
 				value: style,
+				baseValue,
 				onChange: setStyle$1,
 				settings
 			}),

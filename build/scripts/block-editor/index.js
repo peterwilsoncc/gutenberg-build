@@ -109232,10 +109232,12 @@ If there's a particular need for this, please submit a feature request at https:
 				backgroundClip: ["text"]
 			};
 			updatedSettings.shadow = supportedStyles.includes("shadow") ? updatedSettings.shadow : false;
-			if (!supportedStyles.includes("rotate")) updatedSettings.transform = {
-				...updatedSettings.transform,
-				rotate: false
-			};
+			["rotate", "translate"].forEach((key) => {
+				if (!supportedStyles.includes(key)) updatedSettings.transform = {
+					...updatedSettings.transform,
+					[key]: false
+				};
+			});
 			return updatedSettings;
 		}, [
 			parentSettings,
@@ -115447,7 +115449,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* @return Settings object.
 	*/
 	function useBlockSettings(name, parentLayout) {
-		const [backgroundImage, backgroundSize, gradient, backgroundClip, customFontFamilies, defaultFontFamilies, themeFontFamilies, defaultFontSizesEnabled, customFontSizes, defaultFontSizes, themeFontSizes, customFontSize, fontStyle, fontWeight, lineHeight, textAlign, textColumns, textDecoration, textIndent, textShadow, writingMode, textTransform, letterSpacing, padding, margin, blockGap, defaultSpacingSizesEnabled, customSpacingSize, userSpacingSizes, defaultSpacingSizes, themeSpacingSizes, units, aspectRatio, height, minHeight, minWidth, width, dimensionSizes, layout, borderColor, borderRadius, borderStyle, borderWidth, borderRadiusSizes, customColorsEnabled, customColors, customDuotone, themeColors, defaultColors, defaultPalette, defaultDuotone, userDuotonePalette, themeDuotonePalette, defaultDuotonePalette, userGradientPalette, themeGradientPalette, defaultGradientPalette, defaultGradients, areCustomGradientsEnabled, isBackgroundEnabled, isLinkEnabled, isTextEnabled, isHeadingEnabled, isButtonEnabled, shadow, defaultTextShadowPresetsEnabled, customTextShadowPresets, defaultTextShadowPresets, themeTextShadowPresets, rotate] = useSettings("background.backgroundImage", "background.backgroundSize", "background.gradient", "background.backgroundClip", "typography.fontFamilies.custom", "typography.fontFamilies.default", "typography.fontFamilies.theme", "typography.defaultFontSizes", "typography.fontSizes.custom", "typography.fontSizes.default", "typography.fontSizes.theme", "typography.customFontSize", "typography.fontStyle", "typography.fontWeight", "typography.lineHeight", "typography.textAlign", "typography.textColumns", "typography.textDecoration", "typography.textIndent", "typography.textShadow", "typography.writingMode", "typography.textTransform", "typography.letterSpacing", "spacing.padding", "spacing.margin", "spacing.blockGap", "spacing.defaultSpacingSizes", "spacing.customSpacingSize", "spacing.spacingSizes.custom", "spacing.spacingSizes.default", "spacing.spacingSizes.theme", "spacing.units", "dimensions.aspectRatio", "dimensions.height", "dimensions.minHeight", "dimensions.minWidth", "dimensions.width", "dimensions.dimensionSizes", "layout", "border.color", "border.radius", "border.style", "border.width", "border.radiusSizes", "color.custom", "color.palette.custom", "color.customDuotone", "color.palette.theme", "color.palette.default", "color.defaultPalette", "color.defaultDuotone", "color.duotone.custom", "color.duotone.theme", "color.duotone.default", "color.gradients.custom", "color.gradients.theme", "color.gradients.default", "color.defaultGradients", "color.customGradient", "color.background", "color.link", "color.text", "color.heading", "color.button", "shadow", "typography.defaultTextShadowPresets", "typography.textShadowPresets.custom", "typography.textShadowPresets.default", "typography.textShadowPresets.theme", "transform.rotate");
+		const [backgroundImage, backgroundSize, gradient, backgroundClip, customFontFamilies, defaultFontFamilies, themeFontFamilies, defaultFontSizesEnabled, customFontSizes, defaultFontSizes, themeFontSizes, customFontSize, fontStyle, fontWeight, lineHeight, textAlign, textColumns, textDecoration, textIndent, textShadow, writingMode, textTransform, letterSpacing, padding, margin, blockGap, defaultSpacingSizesEnabled, customSpacingSize, userSpacingSizes, defaultSpacingSizes, themeSpacingSizes, units, aspectRatio, height, minHeight, minWidth, width, dimensionSizes, layout, borderColor, borderRadius, borderStyle, borderWidth, borderRadiusSizes, customColorsEnabled, customColors, customDuotone, themeColors, defaultColors, defaultPalette, defaultDuotone, userDuotonePalette, themeDuotonePalette, defaultDuotonePalette, userGradientPalette, themeGradientPalette, defaultGradientPalette, defaultGradients, areCustomGradientsEnabled, isBackgroundEnabled, isLinkEnabled, isTextEnabled, isHeadingEnabled, isButtonEnabled, shadow, defaultTextShadowPresetsEnabled, customTextShadowPresets, defaultTextShadowPresets, themeTextShadowPresets, rotate, translate] = useSettings("background.backgroundImage", "background.backgroundSize", "background.gradient", "background.backgroundClip", "typography.fontFamilies.custom", "typography.fontFamilies.default", "typography.fontFamilies.theme", "typography.defaultFontSizes", "typography.fontSizes.custom", "typography.fontSizes.default", "typography.fontSizes.theme", "typography.customFontSize", "typography.fontStyle", "typography.fontWeight", "typography.lineHeight", "typography.textAlign", "typography.textColumns", "typography.textDecoration", "typography.textIndent", "typography.textShadow", "typography.writingMode", "typography.textTransform", "typography.letterSpacing", "spacing.padding", "spacing.margin", "spacing.blockGap", "spacing.defaultSpacingSizes", "spacing.customSpacingSize", "spacing.spacingSizes.custom", "spacing.spacingSizes.default", "spacing.spacingSizes.theme", "spacing.units", "dimensions.aspectRatio", "dimensions.height", "dimensions.minHeight", "dimensions.minWidth", "dimensions.width", "dimensions.dimensionSizes", "layout", "border.color", "border.radius", "border.style", "border.width", "border.radiusSizes", "color.custom", "color.palette.custom", "color.customDuotone", "color.palette.theme", "color.palette.default", "color.defaultPalette", "color.defaultDuotone", "color.duotone.custom", "color.duotone.theme", "color.duotone.default", "color.gradients.custom", "color.gradients.theme", "color.gradients.default", "color.defaultGradients", "color.customGradient", "color.background", "color.link", "color.text", "color.heading", "color.button", "shadow", "typography.defaultTextShadowPresets", "typography.textShadowPresets.custom", "typography.textShadowPresets.default", "typography.textShadowPresets.theme", "transform.rotate", "transform.translate");
 		const rawSettings = (0, _wordpress_element.useMemo)(() => {
 			return {
 				background: {
@@ -115546,7 +115548,10 @@ If there's a particular need for this, please submit a feature request at https:
 				layout,
 				parentLayout,
 				shadow,
-				transform: { rotate }
+				transform: {
+					rotate,
+					translate
+				}
 			};
 		}, [
 			backgroundImage,
@@ -115619,7 +115624,8 @@ If there's a particular need for this, please submit a feature request at https:
 			isHeadingEnabled,
 			isButtonEnabled,
 			shadow,
-			rotate
+			rotate,
+			translate
 		]);
 		return useSettingsForBlockElement(rawSettings, name);
 	}
@@ -118079,18 +118085,29 @@ If there's a particular need for this, please submit a feature request at https:
 	*
 	* @param props              Component props.
 	* @param props.label        A label for both the input and the slider.
+	* @param props.controlLabel An accessible label for the input and the slider, when it differs from `label`.
 	* @param props.value        The current CSS value.
 	* @param props.onChange     Called with the new value, or `undefined` when cleared.
+	* @param props.placeholder  A value to show, but not save, while `value` is empty.
 	* @param props.units        The units offered; the first is the default.
 	* @param props.unitSettings The slider `min`, `max` and `step` for each unit.
 	*
 	* @return The unit range control.
 	*/
-	function UnitRangeControl({ label, value, onChange, units, unitSettings }) {
+	function UnitRangeControl({ label, controlLabel = label, value, onChange, placeholder, units, unitSettings }) {
 		const [pickedUnit, setPickedUnit] = (0, _wordpress_element.useState)();
 		const [quantity, parsedUnit] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(value, units);
-		const selectedUnit = parsedUnit ?? pickedUnit ?? units[0]?.value ?? "";
+		const [placeholderQuantity, placeholderUnit] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(placeholder, units);
+		const selectedUnit = parsedUnit ?? pickedUnit ?? placeholderUnit ?? units[0]?.value ?? "";
 		const range = unitSettings[selectedUnit];
+		const stepFromPlaceholder = (state, action) => {
+			if (quantity !== void 0 || placeholderQuantity === void 0 || selectedUnit !== placeholderUnit || action.type !== "PRESS_UP" && action.type !== "PRESS_DOWN") return state;
+			const next = placeholderQuantity + Number(state.value);
+			return {
+				...state,
+				value: `${parseFloat(next.toPrecision(12))}`
+			};
+		};
 		const handleChange = (nextValue) => {
 			const [nextQuantity] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(nextValue);
 			onChange(nextQuantity === void 0 ? void 0 : nextValue);
@@ -118101,21 +118118,23 @@ If there's a particular need for this, please submit a feature request at https:
 			gap: "md",
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalUnitControl, {
 				className: "block-editor-global-styles-unit-range-control__input",
-				label,
+				label: controlLabel,
 				hideLabelFromVision: true,
-				value: value ?? "",
+				value: value || selectedUnit,
+				placeholder: placeholderQuantity?.toString(),
 				units,
 				onChange: handleChange,
-				onUnitChange: setPickedUnit
+				onUnitChange: setPickedUnit,
+				__unstableStateReducer: stepFromPlaceholder
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.RangeControl, {
 				className: "block-editor-global-styles-unit-range-control__slider",
-				label,
+				label: controlLabel,
 				hideLabelFromVision: true,
 				value: quantity,
 				min: range?.min,
 				max: range?.max,
 				step: range?.step,
-				initialPosition: 0,
+				initialPosition: placeholderQuantity ?? 0,
 				withInputField: false,
 				onChange: (next) => onChange(next === void 0 ? void 0 : `${next}${selectedUnit}`)
 			})]
@@ -118164,11 +118183,30 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 	};
 	function useHasTransformPanel(settings) {
-		return useHasRotateControl(settings);
+		const hasRotate = useHasRotateControl(settings);
+		const hasTranslate = useHasTranslateControl(settings);
+		return hasRotate || hasTranslate;
 	}
 	function useHasRotateControl(settings) {
 		return !!settings?.transform?.rotate;
 	}
+	function useHasTranslateControl(settings) {
+		return !!settings?.transform?.translate;
+	}
+	const TRANSLATE_UNIT_SETTINGS = Object.fromEntries(Object.entries(RANGE_CONTROL_CUSTOM_SETTINGS).map(([unit, { max, step }]) => [unit, {
+		min: -max,
+		max,
+		step
+	}]));
+	const TRANSLATE_AXES = [{
+		axis: "x",
+		label: (0, _wordpress_i18n._x)("X", "Horizontal axis"),
+		controlLabel: (0, _wordpress_i18n.__)("X offset")
+	}, {
+		axis: "y",
+		label: (0, _wordpress_i18n._x)("Y", "Vertical axis"),
+		controlLabel: (0, _wordpress_i18n.__)("Y offset")
+	}];
 	function TransformToolsPanel({ resetAllFilter, onChange, value, panelId, children }) {
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps$1();
 		const resetAll = () => {
@@ -118182,8 +118220,11 @@ If there's a particular need for this, please submit a feature request at https:
 			children
 		});
 	}
-	const DEFAULT_CONTROLS = { rotate: true };
-	function TransformPanel$1({ as: Wrapper = TransformToolsPanel, value, onChange, inheritedValue = value, settings, panelId, defaultControls = DEFAULT_CONTROLS }) {
+	const DEFAULT_CONTROLS = {
+		rotate: true,
+		translate: true
+	};
+	function TransformPanel$1({ as: Wrapper = TransformToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS }) {
 		const showRotateControl = useHasRotateControl(settings);
 		const storedRotate = value?.transform?.rotate ?? inheritedValue?.transform?.rotate;
 		const rotate = typeof storedRotate === "string" ? storedRotate : void 0;
@@ -118192,21 +118233,43 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		const hasRotateValue = () => value?.transform?.rotate !== void 0;
 		const resetRotate = () => setRotate(void 0);
+		const showTranslateControl = useHasTranslateControl(settings);
+		const units = (0, _wordpress_components.__experimentalUseCustomUnits)({ availableUnits: settings?.spacing?.units || [
+			"%",
+			"px",
+			"em",
+			"rem",
+			"vw",
+			"vh"
+		] });
+		const getTranslate = (axis) => value?.transform?.translate?.[axis];
+		const getInheritedTranslate = (axis) => inheritedValue?.transform?.translate?.[axis] ?? baseValue?.transform?.translate?.[axis];
+		const setTranslate = (axis, newValue) => {
+			onChange(setImmutably(value, ["transform", "translate"], cleanEmptyObject({
+				...value?.transform?.translate,
+				[axis]: newValue
+			})));
+		};
+		const hasTranslateValue = () => value?.transform?.translate?.x !== void 0 || value?.transform?.translate?.y !== void 0;
+		const resetTranslate = () => {
+			onChange(setImmutably(value, ["transform", "translate"], void 0));
+		};
 		const resetAllFilter = (0, _wordpress_element.useCallback)((previousValue) => {
 			return {
 				...previousValue,
 				transform: {
 					...previousValue?.transform,
-					rotate: void 0
+					rotate: void 0,
+					translate: void 0
 				}
 			};
 		}, []);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Wrapper, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Wrapper, {
 			resetAllFilter,
 			value,
 			onChange,
 			panelId,
-			children: showRotateControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+			children: [showRotateControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 				label: (0, _wordpress_i18n.__)("Rotation"),
 				hasValue: hasRotateValue,
 				onDeselect: resetRotate,
@@ -118219,7 +118282,26 @@ If there's a particular need for this, please submit a feature request at https:
 					units: ROTATE_UNITS,
 					unitSettings: ROTATE_UNIT_SETTINGS
 				})
-			})
+			}), showTranslateControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+				label: (0, _wordpress_i18n.__)("Offset"),
+				hasValue: hasTranslateValue,
+				onDeselect: resetTranslate,
+				isShownByDefault: defaultControls.translate,
+				panelId,
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(FieldsetRoot, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldsetLegend, { children: (0, _wordpress_i18n.__)("Offset") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
+					direction: "column",
+					gap: "md",
+					children: TRANSLATE_AXES.map(({ axis, label, controlLabel }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitRangeControl, {
+						label,
+						controlLabel,
+						value: getTranslate(axis),
+						placeholder: getInheritedTranslate(axis),
+						onChange: (newValue) => setTranslate(axis, newValue),
+						units,
+						unitSettings: TRANSLATE_UNIT_SETTINGS
+					}, axis))
+				})] })
+			})]
 		});
 	}
 
@@ -118512,7 +118594,13 @@ If there's a particular need for this, please submit a feature request at https:
 		for (const layer of layers) {
 			const layerTransform = layer?.transform;
 			if (!layerTransform || typeof layerTransform !== "object") continue;
-			for (const [key, layerValue] of Object.entries(layerTransform)) if (layerValue !== void 0 && layerValue !== null) transform[key] = layerValue;
+			for (const [key, layerValue] of Object.entries(layerTransform)) {
+				if (layerValue === void 0 || layerValue === null) continue;
+				transform[key] = key === "translate" && typeof layerValue === "object" ? {
+					...transform.translate,
+					...layerValue
+				} : layerValue;
+			}
 		}
 		return {
 			...resolvedValue,
@@ -118547,6 +118635,7 @@ If there's a particular need for this, please submit a feature request at https:
 			onChange,
 			defaultControls: {
 				rotate: false,
+				translate: false,
 				...defaultControls
 			},
 			inheritedValue
