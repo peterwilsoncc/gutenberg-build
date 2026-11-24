@@ -98431,8 +98431,9 @@ If there's a particular need for this, please submit a feature request at https:
 	function ListViewBlock({ clientId, displacement, isAfterDraggedBlocks, isDragged, isNesting, isSelected, isBranchSelected, selectBlock, position, level, rowCount, siblingBlockCount, showBlockMovers, path, isExpanded, selectedClientIds, isSyncedBranch }) {
 		const cellRef = (0, _wordpress_element.useRef)(null);
 		const rowRef = (0, _wordpress_element.useRef)(null);
-		const settingsRef = (0, _wordpress_element.useRef)(null);
+		const settingsToggleRef = (0, _wordpress_element.useRef)(null);
 		const [isHovered, setIsHovered] = (0, _wordpress_element.useState)(false);
+		const [hasSettingsMenu, setHasSettingsMenu] = (0, _wordpress_element.useState)(false);
 		const [settingsAnchorRect, setSettingsAnchorRect] = (0, _wordpress_element.useState)();
 		const [isRenameModalOpen, setIsRenameModalOpen] = (0, _wordpress_element.useState)(false);
 		const isFirstSelectedBlock = isSelected && selectedClientIds[0] === clientId;
@@ -98575,6 +98576,7 @@ If there's a particular need for this, please submit a feature request at https:
 		}
 		const onMouseEnter = (0, _wordpress_element.useCallback)(() => {
 			setIsHovered(true);
+			setHasSettingsMenu(true);
 			debouncedToggleBlockHighlight(clientId, true);
 		}, [
 			clientId,
@@ -98611,18 +98613,15 @@ If there's a particular need for this, please submit a feature request at https:
 			isExpanded
 		]);
 		const onContextMenu = (0, _wordpress_element.useCallback)((event) => {
-			const { ownerDocument } = settingsRef?.current || {};
+			const { ownerDocument } = rowRef.current || {};
 			if (!ownerDocument || !ownerDocument.hasFocus()) return;
 			if (showBlockActions && allowRightClickOverrides) {
-				settingsRef.current?.click();
+				(0, _wordpress_element.flushSync)(() => setHasSettingsMenu(true));
+				settingsToggleRef.current?.click();
 				setSettingsAnchorRect(new window.DOMRect(event.clientX, event.clientY, 0, 0));
 				event.preventDefault();
 			}
-		}, [
-			allowRightClickOverrides,
-			settingsRef,
-			showBlockActions
-		]);
+		}, [allowRightClickOverrides, showBlockActions]);
 		const onMouseDown = (0, _wordpress_element.useCallback)((event) => {
 			if (allowRightClickOverrides && event.button === 2) event.preventDefault();
 		}, [allowRightClickOverrides]);
@@ -98748,8 +98747,8 @@ If there's a particular need for this, please submit a feature request at https:
 				canShowBlockActions && BlockSettingsMenu && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalTreeGridCell, {
 					className: listViewBlockSettingsClassName,
 					"aria-selected": !!isSelected,
-					ref: settingsRef,
-					children: ({ ref, tabIndex, onFocus }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockSettingsMenu, {
+					ref: settingsToggleRef,
+					children: ({ ref, tabIndex, onFocus }) => hasSettingsMenu || isFirstSelectedBlock ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockSettingsMenu, {
 						clientId,
 						clientIds: dropdownClientIds,
 						icon: more_vertical_default,
@@ -98768,7 +98767,7 @@ If there's a particular need for this, please submit a feature request at https:
 						setInsertedBlockClientId,
 						__experimentalSelectBlock: updateFocusAndSelection,
 						isContentOnlyListView: !!rootClientId && getBlockEditingMode(rootClientId) === "contentOnly"
-					})
+					}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, {})
 				}),
 				isRenameModalOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(BlockRenameModal, {
 					clientId,
