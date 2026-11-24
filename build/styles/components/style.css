@@ -3416,18 +3416,17 @@ body.lockscroll {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: var(--wpds-dimension-padding-md, 12px);
+  inset: calc((48px - var(--wpds-dimension-size-md, 32px)) / 2);
   pointer-events: none;
   border-radius: var(--wpds-border-radius-sm, 2px);
 }
 .components-tab-panel__tabs-item:focus-visible::before {
   outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
   outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
-  outline-offset: 0;
+  outline-offset: calc(-1 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
 }
 .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item::before {
   inset: 0;
-  outline-offset: calc(-1 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
 }
 .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item .components-tab-panel__tabs-item-label {
   position: relative;
