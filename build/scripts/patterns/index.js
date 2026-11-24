@@ -1841,7 +1841,7 @@ react = __toESM(react, 1);
 					children: [
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
 							id: descriptionId,
-							children: (0, _wordpress_i18n.__)("Overrides are changes you make to a block within a synced pattern instance. Use overrides to customize a synced pattern instance to suit its new context. Name this block to specify an override.")
+							children: (0, _wordpress_i18n.__)("Adding an override will allow this block to be edited within any instance of this synced pattern. To set an override, name this block.")
 						}),
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.TextControl, {
 							value: editedBlockName,
@@ -1889,7 +1889,7 @@ react = __toESM(react, 1);
 					gap: "xl",
 					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text, {
 						id: descriptionId,
-						children: (0, _wordpress_i18n.__)("Are you sure you want to disable overrides? Disabling overrides will revert all applied overrides for this block throughout instances of this pattern.")
+						children: (0, _wordpress_i18n.__)("Are you sure you want to disable an override for this block? By disabling, any custom content for this block throughout every instance of this pattern will be reverted to the original content of the synced pattern.")
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 						gap: "sm",
 						justify: "end",
