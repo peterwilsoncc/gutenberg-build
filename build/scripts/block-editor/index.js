@@ -61345,8 +61345,15 @@ Icon: ButtonIcon });
 			if (!isEnabled) return;
 			let timeoutId;
 			function listener(event) {
-				if (event.defaultPrevented) return;
+				if (event.defaultPrevented) {
+					if (event.type === "mouseover") {
+						clearTimeout(timeoutId);
+						node.classList.remove("is-hovered", "is-hovered-draggable");
+					}
+					return;
+				}
 				event.preventDefault();
+				if (event.type === "mouseout" && node.contains(event.relatedTarget)) return;
 				const isHovered = event.type === "mouseover";
 				node.classList.toggle("is-hovered", isHovered);
 				clearTimeout(timeoutId);
