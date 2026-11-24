@@ -23097,6 +23097,11 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		}
 		if (options) dispatch.receiveRegisteredPostMeta(postType, options?.schema?.properties?.meta?.properties);
 	};
+	getRegisteredPostMeta.shouldInvalidate = (action, postType) => {
+		if (action.type !== "INVALIDATE_RESOLUTION") return false;
+		const args = action.args ?? [];
+		return action.selectorName === "getPostType" && args[0] === postType || action.selectorName === "getEntityRecord" && args[0] === "root" && args[1] === "postType" && args[2] === postType;
+	};
 	/**
 	* Requests entity configs for the given kind from the REST API.
 	*
