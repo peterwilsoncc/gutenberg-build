@@ -56903,7 +56903,7 @@ Icon: ButtonIcon });
 			onCheckedChange: (checked) => {
 				updateBlockBindings({ [attribute]: checked ? itemBindings : void 0 });
 			},
-			checked: (0, import_es6.default)(args, field.args) ?? field.key === args?.key,
+			checked: (0, import_es6.default)(args, itemBindings.args),
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: field.label }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemDescription$1, { children: values[attribute] })]
 		});
 	}
@@ -56924,7 +56924,7 @@ Icon: ButtonIcon });
 				field,
 				source,
 				sourceKey
-			}, sourceKey + JSON.stringify(field.args) || field.key)) })
+			}, sourceKey + JSON.stringify(field.args || { key: field.key }))) })
 		})] }, sourceKey);
 	}
 
@@ -56975,7 +56975,7 @@ Icon: ButtonIcon });
 		} else if (!source) {
 			isValid = false;
 			displayText = (0, _wordpress_i18n.__)("Source not registered");
-		} else displayText = compatibleFields?.[boundSourceName]?.find((field) => (0, import_es6.default)(field.args, args))?.label || source?.label || boundSourceName;
+		} else displayText = compatibleFields?.[boundSourceName]?.find((field) => (0, import_es6.default)(field.args || { key: field.key }, args))?.label || source?.label || boundSourceName;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 			hasValue: () => !!binding,
 			label: attribute,
