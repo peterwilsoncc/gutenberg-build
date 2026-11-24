@@ -8377,6 +8377,9 @@ return array(
 				'style' => true,
 				'width' => true
 			),
+			'shadow' => array(
+				'__experimentalSkipSerialization' => true
+			),
 			'interactivity' => array(
 				'clientNavigation' => true
 			),
@@ -8397,6 +8400,7 @@ return array(
 		),
 		'selectors' => array(
 			'border' => '.wp-block-site-logo img, .wp-block-site-logo .components-placeholder',
+			'shadow' => '.wp-block-site-logo img, .wp-block-site-logo .components-placeholder',
 			'filter' => array(
 				'duotone' => '.wp-block-site-logo img, .wp-block-site-logo .components-placeholder__illustration, .wp-block-site-logo .components-placeholder::before'
 			)

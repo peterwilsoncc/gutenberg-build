@@ -81394,6 +81394,7 @@ Icon: ButtonIcon });
 				"style": true,
 				"width": true
 			},
+			"shadow": { "__experimentalSkipSerialization": true },
 			"interactivity": { "clientNavigation": true },
 			"filter": { "duotone": true }
 		},
@@ -81407,6 +81408,7 @@ Icon: ButtonIcon });
 		}],
 		selectors: {
 			"border": ".wp-block-site-logo img, .wp-block-site-logo .components-placeholder",
+			"shadow": ".wp-block-site-logo img, .wp-block-site-logo .components-placeholder",
 			"filter": { "duotone": ".wp-block-site-logo img, .wp-block-site-logo .components-placeholder__illustration, .wp-block-site-logo .components-placeholder::before" }
 		},
 		editorStyle: "wp-block-site-logo-editor",
@@ -81416,7 +81418,7 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/site-logo/edit.mjs
 	const ALLOWED_MEDIA_TYPES$1 = ["image"];
 	const { mediaEditKey, openMediaEditorModalKey } = unlock$1(_wordpress_block_editor.privateApis);
-	const SiteLogo = ({ alt, attributes: { align, width, height, isLink, linkTarget, shouldSyncIcon }, borderProps, isSelected, setAttributes, setLogo, logoUrl, siteUrl, logoId, iconId, setIcon, canUserEdit }) => {
+	const SiteLogo = ({ alt, attributes: { align, width, height, isLink, linkTarget, shouldSyncIcon }, borderProps, shadowProps, isSelected, setAttributes, setLogo, logoUrl, siteUrl, logoId, iconId, setIcon, canUserEdit }) => {
 		const isLargeViewport = (0, _wordpress_compose.useViewportMatch)("medium");
 		const isResizable = !["wide", "full"].includes(align) && isLargeViewport;
 		const [{ naturalWidth, naturalHeight }, setNaturalSize] = (0, _wordpress_element.useState)({});
@@ -81451,7 +81453,10 @@ Icon: ButtonIcon });
 		}
 		const img = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
 			className: clsx("custom-logo", borderProps.className),
-			style: borderProps.style,
+			style: {
+				...borderProps.style,
+				...shadowProps.style
+			},
 			src: logoUrl,
 			alt,
 			onLoad: (event) => {
@@ -81609,6 +81614,7 @@ Icon: ButtonIcon });
 	function LogoEdit({ attributes, className, setAttributes, isSelected }) {
 		const { width, shouldSyncIcon } = attributes;
 		const borderProps = (0, _wordpress_block_editor.__experimentalUseBorderProps)(attributes);
+		const shadowProps = (0, _wordpress_block_editor.__experimentalGetShadowClassesAndStyles)(attributes);
 		const { siteLogoId, canUserEdit, url, siteIconId, mediaItemData, isRequestingMediaItem } = (0, _wordpress_data.useSelect)((select) => {
 			const { canUser, getEntityRecord, getEditedEntityRecord } = select(_wordpress_core_data.store);
 			const _canUserEdit = canUser("update", {
@@ -81710,6 +81716,7 @@ Icon: ButtonIcon });
 			alt,
 			attributes,
 			borderProps,
+			shadowProps,
 			className,
 			isSelected,
 			setAttributes,
@@ -81729,7 +81736,8 @@ Icon: ButtonIcon });
 				withIllustration: true,
 				style: {
 					width,
-					...borderProps.style
+					...borderProps.style,
+					...shadowProps.style
 				},
 				children: content
 			});
@@ -81779,7 +81787,10 @@ Icon: ButtonIcon });
 				(!!logoUrl || !!temporaryURL) && logoImage,
 				(isLoading || !temporaryURL && !logoUrl && !canUserEdit) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Placeholder, {
 					className: clsx("site-logo_placeholder", borderProps.className),
-					style: borderProps.style,
+					style: {
+						...borderProps.style,
+						...shadowProps.style
+					},
 					withIllustration: true,
 					children: isLoading && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 						className: "components-placeholder__preview",
