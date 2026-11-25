@@ -1097,14 +1097,17 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			if (currentOptions.current?.__unstableOnClose) currentOptions.current.__unstableOnClose("focus-outside", event);
 			else if (currentOptions.current?.onClose) currentOptions.current.onClose();
 		});
-		const onKeyDown = (0, _wordpress_element.useCallback)((event) => {
-			currentOptions.current?.onKeyDown?.(event);
+		const closeOnEscape = (0, _wordpress_element.useMemo)(() => (0, _wordpress_keycodes.withIgnoreIMEEvents)((event) => {
 			if (event.key === "Escape" && !event.defaultPrevented && currentOptions.current?.onClose) {
 				event.preventDefault();
 				event.stopPropagation();
 				currentOptions.current.onClose();
 			}
-		}, []);
+		}), []);
+		const onKeyDown = (0, _wordpress_element.useCallback)((event) => {
+			currentOptions.current?.onKeyDown?.(event);
+			closeOnEscape(event);
+		}, [closeOnEscape]);
 		return [useMergeRefs([
 			constrainTabbing ? constrainedTabbingRef : null,
 			options.focusOnMount !== false ? focusReturnRef : null,
