@@ -51427,7 +51427,8 @@ Icon: ButtonIcon });
 			"shadow": true,
 			"transform": {
 				"rotate": true,
-				"translate": true
+				"translate": true,
+				"scale": true
 			},
 			"spacing": {
 				"margin": ["top", "bottom"],
@@ -52174,7 +52175,8 @@ Icon: ButtonIcon });
 			"shadow": true,
 			"transform": {
 				"rotate": true,
-				"translate": true
+				"translate": true,
+				"scale": true
 			},
 			"spacing": {
 				"margin": true,
@@ -91119,7 +91121,8 @@ Icon: ButtonIcon });
 			"shadow": { "__experimentalSkipSerialization": true },
 			"transform": {
 				"rotate": true,
-				"translate": true
+				"translate": true,
+				"scale": true
 			},
 			"dimensions": {
 				"minWidth": true,

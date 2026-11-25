@@ -691,6 +691,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 		"spacing.units",
 		"transform.rotate",
 		"transform.translate",
+		"transform.scale",
 		"typography.fluid",
 		"typography.customFontSize",
 		"typography.defaultFontSizes",

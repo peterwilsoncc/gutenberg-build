@@ -975,6 +975,11 @@ _wordpress_warning = __toESM(_wordpress_warning, 1);
 			support: ["transform", "translate"],
 			useEngine: true
 		},
+		scale: {
+			value: ["transform", "scale"],
+			support: ["transform", "scale"],
+			useEngine: true
+		},
 		textAlign: {
 			value: ["typography", "textAlign"],
 			support: ["typography", "textAlign"],

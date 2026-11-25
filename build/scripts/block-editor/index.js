@@ -110364,7 +110364,11 @@ If there's a particular need for this, please submit a feature request at https:
 				backgroundClip: ["text"]
 			};
 			updatedSettings.shadow = supportedStyles.includes("shadow") ? updatedSettings.shadow : false;
-			["rotate", "translate"].forEach((key) => {
+			[
+				"rotate",
+				"translate",
+				"scale"
+			].forEach((key) => {
 				if (!supportedStyles.includes(key)) updatedSettings.transform = {
 					...updatedSettings.transform,
 					[key]: false
@@ -116600,7 +116604,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* @return Settings object.
 	*/
 	function useBlockSettings(name, parentLayout) {
-		const [backgroundImage, backgroundSize, gradient, backgroundClip, customFontFamilies, defaultFontFamilies, themeFontFamilies, defaultFontSizesEnabled, customFontSizes, defaultFontSizes, themeFontSizes, customFontSize, fontStyle, fontWeight, lineHeight, textAlign, textColumns, textDecoration, textIndent, textShadow, writingMode, textTransform, letterSpacing, padding, margin, blockGap, defaultSpacingSizesEnabled, customSpacingSize, userSpacingSizes, defaultSpacingSizes, themeSpacingSizes, units, aspectRatio, height, minHeight, minWidth, width, dimensionSizes, layout, borderColor, borderRadius, borderStyle, borderWidth, borderRadiusSizes, customColorsEnabled, customColors, customDuotone, themeColors, defaultColors, defaultPalette, defaultDuotone, userDuotonePalette, themeDuotonePalette, defaultDuotonePalette, userGradientPalette, themeGradientPalette, defaultGradientPalette, defaultGradients, areCustomGradientsEnabled, isBackgroundEnabled, isLinkEnabled, isTextEnabled, isHeadingEnabled, isButtonEnabled, shadow, defaultTextShadowPresetsEnabled, customTextShadowPresets, defaultTextShadowPresets, themeTextShadowPresets, rotate, translate] = useSettings("background.backgroundImage", "background.backgroundSize", "background.gradient", "background.backgroundClip", "typography.fontFamilies.custom", "typography.fontFamilies.default", "typography.fontFamilies.theme", "typography.defaultFontSizes", "typography.fontSizes.custom", "typography.fontSizes.default", "typography.fontSizes.theme", "typography.customFontSize", "typography.fontStyle", "typography.fontWeight", "typography.lineHeight", "typography.textAlign", "typography.textColumns", "typography.textDecoration", "typography.textIndent", "typography.textShadow", "typography.writingMode", "typography.textTransform", "typography.letterSpacing", "spacing.padding", "spacing.margin", "spacing.blockGap", "spacing.defaultSpacingSizes", "spacing.customSpacingSize", "spacing.spacingSizes.custom", "spacing.spacingSizes.default", "spacing.spacingSizes.theme", "spacing.units", "dimensions.aspectRatio", "dimensions.height", "dimensions.minHeight", "dimensions.minWidth", "dimensions.width", "dimensions.dimensionSizes", "layout", "border.color", "border.radius", "border.style", "border.width", "border.radiusSizes", "color.custom", "color.palette.custom", "color.customDuotone", "color.palette.theme", "color.palette.default", "color.defaultPalette", "color.defaultDuotone", "color.duotone.custom", "color.duotone.theme", "color.duotone.default", "color.gradients.custom", "color.gradients.theme", "color.gradients.default", "color.defaultGradients", "color.customGradient", "color.background", "color.link", "color.text", "color.heading", "color.button", "shadow", "typography.defaultTextShadowPresets", "typography.textShadowPresets.custom", "typography.textShadowPresets.default", "typography.textShadowPresets.theme", "transform.rotate", "transform.translate");
+		const [backgroundImage, backgroundSize, gradient, backgroundClip, customFontFamilies, defaultFontFamilies, themeFontFamilies, defaultFontSizesEnabled, customFontSizes, defaultFontSizes, themeFontSizes, customFontSize, fontStyle, fontWeight, lineHeight, textAlign, textColumns, textDecoration, textIndent, textShadow, writingMode, textTransform, letterSpacing, padding, margin, blockGap, defaultSpacingSizesEnabled, customSpacingSize, userSpacingSizes, defaultSpacingSizes, themeSpacingSizes, units, aspectRatio, height, minHeight, minWidth, width, dimensionSizes, layout, borderColor, borderRadius, borderStyle, borderWidth, borderRadiusSizes, customColorsEnabled, customColors, customDuotone, themeColors, defaultColors, defaultPalette, defaultDuotone, userDuotonePalette, themeDuotonePalette, defaultDuotonePalette, userGradientPalette, themeGradientPalette, defaultGradientPalette, defaultGradients, areCustomGradientsEnabled, isBackgroundEnabled, isLinkEnabled, isTextEnabled, isHeadingEnabled, isButtonEnabled, shadow, defaultTextShadowPresetsEnabled, customTextShadowPresets, defaultTextShadowPresets, themeTextShadowPresets, rotate, translate, scale] = useSettings("background.backgroundImage", "background.backgroundSize", "background.gradient", "background.backgroundClip", "typography.fontFamilies.custom", "typography.fontFamilies.default", "typography.fontFamilies.theme", "typography.defaultFontSizes", "typography.fontSizes.custom", "typography.fontSizes.default", "typography.fontSizes.theme", "typography.customFontSize", "typography.fontStyle", "typography.fontWeight", "typography.lineHeight", "typography.textAlign", "typography.textColumns", "typography.textDecoration", "typography.textIndent", "typography.textShadow", "typography.writingMode", "typography.textTransform", "typography.letterSpacing", "spacing.padding", "spacing.margin", "spacing.blockGap", "spacing.defaultSpacingSizes", "spacing.customSpacingSize", "spacing.spacingSizes.custom", "spacing.spacingSizes.default", "spacing.spacingSizes.theme", "spacing.units", "dimensions.aspectRatio", "dimensions.height", "dimensions.minHeight", "dimensions.minWidth", "dimensions.width", "dimensions.dimensionSizes", "layout", "border.color", "border.radius", "border.style", "border.width", "border.radiusSizes", "color.custom", "color.palette.custom", "color.customDuotone", "color.palette.theme", "color.palette.default", "color.defaultPalette", "color.defaultDuotone", "color.duotone.custom", "color.duotone.theme", "color.duotone.default", "color.gradients.custom", "color.gradients.theme", "color.gradients.default", "color.defaultGradients", "color.customGradient", "color.background", "color.link", "color.text", "color.heading", "color.button", "shadow", "typography.defaultTextShadowPresets", "typography.textShadowPresets.custom", "typography.textShadowPresets.default", "typography.textShadowPresets.theme", "transform.rotate", "transform.translate", "transform.scale");
 		const rawSettings = (0, _wordpress_element.useMemo)(() => {
 			return {
 				background: {
@@ -116701,7 +116705,8 @@ If there's a particular need for this, please submit a feature request at https:
 				shadow,
 				transform: {
 					rotate,
-					translate
+					translate,
+					scale
 				}
 			};
 		}, [
@@ -116776,7 +116781,8 @@ If there's a particular need for this, please submit a feature request at https:
 			isButtonEnabled,
 			shadow,
 			rotate,
-			translate
+			translate,
+			scale
 		]);
 		return useSettingsForBlockElement(rawSettings, name);
 	}
@@ -119341,16 +119347,38 @@ If there's a particular need for this, please submit a feature request at https:
 			step: 1
 		}
 	};
+	const SCALE_PATTERN = /^((?:\d+(?:\.\d+)?|\.\d+))(%?)$/;
+	const SCALE_STEP = .01;
+	const SCALE_SHIFT_STEP = SCALE_STEP * 10;
+	const SCALE_SLIDER_MAX = 3;
+	const SCALE_INPUT_MAX = 10;
+	/**
+	* Converts a scale value to the number the scale field shows.
+	*
+	* @param value A scale, such as `1.2` or `'120%'`.
+	* @return The scale as a number, such as `1.2`, or `undefined` when the value
+	* is not a single non-negative number or percentage.
+	*/
+	function getScaleAsNumber(value) {
+		const scale = typeof value === "number" && Number.isFinite(value) ? String(value) : value;
+		const match = typeof scale === "string" ? SCALE_PATTERN.exec(scale) : null;
+		if (!match) return;
+		return match[2] ? Number(match[1]) / 100 : Number(match[1]);
+	}
 	function useHasTransformPanel(settings) {
 		const hasRotate = useHasRotateControl(settings);
 		const hasTranslate = useHasTranslateControl(settings);
-		return hasRotate || hasTranslate;
+		const hasScale = useHasScaleControl(settings);
+		return hasRotate || hasTranslate || hasScale;
 	}
 	function useHasRotateControl(settings) {
 		return !!settings?.transform?.rotate;
 	}
 	function useHasTranslateControl(settings) {
 		return !!settings?.transform?.translate;
+	}
+	function useHasScaleControl(settings) {
+		return !!settings?.transform?.scale;
 	}
 	const TRANSLATE_UNIT_SETTINGS = Object.fromEntries(Object.entries(RANGE_CONTROL_CUSTOM_SETTINGS).map(([unit, { max, step }]) => [unit, {
 		min: -max,
@@ -119381,7 +119409,8 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	const DEFAULT_CONTROLS = {
 		rotate: true,
-		translate: true
+		translate: true,
+		scale: true
 	};
 	function TransformPanel$1({ as: Wrapper = TransformToolsPanel, value, onChange, inheritedValue = value, baseValue, settings, panelId, defaultControls = DEFAULT_CONTROLS }) {
 		const showRotateControl = useHasRotateControl(settings);
@@ -119413,13 +119442,39 @@ If there's a particular need for this, please submit a feature request at https:
 		const resetTranslate = () => {
 			onChange(setImmutably(value, ["transform", "translate"], void 0));
 		};
+		const showScaleControl = useHasScaleControl(settings);
+		const scale = getScaleAsNumber(value?.transform?.scale) ?? getScaleAsNumber(inheritedValue?.transform?.scale);
+		const setScale = (newValue) => {
+			onChange(setImmutably(value, ["transform", "scale"], newValue));
+		};
+		const onScaleInputChange = (newValue) => {
+			if (newValue === void 0 || newValue === "") {
+				setScale(void 0);
+				return;
+			}
+			const nextScale = Number(newValue);
+			if (!Number.isFinite(nextScale) || nextScale < 0) return;
+			setScale(nextScale);
+		};
+		const stepFromUnscaled = (state, action) => {
+			if (scale !== void 0 || action.type !== "PRESS_UP" && action.type !== "PRESS_DOWN") return state;
+			const { event } = action.payload;
+			const step = event && "shiftKey" in event && event.shiftKey ? SCALE_SHIFT_STEP : SCALE_STEP;
+			const next = action.type === "PRESS_UP" ? 1 + step : 1 - step;
+			return {
+				...state,
+				value: `${parseFloat(next.toPrecision(12))}`
+			};
+		};
+		const hasScaleValue = () => value?.transform?.scale !== void 0;
 		const resetAllFilter = (0, _wordpress_element.useCallback)((previousValue) => {
 			return {
 				...previousValue,
 				transform: {
 					...previousValue?.transform,
 					rotate: void 0,
-					translate: void 0
+					translate: void 0,
+					scale: void 0
 				}
 			};
 		}, []);
@@ -119428,39 +119483,78 @@ If there's a particular need for this, please submit a feature request at https:
 			value,
 			onChange,
 			panelId,
-			children: [showRotateControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-				label: (0, _wordpress_i18n.__)("Rotation"),
-				hasValue: hasRotateValue,
-				onDeselect: resetRotate,
-				isShownByDefault: defaultControls.rotate,
-				panelId,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitRangeControl, {
+			children: [
+				showRotateControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					label: (0, _wordpress_i18n.__)("Rotation"),
-					value: rotate,
-					onChange: setRotate,
-					units: ROTATE_UNITS,
-					unitSettings: ROTATE_UNIT_SETTINGS
+					hasValue: hasRotateValue,
+					onDeselect: resetRotate,
+					isShownByDefault: defaultControls.rotate,
+					panelId,
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitRangeControl, {
+						label: (0, _wordpress_i18n.__)("Rotation"),
+						value: rotate,
+						onChange: setRotate,
+						units: ROTATE_UNITS,
+						unitSettings: ROTATE_UNIT_SETTINGS
+					})
+				}),
+				showTranslateControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					label: (0, _wordpress_i18n.__)("Offset"),
+					hasValue: hasTranslateValue,
+					onDeselect: resetTranslate,
+					isShownByDefault: defaultControls.translate,
+					panelId,
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(FieldsetRoot, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldsetLegend, { children: (0, _wordpress_i18n.__)("Offset") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
+						direction: "column",
+						gap: "md",
+						children: TRANSLATE_AXES.map(({ axis, label, controlLabel }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitRangeControl, {
+							label,
+							controlLabel,
+							value: getTranslate(axis),
+							placeholder: getInheritedTranslate(axis),
+							onChange: (newValue) => setTranslate(axis, newValue),
+							units,
+							unitSettings: TRANSLATE_UNIT_SETTINGS
+						}, axis))
+					})] })
+				}),
+				showScaleControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+					label: (0, _wordpress_i18n.__)("Scale"),
+					hasValue: hasScaleValue,
+					onDeselect: () => setScale(void 0),
+					isShownByDefault: defaultControls.scale,
+					panelId,
+					children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(FieldsetRoot, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldsetLegend, { children: (0, _wordpress_i18n.__)("Scale") }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
+						direction: "row",
+						align: "center",
+						gap: "md",
+						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalNumberControl, {
+							className: "block-editor-global-styles-unit-range-control__input",
+							label: (0, _wordpress_i18n.__)("Scale"),
+							hideLabelFromVision: true,
+							value: scale ?? "",
+							min: 0,
+							max: SCALE_INPUT_MAX,
+							step: SCALE_STEP,
+							spinControls: "none",
+							placeholder: "1",
+							onChange: onScaleInputChange,
+							__unstableStateReducer: stepFromUnscaled
+						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.RangeControl, {
+							className: "block-editor-global-styles-unit-range-control__slider",
+							label: (0, _wordpress_i18n.__)("Scale"),
+							hideLabelFromVision: true,
+							value: scale,
+							min: 0,
+							max: SCALE_SLIDER_MAX,
+							step: SCALE_STEP,
+							initialPosition: 1,
+							withInputField: false,
+							onChange: setScale
+						})]
+					})] })
 				})
-			}), showTranslateControl && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
-				label: (0, _wordpress_i18n.__)("Offset"),
-				hasValue: hasTranslateValue,
-				onDeselect: resetTranslate,
-				isShownByDefault: defaultControls.translate,
-				panelId,
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(FieldsetRoot, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(FieldsetLegend, { children: (0, _wordpress_i18n.__)("Offset") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Stack, {
-					direction: "column",
-					gap: "md",
-					children: TRANSLATE_AXES.map(({ axis, label, controlLabel }) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(UnitRangeControl, {
-						label,
-						controlLabel,
-						value: getTranslate(axis),
-						placeholder: getInheritedTranslate(axis),
-						onChange: (newValue) => setTranslate(axis, newValue),
-						units,
-						unitSettings: TRANSLATE_UNIT_SETTINGS
-					}, axis))
-				})] })
-			})]
+			]
 		});
 	}
 
@@ -119795,6 +119889,7 @@ If there's a particular need for this, please submit a feature request at https:
 			defaultControls: {
 				rotate: false,
 				translate: false,
+				scale: false,
 				...defaultControls
 			},
 			inheritedValue

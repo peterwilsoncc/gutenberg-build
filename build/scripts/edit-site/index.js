@@ -41705,6 +41705,7 @@ Icon: ButtonIcon });
 		"spacing.units",
 		"transform.rotate",
 		"transform.translate",
+		"transform.scale",
 		"typography.fluid",
 		"typography.customFontSize",
 		"typography.defaultFontSizes",

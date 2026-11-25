@@ -3262,7 +3262,8 @@ return array(
 			'shadow' => true,
 			'transform' => array(
 				'rotate' => true,
-				'translate' => true
+				'translate' => true,
+				'scale' => true
 			),
 			'spacing' => array(
 				'margin' => array(
@@ -3392,7 +3393,8 @@ return array(
 			'shadow' => true,
 			'transform' => array(
 				'rotate' => true,
-				'translate' => true
+				'translate' => true,
+				'scale' => true
 			),
 			'spacing' => array(
 				'margin' => true,
@@ -10262,7 +10264,8 @@ return array(
 			),
 			'transform' => array(
 				'rotate' => true,
-				'translate' => true
+				'translate' => true,
+				'scale' => true
 			),
 			'dimensions' => array(
 				'minWidth' => true,
