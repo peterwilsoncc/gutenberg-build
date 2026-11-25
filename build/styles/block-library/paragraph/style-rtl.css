@@ -59,7 +59,7 @@
   font-size: 3em;
 }
 
-.has-drop-cap:not(:focus)::first-letter {
+.has-drop-cap::first-letter {
   float: inline-start;
   font-size: 8.4em;
   line-height: 0.68;
