@@ -17424,7 +17424,7 @@ const SlugEdit = ({ field, onChange, data }) => {
 						id: postUrlSlugDescriptionId,
 						children: (0, import_i18n.__)("Customize the last part of the Permalink.")
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-						href: "https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink",
+						href: (0, import_i18n.__)("https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink"),
 						openInNewTab: true,
 						children: (0, import_i18n.__)("Learn more")
 					})]
