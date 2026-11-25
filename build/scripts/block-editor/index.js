@@ -3252,6 +3252,25 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	function isUpdatingSameBlockAttribute(action, lastAction) {
 		return action.type === "UPDATE_BLOCK_ATTRIBUTES" && lastAction !== void 0 && lastAction.type === "UPDATE_BLOCK_ATTRIBUTES" && (0, import_es6.default)(action.clientIds, lastAction.clientIds) && hasSameKeys(action.attributes, lastAction.attributes);
 	}
+	/**
+	* Returns the attributes an `UPDATE_BLOCK_ATTRIBUTES` action sets, keyed by
+	* client ID. Blocks that aren't in state, or get no attributes, are left out.
+	*
+	* @param attributes Block attributes state.
+	* @param action     The `UPDATE_BLOCK_ATTRIBUTES` action.
+	*
+	* @return Attributes to set, keyed by client ID.
+	*/
+	function getAttributeUpdates(attributes, action) {
+		const updates = /* @__PURE__ */ new Map();
+		for (const clientId of action.clientIds) {
+			if (!attributes.has(clientId)) continue;
+			const blockAttributes = action.options?.uniqueByBlock ? action.attributes[clientId] : action.attributes;
+			if (!blockAttributes) continue;
+			updates.set(clientId, blockAttributes);
+		}
+		return updates;
+	}
 	function updateBlockTreeForBlocks(state, blocks) {
 		const treeToUpdate = state.tree;
 		const stack = [...blocks];
@@ -3310,16 +3329,16 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				});
 				updateParentInnerBlocksInTree(newState, [action.clientId], false);
 				break;
-			case "UPDATE_BLOCK_ATTRIBUTES":
+			case "UPDATE_BLOCK_ATTRIBUTES": {
+				const updates = getAttributeUpdates(newState.attributes, action);
 				newState.tree = new Map(newState.tree);
-				action.clientIds.forEach((clientId) => {
-					newState.tree.set(clientId, {
-						...newState.tree.get(clientId),
-						attributes: newState.attributes.get(clientId)
-					});
+				for (const clientId of updates.keys()) newState.tree.set(clientId, {
+					...newState.tree.get(clientId),
+					attributes: newState.attributes.get(clientId)
 				});
-				updateParentInnerBlocksInTree(newState, action.clientIds, false);
+				updateParentInnerBlocksInTree(newState, updates.keys(), false);
 				break;
+			}
 			case "REPLACE_BLOCKS_AUGMENTED_WITH_CHILDREN": {
 				const inserterClientIds = getFlattenedClientIds(action.blocks);
 				newState.tree = new Map(newState.tree);
@@ -3712,11 +3731,12 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 					return newState;
 				}
 				case "UPDATE_BLOCK_ATTRIBUTES": {
-					if (action.clientIds.every((id) => !state.get(id))) return state;
+					const updates = getAttributeUpdates(state, action);
+					if (!updates.size) return state;
 					let hasChange = false;
 					const newState = new Map(state);
-					for (const clientId of action.clientIds) {
-						const updatedAttributeEntries = Object.entries(!!action.options?.uniqueByBlock ? action.attributes[clientId] : action.attributes ?? {});
+					for (const [clientId, blockAttributes] of updates) {
+						const updatedAttributeEntries = Object.entries(blockAttributes);
 						if (updatedAttributeEntries.length === 0) continue;
 						let hasUpdatedAttributes = false;
 						const existingAttributes = state.get(clientId);
@@ -5020,12 +5040,9 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 					if (nextState.settings?.disableContentOnlyForUnsyncedPatterns) break;
 					const addedBlocks = [];
 					const removedClientIds = [];
-					for (const clientId of action?.clientIds) {
-						const attributes = action.options?.uniqueByBlock ? action.attributes[clientId] : action.attributes;
-						if (!attributes) break;
-						if (attributes.metadata?.patternName && !state.blocks.attributes.get(clientId)?.metadata?.patternName) addedBlocks.push(nextState.blocks.tree.get(clientId));
-						else if (attributes.metadata && !attributes.metadata?.patternName && state.blocks.attributes.get(clientId)?.metadata?.patternName) removedClientIds.push(clientId);
-					}
+					const updates = getAttributeUpdates(state.blocks.attributes, action);
+					for (const [clientId, attributes] of updates) if (attributes.metadata?.patternName && !state.blocks.attributes.get(clientId)?.metadata?.patternName) addedBlocks.push(nextState.blocks.tree.get(clientId));
+					else if (attributes.metadata && !attributes.metadata?.patternName && state.blocks.attributes.get(clientId)?.metadata?.patternName) removedClientIds.push(clientId);
 					if (!addedBlocks?.length && !removedClientIds?.length) break;
 					const nextDerivedBlockEditingModes = getDerivedBlockEditingModesUpdates({
 						prevState: state,
