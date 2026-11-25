@@ -115518,7 +115518,7 @@ ${content}
       prefix = (0, import_element386.isValidElement)(icon) && (icon.type === "svg" || icon.type === import_primitives100.SVG) ? /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(
         menu_exports.PrefixIcon,
         {
-          icon,
+          icon: icon.props.fill === void 0 ? (0, import_element386.cloneElement)(icon, { fill: "currentColor" }) : icon,
           className: icon.props.className
         }
       ) : /* @__PURE__ */ (0, import_jsx_runtime614.jsx)(import_components201.Icon, { icon });
