@@ -6018,13 +6018,13 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 				super(...args);
 				this.params.type = "outer";
 				this.activeElementBeforeExpanded = null;
-				this.contentContainer[0].ownerDocument.defaultView.addEventListener("keydown", (event) => {
+				this.contentContainer[0].ownerDocument.defaultView.addEventListener("keydown", (0, _wordpress_keycodes.withIgnoreIMEEvents)((event) => {
 					if (this.expanded() && (event.keyCode === _wordpress_keycodes.ESCAPE || event.code === "Escape") && !event.defaultPrevented) {
 						event.preventDefault();
 						event.stopPropagation();
 						(0, _wordpress_data.dispatch)(store).setIsInserterOpened(false);
 					}
-				}, true);
+				}), true);
 				this.contentContainer.addClass("widgets-inserter");
 				this.isFromInternalAction = false;
 				this.expanded.bind(() => {
