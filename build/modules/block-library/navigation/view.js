@@ -132,6 +132,7 @@ const { state, actions } = store("core/navigation", {
 			const { type, firstFocusableElement, lastFocusableElement } = getContext();
 			if (state.menuOpenedBy.click) {
 				if (event.key === "Escape") {
+					if (event.isComposing || event.keyCode === 229) return;
 					event.stopPropagation();
 					actions.closeMenu("click");
 					actions.closeMenu("focus");
