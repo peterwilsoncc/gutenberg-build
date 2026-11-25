@@ -12884,12 +12884,12 @@ function registerStyle$24(hash, css) {
 	runtime.styles.set(hash, css);
 	for (const targetDocument of runtime.documents.keys()) injectStyle$24(targetDocument, hash, css);
 }
-registerStyle$24("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
+registerStyle$24("464a4786cd", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9f833ac3bb5113ce__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;min-inline-size:0;padding:0}.a2a348db2bd3292e__legend:not(._704442dd37db8837__is-hidden)+._9a5e178713ac9d5d__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
 var style_module_default$17 = {
-	"root": "e261be5ffdbff866__root",
-	"legend": "_9c09ae15728936d6__legend",
-	"is-hidden": "_76f0f4f5a833a38d__is-hidden",
-	"description": "cac73664494ce854__description"
+	"root": "_9f833ac3bb5113ce__root",
+	"legend": "a2a348db2bd3292e__legend",
+	"is-hidden": "_704442dd37db8837__is-hidden",
+	"description": "_9a5e178713ac9d5d__description"
 };
 /**
 * A low-level component that associates an accessible legend and description with
@@ -13023,12 +13023,12 @@ var field_module_default$1 = {
 	"is-plain": "_6c0f378dae3a4009__is-plain",
 	"description": "_30612227700b3250__description"
 };
-registerStyle$23("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
+registerStyle$23("464a4786cd", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9f833ac3bb5113ce__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;min-inline-size:0;padding:0}.a2a348db2bd3292e__legend:not(._704442dd37db8837__is-hidden)+._9a5e178713ac9d5d__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
 var style_module_default$16 = {
-	"root": "e261be5ffdbff866__root",
-	"legend": "_9c09ae15728936d6__legend",
-	"is-hidden": "_76f0f4f5a833a38d__is-hidden",
-	"description": "cac73664494ce854__description"
+	"root": "_9f833ac3bb5113ce__root",
+	"legend": "a2a348db2bd3292e__legend",
+	"is-hidden": "_704442dd37db8837__is-hidden",
+	"description": "_9a5e178713ac9d5d__description"
 };
 const FieldsetLegend = (0, import_element.forwardRef)(function UnforwardedFieldsetLegend({ className, hideFromVision, ...restProps }, ref) {
 	const legend = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FieldsetLegend$1, {
@@ -13161,12 +13161,12 @@ var field_module_default = {
 	"is-plain": "_6c0f378dae3a4009__is-plain",
 	"description": "_30612227700b3250__description"
 };
-registerStyle$22("fb61bcd821", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{.e261be5ffdbff866__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;padding:0}._9c09ae15728936d6__legend:not(._76f0f4f5a833a38d__is-hidden)+.cac73664494ce854__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
+registerStyle$22("464a4786cd", "@layer wp-ui{@layer utilities, components, compositions, overrides;@layer components{._9f833ac3bb5113ce__root{border:0;display:flex;flex-direction:column;gap:var(--wpds-dimension-gap-sm,8px);margin:0;min-inline-size:0;padding:0}.a2a348db2bd3292e__legend:not(._704442dd37db8837__is-hidden)+._9a5e178713ac9d5d__description{inset-block-start:calc(var(--wpds-dimension-gap-xs, 4px) - var(--wpds-dimension-gap-sm, 8px));position:relative}}}");
 var style_module_default$15 = {
-	"root": "e261be5ffdbff866__root",
-	"legend": "_9c09ae15728936d6__legend",
-	"is-hidden": "_76f0f4f5a833a38d__is-hidden",
-	"description": "cac73664494ce854__description"
+	"root": "_9f833ac3bb5113ce__root",
+	"legend": "a2a348db2bd3292e__legend",
+	"is-hidden": "_704442dd37db8837__is-hidden",
+	"description": "_9a5e178713ac9d5d__description"
 };
 const FieldsetDescription = (0, import_element.forwardRef)(function UnforwardedFieldsetDescription({ className, id: idProp, render, ...restProps }, ref) {
 	const generatedId = (0, import_element.useId)();
