@@ -837,7 +837,7 @@ var wp;
             inst: { value, getSnapshot }
           });
           var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
-          useLayoutEffect23(
+          useLayoutEffect22(
             function() {
               inst.value = value;
               inst.getSnapshot = getSnapshot;
@@ -871,7 +871,7 @@ var wp;
           return getSnapshot();
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React251 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState173 = React251.useState, useEffect141 = React251.useEffect, useLayoutEffect23 = React251.useLayoutEffect, useDebugValue2 = React251.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+        var React251 = require_react(), objectIs = "function" === typeof Object.is ? Object.is : is2, useState173 = React251.useState, useEffect141 = React251.useEffect, useLayoutEffect22 = React251.useLayoutEffect, useDebugValue2 = React251.useDebugValue, didWarnOld18Alpha = false, didWarnUncachedGetSnapshot = false, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
         exports.useSyncExternalStore = void 0 !== React251.useSyncExternalStore ? React251.useSyncExternalStore : shim;
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
       })();
@@ -899,9 +899,9 @@ var wp;
           return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React251 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore5 = shim.useSyncExternalStore, useRef191 = React251.useRef, useEffect141 = React251.useEffect, useMemo208 = React251.useMemo, useDebugValue2 = React251.useDebugValue;
+        var React251 = require_react(), shim = require_shim(), objectIs = "function" === typeof Object.is ? Object.is : is2, useSyncExternalStore5 = shim.useSyncExternalStore, useRef190 = React251.useRef, useEffect141 = React251.useEffect, useMemo208 = React251.useMemo, useDebugValue2 = React251.useDebugValue;
         exports.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector5, isEqual2) {
-          var instRef = useRef191(null);
+          var instRef = useRef190(null);
           if (null === instRef.current) {
             var inst = { hasValue: false, value: null };
             instRef.current = inst;
@@ -6130,9 +6130,9 @@ var wp;
 
   // packages/block-editor/build-module/hooks/utils.mjs
   var import_blocks109 = __toESM(require_blocks(), 1);
-  var import_element445 = __toESM(require_element(), 1);
+  var import_element444 = __toESM(require_element(), 1);
   var import_data187 = __toESM(require_data(), 1);
-  var import_compose148 = __toESM(require_compose(), 1);
+  var import_compose147 = __toESM(require_compose(), 1);
   var import_hooks15 = __toESM(require_hooks(), 1);
 
   // packages/block-editor/build-module/components/block-edit/context.mjs
@@ -73765,7 +73765,12 @@ var wp;
     contentRef
   }) {
     const registry = (0, import_data54.useRegistry)();
-    const { updateBlockAttributes: updateBlockAttributes2, replaceBlocks: replaceBlocks2, selectionChange: selectionChange2 } = (0, import_data54.useDispatch)(store);
+    const {
+      updateBlockAttributes: updateBlockAttributes2,
+      replaceBlocks: replaceBlocks2,
+      selectionChange: selectionChange2,
+      __unstableMarkLastChangeAsPersistent: __unstableMarkLastChangeAsPersistent2
+    } = (0, import_data54.useDispatch)(store);
     const keys = (0, import_data54.useSelect)(
       (select3) => {
         const { getBlockName: getBlockName2 } = select3(store);
@@ -73850,6 +73855,7 @@ var wp;
           ),
           { uniqueByBlock: true }
         );
+        __unstableMarkLastChangeAsPersistent2();
         return;
       }
       const { start: start2, end } = newValue;
@@ -118472,70 +118478,24 @@ If there's a particular need for this, please submit a feature request at https:
   var panel_color_settings_default = PanelColorSettings;
 
   // packages/block-editor/build-module/components/plain-text/index.mjs
-  var import_element410 = __toESM(require_element(), 1);
+  var import_element409 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/editable-text/index.mjs
-  var import_element409 = __toESM(require_element(), 1);
+  var import_element408 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/rich-text/index.mjs
   var import_es67 = __toESM(require_es6(), 1);
-  var import_element408 = __toESM(require_element(), 1);
+  var import_element407 = __toESM(require_element(), 1);
   var import_data163 = __toESM(require_data(), 1);
-  var import_compose143 = __toESM(require_compose(), 1);
+  var import_compose142 = __toESM(require_compose(), 1);
   var import_rich_text21 = __toESM(require_rich_text(), 1);
   var import_components228 = __toESM(require_components(), 1);
   var import_blocks92 = __toESM(require_blocks(), 1);
   var import_i18n238 = __toESM(require_i18n(), 1);
 
-  // packages/block-editor/build-module/components/rich-text/use-mark-persistent.mjs
-  var import_element403 = __toESM(require_element(), 1);
-  var import_compose138 = __toESM(require_compose(), 1);
-  var TYPING_TIMEOUT = 1e3;
-  function getChangeType(previous, next) {
-    if (previous.html === next.html && previous.hasActiveFormats === next.hasActiveFormats) {
-      return "none";
-    }
-    return previous.text === next.text ? "discrete" : "typing";
-  }
-  function useMarkPersistent({ html, value, onMarkPersistent }) {
-    const { text } = value;
-    const hasActiveFormats = !!value.activeFormats?.length;
-    const previousRef = (0, import_element403.useRef)();
-    const markPersistent = (0, import_compose138.useEvent)(onMarkPersistent);
-    const markPersistentDebounced = (0, import_compose138.useDebounce)(
-      markPersistent,
-      TYPING_TIMEOUT
-    );
-    (0, import_element403.useLayoutEffect)(() => {
-      const previous = previousRef.current;
-      const next = { html, text, hasActiveFormats };
-      if (!previous) {
-        previousRef.current = next;
-        return;
-      }
-      const changeType = getChangeType(previous, next);
-      if (changeType === "none") {
-        return;
-      }
-      previousRef.current = next;
-      if (changeType === "typing") {
-        markPersistentDebounced();
-        return;
-      }
-      markPersistentDebounced.cancel();
-      markPersistent();
-    }, [
-      html,
-      text,
-      hasActiveFormats,
-      markPersistent,
-      markPersistentDebounced
-    ]);
-  }
-
   // packages/block-editor/build-module/components/rich-text/event-listeners/index.mjs
-  var import_element404 = __toESM(require_element(), 1);
-  var import_compose141 = __toESM(require_compose(), 1);
+  var import_element403 = __toESM(require_element(), 1);
+  var import_compose140 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/before-input-rules.mjs
   var import_rich_text9 = __toESM(require_rich_text(), 1);
@@ -118792,8 +118752,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks89 = __toESM(require_blocks(), 1);
   var import_rich_text16 = __toESM(require_rich_text(), 1);
   var import_url12 = __toESM(require_url(), 1);
-  var import_compose139 = __toESM(require_compose(), 1);
-  var { subscribeDelegatedListener: subscribeDelegatedListener4 } = unlock(import_compose139.privateApis);
+  var import_compose138 = __toESM(require_compose(), 1);
+  var { subscribeDelegatedListener: subscribeDelegatedListener4 } = unlock(import_compose138.privateApis);
   var { ownsSelection: ownsSelection3 } = unlock(import_rich_text16.privateApis);
   function createPasteListener(props, element) {
     return function _onPaste(event) {
@@ -118954,9 +118914,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/rich-text/event-listeners/enter.mjs
   var import_rich_text18 = __toESM(require_rich_text(), 1);
-  var import_compose140 = __toESM(require_compose(), 1);
+  var import_compose139 = __toESM(require_compose(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener8, ownsSelection: ownsSelection4 } = unlock(import_rich_text18.privateApis);
-  var { subscribeDelegatedListener: subscribeDelegatedListener5 } = unlock(import_compose140.privateApis);
+  var { subscribeDelegatedListener: subscribeDelegatedListener5 } = unlock(import_compose139.privateApis);
   var enter_default = (props) => (element) => {
     function onBeforeInput(event) {
       const { inputType } = event;
@@ -119068,16 +119028,16 @@ If there's a particular need for this, please submit a feature request at https:
     firefox_compat_default
   ];
   function useEventListeners(props) {
-    const propsRef = (0, import_element404.useRef)(props);
-    (0, import_element404.useInsertionEffect)(() => {
+    const propsRef = (0, import_element403.useRef)(props);
+    (0, import_element403.useInsertionEffect)(() => {
       propsRef.current = props;
     });
-    const refEffects = (0, import_element404.useMemo)(
+    const refEffects = (0, import_element403.useMemo)(
       () => allEventListeners.map((refEffect) => refEffect(propsRef)),
       [propsRef]
     );
-    const dropEffect = (0, import_element404.useMemo)(() => drop(propsRef), [propsRef]);
-    return (0, import_compose141.useRefEffect)(
+    const dropEffect = (0, import_element403.useMemo)(() => drop(propsRef), [propsRef]);
+    return (0, import_compose140.useRefEffect)(
       (element) => {
         const cleanups = [
           dropEffect,
@@ -119092,7 +119052,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/rich-text/content.mjs
-  var import_element405 = __toESM(require_element(), 1);
+  var import_element404 = __toESM(require_element(), 1);
   var import_blocks90 = __toESM(require_blocks(), 1);
   var import_deprecated24 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime621 = __toESM(require_jsx_runtime(), 1);
@@ -119122,30 +119082,30 @@ If there's a particular need for this, please submit a feature request at https:
     format: format7,
     ...props
   }) {
-    value = /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(import_element405.RawHTML, { children: valueToHTMLString(value, multiline) });
+    value = /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(import_element404.RawHTML, { children: valueToHTMLString(value, multiline) });
     return Tag ? /* @__PURE__ */ (0, import_jsx_runtime621.jsx)(Tag, { ...props, children: value }) : value;
   }
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.mjs
-  var import_element407 = __toESM(require_element(), 1);
+  var import_element406 = __toESM(require_element(), 1);
   var import_blocks91 = __toESM(require_blocks(), 1);
   var import_rich_text20 = __toESM(require_rich_text(), 1);
   var import_deprecated26 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/components/rich-text/multiline.mjs
-  var import_element406 = __toESM(require_element(), 1);
+  var import_element405 = __toESM(require_element(), 1);
   var import_deprecated25 = __toESM(require_deprecated(), 1);
   var import_data162 = __toESM(require_data(), 1);
   var import_keycodes27 = __toESM(require_keycodes(), 1);
   var import_rich_text19 = __toESM(require_rich_text(), 1);
-  var import_compose142 = __toESM(require_compose(), 1);
+  var import_compose141 = __toESM(require_compose(), 1);
   var import_jsx_runtime622 = __toESM(require_jsx_runtime(), 1);
   var { subscribeOwnedListener: subscribeOwnedListener9 } = unlock(import_rich_text19.privateApis);
   function useEnterRef(props) {
     const registry = (0, import_data162.useRegistry)();
     const { getSelectionStart: getSelectionStart2, getSelectionEnd: getSelectionEnd2 } = (0, import_data162.useSelect)(store);
     const { selectionChange: selectionChange2 } = (0, import_data162.useDispatch)(store);
-    return (0, import_compose142.useRefEffect)((element) => {
+    return (0, import_compose141.useRefEffect)((element) => {
       function onKeyDown(event) {
         if (event.keyCode !== import_keycodes27.ENTER) {
           return;
@@ -119190,8 +119150,8 @@ If there's a particular need for this, please submit a feature request at https:
     } = lineProps;
     const { clientId } = useBlockEditContext();
     const { selectionChange: selectionChange2 } = (0, import_data162.useDispatch)(store);
-    const latestRef = (0, import_element406.useRef)();
-    (0, import_element406.useInsertionEffect)(() => {
+    const latestRef = (0, import_element405.useRef)();
+    (0, import_element405.useInsertionEffect)(() => {
       latestRef.current = { ...lineProps, clientId };
     });
     const ref = useEnterRef(latestRef);
@@ -119291,12 +119251,12 @@ If there's a particular need for this, please submit a feature request at https:
       );
     }) });
   }
-  var multiline_default = (0, import_element406.forwardRef)(RichTextMultiline);
+  var multiline_default = (0, import_element405.forwardRef)(RichTextMultiline);
 
   // packages/block-editor/build-module/components/rich-text/with-deprecations.mjs
   var import_jsx_runtime623 = __toESM(require_jsx_runtime(), 1);
   function withDeprecations(Component4) {
-    return (0, import_element407.forwardRef)((props, ref) => {
+    return (0, import_element406.forwardRef)((props, ref) => {
       let value = props.value;
       let onChange = props.onChange;
       if (Array.isArray(value)) {
@@ -119393,16 +119353,16 @@ If there's a particular need for this, please submit a feature request at https:
     readOnly,
     ...props
   }, forwardedRef) {
-    const { supportsSplitting } = (0, import_element408.useContext)(PrivateBlockContext);
-    const instanceId = (0, import_compose143.useInstanceId)(RichTextWrapper);
-    const anchorRef = (0, import_element408.useRef)();
-    const [anchorElement, setAnchorElement] = (0, import_element408.useState)(null);
+    const { supportsSplitting } = (0, import_element407.useContext)(PrivateBlockContext);
+    const instanceId = (0, import_compose142.useInstanceId)(RichTextWrapper);
+    const anchorRef = (0, import_element407.useRef)();
+    const [anchorElement, setAnchorElement] = (0, import_element407.useState)(null);
     const context = useBlockEditContext();
     const { clientId, isSelected: isBlockSelected2, name: blockName } = context;
     const isBlockMultiSelected2 = context[isMultiSelectedKey];
     const blockBindings = context[blockBindingsKey];
     const hasDefaultEditingMode = context[blockEditingModeKey] === "default";
-    const blockContext = (0, import_element408.useContext)(block_context_default);
+    const blockContext = (0, import_element407.useContext)(block_context_default);
     const registry = (0, import_data163.useRegistry)();
     const selector5 = (select3) => {
       if (!isBlockSelected2 && !isBlockMultiSelected2) {
@@ -119535,7 +119495,7 @@ If there's a particular need for this, please submit a feature request at https:
       disableFormats
     });
     const hasFormats = !adjustedAllowedFormats || adjustedAllowedFormats.length > 0;
-    (0, import_element408.useEffect)(() => {
+    (0, import_element407.useEffect)(() => {
       if (!identifier) {
         return;
       }
@@ -119554,7 +119514,7 @@ If there's a particular need for this, please submit a feature request at https:
       withoutInteractiveFormatting,
       shouldDisableEditing
     ]);
-    const onSelectionChange = (0, import_element408.useCallback)(
+    const onSelectionChange = (0, import_element407.useCallback)(
       (start2, end) => {
         const selection2 = {};
         const unset = start2 === void 0 && end === void 0;
@@ -119592,6 +119552,7 @@ If there's a particular need for this, please submit a feature request at https:
         selectionChange2
       ]
     );
+    const lastChangeRef = (0, import_element407.useRef)(0);
     const {
       value,
       getValue,
@@ -119601,7 +119562,13 @@ If there's a particular need for this, please submit a feature request at https:
       [getDomPositionKey]: getDomPosition
     } = useRichText({
       value: adjustedValue,
-      onChange: adjustedOnChange,
+      onChange(newValue, meta) {
+        if (Date.now() - lastChangeRef.current >= 1e3) {
+          __unstableMarkLastChangeAsPersistent2();
+        }
+        adjustedOnChange(newValue, meta);
+        lastChangeRef.current = meta.__unstableText === value.text ? 0 : Date.now();
+      },
       selectionStart,
       selectionEnd,
       onSelectionChange,
@@ -119612,7 +119579,7 @@ If there's a particular need for this, please submit a feature request at https:
       __unstableDependencies: [tagName],
       allowedFormats: adjustedAllowedFormats,
       withoutInteractiveFormatting,
-      __unstableFormatTypeHandlerContext: (0, import_element408.useMemo)(
+      __unstableFormatTypeHandlerContext: (0, import_element407.useMemo)(
         () => ({
           richTextIdentifier: identifier,
           blockClientId: clientId
@@ -119620,7 +119587,7 @@ If there's a particular need for this, please submit a feature request at https:
         [identifier, clientId]
       )
     });
-    (0, import_element408.useLayoutEffect)(() => {
+    (0, import_element407.useLayoutEffect)(() => {
       const element = anchorRef.current;
       if (!isSelected2 || element?.contentEditable !== "true") {
         return;
@@ -119640,7 +119607,7 @@ If there's a particular need for this, please submit a feature request at https:
         target.focus();
       }
     }, [selectionStart, selectionEnd, isSelected2]);
-    (0, import_element408.useLayoutEffect)(() => {
+    (0, import_element407.useLayoutEffect)(() => {
       if (crossBlockStart === void 0 && crossBlockEnd === void 0) {
         return;
       }
@@ -119686,7 +119653,7 @@ If there's a particular need for this, please submit a feature request at https:
       "aria-owns": ariaOwns,
       "aria-activedescendant": ariaActiveDescendant
     } = autocompleteProps;
-    (0, import_element408.useEffect)(() => {
+    (0, import_element407.useEffect)(() => {
       if (!isSelected2) {
         return;
       }
@@ -119723,13 +119690,8 @@ If there's a particular need for this, please submit a feature request at https:
       ariaOwns,
       ariaActiveDescendant
     ]);
-    useMarkPersistent({
-      html: adjustedValue,
-      value,
-      onMarkPersistent: __unstableMarkLastChangeAsPersistent2
-    });
-    const [keyboardShortcuts] = (0, import_element408.useState)(() => /* @__PURE__ */ new Set());
-    const [inputEvents] = (0, import_element408.useState)(() => /* @__PURE__ */ new Set());
+    const [keyboardShortcuts] = (0, import_element407.useState)(() => /* @__PURE__ */ new Set());
+    const [inputEvents] = (0, import_element407.useState)(() => /* @__PURE__ */ new Set());
     function onFocus() {
       anchorRef.current?.focus();
     }
@@ -119771,7 +119733,7 @@ If there's a particular need for this, please submit a feature request at https:
           draggable: void 0,
           "aria-label": bindingsLabel || props["aria-label"] || placeholder,
           ...autocompleteProps,
-          ref: (0, import_compose143.useMergeRefs)([
+          ref: (0, import_compose142.useMergeRefs)([
             // Rich text ref must be first because its focus listener
             // must be set up before any other ref calls .focus() on
             // mount.
@@ -119819,9 +119781,9 @@ If there's a particular need for this, please submit a feature request at https:
       )
     ] });
   }
-  var ForwardedRichTextWrapper = (0, import_element408.forwardRef)(RichTextWrapper);
+  var ForwardedRichTextWrapper = (0, import_element407.forwardRef)(RichTextWrapper);
   var RichTextWithDeprecations = withDeprecations(ForwardedRichTextWrapper);
-  var PublicForwardedRichTextContainer = (0, import_element408.forwardRef)((props, ref) => {
+  var PublicForwardedRichTextContainer = (0, import_element407.forwardRef)((props, ref) => {
     const context = useBlockEditContext();
     const isPreviewMode = context[isPreviewModeKey];
     if (isPreviewMode) {
@@ -119873,7 +119835,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/editable-text/index.mjs
   var import_jsx_runtime626 = __toESM(require_jsx_runtime(), 1);
-  var EditableText = (0, import_element409.forwardRef)((props, ref) => {
+  var EditableText = (0, import_element408.forwardRef)((props, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime626.jsx)(rich_text_default, { ref, ...props, __unstableDisableFormats: true });
   });
   EditableText.Content = function Content4({
@@ -119887,7 +119849,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/plain-text/index.mjs
   var import_jsx_runtime627 = __toESM(require_jsx_runtime(), 1);
-  var PlainText = (0, import_element410.forwardRef)(({ __experimentalVersion, ...props }, ref) => {
+  var PlainText = (0, import_element409.forwardRef)(({ __experimentalVersion, ...props }, ref) => {
     if (__experimentalVersion === 2) {
       return /* @__PURE__ */ (0, import_jsx_runtime627.jsx)(editable_text_default, { ref, ...props });
     }
@@ -119906,11 +119868,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/responsive-block-control/index.mjs
   var import_i18n240 = __toESM(require_i18n(), 1);
-  var import_element411 = __toESM(require_element(), 1);
+  var import_element410 = __toESM(require_element(), 1);
   var import_components229 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/responsive-block-control/label.mjs
-  var import_compose144 = __toESM(require_compose(), 1);
+  var import_compose143 = __toESM(require_compose(), 1);
   var import_i18n239 = __toESM(require_i18n(), 1);
   var import_jsx_runtime628 = __toESM(require_jsx_runtime(), 1);
   function ResponsiveBlockControlLabel({
@@ -119918,7 +119880,7 @@ If there's a particular need for this, please submit a feature request at https:
     viewport,
     desc
   }) {
-    const instanceId = (0, import_compose144.useInstanceId)(ResponsiveBlockControlLabel);
+    const instanceId = (0, import_compose143.useInstanceId)(ResponsiveBlockControlLabel);
     const accessibleLabel = desc || (0, import_i18n239.sprintf)(
       /* translators: 1: property name. 2: viewport name. */
       (0, import_i18n239._x)(
@@ -119993,7 +119955,7 @@ If there's a particular need for this, please submit a feature request at https:
       defaultLabel2
     );
     const defaultResponsiveControls = () => {
-      return viewports.map((viewport) => /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(import_element411.Fragment, { children: renderDefaultControl(
+      return viewports.map((viewport) => /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(import_element410.Fragment, { children: renderDefaultControl(
         /* @__PURE__ */ (0, import_jsx_runtime629.jsx)(
           ResponsiveBlockControlLabel,
           {
@@ -120061,11 +120023,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/url-input/button.mjs
   var import_i18n241 = __toESM(require_i18n(), 1);
-  var import_element412 = __toESM(require_element(), 1);
+  var import_element411 = __toESM(require_element(), 1);
   var import_components231 = __toESM(require_components(), 1);
   var import_jsx_runtime631 = __toESM(require_jsx_runtime(), 1);
   function URLInputButton({ url, onChange }) {
-    const [expanded, toggleExpanded] = (0, import_element412.useReducer)(
+    const [expanded, toggleExpanded] = (0, import_element411.useReducer)(
       (isExpanded) => !isExpanded,
       false
     );
@@ -120126,7 +120088,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/url-popover/image-url-input-ui.mjs
   var import_i18n242 = __toESM(require_i18n(), 1);
-  var import_element413 = __toESM(require_element(), 1);
+  var import_element412 = __toESM(require_element(), 1);
   var import_dom80 = __toESM(require_dom(), 1);
   var import_components232 = __toESM(require_components(), 1);
   var import_url13 = __toESM(require_url(), 1);
@@ -120151,18 +120113,18 @@ If there's a particular need for this, please submit a feature request at https:
     onSetLightbox,
     resetLightbox
   }) => {
-    const [isOpen, setIsOpen] = (0, import_element413.useState)(false);
-    const [popoverAnchor, setPopoverAnchor] = (0, import_element413.useState)(
+    const [isOpen, setIsOpen] = (0, import_element412.useState)(false);
+    const [popoverAnchor, setPopoverAnchor] = (0, import_element412.useState)(
       null
     );
     const openLinkUI = () => {
       setIsOpen(true);
     };
-    const [isEditingLink, setIsEditingLink] = (0, import_element413.useState)(false);
-    const [urlInput, setUrlInput] = (0, import_element413.useState)(null);
-    const autocompleteRef = (0, import_element413.useRef)(null);
-    const wrapperRef = (0, import_element413.useRef)(void 0);
-    (0, import_element413.useEffect)(() => {
+    const [isEditingLink, setIsEditingLink] = (0, import_element412.useState)(false);
+    const [urlInput, setUrlInput] = (0, import_element412.useState)(null);
+    const autocompleteRef = (0, import_element412.useRef)(null);
+    const wrapperRef = (0, import_element412.useRef)(void 0);
+    (0, import_element412.useEffect)(() => {
       if (!wrapperRef.current) {
         return;
       }
@@ -120298,7 +120260,7 @@ If there's a particular need for this, please submit a feature request at https:
           label: (0, import_i18n242.__)("Link relation"),
           value: rel ?? "",
           onChange: onSetLinkRel,
-          help: (0, import_element413.createInterpolateElement)(
+          help: (0, import_element412.createInterpolateElement)(
             (0, import_i18n242.__)(
               "The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document."
             ),
@@ -120452,11 +120414,11 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/spacing-sizes-control/index.mjs
   var import_components235 = __toESM(require_components(), 1);
-  var import_element416 = __toESM(require_element(), 1);
+  var import_element415 = __toESM(require_element(), 1);
   var import_i18n246 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/spacing-sizes-control/hooks/use-spacing-sizes.mjs
-  var import_element414 = __toESM(require_element(), 1);
+  var import_element413 = __toESM(require_element(), 1);
   var import_i18n243 = __toESM(require_i18n(), 1);
   var EMPTY_ARRAY17 = [];
   var compare = new Intl.Collator("und", { numeric: true }).compare;
@@ -120475,7 +120437,7 @@ If there's a particular need for this, please submit a feature request at https:
     const customSizes = customSpacingSizes ?? EMPTY_ARRAY17;
     const themeSizes = themeSpacingSizes ?? EMPTY_ARRAY17;
     const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : EMPTY_ARRAY17;
-    return (0, import_element414.useMemo)(() => {
+    return (0, import_element413.useMemo)(() => {
       const sizes = [
         { name: (0, import_i18n243.__)("None"), slug: "0", size: 0 },
         ...customSizes,
@@ -120499,7 +120461,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/spacing-sizes-control/input-controls/spacing-input-control.mjs
-  var import_element415 = __toESM(require_element(), 1);
+  var import_element414 = __toESM(require_element(), 1);
   var import_data164 = __toESM(require_data(), 1);
   var import_i18n244 = __toESM(require_i18n(), 1);
   var import_components233 = __toESM(require_components(), 1);
@@ -120561,7 +120523,7 @@ If there's a particular need for this, please submit a feature request at https:
         "rem"
       ]
     });
-    const presets = (0, import_element415.useMemo)(() => {
+    const presets = (0, import_element414.useMemo)(() => {
       return spacingSizes?.map((preset) => ({
         name: preset.name,
         slug: preset.slug,
@@ -120796,7 +120758,7 @@ If there's a particular need for this, please submit a feature request at https:
     const inputValues = values || DEFAULT_VALUES;
     const hasOneSide = sides2?.length === 1;
     const hasOnlyAxialSides = sides2?.includes("horizontal") && sides2?.includes("vertical") && sides2?.length === 2;
-    const [view, setView] = (0, import_element416.useState)(getInitialView(inputValues, sides2));
+    const [view, setView] = (0, import_element415.useState)(getInitialView(inputValues, sides2));
     const toggleLinked = () => {
       setView(view === VIEWS.axial ? VIEWS.custom : VIEWS.axial);
     };
@@ -120888,7 +120850,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks108 = __toESM(require_blocks(), 1);
   var import_components262 = __toESM(require_components(), 1);
   var import_data185 = __toESM(require_data(), 1);
-  var import_element440 = __toESM(require_element(), 1);
+  var import_element439 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/block-inspector/edit-contents.mjs
   var import_components236 = __toESM(require_components(), 1);
@@ -120981,14 +120943,14 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data166 = __toESM(require_data(), 1);
   var import_i18n248 = __toESM(require_i18n(), 1);
   var import_components238 = __toESM(require_components(), 1);
-  var import_element417 = __toESM(require_element(), 1);
+  var import_element416 = __toESM(require_element(), 1);
   var import_jsx_runtime640 = __toESM(require_jsx_runtime(), 1);
   function SkipToSelectedBlock() {
     const selectedBlockClientId = (0, import_data166.useSelect)(
       (select3) => select3(store).getBlockSelectionStart(),
       []
     );
-    const ref = (0, import_element417.useRef)(void 0);
+    const ref = (0, import_element416.useRef)(void 0);
     useBlockElementRef(
       // An unset ID matches no block element.
       selectedBlockClientId,
@@ -121068,7 +121030,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/index.mjs
   var import_components258 = __toESM(require_components(), 1);
-  var import_element438 = __toESM(require_element(), 1);
+  var import_element437 = __toESM(require_element(), 1);
   var import_preferences4 = __toESM(require_preferences(), 1);
   var import_data182 = __toESM(require_data(), 1);
 
@@ -121148,7 +121110,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/inspector-controls-tabs/styles-tab.mjs
   var import_i18n270 = __toESM(require_i18n(), 1);
   var import_data180 = __toESM(require_data(), 1);
-  var import_element436 = __toESM(require_element(), 1);
+  var import_element435 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/inspector-controls-tabs/position-controls-panel.mjs
   var import_components242 = __toESM(require_components(), 1);
@@ -121254,19 +121216,19 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/elements.mjs
   var import_blocks100 = __toESM(require_blocks(), 1);
-  var import_element428 = __toESM(require_element(), 1);
+  var import_element427 = __toESM(require_element(), 1);
   var import_data175 = __toESM(require_data(), 1);
   var import_i18n261 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/color-panel.mjs
   var import_components245 = __toESM(require_components(), 1);
-  var import_element420 = __toESM(require_element(), 1);
+  var import_element419 = __toESM(require_element(), 1);
   var import_i18n256 = __toESM(require_i18n(), 1);
   var import_style_engine4 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/components/global-styles/color-gradient-dropdown-item.mjs
   var import_components244 = __toESM(require_components(), 1);
-  var import_element418 = __toESM(require_element(), 1);
+  var import_element417 = __toESM(require_element(), 1);
   var import_i18n254 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/inheritance/index.mjs
@@ -121488,7 +121450,7 @@ If there's a particular need for this, please submit a feature request at https:
     showInheritanceLabelIndicators = isGlobalStylesInheritanceIndicatorUIEnabled()
   }) {
     const popoverProps = useToolsPanelItemPopoverProps();
-    const colorGradientDropdownButtonRef = (0, import_element418.useRef)(void 0);
+    const colorGradientDropdownButtonRef = (0, import_element417.useRef)(void 0);
     const itemClassName = clsx_default("block-editor-color-gradient-item", className);
     const hasLocalOverride = showInheritanceLabelIndicators && hasValue3() && hasInheritedValue;
     const inheritanceProps = showInheritanceLabelIndicators ? getInheritanceProps(isPlaceholder, hasLocalOverride, itemClassName) : { className: itemClassName };
@@ -121591,7 +121553,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/hooks.mjs
-  var import_element419 = __toESM(require_element(), 1);
+  var import_element418 = __toESM(require_element(), 1);
   var import_data169 = __toESM(require_data(), 1);
   var import_blocks94 = __toESM(require_blocks(), 1);
   var import_i18n255 = __toESM(require_i18n(), 1);
@@ -121610,7 +121572,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [blockName, element]
     );
-    return (0, import_element419.useMemo)(() => {
+    return (0, import_element418.useMemo)(() => {
       const updatedSettings = { ...parentSettings };
       if (!supportedStyles.includes("fontSize")) {
         updatedSettings.typography = {
@@ -121748,7 +121710,7 @@ If there's a particular need for this, please submit a feature request at https:
     const themeColors = settings3?.color?.palette?.theme;
     const defaultColors = settings3?.color?.palette?.default;
     const shouldDisplayDefaultColors = settings3?.color?.defaultPalette;
-    return (0, import_element419.useMemo)(() => {
+    return (0, import_element418.useMemo)(() => {
       const result = [];
       if (themeColors && themeColors.length) {
         result.push({
@@ -121790,7 +121752,7 @@ If there's a particular need for this, please submit a feature request at https:
     const themeGradients = settings3?.color?.gradients?.theme;
     const defaultGradients = settings3?.color?.gradients?.default;
     const shouldDisplayDefaultGradients = settings3?.color?.defaultGradients;
-    return (0, import_element419.useMemo)(() => {
+    return (0, import_element418.useMemo)(() => {
       const result = [];
       if (themeGradients && themeGradients.length) {
         result.push({
@@ -121832,7 +121794,7 @@ If there's a particular need for this, please submit a feature request at https:
     const gradients = useGradientsPerOrigin(settings3);
     const areCustomSolidsEnabled = settings3?.color?.custom;
     const areCustomGradientsEnabled = settings3?.color?.customGradient;
-    const allColors = (0, import_element419.useMemo)(
+    const allColors = (0, import_element418.useMemo)(
       () => colors2.flatMap(({ colors: originColors }) => originColors),
       [colors2]
     );
@@ -122027,7 +121989,7 @@ If there's a particular need for this, please submit a feature request at https:
     const showCaptionPanel = useHasCaptionPanel(settings3);
     const showButtonPanel = useHasButtonPanel(settings3);
     const showHeadingPanel = useHasHeadingPanel(settings3);
-    const elements = (0, import_element420.useMemo)(
+    const elements = (0, import_element419.useMemo)(
       () => [
         {
           name: "caption",
@@ -122088,7 +122050,7 @@ If there's a particular need for this, please submit a feature request at https:
         showHeadingPanel
       ]
     );
-    const resetAllFilter = (0, import_element420.useCallback)(
+    const resetAllFilter = (0, import_element419.useCallback)(
       (previousValue) => {
         return {
           ...previousValue,
@@ -122338,14 +122300,14 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/global-styles/inherited-value-context.mjs
-  var import_element422 = __toESM(require_element(), 1);
+  var import_element421 = __toESM(require_element(), 1);
   var import_data171 = __toESM(require_data(), 1);
   var import_blocks96 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/hooks/block-style-variation.mjs
   var import_blocks95 = __toESM(require_blocks(), 1);
   var import_data170 = __toESM(require_data(), 1);
-  var import_element421 = __toESM(require_element(), 1);
+  var import_element420 = __toESM(require_element(), 1);
   var import_jsx_runtime648 = __toESM(require_jsx_runtime(), 1);
   var { getVariationStyle: getVariationStyle3 } = unlock(privateApis);
   var VARIATION_PREFIX = "is-style-";
@@ -122388,7 +122350,7 @@ If there's a particular need for this, please submit a feature request at https:
       []
     );
     const { getBlockName: getBlockName2 } = (0, import_data170.useSelect)(store);
-    const overridesWithConfig = (0, import_element421.useMemo)(() => {
+    const overridesWithConfig = (0, import_element420.useMemo)(() => {
       if (!overrides?.length) {
         return;
       }
@@ -122472,7 +122434,7 @@ If there's a particular need for this, please submit a feature request at https:
         globalStyles: settings3[globalStylesDataKey]
       };
     }, []);
-    return (0, import_element421.useMemo)(() => {
+    return (0, import_element420.useMemo)(() => {
       const variationStyles = getVariationStyle3(
         {
           settings: globalSettings,
@@ -122512,7 +122474,7 @@ If there's a particular need for this, please submit a feature request at https:
       variation,
       clientId
     );
-    const variationStyles = (0, import_element421.useMemo)(() => {
+    const variationStyles = (0, import_element420.useMemo)(() => {
       if (!variation) {
         return;
       }
@@ -122569,7 +122531,7 @@ If there's a particular need for this, please submit a feature request at https:
         links: settings3[globalStylesLinksDataKey] ?? null
       };
     }, []);
-    return (0, import_element422.useMemo)(
+    return (0, import_element421.useMemo)(
       () => rawGlobalStylesData ? { styles: rawGlobalStylesData, _links: links ?? void 0 } : null,
       [rawGlobalStylesData, links]
     );
@@ -122588,7 +122550,7 @@ If there's a particular need for this, please submit a feature request at https:
     return levelAttribute || contextLevel || contextOwned.fallbackLevel;
   }
   function useContextHeadingLevel(blockName) {
-    const blockContext = (0, import_element422.useContext)(block_context_default);
+    const blockContext = (0, import_element421.useContext)(block_context_default);
     const contextKey = CONTEXT_HEADING_LEVEL_BLOCKS[blockName]?.contextKey;
     return contextKey ? blockContext[contextKey] : void 0;
   }
@@ -122659,7 +122621,7 @@ If there's a particular need for this, please submit a feature request at https:
       className
     );
     const globalStyles = useRawGlobalStyles();
-    return (0, import_element422.useMemo)(() => {
+    return (0, import_element421.useMemo)(() => {
       if (!blockName) {
         return { value: {}, sources: {} };
       }
@@ -122682,16 +122644,16 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/color.mjs
   var import_hooks10 = __toESM(require_hooks(), 1);
   var import_blocks99 = __toESM(require_blocks(), 1);
-  var import_element427 = __toESM(require_element(), 1);
+  var import_element426 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/hooks/background.mjs
   var import_blocks98 = __toESM(require_blocks(), 1);
   var import_data174 = __toESM(require_data(), 1);
-  var import_element426 = __toESM(require_element(), 1);
+  var import_element425 = __toESM(require_element(), 1);
   var import_i18n260 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/contrast-checker.mjs
-  var import_element423 = __toESM(require_element(), 1);
+  var import_element422 = __toESM(require_element(), 1);
   var import_data172 = __toESM(require_data(), 1);
   var import_blocks97 = __toESM(require_blocks(), 1);
   var import_a11y25 = __toESM(require_a11y(), 1);
@@ -122748,14 +122710,14 @@ If there's a particular need for this, please submit a feature request at https:
     messageOverride
   }) {
     const blockEl = useBlockElement(clientId);
-    const [colors2, setColors] = (0, import_element423.useReducer)(reducer2, {});
+    const [colors2, setColors] = (0, import_element422.useReducer)(reducer2, {});
     const blockType = (0, import_data172.useSelect)(
       (select3) => {
         return name && enabled ? select3(import_blocks97.store).getBlockType(name) : void 0;
       },
       [name, enabled]
     );
-    (0, import_element423.useLayoutEffect)(() => {
+    (0, import_element422.useLayoutEffect)(() => {
       if (!enabled || !blockEl || !blockType) {
         return;
       }
@@ -122765,7 +122727,7 @@ If there's a particular need for this, please submit a feature request at https:
         )
       );
     });
-    (0, import_element423.useLayoutEffect)(() => {
+    (0, import_element422.useLayoutEffect)(() => {
       if (!enabled || !blockEl || !blockType) {
         return;
       }
@@ -122789,7 +122751,7 @@ If there's a particular need for this, please submit a feature request at https:
       enableAlphaChecker: true
     }) : null;
     const speakMessage = warning9?.speakMessage;
-    (0, import_element423.useEffect)(() => {
+    (0, import_element422.useEffect)(() => {
       if (speakMessage) {
         (0, import_a11y25.speak)(speakMessage);
       }
@@ -122799,7 +122761,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/background-panel.mjs
   var import_components248 = __toESM(require_components(), 1);
-  var import_element425 = __toESM(require_element(), 1);
+  var import_element424 = __toESM(require_element(), 1);
   var import_i18n259 = __toESM(require_i18n(), 1);
   var import_style_engine5 = __toESM(require_style_engine(), 1);
 
@@ -122852,7 +122814,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n258 = __toESM(require_i18n(), 1);
   var import_notices12 = __toESM(require_notices(), 1);
   var import_url14 = __toESM(require_url(), 1);
-  var import_element424 = __toESM(require_element(), 1);
+  var import_element423 = __toESM(require_element(), 1);
   var import_data173 = __toESM(require_data(), 1);
   var import_dom81 = __toESM(require_dom(), 1);
   var import_blob2 = __toESM(require_blob(), 1);
@@ -122904,7 +122866,7 @@ If there's a particular need for this, please submit a feature request at https:
     onToggleCallback = noop23
   }) {
     const { isOpen, ...restToggleProps } = toggleProps;
-    (0, import_element424.useEffect)(() => {
+    (0, import_element423.useEffect)(() => {
       if (typeof isOpen !== "undefined") {
         onToggleCallback(isOpen);
       }
@@ -123039,7 +123001,7 @@ If there's a particular need for this, please submit a feature request at https:
     defaultValues,
     containerRef
   }) {
-    const [isUploading, setIsUploading] = (0, import_element424.useState)(false);
+    const [isUploading, setIsUploading] = (0, import_element423.useState)(false);
     const { getSettings: getSettings9 } = (0, import_data173.useSelect)(store);
     const { id, title, url } = style?.background?.backgroundImage || {
       ...inheritedValue?.background?.backgroundImage
@@ -123369,7 +123331,7 @@ If there's a particular need for this, please submit a feature request at https:
         _links: _settings[globalStylesLinksDataKey]
       };
     }, []);
-    const resolvedInheritedValue = (0, import_element424.useMemo)(() => {
+    const resolvedInheritedValue = (0, import_element423.useMemo)(() => {
       const resolvedValues = {
         background: {}
       };
@@ -123402,8 +123364,8 @@ If there's a particular need for this, please submit a feature request at https:
     const hasLocalOverride = showInheritanceLabelIndicators && localHasImageValue && hasBackgroundImageValue(resolvedInheritedValue);
     const imageValue = value?.background?.backgroundImage || inheritedValue?.background?.backgroundImage;
     const shouldShowBackgroundImageControls = hasImageValue && "none" !== imageValue && (settings3?.background?.backgroundSize || settings3?.background?.backgroundPosition || settings3?.background?.backgroundRepeat);
-    const [isDropDownOpen, setIsDropDownOpen] = (0, import_element424.useState)(false);
-    const containerRef = (0, import_element424.useRef)();
+    const [isDropDownOpen, setIsDropDownOpen] = (0, import_element423.useState)(false);
+    const containerRef = (0, import_element423.useRef)();
     return /* @__PURE__ */ (0, import_jsx_runtime650.jsx)(
       "div",
       {
@@ -123607,7 +123569,7 @@ If there's a particular need for this, please submit a feature request at https:
     ) : (0, import_i18n259.__)(
       "The gradient clips the background to the text, including any color or image."
     );
-    const resetAllFilter = (0, import_element425.useCallback)(
+    const resetAllFilter = (0, import_element424.useCallback)(
       (previousValue) => {
         const clearsColorBackground = showBackgroundColorControl;
         const clearsColorGradient = hasBackgroundGradientControl || showLegacyColorGradientControl;
@@ -123999,7 +123961,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function BackgroundInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element426.useCallback)(
+    const attributesResetAllFilter = (0, import_element425.useCallback)(
       (attributes) => backgroundResetAllFilter(attributes, resetAllFilter),
       [resetAllFilter]
     );
@@ -124276,7 +124238,7 @@ If there's a particular need for this, please submit a feature request at https:
       "color.palette.theme",
       "color.palette.default"
     );
-    const colors2 = (0, import_element427.useMemo)(
+    const colors2 = (0, import_element426.useMemo)(
       () => [
         ...userPalette || [],
         ...themePalette || [],
@@ -124365,7 +124327,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/elements.mjs
   var import_jsx_runtime653 = __toESM(require_jsx_runtime(), 1);
   function ElementsInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element428.useCallback)(
+    const attributesResetAllFilter = (0, import_element427.useCallback)(
       (attributes) => {
         const updatedStyle = resetAllFilter(attributes.style);
         return {
@@ -124414,7 +124376,7 @@ If there's a particular need for this, please submit a feature request at https:
       selectedState
     );
     const isStateSelected = !isDefaultBlockStyleState2(selectedState);
-    const value = (0, import_element428.useMemo)(() => {
+    const value = (0, import_element427.useMemo)(() => {
       if (isStateSelected) {
         return getStyleForState2(style, selectedState);
       }
@@ -124466,18 +124428,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/typography.mjs
   var import_blocks106 = __toESM(require_blocks(), 1);
-  var import_element435 = __toESM(require_element(), 1);
+  var import_element434 = __toESM(require_element(), 1);
   var import_data179 = __toESM(require_data(), 1);
   var import_i18n269 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/typography-panel.mjs
   var import_components252 = __toESM(require_components(), 1);
   var import_i18n265 = __toESM(require_i18n(), 1);
-  var import_element431 = __toESM(require_element(), 1);
+  var import_element430 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/text-alignment-control/index.mjs
   var import_i18n262 = __toESM(require_i18n(), 1);
-  var import_element429 = __toESM(require_element(), 1);
+  var import_element428 = __toESM(require_element(), 1);
   var import_components249 = __toESM(require_components(), 1);
   var import_jsx_runtime654 = __toESM(require_jsx_runtime(), 1);
   var TEXT_ALIGNMENT_OPTIONS = [
@@ -124509,7 +124471,7 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     options = DEFAULT_OPTIONS
   }) {
-    const validOptions = (0, import_element429.useMemo)(
+    const validOptions = (0, import_element428.useMemo)(
       () => TEXT_ALIGNMENT_OPTIONS.filter(
         (option) => options.includes(option.value)
       ),
@@ -124646,7 +124608,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/global-styles/text-shadow-panel.mjs
   var import_i18n264 = __toESM(require_i18n(), 1);
   var import_components251 = __toESM(require_components(), 1);
-  var import_element430 = __toESM(require_element(), 1);
+  var import_element429 = __toESM(require_element(), 1);
   var import_jsx_runtime656 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY18 = [];
   var PRESETS_SELECT_THRESHOLD = 7;
@@ -124707,7 +124669,7 @@ If there's a particular need for this, please submit a feature request at https:
       "typography.textShadowPresets.theme",
       "typography.textShadowPresets.custom"
     );
-    const presets = (0, import_element430.useMemo)(
+    const presets = (0, import_element429.useMemo)(
       () => [
         ...defaultPresetsEnabled && defaultPresets || EMPTY_ARRAY18,
         ...themePresets || EMPTY_ARRAY18,
@@ -124808,7 +124770,7 @@ If there's a particular need for this, please submit a feature request at https:
     onToggle,
     isOpen
   }) {
-    const buttonRef = (0, import_element430.useRef)(void 0);
+    const buttonRef = (0, import_element429.useRef)(void 0);
     return /* @__PURE__ */ (0, import_jsx_runtime656.jsxs)(import_jsx_runtime656.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime656.jsx)(
         import_components251.Button,
@@ -125043,7 +125005,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function NoticeForControl({ label, isShownByDefault, children }) {
-    const { menuItems } = (0, import_element431.useContext)(import_components252.__experimentalToolsPanelContext);
+    const { menuItems } = (0, import_element430.useContext)(import_components252.__experimentalToolsPanelContext);
     const isShown = isShownByDefault || !!menuItems?.optional?.[label];
     return isShown ? children : null;
   }
@@ -125171,7 +125133,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const fontFamily = decodeValue(value?.typography?.fontFamily) ?? inheritedFontFamily;
     const isFontFamilyPlaceholder = !hasValue(value?.typography?.fontFamily) && hasValue(inheritedFontFamily);
-    const { fontFamilies, fontFamilyFaces } = (0, import_element431.useMemo)(() => {
+    const { fontFamilies, fontFamilyFaces } = (0, import_element430.useMemo)(() => {
       return getMergedFontFamiliesAndFontFamilyFaces(settings3, fontFamily);
     }, [settings3, fontFamily]);
     const setFontFamily = (newValue) => {
@@ -125284,7 +125246,7 @@ If there's a particular need for this, please submit a feature request at https:
     const fontStyle = decodeValue(value?.typography?.fontStyle) ?? inheritedFontStyle;
     const fontWeight = decodeValue(value?.typography?.fontWeight) ?? inheritedFontWeight;
     const isFontAppearancePlaceholder = !hasValue(value?.typography?.fontStyle) && !hasValue(value?.typography?.fontWeight) && (hasValue(inheritedFontStyle) || hasValue(inheritedFontWeight));
-    const setFontAppearance = (0, import_element431.useCallback)(
+    const setFontAppearance = (0, import_element430.useCallback)(
       ({ fontStyle: newFontStyle, fontWeight: newFontWeight }) => {
         if (newFontStyle !== fontStyle || newFontWeight !== fontWeight) {
           onChange({
@@ -125299,7 +125261,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [fontStyle, fontWeight, onChange, value]
     );
-    const setFontAppearanceWithInheritedCommit = (0, import_element431.useCallback)(
+    const setFontAppearanceWithInheritedCommit = (0, import_element430.useCallback)(
       (next) => {
         if (isFontAppearancePlaceholder && next.fontStyle === fontStyle && next.fontWeight === fontWeight) {
           onChange({
@@ -125324,7 +125286,7 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     );
     const hasFontAppearance = () => hasValue(value?.typography?.fontStyle) || hasValue(value?.typography?.fontWeight);
-    const resetFontAppearance = (0, import_element431.useCallback)(() => {
+    const resetFontAppearance = (0, import_element430.useCallback)(() => {
       setFontAppearance({});
     }, [setFontAppearance]);
     const hasLineHeightEnabled = useHasLineHeightControl(settings3);
@@ -125523,7 +125485,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
     const hasTextShadow = () => hasValue(value?.typography?.textShadow);
     const resetTextShadow = () => setTextShadow(void 0);
-    const resetAllFilter = (0, import_element431.useCallback)(
+    const resetAllFilter = (0, import_element430.useCallback)(
       (previousValue) => {
         const clearsTextGradient = hasTextGradientEnabled && previousValue?.background?.backgroundClip === "text";
         const background = clearsTextGradient ? {
@@ -126161,7 +126123,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/block-editing-mode/index.mjs
   var import_data176 = __toESM(require_data(), 1);
-  var import_element432 = __toESM(require_element(), 1);
+  var import_element431 = __toESM(require_element(), 1);
   function useBlockEditingMode(mode2) {
     const context = useBlockEditContext();
     const { clientId = "" } = context;
@@ -126173,7 +126135,7 @@ If there's a particular need for this, please submit a feature request at https:
       ),
       [clientId]
     );
-    (0, import_element432.useEffect)(() => {
+    (0, import_element431.useEffect)(() => {
       if (!mode2) {
         return;
       }
@@ -126336,11 +126298,11 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/hooks/fit-text.mjs
   var import_hooks14 = __toESM(require_hooks(), 1);
   var import_blocks105 = __toESM(require_blocks(), 1);
-  var import_element434 = __toESM(require_element(), 1);
+  var import_element433 = __toESM(require_element(), 1);
   var import_data178 = __toESM(require_data(), 1);
   var import_i18n268 = __toESM(require_i18n(), 1);
   var import_components255 = __toESM(require_components(), 1);
-  var import_compose145 = __toESM(require_compose(), 1);
+  var import_compose144 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/utils/fit-text-utils.mjs
   function findOptimalFontSize(textElement, applyFontSize) {
@@ -126395,7 +126357,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/fit-text-size-warning/index.mjs
-  var import_element433 = __toESM(require_element(), 1);
+  var import_element432 = __toESM(require_element(), 1);
   var import_i18n267 = __toESM(require_i18n(), 1);
   var import_components254 = __toESM(require_components(), 1);
   var import_a11y26 = __toESM(require_a11y(), 1);
@@ -126404,7 +126366,7 @@ If there's a particular need for this, please submit a feature request at https:
     const message2 = (0, import_i18n267.__)(
       "The text may be too small to read. Consider using a larger container or less text."
     );
-    (0, import_element433.useEffect)(() => {
+    (0, import_element432.useEffect)(() => {
       (0, import_a11y26.speak)(message2);
     }, [message2]);
     return /* @__PURE__ */ (0, import_jsx_runtime661.jsx)("div", { className: "block-editor-fit-text-size-warning", children: /* @__PURE__ */ (0, import_jsx_runtime661.jsx)(
@@ -126441,7 +126403,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useFitText({ fitText, name, clientId }) {
-    const [fontSize, setFontSize] = (0, import_element434.useState)(
+    const [fontSize, setFontSize] = (0, import_element433.useState)(
       null
     );
     const hasFitTextSupport2 = (0, import_blocks105.hasBlockSupport)(name, FIT_TEXT_SUPPORT_KEY);
@@ -126463,7 +126425,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId, hasFitTextSupport2, fitText]
     );
-    const applyFitText = (0, import_element434.useCallback)(() => {
+    const applyFitText = (0, import_element433.useCallback)(() => {
       if (!blockElement || !hasFitTextSupport2 || !fitText) {
         return;
       }
@@ -126477,7 +126439,7 @@ If there's a particular need for this, please submit a feature request at https:
       const optimalSize = optimizeFitText(blockElement, applyFontSizeStyle);
       setFontSize(optimalSize);
     }, [blockElement, hasFitTextSupport2, fitText]);
-    (0, import_element434.useEffect)(() => {
+    (0, import_element433.useEffect)(() => {
       if (!fitText || !blockElement || !clientId || !hasFitTextSupport2 || blockMode === "html") {
         return;
       }
@@ -126525,7 +126487,7 @@ If there's a particular need for this, please submit a feature request at https:
       hasFitTextSupport2,
       blockMode
     ]);
-    (0, import_element434.useEffect)(() => {
+    (0, import_element433.useEffect)(() => {
       if (fitText && blockElement && hasFitTextSupport2 && blockMode !== "html") {
         const frameId = window.requestAnimationFrame(() => {
           if (blockElement) {
@@ -126653,7 +126615,7 @@ If there's a particular need for this, please submit a feature request at https:
     }
     return null;
   }
-  var addFitTextControl = (0, import_compose145.createHigherOrderComponent)((BlockEdit2) => {
+  var addFitTextControl = (0, import_compose144.createHigherOrderComponent)((BlockEdit2) => {
     return function AddFitTextControl(props) {
       const { name, attributes, clientId, isSelected: isSelected2, setAttributes } = props;
       const { fitText } = attributes;
@@ -126791,7 +126753,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function TypographyInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element435.useCallback)(
+    const attributesResetAllFilter = (0, import_element434.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle(attributes);
         const updatedStyle = resetAllFilter(existingStyle);
@@ -126869,7 +126831,7 @@ If there's a particular need for this, please submit a feature request at https:
       className,
       selectedState
     );
-    const baseValue = (0, import_element435.useMemo)(
+    const baseValue = (0, import_element434.useMemo)(
       () => attributesToStyle({
         style,
         fontFamily,
@@ -126889,7 +126851,7 @@ If there's a particular need for this, please submit a feature request at https:
         gradient
       ]
     );
-    const value = (0, import_element435.useMemo)(
+    const value = (0, import_element434.useMemo)(
       () => isStateSelected ? getStyleForState2(style, selectedState) : baseValue,
       [isStateSelected, selectedState, style, baseValue]
     );
@@ -126988,11 +126950,11 @@ If there's a particular need for this, please submit a feature request at https:
     const setAttributes = (newAttributes) => {
       updateBlockAttributes2(clientId, newAttributes);
     };
-    const typographySettings = (0, import_element436.useMemo)(
+    const typographySettings = (0, import_element435.useMemo)(
       () => ({ ...settings3, typography: {} }),
       [settings3]
     );
-    const backgroundSettings = (0, import_element436.useMemo)(
+    const backgroundSettings = (0, import_element435.useMemo)(
       () => ({
         ...settings3,
         background: {
@@ -127127,8 +127089,8 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks107 = __toESM(require_blocks(), 1);
   var import_data181 = __toESM(require_data(), 1);
   var import_components256 = __toESM(require_components(), 1);
-  var import_element437 = __toESM(require_element(), 1);
-  var import_compose146 = __toESM(require_compose(), 1);
+  var import_element436 = __toESM(require_element(), 1);
+  var import_compose145 = __toESM(require_compose(), 1);
   var import_jsx_runtime665 = __toESM(require_jsx_runtime(), 1);
   function BlockQuickNavigation({
     clientIds,
@@ -127187,20 +127149,20 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const blockTitle = displayTitle || blockType?.title || blockName;
     const { selectBlock: selectBlock2, toggleBlockHighlight: toggleBlockHighlight2 } = (0, import_data181.useDispatch)(store);
-    const debouncedToggleBlockHighlight = (0, import_compose146.useDebounce)(
+    const debouncedToggleBlockHighlight = (0, import_compose145.useDebounce)(
       toggleBlockHighlight2,
       50
     );
-    const highlightBlock = (0, import_compose146.useEvent)(
+    const highlightBlock = (0, import_compose145.useEvent)(
       () => debouncedToggleBlockHighlight(clientId, true)
     );
-    const clearBlockHighlight = (0, import_compose146.useEvent)(
+    const clearBlockHighlight = (0, import_compose145.useEvent)(
       () => debouncedToggleBlockHighlight(clientId, false)
     );
-    const clearBlockHighlightOnUnmount = (0, import_compose146.useEvent)(
+    const clearBlockHighlightOnUnmount = (0, import_compose145.useEvent)(
       () => toggleBlockHighlight2(clientId, false)
     );
-    (0, import_element437.useEffect)(
+    (0, import_element436.useEffect)(
       // React ignores the value the cleanup returns.
       () => (() => clearBlockHighlightOnUnmount()),
       [clearBlockHighlightOnUnmount]
@@ -127267,7 +127229,7 @@ If there's a particular need for this, please submit a feature request at https:
     isSectionBlock: isSectionBlock2,
     contentClientIds
   }) {
-    const listViewRef = (0, import_element438.useRef)(null);
+    const listViewRef = (0, import_element437.useRef)(null);
     const showIconLabels = (0, import_data182.useSelect)((select3) => {
       return select3(import_preferences4.store).get("core", "showIconLabels");
     }, []);
@@ -127276,11 +127238,11 @@ If there's a particular need for this, please submit a feature request at https:
         select3(store)
       ).getRequestedInspectorTab()
     }));
-    const [selectedTabId, setSelectedTabId] = (0, import_element438.useState)(
+    const [selectedTabId, setSelectedTabId] = (0, import_element437.useState)(
       () => requestedTab?.tabName ?? tabs[0]?.name
     );
-    const hasUserSelectionRef = (0, import_element438.useRef)(false);
-    const isProgrammaticSwitchRef = (0, import_element438.useRef)(false);
+    const hasUserSelectionRef = (0, import_element437.useRef)(false);
+    const isProgrammaticSwitchRef = (0, import_element437.useRef)(false);
     const {
       __unstableSetOpenListViewPanel: setOpenListViewPanel,
       __unstableIncrementListViewExpandRevision: incrementListViewExpandRevision,
@@ -127289,10 +127251,10 @@ If there's a particular need for this, please submit a feature request at https:
     const { clearRequestedInspectorTab: clearRequestedInspectorTab2 } = unlock(
       (0, import_data182.useDispatch)(store)
     );
-    (0, import_element438.useEffect)(() => {
+    (0, import_element437.useEffect)(() => {
       hasUserSelectionRef.current = false;
     }, [clientId]);
-    (0, import_element438.useEffect)(() => {
+    (0, import_element437.useEffect)(() => {
       if (!requestedTab) {
         return;
       }
@@ -127310,7 +127272,7 @@ If there's a particular need for this, please submit a feature request at https:
       incrementListViewExpandRevision,
       clearRequestedInspectorTab2
     ]);
-    (0, import_element438.useEffect)(() => {
+    (0, import_element437.useEffect)(() => {
       if (selectedTabId === TAB_LIST_VIEW.name && !hasUserSelectionRef.current) {
         setAllListViewPanelsOpen();
         incrementListViewExpandRevision();
@@ -127321,7 +127283,7 @@ If there's a particular need for this, please submit a feature request at https:
       setAllListViewPanelsOpen,
       incrementListViewExpandRevision
     ]);
-    (0, import_element438.useEffect)(() => {
+    (0, import_element437.useEffect)(() => {
       if (!tabs?.length || hasUserSelectionRef.current && tabs.some((tab) => tab.name === selectedTabId)) {
         return;
       }
@@ -127523,7 +127485,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/hooks/states.mjs
-  var import_element439 = __toESM(require_element(), 1);
+  var import_element438 = __toESM(require_element(), 1);
   var import_i18n274 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/state-control.mjs
@@ -127789,7 +127751,7 @@ If there's a particular need for this, please submit a feature request at https:
   var DEFAULT_STATE_VALUE4 = "default";
   var EMPTY_STATE_OPTIONS = [];
   function BlockStatesControl({ name, value, onChange, children }) {
-    const pseudoStateOptions = (0, import_element439.useMemo)(
+    const pseudoStateOptions = (0, import_element438.useMemo)(
       () => getPseudoStateOptions(name),
       [name]
     );
@@ -127810,12 +127772,12 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function BlockStateBadges({ name, value, isResponsiveEditing: isResponsiveEditing3 }) {
-    const pseudoStateOptions = (0, import_element439.useMemo)(
+    const pseudoStateOptions = (0, import_element438.useMemo)(
       () => getPseudoStateOptions(name),
       [name]
     );
     const [viewportSettings] = useSettings("viewport");
-    const deviceStateOptions = (0, import_element439.useMemo)(
+    const deviceStateOptions = (0, import_element438.useMemo)(
       () => getDeviceStateOptions(viewportSettings),
       [viewportSettings]
     );
@@ -128167,7 +128129,7 @@ If there's a particular need for this, please submit a feature request at https:
     isResponsiveEditing: isResponsiveEditing3,
     blockStatesEditingEnabled = true
   }) => {
-    const listViewRef = (0, import_element440.useRef)(null);
+    const listViewRef = (0, import_element439.useRef)(null);
     const hasMultipleTabs = availableTabs?.length > 1;
     const isEditingStyleState = hasViewportBlockStyleState(selectedBlockStyleState2) && isResponsiveEditing3 || hasPseudoBlockStyleState(selectedBlockStyleState2);
     const showStateBadges = blockEditingMode === "default" && isEditingStyleState;
@@ -128331,7 +128293,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/inserter/library.mjs
   var import_data186 = __toESM(require_data(), 1);
-  var import_element441 = __toESM(require_element(), 1);
+  var import_element440 = __toESM(require_element(), 1);
   var import_jsx_runtime674 = __toESM(require_jsx_runtime(), 1);
   var noop24 = () => {
   };
@@ -128380,7 +128342,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var PrivateInserterLibrary = (0, import_element441.forwardRef)(InserterLibrary);
+  var PrivateInserterLibrary = (0, import_element440.forwardRef)(InserterLibrary);
   function PublicInserterLibrary(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime674.jsx)(
       PrivateInserterLibrary,
@@ -128391,7 +128353,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var library_default = (0, import_element441.forwardRef)(PublicInserterLibrary);
+  var library_default = (0, import_element440.forwardRef)(PublicInserterLibrary);
 
   // packages/block-editor/build-module/components/selection-scroll-into-view/index.mjs
   var import_deprecated30 = __toESM(require_deprecated(), 1);
@@ -128404,7 +128366,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/typewriter/index.mjs
-  var import_compose147 = __toESM(require_compose(), 1);
+  var import_compose146 = __toESM(require_compose(), 1);
   var import_dom82 = __toESM(require_dom(), 1);
   var import_keycodes29 = __toESM(require_keycodes(), 1);
   var import_jsx_runtime675 = __toESM(require_jsx_runtime(), 1);
@@ -128412,7 +128374,7 @@ If there's a particular need for this, please submit a feature request at https:
   var arrowKeyCodes = /* @__PURE__ */ new Set([import_keycodes29.UP, import_keycodes29.DOWN, import_keycodes29.LEFT, import_keycodes29.RIGHT]);
   var initialTriggerPercentage = 0.75;
   function useTypewriter() {
-    return (0, import_compose147.useRefEffect)((node) => {
+    return (0, import_compose146.useRefEffect)((node) => {
       const { ownerDocument: ownerDocument2 } = node;
       const { defaultView } = ownerDocument2;
       let scrollResizeRafId;
@@ -128541,10 +128503,10 @@ If there's a particular need for this, please submit a feature request at https:
   var typewriter_default = TypewriterOrIEBypass;
 
   // packages/block-editor/build-module/components/recursion-provider/index.mjs
-  var import_element442 = __toESM(require_element(), 1);
+  var import_element441 = __toESM(require_element(), 1);
   var import_deprecated31 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime676 = __toESM(require_jsx_runtime(), 1);
-  var RenderedRefsContext = (0, import_element442.createContext)({});
+  var RenderedRefsContext = (0, import_element441.createContext)({});
   RenderedRefsContext.displayName = "RenderedRefsContext";
   function addToBlockType(renderedBlocks, blockName, uniqueId2) {
     const result = {
@@ -128555,17 +128517,17 @@ If there's a particular need for this, please submit a feature request at https:
     return result;
   }
   function RecursionProvider({ children, uniqueId: uniqueId2, blockName = "" }) {
-    const previouslyRenderedBlocks = (0, import_element442.useContext)(RenderedRefsContext);
+    const previouslyRenderedBlocks = (0, import_element441.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
-    const newRenderedBlocks = (0, import_element442.useMemo)(
+    const newRenderedBlocks = (0, import_element441.useMemo)(
       () => addToBlockType(previouslyRenderedBlocks, blockName, uniqueId2),
       [previouslyRenderedBlocks, blockName, uniqueId2]
     );
     return /* @__PURE__ */ (0, import_jsx_runtime676.jsx)(RenderedRefsContext.Provider, { value: newRenderedBlocks, children });
   }
   function useHasRecursion(uniqueId2, blockName = "") {
-    const previouslyRenderedBlocks = (0, import_element442.useContext)(RenderedRefsContext);
+    const previouslyRenderedBlocks = (0, import_element441.useContext)(RenderedRefsContext);
     const { name } = useBlockEditContext();
     blockName = blockName || name;
     return Boolean(previouslyRenderedBlocks[blockName]?.has(uniqueId2));
@@ -128588,7 +128550,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/publish-date-time-picker/index.mjs
   var import_components264 = __toESM(require_components(), 1);
   var import_i18n277 = __toESM(require_i18n(), 1);
-  var import_element443 = __toESM(require_element(), 1);
+  var import_element442 = __toESM(require_element(), 1);
   var import_date14 = __toESM(require_date(), 1);
 
   // packages/block-editor/build-module/components/inspector-popover-header/index.mjs
@@ -128678,7 +128640,7 @@ If there's a particular need for this, please submit a feature request at https:
       /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(DatePickerComponent, { ...datePickerProps })
     ] });
   }
-  var PrivatePublishDateTimePicker = (0, import_element443.forwardRef)(PublishDateTimePicker);
+  var PrivatePublishDateTimePicker = (0, import_element442.forwardRef)(PublishDateTimePicker);
   function PublicPublishDateTimePicker(props, ref) {
     return /* @__PURE__ */ (0, import_jsx_runtime678.jsx)(
       PrivatePublishDateTimePicker,
@@ -128690,11 +128652,11 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var publish_date_time_picker_default = (0, import_element443.forwardRef)(PublicPublishDateTimePicker);
+  var publish_date_time_picker_default = (0, import_element442.forwardRef)(PublicPublishDateTimePicker);
 
   // packages/block-editor/build-module/components/tool-selector/index.mjs
   var import_deprecated32 = __toESM(require_deprecated(), 1);
-  var import_element444 = __toESM(require_element(), 1);
+  var import_element443 = __toESM(require_element(), 1);
   function ToolSelector() {
     (0, import_deprecated32.default)("wp.blockEditor.ToolSelector", {
       since: "6.9",
@@ -128702,7 +128664,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return null;
   }
-  var tool_selector_default = (0, import_element444.forwardRef)(ToolSelector);
+  var tool_selector_default = (0, import_element443.forwardRef)(ToolSelector);
 
   // packages/block-editor/build-module/hooks/utils.mjs
   var import_jsx_runtime679 = __toESM(require_jsx_runtime(), 1);
@@ -128784,8 +128746,8 @@ If there's a particular need for this, please submit a feature request at https:
       (0, import_data187.useDispatch)(store)
     );
     const registry = (0, import_data187.useRegistry)();
-    const fallbackId = (0, import_element445.useId)();
-    (0, import_element445.useEffect)(() => {
+    const fallbackId = (0, import_element444.useId)();
+    (0, import_element444.useEffect)(() => {
       if (!css && !assets) {
         return;
       }
@@ -128978,7 +128940,7 @@ If there's a particular need for this, please submit a feature request at https:
       "typography.textShadowPresets.default",
       "typography.textShadowPresets.theme"
     );
-    const rawSettings = (0, import_element445.useMemo)(() => {
+    const rawSettings = (0, import_element444.useMemo)(() => {
       return {
         background: {
           backgroundImage,
@@ -129153,9 +129115,9 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function createBlockEditFilter(features) {
     features = features.map((settings3) => {
-      return { ...settings3, Edit: (0, import_element445.memo)(settings3.edit) };
+      return { ...settings3, Edit: (0, import_element444.memo)(settings3.edit) };
     });
-    const withBlockEditHooks = (0, import_compose148.createHigherOrderComponent)(
+    const withBlockEditHooks = (0, import_compose147.createHigherOrderComponent)(
       (OriginalBlockEdit) => function WithBlockEditHooks(props) {
         const context = useBlockEditContext();
         return [
@@ -129216,7 +129178,7 @@ If there's a particular need for this, please submit a feature request at https:
       nextAll[index3] = next;
       return nextAll;
     });
-    (0, import_element445.useEffect)(() => {
+    (0, import_element444.useEffect)(() => {
       setWrapperProps(wrapperProps);
       return () => {
         setWrapperProps(void 0);
@@ -129224,11 +129186,11 @@ If there's a particular need for this, please submit a feature request at https:
     });
     return null;
   }
-  var BlockPropsPure = (0, import_element445.memo)(BlockProps);
+  var BlockPropsPure = (0, import_element444.memo)(BlockProps);
   function createBlockListBlockFilter(features) {
-    const withBlockListBlockHooks = (0, import_compose148.createHigherOrderComponent)(
+    const withBlockListBlockHooks = (0, import_compose147.createHigherOrderComponent)(
       (BlockListBlock2) => function WithBlockListBlockHooks(props) {
-        const [allWrapperProps, setAllWrapperProps] = (0, import_element445.useState)(Array(features.length).fill(void 0));
+        const [allWrapperProps, setAllWrapperProps] = (0, import_element444.useState)(Array(features.length).fill(void 0));
         return [
           ...features.map((feature, i) => {
             const {
@@ -129493,13 +129455,13 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
   var import_components271 = __toESM(require_components(), 1);
   var import_i18n280 = __toESM(require_i18n(), 1);
-  var import_element449 = __toESM(require_element(), 1);
+  var import_element448 = __toESM(require_element(), 1);
   var import_data190 = __toESM(require_data(), 1);
   var import_blocks113 = __toESM(require_blocks(), 1);
 
   // packages/block-editor/build-module/components/block-allowed-blocks/modal.mjs
   var import_components270 = __toESM(require_components(), 1);
-  var import_element448 = __toESM(require_element(), 1);
+  var import_element447 = __toESM(require_element(), 1);
   var import_i18n279 = __toESM(require_i18n(), 1);
   var import_data189 = __toESM(require_data(), 1);
 
@@ -129508,13 +129470,13 @@ If there's a particular need for this, please submit a feature request at https:
   var import_data188 = __toESM(require_data(), 1);
   var import_components269 = __toESM(require_components(), 1);
   var import_i18n278 = __toESM(require_i18n(), 1);
-  var import_element447 = __toESM(require_element(), 1);
-  var import_compose150 = __toESM(require_compose(), 1);
+  var import_element446 = __toESM(require_element(), 1);
+  var import_compose149 = __toESM(require_compose(), 1);
   var import_a11y27 = __toESM(require_a11y(), 1);
 
   // packages/block-editor/build-module/components/block-manager/category.mjs
-  var import_element446 = __toESM(require_element(), 1);
-  var import_compose149 = __toESM(require_compose(), 1);
+  var import_element445 = __toESM(require_element(), 1);
+  var import_compose148 = __toESM(require_compose(), 1);
   var import_components268 = __toESM(require_components(), 1);
 
   // packages/block-editor/build-module/components/block-manager/checklist.mjs
@@ -129554,8 +129516,8 @@ If there's a particular need for this, please submit a feature request at https:
     selectedBlockTypes,
     onChange
   }) {
-    const instanceId = (0, import_compose149.useInstanceId)(BlockManagerCategory);
-    const toggleVisible = (0, import_element446.useCallback)(
+    const instanceId = (0, import_compose148.useInstanceId)(BlockManagerCategory);
+    const toggleVisible = (0, import_element445.useCallback)(
       (blockType, nextIsChecked) => {
         if (nextIsChecked) {
           onChange([...selectedBlockTypes, blockType]);
@@ -129569,7 +129531,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [selectedBlockTypes, onChange]
     );
-    const toggleAllVisible = (0, import_element446.useCallback)(
+    const toggleAllVisible = (0, import_element445.useCallback)(
       (nextIsChecked) => {
         if (nextIsChecked) {
           onChange([
@@ -129642,8 +129604,8 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     showSelectAll = true
   }) {
-    const debouncedSpeak = (0, import_compose150.useDebounce)(import_a11y27.speak, 500);
-    const [search, setSearch] = (0, import_element447.useState)("");
+    const debouncedSpeak = (0, import_compose149.useDebounce)(import_a11y27.speak, 500);
+    const [search, setSearch] = (0, import_element446.useState)("");
     const { categories, isMatchingSearchTerm } = (0, import_data188.useSelect)((select3) => {
       return {
         categories: select3(import_blocks112.store).getCategories(),
@@ -129655,7 +129617,7 @@ If there's a particular need for this, please submit a feature request at https:
     });
     const isIndeterminate = selectedBlockTypes.length > 0 && selectedBlockTypes.length !== blockTypes.length;
     const isAllChecked = blockTypes.length > 0 && selectedBlockTypes.length === blockTypes.length;
-    (0, import_element447.useEffect)(() => {
+    (0, import_element446.useEffect)(() => {
       if (!search) {
         return;
       }
@@ -129740,7 +129702,7 @@ If there's a particular need for this, please submit a feature request at https:
     selectedBlockTypes,
     onClose
   }) {
-    const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element448.useState)(selectedBlockTypes);
+    const [currentSelectedBlockTypes, setCurrentSelectedBlockTypes] = (0, import_element447.useState)(selectedBlockTypes);
     const { updateBlockAttributes: updateBlockAttributes2 } = (0, import_data189.useDispatch)(store);
     const handleSubmit = () => {
       const isFullySelected = currentSelectedBlockTypes.length === blockTypes.length;
@@ -129821,7 +129783,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/block-allowed-blocks/allowed-blocks-control.mjs
   var import_jsx_runtime685 = __toESM(require_jsx_runtime(), 1);
   function BlockAllowedBlocksControl({ clientId }) {
-    const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element449.useState)(false);
+    const [isBlockControlOpened, setIsBlockControlOpened] = (0, import_element448.useState)(false);
     const { blockTypes, selectedBlockNames } = (0, import_data190.useSelect)(
       (select3) => {
         const { getBlockAttributes: getBlockAttributes3 } = select3(store);
@@ -130197,17 +130159,17 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/style.mjs
-  var import_element459 = __toESM(require_element(), 1);
+  var import_element458 = __toESM(require_element(), 1);
   var import_hooks28 = __toESM(require_hooks(), 1);
   var import_data195 = __toESM(require_data(), 1);
   var import_blocks122 = __toESM(require_blocks(), 1);
-  var import_compose151 = __toESM(require_compose(), 1);
+  var import_compose150 = __toESM(require_compose(), 1);
   var import_style_engine6 = __toESM(require_style_engine(), 1);
 
   // packages/block-editor/build-module/hooks/border.mjs
   var import_blocks119 = __toESM(require_blocks(), 1);
   var import_components283 = __toESM(require_components(), 1);
-  var import_element456 = __toESM(require_element(), 1);
+  var import_element455 = __toESM(require_element(), 1);
   var import_hooks27 = __toESM(require_hooks(), 1);
   var import_data193 = __toESM(require_data(), 1);
 
@@ -130240,12 +130202,12 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/global-styles/dimensions-panel.mjs
   var import_i18n285 = __toESM(require_i18n(), 1);
   var import_components277 = __toESM(require_components(), 1);
-  var import_element451 = __toESM(require_element(), 1);
+  var import_element450 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/child-layout-control/index.mjs
   var import_components276 = __toESM(require_components(), 1);
   var import_i18n283 = __toESM(require_i18n(), 1);
-  var import_element450 = __toESM(require_element(), 1);
+  var import_element449 = __toESM(require_element(), 1);
   var import_data192 = __toESM(require_data(), 1);
 
   // packages/block-editor/build-module/components/grid/use-get-number-of-blocks-before-cell.mjs
@@ -130372,7 +130334,7 @@ If there's a particular need for this, please submit a feature request at https:
         flexSize: void 0
       });
     };
-    (0, import_element450.useEffect)(() => {
+    (0, import_element449.useEffect)(() => {
       if (isFlexSizeValue(selfStretch) && !flexSize) {
         onChange({
           ...childLayout,
@@ -130984,8 +130946,8 @@ If there's a particular need for this, please submit a feature request at https:
       ]
     });
     const minimumMargin = -Infinity;
-    const [minMarginValue, setMinMarginValue] = (0, import_element451.useState)(minimumMargin);
-    const resetAllFilter = (0, import_element451.useCallback)((previousValue) => {
+    const [minMarginValue, setMinMarginValue] = (0, import_element450.useState)(minimumMargin);
+    const resetAllFilter = (0, import_element450.useCallback)((previousValue) => {
       return {
         ...previousValue,
         layout: cleanEmptyObject({
@@ -131606,18 +131568,18 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/border-panel.mjs
   var import_components279 = __toESM(require_components(), 1);
-  var import_element453 = __toESM(require_element(), 1);
+  var import_element452 = __toESM(require_element(), 1);
   var import_i18n287 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/global-styles/shadow-panel-components.mjs
   var import_i18n286 = __toESM(require_i18n(), 1);
   var import_components278 = __toESM(require_components(), 1);
-  var import_element452 = __toESM(require_element(), 1);
+  var import_element451 = __toESM(require_element(), 1);
   var import_jsx_runtime692 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY20 = [];
   function ShadowPopoverContainer({ shadow, onShadowChange, settings: settings3 }) {
     const shadows = useShadowPresets(settings3);
-    const presets = (0, import_element452.useMemo)(() => {
+    const presets = (0, import_element451.useMemo)(() => {
       if (!shadows.length) {
         return shadows;
       }
@@ -131746,7 +131708,7 @@ If there's a particular need for this, please submit a feature request at https:
   function renderShadowToggle(shadow, onShadowChange, resetConfig) {
     const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
     return function ShadowToggle({ onToggle, isOpen }) {
-      const shadowButtonRef = (0, import_element452.useRef)(void 0);
+      const shadowButtonRef = (0, import_element451.useRef)(void 0);
       const toggleProps = {
         onClick: onToggle,
         className: clsx_default(
@@ -131796,7 +131758,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function useShadowPresets(settings3) {
-    return (0, import_element452.useMemo)(() => {
+    return (0, import_element451.useMemo)(() => {
       if (!settings3?.shadow) {
         return EMPTY_ARRAY20;
       }
@@ -131894,7 +131856,7 @@ If there's a particular need for this, please submit a feature request at https:
     const colors2 = useColorsPerOrigin(settings3);
     const itemPopoverProps = useToolsPanelItemPopoverProps();
     const areCustomSolidsEnabled = settings3?.color?.custom;
-    const decodeValue = (0, import_element453.useCallback)(
+    const decodeValue = (0, import_element452.useCallback)(
       (rawValue) => getValueFromVariable({ settings: settings3 }, "", rawValue),
       [settings3]
     );
@@ -131912,7 +131874,7 @@ If there's a particular need for this, please submit a feature request at https:
       );
       return colorObject ? "var:preset|color|" + colorObject.slug : colorValue;
     };
-    const decodeBorder = (0, import_element453.useCallback)(
+    const decodeBorder = (0, import_element452.useCallback)(
       (source) => {
         if (!source) {
           return void 0;
@@ -131934,11 +131896,11 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [decodeValue]
     );
-    const localBorder = (0, import_element453.useMemo)(
+    const localBorder = (0, import_element452.useMemo)(
       () => decodeBorder(value?.border),
       [value?.border, decodeBorder]
     );
-    const inheritedBorder = (0, import_element453.useMemo)(
+    const inheritedBorder = (0, import_element452.useMemo)(
       () => decodeBorder(inheritedValue?.border),
       [inheritedValue?.border, decodeBorder]
     );
@@ -131949,7 +131911,7 @@ If there's a particular need for this, please submit a feature request at https:
     const showBorderStyle = useHasBorderStyleControl(settings3);
     const showBorderWidth = useHasBorderWidthControl(settings3);
     const showBorderRadius = useHasBorderRadiusControl(settings3);
-    const localBorderRadius = (0, import_element453.useMemo)(() => {
+    const localBorderRadius = (0, import_element452.useMemo)(() => {
       if (typeof value?.border?.radius !== "object") {
         return decodeValue(value?.border?.radius);
       }
@@ -131960,7 +131922,7 @@ If there's a particular need for this, please submit a feature request at https:
         bottomRight: decodeValue(value?.border?.radius?.bottomRight)
       };
     }, [value?.border?.radius, decodeValue]);
-    const inheritedBorderRadius = (0, import_element453.useMemo)(() => {
+    const inheritedBorderRadius = (0, import_element452.useMemo)(() => {
       const rawRadius = inheritedValue?.border?.radius;
       if (typeof rawRadius !== "object") {
         return decodeValue(rawRadius);
@@ -131981,7 +131943,7 @@ If there's a particular need for this, please submit a feature request at https:
       return !!borderValues;
     };
     const isBorderRadiusPlaceholder = !hasBorderRadius() && inheritedBorderRadius !== void 0 && inheritedBorderRadius !== "";
-    const borderRadius = (0, import_element453.useMemo)(() => {
+    const borderRadius = (0, import_element452.useMemo)(() => {
       if (!isBorderRadiusPlaceholder) {
         return localBorderRadius;
       }
@@ -132052,7 +132014,7 @@ If there's a particular need for this, please submit a feature request at https:
         radius: value?.border?.radius
       });
     };
-    const resetAllFilter = (0, import_element453.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element452.useCallback)((previousValue) => {
       return {
         ...previousValue,
         border: void 0,
@@ -132161,7 +132123,7 @@ If there's a particular need for this, please submit a feature request at https:
   // packages/block-editor/build-module/components/global-styles/filters-panel.mjs
   var import_components280 = __toESM(require_components(), 1);
   var import_i18n288 = __toESM(require_i18n(), 1);
-  var import_element454 = __toESM(require_element(), 1);
+  var import_element453 = __toESM(require_element(), 1);
   var import_jsx_runtime694 = __toESM(require_jsx_runtime(), 1);
   var EMPTY_ARRAY21 = [];
   function useMultiOriginColorPresets(settings3, { presetSetting, defaultSetting }) {
@@ -132169,7 +132131,7 @@ If there's a particular need for this, please submit a feature request at https:
     const userPresets = settings3?.color?.[presetSetting]?.custom || EMPTY_ARRAY21;
     const themePresets = settings3?.color?.[presetSetting]?.theme || EMPTY_ARRAY21;
     const defaultPresets = settings3?.color?.[presetSetting]?.default || EMPTY_ARRAY21;
-    return (0, import_element454.useMemo)(
+    return (0, import_element453.useMemo)(
       () => [
         ...userPresets,
         ...themePresets,
@@ -132233,7 +132195,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
   var renderToggle2 = (duotone, resetConfig) => function Toggle2({ onToggle, isOpen }) {
     const { hasLocalValue, hasLocalOverride, onReset } = resetConfig;
-    const duotoneButtonRef = (0, import_element454.useRef)(void 0);
+    const duotoneButtonRef = (0, import_element453.useRef)(void 0);
     const toggleProps = {
       onClick: onToggle,
       className: clsx_default(
@@ -132332,7 +132294,7 @@ If there's a particular need for this, please submit a feature request at https:
     const hasDuotone = () => !!value?.filter?.duotone;
     const resetDuotone = () => setDuotone(void 0);
     const hasDuotoneLocalOverride = showInheritanceLabelIndicators && hasDuotone() && inheritedDuotone !== void 0;
-    const resetAllFilter = (0, import_element454.useCallback)((previousValue) => {
+    const resetAllFilter = (0, import_element453.useCallback)((previousValue) => {
       return {
         ...previousValue,
         filter: {
@@ -132453,7 +132415,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/global-styles/advanced-panel.mjs
   var import_components282 = __toESM(require_components(), 1);
-  var import_element455 = __toESM(require_element(), 1);
+  var import_element454 = __toESM(require_element(), 1);
   var import_i18n290 = __toESM(require_i18n(), 1);
   var import_jsx_runtime696 = __toESM(require_jsx_runtime(), 1);
   function validateCSS(css) {
@@ -132487,11 +132449,11 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const hasOwnCSS = typeof value?.css === "string" && value.css.trim() !== "";
     const customCSS = (hasOwnCSS ? value.css : inheritedValue?.css) ?? "";
-    const [cssError, setCSSError] = (0, import_element455.useState)(
+    const [cssError, setCSSError] = (0, import_element454.useState)(
       () => getCSSValidationError(customCSS)
     );
-    const ownValueRef = (0, import_element455.useRef)(customCSS);
-    (0, import_element455.useEffect)(() => {
+    const ownValueRef = (0, import_element454.useRef)(customCSS);
+    (0, import_element454.useEffect)(() => {
       if (customCSS === ownValueRef.current) {
         return;
       }
@@ -132605,7 +132567,7 @@ If there's a particular need for this, please submit a feature request at https:
     };
   }
   function BordersInspectorControl({ label, children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element456.useCallback)(
+    const attributesResetAllFilter = (0, import_element455.useCallback)(
       (attributes) => {
         const existingStyle = attributesToStyle2(attributes);
         const updatedStyle = resetAllFilter(existingStyle);
@@ -132653,7 +132615,7 @@ If there's a particular need for this, please submit a feature request at https:
       selectedState
     );
     const isStateSelected = !isDefaultBlockStyleState2(selectedState);
-    const value = (0, import_element456.useMemo)(() => {
+    const value = (0, import_element455.useMemo)(() => {
       if (isStateSelected) {
         return getStyleForState2(style, selectedState);
       }
@@ -132788,13 +132750,13 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/dimensions.mjs
-  var import_element458 = __toESM(require_element(), 1);
+  var import_element457 = __toESM(require_element(), 1);
   var import_data194 = __toESM(require_data(), 1);
   var import_blocks120 = __toESM(require_blocks(), 1);
   var import_deprecated33 = __toESM(require_deprecated(), 1);
 
   // packages/block-editor/build-module/hooks/spacing-visualizer.mjs
-  var import_element457 = __toESM(require_element(), 1);
+  var import_element456 = __toESM(require_element(), 1);
   var import_is_shallow_equal5 = __toESM(require_is_shallow_equal(), 1);
   var import_jsx_runtime698 = __toESM(require_jsx_runtime(), 1);
   function SpacingVisualizer({
@@ -132804,17 +132766,17 @@ If there's a particular need for this, please submit a feature request at https:
     forceShow
   }) {
     const blockElement = useBlockElement(clientId);
-    const [style, updateStyle] = (0, import_element457.useReducer)(
+    const [style, updateStyle] = (0, import_element456.useReducer)(
       // Styles are only computed once the block element is rendered.
       () => computeStyle(blockElement),
       void 0
     );
-    (0, import_element457.useEffect)(() => {
+    (0, import_element456.useEffect)(() => {
       if (blockElement && forceShow) {
         updateStyle();
       }
     }, [blockElement, forceShow]);
-    (0, import_element457.useEffect)(() => {
+    (0, import_element456.useEffect)(() => {
       if (!blockElement) {
         return;
       }
@@ -132827,9 +132789,9 @@ If there's a particular need for this, please submit a feature request at https:
         observer.disconnect();
       };
     }, [blockElement]);
-    const previousValueRef = (0, import_element457.useRef)(value);
-    const [isActive, setIsActive] = (0, import_element457.useState)(false);
-    (0, import_element457.useEffect)(() => {
+    const previousValueRef = (0, import_element456.useRef)(value);
+    const [isActive, setIsActive] = (0, import_element456.useState)(false);
+    (0, import_element456.useEffect)(() => {
       if ((0, import_is_shallow_equal5.isShallowEqual)(value, previousValueRef.current) || forceShow) {
         return;
       }
@@ -132920,11 +132882,11 @@ If there's a particular need for this, please submit a feature request at https:
   var DIMENSIONS_SUPPORT_KEY = "dimensions";
   var SPACING_SUPPORT_KEY2 = "spacing";
   function useVisualizer() {
-    const [property, setProperty] = (0, import_element458.useState)(false);
+    const [property, setProperty] = (0, import_element457.useState)(false);
     const { hideBlockInterface: hideBlockInterface2, showBlockInterface: showBlockInterface2 } = unlock(
       (0, import_data194.useDispatch)(store)
     );
-    (0, import_element458.useEffect)(() => {
+    (0, import_element457.useEffect)(() => {
       if (!property) {
         showBlockInterface2();
       } else {
@@ -132934,7 +132896,7 @@ If there's a particular need for this, please submit a feature request at https:
     return [property, setProperty];
   }
   function DimensionsInspectorControl({ children, resetAllFilter }) {
-    const attributesResetAllFilter = (0, import_element458.useCallback)(
+    const attributesResetAllFilter = (0, import_element457.useCallback)(
       (attributes) => {
         const existingStyle = attributes.style;
         const updatedStyle = resetAllFilter(existingStyle);
@@ -133616,7 +133578,7 @@ If there's a particular need for this, please submit a feature request at https:
       [clientId, name]
     );
     const isPseudoSelectorState = hasPseudoBlockStyleState(selectedState);
-    const canvasStateCSS = (0, import_element459.useMemo)(() => {
+    const canvasStateCSS = (0, import_element458.useMemo)(() => {
       if (!showStateOnCanvas || !isPseudoSelectorState) {
         return void 0;
       }
@@ -133755,14 +133717,14 @@ If there's a particular need for this, please submit a feature request at https:
     return rules.length > 0 ? rules.join("") : void 0;
   }
   function useBlockProps13({ clientId, name, style }) {
-    const blockElementsContainerIdentifier = (0, import_compose151.useInstanceId)(
+    const blockElementsContainerIdentifier = (0, import_compose150.useInstanceId)(
       STYLE_BLOCK_PROPS_REFERENCE,
       "wp-elements"
     );
     const baseElementSelector = `.${blockElementsContainerIdentifier}`;
     const blockElementStyles = style?.elements;
     const [viewportSettings] = useSettings("viewport");
-    const styles = (0, import_element459.useMemo)(() => {
+    const styles = (0, import_element458.useMemo)(() => {
       const cssRules = [];
       const elementCSS = getElementCSSRules(
         blockElementStyles,
@@ -133839,9 +133801,9 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/duotone.mjs
   var import_blocks124 = __toESM(require_blocks(), 1);
-  var import_compose152 = __toESM(require_compose(), 1);
+  var import_compose151 = __toESM(require_compose(), 1);
   var import_hooks30 = __toESM(require_hooks(), 1);
-  var import_element460 = __toESM(require_element(), 1);
+  var import_element459 = __toESM(require_element(), 1);
   var import_data196 = __toESM(require_data(), 1);
   var import_jsx_runtime701 = __toESM(require_jsx_runtime(), 1);
   var { getDuotoneFilter: getDuotoneFilter2, getDuotoneStylesheet: getDuotoneStylesheet2, getDuotoneUnsetStylesheet: getDuotoneUnsetStylesheet2 } = unlock(privateApis);
@@ -133855,7 +133817,7 @@ If there's a particular need for this, please submit a feature request at https:
       `${presetSetting}.theme`,
       `${presetSetting}.default`
     );
-    return (0, import_element460.useMemo)(
+    return (0, import_element459.useMemo)(
       () => [
         ...userPresets || EMPTY_ARRAY22,
         ...themePresets || EMPTY_ARRAY22,
@@ -134030,7 +133992,7 @@ If there's a particular need for this, please submit a feature request at https:
       } : void 0
     );
     const blockElement = useBlockElement(clientId);
-    (0, import_element460.useEffect)(() => {
+    (0, import_element459.useEffect)(() => {
       if (!isValidFilter) {
         return;
       }
@@ -134044,8 +134006,8 @@ If there's a particular need for this, please submit a feature request at https:
   }
   var DUOTONE_BLOCK_PROPS_REFERENCE = {};
   function useBlockProps14({ clientId, name, style }) {
-    const id = (0, import_compose152.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
-    const selector5 = (0, import_element460.useMemo)(() => {
+    const id = (0, import_compose151.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
+    const selector5 = (0, import_element459.useMemo)(() => {
       const blockType = (0, import_blocks124.getBlockType)(name);
       if (blockType) {
         const duotoneSupport = (0, import_blocks124.getBlockSupport)(
@@ -134148,9 +134110,9 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/custom-css.mjs
-  var import_element461 = __toESM(require_element(), 1);
+  var import_element460 = __toESM(require_element(), 1);
   var import_data197 = __toESM(require_data(), 1);
-  var import_compose153 = __toESM(require_compose(), 1);
+  var import_compose152 = __toESM(require_compose(), 1);
   var import_components285 = __toESM(require_components(), 1);
   var import_blocks126 = __toESM(require_blocks(), 1);
   var import_i18n291 = __toESM(require_i18n(), 1);
@@ -134280,7 +134242,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
   function useBlockProps16({ style, clientId, name }) {
     const [viewportSettings] = useSettings("viewport");
-    const customCSSStateEntries = (0, import_element461.useMemo)(
+    const customCSSStateEntries = (0, import_element460.useMemo)(
       () => getCustomCSSStateEntries(style, name, viewportSettings),
       [style, name, viewportSettings]
     );
@@ -134290,7 +134252,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { createWarningNotice } = (0, import_data197.useDispatch)(import_notices13.store);
     const hasCustomCSS = customCSSStateEntries.length > 0;
-    (0, import_element461.useEffect)(() => {
+    (0, import_element460.useEffect)(() => {
       if (!canEditCSS && hasCustomCSS) {
         createWarningNotice(
           (0, import_i18n291.__)(
@@ -134303,12 +134265,12 @@ If there's a particular need for this, please submit a feature request at https:
         );
       }
     }, [canEditCSS, hasCustomCSS, createWarningNotice]);
-    const customCSSIdentifier = (0, import_compose153.useInstanceId)(
+    const customCSSIdentifier = (0, import_compose152.useInstanceId)(
       CUSTOM_CSS_INSTANCE_REFERENCE,
       "wp-custom-css"
     );
     const customCSSSelector = `.${customCSSIdentifier}`;
-    const transformedCSS = (0, import_element461.useMemo)(
+    const transformedCSS = (0, import_element460.useMemo)(
       () => processCustomCSSStateEntries(
         customCSSStateEntries,
         customCSSSelector
@@ -134358,9 +134320,9 @@ If there's a particular need for this, please submit a feature request at https:
   };
 
   // packages/block-editor/build-module/hooks/layout.mjs
-  var import_compose154 = __toESM(require_compose(), 1);
+  var import_compose153 = __toESM(require_compose(), 1);
   var import_hooks32 = __toESM(require_hooks(), 1);
-  var import_element462 = __toESM(require_element(), 1);
+  var import_element461 = __toESM(require_element(), 1);
   var import_blocks127 = __toESM(require_blocks(), 1);
   var import_data198 = __toESM(require_data(), 1);
   var import_components286 = __toESM(require_components(), 1);
@@ -134554,7 +134516,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const blockEditingMode = useBlockEditingMode();
     const isViewportLayoutState = hasViewportBlockStyleState(selectedState) && !hasPseudoBlockStyleState(selectedState);
-    const resetLayoutFilter = (0, import_element462.useCallback)(
+    const resetLayoutFilter = (0, import_element461.useCallback)(
       (...resetArgs) => {
         const attributes = resetArgs[0] || {};
         const context = resetArgs[1] || {};
@@ -134815,7 +134777,7 @@ If there's a particular need for this, please submit a feature request at https:
     layoutClasses
   }) {
     const { name, attributes } = props;
-    const id = (0, import_compose154.useInstanceId)(BlockListBlock2);
+    const id = (0, import_compose153.useInstanceId)(BlockListBlock2);
     const { layout } = attributes;
     const { default: defaultBlockLayout } = (0, import_blocks127.getBlockSupport)(name, layoutBlockSupportKey) || {};
     const usedLayout = normalizeLegacyLayout(layout) || defaultBlockLayout || {};
@@ -134857,7 +134819,7 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var withLayoutStyles = (0, import_compose154.createHigherOrderComponent)(
+  var withLayoutStyles = (0, import_compose153.createHigherOrderComponent)(
     (BlockListBlock2) => function WithLayoutStyles(props) {
       const { clientId, name, attributes } = props;
       const blockSupportsLayout = hasLayoutBlockSupport(name);
@@ -134933,14 +134895,14 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/layout-child.mjs
-  var import_compose158 = __toESM(require_compose(), 1);
+  var import_compose157 = __toESM(require_compose(), 1);
   var import_data202 = __toESM(require_data(), 1);
-  var import_element466 = __toESM(require_element(), 1);
+  var import_element465 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/grid/grid-visualizer.mjs
-  var import_element463 = __toESM(require_element(), 1);
+  var import_element462 = __toESM(require_element(), 1);
   var import_data199 = __toESM(require_data(), 1);
-  var import_compose155 = __toESM(require_compose(), 1);
+  var import_compose154 = __toESM(require_compose(), 1);
 
   // packages/block-editor/build-module/components/grid/utils.mjs
   function range(start2, length) {
@@ -135109,20 +135071,20 @@ If there's a particular need for this, please submit a feature request at https:
       }
     );
   }
-  var GridVisualizerGrid = (0, import_element463.forwardRef)(
+  var GridVisualizerGrid = (0, import_element462.forwardRef)(
     ({ gridClientId, gridElement, isManualGrid, childGridClientId }, ref) => {
-      const [gridInfo, setGridInfo] = (0, import_element463.useState)(
+      const [gridInfo, setGridInfo] = (0, import_element462.useState)(
         () => getGridInfo(gridElement)
       );
-      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element463.useState)(false);
+      const [isDroppingAllowed, setIsDroppingAllowed] = (0, import_element462.useState)(false);
       const childGridElement = useBlockElement(childGridClientId);
-      const childGridRect = (0, import_element463.useMemo)(() => {
+      const childGridRect = (0, import_element462.useMemo)(() => {
         if (!childGridElement) {
           return null;
         }
         return getGridItemRect(childGridElement);
       }, [childGridElement]);
-      (0, import_element463.useEffect)(() => {
+      (0, import_element462.useEffect)(() => {
         const resizeCallback = () => setGridInfo(getGridInfo(gridElement));
         const borderBoxSpy = new window.ResizeObserver(resizeCallback);
         borderBoxSpy.observe(gridElement, { box: "border-box" });
@@ -135136,7 +135098,7 @@ If there's a particular need for this, please submit a feature request at https:
           contentBoxSpy.disconnect();
         };
       }, [gridElement]);
-      (0, import_element463.useEffect)(() => {
+      (0, import_element462.useEffect)(() => {
         function onGlobalDrag() {
           setIsDroppingAllowed(true);
         }
@@ -135202,7 +135164,7 @@ If there's a particular need for this, please submit a feature request at https:
     );
   }
   function ManualGridVisualizer({ gridClientId, gridInfo, childGridRect }) {
-    const [highlightedRect, setHighlightedRect] = (0, import_element463.useState)(null);
+    const [highlightedRect, setHighlightedRect] = (0, import_element462.useState)(null);
     const gridItemStyles = (0, import_data199.useSelect)(
       (select3) => {
         const { getBlockOrder: getBlockOrder2, getBlockStyles: getBlockStyles2 } = unlock(
@@ -135213,7 +135175,7 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [gridClientId]
     );
-    const occupiedRects = (0, import_element463.useMemo)(() => {
+    const occupiedRects = (0, import_element462.useMemo)(() => {
       const rects = [];
       for (const style of Object.values(gridItemStyles)) {
         const {
@@ -135449,7 +135411,7 @@ If there's a particular need for this, please submit a feature request at https:
     onDrop
   }) {
     const { getDraggedBlockClientIds: getDraggedBlockClientIds2 } = (0, import_data199.useSelect)(store);
-    return (0, import_compose155.__experimentalUseDropZone)({
+    return (0, import_compose154.__experimentalUseDropZone)({
       onDragEnter() {
         const [srcClientId] = getDraggedBlockClientIds2();
         if (srcClientId && validateDrag(srcClientId)) {
@@ -135470,7 +135432,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/grid/grid-item-resizer.mjs
   var import_components288 = __toESM(require_components(), 1);
-  var import_element464 = __toESM(require_element(), 1);
+  var import_element463 = __toESM(require_element(), 1);
   var import_jsx_runtime705 = __toESM(require_jsx_runtime(), 1);
   function GridItemResizer({
     clientId,
@@ -135504,14 +135466,14 @@ If there's a particular need for this, please submit a feature request at https:
     onChange,
     isManualGrid
   }) {
-    const [resizeDirection, setResizeDirection] = (0, import_element464.useState)(null);
-    const [enableSide, setEnableSide] = (0, import_element464.useState)({
+    const [resizeDirection, setResizeDirection] = (0, import_element463.useState)(null);
+    const [enableSide, setEnableSide] = (0, import_element463.useState)({
       top: false,
       bottom: false,
       left: false,
       right: false
     });
-    (0, import_element464.useEffect)(() => {
+    (0, import_element463.useEffect)(() => {
       const observer = new window.ResizeObserver(() => {
         const blockClientRect = blockElement.getBoundingClientRect();
         const rootBlockClientRect = rootBlockElement.getBoundingClientRect();
@@ -135629,7 +135591,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_i18n293 = __toESM(require_i18n(), 1);
   var import_components289 = __toESM(require_components(), 1);
   var import_data200 = __toESM(require_data(), 1);
-  var import_compose156 = __toESM(require_compose(), 1);
+  var import_compose155 = __toESM(require_compose(), 1);
   var import_jsx_runtime706 = __toESM(require_jsx_runtime(), 1);
   function GridItemMovers({
     layout,
@@ -135762,7 +135724,7 @@ If there's a particular need for this, please submit a feature request at https:
     onClick,
     description
   }) {
-    const instanceId = (0, import_compose156.useInstanceId)(GridItemMover);
+    const instanceId = (0, import_compose155.useInstanceId)(GridItemMover);
     const descriptionId = `block-editor-grid-item-mover-button__description-${instanceId}`;
     return /* @__PURE__ */ (0, import_jsx_runtime706.jsxs)(import_jsx_runtime706.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime706.jsx)(
@@ -135786,8 +135748,8 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/grid/use-grid-layout-sync.mjs
   var import_data201 = __toESM(require_data(), 1);
-  var import_element465 = __toESM(require_element(), 1);
-  var import_compose157 = __toESM(require_compose(), 1);
+  var import_element464 = __toESM(require_element(), 1);
+  var import_compose156 = __toESM(require_compose(), 1);
   function useGridLayoutSync({ clientId: gridClientId }) {
     const { gridLayout, blockOrder, selectedBlockLayout } = (0, import_data201.useSelect)(
       (select3) => {
@@ -135803,16 +135765,16 @@ If there's a particular need for this, please submit a feature request at https:
     );
     const { getBlockAttributes: getBlockAttributes3, getBlockRootClientId: getBlockRootClientId2 } = (0, import_data201.useSelect)(store);
     const { updateBlockAttributes: updateBlockAttributes2, __unstableMarkNextChangeAsNotPersistent: __unstableMarkNextChangeAsNotPersistent2 } = (0, import_data201.useDispatch)(store);
-    const selectedBlockRect = (0, import_element465.useMemo)(
+    const selectedBlockRect = (0, import_element464.useMemo)(
       () => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null,
       [selectedBlockLayout]
     );
-    const previouslySelectedBlockRect = (0, import_compose157.usePrevious)(selectedBlockRect);
-    const previousIsManualPlacement = (0, import_compose157.usePrevious)(
+    const previouslySelectedBlockRect = (0, import_compose156.usePrevious)(selectedBlockRect);
+    const previousIsManualPlacement = (0, import_compose156.usePrevious)(
       gridLayout.isManualPlacement
     );
-    const previousBlockOrder = (0, import_compose157.usePrevious)(blockOrder);
-    (0, import_element465.useEffect)(() => {
+    const previousBlockOrder = (0, import_compose156.usePrevious)(blockOrder);
+    (0, import_element464.useEffect)(() => {
       const updates = {};
       if (gridLayout.isManualPlacement) {
         const occupiedRects = [];
@@ -136185,7 +136147,7 @@ If there's a particular need for this, please submit a feature request at https:
     const layout = style?.layout ?? {};
     const { columnStart, rowStart, columnSpan, rowSpan } = layout;
     const parentLayout = useLayout() || {};
-    const id = (0, import_compose158.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
+    const id = (0, import_compose157.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
     const selector5 = `.wp-container-content-${id}`;
     if (true) {
       if (columnStart && typeof columnStart !== "number") {
@@ -136330,7 +136292,7 @@ If there's a particular need for this, please submit a feature request at https:
       view: canvasView,
       viewportSettings
     });
-    const [resizerBounds, setResizerBounds] = (0, import_element466.useState)();
+    const [resizerBounds, setResizerBounds] = (0, import_element465.useState)();
     const childGridClientId = isChildBlockAGrid ? clientId : void 0;
     if (!isVisible2 || isParentBlockCurrentlyHidden || isAnyAncestorHidden) {
       return null;
@@ -136448,7 +136410,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/hooks/block-hooks.mjs
   var import_i18n294 = __toESM(require_i18n(), 1);
-  var import_element467 = __toESM(require_element(), 1);
+  var import_element466 = __toESM(require_element(), 1);
   var import_components290 = __toESM(require_components(), 1);
   var import_blocks129 = __toESM(require_blocks(), 1);
   var import_data203 = __toESM(require_data(), 1);
@@ -136463,7 +136425,7 @@ If there's a particular need for this, please submit a feature request at https:
       (select3) => select3(import_blocks129.store).getBlockTypes(),
       []
     );
-    const hookedBlocksForCurrentBlock = (0, import_element467.useMemo)(
+    const hookedBlocksForCurrentBlock = (0, import_element466.useMemo)(
       () => blockTypes?.filter(
         ({ name: blockName, blockHooks }) => blockHooks && name in blockHooks || ignoredHookedBlocks.includes(blockName)
       ),
@@ -136580,7 +136542,7 @@ If there's a particular need for this, please submit a feature request at https:
             "Manage the inclusion of blocks added automatically by plugins."
           ) }),
           Object.keys(groupedHookedBlocks).map((vendor) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime708.jsxs)(import_element467.Fragment, { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime708.jsxs)(import_element466.Fragment, { children: [
               /* @__PURE__ */ (0, import_jsx_runtime708.jsx)("h3", { children: vendor }),
               groupedHookedBlocks[vendor].map((block) => {
                 const checked4 = block.name in hookedBlockClientIds;
@@ -136626,11 +136588,11 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks130 = __toESM(require_blocks(), 1);
   var import_components292 = __toESM(require_components(), 1);
   var import_data204 = __toESM(require_data(), 1);
-  var import_element468 = __toESM(require_element(), 1);
-  var import_compose159 = __toESM(require_compose(), 1);
+  var import_element467 = __toESM(require_element(), 1);
+  var import_compose158 = __toESM(require_compose(), 1);
   var import_jsx_runtime709 = __toESM(require_jsx_runtime(), 1);
   var useToolsPanelDropdownMenuProps2 = () => {
-    const isMobile = (0, import_compose159.useViewportMatch)("medium", "<");
+    const isMobile = (0, import_compose158.useViewportMatch)("medium", "<");
     return !isMobile ? {
       popoverProps: {
         placement: "left-start",
@@ -136643,7 +136605,7 @@ If there's a particular need for this, please submit a feature request at https:
     name: blockName,
     metadata
   }) => {
-    const blockContext = (0, import_element468.useContext)(block_context_default);
+    const blockContext = (0, import_element467.useContext)(block_context_default);
     const { removeAllBlockBindings } = useBlockBindingsUtils();
     const dropdownMenuProps = useToolsPanelDropdownMenuProps2();
     const { bindableAttributes, hasCompatibleFields } = (0, import_data204.useSelect)(
@@ -136715,7 +136677,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_components293 = __toESM(require_components(), 1);
   var import_data206 = __toESM(require_data(), 1);
   var import_blocks131 = __toESM(require_blocks(), 1);
-  var import_element469 = __toESM(require_element(), 1);
+  var import_element468 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/use-list-view-panel-state/index.mjs
   var import_data205 = __toESM(require_data(), 1);
@@ -136750,7 +136712,7 @@ If there's a particular need for this, please submit a feature request at https:
     return (0, import_blocks131.hasBlockSupport)(nameOrType, LIST_VIEW_SUPPORT_KEY);
   }
   function ListViewPanel({ clientId, name }) {
-    const { isSelectionWithinCurrentSection } = (0, import_element469.useContext)(PrivateBlockContext);
+    const { isSelectionWithinCurrentSection } = (0, import_element468.useContext)(PrivateBlockContext);
     const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
     const { openListViewContentPanel: openListViewContentPanel2 } = unlock(
       (0, import_data206.useDispatch)(store)
@@ -136840,7 +136802,7 @@ If there's a particular need for this, please submit a feature request at https:
   );
 
   // packages/block-editor/build-module/hooks/grid-visualizer.mjs
-  var import_compose160 = __toESM(require_compose(), 1);
+  var import_compose159 = __toESM(require_compose(), 1);
   var import_hooks35 = __toESM(require_hooks(), 1);
   var import_data207 = __toESM(require_data(), 1);
   var import_jsx_runtime711 = __toESM(require_jsx_runtime(), 1);
@@ -136906,7 +136868,7 @@ If there's a particular need for this, please submit a feature request at https:
       )
     ] });
   }
-  var addGridVisualizerToBlockEdit = (0, import_compose160.createHigherOrderComponent)(
+  var addGridVisualizerToBlockEdit = (0, import_compose159.createHigherOrderComponent)(
     (BlockEdit2) => function AddGridVisualizerToBlockEdit(props) {
       if (props.attributes.layout?.type !== "grid") {
         return /* @__PURE__ */ (0, import_jsx_runtime711.jsx)(BlockEdit2, { ...props }, "edit");
@@ -136934,7 +136896,7 @@ If there's a particular need for this, please submit a feature request at https:
   var import_blocks133 = __toESM(require_blocks(), 1);
   var import_components294 = __toESM(require_components(), 1);
   var import_data208 = __toESM(require_data(), 1);
-  var import_element470 = __toESM(require_element(), 1);
+  var import_element469 = __toESM(require_element(), 1);
   var import_i18n297 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/hooks/generate-fields-from-attributes.mjs
@@ -136996,7 +136958,7 @@ If there's a particular need for this, please submit a feature request at https:
     setAttributes
   }) {
     const blockEditingMode = useBlockEditingMode();
-    const blockContext = (0, import_element470.useContext)(block_context_default);
+    const blockContext = (0, import_element469.useContext)(block_context_default);
     const attributes = (0, import_data208.useSelect)(
       (select3) => {
         const _attributes = select3(store).getBlockAttributes(clientId);
@@ -137023,7 +136985,7 @@ If there's a particular need for this, please submit a feature request at https:
       [blockContext, clientId]
     );
     const blockType = (0, import_blocks133.getBlockType)(name);
-    const { fields, form } = (0, import_element470.useMemo)(() => {
+    const { fields, form } = (0, import_element469.useMemo)(() => {
       if (!blockType?.attributes) {
         return { fields: [], form: { fields: [] } };
       }
@@ -137116,7 +137078,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/hooks/use-color-props.mjs
-  var import_element471 = __toESM(require_element(), 1);
+  var import_element470 = __toESM(require_element(), 1);
   function getColorClassesAndStyles(attributes) {
     const { backgroundColor, textColor, gradient, style } = attributes;
     const backgroundClass = getColorClassName(
@@ -137157,7 +137119,7 @@ If there's a particular need for this, please submit a feature request at https:
       "color.gradients.theme",
       "color.gradients.default"
     );
-    const colors2 = (0, import_element471.useMemo)(
+    const colors2 = (0, import_element470.useMemo)(
       () => [
         ...userPalette || [],
         ...themePalette || [],
@@ -137165,7 +137127,7 @@ If there's a particular need for this, please submit a feature request at https:
       ],
       [userPalette, themePalette, defaultPalette]
     );
-    const gradients = (0, import_element471.useMemo)(
+    const gradients = (0, import_element470.useMemo)(
       () => [
         ...userGradients || [],
         ...themeGradients || [],
@@ -137232,10 +137194,10 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/hooks/use-cached-truthy.mjs
-  var import_element472 = __toESM(require_element(), 1);
+  var import_element471 = __toESM(require_element(), 1);
   function useCachedTruthy(value) {
-    const [cachedValue, setCachedValue] = (0, import_element472.useState)(value);
-    (0, import_element472.useEffect)(() => {
+    const [cachedValue, setCachedValue] = (0, import_element471.useState)(value);
+    (0, import_element471.useEffect)(() => {
       if (value) {
         setCachedValue(value);
       }
@@ -137311,7 +137273,7 @@ If there's a particular need for this, please submit a feature request at https:
   var get_px_from_css_unit_default = () => "";
 
   // packages/block-editor/build-module/components/rich-text/get-rich-text-values.mjs
-  var import_element473 = __toESM(require_element(), 1);
+  var import_element472 = __toESM(require_element(), 1);
   var import_blocks134 = __toESM(require_blocks(), 1);
   var import_rich_text24 = __toESM(require_rich_text(), 1);
   var import_jsx_runtime713 = __toESM(require_jsx_runtime(), 1);
@@ -137329,10 +137291,10 @@ If there's a particular need for this, please submit a feature request at https:
     }
     const { type, props } = element;
     switch (type) {
-      case import_element473.StrictMode:
-      case import_element473.Fragment:
+      case import_element472.StrictMode:
+      case import_element472.Fragment:
         return addValuesForElements(props.children, values, innerBlocks);
-      case import_element473.RawHTML:
+      case import_element472.RawHTML:
         return;
       case inner_blocks_default.Content:
         return addValuesForBlocks(values, innerBlocks);
@@ -137405,13 +137367,13 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/block-removal-warning-modal/index.mjs
-  var import_element474 = __toESM(require_element(), 1);
+  var import_element473 = __toESM(require_element(), 1);
   var import_data209 = __toESM(require_data(), 1);
   var import_components296 = __toESM(require_components(), 1);
   var import_i18n298 = __toESM(require_i18n(), 1);
   var import_jsx_runtime715 = __toESM(require_jsx_runtime(), 1);
   function BlockRemovalWarningModal({ rules }) {
-    const [confirmed, setConfirmed] = (0, import_element474.useState)(false);
+    const [confirmed, setConfirmed] = (0, import_element473.useState)(false);
     const { clientIds, selectPrevious, message: message2 } = (0, import_data209.useSelect)(
       (select3) => unlock(select3(store)).getRemovalPromptData()
     );
@@ -137420,13 +137382,13 @@ If there's a particular need for this, please submit a feature request at https:
       setBlockRemovalRules: setBlockRemovalRules2,
       privateRemoveBlocks: privateRemoveBlocks2
     } = unlock((0, import_data209.useDispatch)(store));
-    (0, import_element474.useEffect)(() => {
+    (0, import_element473.useEffect)(() => {
       setBlockRemovalRules2(rules);
       return () => {
         setBlockRemovalRules2();
       };
     }, [rules, setBlockRemovalRules2]);
-    (0, import_element474.useEffect)(() => {
+    (0, import_element473.useEffect)(() => {
       setConfirmed(false);
     }, [clientIds]);
     if (!message2) {
@@ -137496,11 +137458,11 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/dimensions-tool/index.mjs
-  var import_element476 = __toESM(require_element(), 1);
+  var import_element475 = __toESM(require_element(), 1);
 
   // packages/block-editor/build-module/components/dimensions-tool/scale-tool.mjs
   var import_components297 = __toESM(require_components(), 1);
-  var import_element475 = __toESM(require_element(), 1);
+  var import_element474 = __toESM(require_element(), 1);
   var import_i18n299 = __toESM(require_i18n(), 1);
   var import_jsx_runtime716 = __toESM(require_jsx_runtime(), 1);
   var DEFAULT_SCALE_OPTIONS = [
@@ -137543,7 +137505,7 @@ If there's a particular need for this, please submit a feature request at https:
     isShownByDefault = true
   }) {
     const displayValue = value ?? defaultValue2;
-    const scaleHelp = (0, import_element475.useMemo)(() => {
+    const scaleHelp = (0, import_element474.useMemo)(() => {
       return options.reduce(
         (acc, option) => {
           acc[option.value] = option.help;
@@ -137677,14 +137639,14 @@ If there's a particular need for this, please submit a feature request at https:
     const aspectRatio = value.aspectRatio === void 0 || value.aspectRatio === "auto" ? null : value.aspectRatio;
     const scale = value.scale === void 0 ? null : value.scale;
     const hasCustomAspectRatio = !!(width && height);
-    const lastScaleRef = (0, import_element476.useRef)(scale);
-    const lastAspectRatioRef = (0, import_element476.useRef)(aspectRatio);
-    (0, import_element476.useEffect)(() => {
+    const lastScaleRef = (0, import_element475.useRef)(scale);
+    const lastAspectRatioRef = (0, import_element475.useRef)(aspectRatio);
+    (0, import_element475.useEffect)(() => {
       if (scale) {
         lastScaleRef.current = scale;
       }
     }, [scale]);
-    (0, import_element476.useEffect)(() => {
+    (0, import_element475.useEffect)(() => {
       if (!hasCustomAspectRatio) {
         lastAspectRatioRef.current = aspectRatio;
       }
@@ -137938,7 +137900,7 @@ If there's a particular need for this, please submit a feature request at https:
 
   // packages/block-editor/build-module/components/link-picker/link-picker.mjs
   var import_components302 = __toESM(require_components(), 1);
-  var import_element477 = __toESM(require_element(), 1);
+  var import_element476 = __toESM(require_element(), 1);
   var import_i18n304 = __toESM(require_i18n(), 1);
 
   // packages/block-editor/build-module/components/link-picker/link-preview.mjs
@@ -138010,11 +137972,11 @@ If there's a particular need for this, please submit a feature request at https:
     label,
     help
   }) {
-    const [isOpen, setIsOpen] = (0, import_element477.useState)(false);
-    const instanceId = (0, import_element477.useId)();
+    const [isOpen, setIsOpen] = (0, import_element476.useState)(false);
+    const instanceId = (0, import_element476.useId)();
     const dialogTitleId = `link-picker-title-${instanceId}`;
     const dialogDescriptionId = `link-picker-description-${instanceId}`;
-    const anchorRef = (0, import_element477.useRef)(null);
+    const anchorRef = (0, import_element476.useRef)(null);
     const { baseControlProps, controlProps } = (0, import_components302.useBaseControlProps)({
       help
     });
@@ -138102,7 +138064,7 @@ If there's a particular need for this, please submit a feature request at https:
   }
 
   // packages/block-editor/build-module/components/inner-content/index.mjs
-  var import_element478 = __toESM(require_element(), 1);
+  var import_element477 = __toESM(require_element(), 1);
   var import_data211 = __toESM(require_data(), 1);
   var import_dom84 = __toESM(require_dom(), 1);
   var import_jsx_runtime723 = __toESM(require_jsx_runtime(), 1);
@@ -138120,15 +138082,15 @@ If there's a particular need for this, please submit a feature request at https:
       },
       [clientId]
     );
-    const html = (0, import_element478.useMemo)(() => {
+    const html = (0, import_element477.useMemo)(() => {
       let slotIndex = 0;
       return (innerContent ?? []).map(
         (item) => item === null ? `<${SLOT_TAG_NAME} data-slot-index="${slotIndex++}" style="display: contents"></${SLOT_TAG_NAME}>` : item
       ).join("");
     }, [innerContent]);
-    const containerRef = (0, import_element478.useRef)();
-    const [slots, setSlots] = (0, import_element478.useState)([]);
-    (0, import_element478.useLayoutEffect)(() => {
+    const containerRef = (0, import_element477.useRef)();
+    const [slots, setSlots] = (0, import_element477.useState)([]);
+    (0, import_element477.useLayoutEffect)(() => {
       const container = containerRef.current;
       container.innerHTML = (0, import_dom84.safeHTML)(html);
       setSlots(
@@ -138147,7 +138109,7 @@ If there's a particular need for this, please submit a feature request at https:
         }
       ),
       order.map(
-        (childClientId, index3) => slots[index3] ? (0, import_element478.createPortal)(
+        (childClientId, index3) => slots[index3] ? (0, import_element477.createPortal)(
           // Render the selected block synchronously, as the block list does.
           /* @__PURE__ */ (0, import_jsx_runtime723.jsx)(
             import_data211.AsyncModeProvider,
