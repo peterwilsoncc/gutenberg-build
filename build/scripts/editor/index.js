@@ -3843,8 +3843,8 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	const { lock: lock$4, unlock: unlock$4 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
-	const privateApis$77 = {};
-	lock$4(privateApis$77, {
+	const privateApis$78 = {};
+	lock$4(privateApis$78, {
 		getResponsiveMediaQueries,
 		getViewportBreakpoints: getViewportBreakpoints$4,
 		getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels$2,
@@ -5086,7 +5086,7 @@ _wordpress_server_side_render = __toESM(_wordpress_server_side_render, 1);
 	});
 
 // packages/editor/build-module/utils/device-type.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels$1 } = unlock$5(privateApis$77);
+	const { getViewportBreakpoints: getViewportBreakpoints$3, getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels$1 } = unlock$5(privateApis$78);
 	const VIEWPORT_KEY_BY_DEVICE_TYPE = {
 		Tablet: "tablet",
 		Mobile: "mobile"
@@ -54667,7 +54667,7 @@ Icon: ButtonIcon });
 	const { lock: lock$2, unlock: unlock$2 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-ui");
 
 // packages/global-styles-ui/build-module/utils.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$2, resolveStyle: resolveStyle$1 } = unlock$2(privateApis$77);
+	const { getViewportBreakpoints: getViewportBreakpoints$2, resolveStyle: resolveStyle$1 } = unlock$2(privateApis$78);
 	/**
 	* Valid states for elements with their labels.
 	* This mirrors the PHP constant in lib/class-wp-theme-json-gutenberg.php
@@ -55850,7 +55850,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/global-styles-ui/build-module/block-preview-panel.mjs
-	const { getViewportBreakpoints: getViewportBreakpoints$1, getViewportBreakpointValueInPixels } = unlock$2(privateApis$77);
+	const { getViewportBreakpoints: getViewportBreakpoints$1, getViewportBreakpointValueInPixels } = unlock$2(privateApis$78);
 	const DEFAULT_PREVIEW_WIDTH_BY_VIEWPORT = {
 		default: 783,
 		"@tablet": 600,
@@ -89597,7 +89597,8 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/editor/build-module/components/document-outline/index.mjs
-/**
+	const { useBlockElement: useBlockElement$3 } = unlock$5(_wordpress_block_editor.privateApis);
+	/**
 	* Module constants
 	*/
 	const emptyHeadingContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)("em", { children: (0, _wordpress_i18n.__)("(Empty heading)") });
@@ -89717,42 +89718,45 @@ If there's a particular need for this, please submit a feature request at https:
 	/**
 	* Renders a document outline component.
 	*
-	* @param {Object}   props                         Props.
-	* @param {Function} props.onSelect                Function to be called when an outline item is selected
-	* @param {boolean}  props.hasOutlineItemsDisabled Indicates whether the outline items are disabled.
+	* @param {Object}     props                         Props.
+	* @param {() => void} [props.onSelect]              Function to be called when an outline item is selected
+	* @param {boolean}    props.hasOutlineItemsDisabled Indicates whether the outline items are disabled.
 	*
 	* @return {React.ReactNode} The rendered component.
 	*/
 	function DocumentOutline({ onSelect, hasOutlineItemsDisabled }) {
 		const { selectBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
-		const { title, isTitleSupported } = (0, _wordpress_data.useSelect)((select) => {
-			const { getEditedPostAttribute } = select(store);
+		const { title, isTitleSupported, isTitleRendered, postTitleClientId } = (0, _wordpress_data.useSelect)((select) => {
+			const { getEditedPostAttribute, getRenderingMode, getPostBlocksByName } = unlock$5(select(store));
 			const { getPostType } = select(_wordpress_core_data.store);
-			const postType = getPostType(getEditedPostAttribute("type"));
+			const postTypeSlug = getEditedPostAttribute("type");
+			const postType = getPostType(postTypeSlug);
+			const isPostOnly = getRenderingMode() === "post-only";
 			return {
 				title: getEditedPostAttribute("title"),
-				isTitleSupported: postType?.supports?.title ?? false
+				isTitleSupported: postType?.supports?.title ?? false,
+				isTitleRendered: isPostOnly && !DESIGN_POST_TYPES.includes(postTypeSlug),
+				postTitleClientId: isPostOnly ? void 0 : getPostBlocksByName("core/post-title")[0]
 			};
-		});
+		}, []);
 		const blocks = (0, _wordpress_data.useSelect)((select) => {
 			const { getClientIdsWithDescendants, getBlock } = select(_wordpress_block_editor.store);
 			return getClientIdsWithDescendants().map((id) => getBlock(id));
 		});
 		const contentBlocks = (0, _wordpress_data.useSelect)((select) => {
 			if (select(store).getRenderingMode() === "post-only") return;
-			const { getBlocksByName, getClientIdsOfDescendants } = select(_wordpress_block_editor.store);
-			const [postContentClientId] = getBlocksByName("core/post-content");
+			const [postContentClientId] = unlock$5(select(store)).getPostBlocksByName("core/post-content");
 			if (!postContentClientId) return;
-			return getClientIdsOfDescendants(postContentClientId);
+			return select(_wordpress_block_editor.store).getClientIdsOfDescendants(postContentClientId);
 		}, []);
 		const prevHeadingLevelRef = (0, _wordpress_element.useRef)(1);
 		const headings = (0, _wordpress_element.useMemo)(() => computeOutlineHeadings(blocks), [blocks]);
+		const canvasDocument = useBlockElement$3(headings[0]?.clientId)?.ownerDocument;
 		if (headings.length < 1) return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			className: "editor-document-outline has-no-headings",
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(EmptyOutlineIllustration, {}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", { children: (0, _wordpress_i18n.__)("Navigate the structure of your document and address issues like empty or incorrect heading levels.") })]
 		});
-		const titleNode = document.querySelector(".editor-post-title__input");
-		const hasTitle = isTitleSupported && title && titleNode;
+		const hasTitle = isTitleSupported && title && (isTitleRendered || postTitleClientId);
 		const hasMultipleH1 = headings.reduce((acc, heading) => ({
 			...acc,
 			[heading.level]: (acc[heading.level] || 0) + 1
@@ -89765,8 +89769,12 @@ If there's a particular need for this, please submit a feature request at https:
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("ul", { children: [hasTitle && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(TableOfContentsItem, {
 				level: (0, _wordpress_i18n.__)("Title"),
 				isValid: true,
-				onSelect,
-				href: `#${titleNode.id}`,
+				onSelect: () => {
+					if (postTitleClientId) selectBlock(postTitleClientId);
+					else canvasDocument?.querySelector(".editor-post-title__input")?.focus();
+					onSelect?.();
+				},
+				href: "#",
 				isDisabled: hasOutlineItemsDisabled,
 				children: title
 			}), headings.map((item) => {
@@ -107286,7 +107294,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/hooks/push-changes-to-global-styles/use-review-rows.mjs
-	const { resolveStyle } = unlock$5(privateApis$77);
+	const { resolveStyle } = unlock$5(privateApis$78);
 	/**
 	* Turns a raw style value into readable text, using the row's `format` hint so
 	* borders and spacing show as a single CSS value instead of a raw object.
@@ -108938,7 +108946,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/editor/build-module/components/preview-dropdown/index.mjs
-	const { getViewportBreakpoints } = unlock$5(privateApis$77);
+	const { getViewportBreakpoints } = unlock$5(privateApis$78);
 	function PreviewMenu({ forceIsAutosaveable, disabled }) {
 		const menuActionsRef = (0, _wordpress_element.useRef)(null);
 		(0, _wordpress_element.useEffect)(() => {
