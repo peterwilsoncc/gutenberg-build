@@ -130,6 +130,18 @@
   outline: 1px solid transparent;
 }
 
+.block-library-utils__media-control__inspector-icon-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+.block-library-utils__media-control__inspector-icon-indicator svg {
+  flex-shrink: 0;
+}
+
 .block-library-utils__media-control__reset {
   position: absolute;
   left: 0;

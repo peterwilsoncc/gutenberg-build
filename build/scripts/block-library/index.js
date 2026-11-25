@@ -41011,7 +41011,11 @@ Icon: ButtonIcon });
 	}
 
 // packages/block-library/build-module/utils/media-control.mjs
-/**
+	const MEDIA_TYPE_ICONS = {
+		audio: audio_default,
+		video: video_default
+	};
+	/**
 	* Focuses the toggle button.
 	*
 	* @param {Object} containerRef - ref object containing current element
@@ -41024,25 +41028,46 @@ Icon: ButtonIcon });
 		});
 	};
 	/**
+	* MediaControlIndicator - The slot left of the label: a `+` when no media is
+	* set, a thumbnail for an image, and an icon for any other media type.
+	*
+	* @param {Object} props
+	* @param {string} props.url       Media URL
+	* @param {string} props.mediaType Media type
+	* @return {Element} Indicator component
+	*/
+	function MediaControlIndicator({ url, mediaType }) {
+		if (url && mediaType === "image") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+			className: "block-library-utils__media-control__inspector-image-indicator",
+			style: { backgroundImage: `url(${url})` }
+		});
+		const typeIcon = MEDIA_TYPE_ICONS[mediaType] ?? file_default;
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+			className: "block-library-utils__media-control__inspector-icon-indicator",
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(icon_default$2, { icon: url ? typeIcon : plus_default })
+		});
+	}
+	/**
 	* MediaControlPreview - Preview component showing media thumbnail and filename
 	*
 	* @param {Object} props
 	* @param {string} props.url            Media URL for thumbnail
+	* @param {string} props.mediaType      Media type: 'image', 'video', 'audio', or any other type for a generic file (default: 'image')
 	* @param {string} props.filename       Filename to display
 	* @param {Object} props.itemGroupProps Optional props to pass to ItemGroup
 	* @param {string} props.className      Optional className for Truncate
 	* @param {string} props.label          Optional label for accessibility
 	* @return {Element} Preview component
 	*/
-	function MediaControlPreview({ url, filename, itemGroupProps, className, label }) {
+	function MediaControlPreview({ url, mediaType = "image", filename, itemGroupProps, className, label }) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalItemGroup, {
 			...itemGroupProps,
 			as: "span",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
 				justify: "flex-start",
-				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					className: "block-library-utils__media-control__inspector-image-indicator",
-					style: { backgroundImage: url ? `url(${url})` : void 0 }
+				children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaControlIndicator, {
+					url,
+					mediaType
 				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.FlexBlock, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalTruncate, {
 					numberOfLines: 1,
 					className,
@@ -41057,6 +41082,7 @@ Icon: ButtonIcon });
 	* @param {Object}   props
 	* @param {number}   props.mediaId               Media attachment ID
 	* @param {string}   props.mediaUrl              Media URL
+	* @param {string}   props.mediaType             Media type: 'image', 'video', 'audio', or any other type for a generic file (default: 'image')
 	* @param {string}   props.filename              Filename to display
 	* @param {Array}    props.allowedTypes          Allowed media types
 	* @param {Function} props.onSelect              Callback when media selected
@@ -41069,7 +41095,7 @@ Icon: ButtonIcon });
 	* @param {Function} props.onToggleFeaturedImage Callback toggling the featured image
 	* @return {Element} Media control component
 	*/
-	function MediaControl({ mediaId, mediaUrl, filename, allowedTypes, onSelect, onSelectURL, onError, onReset, isUploading = false, emptyLabel = (0, _wordpress_i18n.__)("Media"), useFeaturedImage, onToggleFeaturedImage }) {
+	function MediaControl({ mediaId, mediaUrl, mediaType, filename, allowedTypes, onSelect, onSelectURL, onError, onReset, isUploading = false, emptyLabel = (0, _wordpress_i18n.__)("Media"), useFeaturedImage, onToggleFeaturedImage }) {
 		const { getSettings } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
 		const onFilesDrop = (filesList) => {
 			const { mediaUpload } = getSettings();
@@ -41101,6 +41127,7 @@ Icon: ButtonIcon });
 					onToggleFeaturedImage,
 					name: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaControlPreview, {
 						url: mediaUrl,
+						mediaType,
 						filename,
 						className: "block-library-utils__media-control__inspector-media-replace-title",
 						label: mediaUrl ? (0, _wordpress_url.getFilename)(filename) || emptyLabel : emptyLabel
@@ -41187,6 +41214,7 @@ Icon: ButtonIcon });
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaControl, {
 						mediaId: id,
 						mediaUrl: url,
+						mediaType: isImageBackground ? "image" : "video",
 						filename: image?.media_details?.sizes?.full?.file || image?.slug || (0, _wordpress_url.getFilename)(url),
 						allowedTypes: ALLOWED_MEDIA_TYPES$8,
 						onSelect: onSelectMedia,
@@ -59893,6 +59921,7 @@ Icon: ButtonIcon });
 					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaControl, {
 						mediaId,
 						mediaUrl: mediaUrl || featuredImageURL,
+						mediaType,
 						filename: image?.media_details?.sizes?.full?.file || image?.slug || (0, _wordpress_url.getFilename)(mediaUrl),
 						allowedTypes: ALLOWED_MEDIA_TYPES$5,
 						onSelect: onSelectMedia,
