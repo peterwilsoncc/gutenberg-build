@@ -35,6 +35,7 @@ const { actions } = store("core/search", {
 			ctx.isSearchInputVisible = false;
 		},
 		handleSearchKeydown: withSyncEvent((event) => {
+			if (event?.isComposing || event?.keyCode === 229) return;
 			const { ref } = getElement();
 			if (event?.key === "Escape") {
 				actions.closeSearchInput();
