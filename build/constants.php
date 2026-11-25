@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
-	'version'          => '24.5.0-rc.1',
+	'version'          => '24.5.0',
 	'build_url'        => plugin_dir_url( __FILE__ ),
 	'has_debug_assets' => true,
 );
