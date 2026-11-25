@@ -4359,20 +4359,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return color1.space === color2.space && color1.alpha === color2.alpha && color1.coords.every((c, i) => c === color2.coords[i]);
 	}
 
-// node_modules/.store/colorjs.io@0.7.1-METd09ReG36PFivDyznZ-w/node_modules/colorjs.io/src/luminance.js
-/**
-	* Relative luminance
-	*/
-	/** @import { ColorTypes } from "./types.js" */
-	/**
-	*
-	* @param {ColorTypes} color
-	* @returns {number}
-	*/
-	function getLuminance(color) {
-		return get(color, [xyz_d65_default, "y"]);
-	}
-
 // node_modules/.store/colorjs.io@0.7.1-METd09ReG36PFivDyznZ-w/node_modules/colorjs.io/src/spaces/hsl.js
 	var hsl_default = new ColorSpace({
 		id: "hsl",
@@ -4718,16 +4704,20 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function getRelativeLuminance(color) {
 		if (typeof color === "string") {
 			ColorSpace.register(srgb_default);
-			return Math.max(getLuminance(color), 0);
+			return computeRelativeLuminance(color);
 		}
 		const cachedLuminance = objectLuminanceCache.get(color);
 		if (cachedLuminance && equals(cachedLuminance.color, color)) return cachedLuminance.luminance;
-		const luminance = Math.max(getLuminance(color), 0);
+		const luminance = computeRelativeLuminance(color);
 		objectLuminanceCache.set(color, {
 			color: clone(color),
 			luminance
 		});
 		return luminance;
+	}
+	function computeRelativeLuminance(color) {
+		const [red, green, blue] = to(color, srgb_linear_default).coords.map((channel) => channel ?? 0);
+		return Math.max(.2126 * red + .7152 * green + .0722 * blue, 0);
 	}
 	/**
 	* Calculate a WCAG 2.1 contrast ratio from precomputed relative luminances.
