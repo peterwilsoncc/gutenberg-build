@@ -49574,7 +49574,7 @@ Icon: ButtonIcon });
 			return options;
 		}, []);
 	}
-	function GalleryControls({ attributes, setAttributes, clientId, viewport, innerBlockImages, mediaById, dynamic, updateInnerImages, appliedSort, setAppliedSort }) {
+	function GalleryControls({ attributes, setAttributes, clientId, viewport, innerBlockImages, mediaById, dynamic, updateInnerImages, appliedSort, setAppliedSort, multiGallerySelection }) {
 		const { navigationButtonType, columns, imageCrop, randomOrder, linkTarget, linkTo, sizeSlug, aspectRatio, layout } = attributes;
 		const isDynamic = !!attributes.dynamicContent;
 		const isFlexLayout = isGalleryFlexLayout(layout);
@@ -49601,8 +49601,8 @@ Icon: ButtonIcon });
 			...showDefaultRatios ? defaultOptions || [] : [],
 			...themeOptions || []
 		];
-		const hasViewportSettings = isFlexLayout || aspectRatioOptions.length > 1;
-		if (isViewportStyleState && !hasViewportSettings) return null;
+		const canSetAspectRatio = !multiGallerySelection && aspectRatioOptions.length > 1;
+		if (isViewportStyleState && !(isFlexLayout || canSetAspectRatio)) return null;
 		const viewportStyle = isViewportStyleState ? getViewportGalleryStyle(attributes.style, viewport) : {};
 		const baseColumns = isValidGalleryColumns(columns) ? columns : void 0;
 		const baseImageCrop = typeof imageCrop === "boolean" ? imageCrop : true;
@@ -49614,13 +49614,15 @@ Icon: ButtonIcon });
 		const activeImageCrop = hasViewportImageCrop ? viewportStyle.imageCrop : baseImageCrop;
 		const activeAspectRatio = hasViewportAspectRatio ? viewportStyle.aspectRatio : baseAspectRatio;
 		const currentOrder = appliedSort && appliedSort.clientIds.length === innerBlockImages.length && appliedSort.clientIds.every((id, index) => innerBlockImages[index].clientId === id) ? appliedSort.order : null;
-		const canSortImages = hasSortableImages(innerBlockImages, mediaById);
 		const displayedImageCount = isDynamic ? dynamic.dynamicMedia.length : innerBlockImages.length;
 		let hasLightboxImages;
 		if (isDynamic) hasLightboxImages = linkTo === LINK_DESTINATION_LIGHTBOX;
 		else if (lightboxSetting?.enabled) hasLightboxImages = innerBlockImages.some((block) => block.attributes?.lightbox?.enabled === void 0 || block.attributes?.lightbox?.enabled === true);
 		else hasLightboxImages = innerBlockImages.some((block) => block.attributes.lightbox?.enabled);
+		if (multiGallerySelection && !isFlexLayout && !(lightboxSetting?.allowEditing && hasLightboxImages)) return null;
+		const canSortImages = hasSortableImages(innerBlockImages, mediaById);
 		const imageSizeOptions = getImageSizeOptions(isDynamic ? dynamic.dynamicMedia : Array.from(mediaById.values()), imageSizes);
+		const canSetResolution = !multiGallerySelection && imageSizeOptions.length > 0;
 		function selectRandomOrder() {
 			setAttributes({ randomOrder: true });
 		}
@@ -49732,24 +49734,25 @@ Icon: ButtonIcon });
 				setGallerySettings({
 					columns: void 0,
 					imageCrop: void 0,
-					aspectRatio: void 0
+					...!multiGallerySelection && { aspectRatio: void 0 }
 				});
 				return;
 			}
 			setAttributes({
 				navigationButtonType: "icon",
-				randomOrder: false,
+				...!multiGallerySelection && { randomOrder: false },
 				...isFlexLayout && {
 					columns: void 0,
 					imageCrop: true
 				}
 			});
+			if (multiGallerySelection) return;
 			setAspectRatio("auto");
 			if (isDynamic) dynamic.setSourceOrder(void 0, void 0);
 			if (sizeSlug !== "large") updateImagesSize(DEFAULT_MEDIA_SIZE_SLUG$3);
 			if (linkTarget) toggleOpenInNewTab(false);
 		}
-		const hasLinkTo = linkTo && linkTo !== "none";
+		const canSetLinkTarget = !multiGallerySelection && linkTo && linkTo !== "none";
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalToolsPanel, {
 			label: (0, _wordpress_i18n.__)("Settings"),
 			resetAll,
@@ -49769,7 +49772,7 @@ Icon: ButtonIcon });
 						required: true
 					})
 				}),
-				!isViewportStyleState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+				!isViewportStyleState && !multiGallerySelection && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					isShownByDefault: true,
 					label: (0, _wordpress_i18n.__)("Order by"),
 					hasValue: () => !!randomOrder || isDynamic && (dynamic.sourceOrderby !== "date" || dynamic.sourceOrder !== "desc"),
@@ -49796,7 +49799,7 @@ Icon: ButtonIcon });
 						onSelectRandom: selectRandomOrder
 					})
 				}),
-				!isViewportStyleState && imageSizeOptions.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+				!isViewportStyleState && canSetResolution && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					isShownByDefault: true,
 					label: (0, _wordpress_i18n.__)("Resolution"),
 					hasValue: () => sizeSlug !== "large",
@@ -49811,7 +49814,7 @@ Icon: ButtonIcon });
 						}
 					})
 				}),
-				!isViewportStyleState && hasLinkTo && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+				!isViewportStyleState && canSetLinkTarget && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					isShownByDefault: true,
 					label: (0, _wordpress_i18n.__)("Open images in new tab"),
 					hasValue: () => !!linkTarget,
@@ -49822,7 +49825,7 @@ Icon: ButtonIcon });
 						onChange: toggleOpenInNewTab
 					})
 				}),
-				aspectRatioOptions.length > 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
+				canSetAspectRatio && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalToolsPanelItem, {
 					hasValue: () => isViewportStyleState ? hasViewportAspectRatio : activeAspectRatio !== "auto",
 					label: (0, _wordpress_i18n.__)("Aspect ratio"),
 					onDeselect: () => setAspectRatio(isViewportStyleState ? void 0 : "auto"),
@@ -50199,7 +50202,7 @@ Icon: ButtonIcon });
 	* @param {Object} props.innerBlocksProps The gallery's `useInnerBlocksProps()` result.
 	*/
 	function GalleryDynamicView({ dynamic, innerBlocksProps, ...galleryProps }) {
-		const { attributes } = galleryProps;
+		const { attributes, multiGallerySelection } = galleryProps;
 		const { sourceDescriptor, dynamicImageBlocks, galleryContext, isResolvingDynamic, convertToStatic } = dynamic;
 		const blockEditingMode = (0, _wordpress_block_editor.useBlockEditingMode)();
 		const [isConfirmingDetach, setIsConfirmingDetach] = (0, _wordpress_element.useState)(false);
@@ -50209,7 +50212,7 @@ Icon: ButtonIcon });
 		} : attributes.layout, [attributes.layout]);
 		const emptyInstructions = isResolvingDynamic ? (0, _wordpress_i18n.__)("Loading images…") : sourceDescriptor?.emptyMessage ?? (0, _wordpress_i18n.__)("Dynamic images will appear here.");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
-			blockEditingMode === "default" && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
+			blockEditingMode === "default" && !multiGallerySelection && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
 				group: "other",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
 					onClick: () => setIsConfirmingDetach(true),
@@ -50401,7 +50404,7 @@ Icon: ButtonIcon });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_block_editor.InspectorControls, {
 				group: isViewportStyleState ? "style-state" : "default",
-				children: [!isViewportStyleState && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GallerySourcePanel, {
+				children: [!isViewportStyleState && !multiGallerySelection && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GallerySourcePanel, {
 					dynamic,
 					hasImages
 				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(GalleryControls, {
@@ -50414,10 +50417,11 @@ Icon: ButtonIcon });
 					dynamic,
 					updateInnerImages,
 					appliedSort,
-					setAppliedSort
+					setAppliedSort,
+					multiGallerySelection
 				})]
 			}),
-			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
+			!multiGallerySelection && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_block_editor.BlockControls, {
 				group: "block",
 				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarDropdownMenu, {
 					icon: link_default,
