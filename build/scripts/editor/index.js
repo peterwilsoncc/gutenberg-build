@@ -108556,7 +108556,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const description = info ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemDescription$1, { children: info }) : null;
 		let prefix;
 		if (icon) prefix = (0, _wordpress_element.isValidElement)(icon) && (icon.type === "svg" || icon.type === _wordpress_primitives.SVG) ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PrefixIcon, {
-			icon,
+			icon: icon.props.fill === void 0 ? (0, _wordpress_element.cloneElement)(icon, { fill: "currentColor" }) : icon,
 			className: icon.props.className
 		}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, { icon });
 		const itemShortcut = adaptShortcut(shortcut);
