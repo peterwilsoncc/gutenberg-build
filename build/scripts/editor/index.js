@@ -103338,7 +103338,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 			discardAndClose();
 		};
-		const handleKeyDown = (event) => {
+		const handleKeyDown = (0, _wordpress_keycodes.withIgnoreIMEEvents)((event) => {
 			const isUndoShortcut = _wordpress_keycodes.isKeyboardEvent.primary(event, "z");
 			const isRedoShortcut = _wordpress_keycodes.isKeyboardEvent.primaryShift(event, "z") || !(0, _wordpress_keycodes.isAppleOS)() && _wordpress_keycodes.isKeyboardEvent.primary(event, "y");
 			if ((isUndoShortcut || isRedoShortcut) && isImage) {
@@ -103361,7 +103361,7 @@ If there's a particular need for this, please submit a feature request at https:
 					setIsDiscardDialogOpen(true);
 				}
 			}
-		};
+		});
 		const snackbar = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_notices.SnackbarNotices, {
 			className: noticesClassName,
 			context: MEDIA_EDITOR_NOTICES_CONTEXT

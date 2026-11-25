@@ -47404,7 +47404,7 @@ function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose
 		}
 		discardAndClose();
 	};
-	const handleKeyDown = (event) => {
+	const handleKeyDown = (0, import_keycodes.withIgnoreIMEEvents)((event) => {
 		const isUndoShortcut = import_keycodes.isKeyboardEvent.primary(event, "z");
 		const isRedoShortcut = import_keycodes.isKeyboardEvent.primaryShift(event, "z") || !(0, import_keycodes.isAppleOS)() && import_keycodes.isKeyboardEvent.primary(event, "y");
 		if ((isUndoShortcut || isRedoShortcut) && isImage) {
@@ -47427,7 +47427,7 @@ function MediaEditorContent({ fields = [], form, id, aspectRatioPresets, onClose
 				setIsDiscardDialogOpen(true);
 			}
 		}
-	};
+	});
 	const snackbar = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_notices.SnackbarNotices, {
 		className: noticesClassName,
 		context: MEDIA_EDITOR_NOTICES_CONTEXT
