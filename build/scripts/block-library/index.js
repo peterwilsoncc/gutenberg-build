@@ -60861,15 +60861,9 @@ Icon: ButtonIcon });
 
 // packages/block-library/build-module/navigation/use-navigation-menu.mjs
 	function useNavigationMenu(ref) {
-		const permissions = (0, _wordpress_core_data.useResourcePermissions)({
-			kind: "postType",
-			name: "wp_navigation",
-			id: ref
-		});
 		const { navigationMenu, isNavigationMenuResolved, isNavigationMenuMissing } = (0, _wordpress_data.useSelect)((select) => {
 			return selectExistingMenu(select, ref);
 		}, [ref]);
-		const { canCreate: canCreateNavigationMenus, canUpdate: canUpdateNavigationMenu, canDelete: canDeleteNavigationMenu, isResolving: isResolvingPermissions, hasResolved: hasResolvedPermissions } = permissions;
 		const { records: navigationMenus, isResolving: isResolvingNavigationMenus, hasResolved: hasResolvedNavigationMenus } = (0, _wordpress_core_data.useEntityRecords)("postType", `wp_navigation`, PRELOADED_NAVIGATION_MENUS_QUERY);
 		return {
 			navigationMenu,
@@ -60878,14 +60872,7 @@ Icon: ButtonIcon });
 			navigationMenus,
 			isResolvingNavigationMenus,
 			hasResolvedNavigationMenus,
-			canSwitchNavigationMenu: ref ? navigationMenus?.length > 1 : navigationMenus?.length > 0,
-			canUserCreateNavigationMenus: canCreateNavigationMenus,
-			isResolvingCanUserCreateNavigationMenus: isResolvingPermissions,
-			hasResolvedCanUserCreateNavigationMenus: hasResolvedPermissions,
-			canUserUpdateNavigationMenu: canUpdateNavigationMenu,
-			hasResolvedCanUserUpdateNavigationMenu: ref ? hasResolvedPermissions : void 0,
-			canUserDeleteNavigationMenu: canDeleteNavigationMenu,
-			hasResolvedCanUserDeleteNavigationMenu: ref ? hasResolvedPermissions : void 0
+			canSwitchNavigationMenu: ref ? navigationMenus?.length > 1 : navigationMenus?.length > 0
 		};
 	}
 	function selectExistingMenu(select, ref) {
@@ -60944,7 +60931,11 @@ Icon: ButtonIcon });
 			per_page: -1,
 			context: "view"
 		});
-		const { navigationMenus, isResolvingNavigationMenus, hasResolvedNavigationMenus, canUserCreateNavigationMenus, canSwitchNavigationMenu, isNavigationMenuMissing } = useNavigationMenu(currentMenuId);
+		const { navigationMenus, isResolvingNavigationMenus, hasResolvedNavigationMenus, canSwitchNavigationMenu, isNavigationMenuMissing } = useNavigationMenu(currentMenuId);
+		const canUserCreateNavigationMenus = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).canUser("create", {
+			kind: "postType",
+			name: "wp_navigation"
+		}), []);
 		const [currentTitle] = (0, _wordpress_core_data.useEntityProp)("postType", "wp_navigation", "title", currentMenuId);
 		const menuChoices = (0, _wordpress_element.useMemo)(() => {
 			return navigationMenus?.map(({ id, title, status }, index) => {
@@ -64106,7 +64097,27 @@ Icon: ButtonIcon });
 		const hasOverlays = overlayTemplateParts?.some((templatePart) => templatePart.area === "navigation-overlay") ?? false;
 		const [isResponsiveMenuOpen, setResponsiveMenuVisibility] = (0, _wordpress_element.useState)(false);
 		const [overlayMenuPreview, setOverlayMenuPreview] = (0, _wordpress_element.useState)(false);
-		const { hasResolvedNavigationMenus, isNavigationMenuResolved, isNavigationMenuMissing, canUserUpdateNavigationMenu, hasResolvedCanUserUpdateNavigationMenu, canUserDeleteNavigationMenu, hasResolvedCanUserDeleteNavigationMenu, canUserCreateNavigationMenus, isResolvingCanUserCreateNavigationMenus, hasResolvedCanUserCreateNavigationMenus } = useNavigationMenu(ref);
+		const { hasResolvedNavigationMenus, isNavigationMenuResolved, isNavigationMenuMissing } = useNavigationMenu(ref);
+		const isBlockOrInnerBlockSelected = isSelected || isInnerBlockSelected;
+		const { canUserCreateNavigationMenus, canUserUpdateNavigationMenu, canUserDeleteNavigationMenu } = (0, _wordpress_data.useSelect)((select) => {
+			if (!isBlockOrInnerBlockSelected) return {};
+			const { canUser } = select(_wordpress_core_data.store);
+			const resource = {
+				kind: "postType",
+				name: "wp_navigation"
+			};
+			return {
+				canUserCreateNavigationMenus: canUser("create", resource),
+				canUserUpdateNavigationMenu: ref ? canUser("update", {
+					...resource,
+					id: ref
+				}) : void 0,
+				canUserDeleteNavigationMenu: ref ? canUser("delete", {
+					...resource,
+					id: ref
+				}) : void 0
+			};
+		}, [ref, isBlockOrInnerBlockSelected]);
 		const navMenuResolvedButMissing = hasResolvedNavigationMenus && isNavigationMenuMissing;
 		const { convert: convertClassicMenu, status: classicMenuConversionStatus, error: classicMenuConversionError } = useConvertClassicToBlockMenu(createNavigationMenu);
 		const isConvertingClassicMenu = classicMenuConversionStatus === CLASSIC_MENU_CONVERSION_PENDING;
@@ -64237,16 +64248,14 @@ Icon: ButtonIcon });
 		(0, _wordpress_element.useEffect)(() => {
 			if (!isSelected && !isInnerBlockSelected) hideNavigationMenuPermissionsNotice();
 			if (isSelected || isInnerBlockSelected) {
-				if (ref && !navMenuResolvedButMissing && hasResolvedCanUserUpdateNavigationMenu && !canUserUpdateNavigationMenu) showNavigationMenuPermissionsNotice((0, _wordpress_i18n.__)("You do not have permission to edit this Menu. Any changes made will not be saved."));
-				if (!ref && hasResolvedCanUserCreateNavigationMenus && !canUserCreateNavigationMenus) showNavigationMenuPermissionsNotice((0, _wordpress_i18n.__)("You do not have permission to create Navigation Menus."));
+				if (ref && !navMenuResolvedButMissing && canUserUpdateNavigationMenu === false) showNavigationMenuPermissionsNotice((0, _wordpress_i18n.__)("You do not have permission to edit this Menu. Any changes made will not be saved."));
+				if (!ref && canUserCreateNavigationMenus === false) showNavigationMenuPermissionsNotice((0, _wordpress_i18n.__)("You do not have permission to create Navigation Menus."));
 			}
 		}, [
 			isSelected,
 			isInnerBlockSelected,
 			canUserUpdateNavigationMenu,
-			hasResolvedCanUserUpdateNavigationMenu,
 			canUserCreateNavigationMenus,
-			hasResolvedCanUserCreateNavigationMenus,
 			ref,
 			hideNavigationMenuPermissionsNotice,
 			showNavigationMenuPermissionsNotice,
@@ -64445,7 +64454,7 @@ Icon: ButtonIcon });
 				currentMenuId: ref,
 				clientId,
 				canUserCreateNavigationMenus,
-				isResolvingCanUserCreateNavigationMenus,
+				isResolvingCanUserCreateNavigationMenus: canUserCreateNavigationMenus === void 0,
 				onSelectNavigationMenu,
 				onSelectClassicMenu,
 				onCreateEmpty: createUntitledEmptyNavigationMenu
@@ -64475,8 +64484,8 @@ Icon: ButtonIcon });
 						blockEditingMode === "default" && isEntityAvailable && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_block_editor.InspectorControls, {
 							group: "advanced",
 							children: [
-								hasResolvedCanUserUpdateNavigationMenu && canUserUpdateNavigationMenu && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NavigationMenuNameControl, {}),
-								hasResolvedCanUserDeleteNavigationMenu && canUserDeleteNavigationMenu && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NavigationMenuDeleteControl, { onDelete: () => {
+								canUserUpdateNavigationMenu && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NavigationMenuNameControl, {}),
+								canUserDeleteNavigationMenu && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NavigationMenuDeleteControl, { onDelete: () => {
 									replaceInnerBlocks(clientId, []);
 									showNavigationMenuStatusNotice((0, _wordpress_i18n.__)("Navigation Menu successfully deleted."));
 								} }),
