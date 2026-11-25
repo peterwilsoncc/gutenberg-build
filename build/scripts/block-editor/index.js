@@ -98392,7 +98392,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const blockToolbarAfterRef = usePopoverScroll(__unstableContentRef);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 			...props,
-			onKeyDown,
+			onKeyDown: (0, _wordpress_keycodes.withIgnoreIMEEvents)(onKeyDown),
 			className: clsx(props.className, { "block-editor-block-tools--is-dragging": isDragging }),
 			children: [
 				/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(InsertionPointOpenRef.Provider, {
