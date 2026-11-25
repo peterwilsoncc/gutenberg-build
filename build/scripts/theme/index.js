@@ -4995,7 +4995,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const cCap = options.preserveNearGrayTint ? cSeed * (1 + (cSeed / .02) ** 2) : Infinity;
 		return (lTarget) => {
 			const cmaxTarget = getMaxChromaAtLH(clamp01(lTarget), hSeed, gamut);
-			const cWithCarry = alpha * cmaxTarget * seedCarry;
+			const cIntendedBase = alpha * cmaxTarget;
+			const cWithCarry = options.preserveSeedSaturation ? Math.max(cIntendedBase * seedCarry, cmaxTarget * seedRelative) : cIntendedBase * seedCarry;
 			const t = continuousTaper(lSeed, lTarget, {
 				radiusLight,
 				radiusDark,
@@ -5503,7 +5504,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		...step,
 		taperChromaOptions: {
 			...step.taperChromaOptions,
-			preserveNearGrayTint: true
+			preserveNearGrayTint: true,
+			preserveSeedSaturation: step.taperChromaOptions === BG_SURFACE_TAPER_CHROMA || step.taperChromaOptions === STROKE_TAPER_CHROMA
 		}
 	} : step;
 	const BG_RAMP_CONFIG = Object.fromEntries(Object.entries(BASE_RAMP_CONFIG).map(([stepName, step]) => [stepName, withNearGrayChromaLimit(step)]));
