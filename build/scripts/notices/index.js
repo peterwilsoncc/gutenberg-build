@@ -10316,6 +10316,7 @@ Icon: ButtonIcon });
 	const LIST_SELECTOR = "[data-wp-ui-notice-list]";
 	const CONTENT_BOUNDARY = `.${style_module_default$5.notice}, .${style_module_default$5.actions}, ${LIST_SELECTOR}`;
 	const HIDDEN_CONTENT$1 = "[hidden], [aria-hidden=\"true\"]";
+	const LINE_BREAKING = "address, article, aside, blockquote, br, caption, dd, details, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, legend, li, main, menu, nav, ol, p, pre, search, section, summary, table, td, th, tr, ul";
 	function getComposedParent(element) {
 		const ShadowRoot = element.ownerDocument.defaultView?.ShadowRoot;
 		return element.assignedSlot ?? element.parentElement ?? (ShadowRoot && element.parentNode instanceof ShadowRoot ? element.parentNode.host : null);
@@ -10330,11 +10331,24 @@ Icon: ButtonIcon });
 	function readMessage(root) {
 		function readText(kind) {
 			return Array.from(root.querySelectorAll(`.${style_module_default$5[kind]}`)).filter((element) => element.closest(CONTENT_BOUNDARY) === root && !isHidden(element, root)).map((element) => {
-				const walker = element.ownerDocument.createTreeWalker(element, NodeFilter.SHOW_TEXT, { acceptNode(node) {
-					return node.parentElement && isHidden(node.parentElement, root) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
-				} });
 				let text = "";
-				while (walker.nextNode()) text += walker.currentNode.textContent;
+				let needsSpace = false;
+				function read(node) {
+					if (node.nodeType === Node.TEXT_NODE) {
+						const value = node.textContent ?? "";
+						if (!value) return;
+						if (needsSpace && /\S$/.test(text) && /^\S/.test(value)) text += " ";
+						needsSpace = false;
+						text += value;
+						return;
+					}
+					if (node.nodeType !== Node.ELEMENT_NODE || node.matches(HIDDEN_CONTENT$1)) return;
+					const breaksLine = node.matches(LINE_BREAKING);
+					needsSpace ||= breaksLine;
+					node.childNodes.forEach(read);
+					needsSpace ||= breaksLine;
+				}
+				element.childNodes.forEach(read);
 				return text.trim();
 			}).filter(Boolean).join(" ");
 		}
