@@ -28761,7 +28761,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	*
 	* Pass `computedStyle` when the caller has already resolved it to avoid a second lookup.
 	*/
-	function getElementTransform(element, computedStyle) {
+	function getElementTransform$1(element, computedStyle) {
 		const transform = (computedStyle ?? getWindow$1(element).getComputedStyle(element)).transform;
 		let translateX = 0;
 		let translateY = 0;
@@ -32824,7 +32824,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	}
 	function getActiveTabTranslation(element) {
 		const computedStyle = getWindow$1(element).getComputedStyle(element);
-		const { x, y } = getElementTransform(element, computedStyle);
+		const { x, y } = getElementTransform$1(element, computedStyle);
 		let translateX = x;
 		let translateY = y;
 		const { translate } = computedStyle;
@@ -61299,6 +61299,178 @@ Icon: ButtonIcon });
 		const top = Math.min(rect1.top, rect2.top);
 		return new window.DOMRectReadOnly(left, top, right - left, bottom - top);
 	}
+	const ANGLE_UNITS = {
+		deg: 1,
+		grad: .9,
+		rad: 180 / Math.PI,
+		turn: 360
+	};
+	const ROTATE_AXES = {
+		"": [
+			0,
+			0,
+			1
+		],
+		x: [
+			1,
+			0,
+			0
+		],
+		y: [
+			0,
+			1,
+			0
+		],
+		z: [
+			0,
+			0,
+			1
+		]
+	};
+	function parseAngle(value) {
+		const match = value.match(/^(-?[\d.]+(?:e[+-]?\d+)?)(deg|grad|rad|turn)$/);
+		return match ? parseFloat(match[1]) * ANGLE_UNITS[match[2]] : NaN;
+	}
+	function parseLength(value, size) {
+		if (value.endsWith("%")) return parseFloat(value) / 100 * size;
+		return value.endsWith("px") ? parseFloat(value) : NaN;
+	}
+	/**
+	* Builds the matrix an element's own `translate`, `rotate`, `scale` and
+	* `transform` apply to its border box, about its transform origin.
+	*
+	* @param element Element.
+	* @param style   Computed style of the element.
+	*
+	* @return The matrix, or undefined when the element is not transformed or
+	*         a value can't be read.
+	*/
+	function getOwnTransform(element, style) {
+		const { translate = "none", rotate = "none", scale = "none", transform = "none" } = style;
+		if (translate === "none" && rotate === "none" && scale === "none" && transform === "none") return;
+		const { offsetWidth: width, offsetHeight: height } = element;
+		const [originX, originY] = style.transformOrigin.split(" ").map((value) => parseFloat(value));
+		const matrix = new window.DOMMatrix().translateSelf(originX, originY);
+		if (translate !== "none") {
+			const [x, y = "0px"] = translate.split(" ");
+			matrix.translateSelf(parseLength(x, width), parseLength(y, height));
+		}
+		if (rotate !== "none") {
+			const parts = rotate.split(" ");
+			const angle = parseAngle(parts.pop());
+			const [x, y, z] = ROTATE_AXES[parts.join(" ")] ?? parts.map((value) => parseFloat(value));
+			matrix.rotateAxisAngleSelf(x, y, z, angle);
+		}
+		if (scale !== "none") {
+			const [x, y = x] = scale.split(" ").map((value) => value.endsWith("%") ? parseFloat(value) / 100 : parseFloat(value));
+			matrix.scaleSelf(x, y);
+		}
+		if (transform !== "none") matrix.multiplySelf(new window.DOMMatrix(transform));
+		matrix.translateSelf(-originX, -originY);
+		const { a, b, c, d, e, f } = matrix;
+		return [
+			a,
+			b,
+			c,
+			d,
+			e,
+			f
+		].every(Number.isFinite) ? new window.DOMMatrix([
+			a,
+			b,
+			c,
+			d,
+			e,
+			f
+		]) : void 0;
+	}
+	function getElementTransform(element) {
+		const view = element.ownerDocument.defaultView;
+		if (!view || !("offsetWidth" in element)) return;
+		return getOwnTransform(element, view.getComputedStyle(element));
+	}
+	/**
+	* Returns the matrix that maps the untransformed layout of the nearest
+	* transformed element, from `element` up, to client coordinates. Blocks
+	* inside that element keep their layout in this space, however it is
+	* moved, turned or resized on screen.
+	*
+	* @param element Element to start from, usually a block's parent.
+	* @return The matrix, or null when nothing is transformed.
+	*/
+	function getLayoutFrame(element) {
+		for (let current = element; current; current = current.parentElement) {
+			const transform = getElementTransform(current);
+			if (!transform) continue;
+			const frame = getLayoutFrame(current.parentElement);
+			const { left, top } = getLayoutRect(current, frame);
+			const matrix = (frame ?? new window.DOMMatrix()).translate(left, top).multiply(transform);
+			return matrix.a * matrix.d - matrix.b * matrix.c ? matrix : null;
+		}
+		return null;
+	}
+	/**
+	* Returns the rectangle an element takes up in the layout, before any
+	* transform moves, turns or resizes it or its ancestors. Transforms only
+	* change how an element is painted, so this is where neighbouring blocks
+	* and a newly inserted block line up. An untransformed element outside
+	* transformed ancestors gets its bounding client rect.
+	*
+	* @param element Element.
+	* @param frame   Layout frame of the element's parent, see `getLayoutFrame`.
+	* @return The element's untransformed rect in the frame's coordinates.
+	*/
+	function getLayoutRect(element, frame = getLayoutFrame(element.parentElement)) {
+		const rect = element.getBoundingClientRect();
+		const transform = getElementTransform(element);
+		if (!transform && !frame) return rect;
+		const { offsetWidth: width, offsetHeight: height } = element;
+		const center = (frame ?? new window.DOMMatrix()).inverse().transformPoint({
+			x: rect.left + rect.width / 2,
+			y: rect.top + rect.height / 2
+		});
+		const painted = (transform ?? new window.DOMMatrix()).transformPoint({
+			x: width / 2,
+			y: height / 2
+		});
+		return new window.DOMRect(center.x - painted.x, center.y - painted.y, width, height);
+	}
+	/**
+	* Maps a point in client coordinates into a layout frame.
+	*
+	* @param frame Layout frame, see `getLayoutFrame`.
+	* @param x     Client x coordinate.
+	* @param y     Client y coordinate.
+	* @return The point in the frame's coordinates.
+	*/
+	function toLayoutPoint(frame, x, y) {
+		return frame ? frame.inverse().transformPoint({
+			x,
+			y
+		}) : {
+			x,
+			y
+		};
+	}
+	/**
+	* Maps a rect in a layout frame to client coordinates. The result stays
+	* level: it is centred on the rect's place on screen and scaled with the
+	* frame, but never turned.
+	*
+	* @param frame Layout frame, see `getLayoutFrame`.
+	* @param rect  Rect in the frame's coordinates.
+	* @return The rect in client coordinates.
+	*/
+	function toClientRect(frame, rect) {
+		if (!frame) return rect;
+		const center = frame.transformPoint({
+			x: rect.left + rect.width / 2,
+			y: rect.top + rect.height / 2
+		});
+		const width = rect.width * Math.hypot(frame.a, frame.b);
+		const height = rect.height * Math.hypot(frame.c, frame.d);
+		return new window.DOMRect(center.x - width / 2, center.y - height / 2, width, height);
+	}
 	/**
 	* Extends a rectangle upwards to a given top, keeping its horizontal extent.
 	*
@@ -61309,6 +61481,105 @@ Icon: ButtonIcon });
 	function extendRectToTop(rect, top) {
 		if (top >= rect.top) return rect;
 		return new window.DOMRectReadOnly(rect.left, top, rect.width, rect.bottom - top);
+	}
+	/**
+	* Returns the corners of an element's painted box in client coordinates,
+	* after every transform, in order around the box.
+	*
+	* @param element Element.
+	* @param frame   Layout frame of the element's parent, see `getLayoutFrame`.
+	* @return The four corners.
+	*/
+	function getPaintedCorners(element, frame) {
+		const { x, y, width, height } = getLayoutRect(element, frame);
+		const transform = getElementTransform(element);
+		const corners = [
+			[0, 0],
+			[width, 0],
+			[width, height],
+			[0, height]
+		];
+		if (!frame && !transform) return corners.map(([cornerX, cornerY]) => ({
+			x: x + cornerX,
+			y: y + cornerY
+		}));
+		const matrix = (frame ?? new window.DOMMatrix()).translate(x, y).multiply(transform ?? new window.DOMMatrix());
+		return corners.map(([cornerX, cornerY]) => matrix.transformPoint({
+			x: cornerX,
+			y: cornerY
+		}));
+	}
+	/**
+	* Returns the top and bottom of an element's painted box within a column of
+	* the screen, after every transform.
+	*
+	* @param element Element.
+	* @param frame   Layout frame of the element's parent, see `getLayoutFrame`.
+	* @param left    Left edge of the column, in client coordinates.
+	* @param right   Right edge of the column, in client coordinates.
+	* @return The span, or undefined when the box is outside the column.
+	*/
+	function getPaintedSpan(element, frame, left, right) {
+		const corners = getPaintedCorners(element, frame);
+		const ys = [];
+		corners.forEach((start, index) => {
+			const end = corners[(index + 1) % corners.length];
+			if (start.x >= left && start.x <= right) ys.push(start.y);
+			for (const edge of [left, right]) if ((start.x - edge) * (end.x - edge) < 0) ys.push(start.y + (edge - start.x) / (end.x - start.x) * (end.y - start.y));
+		});
+		return ys.length ? {
+			top: Math.min(...ys),
+			bottom: Math.max(...ys)
+		} : void 0;
+	}
+	/**
+	* Returns the space between two stacked blocks as painted on screen, across
+	* the width of an insertion line. A transform can move a block's painting
+	* away from its layout box, so this keeps a level line clear of both blocks.
+	*
+	* @param previous Element of the block above.
+	* @param next     Element of the block below.
+	* @param frame    Layout frame of their parent, see `getLayoutFrame`.
+	* @param line     The line's rect in client coordinates.
+	* @return The visible gap, or undefined when the painted blocks overlap.
+	*/
+	function getVisibleGap(previous, next, frame, line) {
+		const above = getPaintedSpan(previous, frame, line.left, line.right);
+		const below = getPaintedSpan(next, frame, line.left, line.right);
+		if (!above || !below || below.top <= above.bottom) return;
+		return new window.DOMRect(line.left, above.bottom, line.width, below.top - above.bottom);
+	}
+	/**
+	* Shortens a level insertion line to the part around its middle that crosses
+	* neither painted block. Inside a rotated container the layout gap is
+	* slanted, so a full width line runs into the blocks at its ends.
+	*
+	* @param previous Element of the block above.
+	* @param next     Element of the block below.
+	* @param frame    Layout frame of their parent, see `getLayoutFrame`.
+	* @param line     The line's rect in client coordinates.
+	* @return The shortened line, or undefined when a block covers its middle.
+	*/
+	function getClearLine(previous, next, frame, line) {
+		const y = line.top + line.height / 2;
+		const middle = line.left + line.width / 2;
+		let left = line.left;
+		let right = line.right;
+		for (const element of [previous, next]) {
+			const corners = getPaintedCorners(element, frame);
+			const xs = [];
+			corners.forEach((start, index) => {
+				const end = corners[(index + 1) % corners.length];
+				if (start.y !== end.y && (start.y - y) * (end.y - y) <= 0) xs.push(start.x + (y - start.y) / (end.y - start.y) * (end.x - start.x));
+			});
+			if (!xs.length) continue;
+			const blockLeft = Math.min(...xs);
+			const blockRight = Math.max(...xs);
+			if (blockLeft <= middle && blockRight >= middle) return;
+			if (blockRight < middle) left = Math.max(left, blockRight);
+			else right = Math.min(right, blockLeft);
+		}
+		return new window.DOMRect(left, line.top, right - left, line.height);
 	}
 	/**
 	* Returns whether an element is visible.
@@ -90959,11 +91230,13 @@ If there's a particular need for this, please submit a feature request at https:
 		const isVertical = orientation === "vertical";
 		const popoverAnchor = (0, _wordpress_element.useMemo)(() => {
 			if (popoverRecomputeCounter < 0 || !previousElement && !nextElement || !isVisible) return;
+			const contextElement = operation === "group" ? nextElement || previousElement : previousElement || nextElement;
 			return {
-				contextElement: operation === "group" ? nextElement || previousElement : previousElement || nextElement,
+				contextElement,
 				getBoundingClientRect() {
-					const previousRect = previousElement ? previousElement.getBoundingClientRect() : null;
-					const nextRect = nextElement ? nextElement.getBoundingClientRect() : null;
+					const frame = getLayoutFrame(contextElement.parentElement);
+					const previousRect = previousElement ? getLayoutRect(previousElement, frame) : null;
+					const nextRect = nextElement ? getLayoutRect(nextElement, frame) : null;
 					let left = 0;
 					let top = 0;
 					let width = 0;
@@ -90991,7 +91264,9 @@ If there's a particular need for this, please submit a feature request at https:
 						}
 						width = Math.max(width, 0);
 					}
-					return new window.DOMRect(left, top, width, height);
+					const rect = toClientRect(frame, new window.DOMRect(left, top, width, height));
+					if (isVertical && operation !== "group" && previousElement && nextElement) return getVisibleGap(previousElement, nextElement, frame, rect) ?? getClearLine(previousElement, nextElement, frame, rect) ?? rect;
+					return rect;
 				}
 			};
 		}, [
@@ -91403,12 +91678,12 @@ If there's a particular need for this, please submit a feature request at https:
 				const blockListSettings = getBlockListSettings(rootClientId);
 				const orientation = blockListSettings?.orientation || "vertical";
 				const captureToolbars = !!blockListSettings?.__experimentalCaptureToolbars;
-				const offsetTop = event.clientY;
-				const offsetLeft = event.clientX;
+				const frame = getLayoutFrame(target);
+				const { x: offsetLeft, y: offsetTop } = toLayoutPoint(frame, event.clientX, event.clientY);
 				const clientId = getBlockOrder(rootClientId).find((childClientId) => {
 					const blockEl = refsMap.get(childClientId);
 					if (!blockEl) return false;
-					const blockElRect = blockEl.getBoundingClientRect();
+					const blockElRect = getLayoutRect(blockEl, frame);
 					if (orientation === "vertical") return blockElRect.top > offsetTop;
 					if (offsetTop < blockElRect.top || offsetTop > blockElRect.bottom) return false;
 					return (0, _wordpress_i18n.isRTL)() ? blockElRect.right < offsetLeft : blockElRect.left > offsetLeft;
@@ -91421,8 +91696,8 @@ If there's a particular need for this, please submit a feature request at https:
 				if (getSelectedBlockClientIds().includes(clientId) && orientation === "vertical" && !captureToolbars && !getSettings().hasFixedToolbar) return;
 				const element = refsMap.get(clientId);
 				if (orientation === "vertical") {
-					const elementRect = element.getBoundingClientRect();
-					if (event.clientX > elementRect.right || event.clientX < elementRect.left) {
+					const elementRect = getLayoutRect(element, frame);
+					if (offsetLeft > elementRect.right || offsetLeft < elementRect.left) {
 						hideInsertionPoint();
 						return;
 					}
