@@ -62453,9 +62453,24 @@ Icon: ButtonIcon });
 		placement: "bottom-start"
 	};
 	const BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU = ["core/navigation-link", "core/navigation-submenu"];
-	function AddSubmenuItem({ clientId, onClose, isDisabled, updateExpansion, setInsertedBlockClientId }) {
+	/**
+	* The menu item that adds a link inside a Navigation item, turning a link into
+	* a submenu first. It is disabled for blocks that cannot become a submenu.
+	*
+	* @param {Object}                       props
+	* @param {string}                       props.clientId                 The item's block.
+	* @param {() => void}                   props.onClose                  Closes the menu.
+	* @param {( action: Object ) => void}   props.updateExpansion          Expands or collapses List View rows.
+	* @param {( clientId: string ) => void} props.setInsertedBlockClientId Marks the new link as just inserted, which opens its Link UI.
+	*/
+	function AddSubmenuItem({ clientId, onClose, updateExpansion, setInsertedBlockClientId }) {
 		const { insertBlock, replaceBlock, replaceInnerBlocks } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const { getBlock } = (0, _wordpress_data.useSelect)(_wordpress_block_editor.store);
+		const isDisabled = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlockName, getBlockRootClientId, canInsertBlockType } = select(_wordpress_block_editor.store);
+			const blockName = getBlockName(clientId);
+			return !BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU.includes(blockName) || blockName === "core/navigation-link" && !canInsertBlockType("core/navigation-submenu", getBlockRootClientId(clientId));
+		}, [clientId]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
 			icon: add_submenu_default,
 			disabled: isDisabled,
@@ -62465,7 +62480,10 @@ Icon: ButtonIcon });
 				const block = getBlock(clientId);
 				if (block.name === "core/navigation-submenu") insertBlock(newLink, block.innerBlocks.length, clientId, updateSelectionOnInsert);
 				else {
-					const newSubmenu = (0, _wordpress_blocks.createBlock)("core/navigation-submenu", block.attributes, block.innerBlocks);
+					const newSubmenu = {
+						...(0, _wordpress_blocks.createBlock)("core/navigation-submenu", block.attributes, block.innerBlocks),
+						clientId
+					};
 					replaceBlock(clientId, newSubmenu);
 					replaceInnerBlocks(newSubmenu.clientId, [newLink], updateSelectionOnInsert);
 				}
@@ -62489,7 +62507,7 @@ Icon: ButtonIcon });
 				maximumLength: 25
 			})
 		);
-		const { blockName, rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, _wordpress_data.useSelect)((select) => {
+		const { rootClientId, canDuplicate, canInsertBlock, isFirst, isLast } = (0, _wordpress_data.useSelect)((select) => {
 			const { getBlockRootClientId, getBlockName, canInsertBlockType, getDirectInsertBlock, getBlockIndex, getBlockCount } = select(_wordpress_block_editor.store);
 			const { getDefaultBlockName } = select(_wordpress_blocks.store);
 			const _rootClientId = getBlockRootClientId(clientId);
@@ -62497,7 +62515,6 @@ Icon: ButtonIcon });
 			const canInsertDefaultBlock = canInsertBlockType(getDefaultBlockName(), _rootClientId);
 			const directInsertBlock = _rootClientId ? getDirectInsertBlock(_rootClientId) : null;
 			return {
-				blockName: _blockName,
 				rootClientId: _rootClientId,
 				canDuplicate: !!_blockName && (0, _wordpress_blocks.hasBlockSupport)(_blockName, "multiple", true) && canInsertBlockType(_blockName, _rootClientId),
 				canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && !!_blockName && canInsertBlockType(_blockName, _rootClientId),
@@ -62505,7 +62522,6 @@ Icon: ButtonIcon });
 				isLast: getBlockIndex(clientId) === getBlockCount(_rootClientId) - 1
 			};
 		}, [clientId]);
-		const isSubmenuDisabled = !BLOCKS_THAT_CAN_BE_CONVERTED_TO_SUBMENU.includes(blockName);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropdownMenu, {
 			icon: more_vertical_default,
 			label: (0, _wordpress_i18n.__)("Options"),
@@ -62537,7 +62553,6 @@ Icon: ButtonIcon });
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddSubmenuItem, {
 					clientId,
 					onClose,
-					isDisabled: isSubmenuDisabled,
 					updateExpansion,
 					setInsertedBlockClientId
 				}),
@@ -65786,7 +65801,7 @@ Icon: ButtonIcon });
 			setAttributes,
 			allowTextUpdate: true
 		});
-		const { __unstableMarkNextChangeAsNotPersistent, replaceBlock } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
+		const { __unstableMarkNextChangeAsNotPersistent, replaceBlocks } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		const [isLinkOpen, setIsLinkOpen] = (0, _wordpress_element.useState)(false);
 		const [popoverAnchor, setPopoverAnchor] = (0, _wordpress_element.useState)(null);
 		const listItemRef = (0, _wordpress_element.useRef)(null);
@@ -65873,8 +65888,11 @@ Icon: ButtonIcon });
 		});
 		const ParentElement = openSubmenusOnClick ? "button" : "a";
 		function transformToLink() {
-			const newLinkBlock = (0, _wordpress_blocks.createBlock)("core/navigation-link", attributes);
-			replaceBlock(clientId, newLinkBlock);
+			const newLinkBlock = {
+				...(0, _wordpress_blocks.createBlock)("core/navigation-link", attributes),
+				clientId
+			};
+			replaceBlocks(clientId, newLinkBlock, void 0, isSelected ? 0 : null);
 		}
 		(0, _wordpress_element.useEffect)(() => {
 			if (!hasChildren && prevHasChildren) {
@@ -92238,7 +92256,8 @@ Icon: ButtonIcon });
 	const privateApis = {};
 	lock$1(privateApis, {
 		NAVIGATION_OVERLAY_TEMPLATE_PART_AREA,
-		NavigationLinkUI
+		NavigationLinkUI,
+		AddSubmenuItem
 	});
 
 // packages/block-library/build-module/index.mjs

@@ -1728,7 +1728,8 @@ const POPOVER_PROPS = {
 	className: "block-editor-block-settings-menu__popover",
 	placement: "bottom-start"
 };
-function LeafMoreMenu({ clientId, ...props }) {
+function LeafMoreMenu({ clientId, updateExpansion, setInsertedBlockClientId, ...props }) {
+	const { AddSubmenuItem } = unlock(window.wp.blockLibrary.privateApis);
 	const { moveBlocksDown, moveBlocksUp, removeBlocks, duplicateBlocks, insertBeforeBlock, insertAfterBlock } = (0, import_data.useDispatch)(import_block_editor.store);
 	const removeLabel = (0, import_i18n.sprintf)(
 		/** translators: %s: block name */
@@ -1778,6 +1779,12 @@ function LeafMoreMenu({ clientId, ...props }) {
 					onClose();
 				},
 				children: (0, import_i18n.__)("Move down")
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(AddSubmenuItem, {
+				clientId,
+				onClose,
+				updateExpansion,
+				setInsertedBlockClientId
 			}),
 			canDuplicate && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.MenuItem, {
 				onClick: () => {

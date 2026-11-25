@@ -73844,7 +73844,8 @@ If there's a particular need for this, please submit a feature request at https:
 		placement: "bottom-start"
 	};
 	const { useHistory: useHistory$8, useLocation: useLocation$8 } = unlock$5(_wordpress_router.privateApis);
-	function LeafMoreMenu(props) {
+	const { AddSubmenuItem } = unlock$5(_wordpress_block_library.privateApis);
+	function LeafMoreMenu({ updateExpansion, setInsertedBlockClientId, ...props }) {
 		const history = useHistory$8();
 		const { path } = useLocation$8();
 		const { clientId } = props;
@@ -73905,6 +73906,12 @@ If there's a particular need for this, please submit a feature request at https:
 						onClose();
 					},
 					children: (0, _wordpress_i18n.__)("Move down")
+				}),
+				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AddSubmenuItem, {
+					clientId,
+					onClose,
+					updateExpansion,
+					setInsertedBlockClientId
 				}),
 				attributes?.type === "page" && attributes?.id && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
 					onClick: () => {
