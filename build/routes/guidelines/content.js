@@ -37409,8 +37409,9 @@ function ViewList(props) {
 	});
 	const generateCompositeItemIdPrefix = (0, import_element.useCallback)((item) => `${baseId}-${getItemId(item)}`, [baseId, getItemId]);
 	const isActiveCompositeItem = (0, import_element.useCallback)((item, idToCheck) => {
-		return idToCheck.startsWith(generateCompositeItemIdPrefix(item));
-	}, [generateCompositeItemIdPrefix]);
+		const idPrefix = generateCompositeItemIdPrefix(item);
+		return idToCheck === generateItemWrapperCompositeId(idPrefix) || idToCheck === generateDropdownTriggerCompositeId(idPrefix) || actions.some((action) => idToCheck === generatePrimaryActionCompositeId(idPrefix, action.id));
+	}, [actions, generateCompositeItemIdPrefix]);
 	const [activeCompositeId, setActiveCompositeId] = (0, import_element.useState)(void 0);
 	const compositeRef = (0, import_element.useRef)(null);
 	(0, import_element.useEffect)(() => {
