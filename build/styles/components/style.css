@@ -3435,6 +3435,11 @@ body.lockscroll {
   height: calc(0 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
   border-radius: 0;
 }
+@media (forced-colors: active) {
+  .components-tab-panel__tabs-item::after {
+    background: CanvasText;
+  }
+}
 @media not (prefers-reduced-motion) {
   .components-tab-panel__tabs-item::after {
     transition: height 0.1s linear;
@@ -3442,8 +3447,6 @@ body.lockscroll {
 }
 .components-tab-panel__tabs-item.is-active::after {
   height: calc(1 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
-  outline: 2px solid transparent;
-  outline-offset: -1px;
 }
 .components-tab-panel__tabs-item::before {
   content: "";
@@ -3490,6 +3493,11 @@ body.lockscroll {
   background: currentColor;
   pointer-events: none;
 }
+@media (forced-colors: active) {
+  .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item .components-tab-panel__tabs-item-label::after {
+    background: CanvasText;
+  }
+}
 @media not (prefers-reduced-motion) {
   .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item .components-tab-panel__tabs-item-label::after {
     transition: width 0.1s linear;
@@ -3497,8 +3505,6 @@ body.lockscroll {
 }
 .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item.is-active::after, .components-tab-panel__tabs[aria-orientation=vertical] .components-tab-panel__tabs-item.is-active .components-tab-panel__tabs-item-label::after {
   width: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
-  outline: 2px solid transparent;
-  outline-offset: -1px;
 }
 
 .components-tab-panel__tab-content:focus {
