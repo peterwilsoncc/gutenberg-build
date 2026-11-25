@@ -114698,7 +114698,7 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 				event.preventDefault();
 				submit();
 			},
-			onKeyDown: (event) => {
+			onKeyDown: (0, _wordpress_keycodes.withIgnoreIMEEvents)((event) => {
 				if (_wordpress_keycodes.isKeyboardEvent.primary(event, "Enter")) {
 					event.preventDefault();
 					submit();
@@ -114708,7 +114708,7 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 					event.preventDefault();
 					onCancel(event);
 				}
-			},
+			}),
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(RichTextControl, {
 				id: inputId,
 				label: labels?.input ?? (0, _wordpress_i18n.__)("Note"),
@@ -116861,10 +116861,10 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 			onKeyUp: (event) => {
 				if (event.key === "Tab") isKeyboardTabbingRef.current = false;
 			},
-			onKeyDown: (event) => {
+			onKeyDown: (0, _wordpress_keycodes.withIgnoreIMEEvents)((event) => {
 				if (event.key === "Tab") isKeyboardTabbingRef.current = true;
 				else onKeyDown(event);
-			},
+			}),
 			tabIndex: 0,
 			role: "treeitem",
 			"aria-label": ariaLabel,
