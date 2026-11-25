@@ -98226,6 +98226,24 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/image-editor/build-module/get-image-edit.mjs
 /**
+	* How close a value must be to a whole number to be read as that number.
+	* Working the edit back out of the state leaves floating-point noise, such
+	* as a crop edge at 7e-8 instead of 0 or a width of 1439.9999999999998
+	* pixels. A millionth, of the image or of a pixel, is far below anything
+	* a person can set, so a value that close to a whole number is that number.
+	*/
+	const WHOLE_NUMBER_TOLERANCE = 1e-6;
+	/**
+	* `value`, or the whole number it is within `WHOLE_NUMBER_TOLERANCE` of.
+	*
+	* @param value A fraction of the image, or a size in pixels.
+	* @return The value without floating-point noise next to a whole number.
+	*/
+	function snapToWholeNumber(value) {
+		const whole = Math.round(value);
+		return Math.abs(value - whole) < WHOLE_NUMBER_TOLERANCE ? whole : value;
+	}
+	/**
 	* The person's edit, described against the image loaded in `state.image`.
 	*
 	* The editor's state describes what the canvas shows: where the image sits
@@ -98297,10 +98315,10 @@ If there's a particular need for this, please submit a feature request at https:
 		const offsetY = (fullH - snapH) / 2;
 		const fullX = snapX + offsetX;
 		const fullY = snapY + offsetY;
-		const x = fullX / fullW;
-		const y = fullY / fullH;
-		const width = widthPx / fullW;
-		const height = heightPx / fullH;
+		const x = snapToWholeNumber(fullX / fullW);
+		const y = snapToWholeNumber(fullY / fullH);
+		const width = snapToWholeNumber(widthPx / fullW);
+		const height = snapToWholeNumber(heightPx / fullH);
 		if (!(x <= .001 && y <= .001 && width >= .999 && height >= .999)) edit.crop = {
 			x,
 			y,
@@ -98330,12 +98348,12 @@ If there's a particular need for this, please submit a feature request at https:
 		if (!edit) return null;
 		const rotated = getRotatedBBox(image.naturalWidth, image.naturalHeight, edit.rotation ?? 0);
 		if (!edit.crop) return {
-			width: rotated.width,
-			height: rotated.height
+			width: snapToWholeNumber(rotated.width),
+			height: snapToWholeNumber(rotated.height)
 		};
 		return {
-			width: edit.crop.width * rotated.width,
-			height: edit.crop.height * rotated.height
+			width: snapToWholeNumber(edit.crop.width * rotated.width),
+			height: snapToWholeNumber(edit.crop.height * rotated.height)
 		};
 	}
 
