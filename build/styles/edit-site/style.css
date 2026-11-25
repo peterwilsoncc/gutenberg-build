@@ -425,7 +425,7 @@ body.admin-color-fresh {
   opacity: 0;
 }
 
-.dataviews-filters__reset-button.dataviews-filters__reset-button[aria-disabled=true]:focus {
+.dataviews-filters__reset-button.dataviews-filters__reset-button[aria-disabled=true]:focus-visible {
   opacity: 1;
 }
 
