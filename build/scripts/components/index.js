@@ -67051,7 +67051,7 @@ VisualLabel });
 		const confirmLabel = confirmButtonText ?? (0, _wordpress_i18n.__)("OK");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(react_jsx_runtime.Fragment, { children: isOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Modal, {
 			onRequestClose: handleEvent(onCancel),
-			onKeyDown: handleEnter,
+			onKeyDown: (0, _wordpress_keycodes.withIgnoreIMEEvents)(handleEnter),
 			closeButtonLabel: cancelLabel,
 			isDismissible: true,
 			ref: forwardedRef,
