@@ -2494,8 +2494,9 @@ body.modal-open {
 }
 
 .components-panel {
-  background: #fff;
-  border: 1px solid #e0e0e0;
+  background: var(--wpds-color-background-surface-neutral-strong, #fff);
+  color: var(--wpds-color-foreground-content-neutral, #1e1e1e);
+  border: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
 }
 .components-panel > .components-panel__header:first-child,
 .components-panel > .components-panel__body:first-child {
@@ -2511,8 +2512,8 @@ body.modal-open {
 }
 
 .components-panel__body {
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
+  border-bottom: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
 }
 .components-panel__body h3 {
   margin: 0 0 0.5em;
@@ -2563,7 +2564,7 @@ body.modal-open {
 }
 
 .components-panel__body > .components-panel__body-title:hover {
-  background: #f0f0f0;
+  background: var(--wpds-color-background-interactive-neutral-weak-active, #ececec);
   border: none;
 }
 
@@ -2573,7 +2574,7 @@ body.modal-open {
   width: 100%;
   font-weight: var(--wpds-typography-font-weight-emphasis, 600);
   text-align: left;
-  color: #1e1e1e;
+  color: var(--wpds-color-foreground-interactive-neutral, #1e1e1e);
 }
 @media not (prefers-reduced-motion) {
   .components-panel__body-toggle.components-button {
@@ -2587,12 +2588,28 @@ body.modal-open {
   outline-offset: calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) * -1);
   border-radius: 0;
 }
+.components-panel__body-toggle.components-button:not(:disabled, [aria-disabled=true]):is(:hover,
+:active,
+:focus-visible) {
+  color: var(--wpds-color-foreground-interactive-neutral-active, #1e1e1e);
+}
+.components-panel__body-toggle.components-button:not(:disabled, [aria-disabled=true]):is(:hover,
+:active,
+:focus-visible) .components-panel__icon {
+  color: var(--wpds-color-foreground-interactive-neutral-weak-active, #1e1e1e);
+}
+.components-panel__body-toggle.components-button:disabled, .components-panel__body-toggle.components-button[aria-disabled=true] {
+  color: var(--wpds-color-foreground-interactive-neutral-disabled, #8b8b8b);
+}
+.components-panel__body-toggle.components-button:disabled .components-panel__icon, .components-panel__body-toggle.components-button[aria-disabled=true] .components-panel__icon {
+  color: var(--wpds-color-foreground-interactive-neutral-weak-disabled, #8b8b8b);
+}
 .components-panel__body-toggle.components-button .components-panel__arrow {
   position: absolute;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #1e1e1e;
+  color: inherit;
   fill: currentColor;
 }
 @media not (prefers-reduced-motion) {
@@ -2612,7 +2629,7 @@ body.rtl .components-panel__body-toggle.components-button .dashicons-arrow-right
 }
 
 .components-panel__icon {
-  color: #757575;
+  color: var(--wpds-color-foreground-interactive-neutral-weak, #6e6e6e);
   margin: -2px 0 -2px 6px;
 }
 
