@@ -6664,13 +6664,16 @@ Icon: ButtonIcon });
 	const WIDGET_AREAS_IDENTIFIER = "edit-widgets/block-areas";
 	const { Tabs: WCTabs } = unlock(_wordpress_components.privateApis);
 	function SidebarHeader({ selectedWidgetAreaBlock }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs.TabList, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
-			tabId: WIDGET_AREAS_IDENTIFIER,
-			children: selectedWidgetAreaBlock ? selectedWidgetAreaBlock.attributes.name : (0, _wordpress_i18n.__)("Widget Areas")
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
-			tabId: BLOCK_INSPECTOR_IDENTIFIER,
-			children: (0, _wordpress_i18n.__)("Block")
-		})] });
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(WCTabs.TabList, {
+			className: "edit-widgets-sidebar__panel-tablist",
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
+				tabId: WIDGET_AREAS_IDENTIFIER,
+				children: selectedWidgetAreaBlock ? selectedWidgetAreaBlock.attributes.name : (0, _wordpress_i18n.__)("Widget Areas")
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WCTabs.Tab, {
+				tabId: BLOCK_INSPECTOR_IDENTIFIER,
+				children: (0, _wordpress_i18n.__)("Block")
+			})]
+		});
 	}
 	function SidebarContent({ hasSelectedNonAreaBlock, currentArea, isGeneralSidebarOpen, selectedWidgetAreaBlock }) {
 		const { enableComplementaryArea } = (0, _wordpress_data.useDispatch)(store$18);

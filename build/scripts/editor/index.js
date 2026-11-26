@@ -114084,6 +114084,7 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
  /** translators: Default label for the Document sidebar tab, not selected. */
 		documentLabel = (0, _wordpress_i18n._x)("Document", "noun, panel");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(List$1, {
+			className: "editor-sidebar__panel-tablist",
 			activateOnFocus: false,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Tab, {
 				value: sidebars.document,

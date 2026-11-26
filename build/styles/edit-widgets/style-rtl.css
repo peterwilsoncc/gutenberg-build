@@ -827,6 +827,10 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
   padding-right: 0;
 }
 
+.edit-widgets-sidebar__panel-tablist {
+  margin-bottom: -1px;
+}
+
 .edit-widgets-widget-areas__top-container {
   display: flex;
   padding: 16px;

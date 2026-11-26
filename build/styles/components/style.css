@@ -2506,6 +2506,9 @@ body.modal-open {
 .components-panel > .components-panel__body:last-child {
   border-bottom-width: 0;
 }
+.components-panel > .components-panel__header:last-child {
+  height: 47px;
+}
 
 .components-panel + .components-panel {
   margin-top: -1px;
@@ -2529,8 +2532,8 @@ body.modal-open {
   align-items: center;
   padding: 0 16px;
   border-bottom: 1px solid var(--wpds-color-stroke-surface-neutral, #dbdbdb);
-  box-sizing: content-box;
-  height: 47px;
+  box-sizing: border-box;
+  height: 48px;
 }
 .components-panel__header h2 {
   margin: 0;
