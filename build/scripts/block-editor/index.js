@@ -4804,9 +4804,11 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 			};
 		}
 		if (!state.blocks.controlledInnerBlocks.has(clientId)) return state.blocks.tree.get(clientId);
+		const regularTree = state.blocks.tree.get(clientId);
+		if (!regularTree) return;
 		const controlledTree = state.blocks.tree.get(`controlled||${clientId}`);
 		return {
-			...state.blocks.tree.get(clientId),
+			...regularTree,
 			innerBlocks: controlledTree?.innerBlocks
 		};
 	}
