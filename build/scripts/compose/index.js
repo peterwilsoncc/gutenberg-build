@@ -2827,6 +2827,7 @@ var import_mousetrap = /* @__PURE__ */ __toESM(require_mousetrap(), 1);
 	* @return Array with the fixed window list and setter
 	*/
 	function useFixedWindowList(elementRef, itemHeight, totalItems, options) {
+		(0, _wordpress_deprecated.default)("wp.compose.__experimentalUseFixedWindowList", { since: "7.3" });
 		const { windowOverscan, useWindowing = true, initWindowSize = DEFAULT_INIT_WINDOW_SIZE, expandedState } = options ?? {};
 		const [fixedListWindow, setFixedListWindow] = (0, _wordpress_element.useState)({
 			visibleItems: initWindowSize,
