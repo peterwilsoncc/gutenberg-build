@@ -93958,7 +93958,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const lastSearchRef = (0, _wordpress_element.useRef)("");
 		const pendingTermsRef = (0, _wordpress_element.useRef)(/* @__PURE__ */ new Set());
 		const registry = (0, _wordpress_data.useRegistry)();
-		const { editPost } = (0, _wordpress_data.useDispatch)(store);
+		const { editPost, lockPostSaving, unlockPostSaving } = (0, _wordpress_data.useDispatch)(store);
 		const { saveEntityRecord } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
 		const { createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const { terms, termIds, taxonomy, hasAssignAction, hasCreateAction, hasResolvedTerms } = (0, _wordpress_data.useSelect)((select) => {
@@ -94042,20 +94042,25 @@ If there's a particular need for this, please submit a feature request at https:
 			};
 			pendingTermsRef.current.add(pendingTerm.value);
 			setValues((currentValues) => [...currentValues, pendingTerm]);
-			let savedTerm;
+			lockPostSaving(pendingTerm.value);
 			try {
-				savedTerm = await findOrCreateTerm(name);
-			} catch (error) {
-				createErrorNotice(error.message, { type: "snackbar" });
+				let savedTerm;
+				try {
+					savedTerm = await findOrCreateTerm(name);
+				} catch (error) {
+					createErrorNotice(error.message, { type: "snackbar" });
+					pendingTermsRef.current.delete(pendingTerm.value);
+					setValues((currentValues) => currentValues.filter((item) => !isSameTerm(item, pendingTerm)));
+					return false;
+				}
+				if (!pendingTermsRef.current.has(pendingTerm.value)) return false;
 				pendingTermsRef.current.delete(pendingTerm.value);
-				setValues((currentValues) => currentValues.filter((item) => !isSameTerm(item, pendingTerm)));
-				return false;
+				setValues((currentValues) => currentValues.filter((item) => isSameTerm(item, pendingTerm) || !isSameTerm(item, savedTerm)).map((item) => isSameTerm(item, pendingTerm) ? savedTerm : item));
+				assignTerm(itemToTermId(savedTerm));
+				return true;
+			} finally {
+				unlockPostSaving(pendingTerm.value);
 			}
-			if (!pendingTermsRef.current.has(pendingTerm.value)) return false;
-			pendingTermsRef.current.delete(pendingTerm.value);
-			setValues((currentValues) => currentValues.filter((item) => isSameTerm(item, pendingTerm) || !isSameTerm(item, savedTerm)).map((item) => isSameTerm(item, pendingTerm) ? savedTerm : item));
-			assignTerm(itemToTermId(savedTerm));
-			return true;
 		}
 		async function createTerms(names) {
 			if ((await Promise.all(names.map((name) => createTerm(name)))).includes(true)) (0, _wordpress_a11y.speak)(termAddedLabel, "assertive");
@@ -94374,7 +94379,7 @@ If there's a particular need for this, please submit a feature request at https:
 				taxonomy: _taxonomy
 			};
 		}, [slug]);
-		const { editPost } = (0, _wordpress_data.useDispatch)(store);
+		const { editPost, lockPostSaving, unlockPostSaving } = (0, _wordpress_data.useDispatch)(store);
 		const { saveEntityRecord } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
 		const { createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const selectedTerms = (0, _wordpress_element.useMemo)(() => new Set(terms), [terms]);
@@ -94444,27 +94449,33 @@ If there's a particular need for this, please submit a feature request at https:
 				return;
 			}
 			setAdding(true);
-			let newTerm;
+			const lockName = `term-create-${slug}`;
+			lockPostSaving(lockName);
 			try {
-				newTerm = await addTerm({
-					name: formName,
-					parent: formParent ? formParent : void 0
-				});
-			} catch (error) {
-				createErrorNotice(error.message, { type: "snackbar" });
-				return;
+				let newTerm;
+				try {
+					newTerm = await addTerm({
+						name: formName,
+						parent: formParent ? formParent : void 0
+					});
+				} catch (error) {
+					createErrorNotice(error.message, { type: "snackbar" });
+					return;
+				}
+				const defaultName = slug === "category" ? (0, _wordpress_i18n.__)("Category") : (0, _wordpress_i18n.__)("Term");
+				const termAddedMessage = (0, _wordpress_i18n.sprintf)(
+					/** translators: %s: term name. */
+					(0, _wordpress_i18n._x)("%s added", "term"),
+					taxonomy?.labels?.singular_name ?? defaultName
+				);
+				(0, _wordpress_a11y.speak)(termAddedMessage, "assertive");
+				setAdding(false);
+				setFormName("");
+				setFormParent("");
+				onUpdateTerms([...terms, newTerm.id]);
+			} finally {
+				unlockPostSaving(lockName);
 			}
-			const defaultName = slug === "category" ? (0, _wordpress_i18n.__)("Category") : (0, _wordpress_i18n.__)("Term");
-			const termAddedMessage = (0, _wordpress_i18n.sprintf)(
-				/** translators: %s: term name. */
-				(0, _wordpress_i18n._x)("%s added", "term"),
-				taxonomy?.labels?.singular_name ?? defaultName
-			);
-			(0, _wordpress_a11y.speak)(termAddedMessage, "assertive");
-			setAdding(false);
-			setFormName("");
-			setFormParent("");
-			onUpdateTerms([...terms, newTerm.id]);
 		};
 		const labelWithFallback = (labelProperty, fallbackIsCategory, fallbackIsNotCategory) => taxonomy?.labels?.[labelProperty] ?? (slug === "category" ? fallbackIsCategory : fallbackIsNotCategory);
 		const newTermButtonLabel = labelWithFallback("add_new_item", (0, _wordpress_i18n.__)("Add Category"), (0, _wordpress_i18n.__)("Add Term"));
