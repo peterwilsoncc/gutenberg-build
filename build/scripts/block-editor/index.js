@@ -123415,7 +123415,7 @@ If there's a particular need for this, please submit a feature request at https:
 	* @return List view inspector controls or null.
 	*/
 	function ListViewPanel({ clientId, name }) {
-		const { isSelectionWithinCurrentSection } = (0, _wordpress_element.useContext)(PrivateBlockContext);
+		const { isSelectionWithinCurrentSection, isMultiSelected } = (0, _wordpress_element.useContext)(PrivateBlockContext);
 		const { isOpened, expandRevision, handleToggle } = useListViewPanelState(clientId);
 		const { openListViewContentPanel } = unlock$2((0, _wordpress_data.useDispatch)(store));
 		const { isEnabled, hasChildren, isNestedListView } = (0, _wordpress_data.useSelect)((select) => {
@@ -123428,7 +123428,7 @@ If there's a particular need for this, please submit a feature request at https:
 			};
 		}, [clientId]);
 		const title = (0, _wordpress_blocks.getBlockType)(name)?.title || name;
-		if (!isEnabled || isNestedListView) return null;
+		if (!isEnabled || isNestedListView || isMultiSelected) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InspectorControlsFill, {
 			group: "list",
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.PanelBody, {
