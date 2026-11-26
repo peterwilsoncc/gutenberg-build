@@ -13683,14 +13683,14 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	* Note that for the block to be useful, any scripts required by a widget must
 	* be loaded into the page.
 	*
-	* @param {Object} supports Block support settings.
+	* @param supports Block support settings.
 	* @see https://developer.wordpress.org/block-editor/how-to-guides/widgets/legacy-widget-block/
 	*/
 	function registerLegacyWidgetBlock(supports = {}) {
 		const { metadata, settings, name } = legacy_widget_exports;
 		(0, _wordpress_blocks.registerBlockType)({
-			name,
-			...metadata
+			...metadata,
+			name
 		}, {
 			...settings,
 			supports: {
@@ -13702,13 +13702,13 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	/**
 	* Registers the Widget Group block.
 	*
-	* @param {Object} supports Block support settings.
+	* @param supports Block support settings.
 	*/
 	function registerWidgetGroupBlock(supports = {}) {
 		const { metadata, settings, name } = widget_group_exports;
 		(0, _wordpress_blocks.registerBlockType)({
-			name,
-			...metadata
+			...metadata,
+			name
 		}, {
 			...settings,
 			supports: {
