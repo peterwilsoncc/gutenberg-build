@@ -7268,7 +7268,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function unwrapElement(element) {
 		return !isElement$1(element) ? element.contextElement : element;
 	}
-	function getScale$2(element) {
+	function getScale$1(element) {
 		const domElement = unwrapElement(element);
 		if (!isHTMLElement(domElement)) return createCoords(1);
 		const rect = domElement.getBoundingClientRect();
@@ -7303,8 +7303,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		let scale = createCoords(1);
 		if (includeScale) {
 			if (offsetParent) {
-				if (isElement$1(offsetParent)) scale = getScale$2(offsetParent);
-			} else scale = getScale$2(element);
+				if (isElement$1(offsetParent)) scale = getScale$1(offsetParent);
+			} else scale = getScale$1(element);
 		}
 		const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
 		let x = (clientRect.left + visualOffsets.x) / scale.x;
@@ -7317,7 +7317,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			let currentWin = win;
 			let currentIFrame = getFrameElement(currentWin);
 			while (currentIFrame && offsetWin !== currentWin) {
-				const iframeScale = getScale$2(currentIFrame);
+				const iframeScale = getScale$1(currentIFrame);
 				const iframeRect = currentIFrame.getBoundingClientRect();
 				const css = getComputedStyle$2(currentIFrame);
 				const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
@@ -7368,7 +7368,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) scroll = getNodeScroll(offsetParent);
 			if (isOffsetParentAnElement) {
 				const offsetRect = getBoundingClientRect(offsetParent);
-				scale = getScale$2(offsetParent);
+				scale = getScale$1(offsetParent);
 				offsets.x = offsetRect.x + offsetParent.clientLeft;
 				offsets.y = offsetRect.y + offsetParent.clientTop;
 			}
@@ -7446,7 +7446,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
 		const top = clientRect.top + element.clientTop;
 		const left = clientRect.left + element.clientLeft;
-		const scale = getScale$2(element);
+		const scale = getScale$1(element);
 		return {
 			width: element.clientWidth * scale.x,
 			height: element.clientHeight * scale.y,
@@ -7595,7 +7595,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		getElementRects,
 		getClientRects,
 		getDimensions,
-		getScale: getScale$2,
+		getScale: getScale$1,
 		isElement: isElement$1,
 		isRTL: isRTL$23
 	};
@@ -13082,7 +13082,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				store.context.handleScrollArrowVisibility(scroller);
 				return;
 			}
-			const scale = getScale$1(positionerElement);
+			const scale = getScale(positionerElement);
 			const currentHeight = normalizeSize(positionerElement.getBoundingClientRect().height, "y", scale);
 			const doc = ownerDocument(positionerElement);
 			const win = getWindow$1(positionerElement);
@@ -13174,7 +13174,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				const positionerStyles = win.getComputedStyle(positionerElement);
 				const popupStyles = win.getComputedStyle(popupElement);
 				const doc = ownerDocument(triggerElement);
-				const scale = getScale$1(triggerElement);
+				const scale = getScale(triggerElement);
 				const triggerRect = normalizeRect(triggerElement.getBoundingClientRect(), scale);
 				const positionerRect = normalizeRect(positionerElement.getBoundingClientRect(), scale);
 				const triggerHeight = triggerRect.height;
@@ -13317,7 +13317,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function getMaxScrollTop(scroller) {
 		return getMaxScrollOffset(scroller.scrollHeight, scroller.clientHeight);
 	}
-	function getScale$1(element) {
+	function getScale(element) {
 		return platform.getScale(element);
 	}
 	function normalizeSize(size, axis, scale) {
@@ -50186,7 +50186,7 @@ VisualLabel });
 	*
 	* @return The product of values.
 	*/
-	function multiply$1(...args) {
+	function multiply(...args) {
 		if (!args.length) return 0;
 		const precision = args.reduce((total, arg) => total + getPrecision(getNumber(arg)), 0);
 		const product = args.reduce((total, arg, index) => {
@@ -50527,7 +50527,7 @@ VisualLabel });
 		const mergedRef = (0, _wordpress_compose.useMergeRefs)([inputRef, forwardedRef]);
 		const isStepAny = step === "any";
 		const baseStep = isStepAny ? 1 : ensureNumber(step);
-		const baseSpin = multiply$1(ensureNumber(spinFactor), baseStep);
+		const baseSpin = multiply(ensureNumber(spinFactor), baseStep);
 		const constrainValue = (value, stepOverride) => {
 			if (!isStepAny) value = ensureValidStep(value, min, stepOverride ?? baseStep);
 			return `${clamp$1(value, min, max)}`;
@@ -50539,7 +50539,7 @@ VisualLabel });
 		const spinValue = (value, direction, event) => {
 			event?.preventDefault();
 			const shift = event?.shiftKey && isShiftStepEnabled;
-			const delta = shift ? multiply$1(ensureNumber(shiftStep), baseSpin) : baseSpin;
+			const delta = shift ? multiply(ensureNumber(shiftStep), baseSpin) : baseSpin;
 			let nextValue = isValueEmpty(value) ? baseValue : value;
 			if (direction === "up") nextValue = add(nextValue, delta);
 			else if (direction === "down") nextValue = subtract(nextValue, delta);
@@ -50567,7 +50567,7 @@ VisualLabel });
 			if (type === "DRAG" && isDragEnabled) {
 				const [x, y] = payload.delta;
 				const enableShift = payload.shiftKey && isShiftStepEnabled;
-				const modifier = enableShift ? multiply$1(ensureNumber(shiftStep), baseSpin) : baseSpin;
+				const modifier = enableShift ? multiply(ensureNumber(shiftStep), baseSpin) : baseSpin;
 				let directionModifier;
 				let delta;
 				switch (dragDirection) {
@@ -50589,7 +50589,7 @@ VisualLabel });
 				}
 				if (delta !== 0) {
 					delta = Math.ceil(Math.abs(delta)) * Math.sign(delta);
-					const distance = multiply$1(delta, modifier, directionModifier);
+					const distance = multiply(delta, modifier, directionModifier);
 					nextState.value = constrainValue(add(currentValue, distance), enableShift ? modifier : void 0);
 				}
 			}
@@ -58358,7 +58358,7 @@ VisualLabel });
 		if (step === void 0) {
 			const unitStep = (units?.find((option) => option.value === unit))?.step ?? 1;
 			step = "any";
-			spinFactor = multiply$1(props.spinFactor ?? 1, unitStep);
+			spinFactor = multiply(props.spinFactor ?? 1, unitStep);
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(NumberControl, {
 			...props,
@@ -76558,115 +76558,7 @@ The screen with id ${screen.id} will not be added.`);
 	}(react.PureComponent);
 
 // packages/components/build-module/resizable-box/utils.mjs
-	const IDENTITY = {
-		a: 1,
-		b: 0,
-		c: 0,
-		d: 1
-	};
-	const ANGLE_UNITS = {
-		deg: Math.PI / 180,
-		grad: Math.PI / 200,
-		rad: 1,
-		turn: 2 * Math.PI
-	};
-	function multiply(m, n) {
-		return {
-			a: m.a * n.a + m.c * n.b,
-			b: m.b * n.a + m.d * n.b,
-			c: m.a * n.c + m.c * n.d,
-			d: m.b * n.c + m.d * n.d
-		};
-	}
-	function parseAngle(value) {
-		const match = value.match(/^(-?[\d.]+(?:e-?\d+)?)(deg|grad|rad|turn)$/);
-		return match ? parseFloat(match[1]) * ANGLE_UNITS[match[2]] : void 0;
-	}
-	/**
-	* Reads the computed `rotate` property. Only a turn around the z axis keeps
-	* the element flat, so any other axis is treated as no rotation.
-	*
-	* @param value Computed `rotate` value.
-	*/
-	function getRotate(value) {
-		const parts = value.trim().split(/\s+/);
-		const angle = parseAngle(parts[parts.length - 1]);
-		const axis = parts.slice(0, -1).join(" ");
-		if (angle === void 0 || ![
-			"",
-			"z",
-			"0 0 1"
-		].includes(axis)) return IDENTITY;
-		const cos = Math.cos(angle);
-		const sin = Math.sin(angle);
-		return {
-			a: cos,
-			b: sin,
-			c: -sin,
-			d: cos
-		};
-	}
-	function getScale(value) {
-		const [x, y = x] = value.trim().split(/\s+/).map((part) => part.endsWith("%") ? parseFloat(part) / 100 : parseFloat(part));
-		if (!Number.isFinite(x) || !Number.isFinite(y)) return IDENTITY;
-		return {
-			a: x,
-			b: 0,
-			c: 0,
-			d: y
-		};
-	}
-	/**
-	* Reads the computed `transform` property, which is always `none`,
-	* `matrix()` or `matrix3d()`.
-	*
-	* @param value Computed `transform` value.
-	*/
-	function getTransform(value) {
-		const match = value.match(/^matrix(3d)?\((.+)\)$/);
-		if (!match) return IDENTITY;
-		const numbers = match[2].split(",").map(parseFloat);
-		const [a, b, c, d] = match[1] ? [
-			numbers[0],
-			numbers[1],
-			numbers[4],
-			numbers[5]
-		] : numbers;
-		return {
-			a,
-			b,
-			c,
-			d
-		};
-	}
-	/**
-	* Returns how a single element's own computed style rotates and scales it.
-	*
-	* @param style The element's computed style.
-	*
-	* @return The linear transform from the element's axes to its parent's.
-	*/
-	function getStyleTransform(style) {
-		let matrix = getRotate(style.rotate || "none");
-		matrix = multiply(matrix, getScale(style.scale || "none"));
-		return multiply(matrix, getTransform(style.transform || "none"));
-	}
-	/**
-	* Returns how an element and its ancestors rotate and scale it on screen.
-	* Translation is left out, since it moves the element without changing
-	* which way its edges face.
-	*
-	* @param element The element to measure.
-	*
-	* @return The linear transform from the element's axes to screen axes.
-	*/
-	function getScreenTransform(element) {
-		const view = element.ownerDocument.defaultView;
-		let matrix = IDENTITY;
-		if (!view) return matrix;
-		for (let node = element; node; node = node.parentElement) matrix = multiply(getStyleTransform(view.getComputedStyle(node)), matrix);
-		return matrix;
-	}
+	const getViewportVectorTransform = unlock(_wordpress_dom.privateApis).getViewportVectorTransform;
 	/**
 	* Maps a pointer movement on screen into an element's own axes.
 	*
@@ -76858,7 +76750,7 @@ The screen with id ${screen.id} will not be added.`);
 			super.onResizeStart(event, direction);
 			this.stopTransformedDrag();
 			if (!this.resizable || (this.props.scale ?? 1) !== 1) return;
-			const matrix = getScreenTransform(this.resizable);
+			const matrix = getViewportVectorTransform(this.resizable);
 			if (!isIdentity(matrix)) this.transformedDrag = {
 				matrix,
 				handleElement: event.currentTarget,
@@ -76995,7 +76887,7 @@ The screen with id ${screen.id} will not be added.`);
 			if (!showHandle || resizableRef.current?.state.isResizing) return;
 			const element = resizableRef.current?.resizable;
 			if (!element) return;
-			const next = getScreenTransform(element);
+			const next = getViewportVectorTransform(element);
 			setMatrix((current) => isSameTransform(current, next) ? current : next);
 		});
 		return (0, _wordpress_element.useMemo)(() => {
@@ -83022,8 +82914,6 @@ The screen with id ${screen.id} will not be added.`);
 		ContentEditableControl,
 		__experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
 		ComponentsContext,
-		getScreenTransform,
-		getStyleTransform,
 		Tabs,
 		get Menu() {
 			(0, _wordpress_deprecated.default)("`privateApis.Menu` from `@wordpress/components`", {

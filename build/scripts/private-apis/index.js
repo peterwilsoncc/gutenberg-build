@@ -31,6 +31,7 @@
 		"@wordpress/core-fields",
 		"@wordpress/customize-widgets",
 		"@wordpress/data",
+		"@wordpress/dom",
 		"@wordpress/edit-post",
 		"@wordpress/edit-site",
 		"@wordpress/edit-widgets",

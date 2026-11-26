@@ -1,4 +1,4 @@
-(function(exports, _wordpress_deprecated) {
+(function(exports, _wordpress_private_apis, _wordpress_deprecated) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -284,6 +284,337 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function findNext(element) {
 		return filterTabbable(find$1(element.ownerDocument.body)).find((focusable) => element.compareDocumentPosition(focusable) & element.DOCUMENT_POSITION_FOLLOWING);
 	}
+
+// packages/dom/build-module/transforms.mjs
+	const IDENTITY = {
+		a: 1,
+		b: 0,
+		c: 0,
+		d: 1
+	};
+	const DEGREES_PER_UNIT = {
+		deg: 1,
+		grad: .9,
+		rad: 180 / Math.PI,
+		turn: 360
+	};
+	const RADIANS_PER_UNIT = {
+		deg: Math.PI / 180,
+		grad: Math.PI / 200,
+		rad: 1,
+		turn: 2 * Math.PI
+	};
+	function multiply(m, n) {
+		return {
+			a: m.a * n.a + m.c * n.b,
+			b: m.b * n.a + m.d * n.b,
+			c: m.a * n.c + m.c * n.d,
+			d: m.b * n.c + m.d * n.d
+		};
+	}
+	function parseAngle(value, units) {
+		const match = value.match(/^(-?[\d.]+(?:e[+-]?\d+)?)(deg|grad|rad|turn)$/);
+		return match ? parseFloat(match[1]) * units[match[2]] : NaN;
+	}
+	const ROTATE_AXES = {
+		"": [
+			0,
+			0,
+			1
+		],
+		x: [
+			1,
+			0,
+			0
+		],
+		y: [
+			0,
+			1,
+			0
+		],
+		z: [
+			0,
+			0,
+			1
+		]
+	};
+	/**
+	* Splits a computed `rotate` value into its axis and angle.
+	*
+	* @param value Computed `rotate` value, other than `none`.
+	* @param units The angle per CSS unit, in the unit wanted.
+	*/
+	function parseRotate(value, units) {
+		const parts = value.trim().split(/\s+/);
+		const angle = parseAngle(parts.pop(), units);
+		const [x, y, z] = ROTATE_AXES[parts.join(" ")] ?? parts.map((part) => parseFloat(part));
+		return [
+			x,
+			y,
+			z,
+			angle
+		];
+	}
+	function parseScale(value) {
+		const [x, y = x, z = 1] = value.trim().split(/\s+/).map((part) => part.endsWith("%") ? parseFloat(part) / 100 : parseFloat(part));
+		return [
+			x,
+			y,
+			z
+		];
+	}
+	const IDENTITY_3D = [
+		[
+			1,
+			0,
+			0
+		],
+		[
+			0,
+			1,
+			0
+		],
+		[
+			0,
+			0,
+			1
+		]
+	];
+	/**
+	* Applies `m` after `n`.
+	*
+	* @param m The outer transform.
+	* @param n The inner transform.
+	*/
+	function multiply3D(m, n) {
+		return n.map(([x, y, z]) => [
+			0,
+			1,
+			2
+		].map((i) => m[0][i] * x + m[1][i] * y + m[2][i] * z));
+	}
+	function getRotate(value) {
+		if (value === "none") return IDENTITY_3D;
+		const [x, y, z, angle] = parseRotate(value, RADIANS_PER_UNIT);
+		const length = Math.hypot(x, y, z);
+		const [ux, uy, uz] = [
+			x / length,
+			y / length,
+			z / length
+		];
+		const cos = Math.cos(angle);
+		const sin = Math.sin(angle);
+		const t = 1 - cos;
+		const matrix = [
+			[
+				cos + ux * ux * t,
+				ux * uy * t + uz * sin,
+				ux * uz * t - uy * sin
+			],
+			[
+				ux * uy * t - uz * sin,
+				cos + uy * uy * t,
+				uy * uz * t + ux * sin
+			],
+			[
+				ux * uz * t + uy * sin,
+				uy * uz * t - ux * sin,
+				cos + uz * uz * t
+			]
+		];
+		if (!matrix.flat().every(Number.isFinite)) return IDENTITY_3D;
+		const quarters = 2 * angle / Math.PI;
+		if (ux === 0 && uy === 0 || Math.abs(quarters - Math.round(quarters)) > 1e-9) return matrix;
+		return matrix.map((column) => column.map((entry) => Math.round(entry * 0xe8d4a51000) / 0xe8d4a51000 + 0));
+	}
+	function getScale(value) {
+		const [x, y, z] = parseScale(value);
+		if (![
+			x,
+			y,
+			z
+		].every(Number.isFinite)) return IDENTITY_3D;
+		return [
+			[
+				x,
+				0,
+				0
+			],
+			[
+				0,
+				y,
+				0
+			],
+			[
+				0,
+				0,
+				z
+			]
+		];
+	}
+	/**
+	* Reads the computed `transform` property, which is always `none`,
+	* `matrix()` or `matrix3d()`.
+	*
+	* @param value Computed `transform` value.
+	*/
+	function getTransform(value) {
+		const match = value.match(/^matrix(3d)?\((.+)\)$/);
+		if (!match) return IDENTITY_3D;
+		const n = match[2].split(",").map(parseFloat);
+		if (!match[1]) return [
+			[
+				n[0],
+				n[1],
+				0
+			],
+			[
+				n[2],
+				n[3],
+				0
+			],
+			[
+				0,
+				0,
+				1
+			]
+		];
+		return [
+			[
+				n[0],
+				n[1],
+				n[2]
+			],
+			[
+				n[4],
+				n[5],
+				n[6]
+			],
+			[
+				n[8],
+				n[9],
+				n[10]
+			]
+		];
+	}
+	/**
+	* Maps 2D directions and deltas from an element's axes to its parent's axes.
+	* Translation and transform origin only affect positions. The element's own
+	* properties combine in 3D before the result is flattened onto the page.
+	*
+	* @param style The element's computed style.
+	*
+	* @return The linear transform from the element's axes to its parent's.
+	*/
+	function getStyleLinearTransform(style) {
+		const [[a, b], [c, d]] = multiply3D(multiply3D(getRotate(style.rotate || "none"), getScale(style.scale || "none")), getTransform(style.transform || "none"));
+		return {
+			a,
+			b,
+			c,
+			d
+		};
+	}
+	/**
+	* Whether the element's own transform keeps its edges parallel to its
+	* parent's axes, including quarter turns.
+	*
+	* @param style The element's computed style.
+	*/
+	function isStyleTransformAxisAligned(style) {
+		const { a, b, c, d } = getStyleLinearTransform(style);
+		return Math.abs(b) < 1e-5 && Math.abs(c) < 1e-5 || Math.abs(a) < 1e-5 && Math.abs(d) < 1e-5;
+	}
+	/**
+	* Maps 2D directions and distances from the element's local axes to its
+	* document's viewport axes. Includes ancestor transforms, and projects turns
+	* out of the page onto it, as `getBorderBoxPointTransform` does when there is
+	* no perspective.
+	*
+	* @param element The element to measure.
+	*/
+	function getViewportVectorTransform(element) {
+		const view = element.ownerDocument.defaultView;
+		let matrix = IDENTITY;
+		if (!view) return matrix;
+		for (let node = element; node; node = node.parentElement) matrix = multiply(getStyleLinearTransform(view.getComputedStyle(node)), matrix);
+		return matrix;
+	}
+	function parseLength(value, size) {
+		if (value.endsWith("%")) return parseFloat(value) / 100 * size;
+		return value.endsWith("px") ? parseFloat(value) : NaN;
+	}
+	/**
+	* Builds the matrix an element's own `translate`, `rotate`, `scale` and
+	* `transform` apply to its border box, about its transform origin.
+	*
+	* @param element Element.
+	* @param style   Computed style of the element.
+	*
+	* @return The matrix, or undefined when the element is not transformed or
+	*         a value can't be read.
+	*/
+	function getOwnTransform(element, style) {
+		const { translate = "none", rotate = "none", scale = "none", transform = "none" } = style;
+		if (translate === "none" && rotate === "none" && scale === "none" && transform === "none") return;
+		const { offsetWidth: width, offsetHeight: height } = element;
+		const [originX, originY] = style.transformOrigin.split(" ").map((value) => parseFloat(value));
+		const matrix = new window.DOMMatrix().translateSelf(originX, originY);
+		if (translate !== "none") {
+			const [x, y = "0px"] = translate.split(" ");
+			matrix.translateSelf(parseLength(x, width), parseLength(y, height));
+		}
+		if (rotate !== "none") matrix.rotateAxisAngleSelf(...parseRotate(rotate, DEGREES_PER_UNIT));
+		if (scale !== "none") matrix.scaleSelf(...parseScale(scale));
+		if (transform !== "none") matrix.multiplySelf(new window.DOMMatrix(transform));
+		matrix.translateSelf(-originX, -originY);
+		const { a, b, c, d, e, f } = matrix;
+		return [
+			a,
+			b,
+			c,
+			d,
+			e,
+			f
+		].every(Number.isFinite) ? new window.DOMMatrix([
+			a,
+			b,
+			c,
+			d,
+			e,
+			f
+		]) : void 0;
+	}
+	/**
+	* Maps a local border-box point to its painted position within the same box's
+	* coordinate system. Includes translation and transform origin, and projects
+	* out-of-plane rotations onto the x/y plane. Ancestor transforms are applied
+	* separately by the caller. Returns undefined when there is no usable transform.
+	*
+	* @param element Element whose border box is measured.
+	*/
+	function getBorderBoxPointTransform(element) {
+		const view = element.ownerDocument.defaultView;
+		if (!view || !("offsetWidth" in element)) return;
+		return getOwnTransform(element, view.getComputedStyle(element));
+	}
+
+// packages/dom/build-module/lock-unlock.mjs
+	const { lock } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/dom");
+
+// packages/dom/build-module/private-apis.mjs
+	const lockedApis = {
+		getBorderBoxPointTransform,
+		getViewportVectorTransform,
+		isStyleTransformAxisAligned
+	};
+	/**
+	* Private `@wordpress/dom` APIs.
+	*
+	* @ignore
+	*/
+	const privateApis = {};
+	lock(privateApis, lockedApis);
 
 // packages/dom/build-module/utils/assert-is-defined.mjs
 	function assertIsDefined(val, name) {
@@ -1435,6 +1766,7 @@ exports.isTextField = isTextField;
 exports.isVerticalEdge = isVerticalEdge;
 exports.placeCaretAtHorizontalEdge = placeCaretAtHorizontalEdge;
 exports.placeCaretAtVerticalEdge = placeCaretAtVerticalEdge;
+exports.privateApis = privateApis;
 exports.remove = remove;
 exports.removeInvalidHTML = removeInvalidHTML;
 exports.replace = replace;
@@ -1445,5 +1777,5 @@ exports.wrap = wrap;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).dom = exports;
 return exports;
-})({}, window.wp.deprecated);
+})({}, window.wp.privateApis, window.wp.deprecated);
 //# sourceMappingURL=index.js.map
