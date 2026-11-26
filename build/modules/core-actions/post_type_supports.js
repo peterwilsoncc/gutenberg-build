@@ -650,6 +650,8 @@ const permanentlyDeletePost = {
 								);
 							}
 							createErrorNotice(errorMessage, { type: "snackbar" });
+							const deletedItems = items.filter((_item, index) => promiseResult[index].status === "fulfilled");
+							if (deletedItems.length > 0) onActionPerformed?.(deletedItems);
 						}
 						setIsBusy(false);
 						closeModal?.();
@@ -943,6 +945,8 @@ const restorePost = {
 				);
 			}
 			createErrorNotice(errorMessage, { type: "snackbar" });
+			const restoredPosts = posts.filter((_post, index) => promiseResult[index].status === "fulfilled");
+			if (restoredPosts.length > 0 && onActionPerformed) onActionPerformed(restoredPosts);
 		}
 	}
 };

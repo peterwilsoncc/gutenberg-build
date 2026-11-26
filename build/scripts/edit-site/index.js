@@ -75235,6 +75235,7 @@ If there's a particular need for this, please submit a feature request at https:
 				const icon = resolveIcon(view);
 				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SidebarNavigationItem, {
 					icon,
+					suffix: typeof view.count === "number" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: view.count.toLocaleString() }),
 					to: (0, _wordpress_url.addQueryArgs)(path, { activeView: slug }),
 					"aria-current": isActive ? "true" : void 0,
 					children: view.title
@@ -76499,7 +76500,7 @@ If there's a particular need for this, please submit a feature request at https:
 		"author",
 		"discussion"
 	];
-	function QuickEditModal({ postType, postId, closeModal, quickEditForm }) {
+	function QuickEditModal({ postType, postId, closeModal, onSave: onSaved, quickEditForm }) {
 		const isBulk = postId.length > 1;
 		const [modalElement, setModalElement] = (0, _wordpress_element.useState)(null);
 		const [localEdits, setLocalEdits] = (0, _wordpress_element.useState)({});
@@ -76571,6 +76572,7 @@ If there's a particular need for this, please submit a feature request at https:
 			for (const id of postId) editEntityRecord("postType", postType, id, localEdits);
 			if (isBulk) await Promise.allSettled(postId.map((id) => saveEditedEntityRecord("postType", postType, id)));
 			else await saveEditedEntityRecord("postType", postType, postId[0]);
+			onSaved?.();
 			closeModal?.();
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.Modal, {
@@ -76728,9 +76730,15 @@ If there's a particular need for this, please submit a feature request at https:
 				})
 			};
 		}, [postType]);
+		const { invalidateResolution } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
+		const refreshViewCounts = (0, _wordpress_element.useCallback)(() => {
+			invalidateResolution("getViewConfig", ["postType", postType]);
+		}, [invalidateResolution, postType]);
+		(0, _wordpress_element.useEffect)(() => refreshViewCounts, [refreshViewCounts]);
 		const postTypeActions = usePostActions({
 			postType,
-			context: "list"
+			context: "list",
+			onActionPerformed: refreshViewCounts
 		});
 		const editAction = useEditPostAction();
 		const quickEditAction = useQuickEditPostAction();
@@ -76802,6 +76810,7 @@ If there's a particular need for this, please submit a feature request at https:
 				postType,
 				postId: selection,
 				closeModal: closeQuickEditModal,
+				onSave: refreshViewCounts,
 				quickEditForm
 			})]
 		});
