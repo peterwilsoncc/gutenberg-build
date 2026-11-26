@@ -5613,7 +5613,7 @@ Icon: ButtonIcon });
 	* @param {string} widgetAreaId ID of the widget area to process.
 	* @return {Function} An action creator.
 	*/
-	const saveWidgetArea = (widgetAreaId) => async ({ dispatch, select, registry }) => {
+	const saveWidgetArea = (widgetAreaId) => async ({ select, registry }) => {
 		const widgets = select.getWidgets();
 		const post = registry.select(_wordpress_core_data.store).getEditedEntityRecord(KIND, POST_TYPE, buildWidgetAreaPostId(widgetAreaId));
 		const areaWidgets = Object.values(widgets).filter(({ sidebar }) => sidebar === widgetAreaId);
@@ -5677,11 +5677,8 @@ Icon: ButtonIcon });
 			failedWidgetNames.join(", ")
 		));
 		registry.dispatch(_wordpress_core_data.store).editEntityRecord(KIND, WIDGET_AREA_ENTITY_TYPE, widgetAreaId, { widgets: sidebarWidgetsIds }, { undoIgnore: true });
-		dispatch(trySaveWidgetArea(widgetAreaId));
+		await registry.dispatch(_wordpress_core_data.store).saveEditedEntityRecord(KIND, WIDGET_AREA_ENTITY_TYPE, widgetAreaId, { throwOnError: true });
 		registry.dispatch(_wordpress_core_data.store).receiveEntityRecords(KIND, POST_TYPE, post, void 0);
-	};
-	const trySaveWidgetArea = (widgetAreaId) => ({ registry }) => {
-		registry.dispatch(_wordpress_core_data.store).saveEditedEntityRecord(KIND, WIDGET_AREA_ENTITY_TYPE, widgetAreaId, { throwOnError: true });
 	};
 	/**
 	* Sets the clientId stored for a particular widgetId.
