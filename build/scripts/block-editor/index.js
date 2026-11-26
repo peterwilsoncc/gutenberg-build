@@ -115556,17 +115556,20 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	function useInspectorControlsTabs(blockName, contentClientIds, isSectionBlock, hasBlockStyles) {
 		const tabs = [];
-		const { bindings: bindingsGroup, border: borderGroup, color: colorGroup, content: contentGroup, default: defaultGroup, layout: layoutGroup, dimensions: dimensionsGroup, list: listGroup, position: positionGroup, styles: stylesGroup, transform: transformGroup, typography: typographyGroup, effects: effectsGroup } = groups;
+		const { background: backgroundGroup, bindings: bindingsGroup, border: borderGroup, color: colorGroup, content: contentGroup, default: defaultGroup, elements: elementsGroup, filter: filterGroup, layout: layoutGroup, dimensions: dimensionsGroup, list: listGroup, position: positionGroup, styles: stylesGroup, transform: transformGroup, typography: typographyGroup, effects: effectsGroup } = groups;
 		const listFills = (0, _wordpress_components.__experimentalUseSlotFills)(listGroup.name);
 		const hasListFills = !!listFills && listFills.length;
 		const contentFills = (0, _wordpress_components.__experimentalUseSlotFills)(contentGroup.name);
 		const hasContentFills = !!contentFills && contentFills.length;
 		const hasStyleFills = [
+			...(0, _wordpress_components.__experimentalUseSlotFills)(backgroundGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(borderGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(colorGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(layoutGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(positionGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(dimensionsGroup.name) || [],
+			...(0, _wordpress_components.__experimentalUseSlotFills)(elementsGroup.name) || [],
+			...(0, _wordpress_components.__experimentalUseSlotFills)(filterGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(stylesGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(transformGroup.name) || [],
 			...(0, _wordpress_components.__experimentalUseSlotFills)(typographyGroup.name) || [],
