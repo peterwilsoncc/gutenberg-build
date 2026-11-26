@@ -13650,7 +13650,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 						label: widgetArea.name,
 						info: widgetArea.description
 					})),
-					value: currentWidgetAreaId,
+					value: currentWidgetAreaId ?? "",
 					onSelect: (value) => {
 						onSelect(value);
 						onClose();
@@ -13664,13 +13664,8 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 /**
 	* Get the internal widget id from block.
 	*
-	* @typedef  {Object} Attributes
-	* @property {string}     __internalWidgetId The internal widget id.
-	* @typedef  {Object} Block
-	* @property {Attributes} attributes         The attributes of the block.
-	*
-	* @param    {Block}      block              The block.
-	* @return {string} The internal widget id.
+	* @param block The block.
+	* @return The internal widget id.
 	*/
 	function getWidgetIdFromBlock(block) {
 		return block.attributes.__internalWidgetId;
@@ -13678,9 +13673,9 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	/**
 	* Add internal widget id to block's attributes.
 	*
-	* @param {Block}  block    The block.
-	* @param {string} widgetId The widget id.
-	* @return {Block} The updated block.
+	* @param block    The block.
+	* @param widgetId The widget id.
+	* @return The updated block.
 	*/
 	function addWidgetIdToBlock(block, widgetId) {
 		return {
