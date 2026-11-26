@@ -12801,17 +12801,27 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	* @property {Element} element The control's DOM element.
 	*/
 	var Control = class {
+		id;
+		idBase;
+		_instance;
+		_hasPreview;
+		onChangeInstance;
+		onChangeHasPreview;
+		onError;
+		number;
+		element;
+		form;
+		content;
 		/**
 		* Creates and loads a new control.
 		*
-		* @access public
-		* @param {Object}   params
-		* @param {string}   params.id
-		* @param {string}   params.idBase
-		* @param {Object}   params.instance
-		* @param {Function} params.onChangeInstance
-		* @param {Function} params.onChangeHasPreview
-		* @param {Function} params.onError
+		* @param params
+		* @param params.id
+		* @param params.idBase
+		* @param params.instance
+		* @param params.onChangeInstance
+		* @param params.onChangeHasPreview
+		* @param params.onError
 		*/
 		constructor({ id, idBase, instance, onChangeInstance, onChangeHasPreview, onError }) {
 			this.id = id;
@@ -12830,8 +12840,6 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		}
 		/**
 		* Clean up the control so that it can be garbage collected.
-		*
-		* @access public
 		*/
 		destroy() {
 			this.unbindEvents();
@@ -12839,8 +12847,6 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		}
 		/**
 		* Creates the control's DOM structure.
-		*
-		* @access private
 		*/
 		initDOM() {
 			this.element = el("div", { class: "widget open" }, [el("div", { class: "widget-inside" }, [this.form = el("form", {
@@ -12878,16 +12884,14 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 					value: this.idBase ? this.number.toString() : ""
 				}),
 				this.content = el("div", { class: "widget-content" }),
-				this.id && el("button", {
+				this.id ? el("button", {
 					class: "button is-primary",
 					type: "submit"
-				}, (0, _wordpress_i18n.__)("Save"))
+				}, (0, _wordpress_i18n.__)("Save")) : null
 			])])]);
 		}
 		/**
 		* Adds the control's event listeners.
-		*
-		* @access private
 		*/
 		bindEvents() {
 			if (window.jQuery) {
@@ -12903,8 +12907,6 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		}
 		/**
 		* Removes the control's event listeners.
-		*
-		* @access private
 		*/
 		unbindEvents() {
 			if (window.jQuery) {
@@ -12921,8 +12923,6 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		/**
 		* Fetches the widget's form HTML from the REST API and loads it into the
 		* control's form.
-		*
-		* @access private
 		*/
 		async loadContent() {
 			try {
@@ -12956,10 +12956,8 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 			}
 		}
 		/**
-		* Perform a save when a multi widget's form is changed. Non-multi widgets
-		* are saved manually.
-		*
-		* @access private
+		* Perform a save when a multi widget's form is changed. Non-multi widgets are
+		* saved manually.
 		*/
 		handleFormChange() {
 			if (this.idBase) this.saveForm();
@@ -12967,8 +12965,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		/**
 		* Perform a save when the control's form is manually submitted.
 		*
-		* @access private
-		* @param {Event} event
+		* @param event Form submit event.
 		*/
 		handleFormSubmit(event) {
 			event.preventDefault();
@@ -12977,8 +12974,6 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		/**
 		* Serialize the control's form, send it to the REST API, and update the
 		* instance with the encoded instance that the REST API returns.
-		*
-		* @access private
 		*/
 		async saveForm() {
 			const formData = serializeForm(this.form);
@@ -13006,16 +13001,12 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		}
 		/**
 		* The widget's instance object.
-		*
-		* @access private
 		*/
 		get instance() {
 			return this._instance;
 		}
 		/**
 		* The widget's instance object.
-		*
-		* @access private
 		*/
 		set instance(instance) {
 			if (this._instance !== instance) {
@@ -13025,16 +13016,12 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		}
 		/**
 		* Whether or not the widget can be previewed.
-		*
-		* @access public
 		*/
 		get hasPreview() {
 			return this._hasPreview;
 		}
 		/**
 		* Whether or not the widget can be previewed.
-		*
-		* @access private
 		*/
 		set hasPreview(hasPreview) {
 			if (this._hasPreview !== hasPreview) {
@@ -13088,8 +13075,9 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	}
 	function isEmptyNode(node) {
 		switch (node.nodeType) {
-			case node.TEXT_NODE: return node.nodeValue.trim() === "";
-			case node.ELEMENT_NODE:
+			case Node.TEXT_NODE: return node.nodeValue.trim() === "";
+			case Node.ELEMENT_NODE: {
+				const element = node;
 				if ([
 					"AUDIO",
 					"CANVAS",
@@ -13100,9 +13088,10 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 					"OBJECT",
 					"SVG",
 					"VIDEO"
-				].includes(node.tagName)) return false;
-				if (!node.hasChildNodes()) return true;
-				return Array.from(node.childNodes).every(isEmptyNode);
+				].includes(element.tagName)) return false;
+				if (!element.hasChildNodes()) return true;
+				return Array.from(element.childNodes).every(isEmptyNode);
+			}
 			default: return true;
 		}
 	}
@@ -13112,7 +13101,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 
 // packages/widgets/build-module/blocks/legacy-widget/edit/form.mjs
 	function Form({ title, isVisible, id, idBase, instance, isWide, onChangeInstance, onChangeHasPreview }) {
-		const ref = (0, _wordpress_element.useRef)();
+		const ref = (0, _wordpress_element.useRef)(null);
 		const isMediumLargeViewport = (0, _wordpress_compose.useViewportMatch)("small");
 		const outgoingInstances = (0, _wordpress_element.useRef)(/* @__PURE__ */ new Set());
 		const incomingInstances = (0, _wordpress_element.useRef)(/* @__PURE__ */ new Set());
@@ -13232,11 +13221,11 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Disabled, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("iframe", {
 				ref,
 				className: "wp-block-legacy-widget__edit-preview-iframe",
-				tabIndex: "-1",
+				tabIndex: -1,
 				title: (0, _wordpress_i18n.__)("Legacy Widget Preview"),
 				srcDoc,
 				onLoad: (event) => {
-					event.target.contentDocument.body.style.overflow = "hidden";
+					event.currentTarget.contentDocument.body.style.overflow = "hidden";
 					setIsLoaded(true);
 				},
 				height: 100
@@ -13480,20 +13469,20 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 				};
 			}
 		}
-	].map(({ block, widget, transform, transformBlock }) => {
-		return {
-			type: "block",
-			blocks: [block],
-			isMatch: ({ idBase, instance }) => {
-				return idBase === widget && !!instance?.raw;
-			},
-			transform: ({ instance }) => {
-				const transformedBlock = transformBlock ? transformBlock(instance.raw) : (0, _wordpress_blocks.createBlock)(block, transform ? transform(instance.raw) : void 0);
-				if (!instance.raw?.title) return transformedBlock;
-				return [(0, _wordpress_blocks.createBlock)("core/heading", { content: instance.raw.title }), transformedBlock];
-			}
-		};
-	}) };
+	].map(({ block, widget, transform, transformBlock }) => ({
+		type: "block",
+		blocks: [block],
+		isMatch: (attributes) => {
+			const { idBase, instance } = attributes;
+			return idBase === widget && !!instance?.raw;
+		},
+		transform: (attributes) => {
+			const { instance } = attributes;
+			const transformedBlock = transformBlock ? transformBlock(instance.raw) : (0, _wordpress_blocks.createBlock)(block, transform ? transform(instance.raw) : void 0);
+			if (!instance.raw?.title) return transformedBlock;
+			return [(0, _wordpress_blocks.createBlock)("core/heading", { content: instance.raw.title }), transformedBlock];
+		}
+	})) };
 
 // packages/widgets/build-module/blocks/legacy-widget/index.mjs
 	var legacy_widget_exports = /* @__PURE__ */ __exportAll({
