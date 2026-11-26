@@ -5434,8 +5434,8 @@ mark.wp-note {
 }
 @media (forced-colors: active) {
   .editor-collab-sidebar-panel__reaction-button[aria-pressed=true] {
-    background-color: SelectedItem;
-    color: SelectedItemText;
+    background-color: Highlight;
+    color: HighlightText;
   }
   .editor-collab-sidebar-panel__reaction-button[aria-pressed=true][data-disabled] {
     background-color: GrayText;
@@ -5471,8 +5471,8 @@ mark.wp-note {
 }
 @media (forced-colors: active) {
   .editor-collab-sidebar-panel__reaction-option[data-checked] {
-    background-color: SelectedItem;
-    color: SelectedItemText;
+    background-color: Highlight;
+    color: HighlightText;
   }
   .editor-collab-sidebar-panel__reaction-option[data-checked] > * {
     forced-color-adjust: none;
@@ -6105,7 +6105,7 @@ mark.wp-note {
 @media (forced-colors: active) {
   .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed,
   .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed {
-    background: SelectedItem !important;
+    background: Highlight !important;
   }
   .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed:disabled, .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed[aria-disabled=true],
   .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed:disabled,

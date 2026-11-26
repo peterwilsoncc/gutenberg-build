@@ -204,7 +204,7 @@ body.admin-color-fresh {
 @media (forced-colors: active) {
   .customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed,
   .customize-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed {
-    background: SelectedItem !important;
+    background: Highlight !important;
   }
   .customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed:disabled, .customize-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed[aria-disabled=true],
   .customize-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed:disabled,

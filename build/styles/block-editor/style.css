@@ -1261,8 +1261,8 @@ iframe[name=editor-canvas] {
   .block-editor-block-styles__variants .block-editor-block-styles__item[aria-checked=true] {
     forced-color-adjust: none;
     outline-color: CanvasText;
-    background-color: SelectedItem;
-    color: SelectedItemText;
+    background-color: Highlight;
+    color: HighlightText;
     border-color: ButtonBorder;
   }
 }
@@ -2787,13 +2787,13 @@ iframe[name=editor-canvas] {
 }
 @media (forced-colors: active) {
   .block-editor-list-view-leaf.is-selected td {
-    background: SelectedItem;
+    background: Highlight;
   }
   .block-editor-list-view-leaf.is-selected .block-editor-list-view-block-contents, .block-editor-list-view-leaf.is-selected .components-button.has-icon {
-    color: SelectedItemText;
+    color: HighlightText;
   }
   .block-editor-list-view-leaf.is-selected svg, .block-editor-list-view-leaf.is-selected .block-editor-block-icon.has-colors svg {
-    fill: SelectedItemText;
+    fill: HighlightText;
   }
   .block-editor-list-view-leaf.is-selected .block-editor-list-view-block-select-button__title {
     forced-color-adjust: none;
@@ -2802,7 +2802,7 @@ iframe[name=editor-canvas] {
     --focus-color: CanvasText;
   }
   .block-editor-list-view-leaf.is-selected :is(.block-editor-list-view-block__menu, .block-editor-block-mover-button):focus {
-    --focus-color: SelectedItemText;
+    --focus-color: HighlightText;
   }
 }
 .block-editor-list-view-leaf.is-first-selected td:first-child {

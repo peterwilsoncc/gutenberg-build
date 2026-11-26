@@ -736,7 +736,7 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
 @media (forced-colors: active) {
   .edit-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed,
   .edit-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed {
-    background: SelectedItem !important;
+    background: Highlight !important;
   }
   .edit-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed:disabled, .edit-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed[aria-disabled=true],
   .edit-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed:disabled,

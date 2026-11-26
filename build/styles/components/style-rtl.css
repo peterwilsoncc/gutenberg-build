@@ -593,8 +593,8 @@ p + .components-button.is-tertiary {
     forced-color-adjust: none;
     outline-color: CanvasText !important;
     border-color: ButtonBorder !important;
-    background: SelectedItem !important;
-    color: SelectedItemText !important;
+    background: Highlight !important;
+    color: HighlightText !important;
   }
   .components-button.is-pressed:disabled, .components-button.is-pressed[aria-disabled=true] {
     border-color: GrayText !important;
@@ -3861,7 +3861,7 @@ body.lockscroll {
   }
   .components-accessible-toolbar .components-button.is-pressed::before,
   .components-toolbar .components-button.is-pressed::before {
-    background: SelectedItem;
+    background: Highlight;
   }
   .components-accessible-toolbar .components-button.is-pressed:disabled::before, .components-accessible-toolbar .components-button.is-pressed[aria-disabled=true]::before,
   .components-toolbar .components-button.is-pressed:disabled::before,
