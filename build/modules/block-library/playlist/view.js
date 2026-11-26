@@ -1786,8 +1786,8 @@ const DEFAULT_SEEK_LABEL = "Seek";
 /**
 * Get computed style for an element, using ownerDocument for iframe compatibility.
 *
-* @param {Element} element - The element to get styles from.
-* @return {CSSStyleDeclaration} The computed style.
+* @param element - The element to get styles from.
+* @return The computed style.
 */
 function getComputedStyle$1(element) {
 	return element.ownerDocument.defaultView.getComputedStyle(element);
@@ -1874,7 +1874,7 @@ function resolveColorValue(element, colorValue) {
 }
 function getResolvedGradientStops(element, gradientValue) {
 	const stops = getWaveformGradientStops(gradientValue)?.map((colorValue) => resolveColorValue(element, colorValue)).filter((colorValue) => q$1(colorValue).isValid());
-	return stops?.length > 1 ? stops : void 0;
+	return stops && stops.length > 1 ? stops : void 0;
 }
 function applyAlpha(colorValue, alpha) {
 	if (Array.isArray(colorValue)) return colorValue.map((color) => q$1(color).alpha(alpha).toRgbString());
@@ -1885,7 +1885,7 @@ function getRepresentativeColor(colorValue) {
 	return colorValue;
 }
 function getWaveformGradientStops(gradientValue) {
-	const stops = getTopLevelGradientParts(gradientValue).map(getColorStopValue).filter(Boolean);
+	const stops = getTopLevelGradientParts(gradientValue).map(getColorStopValue).filter((stop) => Boolean(stop));
 	return stops.length > 1 ? stops : void 0;
 }
 function serializeColorValue(colorValue) {
@@ -1894,11 +1894,11 @@ function serializeColorValue(colorValue) {
 /**
 * Get all colors needed for the waveform player based on the element's styles.
 *
-* @param {Element} element               - The element to derive colors from.
-* @param {string}  waveformColorValue    - The base waveform color value to use.
-* @param {string}  textColorValue        - The text color value to use.
-* @param {string}  waveformGradientValue - The waveform gradient value to use.
-* @return {Object} Object containing textColor, waveformColor, progressColor.
+* @param element               - The element to derive colors from.
+* @param waveformColorValue    - The base waveform color value to use.
+* @param textColorValue        - The text color value to use.
+* @param waveformGradientValue - The waveform gradient value to use.
+* @return Object containing textColor, waveformColor, progressColor.
 */
 function getWaveformColors(element, waveformColorValue, textColorValue, waveformGradientValue) {
 	const textColor = textColorValue || getComputedStyle$1(element).color;
@@ -1917,20 +1917,20 @@ function getWaveformColors(element, waveformColorValue, textColorValue, waveform
 /**
 * Create a waveform container element with the specified attributes.
 *
-* @param {Object} options                  - The options for the container.
-* @param {string} options.url              - The audio URL.
-* @param {string} options.title            - The track title.
-* @param {string} options.artist           - The track artist.
-* @param {string} options.artwork          - The track image URL.
-* @param {string} options.waveformColor    - The waveform bar color.
-* @param {string} options.progressColor    - The progress indicator color.
-* @param {string} options.waveformGradient - The waveform gradient direction.
-* @param {string} options.buttonColor      - The play button color.
-* @param {string} options.seekLabel        - Accessible label for the seek control.
-* @param {string} options.seekValueText    - Accessible value-text template for the seek control (e.g. '%1$s of %2$s').
-* @param {number} options.height           - The waveform height in pixels.
-* @param {string} options.waveformStyle    - The visualization style (bars, mirror, line, blocks, dots, seekbar).
-* @return {Element} The configured container element.
+* @param options                  - The options for the container.
+* @param options.url              - The audio URL.
+* @param options.title            - The track title.
+* @param options.artist           - The track artist.
+* @param options.artwork          - The track image URL.
+* @param options.waveformColor    - The waveform bar color.
+* @param options.progressColor    - The progress indicator color.
+* @param options.waveformGradient - The waveform gradient direction.
+* @param options.buttonColor      - The play button color.
+* @param options.seekLabel        - Accessible label for the seek control.
+* @param options.seekValueText    - Accessible value-text template for the seek control (e.g. '%1$s of %2$s').
+* @param options.height           - The waveform height in pixels.
+* @param options.waveformStyle    - The visualization style (bars, mirror, line, blocks, dots, seekbar).
+* @return The configured container element.
 */
 function createWaveformContainer({ url, title, artist, artwork, waveformColor, progressColor, waveformGradient, buttonColor, seekLabel, seekValueText, height = DEFAULT_WAVEFORM_HEIGHT, waveformStyle = "bars" }) {
 	const container = document.createElement("div");
@@ -1954,13 +1954,13 @@ function createWaveformContainer({ url, title, artist, artwork, waveformColor, p
 /**
 * Apply custom styles to a generated waveform player.
 *
-* @param {Element} container                 - The generated player container.
-* @param {Object}  styles                    - The player styles.
-* @param {string}  styles.backgroundColor    - The waveform area background color.
-* @param {string}  styles.backgroundGradient - The waveform area background gradient.
-* @param {string}  styles.textColor          - The player text color.
-* @param {string}  styles.playButtonColor    - The play button color.
-* @param {string}  styles.playButtonGradient - The play button gradient.
+* @param container                 - The generated player container.
+* @param styles                    - The player styles.
+* @param styles.backgroundColor    - The waveform area background color.
+* @param styles.backgroundGradient - The waveform area background gradient.
+* @param styles.textColor          - The player text color.
+* @param styles.playButtonColor    - The play button color.
+* @param styles.playButtonGradient - The play button gradient.
 */
 function applyWaveformPlayerStyles(container, { backgroundColor, backgroundGradient, textColor, playButtonColor, playButtonGradient } = {}) {
 	const waveformContainer = container.querySelector(".waveform-container");
@@ -1994,8 +1994,8 @@ function applyWaveformPlayerStyles(container, { backgroundColor, backgroundGradi
 * Apply contrasting color to SVG icon paths for visibility.
 * The icons should contrast with the button background.
 *
-* @param {Element} container   - The waveform container element.
-* @param {string}  buttonColor - The button background color.
+* @param container   - The waveform container element.
+* @param buttonColor - The button background color.
 */
 function styleSvgIcons(container, buttonColor) {
 	const iconColor = q$1(buttonColor).isDark() ? "#ffffff" : "#000000";
@@ -2006,10 +2006,10 @@ function styleSvgIcons(container, buttonColor) {
 /**
 * Set up play button accessibility: aria-label that toggles on play/pause.
 *
-* @param {Element} container    - The waveform container element.
-* @param {Object}  labels       - Button labels.
-* @param {string}  labels.play  - Label for the play state.
-* @param {string}  labels.pause - Label for the pause state.
+* @param container    - The waveform container element.
+* @param labels       - Button labels.
+* @param labels.play  - Label for the play state.
+* @param labels.pause - Label for the pause state.
 */
 function setupPlayButtonAccessibility(container, { play: playLabel = "Play", pause: pauseLabel = "Pause" } = {}) {
 	const playBtn = container.querySelector(".waveform-btn");
@@ -2029,8 +2029,8 @@ function setupPlayButtonAccessibility(container, { play: playLabel = "Play", pau
 /**
 * Get the accessible label for the waveform seek control.
 *
-* @param {string} label - Accessible label for the seek control.
-* @return {string} The provided label or translated fallback.
+* @param label - Accessible label for the seek control.
+* @return The provided label or translated fallback.
 */
 function getSeekControlLabel(label) {
 	return label || DEFAULT_SEEK_LABEL;
@@ -2038,8 +2038,8 @@ function getSeekControlLabel(label) {
 /**
 * Update the waveform seek control label.
 *
-* @param {Object} instance - The WaveformPlayer instance.
-* @param {string} label    - Accessible label for the seek control.
+* @param instance - The WaveformPlayer instance.
+* @param label    - Accessible label for the seek control.
 */
 function updateSeekControlLabel(instance, label) {
 	const seekLabel = getSeekControlLabel(label);
@@ -2051,8 +2051,8 @@ function updateSeekControlLabel(instance, label) {
 /**
 * Show the current artwork as the play button background.
 *
-* @param {Element} container  - The waveform player container element.
-* @param {string}  artworkUrl - The track image URL.
+* @param container  - The waveform player container element.
+* @param artworkUrl - The track image URL.
 */
 function setupPlayButtonArtwork(container, artworkUrl) {
 	if (!artworkUrl) {
@@ -2066,7 +2066,7 @@ function setupPlayButtonArtwork(container, artworkUrl) {
 /**
 * Log play errors, filtering out expected AbortError.
 *
-* @param {Error} error - The error from play().
+* @param error - The error from play().
 */
 function logPlayError(error) {
 	if (error.name === "AbortError") return;
@@ -2078,24 +2078,24 @@ function logPlayError(error) {
 * This is the shared core logic used by both the React component (editor)
 * and the Interactivity API (frontend).
 *
-* @param {Element}  element                       - The container element (must be in DOM).
-* @param {Object}   options                       - Configuration options.
-* @param {string}   options.src                   - The audio file URL.
-* @param {string}   options.title                 - The track title.
-* @param {string}   options.artist                - The artist name.
-* @param {string}   options.image                 - The track image URL.
-* @param {string}   options.imageAlt              - The track image alt text.
-* @param {string}   options.waveformColor         - The waveform color.
-* @param {string}   options.waveformGradient      - The waveform gradient.
-* @param {string}   options.textColor             - The player text color.
-* @param {string}   options.backgroundColor       - The player background color.
-* @param {string}   options.backgroundGradient    - The player background gradient.
-* @param {boolean}  options.autoPlay              - Whether to auto-play when ready.
-* @param {Function} options.onEnded               - Callback when track ends.
-* @param {Object}   options.labels                - Translated button labels.
-* @param {string}   options.waveformStyle         - Waveform style (bars, mirror, line, blocks, dots, seekbar).
-* @param {boolean}  options.showPlayButtonArtwork - Whether to show artwork on the play button.
-* @return {Object} Object with instance, container, and destroy function.
+* @param element                       - The container element (must be in DOM).
+* @param options                       - Configuration options.
+* @param options.src                   - The audio file URL.
+* @param options.title                 - The track title.
+* @param options.artist                - The artist name.
+* @param options.image                 - The track image URL.
+* @param options.imageAlt              - The track image alt text.
+* @param options.waveformColor         - The waveform color.
+* @param options.waveformGradient      - The waveform gradient.
+* @param options.textColor             - The player text color.
+* @param options.backgroundColor       - The player background color.
+* @param options.backgroundGradient    - The player background gradient.
+* @param options.autoPlay              - Whether to auto-play when ready.
+* @param options.onEnded               - Callback when track ends.
+* @param options.labels                - Translated button labels.
+* @param options.waveformStyle         - Waveform style (bars, mirror, line, blocks, dots, seekbar).
+* @param options.showPlayButtonArtwork - Whether to show artwork on the play button.
+* @return Object with instance, container, and destroy function.
 */
 function initWaveformPlayer(element, { src, title, artist, image, imageAlt, waveformColor: waveformColorValue, waveformGradient: waveformGradientValue, textColor: textColorValue, backgroundColor, backgroundGradient, autoPlay, onEnded, labels, waveformStyle, showPlayButtonArtwork = false }) {
 	const playerArtwork = showPlayButtonArtwork ? void 0 : image;
