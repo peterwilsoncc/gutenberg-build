@@ -121663,7 +121663,7 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 		const { type, default: { type: defaultType = "default" } = {} } = blockSupportAndLayout;
 		const blockLayoutType = type || defaultType;
-		const showInheritToggle = !!(allowInheriting && (!blockLayoutType || blockLayoutType === "default" || blockLayoutType === "constrained" || blockSupportAndLayout.inherit));
+		const showInheritToggle = !!(isDefaultBlockStyleState(selectedState) && allowInheriting && (!blockLayoutType || blockLayoutType === "default" || blockLayoutType === "constrained" || blockSupportAndLayout.inherit));
 		const { inherit = false, contentSize = null } = usedLayout;
 		/**
 		* `themeSupportsLayout` is only relevant to the `default/flow` or
@@ -121699,7 +121699,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const resetLayout = () => onChangeLayout(resetLayoutDefaults);
 		const resetInheritToggle = () => onChangeLayout({ type: "default" });
 		const isUsingContentWidth = () => layoutType?.name === "constrained" || hasContentSizeOrLegacySettings;
-		const hasInheritToggleValue = () => isViewportLayoutState ? (usedLayout?.type ?? "default") !== (resetLayoutDefaults?.type ?? "default") : layout?.type === "constrained";
+		const hasInheritToggleValue = () => layout?.type === "constrained";
 		const hasLayoutTypeValue = () => (usedLayout?.type ?? "default") !== (resetLayoutDefaults?.type ?? "default");
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [showLayoutPanel && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(InspectorControls, {
 			group: "layout",
