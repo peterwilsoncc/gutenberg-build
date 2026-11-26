@@ -3430,10 +3430,21 @@ iframe[name=editor-canvas] {
 .block-editor-tabbed-sidebar {
   background-color: #fff;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
   flex-grow: 1;
   overflow: hidden;
+}
+.block-editor-tabbed-sidebar:has(> .block-editor-tabbed-sidebar__tabpanel:focus-visible)::after {
+  content: "";
+  grid-row: 2;
+  grid-column: 1;
+  z-index: 1;
+  pointer-events: none;
+  outline: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) solid var(--focus-color, var(--wpds-color-stroke-focus, var(--wp-admin-theme-color, #3858e9)));
+  outline-offset: var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px));
+  outline-offset: calc(-1 * var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)));
 }
 
 .block-editor-tabbed-sidebar__tablist-and-close-button {
@@ -3455,11 +3466,13 @@ iframe[name=editor-canvas] {
 }
 
 .block-editor-tabbed-sidebar__tabpanel {
+  grid-row: 2;
+  grid-column: 1;
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
   overflow-y: auto;
   scrollbar-gutter: auto;
+  isolation: isolate;
 }
 
 .block-editor-block-list__block .block-editor-url-input,
