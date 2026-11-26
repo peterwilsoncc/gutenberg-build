@@ -1148,6 +1148,37 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		if (typeof angle !== "number") return angle;
 		return (angle % 360 + 360) % 360;
 	}
+	/**
+	* @param {"raw" | "increasing" | "decreasing" | "longer" | "shorter"} arc
+	* @param {[number, number]} angles
+	* @returns {[number, number]}
+	*/
+	function adjust(arc, angles) {
+		let [a1, a2] = angles;
+		let none1 = isNone(a1);
+		let none2 = isNone(a2);
+		if (none1 && none2) return [a1, a2];
+		else if (none1) a1 = a2;
+		else if (none2) a2 = a1;
+		if (arc === "raw") return angles;
+		a1 = constrain(a1);
+		a2 = constrain(a2);
+		let angleDiff = a2 - a1;
+		if (arc === "increasing") {
+			if (angleDiff < 0) a2 += 360;
+		} else if (arc === "decreasing") {
+			if (angleDiff > 0) a1 += 360;
+		} else if (arc === "longer") {
+			if (-180 < angleDiff && angleDiff < 180) {
+				if (angleDiff > 0) a1 += 360;
+				else a2 += 360;
+			}
+		} else if (arc === "shorter") {
+			if (angleDiff > 180) a1 += 360;
+			else if (angleDiff < -180) a2 += 360;
+		}
+		return [a1, a2];
+	}
 
 // node_modules/.store/colorjs.io@0.7.1-METd09ReG36PFivDyznZ-w/node_modules/colorjs.io/src/spaces/lch.js
 	var lch_default = new ColorSpace({
@@ -4359,6 +4390,140 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return color1.space === color2.space && color1.alpha === color2.alpha && color1.coords.every((c, i) => c === color2.coords[i]);
 	}
 
+// node_modules/.store/colorjs.io@0.7.1-METd09ReG36PFivDyznZ-w/node_modules/colorjs.io/src/interpolation.js
+/**
+	* Functions related to color interpolation
+	*/
+	/** @import { ColorTypes, PlainColorObject, Ref } from "./types.js" */
+	/** @typedef {import("./types.js").MixOptions} MixOptions */
+	/** @typedef {import("./types.js").Range} Range */
+	/** @typedef {import("./types.js").RangeOptions} RangeOptions */
+	/** @typedef {import("./types.js").StepsOptions} StepsOptions */
+	/**
+	* Return an intermediate color between two colors
+	* @overload
+	* @param {ColorTypes} c1
+	* @param {ColorTypes} c2
+	* @param {MixOptions} [options]
+	* @returns {PlainColorObject}
+	*/
+	/**
+	* @overload
+	* @param {ColorTypes} c1
+	* @param {ColorTypes} c2
+	* @param {number} [p=0.5]
+	* @param {MixOptions} [options]
+	* @returns {PlainColorObject}
+	*/
+	function mix(c1, c2, p, o = {}) {
+		[c1, c2] = [getColor(c1), getColor(c2)];
+		if (type(p) === "object") [p, o] = [.5, p];
+		return range(c1, c2, o)(p ?? .5);
+	}
+	/**
+	* Creates a function that accepts a number and returns a color.
+	* For numbers in the range 0 to 1, the function interpolates;
+	* for numbers outside that range, the function extrapolates
+	* (and thus may not return the results you expect)
+	* @overload
+	* @param {Range} range
+	* @param {RangeOptions} [options]
+	* @returns {Range}
+	*/
+	/**
+	* @overload
+	* @param {ColorTypes} color1
+	* @param {ColorTypes} color2
+	* @param {RangeOptions & Record<string, any>} [options]
+	* @returns {Range}
+	*/
+	function range(color1, color2, options = {}) {
+		if (isRange(color1)) {
+			let [r, options] = [color1, color2];
+			return range(...r.rangeArgs.colors, {
+				...r.rangeArgs.options,
+				...options
+			});
+		}
+		let { space, outputSpace, progression, premultiplied } = options;
+		color1 = getColor(color1);
+		color2 = getColor(color2);
+		color1 = clone(color1);
+		color2 = clone(color2);
+		let rangeArgs = {
+			colors: [color1, color2],
+			options
+		};
+		if (space) space = ColorSpace.get(space);
+		else space = ColorSpace.registry[defaults_default.interpolationSpace] || color1.space;
+		outputSpace = outputSpace ? ColorSpace.get(outputSpace) : space;
+		color1 = to(color1, space);
+		color2 = to(color2, space);
+		color1 = toGamut(color1);
+		color2 = toGamut(color2);
+		let hueId = space.hueId;
+		let hueIndex = space.hueIndex;
+		if (hueId) {
+			let arc = options.hue = options.hue || "shorter";
+			let hue = [space, hueId];
+			let [θ1, θ2] = [get(color1, hue), get(color2, hue)];
+			if (isNone(θ1) && !isNone(θ2)) θ1 = θ2;
+			else if (isNone(θ2) && !isNone(θ1)) θ2 = θ1;
+			[θ1, θ2] = adjust(arc, [θ1, θ2]);
+			set(color1, hue, θ1);
+			set(color2, hue, θ2);
+		}
+		if (isNone(color1.alpha) && !isNone(color2.alpha)) color1.alpha = color2.alpha;
+		else if (isNone(color2.alpha) && !isNone(color1.alpha)) color2.alpha = color1.alpha;
+		if (premultiplied) {
+			color1.coords = premultiply(color1.coords, color1.alpha, hueIndex);
+			color2.coords = premultiply(color2.coords, color2.alpha, hueIndex);
+		}
+		return Object.assign((p) => {
+			p = progression ? progression(p) : p;
+			let coords = color1.coords.map((start, i) => {
+				let end = color2.coords[i];
+				return interpolate(start, end, p);
+			});
+			let alpha = interpolate(color1.alpha, color2.alpha, p);
+			let ret = {
+				space,
+				coords,
+				alpha
+			};
+			if (premultiplied) ret.coords = premultiply(ret.coords, alpha, hueIndex, true);
+			if (outputSpace !== space) ret = to(ret, outputSpace);
+			return ret;
+		}, { rangeArgs });
+	}
+	/**
+	* Premultiply a color's coordinates by its alpha, or undo premultiplication by dividing by it.
+	* Per CSS Color 4, the hue angle of a polar space is never premultiplied,
+	* `none` components stay `none`, a `none` alpha means no (un)premultiplication happens at all,
+	* and un-premultiplying by a zero alpha leaves the coords as they are, rather than dividing by zero.
+	* See https://drafts.csswg.org/css-color-4/#interpolation-alpha
+	* @param {(number | null)[]} coords
+	* @param {number | null} alpha
+	* @param {number} hueIndex - Index of the hue coordinate, or -1 if the space has none
+	* @param {boolean} [undo=false] - Divide by alpha instead of multiplying by it
+	* @returns {[number, number, number]}
+	*/
+	function premultiply(coords, alpha, hueIndex, undo = false) {
+		if (isNone(alpha) || undo && alpha === 0) return coords;
+		return coords.map((c, i) => {
+			if (i === hueIndex || isNone(c)) return c;
+			return undo ? c / alpha : c * alpha;
+		});
+	}
+	/**
+	* @param {any} val
+	* @returns {val is Range}
+	*/
+	function isRange(val) {
+		return type(val) === "function" && !!val.rangeArgs;
+	}
+	defaults_default.interpolationSpace = "lab";
+
 // node_modules/.store/colorjs.io@0.7.1-METd09ReG36PFivDyznZ-w/node_modules/colorjs.io/src/spaces/hsl.js
 	var hsl_default = new ColorSpace({
 		id: "hsl",
@@ -4552,15 +4717,9 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			"background-interactive-neutral-weak",
 			"background-interactive-neutral-weak-disabled"
 		],
-		"primary-bgFill1": ["background-interactive-brand-strong"],
-		"primary-bgFill2": ["background-interactive-brand-strong-active"],
-		"primary-fgFill": [
-			"background-thumb-brand-strong",
-			"foreground-interactive-brand-strong",
-			"foreground-interactive-brand-strong-active"
-		],
 		"primary-surface4": ["background-interactive-brand-weak-active"],
 		"primary-fgSurface4": ["foreground-interactive-brand-active"],
+		"primary-bgFill1": ["background-interactive-brand-strong"],
 		"primary-fgSurface3": ["foreground-interactive-brand"],
 		"primary-stroke3": [
 			"background-indicator-brand",
@@ -4572,6 +4731,12 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		],
 		"primary-stroke4": ["stroke-interactive-brand-active"],
 		"primary-stroke1": ["stroke-surface-brand"],
+		"primary-bgFill2": ["background-interactive-brand-strong-active"],
+		"primary-fgFill": [
+			"background-thumb-brand-strong",
+			"foreground-interactive-brand-strong",
+			"foreground-interactive-brand-strong-active"
+		],
 		"primary-surface1": ["background-surface-brand"],
 		"info-surface2": ["background-surface-info-weak"],
 		"info-surface4": ["background-surface-info"],
@@ -4810,7 +4975,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	};
 
 // packages/theme/build-module/color-ramps/lib/utils.mjs
-/**
+	function getContrastReferences(contrast) {
+		return [contrast, ...contrast.additionalReferences ?? []];
+	}
+	/**
 	* Build a dependency graph from the steps configuration
 	* @param config - The steps configuration object
 	*/
@@ -4826,8 +4994,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		});
 		Object.entries(config).forEach(([stepName, stepConfig]) => {
 			const step = stepName;
-			const references = [stepConfig.contrast.reference, ...stepConfig.contrast.additionalReferences ?? []];
-			for (const reference of references) {
+			for (const { reference } of getContrastReferences(stepConfig.contrast)) {
+				if (reference === "neutralSurface") continue;
 				dependencies.get(step).push(reference);
 				dependents.get(reference).push(step);
 			}
@@ -4873,11 +5041,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function stepsForStep(stepName, config) {
 		const result = /* @__PURE__ */ new Set();
 		function visit(step) {
-			if (step === "seed" || result.has(step)) return;
+			if (step === "neutralSurface" || step === "seed" || result.has(step)) return;
 			const stepConfig = config[step];
 			if (!stepConfig) return;
-			visit(stepConfig.contrast.reference);
-			stepConfig.contrast.additionalReferences?.forEach(visit);
+			for (const { reference } of getContrastReferences(stepConfig.contrast)) visit(reference);
 			if (stepConfig.sameAsIfPossible) visit(stepConfig.sameAsIfPossible);
 			result.add(step);
 		}
@@ -5046,7 +5213,19 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return 1 - (1 - opts.kDark) * w;
 	}
 	const MAX_CHROMA = .45;
+	const MAX_CACHED_CHROMAS = 1e3;
+	const maxChromaCache = /* @__PURE__ */ new Map();
 	function getMaxChromaAtLH(l, h, gamutSpace) {
+		if (gamutSpace !== srgb_default) return computeMaxChromaAtLH(l, h, gamutSpace);
+		const key = `${l} ${h}`;
+		const cached = maxChromaCache.get(key);
+		if (cached !== void 0) return cached;
+		const chroma = computeMaxChromaAtLH(l, h, gamutSpace);
+		if (maxChromaCache.size >= MAX_CACHED_CHROMAS) maxChromaCache.clear();
+		maxChromaCache.set(key, chroma);
+		return chroma;
+	}
+	function computeMaxChromaAtLH(l, h, gamutSpace) {
 		const probe = {
 			space: oklch_default,
 			coords: [
@@ -5157,30 +5336,40 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	* @param params.config                - Ramp configuration defining contrast requirements
 	* @param params.mainDir               - Primary direction for the ramp (lighter/darker)
 	* @param params.oppDir                - Opposite direction from mainDir
+	* @param params.neutralSurface        - Neutral surface with the least contrast headroom
 	* @param params.pinLightness          - Optional lightness override for a given step
 	* @param params.pinLightness.stepName
 	* @param params.pinLightness.value
 	* @return Object containing ramp results and satisfaction status
 	*/
-	function calculateRamp({ seed, sortedSteps, config, mainDir, oppDir, pinLightness }) {
+	function calculateRamp({ seed, sortedSteps, config, mainDir, oppDir, neutralSurface, pinLightness }) {
 		const rampResults = {};
 		let maxDeficit = -Infinity;
 		let maxDeficitDirection = "lighter";
 		let maxDeficitStep;
 		const calculatedColors = /* @__PURE__ */ new Map();
 		calculatedColors.set("seed", seed);
+		if (neutralSurface) calculatedColors.set("neutralSurface", neutralSurface);
 		for (const stepName of sortedSteps) {
 			const { contrast, lightness: stepLightnessConstraint, taperChromaOptions, sameAsIfPossible } = config[stepName];
-			const referenceColors = [contrast.reference, ...contrast.additionalReferences ?? []].map((referenceName) => {
-				const referenceColor = calculatedColors.get(referenceName);
-				if (!referenceColor) throw new Error(`Reference color for step ${stepName} not found: ${referenceName}`);
-				return referenceColor;
+			const references = getContrastReferences(contrast).map(({ reference, target }) => {
+				const color = calculatedColors.get(reference);
+				if (!color) throw new Error(`Reference color for step ${stepName} not found: ${reference}`);
+				return {
+					color,
+					target,
+					emitted: neutralSurface ? getColorString(color) : ""
+				};
 			});
+			const meetsTargets = (candidate) => {
+				if (!neutralSurface) return references.every(({ color, target }) => getContrast(color, candidate) >= adjustContrastTarget(target));
+				const emittedCandidate = getColorString(candidate);
+				return references.every(({ emitted, target }) => getContrast(emitted, emittedCandidate) >= target);
+			};
 			if (sameAsIfPossible) {
 				const candidateColor = calculatedColors.get(sameAsIfPossible);
 				if (!candidateColor) throw new Error(`Same-as color for step ${stepName} not found: ${sameAsIfPossible}`);
-				const adjustedTarget = adjustContrastTarget(contrast.target);
-				if (referenceColors.every((referenceColor) => getContrast(referenceColor, candidateColor) >= adjustedTarget)) {
+				if (meetsTargets(candidateColor)) {
 					calculatedColors.set(stepName, candidateColor);
 					rampResults[stepName] = getColorString(candidateColor);
 					continue;
@@ -5189,13 +5378,20 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			function computeDirection(colors, followDirection) {
 				if (followDirection === "main") return mainDir;
 				if (followDirection === "opposite") return oppDir;
-				if (followDirection === "best") return computeBetterFgColorDirection(colors, contrast.preferLighter).better;
+				if (followDirection === "best") {
+					const { better, worse } = computeBetterFgColorDirection(colors, contrast.preferLighter);
+					if (neutralSurface && stepName === "fgFill") {
+						for (const direction of [better, worse]) if (meetsTargets(direction === "lighter" ? WHITE : BLACK)) return direction;
+						return oppDir;
+					}
+					return better;
+				}
 				return followDirection;
 			}
-			const computedDir = computeDirection(referenceColors, contrast.followDirection);
+			const computedDir = computeDirection(references.map(({ color }) => color), contrast.followDirection);
 			const endpoint = computedDir === "lighter" ? WHITE : BLACK;
-			const referenceColor = referenceColors.reduce((tightest, current) => getContrast(current, endpoint) < getContrast(tightest, endpoint) ? current : tightest);
-			const adjustedTarget = adjustContrastTarget(contrast.target);
+			const { color: referenceColor, target } = references.reduce((worst, next) => getContrast(next.color, endpoint) / next.target < getContrast(worst.color, endpoint) / worst.target ? next : worst);
+			const adjustedTarget = adjustContrastTarget(target);
 			let lightnessConstraint;
 			if (pinLightness?.stepName === stepName) lightnessConstraint = {
 				value: pinLightness.value,
@@ -5214,8 +5410,20 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 				maxDeficitDirection = computedDir;
 				maxDeficitStep = stepName;
 			}
-			calculatedColors.set(stepName, searchResults.color);
-			rampResults[stepName] = getColorString(searchResults.color);
+			let color = searchResults.color;
+			if (neutralSurface && searchResults.reached && !meetsTargets(color) && meetsTargets(endpoint)) {
+				const towardEndpoint = (amount) => mix(searchResults.color, endpoint, amount, { space: oklab_default });
+				let low = 0;
+				let high = 1;
+				for (let i = 0; i < 10; i++) {
+					const amount = (low + high) / 2;
+					if (meetsTargets(towardEndpoint(amount))) high = amount;
+					else low = amount;
+				}
+				color = towardEndpoint(high);
+			}
+			calculatedColors.set(stepName, color);
+			rampResults[stepName] = getColorString(color);
 		}
 		return {
 			rampResults,
@@ -5224,11 +5432,13 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			maxDeficitStep
 		};
 	}
-	function buildRamp(seedArg, config, { mainDirection, pinLightness, rescaleToFitContrastTargets = true } = {}) {
+	function buildRamp(seedArg, config, { mainDirection, neutralSurface: neutralSurfaceColor, pinLightness, rescaleToFitContrastTargets = true } = {}) {
 		const parsedSeed = parseSeedColor(seedArg);
+		const neutralSurface = neutralSurfaceColor ? clampToGamut(parseSeedColor(neutralSurfaceColor)) : void 0;
 		let seed;
 		try {
 			seed = clampToGamut(parsedSeed);
+			if (neutralSurface) seed = clampToGamut(parseSeedColor(getColorString(seed)));
 		} catch (error) {
 			throw new Error(`Invalid seed color "${seedArg}": ${error instanceof Error ? error.message : "Unknown error"}`);
 		}
@@ -5249,13 +5459,28 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			config,
 			mainDir,
 			oppDir,
+			neutralSurface,
 			pinLightness
 		});
+		function getWarnings(ramp, candidate, steps = sortedSteps) {
+			const emitted = {
+				...ramp,
+				seed: getColorString(candidate),
+				neutralSurface: neutralSurfaceColor
+			};
+			return steps.filter((stepName) => {
+				const { contrast } = config[stepName];
+				return !contrast.ignoreWhenAdjustingSeed && getContrastReferences(contrast).some(({ reference, target }) => getContrast(ramp[stepName], emitted[reference]) < target);
+			});
+		}
 		let bestRamp = rampResults;
-		if (maxDeficit > .004 && rescaleToFitContrastTargets) {
-			const iterSteps = stepsForStep(maxDeficitStep, config);
+		if (maxDeficit > .004 && rescaleToFitContrastTargets && (!neutralSurface || getWarnings(rampResults, seed).length > 0)) {
+			const iterSteps = neutralSurface ? sortedSteps : stepsForStep(maxDeficitStep, config);
+			const seedL = get(seed, [oklch_default, "l"]);
+			let passing;
 			function getSeedForL(l) {
-				return clampToGamut(set(clone(seed), [oklch_default, "l"], l));
+				const color = clampToGamut(set(clone(seed), [oklch_default, "l"], l));
+				return neutralSurface ? clampToGamut(parseSeedColor(getColorString(color))) : color;
 			}
 			function getDeficitForSeed(s) {
 				const iterationResults = calculateRamp({
@@ -5264,30 +5489,86 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 					config,
 					mainDir,
 					oppDir,
+					neutralSurface,
 					pinLightness
 				});
+				if (neutralSurface && getWarnings(iterationResults.rampResults, s).length === 0) {
+					passing = {
+						seed: s,
+						ramp: iterationResults.rampResults
+					};
+					return 0;
+				}
 				return iterationResults.maxDeficitDirection === maxDeficitDirection ? iterationResults.maxDeficit : -maxDeficit;
 			}
 			const lowerSeedL = maxDeficitDirection === "lighter" ? 0 : 1;
 			const lowerDeficit = -maxDeficit;
-			const upperSeedL = get(seed, [oklch_default, "l"]);
-			const bestSeed = solveWithBisect(getSeedForL, getDeficitForSeed, lowerSeedL, lowerDeficit, upperSeedL, maxDeficit);
-			bestRamp = calculateRamp({
-				seed: bestSeed,
-				sortedSteps,
-				config,
-				mainDir,
-				oppDir,
-				pinLightness
-			}).rampResults;
-			seed = bestSeed;
+			const bestSeed = solveWithBisect(getSeedForL, getDeficitForSeed, lowerSeedL, lowerDeficit, seedL, maxDeficit);
+			if (passing) {
+				const searched = passing;
+				const refine = (steps) => {
+					let closest = searched;
+					let failingL = seedL;
+					let passingL = get(closest.seed, [oklch_default, "l"]);
+					let failingColor = getColorString(seed);
+					for (let i = 0; i < 10; i++) {
+						const l = (failingL + passingL) / 2;
+						const candidate = getSeedForL(l);
+						const emitted = getColorString(candidate);
+						if (emitted === failingColor || emitted === getColorString(closest.seed)) break;
+						const { rampResults: ramp } = calculateRamp({
+							seed: candidate,
+							sortedSteps: steps,
+							config,
+							mainDir,
+							oppDir,
+							neutralSurface,
+							pinLightness
+						});
+						if (getWarnings(ramp, candidate, steps).length === 0) {
+							closest = {
+								seed: candidate,
+								ramp
+							};
+							passingL = l;
+						} else {
+							failingL = l;
+							failingColor = emitted;
+						}
+					}
+					return closest;
+				};
+				const failedSteps = new Set(getWarnings(rampResults, seed).flatMap((step) => stepsForStep(step, config)));
+				const refined = refine(sortedSteps.filter((step) => failedSteps.has(step)));
+				const { rampResults: refinedRamp } = calculateRamp({
+					seed: refined.seed,
+					sortedSteps,
+					config,
+					mainDir,
+					oppDir,
+					neutralSurface,
+					pinLightness
+				});
+				passing = getWarnings(refinedRamp, refined.seed).length === 0 ? {
+					seed: refined.seed,
+					ramp: refinedRamp
+				} : refine(sortedSteps);
+				bestRamp = passing.ramp;
+				seed = passing.seed;
+			} else {
+				bestRamp = calculateRamp({
+					seed: bestSeed,
+					sortedSteps,
+					config,
+					mainDir,
+					oppDir,
+					neutralSurface,
+					pinLightness
+				}).rampResults;
+				seed = bestSeed;
+			}
 		}
-		const serializedSeed = getColorString(seed);
-		const warnings = sortedSteps.filter((stepName) => {
-			const { contrast } = config[stepName];
-			if (contrast.ignoreWhenAdjustingSeed) return false;
-			return [contrast.reference, ...contrast.additionalReferences ?? []].some((referenceName) => getContrast(bestRamp[stepName], referenceName === "seed" ? serializedSeed : bestRamp[referenceName]) < contrast.target);
-		});
+		const warnings = getWarnings(bestRamp, seed);
 		if (mainDir === "darker") {
 			const tmpSurface1 = bestRamp.surface1;
 			bestRamp.surface1 = bestRamp.surface3;
@@ -5298,6 +5579,147 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			warnings: warnings.length ? warnings : void 0,
 			direction: mainDir
 		};
+	}
+
+// packages/theme/build-module/semantic-color-contrast-pairs.mjs
+/**
+	* Semantic color token paths used together for normal text.
+	*
+	* Paths omit the shared `wpds-color` prefix so build configuration and runtime
+	* tests can adapt the same pairs to DTCG token IDs and CSS custom properties.
+	*/
+	const MINIMUM_TEXT_CONTRAST = 4.5;
+	const NEUTRAL_CONTRAST_SURFACES = {
+		"background.surface.neutral": "surface2",
+		"background.surface.neutral-strong": "surface3",
+		"background.surface.neutral-weak": "surface1"
+	};
+	const brandSurfaces = [...Object.keys(NEUTRAL_CONTRAST_SURFACES), "background.surface.brand"];
+	const brandFocusTokens = [
+		"stroke.focus",
+		"background.interactive.brand-strong",
+		"background.interactive.brand-strong-active"
+	];
+	const SEMANTIC_COLOR_CONTRAST_PAIRS = [
+		...brandSurfaces.flatMap((background) => ["foreground.interactive.brand", "foreground.interactive.brand-active"].map((foreground) => ({
+			background,
+			foreground
+		}))),
+		{
+			background: "background.interactive.neutral",
+			foreground: "foreground.interactive.neutral"
+		},
+		{
+			background: "background.interactive.neutral",
+			foreground: "foreground.interactive.neutral-weak"
+		},
+		{
+			background: "background.interactive.neutral-active",
+			foreground: "foreground.interactive.neutral"
+		},
+		{
+			background: "background.interactive.neutral-active",
+			foreground: "foreground.interactive.neutral-weak"
+		},
+		{
+			background: "background.interactive.neutral-weak-active",
+			foreground: "foreground.interactive.neutral-active"
+		},
+		{
+			background: "background.surface.neutral",
+			foreground: "foreground.content.neutral"
+		},
+		{
+			background: "background.surface.neutral-strong",
+			foreground: "foreground.content.neutral"
+		},
+		{
+			background: "background.surface.neutral-weak",
+			foreground: "foreground.content.neutral"
+		},
+		{
+			background: "background.surface.neutral",
+			foreground: "foreground.content.neutral-weak"
+		},
+		{
+			background: "background.surface.neutral-weak",
+			foreground: "foreground.content.neutral-weak"
+		},
+		{
+			background: "background.surface.neutral-strong",
+			foreground: "foreground.content.neutral-weak"
+		},
+		{
+			background: "background.surface.info",
+			foreground: "foreground.content.info"
+		},
+		{
+			background: "background.surface.info-weak",
+			foreground: "foreground.content.info-weak"
+		},
+		{
+			background: "background.surface.success",
+			foreground: "foreground.content.success"
+		},
+		{
+			background: "background.surface.success-weak",
+			foreground: "foreground.content.success-weak"
+		},
+		{
+			background: "background.surface.warning",
+			foreground: "foreground.content.warning"
+		},
+		{
+			background: "background.surface.warning-weak",
+			foreground: "foreground.content.warning-weak"
+		},
+		{
+			background: "background.surface.caution",
+			foreground: "foreground.content.caution"
+		},
+		{
+			background: "background.surface.caution-weak",
+			foreground: "foreground.content.caution-weak"
+		},
+		{
+			background: "background.surface.error",
+			foreground: "foreground.content.error"
+		},
+		{
+			background: "background.surface.error-weak",
+			foreground: "foreground.content.error-weak"
+		},
+		{
+			background: "background.interactive.brand-strong",
+			foreground: "foreground.interactive.brand-strong"
+		},
+		{
+			background: "background.interactive.brand-strong-active",
+			foreground: "foreground.interactive.brand-strong-active"
+		},
+		{
+			background: "background.interactive.error-strong",
+			foreground: "foreground.interactive.error-strong"
+		},
+		{
+			background: "background.interactive.error-strong-active",
+			foreground: "foreground.interactive.error-strong-active"
+		},
+		{
+			background: "background.interactive.neutral-strong",
+			foreground: "foreground.interactive.neutral-strong"
+		},
+		{
+			background: "background.interactive.neutral-strong-active",
+			foreground: "foreground.interactive.neutral-strong-active"
+		}
+	];
+	const SEMANTIC_FOCUS_CONTRAST_PAIRS = brandSurfaces.flatMap((background) => brandFocusTokens.map((foreground) => ({
+		background,
+		foreground
+	})));
+	function getSemanticColorCustomProperty(token) {
+		return `--wpds-color-${token.replaceAll(".", "-")}`;
 	}
 
 // packages/theme/build-module/color-ramps/lib/ramp-configs.mjs
@@ -5472,7 +5894,10 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		fgFill: {
 			contrast: {
 				reference: "bgFill1",
-				additionalReferences: ["bgFill2"],
+				additionalReferences: [{
+					reference: "bgFill2",
+					target: 4.5
+				}],
 				followDirection: "best",
 				target: 4.5
 			},
@@ -5574,6 +5999,47 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			taperChromaOptions: void 0
 		}
 	};
+	function createPrimaryRampConfig(brandSurface) {
+		const withSurfaceTargets = (config, target) => {
+			const existing = getContrastReferences(config.contrast);
+			return {
+				...config,
+				contrast: {
+					...config.contrast,
+					additionalReferences: [...config.contrast.additionalReferences ?? [], ...["neutralSurface", brandSurface].filter((reference) => !existing.some((current) => current.reference === reference && current.target >= target)).map((reference) => ({
+						reference,
+						target
+					}))]
+				}
+			};
+		};
+		return {
+			...ACCENT_RAMP_CONFIG,
+			surface2: {
+				...ACCENT_RAMP_CONFIG.surface2,
+				contrast: {
+					...ACCENT_RAMP_CONFIG.surface2.contrast,
+					reference: "seed"
+				}
+			},
+			bgFill1: withSurfaceTargets({
+				sameAsIfPossible: "seed",
+				contrast: {
+					reference: "neutralSurface",
+					target: 3,
+					followDirection: "main"
+				}
+			}, 3),
+			bgFill2: withSurfaceTargets(ACCENT_RAMP_CONFIG.bgFill2, 3),
+			stroke3: withSurfaceTargets(ACCENT_RAMP_CONFIG.stroke3, 3),
+			fgSurface3: withSurfaceTargets(ACCENT_RAMP_CONFIG.fgSurface3, MINIMUM_TEXT_CONTRAST),
+			fgSurface4: withSurfaceTargets(ACCENT_RAMP_CONFIG.fgSurface4, MINIMUM_TEXT_CONTRAST)
+		};
+	}
+	const PRIMARY_RAMP_CONFIGS = {
+		lighter: createPrimaryRampConfig("surface1"),
+		darker: createPrimaryRampConfig("surface3")
+	};
 
 // packages/theme/build-module/color-ramps/index.mjs
 /**
@@ -5598,13 +6064,20 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	/**
 	* Creates an accent ramp (ie used by primary, success, info, warning and error
 	* ramps).
+	* @param name   The accent ramp name.
 	* @param seed   The seed color for the accent ramp.
 	* @param bgRamp The ramp of the background on which the accent is shown.
 	*/
-	function buildAccentRamp(seed, bgRamp) {
+	function buildAccentRamp(name, seed, bgRamp) {
 		if (typeof seed !== "string" || seed.trim() === "") throw new Error("Seed color must be a non-empty string");
 		const bgRampInfo = bgRamp ? getBgRampInfo(bgRamp) : void 0;
-		return buildRamp(seed, ACCENT_RAMP_CONFIG, bgRampInfo);
+		if (name !== "primary" || !bgRamp) return buildRamp(seed, ACCENT_RAMP_CONFIG, bgRampInfo);
+		const endpoint = bgRamp.direction === "lighter" ? "#fff" : "#000";
+		const neutralSurface = Object.values(NEUTRAL_CONTRAST_SURFACES).map((step) => bgRamp.ramp[step]).reduce((worst, next) => getContrast(next, endpoint) < getContrast(worst, endpoint) ? next : worst);
+		return buildRamp(seed, PRIMARY_RAMP_CONFIGS[bgRamp.direction], {
+			...bgRampInfo,
+			neutralSurface
+		});
 	}
 
 // packages/theme/build-module/color-ramps/lib/default-ramps.mjs
@@ -5638,27 +6111,27 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		},
 		primary: {
 			ramp: {
-				bgFill1: "#3858e9",
-				bgFill2: "#2d48d9",
-				fgFill: "#eff0f2",
 				surface2: "#f6f8fe",
 				surface6: "#c6d1ed",
 				surface5: "#dbe2f4",
 				surface4: "#e4e9f7",
 				surface3: "#fff",
 				fgSurface4: "#0b0070",
-				fgSurface3: "#3858e9",
 				fgSurface2: "#5981ff",
 				fgSurface1: "#83a7ff",
-				stroke3: "#3858e9",
-				stroke4: "#2336c7",
-				stroke2: "#9cabd2",
-				stroke1: "#b0bcdb",
 				bgFillDark: "#1a1e27",
 				fgFillDark: "#eff0f2",
 				bgFillInverted2: "#1a1e27",
 				bgFillInverted1: "#1400a2",
 				fgFillInverted: "#eff0f2",
+				bgFill1: "#3858e9",
+				fgSurface3: "#3858e9",
+				stroke3: "#3858e9",
+				stroke4: "#2336c7",
+				stroke2: "#9cabd2",
+				stroke1: "#b0bcdb",
+				bgFill2: "#2d48d9",
+				fgFill: "#eff0f2",
 				surface1: "#ebeffa"
 			},
 			direction: "darker"
@@ -5800,141 +6273,6 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		}
 	};
 
-// packages/theme/build-module/semantic-color-contrast-pairs.mjs
-/**
-	* Semantic color token paths used together for normal text.
-	*
-	* Paths omit the shared `wpds-color` prefix so build configuration and runtime
-	* tests can adapt the same pairs to DTCG token IDs and CSS custom properties.
-	*/
-	const MINIMUM_TEXT_CONTRAST = 4.5;
-	const SEMANTIC_COLOR_CONTRAST_PAIRS = [
-		{
-			background: "background.interactive.neutral",
-			foreground: "foreground.interactive.neutral"
-		},
-		{
-			background: "background.interactive.neutral",
-			foreground: "foreground.interactive.neutral-weak"
-		},
-		{
-			background: "background.interactive.neutral-active",
-			foreground: "foreground.interactive.neutral"
-		},
-		{
-			background: "background.interactive.neutral-active",
-			foreground: "foreground.interactive.neutral-weak"
-		},
-		{
-			background: "background.interactive.neutral-weak-active",
-			foreground: "foreground.interactive.neutral-active"
-		},
-		{
-			background: "background.surface.neutral",
-			foreground: "foreground.content.neutral"
-		},
-		{
-			background: "background.surface.neutral-strong",
-			foreground: "foreground.content.neutral"
-		},
-		{
-			background: "background.surface.neutral-weak",
-			foreground: "foreground.content.neutral"
-		},
-		{
-			background: "background.surface.neutral",
-			foreground: "foreground.content.neutral-weak"
-		},
-		{
-			background: "background.surface.neutral-weak",
-			foreground: "foreground.content.neutral-weak"
-		},
-		{
-			background: "background.surface.neutral-strong",
-			foreground: "foreground.content.neutral-weak"
-		},
-		{
-			background: "background.surface.info",
-			foreground: "foreground.content.info"
-		},
-		{
-			background: "background.surface.info-weak",
-			foreground: "foreground.content.info-weak"
-		},
-		{
-			background: "background.surface.success",
-			foreground: "foreground.content.success"
-		},
-		{
-			background: "background.surface.success-weak",
-			foreground: "foreground.content.success-weak"
-		},
-		{
-			background: "background.surface.warning",
-			foreground: "foreground.content.warning"
-		},
-		{
-			background: "background.surface.warning-weak",
-			foreground: "foreground.content.warning-weak"
-		},
-		{
-			background: "background.surface.caution",
-			foreground: "foreground.content.caution"
-		},
-		{
-			background: "background.surface.caution-weak",
-			foreground: "foreground.content.caution-weak"
-		},
-		{
-			background: "background.surface.error",
-			foreground: "foreground.content.error"
-		},
-		{
-			background: "background.surface.error-weak",
-			foreground: "foreground.content.error-weak"
-		},
-		{
-			background: "background.interactive.brand-strong",
-			foreground: "foreground.interactive.brand-strong"
-		},
-		{
-			background: "background.interactive.brand-strong-active",
-			foreground: "foreground.interactive.brand-strong-active"
-		},
-		{
-			background: "background.interactive.error-strong",
-			foreground: "foreground.interactive.error-strong"
-		},
-		{
-			background: "background.interactive.error-strong-active",
-			foreground: "foreground.interactive.error-strong-active"
-		},
-		{
-			background: "background.interactive.neutral-strong",
-			foreground: "foreground.interactive.neutral-strong"
-		},
-		{
-			background: "background.interactive.neutral-strong-active",
-			foreground: "foreground.interactive.neutral-strong-active"
-		}
-	];
-	const SEMANTIC_FOCUS_CONTRAST_PAIRS = [
-		"background.surface.neutral",
-		"background.surface.neutral-strong",
-		"background.surface.neutral-weak",
-		"background.surface.brand"
-	].flatMap((background) => [
-		"stroke.focus",
-		"background.interactive.brand-strong",
-		"background.interactive.brand-strong-active"
-	].map((foreground) => ({
-		background,
-		foreground
-	})));
-	function getSemanticColorCustomProperty(token) {
-		return `--wpds-color-${token.replaceAll(".", "-")}`;
-	}
-
 // packages/theme/build-module/theme-provider-color-warnings.mjs
 	function collectThemeProviderColorWarnings(ramps, colorValues) {
 		const warnings = [];
@@ -5974,7 +6312,8 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return seed === DEFAULT_SEED_COLORS.background ? DEFAULT_RAMPS.background : getCachedBgRamp(seed);
 	}
 	function getAccentRamp(rampName, seed, bgRamp) {
-		return bgRamp === DEFAULT_RAMPS.background && seed === DEFAULT_SEED_COLORS[rampName] ? DEFAULT_RAMPS[rampName] : getCachedAccentRamp(seed, bgRamp);
+		if (bgRamp === DEFAULT_RAMPS.background && seed === DEFAULT_SEED_COLORS[rampName]) return DEFAULT_RAMPS[rampName];
+		return getCachedAccentRamp(rampName, seed, bgRamp);
 	}
 	const legacyWpComponentsOverridesCSS = [
 		["--wp-components-color-accent", "var(--wp-admin-theme-color)"],
@@ -6020,11 +6359,15 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return entries;
 	}
 	function generateStyles({ primary, colorEntries }) {
-		return Object.fromEntries([
+		const styles = Object.fromEntries([
 			colorEntries,
 			legacyWpAdminThemeOverridesCSS(primary),
 			legacyWpComponentsOverridesCSS
 		].flat());
+		const accent = styles["--wp-admin-theme-color"];
+		const onFill = styles["--wpds-color-foreground-interactive-brand-strong"];
+		if (getContrast(accent, onFill) < 4.5) styles["--wp-components-color-accent-inverted"] = getContrast(accent, "#fff") >= 4.5 ? "#fff" : "#000";
+		return styles;
 	}
 	function generateThemeProviderColors(primary, background) {
 		const seeds = {
