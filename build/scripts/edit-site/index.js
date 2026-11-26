@@ -75084,7 +75084,7 @@ If there's a particular need for this, please submit a feature request at https:
 				history.navigate((0, _wordpress_url.addQueryArgs)(path, {
 					...query,
 					pageNumber: params.page,
-					search: params.search
+					search: params.search || void 0
 				}));
 			}
 		});
