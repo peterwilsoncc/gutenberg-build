@@ -106817,7 +106817,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		/**
 		* Sets the open/closed state of the Advanced Settings Drawer,
-		* optionlly persisting the state to the user's preferences.
+		* optionally persisting the state to the user's preferences.
 		*
 		* Note that Block Editor components can be consumed by non-WordPress
 		* environments which may not have preferences setup.
