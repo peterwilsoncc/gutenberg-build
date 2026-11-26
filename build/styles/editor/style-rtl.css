@@ -3800,7 +3800,7 @@ div.dataviews-view-list {
 }
 
 .dataviews-controls__date-preset:active {
-  background-color: var(--wpds-color-background-interactive-neutral-strong-active, #1e1e1e);
+  background-color: var(--wpds-color-background-interactive-neutral-strong-active, #2e2e2e);
 }
 
 .dataviews-validated-control__wrapper-with-error-delegate:has(input[type=radio]:invalid[data-validity-visible]), .dataviews-validated-control__wrapper-with-error-delegate:has(input:invalid[data-validity-visible]) .components-form-token-field__input-container:not(:has([aria-expanded=true])), .dataviews-validated-control .components-combobox-control__suggestions-container:has(input:invalid[data-validity-visible]):not(:has([aria-expanded=true])), .dataviews-validated-control:has(:is(input, select):invalid[data-validity-visible]) .components-input-control__backdrop {
@@ -6087,7 +6087,7 @@ mark.wp-note {
 }
 .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed,
 .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed {
-  background: var(--wpds-color-background-interactive-neutral-strong-active, #1e1e1e);
+  background: var(--wpds-color-background-interactive-neutral-strong-active, #2e2e2e);
 }
 .editor-document-tools .editor-document-tools__left > .components-button.has-icon.is-pressed:is(:disabled, [aria-disabled=true]),
 .editor-document-tools .editor-document-tools__left > .components-dropdown > .components-button.has-icon.is-pressed:is(:disabled, [aria-disabled=true]) {

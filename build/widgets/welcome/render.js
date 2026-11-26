@@ -1393,11 +1393,11 @@ function HeaderBackground({ version }) {
 }
 
 // widgets/welcome/components/banner/banner.module.css
-registerStyle("5745d98173", ".f1c0e834f10b27d5__banner{--banner-bg:var(--wpds-color-background-interactive-neutral-strong,#2e2e2e);--banner-fg:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--banner-accent-brand:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--banner-accent-warm:color-mix(in srgb,var(--wpds-color-stroke-surface-warning,#e0bc7d) 60%,var(--wpds-color-background-surface-neutral-strong,#fff));--banner-accent-dark:var(--wpds-color-foreground-content-neutral,#1e1e1e);--banner-glint:color-mix(in srgb,var(--banner-fg) 80%,var(--banner-accent-warm));background-color:var(--banner-bg);background-image:linear-gradient(108deg,var(--banner-bg) 0,var(--banner-bg) 26%,var(--banner-accent-brand) 66%,var(--banner-accent-warm) 100%);color:var(--banner-fg);min-height:clamp(180px,20cqi,320px);overflow:hidden;padding:var(--wpds-dimension-padding-3xl,32px);position:relative}._9bac0689df65606b__banner-content{position:relative;z-index:1}.e3cc9df389b9f45c__banner-link{color:inherit;text-decoration:underline;text-underline-offset:.2em}@container (max-width: 420px){.f1c0e834f10b27d5__banner{padding:var(--wpds-dimension-padding-lg,16px)}}");
+registerStyle("1012040cbc", ".bc9926baaffb1407__banner{--banner-bg:var(--wpds-color-background-interactive-neutral-strong,#1e1e1e);--banner-fg:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);--banner-accent-brand:var(--wpds-color-background-interactive-brand-strong,var(--wp-admin-theme-color,#3858e9));--banner-accent-warm:color-mix(in srgb,var(--wpds-color-stroke-surface-warning,#e0bc7d) 60%,var(--wpds-color-background-surface-neutral-strong,#fff));--banner-accent-dark:var(--wpds-color-foreground-content-neutral,#1e1e1e);--banner-glint:color-mix(in srgb,var(--banner-fg) 80%,var(--banner-accent-warm));background-color:var(--banner-bg);background-image:linear-gradient(108deg,var(--banner-bg) 0,var(--banner-bg) 26%,var(--banner-accent-brand) 66%,var(--banner-accent-warm) 100%);color:var(--banner-fg);min-height:clamp(180px,20cqi,320px);overflow:hidden;padding:var(--wpds-dimension-padding-3xl,32px);position:relative}._249bac084f2f6c68__banner-content{position:relative;z-index:1}._3b220aa6b3947d16__banner-link{color:inherit;text-decoration:underline;text-underline-offset:.2em}@container (max-width: 420px){.bc9926baaffb1407__banner{padding:var(--wpds-dimension-padding-lg,16px)}}");
 var banner_module_default = {
-	"banner": "f1c0e834f10b27d5__banner",
-	"banner-content": "_9bac0689df65606b__banner-content",
-	"banner-link": "e3cc9df389b9f45c__banner-link"
+	"banner": "bc9926baaffb1407__banner",
+	"banner-content": "_249bac084f2f6c68__banner-content",
+	"banner-link": "_3b220aa6b3947d16__banner-link"
 };
 
 // widgets/welcome/components/banner/banner.tsx
@@ -1432,8 +1432,8 @@ function Banner() {
 }
 
 // widgets/welcome/components/feature-highlight/feature-highlight.module.css
-registerStyle("00f1de131f", "._24447b3090580370__icon-box{background-color:var(--wpds-color-background-interactive-neutral-strong,#2e2e2e);block-size:calc(var(--wpds-dimension-padding-2xl, 24px)*2);border-radius:var(--wpds-border-radius-md,4px);color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);flex-shrink:0;inline-size:calc(var(--wpds-dimension-padding-2xl, 24px)*2)}");
-var feature_highlight_module_default = { "icon-box": "_24447b3090580370__icon-box" };
+registerStyle("407ffa6d47", ".ba4c0d56193e292c__icon-box{background-color:var(--wpds-color-background-interactive-neutral-strong,#1e1e1e);block-size:calc(var(--wpds-dimension-padding-2xl, 24px)*2);border-radius:var(--wpds-border-radius-md,4px);color:var(--wpds-color-foreground-interactive-neutral-strong,#f0f0f0);flex-shrink:0;inline-size:calc(var(--wpds-dimension-padding-2xl, 24px)*2)}");
+var feature_highlight_module_default = { "icon-box": "ba4c0d56193e292c__icon-box" };
 
 // widgets/welcome/components/feature-highlight/feature-highlight.tsx
 function FeatureHighlight({ icon, title, description, ctaUrl, ctaLabel }) {

@@ -567,7 +567,7 @@ p + .components-button.is-tertiary {
   margin-inline: -1px;
 }
 .components-button.is-pressed {
-  --_wp-components-button-pressed-background: var(--wpds-color-background-interactive-neutral-strong-active, #1e1e1e);
+  --_wp-components-button-pressed-background: var(--wpds-color-background-interactive-neutral-strong-active, #2e2e2e);
 }
 .components-button.is-pressed, .components-button.is-pressed:hover, .components-button.is-pressed.is-busy {
   color: var(--wpds-color-foreground-interactive-neutral-strong-active, #f0f0f0);

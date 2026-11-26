@@ -727,7 +727,7 @@ body.is-dragging-components-draggable .wp-block[data-type="core/widget-area"] .c
 }
 .edit-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed,
 .edit-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed {
-  background: var(--wpds-color-background-interactive-neutral-strong-active, #1e1e1e);
+  background: var(--wpds-color-background-interactive-neutral-strong-active, #2e2e2e);
 }
 .edit-widgets-header-toolbar > .components-button.has-icon.has-icon.has-icon.is-pressed:is(:disabled, [aria-disabled=true]),
 .edit-widgets-header-toolbar > .components-dropdown > .components-button.has-icon.has-icon.is-pressed:is(:disabled, [aria-disabled=true]) {
