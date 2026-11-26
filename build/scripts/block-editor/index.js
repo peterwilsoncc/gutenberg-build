@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_element, _wordpress_data, _wordpress_compose, _wordpress_hooks, _wordpress_i18n, _wordpress_components, _wordpress_primitives, react_jsx_runtime, _wordpress_deprecated, _wordpress_is_shallow_equal, _wordpress_private_apis, _wordpress_rich_text, _wordpress_block_serialization_default_parser, _wordpress_style_engine, _wordpress_a11y, _wordpress_notices, _wordpress_url, react, react_dom, _wordpress_warning, _wordpress_theme, _wordpress_keycodes, _wordpress_dom, _wordpress_html_entities, _wordpress_upload_media, _wordpress_keyboard_shortcuts, _wordpress_priority_queue, _wordpress_date, _wordpress_blob, _wordpress_token_list, _wordpress_preferences, _wordpress_commands) {
+(function(exports, _wordpress_blocks, _wordpress_element, _wordpress_data, _wordpress_compose, _wordpress_hooks, _wordpress_i18n, _wordpress_components, _wordpress_primitives, react_jsx_runtime, _wordpress_deprecated, _wordpress_is_shallow_equal, _wordpress_private_apis, _wordpress_rich_text, _wordpress_block_serialization_default_parser, _wordpress_style_engine, _wordpress_a11y, _wordpress_notices, _wordpress_url, react, react_dom, _wordpress_warning, _wordpress_theme, _wordpress_keycodes, _wordpress_dom, _wordpress_html_entities, _wordpress_upload_media, _wordpress_keyboard_shortcuts, _wordpress_priority_queue, _wordpress_escape_html, _wordpress_date, _wordpress_blob, _wordpress_token_list, _wordpress_preferences, _wordpress_commands) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -8392,7 +8392,8 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		const coreInserterMediaCategoriesNames = inserterMediaCategories?.map(({ name }) => name) || [];
 		return [...inserterMediaCategories || [], ...(registeredInserterMediaCategories || []).filter(({ name }) => !coreInserterMediaCategoriesNames.includes(name))].filter((category) => {
 			if (!enableOpenverseMediaCategory && category.name === "openverse") return false;
-			return Object.values(allowedMimeTypes).some((mimeType) => mimeType.startsWith(`${category.mediaType}/`));
+			const mimeTypePrefixes = category.mediaType === "file" ? ["application/", "text/"] : [`${category.mediaType}/`];
+			return Object.values(allowedMimeTypes).some((mimeType) => mimeTypePrefixes.some((prefix) => mimeType.startsWith(prefix)));
 		});
 	}, (state) => [
 		state.settings.inserterMediaCategories,
@@ -13515,7 +13516,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* @property {Object}                                                                       labels                         Labels for the media category.
 	* @property {string}                                                                       labels.name                    General name of the media category. It's used in the inserter media items list.
 	* @property {string}                                                                       [labels.search_items='Search'] Label for searching items. Default is ‘Search Posts’ / ‘Search Pages’.
-	* @property {('image'|'audio'|'video')}                                                    mediaType                      The media type of the media category.
+	* @property {('image'|'audio'|'video'|'file')}                                             mediaType                      The media type of the media category. `file` covers documents, such as PDFs, and other non-media files, which are inserted as File blocks.
 	* @property {(InserterMediaRequest) => Promise<InserterMediaItem[]|InserterMediaResponse>} fetch                          The function to fetch media items for the category. Returning an
 	*                                                                                                                         `InserterMediaResponse` instead of a plain array opts the category into
 	*                                                                                                                         pagination.
@@ -13542,9 +13543,10 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 		if (![
 			"image",
 			"audio",
-			"video"
+			"video",
+			"file"
 		].includes(category.mediaType)) {
-			console.error("Category should have `mediaType` property that is one of `image|audio|video`.");
+			console.error("Category should have `mediaType` property that is one of `image|audio|video|file`.");
 			return;
 		}
 		if (!category.fetch || typeof category.fetch !== "function") {
@@ -73428,12 +73430,13 @@ Icon: ButtonIcon });
 		const [categories, setCategories] = (0, _wordpress_element.useState)([]);
 		const [hasResolved, setHasResolved] = (0, _wordpress_element.useState)(false);
 		const inserterMediaCategories = (0, _wordpress_data.useSelect)((select) => unlock$2(select(store)).getInserterMediaCategories(), []);
-		const { canInsertImage, canInsertVideo, canInsertAudio } = (0, _wordpress_data.useSelect)((select) => {
+		const { canInsertImage, canInsertVideo, canInsertAudio, canInsertFile } = (0, _wordpress_data.useSelect)((select) => {
 			const { canInsertBlockType } = select(store);
 			return {
 				canInsertImage: canInsertBlockType("core/image", rootClientId),
 				canInsertVideo: canInsertBlockType("core/video", rootClientId),
-				canInsertAudio: canInsertBlockType("core/audio", rootClientId)
+				canInsertAudio: canInsertBlockType("core/audio", rootClientId),
+				canInsertFile: canInsertBlockType("core/file", rootClientId)
 			};
 		}, [rootClientId]);
 		(0, _wordpress_element.useEffect)(() => {
@@ -73455,7 +73458,8 @@ Icon: ButtonIcon });
 				const canInsertMediaType = {
 					image: canInsertImage,
 					video: canInsertVideo,
-					audio: canInsertAudio
+					audio: canInsertAudio,
+					file: canInsertFile
 				};
 				inserterMediaCategories.forEach((category) => {
 					if (canInsertMediaType[category.mediaType] && (categoriesHaveMedia.get(category.name) || category.emptyMessage)) _categories.push(category);
@@ -73467,6 +73471,7 @@ Icon: ButtonIcon });
 			canInsertImage,
 			canInsertVideo,
 			canInsertAudio,
+			canInsertFile,
 			inserterMediaCategories
 		]);
 		return {
@@ -73503,6 +73508,30 @@ Icon: ButtonIcon });
 		video: "video"
 	};
 	/**
+	* Creates a File block for media that has no block of its own, such as a PDF.
+	* Mirrors what the File block sets when a file is chosen from its placeholder.
+	*
+	* @param media The media object to create the block from.
+	* @return The File block.
+	*/
+	function createFileBlock(media) {
+		const { title } = media;
+		const plainTitle = typeof title === "string" ? title : title?.raw;
+		const renderedTitle = typeof title === "string" ? void 0 : title?.rendered;
+		const fileName = plainTitle ? (0, _wordpress_escape_html.escapeEditableHTML)(plainTitle) : renderedTitle || (0, _wordpress_escape_html.escapeEditableHTML)((0, _wordpress_url.getFilename)(media.url) ?? "");
+		const isPdf = (media.mime || media.mime_type) === "application/pdf" || (0, _wordpress_url.getFilename)(media.url)?.toLowerCase().endsWith(".pdf");
+		const block = (0, _wordpress_blocks.createBlock)("core/file", {
+			id: media.id || void 0,
+			href: media.url,
+			fileName,
+			textLinkHref: media.url,
+			downloadButtonText: (0, _wordpress_i18n._x)("Download", "button label"),
+			displayPreview: isPdf || void 0
+		});
+		block.attributes.fileId = `wp-block-file--media-${block.clientId}`;
+		return block;
+	}
+	/**
 	* A media item's id, used for item identity in the grid.
 	*
 	* Library items carry a numeric `id` and external ones (e.g. Openverse) carry
@@ -73525,11 +73554,16 @@ Icon: ButtonIcon });
 	* @return An array containing the block and the preview element.
 	*/
 	function getBlockAndPreviewFromMedia(media, mediaType) {
+		const mediaSrc = media.url;
+		const filePreview = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FilePreview, {
+			url: mediaSrc,
+			mediaType
+		});
+		if (mediaType === "file") return [createFileBlock(media), filePreview];
 		const attributes = {
 			id: media.id || void 0,
 			caption: media.caption || void 0
 		};
-		const mediaSrc = media.url;
 		const alt = media.alt || void 0;
 		if (mediaType === "image") {
 			attributes.url = mediaSrc;
@@ -73543,10 +73577,7 @@ Icon: ButtonIcon });
 			onError: ({ currentTarget }) => {
 				if (currentTarget.src === media.previewUrl) currentTarget.src = mediaSrc;
 			}
-		}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(FilePreview, {
-			url: mediaSrc,
-			mediaType
-		});
+		}) : filePreview;
 		return [(0, _wordpress_blocks.createBlock)(`core/${mediaType}`, attributes), preview];
 	}
 
@@ -90251,12 +90282,20 @@ If there's a particular need for this, please submit a feature request at https:
 	const ALLOWED_MEDIA_TYPES = [
 		"image",
 		"video",
+		"audio",
+		"application",
+		"text"
+	];
+	const BLOCK_MEDIA_TYPES = [
+		"image",
+		"video",
 		"audio"
 	];
 	const LIBRARY_CATEGORIES = [
 		"images",
 		"videos",
-		"audio"
+		"audio",
+		"files"
 	];
 	const LIBRARY_SOURCE = "media-library";
 	const DEFAULT_MEDIA_TYPE = "image";
@@ -90270,8 +90309,9 @@ If there's a particular need for this, please submit a feature request at https:
 		const onSelectMedia = (0, _wordpress_element.useCallback)((media) => {
 			const item = media;
 			if (!item?.url) return;
-			const mediaType = window.__experimentalDataViewsMediaModal && item.mime_type ? item.mime_type.split("/")[0] : item.type;
-			if (!mediaType) return;
+			const type = window.__experimentalDataViewsMediaModal && item.mime_type ? item.mime_type.split("/")[0] : item.type;
+			if (!type) return;
+			const mediaType = BLOCK_MEDIA_TYPES.includes(type) ? type : "file";
 			const [block] = getBlockAndPreviewFromMedia({
 				...item,
 				url: item.url
@@ -124880,5 +124920,5 @@ exports.withFontSizes = with_font_sizes_default;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).blockEditor = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.element, window.wp.data, window.wp.compose, window.wp.hooks, window.wp.i18n, window.wp.components, window.wp.primitives, window.ReactJSXRuntime, window.wp.deprecated, window.wp.isShallowEqual, window.wp.privateApis, window.wp.richText, window.wp.blockSerializationDefaultParser, window.wp.styleEngine, window.wp.a11y, window.wp.notices, window.wp.url, window.React, window.ReactDOM, window.wp.warning, window.wp.theme, window.wp.keycodes, window.wp.dom, window.wp.htmlEntities, window.wp.uploadMedia, window.wp.keyboardShortcuts, window.wp.priorityQueue, window.wp.date, window.wp.blob, window.wp.tokenList, window.wp.preferences, window.wp.commands);
+})({}, window.wp.blocks, window.wp.element, window.wp.data, window.wp.compose, window.wp.hooks, window.wp.i18n, window.wp.components, window.wp.primitives, window.ReactJSXRuntime, window.wp.deprecated, window.wp.isShallowEqual, window.wp.privateApis, window.wp.richText, window.wp.blockSerializationDefaultParser, window.wp.styleEngine, window.wp.a11y, window.wp.notices, window.wp.url, window.React, window.ReactDOM, window.wp.warning, window.wp.theme, window.wp.keycodes, window.wp.dom, window.wp.htmlEntities, window.wp.uploadMedia, window.wp.keyboardShortcuts, window.wp.priorityQueue, window.wp.escapeHtml, window.wp.date, window.wp.blob, window.wp.tokenList, window.wp.preferences, window.wp.commands);
 //# sourceMappingURL=index.js.map

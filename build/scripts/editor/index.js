@@ -103826,6 +103826,18 @@ If there's a particular need for this, please submit a feature request at https:
 				media_type: "audio"
 			})
 		}),
+		createCoreMediaCategory({
+			name: "files",
+			labels: {
+				name: (0, _wordpress_i18n.__)("Files"),
+				search_items: (0, _wordpress_i18n.__)("Search files")
+			},
+			mediaType: "file",
+			getQuery: (query) => ({
+				...query,
+				media_type: ["application", "text"]
+			})
+		}),
 		{
 			name: "openverse",
 			labels: {
