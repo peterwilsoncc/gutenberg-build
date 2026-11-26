@@ -35435,6 +35435,9 @@ Icon: ButtonIcon });
 							styleEl.innerHTML = css;
 							doc.head.appendChild(styleEl);
 						});
+						editor.getContainer().addEventListener("keydown", (event) => {
+							if (event.key === "Escape") event.preventDefault();
+						});
 					});
 				}
 			} });
