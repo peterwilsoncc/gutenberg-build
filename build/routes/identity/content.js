@@ -33176,7 +33176,8 @@ function normalizeLayout(layout) {
 				withHeader: true,
 				isOpened: typeof layout.isOpened === "boolean" ? layout.isOpened : true,
 				summary: normalizeCardSummaryField(summary),
-				isCollapsible: layout.isCollapsible === void 0 ? true : layout.isCollapsible
+				isCollapsible: layout.isCollapsible === void 0 ? true : layout.isCollapsible,
+				...layout.headingLevel && { headingLevel: layout.headingLevel }
 			};
 		}
 	} else if (layout?.type === "row") normalizedLayout = {
@@ -34233,11 +34234,15 @@ function HeaderContent({ data, fields, label, layout, isOpen, touched, validity 
 	const visibleSummaryFields = getSummaryFields(layout.summary, fields).filter((summaryField) => isSummaryFieldVisible(summaryField, layout.summary, isOpen));
 	const hasBadge = touched && layout.isCollapsible;
 	const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
+	const HeadingTag = layout.withHeader && !layout.isCollapsible && layout.headingLevel ? `h${layout.headingLevel}` : void 0;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
 		align: "center",
 		justify: "space-between",
 		className: "dataforms-layouts-card__field-header-content",
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Title, { children: label }), (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(HeaderDescription, {
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Title, {
+			render: HeadingTag && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeadingTag, {}),
+			children: label
+		}), (hasBadge || hasSummary) && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(HeaderDescription, {
 			className: "dataforms-layouts-card__field-header-content-description",
 			children: [hasBadge && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValidationBadge, { validity }), hasSummary && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: "dataforms-layouts-card__field-summary",
@@ -34326,6 +34331,11 @@ function FormCardField({ data, field, onChange, hideLabelFromVision, markWhenOpt
 		validity,
 		withHeader
 	});
+	const headingLevel = layout.withHeader ? layout.headingLevel : void 0;
+	const collapsibleHeadingProps = headingLevel ? {
+		role: "heading",
+		"aria-level": headingLevel
+	} : {};
 	const headerContent = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeaderContent, {
 		data,
 		fields,
@@ -34340,7 +34350,10 @@ function FormCardField({ data, field, onChange, hideLabelFromVision, markWhenOpt
 		open: isOpen,
 		onOpenChange: handleOpenChange,
 		...focusOutsideProps,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Header$3, { children: headerContent }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content, {
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Header$3, {
+			...collapsibleHeadingProps,
+			children: headerContent
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content, {
 			ref: contentRef,
 			onFocus: handleContentFocus,
 			children: bodyContent

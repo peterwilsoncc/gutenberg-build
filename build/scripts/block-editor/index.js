@@ -88269,7 +88269,8 @@ If there's a particular need for this, please submit a feature request at https:
 					withHeader: true,
 					isOpened: typeof layout.isOpened === "boolean" ? layout.isOpened : true,
 					summary: normalizeCardSummaryField(summary),
-					isCollapsible: layout.isCollapsible === void 0 ? true : layout.isCollapsible
+					isCollapsible: layout.isCollapsible === void 0 ? true : layout.isCollapsible,
+					...layout.headingLevel && { headingLevel: layout.headingLevel }
 				};
 			}
 		} else if (layout?.type === "row") normalizedLayout = {
@@ -89242,11 +89243,15 @@ If there's a particular need for this, please submit a feature request at https:
 		const visibleSummaryFields = getSummaryFields(layout.summary, fields).filter((summaryField) => isSummaryFieldVisible(summaryField, layout.summary, isOpen));
 		const hasBadge = touched && layout.isCollapsible;
 		const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
+		const HeadingTag = layout.withHeader && !layout.isCollapsible && layout.headingLevel ? `h${layout.headingLevel}` : void 0;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 			align: "center",
 			justify: "space-between",
 			className: "dataforms-layouts-card__field-header-content",
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Title$1, { children: label }), (hasBadge || hasSummary) && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HeaderDescription, {
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Title$1, {
+				render: HeadingTag && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HeadingTag, {}),
+				children: label
+			}), (hasBadge || hasSummary) && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HeaderDescription, {
 				className: "dataforms-layouts-card__field-header-content-description",
 				children: [hasBadge && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidationBadge, { validity }), hasSummary && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 					className: "dataforms-layouts-card__field-summary",
@@ -89335,6 +89340,11 @@ If there's a particular need for this, please submit a feature request at https:
 			validity,
 			withHeader
 		});
+		const headingLevel = layout.withHeader ? layout.headingLevel : void 0;
+		const collapsibleHeadingProps = headingLevel ? {
+			role: "heading",
+			"aria-level": headingLevel
+		} : {};
 		const headerContent = /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HeaderContent, {
 			data,
 			fields,
@@ -89349,7 +89359,10 @@ If there's a particular need for this, please submit a feature request at https:
 			open: isOpen,
 			onOpenChange: handleOpenChange,
 			...focusOutsideProps,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Header$2, { children: headerContent }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Content$1, {
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Header$2, {
+				...collapsibleHeadingProps,
+				children: headerContent
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Content$1, {
 				ref: contentRef,
 				onFocus: handleContentFocus,
 				children: bodyContent
