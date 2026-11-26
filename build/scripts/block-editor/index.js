@@ -121593,15 +121593,32 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 	function LayoutPanelPure({ layout, style, setAttributes, name: blockName, clientId }) {
 		const { layout: layoutSettings } = useBlockSettings(blockName);
-		const { themeSupportsLayout, activeBlockVariation, selectedState, isResponsiveEditing } = (0, _wordpress_data.useSelect)((select) => {
-			const { getBlockAttributes, getSettings, getSelectedBlockStyleState, isResponsiveEditing: getIsResponsiveEditing } = unlock$2(select(store));
+		const { themeSupportsLayout, activeBlockVariation, selectedState, isResponsiveEditing, hasMixedLayoutTypes } = (0, _wordpress_data.useSelect)((select) => {
+			const { getBlockAttributes, getMultiSelectedBlockClientIds, getSettings, getSelectedBlockStyleState, isResponsiveEditing: getIsResponsiveEditing } = unlock$2(select(store));
+			const multiSelectedClientIds = getMultiSelectedBlockClientIds();
+			let _hasMixedLayoutTypes = false;
+			if (multiSelectedClientIds.includes(clientId)) {
+				const _layoutBlockSupport = (0, _wordpress_blocks.getBlockSupport)(blockName, layoutBlockSupportKey, {});
+				const defaultLayout = {
+					...layoutSettings,
+					..._layoutBlockSupport
+				}.default;
+				const getLayoutTypeForBlock = (id) => (getBlockAttributes(id)?.layout || defaultLayout)?.type || _layoutBlockSupport.default?.type || "default";
+				const layoutType = getLayoutTypeForBlock(clientId);
+				_hasMixedLayoutTypes = multiSelectedClientIds.some((id) => getLayoutTypeForBlock(id) !== layoutType);
+			}
 			return {
+				hasMixedLayoutTypes: _hasMixedLayoutTypes,
 				activeBlockVariation: select(_wordpress_blocks.store).getActiveBlockVariation(blockName, getBlockAttributes(clientId) || {}, "block"),
 				themeSupportsLayout: getSettings().supportsLayout,
 				selectedState: getSelectedBlockStyleState(clientId),
 				isResponsiveEditing: getIsResponsiveEditing()
 			};
-		}, [blockName, clientId]);
+		}, [
+			blockName,
+			clientId,
+			layoutSettings
+		]);
 		const blockEditingMode = useBlockEditingMode();
 		const isViewportLayoutState = hasViewportBlockStyleState(selectedState) && !hasPseudoBlockStyleState(selectedState);
 		const resetLayoutFilter = (0, _wordpress_element.useCallback)((...resetArgs) => {
@@ -121624,7 +121641,7 @@ If there's a particular need for this, please submit a feature request at https:
 			selectedState,
 			style
 		]);
-		if (blockEditingMode !== "default") return null;
+		if (blockEditingMode !== "default" || hasMixedLayoutTypes) return null;
 		const layoutBlockSupport = (0, _wordpress_blocks.getBlockSupport)(blockName, layoutBlockSupportKey, {});
 		const blockSupportAndThemeSettings = {
 			...layoutSettings,
