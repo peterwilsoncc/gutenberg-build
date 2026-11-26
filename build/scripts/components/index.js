@@ -66384,9 +66384,12 @@ VisualLabel });
 					preventDefault = true;
 					break;
 				case "Escape":
+					if (isExpanded) {
+						preventDefault = true;
+						event.stopPropagation();
+					}
 					setIsExpanded(false);
 					setSelectedSuggestion(null);
-					preventDefault = true;
 			}
 			if (preventDefault) event.preventDefault();
 		});
@@ -66416,6 +66419,7 @@ VisualLabel });
 			inputContainer.current?.focus();
 		};
 		const handleResetStopPropagation = (event) => {
+			if (event.code === "Escape") return;
 			event.stopPropagation();
 		};
 		(0, _wordpress_element.useEffect)(() => {
@@ -72217,7 +72221,8 @@ VisualLabel });
 		}
 		function handleEscapeKey(event) {
 			collapseSuggestionsList(event);
-			return true;
+			if (isExpanded) event.stopPropagation();
+			return isExpanded;
 		}
 		function handleTabKey(event) {
 			collapseSuggestionsList(event);
