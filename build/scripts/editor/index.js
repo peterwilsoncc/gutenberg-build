@@ -90169,7 +90169,8 @@ If there's a particular need for this, please submit a feature request at https:
 			super(...arguments);
 			this.state = {
 				error: null,
-				componentStack: null
+				componentStack: null,
+				content: void 0
 			};
 		}
 		componentDidCatch(error, errorInfo) {
@@ -90179,10 +90180,13 @@ If there's a particular need for this, please submit a feature request at https:
 			(0, _wordpress_hooks.doAction)("editor.ErrorBoundary.errorLogged", error, errorInfo);
 		}
 		static getDerivedStateFromError(error) {
-			return { error };
+			return {
+				error,
+				content: getContent()
+			};
 		}
 		render() {
-			const { error, componentStack } = this.state;
+			const { error, componentStack, content } = this.state;
 			const { canCopyContent = false } = this.props;
 			if (!error) return this.props.children;
 			const { title, description } = getErrorNotice();
@@ -90196,7 +90200,7 @@ If there's a particular need for this, please submit a feature request at https:
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Title, { children: title }),
 						/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Description$1, { children: description }),
 						/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Actions, { children: [canCopyContent && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CopyButton$1, {
-							text: getContent,
+							text: content,
 							children: (0, _wordpress_i18n.__)("Copy contents")
 						}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CopyButton$1, {
 							variant: "solid",
