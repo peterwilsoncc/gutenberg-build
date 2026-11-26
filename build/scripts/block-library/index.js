@@ -53131,6 +53131,7 @@ Icon: ButtonIcon });
 			className: "wp-block-icon__inserter-grid-icons-list-item",
 			onClick: () => onChange(icon.name),
 			variant: isSelected ? "primary" : void 0,
+			"aria-current": isSelected,
 			__next40pxDefaultSize: true,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 				className: "wp-block-icon__inserter-grid-icons-list-item-icon",
