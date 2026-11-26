@@ -105453,12 +105453,12 @@ If there's a particular need for this, please submit a feature request at https:
 				subtext: (0, _wordpress_i18n.__)("Visitors will see blank pages."),
 				requireConfirmation: true
 			};
-			if (removedBlocks.filter(({ name }) => TEMPLATE_BLOCKS.includes(name)).length) return (0, _wordpress_i18n._n)("Deleting this block will stop your post or page content from displaying on this template. It is not recommended.", "Some of the deleted blocks will stop your post or page content from displaying on this template. It is not recommended.", removedBlocks.length);
+			if (removedBlocks.filter(({ name }) => TEMPLATE_BLOCKS.includes(name)).length) return removedBlocks.length === 1 ? (0, _wordpress_i18n.__)("Deleting this block will stop your post or page content from displaying on this template. It is not recommended.") : (0, _wordpress_i18n.__)("Some of the deleted blocks will stop your post or page content from displaying on this template. It is not recommended.");
 		}
 	}, {
 		postTypes: ["wp_block"],
 		callback(removedBlocks) {
-			if (removedBlocks.filter(({ attributes }) => attributes?.metadata?.bindings && Object.values(attributes.metadata.bindings).some((binding) => binding.source === "core/pattern-overrides")).length) return (0, _wordpress_i18n._n)("The deleted block allows instance overrides. Removing it may result in content not displaying where this pattern is used. Are you sure you want to proceed?", "Some of the deleted blocks allow instance overrides. Removing them may result in content not displaying where this pattern is used. Are you sure you want to proceed?", removedBlocks.length);
+			if (removedBlocks.filter(({ attributes }) => attributes?.metadata?.bindings && Object.values(attributes.metadata.bindings).some((binding) => binding.source === "core/pattern-overrides")).length) return removedBlocks.length === 1 ? (0, _wordpress_i18n.__)("The deleted block allows instance overrides. Removing it may result in content not displaying where this pattern is used. Are you sure you want to proceed?") : (0, _wordpress_i18n.__)("Some of the deleted blocks allow instance overrides. Removing them may result in content not displaying where this pattern is used. Are you sure you want to proceed?");
 		}
 	}];
 	function BlockRemovalWarnings() {

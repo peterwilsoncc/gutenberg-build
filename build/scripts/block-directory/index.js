@@ -9519,7 +9519,7 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 			initialOpen: true,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 				className: "installed-blocks-pre-publish-panel__copy",
-				children: (0, _wordpress_i18n._n)("The following block has been added to your site.", "The following blocks have been added to your site.", newBlockTypes.length)
+				children: newBlockTypes.length === 1 ? (0, _wordpress_i18n.__)("The following block has been added to your site.") : (0, _wordpress_i18n.__)("The following blocks have been added to your site.")
 			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CompactList, { items: newBlockTypes })]
 		});
 	}
