@@ -4985,10 +4985,10 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
 .edit-site-sidebar-navigation-screen-navigation-menus__content .block-editor-list-view-block__menu-cell {
   padding-left: 0;
 }
-.edit-site-sidebar-navigation-screen-navigation-menus__content .block-editor-list-view-block-select-button {
+.edit-site-sidebar-navigation-screen-navigation-menus__content :where(.block-editor-list-view-leaf:not(.is-selected)) .block-editor-list-view-block-select-button {
   color: var(--wpds-color-foreground-interactive-neutral-weak, #6e6e6e);
 }
-.edit-site-sidebar-navigation-screen-navigation-menus__content .block-editor-list-view-block-select-button:hover, .edit-site-sidebar-navigation-screen-navigation-menus__content .block-editor-list-view-block-select-button:focus, .edit-site-sidebar-navigation-screen-navigation-menus__content .block-editor-list-view-block-select-button[aria-current] {
+.edit-site-sidebar-navigation-screen-navigation-menus__content :where(.block-editor-list-view-leaf:not(.is-selected)) .block-editor-list-view-block-select-button:hover, .edit-site-sidebar-navigation-screen-navigation-menus__content :where(.block-editor-list-view-leaf:not(.is-selected)) .block-editor-list-view-block-select-button:focus {
   color: var(--wpds-color-foreground-interactive-neutral-weak-active, #1e1e1e);
 }
 .edit-site-sidebar-navigation-screen-navigation-menus__content .block-editor-list-view-block__menu {
