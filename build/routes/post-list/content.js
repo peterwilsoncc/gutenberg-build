@@ -53020,7 +53020,7 @@ function PostList() {
 function PostListView({ postType, slug, defaultView, defaultLayouts, viewList, activeViewOverrides, quickEditForm }) {
 	const invalidate = useInvalidate();
 	const navigate = useNavigate();
-	const { invalidateResolution } = unlock((0, import_data.useDispatch)(import_core_data.store));
+	const { invalidateResolution } = (0, import_data.useDispatch)(import_core_data.store);
 	const searchParams = useSearch({ from: "/types/$type/list/$slug" });
 	const postTypeObject = (0, import_data.useSelect)((select) => select(import_core_data.store).getPostType(postType), [postType]);
 	const labels = postTypeObject?.labels;

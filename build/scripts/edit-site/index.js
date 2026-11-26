@@ -76538,28 +76538,36 @@ If there's a particular need for this, please submit a feature request at https:
 	* This hook fetches all notes for the given posts and returns
 	* a map of post ID to notes count.
 	*
-	* @param {number[]} postIds - Array of post IDs to fetch notes for.
-	* @return {{ notesCount: Object, isResolving: boolean }} Object with notesCount map and loading state.
+	* @param postIds Array of post IDs to fetch notes for.
+	* @return Object with the notes count of each post, undefined until the
+	*         counts arrive or when they fail to, and whether they are loading.
 	*/
 	function useNotesCount(postIds) {
-		const { records: notes, isResolving } = (0, _wordpress_core_data.useEntityRecords)("root", "comment", {
+		const { records: notes, hasResolved } = (0, _wordpress_core_data.useEntityRecords)("root", "comment", {
 			post: postIds,
 			type: "note",
 			status: "all",
 			per_page: -1,
 			_fields: "id,post"
 		}, { enabled: postIds?.length > 0 });
+		const isLoading = postIds.length > 0 && !hasResolved;
 		return {
 			notesCount: (0, _wordpress_element.useMemo)(() => {
-				if (!notes || notes.length === 0) return {};
+				if (isLoading || !notes) return {};
 				const counts = {};
+				postIds.forEach((postId) => {
+					counts[postId] = 0;
+				});
 				notes.forEach((note) => {
-					const postId = note.post;
-					counts[postId] = (counts[postId] || 0) + 1;
+					if (note.post in counts) counts[note.post]++;
 				});
 				return counts;
-			}, [notes]),
-			isResolving
+			}, [
+				isLoading,
+				notes,
+				postIds
+			]),
+			isLoading
 		};
 	}
 
@@ -76605,7 +76613,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const fields = (0, _wordpress_element.useMemo)(() => _fields?.map((field) => {
 			if (field.id === "status") return {
 				...field,
-				elements: field.elements.filter((element) => element.value !== "trash")
+				elements: field.elements?.filter((element) => element.value !== "trash")
 			};
 			if (field.id === "template") return {
 				...field,
@@ -76698,6 +76706,8 @@ If there's a particular need for this, please submit a feature request at https:
 	const { useLocation, useHistory } = unlock$5(_wordpress_router.privateApis);
 	const { useEntityRecordsWithPermissions } = unlock$5(_wordpress_core_data.privateApis);
 	const EMPTY_ARRAY = [];
+	const EMPTY_IDS = [];
+	const NOTES_COUNT_FIELD = "notesCount";
 	const DEFAULT_STATUSES = "draft,future,pending,private,publish";
 	function getItemId(item) {
 		return item.id.toString();
@@ -76773,10 +76783,12 @@ If there's a particular need for this, please submit a feature request at https:
 		}, [view]);
 		const { records, isResolving: isLoadingData, totalItems, totalPages, hasResolved } = useEntityRecordsWithPermissions("postType", postType, queryArgs);
 		const postIds = (0, _wordpress_element.useMemo)(() => records?.map((record) => record.id) ?? [], [records]);
-		const { notesCount, isLoading: isLoadingNotesCount } = useNotesCount(postIds);
+		const hasNotesField = fields.some((field) => field.id === NOTES_COUNT_FIELD);
+		const { notesCount, isLoading: isLoadingNotesCount } = useNotesCount(hasNotesField ? postIds : EMPTY_IDS);
+		const showsNotesCount = hasNotesField && (!!view.fields?.includes(NOTES_COUNT_FIELD) || view.titleField === NOTES_COUNT_FIELD && view.showTitle !== false || view.mediaField === NOTES_COUNT_FIELD && view.showMedia !== false || view.descriptionField === NOTES_COUNT_FIELD && view.showDescription !== false || view.groupBy?.field === NOTES_COUNT_FIELD);
 		const data = (0, _wordpress_element.useMemo)(() => records?.map((record) => ({
 			...record,
-			notesCount: notesCount[record.id] ?? 0
+			notesCount: notesCount[record.id]
 		})), [records, notesCount]);
 		const ids = data?.map((record) => getItemId(record)) ?? [];
 		const postIdWasDeleted = ((0, _wordpress_compose.usePrevious)(ids) ?? []).filter((id) => !ids.includes(id)).includes(postId);
@@ -76861,7 +76873,7 @@ If there's a particular need for this, please submit a feature request at https:
 				fields,
 				actions,
 				data: data || EMPTY_ARRAY,
-				isLoading: isLoadingData || isLoadingNotesCount || !hasResolved,
+				isLoading: isLoadingData || !hasResolved || showsNotesCount && isLoadingNotesCount,
 				view,
 				onChangeView,
 				selection,
