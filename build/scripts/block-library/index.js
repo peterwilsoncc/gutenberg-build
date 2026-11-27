@@ -86068,18 +86068,34 @@ Icon: ButtonIcon });
 		const { sectionName: selectionSectionName, rowIndex: selectionRowIndex } = selection;
 		return Object.fromEntries(Object.entries(tableSections).map(([sectionName, section]) => {
 			if (selectionSectionName && selectionSectionName !== sectionName) return [sectionName, section];
+			const positions = selection.type === "column" ? getSectionCellPositions(section) : void 0;
 			return [sectionName, section.map((row, rowIndex) => {
 				if (selectionRowIndex && selectionRowIndex !== rowIndex) return row;
 				return { cells: row.cells.map((cellAttributes, columnIndex) => {
-					if (!isCellSelected({
+					if (!(positions ? isCellInColumnSelection(positions[rowIndex][columnIndex], selection) : isCellSelected({
 						sectionName,
 						columnIndex,
 						rowIndex
-					}, selection)) return cellAttributes;
+					}, selection))) return cellAttributes;
 					return updateCell(cellAttributes);
 				}) };
 			})];
 		}));
+	}
+	/**
+	* Returns whether a cell covers any of the logical columns in a column selection.
+	*
+	* @param {Object} position             The logical position of the cell.
+	* @param {number} position.columnIndex The logical column where the cell starts.
+	* @param {number} position.colspan     The number of columns the cell covers.
+	* @param {Object} selection            A column selection, with the logical
+	*                                      `columnIndex` and optional `colspan`.
+	*
+	* @return {boolean} True if the cell is in the selection, false otherwise.
+	*/
+	function isCellInColumnSelection({ columnIndex, colspan }, selection) {
+		const start = selection.columnIndex;
+		return columnIndex < start + (selection.colspan ?? 1) && columnIndex + colspan > start;
 	}
 	/**
 	* Returns whether the cell at `cellLocation` is included in the selection `selection`.
@@ -86120,6 +86136,21 @@ Icon: ButtonIcon });
 		const newCell = { ...cell };
 		if (rowspan > 1) newCell.rowspan = String(rowspan);
 		else delete newCell.rowspan;
+		return newCell;
+	}
+	/**
+	* Returns a copy of the cell with the given colspan, omitting the attribute
+	* when the cell no longer spans multiple columns.
+	*
+	* @param {Object} cell    The cell attributes.
+	* @param {number} colspan The new colspan.
+	*
+	* @return {Object} The updated cell attributes.
+	*/
+	function setCellColspan(cell, colspan) {
+		const newCell = { ...cell };
+		if (colspan > 1) newCell.colspan = String(colspan);
+		else delete newCell.colspan;
 		return newCell;
 	}
 	/**
@@ -86196,6 +86227,47 @@ Icon: ButtonIcon });
 		const cell = section[rowIndex]?.cells?.[columnIndex];
 		if (!cell) return 1;
 		return Math.min(getSpan(cell.rowspan), section.length - rowIndex);
+	}
+	/**
+	* Lists, for every row of a table section, the cells that cover it: the row's
+	* own cells and the cells spanning down into it from the rows above.
+	*
+	* @param {Array} positions Cell positions from `getSectionCellPositions`.
+	*
+	* @return {Array} For each row, an array with the `rowIndex` and `cellIndex`
+	*                 of each covering cell, and the logical `start` and `end`
+	*                 (exclusive) columns it covers.
+	*/
+	function getSectionCellCoverage(positions) {
+		const coverage = positions.map(() => []);
+		positions.forEach((rowPositions, rowIndex) => {
+			rowPositions.forEach(({ columnIndex, colspan, rowspan }, cellIndex) => {
+				for (let r = rowIndex; r < rowIndex + rowspan; r++) coverage[r].push({
+					rowIndex,
+					cellIndex,
+					start: columnIndex,
+					end: columnIndex + colspan
+				});
+			});
+		});
+		return coverage;
+	}
+	/**
+	* Returns the logical columns covered by a cell, accounting for colspan and
+	* rowspan in the table section.
+	*
+	* @param {Object} state        Current table state.
+	* @param {Object} cellLocation The location of the cell.
+	*
+	* @return {Object} The logical `columnIndex` where the cell starts, and its `colspan`.
+	*/
+	function getCellColumnRange(state, cellLocation) {
+		const { sectionName, rowIndex, columnIndex } = cellLocation;
+		const position = getSectionCellPositions(state[sectionName] ?? [])[rowIndex]?.[columnIndex];
+		return {
+			columnIndex: position?.columnIndex ?? columnIndex,
+			colspan: position?.colspan ?? 1
+		};
 	}
 	/**
 	* Inserts a row in the table state.
@@ -86299,16 +86371,35 @@ Icon: ButtonIcon });
 		].includes(key)));
 		return Object.fromEntries(Object.entries(tableSections).map(([sectionName, section]) => {
 			if (isEmptyTableSection(section)) return [sectionName, section];
-			return [sectionName, section.map((row) => {
-				if (isEmptyRow(row) || row.cells.length < columnIndex) return row;
-				return { cells: [
-					...row.cells.slice(0, columnIndex),
-					{
-						content: "",
-						tag: sectionName === "head" ? "th" : "td"
-					},
-					...row.cells.slice(columnIndex)
-				] };
+			const positions = getSectionCellPositions(section);
+			const coverage = getSectionCellCoverage(positions);
+			return [sectionName, section.map((row, rowIndex) => {
+				if (isEmptyRow(row)) return row;
+				const rowCoverage = coverage[rowIndex];
+				if (Math.max(...rowCoverage.map(({ end }) => end)) < columnIndex) return row;
+				const spanningCell = rowCoverage.find(({ start, end }) => start < columnIndex && columnIndex < end);
+				if (spanningCell) {
+					if (spanningCell.rowIndex !== rowIndex) return row;
+					return {
+						...row,
+						cells: row.cells.map((cell, cellIndex) => cellIndex === spanningCell.cellIndex ? {
+							...cell,
+							colspan: String(getSpan(cell.colspan) + 1)
+						} : cell)
+					};
+				}
+				const insertAt = positions[rowIndex].filter((position) => position.columnIndex < columnIndex).length;
+				return {
+					...row,
+					cells: [
+						...row.cells.slice(0, insertAt),
+						{
+							content: "",
+							tag: sectionName === "head" ? "th" : "td"
+						},
+						...row.cells.slice(insertAt)
+					]
+				};
 			})];
 		}));
 	}
@@ -86329,7 +86420,20 @@ Icon: ButtonIcon });
 		].includes(key)));
 		return Object.fromEntries(Object.entries(tableSections).map(([sectionName, section]) => {
 			if (isEmptyTableSection(section)) return [sectionName, section];
-			return [sectionName, section.map((row) => ({ cells: row.cells.length >= columnIndex ? row.cells.filter((cell, index) => index !== columnIndex) : row.cells })).filter((row) => row.cells.length)];
+			const positions = getSectionCellPositions(section);
+			let newSection = section.map((row, rowIndex) => ({
+				...row,
+				cells: row.cells.flatMap((cell, cellIndex) => {
+					const { columnIndex: start, colspan } = positions[rowIndex][cellIndex];
+					if (columnIndex < start || columnIndex >= start + colspan) return [cell];
+					return colspan > 1 ? [setCellColspan(cell, colspan - 1)] : [];
+				})
+			}));
+			for (let rowIndex = newSection.length - 1; rowIndex >= 0; rowIndex--) if (isEmptyRow(newSection[rowIndex])) newSection = deleteRow({ [sectionName]: newSection }, {
+				sectionName,
+				rowIndex
+			})[sectionName];
+			return [sectionName, newSection];
 		}));
 	}
 	/**
@@ -86473,11 +86577,12 @@ Icon: ButtonIcon });
 		*/
 		function onChangeColumnAlignment(align) {
 			if (!selectedCell) return;
-			const columnSelection = {
+			const { columnIndex, colspan } = getCellColumnRange(attributes, selectedCell);
+			setAttributes(updateSelectedCell(attributes, {
 				type: "column",
-				columnIndex: selectedCell.columnIndex
-			};
-			setAttributes(updateSelectedCell(attributes, columnSelection, (cellAttributes) => ({
+				columnIndex,
+				colspan
+			}, (cellAttributes) => ({
 				...cellAttributes,
 				align
 			})));
@@ -86554,13 +86659,14 @@ Icon: ButtonIcon });
 		*/
 		function onInsertColumn(delta = 0) {
 			if (!selectedCell) return;
-			const { sectionName, rowIndex, columnIndex } = selectedCell;
-			const newColumnIndex = columnIndex + delta;
+			const { sectionName, rowIndex } = selectedCell;
+			const { columnIndex, colspan } = getCellColumnRange(attributes, selectedCell);
+			const newColumnIndex = delta > 0 ? columnIndex + colspan : columnIndex;
 			setAttributes(insertColumn(attributes, { columnIndex: newColumnIndex }));
 			setSelectedCell({
 				sectionName,
 				rowIndex,
-				columnIndex: newColumnIndex,
+				columnIndex: selectedCell.columnIndex + delta,
 				type: "cell"
 			});
 		}
@@ -86581,12 +86687,14 @@ Icon: ButtonIcon });
 		*/
 		function onDeleteColumn() {
 			if (!selectedCell) return;
-			const { sectionName, columnIndex } = selectedCell;
+			const { columnIndex, colspan } = getCellColumnRange(attributes, selectedCell);
+			let newAttributes = attributes;
+			for (let index = columnIndex + colspan - 1; index >= columnIndex; index--) newAttributes = {
+				...newAttributes,
+				...deleteColumn(newAttributes, { columnIndex: index })
+			};
 			setSelectedCell();
-			setAttributes(deleteColumn(attributes, {
-				sectionName,
-				columnIndex
-			}));
+			setAttributes(newAttributes);
 		}
 		const [prevIsSingleSelected, setPrevIsSingleSelected] = (0, _wordpress_element.useState)(isSingleSelected);
 		if (isSingleSelected !== prevIsSingleSelected) {
