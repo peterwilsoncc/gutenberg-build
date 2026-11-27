@@ -343,6 +343,9 @@ fieldset.media-edit .media-edit__compact-group {
 fieldset.media-edit .media-edit__compact-group.is-single {
   border-radius: 2px;
 }
+fieldset.media-edit .media-edit__compact-group.is-single .media-edit__picker-button {
+  min-height: 38px;
+}
 fieldset.media-edit .media-edit__compact-group .media-edit__picker-button {
   border: 0;
 }
@@ -399,6 +402,7 @@ fieldset.media-edit .media-edit__picker-button {
   border: 1px dashed #949494;
   border-radius: 2px;
   padding: 4px 8px;
+  box-sizing: border-box;
   min-height: 40px;
   cursor: var(--wpds-cursor-control, pointer);
   min-width: 0;

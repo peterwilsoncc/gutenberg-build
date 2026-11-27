@@ -1,4 +1,4 @@
-(function(exports, _wordpress_blocks, _wordpress_block_library, _wordpress_data, _wordpress_deprecated, _wordpress_element, _wordpress_editor, _wordpress_preferences, _wordpress_widgets, _wordpress_core_data, _wordpress_block_editor, _wordpress_i18n, _wordpress_patterns, _wordpress_private_apis, _wordpress_router, react, react_jsx_runtime, react_dom, _wordpress_warning, _wordpress_compose, _wordpress_a11y, _wordpress_primitives, _wordpress_theme, _wordpress_components, _wordpress_dom, _wordpress_plugins, _wordpress_notices, _wordpress_url, _wordpress_keyboard_shortcuts, _wordpress_keycodes, _wordpress_api_fetch, _wordpress_commands, _wordpress_html_entities, _wordpress_style_engine, _wordpress_date, _wordpress_blob, _wordpress_media_utils) {
+(function(exports, _wordpress_blocks, _wordpress_block_library, _wordpress_data, _wordpress_deprecated, _wordpress_element, _wordpress_editor, _wordpress_preferences, _wordpress_widgets, _wordpress_core_data, _wordpress_block_editor, _wordpress_i18n, _wordpress_patterns, _wordpress_private_apis, _wordpress_router, react, react_jsx_runtime, react_dom, _wordpress_warning, _wordpress_compose, _wordpress_a11y, _wordpress_primitives, _wordpress_theme, _wordpress_components, _wordpress_dom, _wordpress_plugins, _wordpress_notices, _wordpress_url, _wordpress_keyboard_shortcuts, _wordpress_keycodes, _wordpress_api_fetch, _wordpress_commands, _wordpress_html_entities, _wordpress_style_engine, _wordpress_date, _wordpress_media_utils) {
 
 "use strict";
 // \0rolldown/runtime.js
@@ -116,7 +116,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	});
 
 // packages/edit-site/build-module/lock-unlock.mjs
-	const { lock: lock$5, unlock: unlock$5 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/edit-site");
+	const { lock: lock$4, unlock: unlock$4 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/edit-site");
 
 // packages/edit-site/build-module/utils/constants.mjs
 	const ATTACHMENT_POST_TYPE = "attachment";
@@ -125,7 +125,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	const TEMPLATE_PART_POST_TYPE = "wp_template_part";
 	const TEMPLATE_PART_AREA_DEFAULT_CATEGORY = "uncategorized";
 	const TEMPLATE_PART_ALL_AREAS_CATEGORY = "all-parts";
-	const { PATTERN_TYPES, PATTERN_DEFAULT_CATEGORY, PATTERN_USER_CATEGORY, EXCLUDED_PATTERN_SOURCES, PATTERN_SYNC_TYPES } = unlock$5(_wordpress_patterns.privateApis);
+	const { PATTERN_TYPES, PATTERN_DEFAULT_CATEGORY, PATTERN_USER_CATEGORY, EXCLUDED_PATTERN_SOURCES, PATTERN_SYNC_TYPES } = unlock$4(_wordpress_patterns.privateApis);
 	const FOCUSABLE_ENTITIES = [
 		TEMPLATE_PART_POST_TYPE,
 		NAVIGATION_POST_TYPE,
@@ -170,7 +170,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		toggleFeature: () => toggleFeature,
 		updateSettings: () => updateSettings
 	}, 1);
-	const { interfaceStore } = unlock$5(_wordpress_editor.privateApis);
+	const { interfaceStore } = unlock$4(_wordpress_editor.privateApis);
 	/**
 	* Dispatches an action that toggles a feature flag.
 	*
@@ -244,7 +244,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	* @param {Object} template The template object.
 	*/
 	const removeTemplate = (template) => ({ registry }) => {
-		return unlock$5(registry.dispatch(_wordpress_editor.store)).removeTemplates([template]);
+		return unlock$4(registry.dispatch(_wordpress_editor.store)).removeTemplates([template]);
 	};
 	/**
 	* Action that sets a template part.
@@ -437,7 +437,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	*                                      reverting the template. Default true.
 	*/
 	const revertTemplate = (template, options) => ({ registry }) => {
-		return unlock$5(registry.dispatch(_wordpress_editor.store)).revertTemplate(template, options);
+		return unlock$4(registry.dispatch(_wordpress_editor.store)).revertTemplate(template, options);
 	};
 	/**
 	* Action that opens an editor sidebar.
@@ -741,7 +741,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 			since: "6.5",
 			version: "6.7"
 		});
-		return unlock$5(select(_wordpress_editor.store)).getInserter();
+		return unlock$4(select(_wordpress_editor.store)).getInserter();
 	});
 	/**
 	* Returns true if the list view is opened.
@@ -873,8 +873,8 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		selectors: selectors_exports
 	});
 	(0, _wordpress_data.register)(store);
-	unlock$5(store).registerPrivateSelectors(private_selectors_exports);
-	unlock$5(store).registerPrivateActions(private_actions_exports);
+	unlock$4(store).registerPrivateSelectors(private_selectors_exports);
+	unlock$4(store).registerPrivateActions(private_actions_exports);
 
 // node_modules/.store/clsx@2.1.1-XOLP1vUL9vEGfpiXm37fAw/node_modules/clsx/dist/clsx.mjs
 	function r$1(e) {
@@ -10413,7 +10413,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	*
 	* Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 	*/
-	const Button$44 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
+	const Button$43 = /*#__PURE__*/ react.forwardRef(function Button(componentProps, forwardedRef) {
 		const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 		const { getButtonProps, buttonRef } = useButton({
 			disabled,
@@ -10426,7 +10426,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 			props: [elementProps, getButtonProps]
 		});
 	});
-	Button$44.displayName = "Button";
+	Button$43.displayName = "Button";
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/getDefaultFormSubmitter.mjs
 /**
@@ -16755,7 +16755,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	/**
 	* A component used to notify users that their action is being processed.
 	*/
-	const Spinner$17 = (0, _wordpress_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
+	const Spinner$16 = (0, _wordpress_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("svg", {
 			className: clsx(style_module_default$45.spinner, className),
 			style: color === void 0 ? style : {
@@ -16921,18 +16921,18 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$43 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
+	const Button$42 = (0, _wordpress_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, _wordpress_i18n.__)("Loading"), children, ...props }, ref) {
 		const mergedClassName = clsx(global_css_defense_module_default$13.button, resets_module_default$18["box-sizing"], focus_module_default$6["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$44.button, style_module_default$44[`is-${tone}`], style_module_default$44[`is-${variant}`], style_module_default$44[`is-${size}`], loading && style_module_default$44["is-loading"], className);
 		(0, _wordpress_element.useEffect)(() => {
 			if (loading && loadingAnnouncement) (0, _wordpress_a11y.speak)(loadingAnnouncement);
 		}, [loading, loadingAnnouncement]);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$44, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$43, {
 			ref,
 			className: mergedClassName,
 			focusableWhenDisabled,
 			disabled: disabled ?? loading,
 			...props,
-			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$17, { className: style_module_default$44.spinner })]
+			children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$16, { className: style_module_default$44.spinner })]
 		});
 	});
 
@@ -16946,7 +16946,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	* <Icon icon={ wordpress } />
 	* ```
 	*/
-	const Icon$6 = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+	const Icon$5 = (0, _wordpress_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
 		const mergedStyle = icon.props.style || style ? {
 			...icon.props.style,
 			...style
@@ -17079,7 +17079,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 		"spinner": "_8379197ecc038a01__spinner"
 	};
 	const ButtonIcon = (0, _wordpress_element.forwardRef)(function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 			ref,
 			icon,
 			className: clsx(style_module_default$43.icon, className),
@@ -17096,7 +17096,7 @@ _wordpress_api_fetch = __toESM(_wordpress_api_fetch, 1);
 	* See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 	* for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 	*/
-	const Button$42 = Object.assign(Button$43, { 
+	const Button$41 = Object.assign(Button$42, { 
 	/**
 	* An icon component specifically designed to work well when rendered inside
 	* a `Button` component.
@@ -17174,20 +17174,6 @@ Icon: ButtonIcon });
 		stroke: "currentColor",
 		strokeWidth: "1.5",
 		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M12 20L12 5M17 10L12 5L7 10" })
-	});
-
-// packages/icons/build-module/library/audio.mjs
-	var audio_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
-		xmlns: "http://www.w3.org/2000/svg",
-		viewBox: "0 0 24 24",
-		style: { fill: "none" },
-		stroke: "currentColor",
-		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			d: "M13.25 16.5C13.25 18.0188 12.0188 19.25 10.5 19.25C8.98122 19.25 7.75 18.0188 7.75 16.5C7.75 14.9812 8.98122 13.75 10.5 13.75C12.0188 13.75 13.25 14.9812 13.25 16.5Z",
-			fill: "currentColor",
-			stroke: "none"
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M10.5 19.25C12.0188 19.25 13.25 18.0188 13.25 16.5C13.25 14.9812 12.0188 13.75 10.5 13.75C8.98122 13.75 7.75 14.9812 7.75 16.5C7.75 18.0188 8.98122 19.25 10.5 19.25ZM10.5 19.25C13.4867 19.25 13.75 16.5 13.75 15.1379V7.99998C13.75 4.9108 16.4 5.00254 18 5.00233" })]
 	});
 
 // packages/icons/build-module/library/backup.mjs
@@ -17455,19 +17441,6 @@ Icon: ButtonIcon });
 		stroke: "currentColor",
 		strokeWidth: "1.5",
 		children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M12 9L12 14M12 15.5V17M11.1284 5.04947L3.83827 18.0097C3.46331 18.6763 3.94502 19.5 4.70985 19.5H19.2902C20.055 19.5 20.5367 18.6763 20.1617 18.0097L12.8716 5.04947C12.4893 4.36982 11.5107 4.36982 11.1284 5.04947Z" })
-	});
-
-// packages/icons/build-module/library/file.mjs
-	var file_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
-		xmlns: "http://www.w3.org/2000/svg",
-		viewBox: "0 0 24 24",
-		style: { fill: "none" },
-		stroke: "currentColor",
-		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M14 4.75V7.75C14 8.44036 14.5596 9 15.25 9H18.25" }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			d: "M5.75 18L5.75 6C5.75 5.30964 6.30964 4.75 7 4.75H14L18.25 9V18C18.25 18.6904 17.6904 19.25 17 19.25H7C6.30964 19.25 5.75 18.6904 5.75 18Z",
-			strokeLinejoin: "round"
-		})]
 	});
 
 // packages/icons/build-module/library/folder.mjs
@@ -18151,20 +18124,6 @@ Icon: ButtonIcon });
 			}),
 			/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M5 19.25H12" })
 		]
-	});
-
-// packages/icons/build-module/library/video.mjs
-	var video_default = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_primitives.SVG, {
-		xmlns: "http://www.w3.org/2000/svg",
-		viewBox: "0 0 24 24",
-		style: { fill: "none" },
-		stroke: "currentColor",
-		strokeWidth: "1.5",
-		children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, {
-			d: "M10 15L15 12L10 9V15Z",
-			fill: "currentColor",
-			stroke: "none"
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_primitives.Path, { d: "M4.75 6C4.75 5.30964 5.30964 4.75 6 4.75H18C18.6904 4.75 19.25 5.30964 19.25 6V18C19.25 18.6904 18.6904 19.25 18 19.25H6C5.30964 19.25 4.75 18.6904 4.75 18V6Z" })]
 	});
 
 // packages/ui/build-module/menu/context.mjs
@@ -20118,7 +20077,7 @@ Icon: ButtonIcon });
 	* description in the same item.
 	*/
 	const PrefixIcon = (0, _wordpress_element.forwardRef)(function MenuPrefixIcon({ className, size = 16, ...props }, ref) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 			...props,
 			ref,
 			size,
@@ -20450,7 +20409,7 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MenuRadioItemIndicator, {
 				keepMounted: true,
 				className: style_module_default$32["item-selection-indicator"],
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 					icon: radioCheck,
 					className: style_module_default$32["radio-selection-icon"],
 					"aria-hidden": "true"
@@ -20856,7 +20815,7 @@ Icon: ButtonIcon });
 					shortcut,
 					shortcutDescriptionId,
 					suffix,
-					trailing: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+					trailing: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 						className: style_module_default$30["submenu-chevron"],
 						icon: chevron_right_small_default,
 						size: 24,
@@ -21016,14 +20975,14 @@ Icon: ButtonIcon });
 	});
 
 // packages/ui/build-module/lock-unlock.mjs
-	const { lock: lock$4, unlock: unlock$4 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
+	const { lock: lock$3, unlock: unlock$3 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/ui");
 
 // packages/ui/build-module/utils/theme-provider.mjs
 	function getThemeProvider() {
 		const themePackage = _wordpress_theme;
 		if (themePackage.ThemeProvider) return themePackage.ThemeProvider;
 		if (!themePackage.privateApis) throw new Error("@wordpress/ui: @wordpress/theme must expose `ThemeProvider` or `privateApis.ThemeProvider`.");
-		return unlock$4(themePackage.privateApis).ThemeProvider;
+		return unlock$3(themePackage.privateApis).ThemeProvider;
 	}
 	const ThemeProvider$1 = getThemeProvider();
 
@@ -22037,7 +21996,7 @@ Icon: ButtonIcon });
 							className: clsx(style_module_default$23["header-trigger-positioner"]),
 							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 								className: clsx(style_module_default$23["header-trigger-wrapper"], global_css_defense_module_default$7.div),
-								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+								children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 									icon: chevron_down_default,
 									className: style_module_default$23["header-trigger"]
 								})
@@ -22595,7 +22554,7 @@ Icon: ButtonIcon });
 			ref,
 			...targetProps,
 			disabled: disabled && !focusableWhenDisabled,
-			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$42, {
+			render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$41, {
 				...restProps,
 				size,
 				"aria-label": label,
@@ -22603,7 +22562,7 @@ Icon: ButtonIcon });
 				focusableWhenDisabled
 			}),
 			className: classes,
-			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 				icon,
 				size: 24,
 				className: style_module_default$19.icon
@@ -23177,7 +23136,7 @@ Icon: ButtonIcon });
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 				className: style_module_default$15.label,
 				children
-			}), infotip && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+			}), infotip && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 				icon: help_default,
 				size: 16,
 				"aria-hidden": "true",
@@ -33854,7 +33813,7 @@ Icon: ButtonIcon });
 			...restProps,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(CheckboxIndicator, {
 				className: style_module_default$10["indicator-icon"],
-				render: (props, state) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+				render: (props, state) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 					...props,
 					icon: state.indeterminate ? reset_default : check_default,
 					viewBox: "4 4 16 16",
@@ -34004,7 +33963,7 @@ Icon: ButtonIcon });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("p", {
 			id,
 			className: clsx(global_css_defense_module_default$3.p, style_module_default$9.indicator, style_module_default$9[`is-${type}`]),
-			children: [type === "validating" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$17, { className: style_module_default$9["indicator-spinner"] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+			children: [type === "validating" ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Spinner$16, { className: style_module_default$9["indicator-spinner"] }) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 				className: style_module_default$9["indicator-icon"],
 				icon: ICON[type],
 				size: 16,
@@ -35596,7 +35555,7 @@ Icon: ButtonIcon });
 			...restProps,
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 				className: item_popup_module_default$3["item-icon"],
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 					icon: check_default,
 					className: item_popup_module_default$3["item-indicator-icon"],
 					size: 20
@@ -36226,7 +36185,7 @@ Icon: ButtonIcon });
 					placeholder,
 					className: select_trigger_module_default["trigger-value"],
 					children
-				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, {
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, {
 					className: select_trigger_module_default["trigger-caret"],
 					icon: chevron_down_default,
 					size: 18
@@ -37434,13 +37393,13 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/site-hub/index.mjs
-	const { useLocation: useLocation$28, useHistory: useHistory$23 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$28, useHistory: useHistory$23 } = unlock$4(_wordpress_router.privateApis);
 	const SiteHubMobile = (0, _wordpress_element.memo)((0, _wordpress_element.forwardRef)((props, ref) => {
 		const { path } = useLocation$28();
 		const history = useHistory$23();
 		const { navigate } = (0, _wordpress_element.useContext)(SidebarNavigationContext);
 		const { dashboardLink, isBlockTheme, isClassicThemeWithStyleBookSupport } = (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings } = unlock$5(select(store));
+			const { getSettings } = unlock$4(select(store));
 			const { getCurrentTheme } = select(_wordpress_core_data.store);
 			const currentTheme = getCurrentTheme();
 			const settings = getSettings();
@@ -37478,7 +37437,7 @@ Icon: ButtonIcon });
 	}));
 
 // packages/edit-site/build-module/components/resizable-frame/index.mjs
-	const { useLocation: useLocation$27, useHistory: useHistory$22 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$27, useHistory: useHistory$22 } = unlock$4(_wordpress_router.privateApis);
 	const HANDLE_STYLES_OVERRIDE = {
 		position: void 0,
 		userSelect: void 0,
@@ -40656,7 +40615,7 @@ Icon: ButtonIcon });
 	}).animated;
 
 // packages/edit-site/build-module/components/layout/animation.mjs
-	function getAbsolutePosition$1(element) {
+	function getAbsolutePosition(element) {
 		return {
 			top: element.offsetTop,
 			left: element.offsetLeft
@@ -40677,10 +40636,10 @@ Icon: ButtonIcon });
 	* @param {Object} $1                          Options
 	* @param {*}      $1.triggerAnimationOnChange Variable used to trigger the animation if it changes.
 	*/
-	function useMovingAnimation$1({ triggerAnimationOnChange }) {
+	function useMovingAnimation({ triggerAnimationOnChange }) {
 		const ref = (0, _wordpress_element.useRef)();
 		const { previous, prevRect } = (0, _wordpress_element.useMemo)(() => ({
-			previous: ref.current && getAbsolutePosition$1(ref.current),
+			previous: ref.current && getAbsolutePosition(ref.current),
 			prevRect: ref.current && ref.current.getBoundingClientRect()
 		}), [triggerAnimationOnChange]);
 		(0, _wordpress_element.useLayoutEffect)(() => {
@@ -40753,12 +40712,12 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/save-button/index.mjs
-	const { useLocation: useLocation$26 } = unlock$5(_wordpress_router.privateApis);
-	const { useEntitiesSavedStatesIsDirty: useEntitiesSavedStatesIsDirty$1 } = unlock$5(_wordpress_core_data.privateApis);
+	const { useLocation: useLocation$26 } = unlock$4(_wordpress_router.privateApis);
+	const { useEntitiesSavedStatesIsDirty: useEntitiesSavedStatesIsDirty$1 } = unlock$4(_wordpress_core_data.privateApis);
 	function SaveButton({ className = "edit-site-save-button__button", variant = "primary", showTooltip = true, showReviewMessage, icon, size, __next40pxDefaultSize = false }) {
 		const { params } = useLocation$26();
 		const { setIsSaveViewOpened } = (0, _wordpress_data.useDispatch)(store);
-		const { saveDirtyEntities } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_core_data.store));
+		const { saveDirtyEntities } = unlock$4((0, _wordpress_data.useDispatch)(_wordpress_core_data.store));
 		const { dirtyEntityRecords } = useEntitiesSavedStatesIsDirty$1();
 		const { isSaving, isSaveViewOpen, previewingThemeName } = (0, _wordpress_data.useSelect)((select) => {
 			const { isSavingEntityRecord, isResolving } = select(_wordpress_core_data.store);
@@ -40850,7 +40809,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/utils/use-activate-theme.mjs
-	const { useHistory: useHistory$21, useLocation: useLocation$25 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$21, useLocation: useLocation$25 } = unlock$4(_wordpress_router.privateApis);
 	/**
 	* This should be refactored to use the REST API, once the REST API can activate themes.
 	*
@@ -40886,8 +40845,8 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/save-panel/index.mjs
-	const { useLocation: useLocation$24 } = unlock$5(_wordpress_router.privateApis);
-	const { EntitiesSavedStatesExtensible, EntitiesSavedStates, useEntitiesSavedStatesIsDirty } = unlock$5(_wordpress_core_data.privateApis);
+	const { useLocation: useLocation$24 } = unlock$4(_wordpress_router.privateApis);
+	const { EntitiesSavedStatesExtensible, EntitiesSavedStates, useEntitiesSavedStatesIsDirty } = unlock$4(_wordpress_core_data.privateApis);
 	const EntitiesSavedStatesForPreview = ({ onClose, renderDialog, variant }) => {
 		const isDirtyProps = useEntitiesSavedStatesIsDirty();
 		let activateSaveLabel, successNoticeContent;
@@ -40941,7 +40900,7 @@ Icon: ButtonIcon });
 			const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord, isResolving } = select(_wordpress_core_data.store);
 			const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
 			const isActivatingTheme = isResolving("activateTheme");
-			const { isSaveViewOpened } = unlock$5(select(store));
+			const { isSaveViewOpened } = unlock$4(select(store));
 			return {
 				isSaveViewOpen: isSaveViewOpened(),
 				isDirty: dirtyEntityRecords.length > 0,
@@ -40988,8 +40947,8 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/layout/index.mjs
-	const { useLocation: useLocation$23 } = unlock$5(_wordpress_router.privateApis);
-	const { useStyle: useStyle$4, UploadProgressSnackbar } = unlock$5(_wordpress_editor.privateApis);
+	const { useLocation: useLocation$23 } = unlock$4(_wordpress_router.privateApis);
+	const { useStyle: useStyle$4, UploadProgressSnackbar } = unlock$4(_wordpress_editor.privateApis);
 	const ANIMATION_DURATION = .3;
 	const CONTENT_COLOR = { background: "#fcfcfc" };
 	function Layout() {
@@ -41006,7 +40965,7 @@ Icon: ButtonIcon });
 		const [canvasResizer, canvasSize] = (0, _wordpress_compose.useResizeObserver)();
 		const isEditorLoading = useIsSiteEditorLoading();
 		const [isResizableFrameOversized, setIsResizableFrameOversized] = (0, _wordpress_element.useState)(false);
-		const animationRef = useMovingAnimation$1({ triggerAnimationOnChange: routeKey + "-" + canvas });
+		const animationRef = useMovingAnimation({ triggerAnimationOnChange: routeKey + "-" + canvas });
 		const { showIconLabels } = (0, _wordpress_data.useSelect)((select) => {
 			return { showIconLabels: select(_wordpress_preferences.store).get("core", "showIconLabels") };
 		});
@@ -41143,10 +41102,10 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/hooks/commands/use-common-commands.mjs
-	const { useHistory: useHistory$20, useLocation: useLocation$22 } = unlock$5(_wordpress_router.privateApis);
-	const { useGlobalStyles: useGlobalStyles$3 } = unlock$5(_wordpress_editor.privateApis);
+	const { useHistory: useHistory$20, useLocation: useLocation$22 } = unlock$4(_wordpress_router.privateApis);
+	const { useGlobalStyles: useGlobalStyles$3 } = unlock$4(_wordpress_editor.privateApis);
 	const getGlobalStylesToggleWelcomeGuideCommands = () => function useGlobalStylesToggleWelcomeGuideCommands() {
-		const { openGeneralSidebar } = unlock$5((0, _wordpress_data.useDispatch)(store));
+		const { openGeneralSidebar } = unlock$4((0, _wordpress_data.useDispatch)(store));
 		const { params } = useLocation$22();
 		const { canvas = "view" } = params;
 		const { set } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
@@ -41204,8 +41163,8 @@ Icon: ButtonIcon });
 		};
 	};
 	const getGlobalStylesOpenRevisionsCommands = () => function useGlobalStylesOpenRevisionsCommands() {
-		const { openGeneralSidebar } = unlock$5((0, _wordpress_data.useDispatch)(store));
-		const { setStylesPath } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
+		const { openGeneralSidebar } = unlock$4((0, _wordpress_data.useDispatch)(store));
+		const { setStylesPath } = unlock$4((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
 		const { params } = useLocation$22();
 		const { canvas = "view" } = params;
 		const history = useHistory$20();
@@ -41254,8 +41213,8 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/hooks/commands/use-set-command-context.mjs
-	const { useCommandContext } = unlock$5(_wordpress_commands.privateApis);
-	const { useLocation: useLocation$21 } = unlock$5(_wordpress_router.privateApis);
+	const { useCommandContext } = unlock$4(_wordpress_commands.privateApis);
+	const { useLocation: useLocation$21 } = unlock$4(_wordpress_router.privateApis);
 	/**
 	* React hook used to set the correct command context based on the current state.
 	*/
@@ -41281,10 +41240,10 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen/index.mjs
-	const { useHistory: useHistory$19, useLocation: useLocation$20 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$19, useLocation: useLocation$20 } = unlock$4(_wordpress_router.privateApis);
 	function SidebarNavigationScreen({ isRoot, title, actions, content, footer, description, backPath: backPathProp }) {
 		const { dashboardLink, dashboardLinkText, previewingThemeName } = (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings } = unlock$5(select(store));
+			const { getSettings } = unlock$4(select(store));
 			const currentlyPreviewingThemeId = currentlyPreviewingTheme();
 			return {
 				dashboardLink: getSettings().__experimentalDashboardLink,
@@ -41359,7 +41318,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-item/index.mjs
-	const { useHistory: useHistory$18, useLink, useLocation: useLocation$19 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$18, useLink, useLocation: useLocation$19 } = unlock$4(_wordpress_router.privateApis);
 	function SidebarNavigationItem({ isHidden = false, ...props }) {
 		if (isHidden) return null;
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(SidebarNavigationItemContent, { ...props });
@@ -41637,7 +41596,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/canvas-loader/index.mjs
-	const { useStyle: useStyle$3 } = unlock$5(_wordpress_editor.privateApis);
+	const { useStyle: useStyle$3 } = unlock$4(_wordpress_editor.privateApis);
 	function CanvasLoader({ id }) {
 		const textColor = useStyle$3("color.text");
 		const { elapsed, total } = (0, _wordpress_data.useSelect)((select) => {
@@ -44635,11 +44594,11 @@ Icon: ButtonIcon });
 	}
 
 // packages/global-styles-engine/build-module/lock-unlock.mjs
-	const { lock: lock$3, unlock: unlock$3 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
+	const { lock: lock$2, unlock: unlock$2 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/global-styles-engine");
 
 // packages/global-styles-engine/build-module/private-apis.mjs
 	const privateApis$48 = {};
-	lock$3(privateApis$48, {
+	lock$2(privateApis$48, {
 		getResponsiveMediaQueries,
 		getViewportBreakpoints: getViewportBreakpoints$2,
 		getViewportBreakpointValueInPixels: getViewportBreakpointValueInPixels$1,
@@ -44680,7 +44639,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/block-editor/use-navigate-to-entity-record.mjs
-	const { useHistory: useHistory$17, useLocation: useLocation$18 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$17, useLocation: useLocation$18 } = unlock$4(_wordpress_router.privateApis);
 	/**
 	* Hook to handle navigation to entity records.
 	*
@@ -44717,8 +44676,8 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/block-editor/use-site-editor-settings.mjs
-	const { useLocation: useLocation$17, useHistory: useHistory$16 } = unlock$5(_wordpress_router.privateApis);
-	const { useGlobalStyles: useGlobalStyles$2 } = unlock$5(_wordpress_editor.privateApis);
+	const { useLocation: useLocation$17, useHistory: useHistory$16 } = unlock$4(_wordpress_router.privateApis);
+	const { useGlobalStyles: useGlobalStyles$2 } = unlock$4(_wordpress_editor.privateApis);
 	function useNavigateToPreviousEntityRecord() {
 		const location = useLocation$17();
 		const previousCanvas = (0, _wordpress_compose.usePrevious)(location.query.canvas);
@@ -44792,7 +44751,7 @@ Icon: ButtonIcon });
 	PluginTemplateSettingPanel.Slot = Slot;
 
 // packages/edit-site/build-module/components/more-menu/welcome-guide-menu-item.mjs
-	const { MoreMenuItem } = unlock$5(_wordpress_editor.privateApis);
+	const { MoreMenuItem } = unlock$4(_wordpress_editor.privateApis);
 	function WelcomeGuideMenuItem() {
 		const { toggle } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MoreMenuItem, {
@@ -44803,13 +44762,13 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/more-menu/index.mjs
-	const { ToolsMoreMenuGroup, PreferencesModal, SiteExport } = unlock$5(_wordpress_editor.privateApis);
+	const { ToolsMoreMenuGroup, PreferencesModal, SiteExport } = unlock$4(_wordpress_editor.privateApis);
 	function MoreMenu() {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)(ToolsMoreMenuGroup, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(SiteExport, {}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(WelcomeGuideMenuItem, {})] }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PreferencesModal, {})] });
 	}
 
 // packages/edit-site/build-module/components/block-editor/use-editor-iframe-props.mjs
-	const { useLocation: useLocation$16, useHistory: useHistory$15 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$16, useHistory: useHistory$15 } = unlock$4(_wordpress_router.privateApis);
 	function useEditorIframeProps() {
 		const { query, path } = useLocation$16();
 		const history = useHistory$15();
@@ -44852,7 +44811,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/routes/use-title.mjs
-	const { useLocation: useLocation$15 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$15 } = unlock$4(_wordpress_router.privateApis);
 	function useTitle(title) {
 		const location = useLocation$15();
 		const siteTitle = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).getEntityRecord("root", "site")?.title, []);
@@ -44880,7 +44839,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/editor/use-editor-title.mjs
-	const { getTemplateInfo } = unlock$5(_wordpress_core_data.privateApis);
+	const { getTemplateInfo } = unlock$4(_wordpress_core_data.privateApis);
 	function useEditorTitle(postType, postId) {
 		const { title, isLoaded } = (0, _wordpress_data.useSelect)((select) => {
 			const { getEditedEntityRecord, getCurrentTheme, hasFinishedResolution } = select(_wordpress_core_data.store);
@@ -44912,7 +44871,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/editor/use-revisions-url-sync.mjs
-	const { useHistory: useHistory$14, useLocation: useLocation$14 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$14, useLocation: useLocation$14 } = unlock$4(_wordpress_router.privateApis);
 	/**
 	* Safari throws after more than 100 History API calls in 30 seconds.
 	*/
@@ -44925,10 +44884,10 @@ Icon: ButtonIcon });
 			return {
 				currentPostType: editor.getCurrentPostType(),
 				currentPostId: editor.getCurrentPostId(),
-				currentRevisionId: unlock$5(editor).getCurrentRevisionId()
+				currentRevisionId: unlock$4(editor).getCurrentRevisionId()
 			};
 		}, []);
-		const { openRevision, setCurrentRevisionId } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
+		const { openRevision, setCurrentRevisionId } = unlock$4((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
 		const entityKey = postType && postId ? `${postType}:${postId}` : null;
 		const isCurrentEntity = !!entityKey && currentPostType === postType && String(currentPostId) === String(postId);
 		const handledEntityKeyRef = (0, _wordpress_element.useRef)(null);
@@ -45008,7 +44967,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/editor/use-resolve-edited-entity.mjs
-	const { useLocation: useLocation$13 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$13 } = unlock$4(_wordpress_router.privateApis);
 	const postTypesWithoutParentTemplate = [
 		ATTACHMENT_POST_TYPE,
 		TEMPLATE_POST_TYPE,
@@ -45037,7 +44996,7 @@ Icon: ButtonIcon });
 		const { selectedBlock } = query;
 		const appliedSelectionRef = (0, _wordpress_element.useRef)(null);
 		const homePage = (0, _wordpress_data.useSelect)((select) => {
-			const { getHomePage } = unlock$5(select(_wordpress_core_data.store));
+			const { getHomePage } = unlock$4(select(_wordpress_core_data.store));
 			return getHomePage();
 		}, []);
 		/**
@@ -45049,7 +45008,7 @@ Icon: ButtonIcon });
 		const resolvedTemplateId = (0, _wordpress_data.useSelect)((select) => {
 			if (postTypesWithoutParentTemplate.includes(postType) && postId) return;
 			if (postId && postId.includes(",")) return;
-			const { getTemplateId } = unlock$5(select(_wordpress_core_data.store));
+			const { getTemplateId } = unlock$4(select(_wordpress_core_data.store));
 			if (postType && postId && authorizedPostTypes.includes(postType)) return getTemplateId(postType, postId);
 			if (homePage?.postType === "page") return getTemplateId("page", homePage?.postId);
 			if (homePage?.postType === "wp_template") return homePage?.postId;
@@ -45141,8 +45100,8 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-site/build-module/components/editor/index.mjs
-	const { Editor, BackButton } = unlock$5(_wordpress_editor.privateApis);
-	const { useHistory: useHistory$13, useLocation: useLocation$12 } = unlock$5(_wordpress_router.privateApis);
+	const { Editor, BackButton } = unlock$4(_wordpress_editor.privateApis);
+	const { useHistory: useHistory$13, useLocation: useLocation$12 } = unlock$4(_wordpress_router.privateApis);
 	function getListPathForPostType(postType) {
 		switch (postType) {
 			case "navigation": return "/navigation";
@@ -45191,9 +45150,9 @@ Icon: ButtonIcon });
 		useRevisionsURLSync(isEditMode, editorPostType, editorPostId);
 		const loadingProgressId = (0, _wordpress_compose.useInstanceId)(CanvasLoader, "edit-site-editor__loading-progress");
 		const editorSettings = useSpecificEditorSettings();
-		const { resetZoomLevel } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
-		const { setCurrentRevisionId, resetStylesNavigation } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
-		const { getShowStylebook } = unlock$5((0, _wordpress_data.useSelect)(_wordpress_editor.store));
+		const { resetZoomLevel } = unlock$4((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
+		const { setCurrentRevisionId, resetStylesNavigation } = unlock$4((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
+		const { getShowStylebook } = unlock$4((0, _wordpress_data.useSelect)(_wordpress_editor.store));
 		const isStylesEditing = isEditMode && location.name === "styles";
 		(0, _wordpress_element.useEffect)(() => {
 			if (!isStylesEditing) resetStylesNavigation();
@@ -45746,7 +45705,7 @@ Icon: ButtonIcon });
 	}
 	function ActionTrigger({ action, onClick, isBusy, items }) {
 		const label = getActionLabel(action, items);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$42, {
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$41, {
 			variant: "outline",
 			tone: "neutral",
 			size: "compact",
@@ -45837,12 +45796,12 @@ Icon: ButtonIcon });
 					justify: "start",
 					children: isMobile ? actionsToShow.length > 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$9, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$4, {
 						disabled: !!actionInProgress,
-						render: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$42, {
+						render: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Button$41, {
 							variant: "outline",
 							tone: "neutral",
 							size: "compact",
 							loading: !!actionInProgress,
-							children: [(0, _wordpress_i18n.__)("Actions"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$42.Icon, { icon: chevron_down_default })]
+							children: [(0, _wordpress_i18n.__)("Actions"), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Button$41.Icon, { icon: chevron_down_default })]
 						})
 					}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$2, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Group$1, { children: renderActions(true) }) })] }) : renderActions()
 				}),
@@ -54496,7 +54455,7 @@ If there's a particular need for this, please submit a feature request at https:
 
 // node_modules/.store/@ariakit/react-components@0.7.2-VnozTUXqAW_lkge2E6xscw/node_modules/@ariakit/react-components/dist/combobox/combobox-item-value.js
 	const TagName$2 = "span";
-	function normalizeValue$1(value) {
+	function normalizeValue(value) {
 		return normalizeString(value).toLowerCase();
 	}
 	function getOffsets(string, values) {
@@ -54529,7 +54488,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const ends = [];
 		let index = 0;
 		for (const char of itemValue) {
-			const normalizedLength = normalizeValue$1(char).length;
+			const normalizedLength = normalizeValue(char).length;
 			for (let i = 0; i < normalizedLength; i += 1) {
 				starts.push(i === 0 ? index : -1);
 				ends.push(index);
@@ -54566,14 +54525,14 @@ If there's a particular need for this, please submit a feature request at https:
 	function splitValue(itemValue, userValue) {
 		if (!itemValue) return itemValue;
 		if (!userValue) return itemValue;
-		const userValues = toArray(userValue).map(normalizeValue$1);
+		const userValues = toArray(userValue).map(normalizeValue);
 		const parts = [];
 		const span = (value, autocomplete = false) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
 			"data-autocomplete-value": autocomplete ? "" : void 0,
 			"data-user-value": autocomplete ? void 0 : "",
 			children: value
 		}, parts.length);
-		const offsets = toOriginalOffsets(itemValue, mergeOverlappingOffsets(getOffsets(normalizeValue$1(itemValue), new Set(userValues))));
+		const offsets = toOriginalOffsets(itemValue, mergeOverlappingOffsets(getOffsets(normalizeValue(itemValue), new Set(userValues))));
 		const firstEntry = offsets[0];
 		if (!firstEntry) {
 			parts.push(span(itemValue, true));
@@ -58278,7 +58237,7 @@ If there's a particular need for this, please submit a feature request at https:
 			type: "email",
 			prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout.Slot, {
 				padding: "minimal",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, { icon: envelope_default })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, { icon: envelope_default })
 			})
 		});
 	}
@@ -58295,7 +58254,7 @@ If there's a particular need for this, please submit a feature request at https:
 			type: "tel",
 			prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout.Slot, {
 				padding: "minimal",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, { icon: mobile_default })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, { icon: mobile_default })
 			})
 		});
 	}
@@ -58312,7 +58271,7 @@ If there's a particular need for this, please submit a feature request at https:
 			type: "url",
 			prefix: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(InputLayout.Slot, {
 				padding: "minimal",
-				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$6, { icon: link_default })
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Icon$5, { icon: link_default })
 			})
 		});
 	}
@@ -62002,672 +61961,6 @@ If there's a particular need for this, please submit a feature request at https:
 		};
 	}
 
-// packages/fields/build-module/lock-unlock.mjs
-	const { lock: lock$2, unlock: unlock$2 } = (0, _wordpress_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/fields");
-
-// packages/fields/build-module/components/media-edit/use-moving-animation.mjs
-	function getAbsolutePosition(element) {
-		return {
-			top: element.offsetTop,
-			left: element.offsetLeft
-		};
-	}
-	/**
-	* Hook used to compute the styles required to move a div into a new position.
-	*
-	* The way this animation works is the following:
-	*  - It first renders the element as if there was no animation.
-	*  - It takes a snapshot of the position of the element to use it
-	*    as a destination point for the animation.
-	*  - It restores the element to the previous position using a CSS transform
-	*
-	* Only animates on reorder of same items.
-	* Cancels running animations when the set of items changes (e.g. an item is added or removed).
-	*
-	* @param index    Position of the element in the list; the animation runs when it changes.
-	* @param itemsKey Identifies the set of items in the list, regardless of order.
-	*/
-	function useMovingAnimation(index, itemsKey) {
-		const ref = (0, _wordpress_element.useRef)(null);
-		const previousRef = (0, _wordpress_element.useRef)(void 0);
-		const previousItemsKeyRef = (0, _wordpress_element.useRef)(itemsKey);
-		if (ref.current) previousRef.current = getAbsolutePosition(ref.current);
-		(0, _wordpress_element.useLayoutEffect)(() => {
-			const hasItemsChanged = previousItemsKeyRef.current !== itemsKey;
-			previousItemsKeyRef.current = itemsKey;
-			const previous = previousRef.current;
-			if (!previous || !ref.current) return;
-			if (hasItemsChanged) {
-				ref.current.style.transform = "";
-				return;
-			}
-			if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-			const controller = new Controller({
-				x: 0,
-				y: 0,
-				config: {
-					mass: 5,
-					tension: 2e3,
-					friction: 200
-				},
-				onChange({ value }) {
-					if (!ref.current) return;
-					let { x, y } = value;
-					x = Math.round(x);
-					y = Math.round(y);
-					const finishedMoving = x === 0 && y === 0;
-					ref.current.style.transform = finishedMoving ? "" : `translate3d(${x}px,${y}px,0)`;
-				}
-			});
-			ref.current.style.transform = "";
-			const destination = getAbsolutePosition(ref.current);
-			const x = Math.round(previous.left - destination.left);
-			const y = Math.round(previous.top - destination.top);
-			controller.start({
-				x: 0,
-				y: 0,
-				from: {
-					x,
-					y
-				}
-			});
-			return () => {
-				controller.stop();
-				controller.set({
-					x: 0,
-					y: 0
-				});
-			};
-		}, [index, itemsKey]);
-		return ref;
-	}
-
-// packages/fields/build-module/components/media-edit/index.mjs
-	const { MediaUploadModal } = unlock$2(_wordpress_media_utils.privateApis);
-	function AnimatedMediaItem({ children, index, itemsKey, className }) {
-		const ref = useMovingAnimation(index, itemsKey);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			ref,
-			className,
-			children
-		});
-	}
-	function normalizeValue(value) {
-		if (Array.isArray(value)) return value;
-		return value ? [value] : [];
-	}
-	/**
-	* Conditional Media component that uses MediaUploadModal when experiment is enabled,
-	* otherwise falls back to media-utils MediaUpload. Also what `FilteredMediaUpload`
-	* falls back to when nothing is registered on `editor.MediaUpload`, as in tests.
-	*
-	* @param root0          Component props.
-	* @param root0.render   Render prop function that receives { open } object.
-	* @param root0.multiple Whether to allow multiple media selections; `'add'` keeps the current selection in the legacy media frame.
-	* @return The component.
-	*/
-	function ConditionalMediaUpload({ render, multiple, ...props }) {
-		const [isModalOpen, setIsModalOpen] = (0, _wordpress_element.useState)(false);
-		if (window.__experimentalDataViewsMediaModal) return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [render && render({ open: () => setIsModalOpen(true) }), isModalOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaUploadModal, {
-			...props,
-			multiple: !!multiple,
-			isOpen: isModalOpen,
-			onClose: () => {
-				setIsModalOpen(false);
-				props.onClose?.();
-			},
-			onSelect: (media) => {
-				setIsModalOpen(false);
-				props.onSelect?.(media);
-			}
-		})] });
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_media_utils.MediaUpload, {
-			...props,
-			render,
-			multiple
-		});
-	}
-	const FilteredMediaUpload = (0, _wordpress_components.withFilters)("editor.MediaUpload")(ConditionalMediaUpload);
-	function MediaPickerButton({ open, children, label, showTooltip = false, onFilesDrop, attachment, isUploading = false }) {
-		const isBlob = attachment && (0, _wordpress_blob.isBlobURL)(attachment.source_url);
-		const mediaPickerButton = /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: clsx("fields__media-edit-picker-button", { "has-attachment": attachment }),
-			role: "button",
-			tabIndex: 0,
-			onClick: () => {
-				if (!isUploading) open();
-			},
-			onKeyDown: (event) => {
-				if (isUploading) return;
-				if (event.key === "Enter" || event.key === " ") {
-					event.preventDefault();
-					open();
-				}
-			},
-			"aria-label": label,
-			"aria-disabled": isUploading,
-			children: [
-				children,
-				isBlob && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-					className: "fields__media-edit-picker-button-spinner",
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Spinner, {})
-				}),
-				!isUploading && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.DropZone, { onFilesDrop: (files) => onFilesDrop(files, attachment?.id) })
-			]
-		});
-		if (!showTooltip) return mediaPickerButton;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Root$8, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Trigger$3, { render: mediaPickerButton }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Popup$1, { children: label })] });
-	}
-	const archiveMimeTypes = [
-		"application/zip",
-		"application/x-zip-compressed",
-		"application/x-rar-compressed",
-		"application/x-7z-compressed",
-		"application/x-tar",
-		"application/x-gzip"
-	];
-	function MediaTitle({ attachment }) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalTruncate, {
-			className: "fields__media-edit-filename",
-			children: (0, _wordpress_html_entities.decodeEntities)(attachment.title.rendered)
-		});
-	}
-	function MediaEditPlaceholder(props) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPickerButton, {
-			...props,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
-				className: "fields__media-edit-placeholder",
-				children: props.label
-			})
-		});
-	}
-	function MoveButtons({ itemId, index, totalItems, isUploading, moveItem, orientation = "vertical" }) {
-		const isHorizontal = orientation === "horizontal";
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-			__next40pxDefaultSize: true,
-			icon: isHorizontal ? chevron_left_default : chevron_up_default,
-			label: isHorizontal ? (0, _wordpress_i18n.__)("Move left") : (0, _wordpress_i18n.__)("Move up"),
-			size: "small",
-			disabled: isUploading || index === 0,
-			accessibleWhenDisabled: true,
-			tooltipPosition: "top",
-			onClick: (event) => {
-				event.stopPropagation();
-				moveItem(itemId, "up");
-			}
-		}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-			__next40pxDefaultSize: true,
-			icon: isHorizontal ? chevron_right_default : chevron_down_default,
-			label: isHorizontal ? (0, _wordpress_i18n.__)("Move right") : (0, _wordpress_i18n.__)("Move down"),
-			size: "small",
-			disabled: isUploading || index === totalItems - 1,
-			accessibleWhenDisabled: true,
-			tooltipPosition: "top",
-			onClick: (event) => {
-				event.stopPropagation();
-				moveItem(itemId, "down");
-			}
-		})] });
-	}
-	function MediaPreview({ attachment }) {
-		const url = attachment.source_url;
-		const mimeType = attachment.mime_type || "";
-		if (mimeType.startsWith("image")) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("img", {
-			className: "fields__media-edit-thumbnail",
-			alt: attachment.alt_text || "",
-			src: url
-		});
-		else if (mimeType.startsWith("audio")) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, { icon: audio_default });
-		else if (mimeType.startsWith("video")) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, { icon: video_default });
-		else if (archiveMimeTypes.includes(mimeType)) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, { icon: archive_default });
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Icon, { icon: file_default });
-	}
-	/**
-	* Identifies the set of items regardless of their order, so a reorder can be
-	* told apart from items being added or removed.
-	*
-	* @param items The items in the list.
-	* @return A key that only changes when items are added or removed.
-	*/
-	function getItemsKey(items) {
-		return (items ?? []).map((item) => String(item.id)).sort().join(",");
-	}
-	function ExpandedMediaEditAttachments({ allItems, addButtonLabel, multiple, removeItem, moveItem, open, onFilesDrop, isUploading, setTargetItemId }) {
-		const itemsKey = getItemsKey(allItems);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
-			className: clsx("fields__media-edit-expanded", {
-				"is-multiple": multiple,
-				"is-single": !multiple,
-				"is-empty": !allItems?.length
-			}),
-			children: [allItems?.map((attachment, index) => {
-				const hasPreviewImage = attachment.mime_type?.startsWith("image");
-				const isBlob = (0, _wordpress_blob.isBlobURL)(attachment.source_url);
-				const attachmentNumericId = attachment.id;
-				return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(AnimatedMediaItem, {
-					index,
-					itemsKey,
-					className: clsx("fields__media-edit-expanded-item", { "has-preview-image": hasPreviewImage }),
-					children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPickerButton, {
-						open: () => {
-							setTargetItemId(attachmentNumericId);
-							open();
-						},
-						label: !isBlob ? (0, _wordpress_i18n.sprintf)(
-							/** translators: %s: The title of the media item. */
-							(0, _wordpress_i18n.__)("Replace %s"),
-							(0, _wordpress_html_entities.decodeEntities)(attachment.title.rendered)
-						) : (0, _wordpress_i18n.__)("Replace"),
-						showTooltip: true,
-						onFilesDrop,
-						attachment,
-						isUploading,
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-							className: "fields__media-edit-expanded-preview",
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalVStack, {
-								spacing: 0,
-								alignment: "center",
-								justify: "center",
-								className: "fields__media-edit-expanded-preview-stack",
-								children: (!isBlob || hasPreviewImage) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreview, { attachment })
-							})
-						})
-					}), !isBlob && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-						className: "fields__media-edit-expanded-overlay",
-						children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
-							className: "fields__media-edit-expanded-actions",
-							spacing: 0,
-							alignment: "flex-end",
-							expanded: false,
-							children: [multiple && allItems.length > 1 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MoveButtons, {
-								itemId: attachmentNumericId,
-								index,
-								totalItems: allItems.length,
-								isUploading,
-								moveItem,
-								orientation: "horizontal"
-							}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-								__next40pxDefaultSize: true,
-								icon: close_small_default,
-								label: (0, _wordpress_i18n.__)("Remove"),
-								size: "small",
-								disabled: isUploading,
-								accessibleWhenDisabled: true,
-								tooltipPosition: "top",
-								onClick: (event) => {
-									event.stopPropagation();
-									removeItem(attachmentNumericId);
-								}
-							})]
-						})
-					})]
-				}, attachment.id);
-			}), (multiple || !allItems?.length) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditPlaceholder, {
-				open: () => {
-					setTargetItemId(void 0);
-					open();
-				},
-				label: addButtonLabel,
-				onFilesDrop,
-				isUploading
-			})]
-		});
-	}
-	function CompactMediaEditAttachments({ allItems, addButtonLabel, multiple, removeItem, moveItem, open, onFilesDrop, isUploading, setTargetItemId }) {
-		const itemsKey = getItemsKey(allItems);
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [!!allItems?.length && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-			className: clsx("fields__media-edit-compact-group", { "is-single": allItems.length === 1 }),
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalVStack, {
-				spacing: 0,
-				children: allItems.map((attachment, index) => {
-					const isBlob = (0, _wordpress_blob.isBlobURL)(attachment.source_url);
-					const showMoveButtons = multiple && allItems.length > 1;
-					const attachmentNumericId = attachment.id;
-					return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(AnimatedMediaItem, {
-						index,
-						itemsKey,
-						className: "fields__media-edit-compact",
-						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPickerButton, {
-							open: () => {
-								setTargetItemId(attachmentNumericId);
-								open();
-							},
-							label: (0, _wordpress_i18n.__)("Replace"),
-							showTooltip: true,
-							onFilesDrop,
-							attachment,
-							isUploading,
-							children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaPreview, { attachment }), !isBlob && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaTitle, { attachment })] })
-						}), !isBlob && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalHStack, {
-							className: "fields__media-edit-compact-movers",
-							spacing: 0,
-							alignment: "flex-end",
-							expanded: false,
-							children: [showMoveButtons && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MoveButtons, {
-								itemId: attachmentNumericId,
-								index,
-								totalItems: allItems.length,
-								isUploading,
-								moveItem,
-								orientation: "vertical"
-							}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.Button, {
-								__next40pxDefaultSize: true,
-								icon: close_small_default,
-								label: (0, _wordpress_i18n.__)("Remove"),
-								size: "small",
-								disabled: isUploading,
-								accessibleWhenDisabled: true,
-								tooltipPosition: "top",
-								onClick: (event) => {
-									event.stopPropagation();
-									removeItem(attachmentNumericId);
-								}
-							})]
-						})]
-					}, attachment.id);
-				})
-			})
-		}), (multiple || !allItems?.length) && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditPlaceholder, {
-			open: () => {
-				setTargetItemId(void 0);
-				open();
-			},
-			label: addButtonLabel,
-			onFilesDrop,
-			isUploading
-		})] });
-	}
-	/**
-	* A media edit control component that provides a media picker UI with upload functionality
-	* for selecting WordPress media attachments. Supports both the traditional WordPress media
-	* library and the experimental DataViews media modal.
-	*
-	* This component is intended to be used as the `Edit` property of a field definition when
-	* registering fields with `registerEntityField` from `@wordpress/editor`.
-	*
-	* @template Item - The type of the item being edited.
-	*
-	* @param {MediaEditProps<Item>} props                       - The component props.
-	* @param {Item}                 props.data                  - The item being edited.
-	* @param {Object}               props.field                 - The field configuration with getValue and setValue methods.
-	* @param {Function}             props.onChange              - Callback function when the media selection changes.
-	* @param {string[]}             [props.allowedTypes]        - Array of allowed media types. Use `['*']` to allow all file types. Default `['image']`.
-	* @param {boolean}              [props.multiple]            - Whether to allow multiple media selections. Default `false`.
-	* @param {boolean}              [props.hideLabelFromVision] - Whether the label should be hidden from vision.
-	* @param {boolean}              [props.isExpanded]          - Whether to render in an expanded form. Default `false`.
-	*
-	* @return {React.JSX.Element} The media edit control component.
-	*
-	* @example
-	* ```tsx
-	* import { MediaEdit } from '@wordpress/fields';
-	* import type { DataFormControlProps } from '@wordpress/dataviews';
-	*
-	* const featuredImageField = {
-	*   id: 'featured_media',
-	*   type: 'media',
-	*   label: 'Featured Image',
-	*   Edit: (props: DataFormControlProps<MyPostType>) => (
-	*     <MediaEdit
-	*       {...props}
-	*       allowedTypes={['image']}
-	*     />
-	*   ),
-	* };
-	* ```
-	*/
-	function MediaEdit(props) {
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaEditControl, { ...props });
-	}
-	function MediaEditControl({ data, field, onChange, hideLabelFromVision, allowedTypes = ["image"], multiple, isExpanded, validity, isPickerFiltered, featuredImageFlow, pickerTitle }) {
-		const MediaUploadComponent = isPickerFiltered ? FilteredMediaUpload : ConditionalMediaUpload;
-		const value = field.getValue({ item: data });
-		const canUpload = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).canUser("create", {
-			kind: "postType",
-			name: "attachment"
-		}) ?? true, []);
-		const [isTouched, setIsTouched] = (0, _wordpress_element.useState)(false);
-		const validityTargetRef = (0, _wordpress_element.useRef)(null);
-		const [customValidity, setCustomValidity] = (0, _wordpress_element.useState)(void 0);
-		(0, _wordpress_element.useEffect)(() => {
-			const validityTarget = validityTargetRef.current;
-			const handler = () => {
-				setIsTouched(true);
-			};
-			validityTarget?.addEventListener("invalid", handler);
-			return () => validityTarget?.removeEventListener("invalid", handler);
-		}, []);
-		const attachments = (0, _wordpress_data.useSelect)((select) => {
-			if (!value) return null;
-			const sortedIds = normalizeValue(value).toSorted((a, b) => a - b);
-			const { getEntityRecords } = select(_wordpress_core_data.store);
-			return getEntityRecords("postType", "attachment", { include: sortedIds });
-		}, [value]);
-		const stableAttachmentsRef = (0, _wordpress_element.useRef)(null);
-		if (attachments !== null) stableAttachmentsRef.current = attachments;
-		let stableAttachments = attachments;
-		if (attachments === null && stableAttachmentsRef.current && value) {
-			const stableIds = new Set(stableAttachmentsRef.current.map((a) => a.id));
-			if (normalizeValue(value).every((id) => stableIds.has(id))) stableAttachments = stableAttachmentsRef.current;
-		}
-		const orderedAttachments = (0, _wordpress_element.useMemo)(() => {
-			if (!stableAttachments) return null;
-			const normalizedValue = normalizeValue(value);
-			const attachmentMap = new Map(stableAttachments.map((a) => [a.id, a]));
-			return normalizedValue.map((id) => attachmentMap.get(id)).filter((a) => a !== void 0);
-		}, [stableAttachments, value]);
-		const { createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
-		const { receiveEntityRecords } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
-		const [targetItemId, setTargetItemId] = (0, _wordpress_element.useState)();
-		const openModalRef = (0, _wordpress_element.useRef)(void 0);
-		const [pendingOpen, setPendingOpen] = (0, _wordpress_element.useState)(false);
-		const [blobs, setBlobs] = (0, _wordpress_element.useState)([]);
-		(0, _wordpress_element.useEffect)(() => {
-			if (pendingOpen) {
-				setPendingOpen(false);
-				openModalRef.current?.();
-			}
-		}, [pendingOpen]);
-		const onChangeControl = (0, _wordpress_element.useCallback)((newValue) => onChange(field.setValue({
-			item: data,
-			value: newValue
-		})), [
-			data,
-			field,
-			onChange
-		]);
-		const removeItem = (0, _wordpress_element.useCallback)((itemId) => {
-			const newIds = normalizeValue(value).filter((id) => id !== itemId);
-			setIsTouched(true);
-			onChangeControl(newIds.length ? newIds : void 0);
-		}, [value, onChangeControl]);
-		const moveItem = (0, _wordpress_element.useCallback)((itemId, direction) => {
-			if (!orderedAttachments) return;
-			const currentIds = orderedAttachments.map((a) => a.id);
-			const index = currentIds.indexOf(itemId);
-			const newIndex = direction === "up" ? index - 1 : index + 1;
-			[currentIds[index], currentIds[newIndex]] = [currentIds[newIndex], currentIds[index]];
-			onChangeControl(currentIds);
-		}, [orderedAttachments, onChangeControl]);
-		const onFilesDrop = (0, _wordpress_element.useCallback)((files, _targetItemId) => {
-			setTargetItemId(_targetItemId);
-			(0, _wordpress_media_utils.uploadMedia)({
-				allowedTypes: allowedTypes?.length ? allowedTypes : void 0,
-				filesList: files,
-				onFileChange(uploadedMedia) {
-					const blobUrls = uploadedMedia.filter((item) => (0, _wordpress_blob.isBlobURL)(item.url)).map((item) => item.url);
-					setBlobs(blobUrls);
-					if (!!blobUrls.length) return;
-					receiveEntityRecords("postType", "attachment", [], void 0, true);
-					const uploadedIds = uploadedMedia.map((item) => item.id);
-					if (!multiple) {
-						onChangeControl(uploadedIds[0]);
-						setTargetItemId(void 0);
-						return;
-					}
-					const currentValue = normalizeValue(value);
-					if (_targetItemId === void 0) onChangeControl([...currentValue, ...uploadedIds]);
-					else {
-						const newValue = [...currentValue];
-						newValue.splice(currentValue.indexOf(_targetItemId), 1, ...uploadedIds);
-						onChangeControl(newValue);
-					}
-					setTargetItemId(void 0);
-				},
-				onError(error) {
-					setTargetItemId(void 0);
-					setBlobs([]);
-					createErrorNotice(error.message, { type: "snackbar" });
-				},
-				multiple: !!multiple
-			});
-		}, [
-			allowedTypes,
-			value,
-			multiple,
-			createErrorNotice,
-			onChangeControl,
-			receiveEntityRecords
-		]);
-		const addButtonLabel = field.placeholder || (multiple ? (0, _wordpress_i18n.__)("Choose files") : (0, _wordpress_i18n.__)("Choose file"));
-		const allItems = (0, _wordpress_element.useMemo)(() => {
-			if (!blobs.length) return orderedAttachments;
-			const items = [...orderedAttachments || []];
-			const blobItems = blobs.map((url) => ({
-				id: url,
-				source_url: url,
-				mime_type: (0, _wordpress_blob.getBlobTypeByURL)(url)
-			}));
-			if (targetItemId !== void 0) {
-				const targetIndex = items.findIndex((a) => a.id === targetItemId);
-				items.splice(targetIndex, 1, ...blobItems);
-			} else items.push(...blobItems);
-			return items;
-		}, [
-			orderedAttachments,
-			targetItemId,
-			blobs
-		]);
-		(0, _wordpress_element.useEffect)(() => {
-			if (!isTouched) return;
-			const input = validityTargetRef.current;
-			if (!input) return;
-			if (validity) {
-				const customValidityResult = validity?.custom;
-				setCustomValidity(customValidityResult);
-				if (customValidityResult?.type === "invalid") input.setCustomValidity(customValidityResult.message || (0, _wordpress_i18n.__)("Invalid"));
-				else input.setCustomValidity("");
-			} else {
-				input.setCustomValidity("");
-				setCustomValidity(void 0);
-			}
-		}, [
-			isTouched,
-			field.isValid,
-			validity
-		]);
-		(0, _wordpress_element.useEffect)(() => {
-			if (isTouched && customValidity?.message) (0, _wordpress_a11y.speak)(customValidity.message);
-		}, [isTouched, customValidity?.message]);
-		const onBlur = (0, _wordpress_element.useCallback)((event) => {
-			if (isTouched) return;
-			if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) setIsTouched(true);
-		}, [isTouched]);
-		if (!canUpload) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("fieldset", {
-			className: "fields__media-edit",
-			"data-field-id": field.id,
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, { children: (0, _wordpress_i18n.sprintf)(
-				/** translators: %s: The field label. */
-				(0, _wordpress_i18n.__)("%s: To edit this field, you need permission to upload media."),
-				field.label
-			) })
-		});
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
-			direction: "column",
-			gap: "sm",
-			onBlur,
-			children: [
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)("fieldset", {
-					className: "fields__media-edit",
-					"data-field-id": field.id,
-					children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(MediaUploadComponent, {
-						title: pickerTitle ?? field.label,
-						featuredImageFlow,
-						unstableFeaturedImageFlow: featuredImageFlow,
-						onSelect: (selectedMedia) => {
-							if (!multiple) {
-								onChangeControl(selectedMedia.id);
-								setTargetItemId(void 0);
-								return;
-							}
-							const newIds = Array.isArray(selectedMedia) ? selectedMedia.map((m) => m.id) : [selectedMedia.id];
-							const currentValue = normalizeValue(value);
-							if (!currentValue.length) onChangeControl(newIds);
-							else if (targetItemId === void 0) {
-								const existingItems = currentValue.filter((id) => newIds.includes(id));
-								const newItems = newIds.filter((id) => !currentValue.includes(id));
-								onChangeControl([...existingItems, ...newItems]);
-							} else if (selectedMedia.id !== targetItemId) {
-								const filtered = currentValue.filter((id) => id !== selectedMedia.id);
-								onChangeControl(filtered.map((id) => id === targetItemId ? selectedMedia.id : id));
-							}
-							setTargetItemId(void 0);
-						},
-						onClose: () => setTargetItemId(void 0),
-						allowedTypes,
-						value: targetItemId !== void 0 ? targetItemId : value,
-						multiple: multiple && targetItemId === void 0 ? "add" : false,
-						render: ({ open }) => {
-							openModalRef.current = open;
-							const AttachmentsComponent = isExpanded ? ExpandedMediaEditAttachments : CompactMediaEditAttachments;
-							return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalVStack, {
-								spacing: 2,
-								children: [
-									field.label && (hideLabelFromVision ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
-										render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("legend", {}),
-										children: field.label
-									}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.BaseControl.VisualLabel, {
-										as: "legend",
-										style: { marginBottom: 0 },
-										children: field.label
-									})),
-									/* @__PURE__ */ (0, react_jsx_runtime.jsx)(AttachmentsComponent, {
-										allItems,
-										addButtonLabel,
-										multiple,
-										removeItem,
-										moveItem,
-										open: () => setPendingOpen(true),
-										onFilesDrop,
-										isUploading: !!blobs.length,
-										setTargetItemId
-									}),
-									field.description && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.__experimentalText, {
-										variant: "muted",
-										className: "fields__media-edit-description",
-										children: field.description
-									})
-								]
-							});
-						}
-					})
-				}),
-				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, { children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
-					type: "text",
-					ref: validityTargetRef,
-					value: value ?? "",
-					tabIndex: -1,
-					"aria-hidden": "true",
-					onChange: () => {}
-				}) }),
-				customValidity && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidityIndicator, {
-					type: customValidity.type,
-					message: customValidity.message
-				})
-			]
-		});
-	}
-
 // node_modules/.store/dequal@2.0.3-i0E7NB0LKMTt-IGua292bA/node_modules/dequal/dist/index.mjs
 	var has = Object.prototype.hasOwnProperty;
 	function find(iter, tar, key) {
@@ -63069,6 +62362,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/sidebar-identity/index.mjs
+	const { MediaEdit } = unlock$4(_wordpress_media_utils.privateApis);
 	const VIEW_CONFIG_FIELDS$4 = ["form"];
 	const fields = [
 		{
@@ -73630,13 +72924,13 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-global-styles/index.mjs
-	const { useLocation: useLocation$11, useHistory: useHistory$12 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$11, useHistory: useHistory$12 } = unlock$4(_wordpress_router.privateApis);
 	function SidebarNavigationScreenGlobalStyles() {
 		const history = useHistory$12();
 		const { path, query } = useLocation$11();
 		const { revisions, isLoading: isLoadingRevisions, revisionsCount } = useGlobalStylesRevisions();
 		const { openGeneralSidebar } = (0, _wordpress_data.useDispatch)(store);
-		const { setStylesPath, setShowStylebook } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
+		const { setStylesPath, setShowStylebook } = unlock$4((0, _wordpress_data.useDispatch)(_wordpress_editor.store));
 		const { set: setPreference } = (0, _wordpress_data.useDispatch)(_wordpress_preferences.store);
 		const openGlobalStyles = (0, _wordpress_element.useCallback)(async () => {
 			history.navigate((0, _wordpress_url.addQueryArgs)((0, _wordpress_url.removeQueryArgs)(path, "preview"), { canvas: "edit" }), { transition: "canvas-mode-edit-transition" });
@@ -73672,9 +72966,9 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/sidebar-global-styles/index.mjs
-	const { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock$5(_wordpress_editor.privateApis);
-	const { useLocation: useLocation$10, useHistory: useHistory$11 } = unlock$5(_wordpress_router.privateApis);
-	const { ToolsPanelPopoverPropsContext } = unlock$5(_wordpress_block_editor.privateApis);
+	const { GlobalStylesUIWrapper, GlobalStylesActionMenu } = unlock$4(_wordpress_editor.privateApis);
+	const { useLocation: useLocation$10, useHistory: useHistory$11 } = unlock$4(_wordpress_router.privateApis);
+	const { ToolsPanelPopoverPropsContext } = unlock$4(_wordpress_block_editor.privateApis);
 	const TOOLS_PANEL_POPOVER_PROPS = {
 		dropdown: {
 			placement: "right-start",
@@ -73755,8 +73049,8 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/site-editor-routes/styles.mjs
-	const { useLocation: useLocation$9, useHistory: useHistory$10 } = unlock$5(_wordpress_router.privateApis);
-	const { StyleBookPreview: StyleBookPreview$1, useGlobalStyles: useGlobalStyles$1 } = unlock$5(_wordpress_editor.privateApis);
+	const { useLocation: useLocation$9, useHistory: useHistory$10 } = unlock$4(_wordpress_router.privateApis);
+	const { StyleBookPreview: StyleBookPreview$1, useGlobalStyles: useGlobalStyles$1 } = unlock$4(_wordpress_editor.privateApis);
 	function StyleBookPreviewArea({ siteData }) {
 		const { path, query } = useLocation$9();
 		const history = useHistory$10();
@@ -73859,7 +73153,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/more-menu.mjs
-	const { useHistory: useHistory$9 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$9 } = unlock$4(_wordpress_router.privateApis);
 	const POPOVER_PROPS$1 = { position: "bottom right" };
 	function ScreenNavigationMoreMenu(props) {
 		const { onDelete, onSave, onDuplicate, menuTitle, menuId } = props;
@@ -73926,8 +73220,8 @@ If there's a particular need for this, please submit a feature request at https:
 		className: "block-editor-block-settings-menu__popover",
 		placement: "bottom-start"
 	};
-	const { useHistory: useHistory$8, useLocation: useLocation$8 } = unlock$5(_wordpress_router.privateApis);
-	const { AddSubmenuItem } = unlock$5(_wordpress_block_library.privateApis);
+	const { useHistory: useHistory$8, useLocation: useLocation$8 } = unlock$4(_wordpress_router.privateApis);
+	const { AddSubmenuItem } = unlock$4(_wordpress_block_library.privateApis);
 	function LeafMoreMenu({ updateExpansion, setInsertedBlockClientId, ...props }) {
 		const history = useHistory$8();
 		const { path } = useLocation$8();
@@ -74014,8 +73308,8 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/navigation-menu-content.mjs
-	const { PrivateListView } = unlock$5(_wordpress_block_editor.privateApis);
-	const { NavigationLinkUI } = unlock$5(_wordpress_block_library.privateApis);
+	const { PrivateListView } = unlock$4(_wordpress_block_editor.privateApis);
+	const { NavigationLinkUI } = unlock$4(_wordpress_block_library.privateApis);
 	const ALLOWED_BLOCK_NAMES = [
 		"core/home-link",
 		"core/search",
@@ -74058,7 +73352,7 @@ If there's a particular need for this, please submit a feature request at https:
 				isLoading: !areInnerBlocksControlled(rootClientId) || isLoadingPages
 			};
 		}, [rootClientId]);
-		const { openListViewContentPanel } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
+		const { openListViewContentPanel } = unlock$4((0, _wordpress_data.useDispatch)(_wordpress_block_editor.store));
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
 			!isLoading && !hasChildren && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 				className: "edit-site-sidebar-navigation-screen-navigation-menus__empty-message",
@@ -74084,7 +73378,7 @@ If there's a particular need for this, please submit a feature request at https:
 	const noop = () => {};
 	function NavigationMenuEditor({ navigationMenuId }) {
 		const { storedSettings } = (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings } = unlock$5(select(store));
+			const { getSettings } = unlock$4(select(store));
 			return { storedSettings: getSettings() };
 		}, []);
 		const settings = (0, _wordpress_element.useMemo)(() => {
@@ -74146,7 +73440,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/index.mjs
-	const { useLocation: useLocation$7 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$7 } = unlock$4(_wordpress_router.privateApis);
 	const postType = `wp_navigation`;
 	function SidebarNavigationScreenNavigationMenu({ backPath }) {
 		const { params: { postId } } = useLocation$7();
@@ -74182,7 +73476,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menu/use-navigation-menu-handlers.mjs
-	const { useHistory: useHistory$7 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$7 } = unlock$4(_wordpress_router.privateApis);
 	function useDeleteNavigationMenu() {
 		const { deleteEntityRecord } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
 		const { createSuccessNotice, createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
@@ -74284,7 +73578,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function SidebarNavigationScreenNavigationMenus({ backPath }) {
 		const { records: navigationMenus, isResolving: isResolvingNavigationMenus, hasResolved: hasResolvedNavigationMenus } = (0, _wordpress_core_data.useEntityRecords)("postType", NAVIGATION_POST_TYPE, PRELOADED_NAVIGATION_MENUS_QUERY);
 		const isLoading = isResolvingNavigationMenus && !hasResolvedNavigationMenus;
-		const { getNavigationFallbackId } = unlock$5((0, _wordpress_data.useSelect)(_wordpress_core_data.store));
+		const { getNavigationFallbackId } = unlock$4((0, _wordpress_data.useSelect)(_wordpress_core_data.store));
 		const isCreatingNavigationFallback = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).isResolving("getNavigationFallbackId"), []);
 		const firstNavigationMenu = navigationMenus?.[0];
 		if (!firstNavigationMenu && !isResolvingNavigationMenus && hasResolvedNavigationMenus && !isCreatingNavigationFallback) getNavigationFallbackId();
@@ -74390,7 +73684,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-default-pattern-categories.mjs
 	function useDefaultPatternCategories() {
 		const blockPatternCategories = (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings } = unlock$5(select(store));
+			const { getSettings } = unlock$4(select(store));
 			const settings = getSettings();
 			return settings.__experimentalAdditionalBlockPatternCategories ?? settings.__experimentalBlockPatternCategories;
 		});
@@ -74404,7 +73698,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.mjs
 	function useThemePatterns() {
 		const blockPatterns = (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings } = unlock$5(select(store));
+			const { getSettings } = unlock$4(select(store));
 			return getSettings().__experimentalAdditionalBlockPatterns ?? getSettings().__experimentalBlockPatterns;
 		});
 		const restBlockPatterns = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).getBlockPatterns());
@@ -74412,7 +73706,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/page-patterns/search-items.mjs
-	const { SEARCH_RANK, searchItems: searchAndRankItems } = unlock$5(_wordpress_block_editor.privateApis);
+	const { SEARCH_RANK, searchItems: searchAndRankItems } = unlock$4(_wordpress_block_editor.privateApis);
 	const getName = (item) => {
 		if (item.type === PATTERN_TYPES.user) return item.slug;
 		if (item.type === "wp_template_part") return "";
@@ -74492,7 +73786,7 @@ If there's a particular need for this, please submit a feature request at https:
 		select(_wordpress_core_data.store).getCurrentTheme()?.default_template_part_areas
 	]);
 	const selectThemePatterns = (0, _wordpress_data.createSelector)((select) => {
-		const { getSettings } = unlock$5(select(store));
+		const { getSettings } = unlock$4(select(store));
 		const { isResolving: isResolvingSelector } = select(_wordpress_core_data.store);
 		const settings = getSettings();
 		const blockPatterns = settings.__experimentalAdditionalBlockPatterns ?? settings.__experimentalBlockPatterns;
@@ -74509,7 +73803,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}, (select) => [
 		select(_wordpress_core_data.store).getBlockPatterns(),
 		select(_wordpress_core_data.store).isResolving("getBlockPatterns"),
-		unlock$5(select(store)).getSettings()
+		unlock$4(select(store)).getSettings()
 	]);
 	const selectPatterns = (0, _wordpress_data.createSelector)((select, categoryId, syncStatus, search = "") => {
 		const { patterns: themePatterns, isResolving: isResolvingThemePatterns } = selectThemePatterns(select);
@@ -74566,7 +73860,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function useAugmentPatternsWithPermissions(patterns) {
 		const idsAndTypes = (0, _wordpress_element.useMemo)(() => patterns?.filter((record) => record.type !== PATTERN_TYPES.theme).map((record) => [record.type, record.id]) ?? [], [patterns]);
 		const permissions = (0, _wordpress_data.useSelect)((select) => {
-			const { getEntityRecordPermissions } = unlock$5(select(_wordpress_core_data.store));
+			const { getEntityRecordPermissions } = unlock$4(select(_wordpress_core_data.store));
 			return idsAndTypes.reduce((acc, [type, id]) => {
 				acc[id] = getEntityRecordPermissions("postType", type, id);
 				return acc;
@@ -74660,7 +73954,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.mjs
-	const { NAVIGATION_OVERLAY_TEMPLATE_PART_AREA } = unlock$5(_wordpress_block_library.privateApis);
+	const { NAVIGATION_OVERLAY_TEMPLATE_PART_AREA } = unlock$4(_wordpress_block_library.privateApis);
 	const useTemplatePartsGroupedByArea = (items) => {
 		const allItems = items || [];
 		const templatePartAreas = (0, _wordpress_data.useSelect)((select) => select(_wordpress_core_data.store).getCurrentTheme()?.default_template_part_areas || [], []);
@@ -74691,8 +73985,8 @@ If there's a particular need for this, please submit a feature request at https:
 
 // packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.mjs
 	const VIEW_CONFIG_FIELDS$3 = ["view_list"];
-	const { useLocation: useLocation$6 } = unlock$5(_wordpress_router.privateApis);
-	const { getTemplatePartIcon } = unlock$5(_wordpress_core_data.privateApis);
+	const { useLocation: useLocation$6 } = unlock$4(_wordpress_router.privateApis);
+	const { getTemplatePartIcon } = unlock$4(_wordpress_core_data.privateApis);
 	function CategoriesGroup({ templatePartViews, patternViews, templatePartCounts, patternCounts, currentCategory, currentType }) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(_wordpress_components.__experimentalItemGroup, {
 			className: "edit-site-sidebar-navigation-screen-patterns__group",
@@ -74769,12 +74063,12 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/page-patterns/use-pattern-settings.mjs
-	const { useGlobalStyles } = unlock$5(_wordpress_editor.privateApis);
-	const { globalStylesDataKey } = unlock$5(_wordpress_block_editor.privateApis);
+	const { useGlobalStyles } = unlock$4(_wordpress_editor.privateApis);
+	const { globalStylesDataKey } = unlock$4(_wordpress_block_editor.privateApis);
 	function usePatternSettings() {
 		const { merged: mergedConfig } = useGlobalStyles();
 		const storedSettings = (0, _wordpress_data.useSelect)((select) => {
-			const { getSettings } = unlock$5(select(store));
+			const { getSettings } = unlock$4(select(store));
 			return getSettings();
 		}, []);
 		const settingsBlockPatterns = storedSettings.__experimentalAdditionalBlockPatterns ?? storedSettings.__experimentalBlockPatterns;
@@ -74804,14 +74098,14 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/add-new-pattern/index.mjs
-	const { useHistory: useHistory$6, useLocation: useLocation$5 } = unlock$5(_wordpress_router.privateApis);
-	const { CreatePatternModal, CreateTemplatePartModal, useAddPatternCategory } = unlock$5(_wordpress_patterns.privateApis);
+	const { useHistory: useHistory$6, useLocation: useLocation$5 } = unlock$4(_wordpress_router.privateApis);
+	const { CreatePatternModal, CreateTemplatePartModal, useAddPatternCategory } = unlock$4(_wordpress_patterns.privateApis);
 	function AddNewPattern() {
 		const history = useHistory$6();
 		const location = useLocation$5();
 		const [showPatternModal, setShowPatternModal] = (0, _wordpress_element.useState)(false);
 		const [showTemplatePartModal, setShowTemplatePartModal] = (0, _wordpress_element.useState)(false);
-		const { createPatternFromFile } = unlock$5((0, _wordpress_data.useDispatch)(_wordpress_patterns.store));
+		const { createPatternFromFile } = unlock$4((0, _wordpress_data.useDispatch)(_wordpress_patterns.store));
 		const { createSuccessNotice, createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
 		const patternUploadInputRef = (0, _wordpress_element.useRef)();
 		const { isBlockBasedTheme, addNewPatternLabel, addNewTemplatePartLabel, canCreatePattern, canCreateTemplatePart } = (0, _wordpress_data.useSelect)((select) => {
@@ -74924,7 +74218,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/page-patterns/rename-category-menu-item.mjs
-	const { RenamePatternCategoryModal } = unlock$5(_wordpress_patterns.privateApis);
+	const { RenamePatternCategoryModal } = unlock$4(_wordpress_patterns.privateApis);
 	function RenameCategoryMenuItem({ category, onClose }) {
 		const [isModalOpen, setIsModalOpen] = (0, _wordpress_element.useState)(false);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.MenuItem, {
@@ -74956,7 +74250,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/page-patterns/delete-category-menu-item.mjs
-	const { useHistory: useHistory$5 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$5 } = unlock$4(_wordpress_router.privateApis);
 	function DeleteCategoryMenuItem({ category, onClose }) {
 		const [isModalOpen, setIsModalOpen] = (0, _wordpress_element.useState)(false);
 		const history = useHistory$5();
@@ -75037,7 +74331,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/dataviews-actions/index.mjs
-	const { useLocation: useLocation$4, useHistory: useHistory$4 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$4, useHistory: useHistory$4 } = unlock$4(_wordpress_router.privateApis);
 	const useEditPostAction = () => {
 		const history = useHistory$4();
 		return (0, _wordpress_element.useMemo)(() => ({
@@ -75082,7 +74376,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/edit-site/build-module/components/page-patterns/fields.mjs
-	const { useStyle: useStyle$1 } = unlock$5(_wordpress_editor.privateApis);
+	const { useStyle: useStyle$1 } = unlock$4(_wordpress_editor.privateApis);
 	function PreviewField$1({ item }) {
 		const descriptionId = (0, _wordpress_element.useId)();
 		const description = item.description || item?.excerpt?.raw;
@@ -75119,9 +74413,9 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/edit-site/build-module/components/page-patterns/index.mjs
-	const { ExperimentalBlockEditorProvider } = unlock$5(_wordpress_block_editor.privateApis);
-	const { usePostActions: usePostActions$2, usePostFields: usePostFields$3 } = unlock$5(_wordpress_editor.privateApis);
-	const { useLocation: useLocation$3, useHistory: useHistory$3 } = unlock$5(_wordpress_router.privateApis);
+	const { ExperimentalBlockEditorProvider } = unlock$4(_wordpress_block_editor.privateApis);
+	const { usePostActions: usePostActions$2, usePostFields: usePostFields$3 } = unlock$4(_wordpress_editor.privateApis);
+	const { useLocation: useLocation$3, useHistory: useHistory$3 } = unlock$4(_wordpress_router.privateApis);
 	const EMPTY_ARRAY$2 = [];
 	const VIEW_CONFIG_FIELDS$2 = ["default_view", "default_layouts"];
 	function usePagePatternsHeader(type, categoryId) {
@@ -75287,7 +74581,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/edit-site/build-module/components/sidebar-dataviews/index.mjs
-	const { useLocation: useLocation$2 } = unlock$5(_wordpress_router.privateApis);
+	const { useLocation: useLocation$2 } = unlock$4(_wordpress_router.privateApis);
 	const VIEW_CONFIG_FIELDS$1 = ["view_list"];
 	const SLUG_TO_ICON = {
 		all: pages_default,
@@ -76064,7 +75358,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/add-new-template/index.mjs
-	const { useHistory: useHistory$2 } = unlock$5(_wordpress_router.privateApis);
+	const { useHistory: useHistory$2 } = unlock$4(_wordpress_router.privateApis);
 	const DEFAULT_TEMPLATE_SLUGS = [
 		"front-page",
 		"home",
@@ -76287,7 +75581,7 @@ If there's a particular need for this, please submit a feature request at https:
 	var add_new_template_default = (0, _wordpress_element.memo)(NewTemplate);
 
 // packages/edit-site/build-module/components/page-templates/fields.mjs
-	const { useStyle } = unlock$5(_wordpress_editor.privateApis);
+	const { useStyle } = unlock$4(_wordpress_editor.privateApis);
 	function PreviewField({ item }) {
 		const settings = usePatternSettings();
 		const backgroundColor = useStyle("color.background") ?? "white";
@@ -76313,9 +75607,9 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/edit-site/build-module/components/page-templates/index.mjs
-	const { usePostActions: usePostActions$1, usePostFields: usePostFields$2 } = unlock$5(_wordpress_editor.privateApis);
-	const { useHistory: useHistory$1, useLocation: useLocation$1 } = unlock$5(_wordpress_router.privateApis);
-	const { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions$1 } = unlock$5(_wordpress_core_data.privateApis);
+	const { usePostActions: usePostActions$1, usePostFields: usePostFields$2 } = unlock$4(_wordpress_editor.privateApis);
+	const { useHistory: useHistory$1, useLocation: useLocation$1 } = unlock$4(_wordpress_router.privateApis);
+	const { useEntityRecordsWithPermissions: useEntityRecordsWithPermissions$1 } = unlock$4(_wordpress_core_data.privateApis);
 	const VIEW_CONFIG_FIELDS = [
 		"default_view",
 		"default_layouts",
@@ -76412,7 +75706,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/edit-site/build-module/components/site-editor-routes/templates.mjs
 	async function isTemplateListView(query) {
 		const { activeView = "active" } = query;
-		const config = await unlock$5((0, _wordpress_data.resolveSelect)(_wordpress_core_data.store)).getViewConfig("postType", "wp_template");
+		const config = await unlock$4((0, _wordpress_data.resolveSelect)(_wordpress_core_data.store)).getViewConfig("postType", "wp_template");
 		const defaultView = config?.default_view;
 		const activeViewOverrides = config?.view_list?.find((v) => v.slug === activeView)?.view ?? {};
 		return (await loadView({
@@ -76583,7 +75877,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/post-list/quick-edit-modal.mjs
-	const { usePostFields: usePostFields$1, PostCardPanel } = unlock$5(_wordpress_editor.privateApis);
+	const { usePostFields: usePostFields$1, PostCardPanel } = unlock$4(_wordpress_editor.privateApis);
 	const fieldsWithBulkEditSupport = [
 		"status",
 		"date",
@@ -76691,9 +75985,9 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/post-list/index.mjs
-	const { usePostActions, usePostFields } = unlock$5(_wordpress_editor.privateApis);
-	const { useLocation, useHistory } = unlock$5(_wordpress_router.privateApis);
-	const { useEntityRecordsWithPermissions } = unlock$5(_wordpress_core_data.privateApis);
+	const { usePostActions, usePostFields } = unlock$4(_wordpress_editor.privateApis);
+	const { useLocation, useHistory } = unlock$4(_wordpress_router.privateApis);
+	const { useEntityRecordsWithPermissions } = unlock$4(_wordpress_core_data.privateApis);
 	const EMPTY_ARRAY = [];
 	const EMPTY_IDS = [];
 	const NOTES_COUNT_FIELD = "notesCount";
@@ -76891,7 +76185,7 @@ If there's a particular need for this, please submit a feature request at https:
 // packages/edit-site/build-module/components/site-editor-routes/pages.mjs
 	async function isListView(query) {
 		const { activeView = "all" } = query;
-		const config = await unlock$5((0, _wordpress_data.resolveSelect)(_wordpress_core_data.store)).getViewConfig("postType", "page");
+		const config = await unlock$4((0, _wordpress_data.resolveSelect)(_wordpress_core_data.store)).getViewConfig("postType", "page");
 		const defaultView = config?.default_view;
 		const defaultLayouts = config?.default_layouts;
 		const viewEntry = config?.view_list?.find((v) => v.slug === activeView);
@@ -76958,7 +76252,7 @@ If there's a particular need for this, please submit a feature request at https:
 	};
 
 // packages/edit-site/build-module/components/site-editor-routes/stylebook.mjs
-	const { StyleBookPreview } = unlock$5(_wordpress_editor.privateApis);
+	const { StyleBookPreview } = unlock$4(_wordpress_editor.privateApis);
 	const stylebookRoute = {
 		name: "stylebook",
 		path: "/stylebook",
@@ -77026,7 +76320,7 @@ If there's a particular need for this, please submit a feature request at https:
 	];
 	function useRegisterSiteEditorRoutes() {
 		const registry = (0, _wordpress_data.useRegistry)();
-		const { registerRoute } = unlock$5((0, _wordpress_data.useDispatch)(store));
+		const { registerRoute } = unlock$4((0, _wordpress_data.useDispatch)(store));
 		(0, _wordpress_element.useEffect)(() => {
 			registry.batch(() => {
 				routes.forEach(registerRoute);
@@ -77035,7 +76329,7 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/edit-site/build-module/components/app/index.mjs
-	const { RouterProvider } = unlock$5(_wordpress_router.privateApis);
+	const { RouterProvider } = unlock$4(_wordpress_router.privateApis);
 	function AppLayout() {
 		useCommonCommands();
 		useSetCommandContext();
@@ -77045,7 +76339,7 @@ If there's a particular need for this, please submit a feature request at https:
 		useRegisterSiteEditorRoutes();
 		const { routes, currentTheme, editorSettings } = (0, _wordpress_data.useSelect)((select) => {
 			return {
-				routes: unlock$5(select(store)).getRoutes(),
+				routes: unlock$4(select(store)).getRoutes(),
 				currentTheme: select(_wordpress_core_data.store).getCurrentTheme(),
 				editorSettings: select(store).getSettings()
 			};
@@ -77178,5 +76472,5 @@ exports.store = store;
 Object.defineProperty(exports, '__esModule', { value: true });
 (window.wp ||= {}).editSite = exports;
 return exports;
-})({}, window.wp.blocks, window.wp.blockLibrary, window.wp.data, window.wp.deprecated, window.wp.element, window.wp.editor, window.wp.preferences, window.wp.widgets, window.wp.coreData, window.wp.blockEditor, window.wp.i18n, window.wp.patterns, window.wp.privateApis, window.wp.router, window.React, window.ReactJSXRuntime, window.ReactDOM, window.wp.warning, window.wp.compose, window.wp.a11y, window.wp.primitives, window.wp.theme, window.wp.components, window.wp.dom, window.wp.plugins, window.wp.notices, window.wp.url, window.wp.keyboardShortcuts, window.wp.keycodes, window.wp.apiFetch, window.wp.commands, window.wp.htmlEntities, window.wp.styleEngine, window.wp.date, window.wp.blob, window.wp.mediaUtils);
+})({}, window.wp.blocks, window.wp.blockLibrary, window.wp.data, window.wp.deprecated, window.wp.element, window.wp.editor, window.wp.preferences, window.wp.widgets, window.wp.coreData, window.wp.blockEditor, window.wp.i18n, window.wp.patterns, window.wp.privateApis, window.wp.router, window.React, window.ReactJSXRuntime, window.ReactDOM, window.wp.warning, window.wp.compose, window.wp.a11y, window.wp.primitives, window.wp.theme, window.wp.components, window.wp.dom, window.wp.plugins, window.wp.notices, window.wp.url, window.wp.keyboardShortcuts, window.wp.keycodes, window.wp.apiFetch, window.wp.commands, window.wp.htmlEntities, window.wp.styleEngine, window.wp.date, window.wp.mediaUtils);
 //# sourceMappingURL=index.js.map

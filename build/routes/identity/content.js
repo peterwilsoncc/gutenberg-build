@@ -3,22 +3,22 @@ import { loadEditorAssets } from "@wordpress/lazy-editor";
 
 // \0rolldown/runtime.js
 var __create = Object.create;
-var __defProp$1 = Object.defineProperty;
+var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod, mod.exports), cb = null), mod.exports);
-var __exportAll$1 = (all, no_symbols) => {
+var __exportAll = (all, no_symbols) => {
 	let target = {};
 	for (var name in all) {
-		__defProp$1(target, name, {
+		__defProp(target, name, {
 			get: all[name],
 			enumerable: true
 		});
 	}
 	if (!no_symbols) {
-		__defProp$1(target, Symbol.toStringTag, { value: "Module" });
+		__defProp(target, Symbol.toStringTag, { value: "Module" });
 	}
 	return target;
 };
@@ -27,7 +27,7 @@ var __copyProps = (to, from, except, desc) => {
 		for (var keys = __getOwnPropNames(from), i = 0, n = keys.length, key; i < n; i++) {
 			key = keys[i];
 			if (!__hasOwnProp.call(to, key) && key !== except) {
-				__defProp$1(to, key, {
+				__defProp(to, key, {
 					get: ((k) => from[k]).bind(null, key),
 					enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
 				});
@@ -36,7 +36,7 @@ var __copyProps = (to, from, except, desc) => {
 	}
 	return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule || !__hasOwnProp.call(mod, "default") ? __defProp$1(target, "default", {
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule || !__hasOwnProp.call(mod, "default") ? __defProp(target, "default", {
 	value: mod,
 	enumerable: true
 }) : target, mod));
@@ -77,7 +77,7 @@ function useRefWithInit(init, initArg) {
 */
 function useMergedRefs(a, b, c, d) {
 	const forkRef = useRefWithInit(createForkRef).current;
-	if (didChange(forkRef, a, b, c, d)) update$2(forkRef, [
+	if (didChange(forkRef, a, b, c, d)) update(forkRef, [
 		a,
 		b,
 		c,
@@ -92,7 +92,7 @@ function useMergedRefs(a, b, c, d) {
 */
 function useMergedRefsN(refs) {
 	const forkRef = useRefWithInit(createForkRef).current;
-	if (didChangeN(forkRef, refs)) update$2(forkRef, refs);
+	if (didChangeN(forkRef, refs)) update(forkRef, refs);
 	return forkRef.callback;
 }
 function createForkRef() {
@@ -108,7 +108,7 @@ function didChange(forkRef, a, b, c, d) {
 function didChangeN(forkRef, newRefs) {
 	return forkRef.refs.length !== newRefs.length || forkRef.refs.some((ref, index) => ref !== newRefs[index]);
 }
-function update$2(forkRef, refs) {
+function update(forkRef, refs) {
 	forkRef.refs = refs;
 	if (refs.every((ref) => ref == null)) {
 		forkRef.callback = null;
@@ -535,8 +535,8 @@ function assertNotCalled() {
 }
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/useIsoLayoutEffect.mjs
-const noop$1 = () => {};
-const useIsoLayoutEffect = typeof document !== "undefined" ? import__wp_global_react.useLayoutEffect : noop$1;
+const noop = () => {};
+const useIsoLayoutEffect = typeof document !== "undefined" ? import__wp_global_react.useLayoutEffect : noop;
 
 // \0wp-global:react-dom
 var require__wp_global_react_dom = /* @__PURE__ */ __commonJSMin(((exports, module) => {
@@ -2707,7 +2707,7 @@ const oppositeSideMap = {
 	bottom: "top",
 	top: "bottom"
 };
-function clamp$2(start, value, end) {
+function clamp$1(start, value, end) {
 	return max$1(start, min$1(value, end));
 }
 function evaluate(value, param) {
@@ -7330,7 +7330,7 @@ const shift$1 = function(options) {
 			const mainAxis = getOppositeAxis(crossAxis);
 			let mainAxisCoord = coords[mainAxis];
 			let crossAxisCoord = coords[crossAxis];
-			const clampCoord = (axis, coord) => clamp$2(coord + overflow[axis === "y" ? "top" : "left"], coord, coord - overflow[axis === "y" ? "bottom" : "right"]);
+			const clampCoord = (axis, coord) => clamp$1(coord + overflow[axis === "y" ? "top" : "left"], coord, coord - overflow[axis === "y" ? "bottom" : "right"]);
 			if (checkMainAxis) mainAxisCoord = clampCoord(mainAxis, mainAxisCoord);
 			if (checkCrossAxis) crossAxisCoord = clampCoord(crossAxis, crossAxisCoord);
 			const limitedCoords = limiter.fn({
@@ -8892,7 +8892,7 @@ const baseArrow = (options) => ({
 		const min = minPadding;
 		const max = clientSize - arrowDimensions[length] - maxPadding;
 		const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
-		const offset = clamp$2(min, center, max);
+		const offset = clamp$1(min, center, max);
 		const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset && rects.reference[length] / 2 - (center < min ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
 		const alignmentOffset = shouldAddOffset ? center < min ? center - min : center - max : 0;
 		return {
@@ -9370,7 +9370,7 @@ ListboxSeparator.displayName = "ListboxSeparator";
 *
 * Documentation: [Base UI Button](https://base-ui.com/react/components/button)
 */
-const Button$9 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Button(componentProps, forwardedRef) {
+const Button$8 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Button(componentProps, forwardedRef) {
 	const { render, className, disabled = false, focusableWhenDisabled = false, nativeButton = true, style, ...elementProps } = componentProps;
 	const { getButtonProps, buttonRef } = useButton({
 		disabled,
@@ -9383,7 +9383,7 @@ const Button$9 = /*#__PURE__*/ import__wp_global_react.forwardRef(function Butto
 		props: [elementProps, getButtonProps]
 	});
 });
-Button$9.displayName = "Button";
+Button$8.displayName = "Button";
 
 // node_modules/.store/@base-ui/react@1.9.0-uHNeM94OdjIeOtpyYGvL0A/node_modules/@base-ui/react/field/item/FieldItemContext.mjs
 const FieldItemContext = /*#__PURE__*/ import__wp_global_react.createContext({ disabled: false });
@@ -9891,7 +9891,7 @@ function useCSPContext() {
 }
 
 // node_modules/.store/@base-ui/utils@0.5.0--7My7Lubseca8je9LSEweA/node_modules/@base-ui/utils/clamp.mjs
-function clamp$1(val, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
+function clamp(val, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
 	return Math.max(min, Math.min(val, max));
 }
 
@@ -10438,7 +10438,7 @@ function getMaxScrollOffset(scrollSize, clientSize) {
 }
 function normalizeScrollOffset(value, max) {
 	if (max <= 0) return 0;
-	const clamped = clamp$1(value, 0, max);
+	const clamped = clamp(value, 0, max);
 	const startDistance = clamped;
 	const endDistance = max - clamped;
 	const withinStartTolerance = startDistance <= 1;
@@ -11310,7 +11310,7 @@ const SelectPopup = /*#__PURE__*/ import__wp_global_react.forwardRef(function Se
 		const diff = isTopPositioned ? maxScrollTop - scrollTop : scrollTop;
 		const nextHeight = Math.min(currentHeight + diff, maxAvailableHeight);
 		if (diff <= 1) {
-			const heightDelta = clamp$1(diff, 0, maxAvailableHeight - currentHeight);
+			const heightDelta = clamp(diff, 0, maxAvailableHeight - currentHeight);
 			if (heightDelta > 0) setHeight(currentHeight + heightDelta);
 			scroller.scrollTop = isTopPositioned ? maxScrollTop : 0;
 			if (maxAvailableHeight - (currentHeight + heightDelta) <= 1) reachedMaxHeightRef.current = true;
@@ -11322,7 +11322,7 @@ const SelectPopup = /*#__PURE__*/ import__wp_global_react.forwardRef(function Se
 		const nextPositionerHeight = Math.ceil(nextHeight);
 		if (nextPositionerHeight !== 0) setHeight(nextPositionerHeight);
 		if (nextScrollTop != null) {
-			const target = clamp$1(nextScrollTop, 0, getMaxScrollTop(scroller));
+			const target = clamp(nextScrollTop, 0, getMaxScrollTop(scroller));
 			if (Math.abs(scroller.scrollTop - target) > 1) scroller.scrollTop = target;
 		}
 		if (nextPositionerHeight >= maxAvailableHeight - 1) reachedMaxHeightRef.current = true;
@@ -11416,7 +11416,7 @@ const SelectPopup = /*#__PURE__*/ import__wp_global_react.forwardRef(function Se
 			const maxHeight = viewportHeight - marginTop - marginBottom;
 			const scrollTop = idealHeight - height;
 			const maxRight = viewportWidth - paddingRight;
-			positionerElement.style.left = `${clamp$1(alignedLeft, paddingLeft, maxRight - positionerRect.width)}px`;
+			positionerElement.style.left = `${clamp(alignedLeft, paddingLeft, maxRight - positionerRect.width)}px`;
 			positionerElement.style.height = `${height}px`;
 			positionerElement.style.maxHeight = "none";
 			positionerElement.style.marginTop = `${marginTop}px`;
@@ -11446,7 +11446,7 @@ const SelectPopup = /*#__PURE__*/ import__wp_global_react.forwardRef(function Se
 				const popupTop = positionerRect.top;
 				const popupHeight = positionerRect.height;
 				const textCenterY = textRect.top + textRect.height / 2;
-				const clampedY = clamp$1(popupHeight > 0 ? (textCenterY - popupTop) / popupHeight * 100 : 50, 0, 100);
+				const clampedY = clamp(popupHeight > 0 ? (textCenterY - popupTop) / popupHeight * 100 : 50, 0, 100);
 				popupElement.style.setProperty(transformOrigin, `50% ${clampedY}%`);
 			}
 			if (initialHeight === viewportHeight || height >= maxPopupHeight) reachedMaxHeightRef.current = true;
@@ -12487,7 +12487,7 @@ var style_module_default$29 = {
 /**
 * A component used to notify users that their action is being processed.
 */
-const Spinner$6 = (0, import_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
+const Spinner$5 = (0, import_element.forwardRef)(function UnforwardedSpinner({ className, color, style, ...props }, ref) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
 		className: clsx(style_module_default$29.spinner, className),
 		style: color === void 0 ? style : {
@@ -12654,18 +12654,18 @@ var global_css_defense_module_default$10 = {
 * See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 * for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
-const Button$8 = (0, import_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, import_i18n.__)("Loading"), children, ...props }, ref) {
+const Button$7 = (0, import_element.forwardRef)(function UnforwardedButton({ tone = "brand", variant = "solid", size = "default", className, focusableWhenDisabled = true, disabled, loading, loadingAnnouncement = (0, import_i18n.__)("Loading"), children, ...props }, ref) {
 	const mergedClassName = clsx(global_css_defense_module_default$10.button, resets_module_default$8["box-sizing"], focus_module_default$4["outset-ring--focus-except-active"], variant !== "unstyled" && style_module_default$28.button, style_module_default$28[`is-${tone}`], style_module_default$28[`is-${variant}`], style_module_default$28[`is-${size}`], loading && style_module_default$28["is-loading"], className);
 	(0, import_element.useEffect)(() => {
 		if (loading && loadingAnnouncement) speak(loadingAnnouncement);
 	}, [loading, loadingAnnouncement]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$9, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button$8, {
 		ref,
 		className: mergedClassName,
 		focusableWhenDisabled,
 		disabled: disabled ?? loading,
 		...props,
-		children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner$6, { className: style_module_default$28.spinner })]
+		children: [children, loading && variant !== "unstyled" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner$5, { className: style_module_default$28.spinner })]
 	});
 });
 
@@ -12685,7 +12685,7 @@ var import_primitives = require_primitives();
 * <Icon icon={ wordpress } />
 * ```
 */
-const Icon$2 = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
+const Icon$1 = (0, import_element.forwardRef)(function UnforwardedIcon({ icon, size = 24, style, ...restProps }, ref) {
 	const mergedStyle = icon.props.style || style ? {
 		...icon.props.style,
 		...style
@@ -12818,7 +12818,7 @@ var style_module_default$27 = {
 	"spinner": "_8379197ecc038a01__spinner"
 };
 const ButtonIcon = (0, import_element.forwardRef)(function UnforwardedButtonIcon({ className, icon, ...props }, ref) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, {
 		ref,
 		icon,
 		className: clsx(style_module_default$27.icon, className),
@@ -12835,36 +12835,12 @@ ButtonIcon.displayName = "Button.Icon";
 * See the [Usage Guidelines](https://wordpress.github.io/gutenberg/?path=/docs/design-system-components-button-usage-guidelines--docs)
 * for when to use `Button`, `IconButton`, `Link`, or `ButtonLink`.
 */
-const Button$7 = Object.assign(Button$8, { 
+const Button$6 = Object.assign(Button$7, { 
 /**
 * An icon component specifically designed to work well when rendered inside
 * a `Button` component.
 */
 Icon: ButtonIcon });
-
-// packages/icons/build-module/library/archive.mjs
-var archive_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
-	xmlns: "http://www.w3.org/2000/svg",
-	viewBox: "0 0 24 24",
-	style: { fill: "none" },
-	stroke: "currentColor",
-	strokeWidth: "1.5",
-	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M8.5 11H15.5M8.5 14.5H15.5M20.25 17.5V8.5C20.25 7.80964 19.6904 7.25 19 7.25H13.3463C12.8352 7.25 12.3755 6.93881 12.1857 6.46424L11.8143 5.53576C11.6245 5.06119 11.1648 4.75 10.6537 4.75H5C4.30964 4.75 3.75 5.30964 3.75 6V17.5C3.75 18.1904 4.30964 18.75 5 18.75H19C19.6904 18.75 20.25 18.1904 20.25 17.5Z" })
-});
-
-// packages/icons/build-module/library/audio.mjs
-var audio_default = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_primitives.SVG, {
-	xmlns: "http://www.w3.org/2000/svg",
-	viewBox: "0 0 24 24",
-	style: { fill: "none" },
-	stroke: "currentColor",
-	strokeWidth: "1.5",
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, {
-		d: "M13.25 16.5C13.25 18.0188 12.0188 19.25 10.5 19.25C8.98122 19.25 7.75 18.0188 7.75 16.5C7.75 14.9812 8.98122 13.75 10.5 13.75C12.0188 13.75 13.25 14.9812 13.25 16.5Z",
-		fill: "currentColor",
-		stroke: "none"
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M10.5 19.25C12.0188 19.25 13.25 18.0188 13.25 16.5C13.25 14.9812 12.0188 13.75 10.5 13.75C8.98122 13.75 7.75 14.9812 7.75 16.5C7.75 18.0188 8.98122 19.25 10.5 19.25ZM10.5 19.25C13.4867 19.25 13.75 16.5 13.75 15.1379V7.99998C13.75 4.9108 16.4 5.00254 18 5.00233" })]
-});
 
 // packages/icons/build-module/library/check.mjs
 var check_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
@@ -12906,16 +12882,6 @@ var chevron_right_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_p
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M10 6.5L15 12L10 17.5" })
 });
 
-// packages/icons/build-module/library/chevron-up.mjs
-var chevron_up_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
-	xmlns: "http://www.w3.org/2000/svg",
-	viewBox: "0 0 24 24",
-	style: { fill: "none" },
-	stroke: "currentColor",
-	strokeWidth: "1.5",
-	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M7 13L12 9L17 13" })
-});
-
 // packages/icons/build-module/library/close-small.mjs
 var close_small_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.SVG, {
 	xmlns: "http://www.w3.org/2000/svg",
@@ -12944,19 +12910,6 @@ var error_default = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitive
 	stroke: "currentColor",
 	strokeWidth: "1.5",
 	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M12 9L12 14M12 15.5V17M11.1284 5.04947L3.83827 18.0097C3.46331 18.6763 3.94502 19.5 4.70985 19.5H19.2902C20.055 19.5 20.5367 18.6763 20.1617 18.0097L12.8716 5.04947C12.4893 4.36982 11.5107 4.36982 11.1284 5.04947Z" })
-});
-
-// packages/icons/build-module/library/file.mjs
-var file_default = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_primitives.SVG, {
-	xmlns: "http://www.w3.org/2000/svg",
-	viewBox: "0 0 24 24",
-	style: { fill: "none" },
-	stroke: "currentColor",
-	strokeWidth: "1.5",
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M14 4.75V7.75C14 8.44036 14.5596 9 15.25 9H18.25" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, {
-		d: "M5.75 18L5.75 6C5.75 5.30964 6.30964 4.75 7 4.75H14L18.25 9V18C18.25 18.6904 17.6904 19.25 17 19.25H7C6.30964 19.25 5.75 18.6904 5.75 18Z",
-		strokeLinejoin: "round"
-	})]
 });
 
 // packages/icons/build-module/library/help.mjs
@@ -13044,20 +12997,6 @@ var unseen_default = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_primiti
 		d: "M12 9.5C10.3431 9.5 9 10.8431 9 12.5C9 13.6747 9.67519 14.6917 10.6587 15.1842L13.1523 9.72929C12.7975 9.58156 12.4083 9.5 12 9.5Z",
 		fill: "currentColor"
 	})]
-});
-
-// packages/icons/build-module/library/video.mjs
-var video_default = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_primitives.SVG, {
-	xmlns: "http://www.w3.org/2000/svg",
-	viewBox: "0 0 24 24",
-	style: { fill: "none" },
-	stroke: "currentColor",
-	strokeWidth: "1.5",
-	children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, {
-		d: "M10 15L15 12L10 9V15Z",
-		fill: "currentColor",
-		stroke: "none"
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_primitives.Path, { d: "M4.75 6C4.75 5.30964 5.30964 4.75 6 4.75H18C18.6904 4.75 19.25 5.30964 19.25 6V18C19.25 18.6904 18.6904 19.25 18 19.25H6C5.30964 19.25 4.75 18.6904 4.75 18V6Z" })]
 });
 
 // packages/ui/build-module/visually-hidden/visually-hidden.mjs
@@ -14952,7 +14891,7 @@ const Header$3 = (0, import_element.forwardRef)(function CollapsibleCardHeader({
 						className: clsx(style_module_default$18["header-trigger-positioner"]),
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: clsx(style_module_default$18["header-trigger-wrapper"], global_css_defense_module_default$7.div),
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, {
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, {
 								icon: chevron_down_default,
 								className: style_module_default$18["header-trigger"]
 							})
@@ -15510,7 +15449,7 @@ const IconButton = (0, import_element.forwardRef)(function UnforwardedIconButton
 		ref,
 		...targetProps,
 		disabled: disabled && !focusableWhenDisabled,
-		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$7, {
+		render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button$6, {
 			...restProps,
 			size,
 			"aria-label": label,
@@ -15518,7 +15457,7 @@ const IconButton = (0, import_element.forwardRef)(function UnforwardedIconButton
 			focusableWhenDisabled
 		}),
 		className: classes,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, {
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, {
 			icon,
 			size: 24,
 			className: style_module_default$14.icon
@@ -15681,7 +15620,7 @@ const Badge = (0, import_element.forwardRef)(function UnforwardedBadge({ intent 
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			className: style_module_default$13.label,
 			children
-		}), infotip && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, {
+		}), infotip && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, {
 			icon: help_default,
 			size: 16,
 			"aria-hidden": "true",
@@ -17097,7 +17036,7 @@ function buildMatchFn(args) {
 		if (!matchResult) return null;
 		const matchedString = matchResult[0];
 		const parsePatterns = width && args.parsePatterns[width] || args.parsePatterns[args.defaultParseWidth];
-		const key = Array.isArray(parsePatterns) ? findIndex$1(parsePatterns, (pattern) => pattern.test(matchedString)) : findKey(parsePatterns, (pattern) => pattern.test(matchedString));
+		const key = Array.isArray(parsePatterns) ? findIndex(parsePatterns, (pattern) => pattern.test(matchedString)) : findKey(parsePatterns, (pattern) => pattern.test(matchedString));
 		let value;
 		value = args.valueCallback ? args.valueCallback(key) : key;
 		value = options.valueCallback ? options.valueCallback(value) : value;
@@ -17111,7 +17050,7 @@ function buildMatchFn(args) {
 function findKey(object, predicate) {
 	for (const key in object) if (Object.prototype.hasOwnProperty.call(object, key) && predicate(object[key])) return key;
 }
-function findIndex$1(array, predicate) {
+function findIndex(array, predicate) {
 	for (let key = 0; key < array.length; key++) if (predicate(array[key])) return key;
 }
 
@@ -19859,7 +19798,7 @@ var SelectionState;
 * Enum representing different animation states for transitioning between
 * months.
 */
-var Animation$1;
+var Animation;
 (function(Animation) {
 	/** The entering weeks when they appear before the exiting month. */
 	Animation["weeks_before_enter"] = "weeks_before_enter";
@@ -19877,7 +19816,7 @@ var Animation$1;
 	Animation["caption_before_enter"] = "caption_before_enter";
 	/** The exiting caption when it disappears before the entering month. */
 	Animation["caption_before_exit"] = "caption_before_exit";
-})(Animation$1 || (Animation$1 = {}));
+})(Animation || (Animation = {}));
 
 // node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/useDayPicker.js
 /** @ignore */
@@ -20201,7 +20140,7 @@ function YearsDropdown(props) {
 }
 
 // node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/components/custom-components.js
-var custom_components_exports = /* @__PURE__ */ __exportAll$1({
+var custom_components_exports = /* @__PURE__ */ __exportAll({
 	CaptionLabel: () => CaptionLabel,
 	Chevron: () => Chevron,
 	Day: () => Day$1,
@@ -20497,7 +20436,7 @@ function getDefaultClassNames() {
 	for (const key in UI) classNames[UI[key]] = `rdp-${UI[key]}`;
 	for (const key in DayFlag) classNames[DayFlag[key]] = `rdp-${DayFlag[key]}`;
 	for (const key in SelectionState) classNames[SelectionState[key]] = `rdp-${SelectionState[key]}`;
-	for (const key in Animation$1) classNames[Animation$1[key]] = `rdp-${Animation$1[key]}`;
+	for (const key in Animation) classNames[Animation[key]] = `rdp-${Animation[key]}`;
 	return classNames;
 }
 
@@ -20614,7 +20553,7 @@ function formatYearDropdown(year, dateLib = defaultDateLib) {
 }
 
 // node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/formatters/index.js
-var formatters_exports = /* @__PURE__ */ __exportAll$1({
+var formatters_exports = /* @__PURE__ */ __exportAll({
 	formatCaption: () => formatCaption,
 	formatDay: () => formatDay,
 	formatMonthDropdown: () => formatMonthDropdown,
@@ -20815,7 +20754,7 @@ function labelYearDropdown(_options) {
 }
 
 // node_modules/.store/react-day-picker@10.0.2--81BxD8beh9P7I-af02W6Q/node_modules/react-day-picker/dist/esm/labels/index.js
-var labels_exports = /* @__PURE__ */ __exportAll$1({
+var labels_exports = /* @__PURE__ */ __exportAll({
 	labelDayButton: () => labelDayButton,
 	labelGrid: () => labelGrid,
 	labelGridcell: () => labelGridcell,
@@ -21145,8 +21084,8 @@ function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib
 		if (!enabled || !rootElRef.current || !(rootElRef.current instanceof HTMLElement) || months.length === 0 || previousMonths.length === 0 || months.length !== previousMonths.length) return;
 		const isSameMonth = dateLib.isSameMonth(months[0].date, previousMonths[0].date);
 		const isAfterPreviousMonth = dateLib.isAfter(months[0].date, previousMonths[0].date);
-		const captionAnimationClass = isAfterPreviousMonth ? classNames[Animation$1.caption_after_enter] : classNames[Animation$1.caption_before_enter];
-		const weeksAnimationClass = isAfterPreviousMonth ? classNames[Animation$1.weeks_after_enter] : classNames[Animation$1.weeks_before_enter];
+		const captionAnimationClass = isAfterPreviousMonth ? classNames[Animation.caption_after_enter] : classNames[Animation.caption_before_enter];
+		const weeksAnimationClass = isAfterPreviousMonth ? classNames[Animation.weeks_after_enter] : classNames[Animation.weeks_before_enter];
 		const previousRootElSnapshot = previousRootElSnapshotRef.current;
 		const rootElSnapshot = rootElRef.current.cloneNode(true);
 		if (rootElSnapshot instanceof HTMLElement) {
@@ -21198,11 +21137,11 @@ function useAnimation(rootElRef, enabled, { classNames, months, focused, dateLib
 				if (previousWeekdaysEl) previousWeekdaysEl.style.opacity = "0";
 				const previousCaptionEl = queryCaptionEl(previousMonthEl);
 				if (previousCaptionEl) {
-					previousCaptionEl.classList.add(isAfterPreviousMonth ? classNames[Animation$1.caption_before_exit] : classNames[Animation$1.caption_after_exit]);
+					previousCaptionEl.classList.add(isAfterPreviousMonth ? classNames[Animation.caption_before_exit] : classNames[Animation.caption_after_exit]);
 					previousCaptionEl.addEventListener("animationend", cleanUp);
 				}
 				const previousWeeksEl = queryWeeksEl(previousMonthEl);
-				if (previousWeeksEl) previousWeeksEl.classList.add(isAfterPreviousMonth ? classNames[Animation$1.weeks_before_exit] : classNames[Animation$1.weeks_after_exit]);
+				if (previousWeeksEl) previousWeeksEl.classList.add(isAfterPreviousMonth ? classNames[Animation.weeks_before_exit] : classNames[Animation.weeks_after_exit]);
 				currentMonthEl.insertBefore(previousMonthEl, currentMonthEl.firstChild);
 			});
 		}
@@ -26366,7 +26305,7 @@ function ValidityIndicator({ id, type, message }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 		id,
 		className: clsx(global_css_defense_module_default$3.p, style_module_default$8.indicator, style_module_default$8[`is-${type}`]),
-		children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner$6, { className: style_module_default$8["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, {
+		children: [type === "validating" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Spinner$5, { className: style_module_default$8["indicator-spinner"] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, {
 			className: style_module_default$8["indicator-icon"],
 			icon: ICON[type],
 			size: 16,
@@ -27801,7 +27740,7 @@ const Item$1 = (0, import_element.forwardRef)(function UnforwardedItem({ classNa
 		...restProps,
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			className: item_popup_module_default$3["item-icon"],
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, {
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, {
 				icon: check_default,
 				className: item_popup_module_default$3["item-indicator-icon"],
 				size: 20
@@ -28431,7 +28370,7 @@ const Trigger$1 = (0, import_element.forwardRef)(function UnforwardedTrigger({ c
 				placeholder,
 				className: select_trigger_module_default["trigger-value"],
 				children
-			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, {
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, {
 				className: select_trigger_module_default["trigger-caret"],
 				icon: chevron_down_default,
 				size: 18
@@ -31169,7 +31108,7 @@ function Email({ data, field, onChange, hideLabelFromVision, markWhenOptional, v
 		type: "email",
 		prefix: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout.Slot, {
 			padding: "minimal",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, { icon: envelope_default })
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, { icon: envelope_default })
 		})
 	});
 }
@@ -31186,7 +31125,7 @@ function Telephone({ data, field, onChange, hideLabelFromVision, markWhenOptiona
 		type: "tel",
 		prefix: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout.Slot, {
 			padding: "minimal",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, { icon: mobile_default })
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, { icon: mobile_default })
 		})
 	});
 }
@@ -31203,7 +31142,7 @@ function Url({ data, field, onChange, hideLabelFromVision, markWhenOptional, val
 		type: "url",
 		prefix: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout.Slot, {
 			padding: "minimal",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$2, { icon: link_default })
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon$1, { icon: link_default })
 		})
 	});
 }
@@ -34732,9 +34671,9 @@ function useViewConfig({ kind, name, fields }) {
 	]);
 }
 
-// \0wp-global:@wordpress/blob
-var require_blob = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.blob;
+// \0wp-global:@wordpress/media-utils
+var require_media_utils = /* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = window.wp.mediaUtils;
 }));
 
 // \0wp-global:@wordpress/html-entities
@@ -34742,3580 +34681,10 @@ var require_html_entities = /* @__PURE__ */ __commonJSMin(((exports, module) => 
 	module.exports = window.wp.htmlEntities;
 }));
 
-// \0wp-global:@wordpress/media-utils
-var require_media_utils = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.mediaUtils;
-}));
-
-// \0wp-global:@wordpress/notices
-var require_notices = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = window.wp.notices;
-}));
-
-// packages/fields/build-module/lock-unlock.mjs
-const { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/fields");
-
-// node_modules/.store/@react-spring/shared@10.1.2-3ptIGZgAKMkeKnB2V4vn3A/node_modules/@react-spring/shared/dist/chunk.mjs
-var __defProp = Object.defineProperty;
-var __exportAll = (all, no_symbols) => {
-	let target = {};
-	for (var name in all) __defProp(target, name, {
-		get: all[name],
-		enumerable: true
-	});
-	if (!no_symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
-	return target;
-};
-
-// node_modules/.store/@react-spring/rafz@10.1.2-fsMVLGe_NAWzZfSppopwsQ/node_modules/@react-spring/rafz/dist/react-spring_rafz.modern.mjs
-let updateQueue = makeQueue();
-/**
-* Schedule an update for next frame.
-* Your function can return `true` to repeat next frame.
-*/
-const raf = (fn) => schedule(fn, updateQueue);
-let writeQueue = makeQueue();
-raf.write = (fn) => schedule(fn, writeQueue);
-let onStartQueue = makeQueue();
-raf.onStart = (fn) => schedule(fn, onStartQueue);
-let onFrameQueue = makeQueue();
-raf.onFrame = (fn) => schedule(fn, onFrameQueue);
-let onFinishQueue = makeQueue();
-raf.onFinish = (fn) => schedule(fn, onFinishQueue);
-let timeouts = [];
-raf.setTimeout = (handler, ms) => {
-	const time = raf.now() + ms;
-	const cancel = () => {
-		const i = timeouts.findIndex((t) => t.cancel == cancel);
-		if (~i) timeouts.splice(i, 1);
-		pendingCount -= ~i ? 1 : 0;
-	};
-	const timeout = {
-		time,
-		handler,
-		cancel
-	};
-	timeouts.splice(findTimeout(time), 0, timeout);
-	pendingCount += 1;
-	start();
-	return timeout;
-};
-/** Find the index where the given time is not greater. */
-const findTimeout = (time) => ~(~timeouts.findIndex((t) => t.time > time) || ~timeouts.length);
-raf.cancel = (fn) => {
-	onStartQueue.delete(fn);
-	onFrameQueue.delete(fn);
-	onFinishQueue.delete(fn);
-	updateQueue.delete(fn);
-	writeQueue.delete(fn);
-};
-raf.sync = (fn) => {
-	sync = true;
-	raf.batchedUpdates(fn);
-	sync = false;
-};
-raf.throttle = (fn) => {
-	let lastArgs;
-	function queuedFn() {
-		try {
-			fn(...lastArgs);
-		} finally {
-			lastArgs = null;
-		}
-	}
-	function throttled(...args) {
-		lastArgs = args;
-		raf.onStart(queuedFn);
-	}
-	throttled.handler = fn;
-	throttled.cancel = () => {
-		onStartQueue.delete(queuedFn);
-		lastArgs = null;
-	};
-	return throttled;
-};
-let nativeRaf = typeof window != "undefined" ? window.requestAnimationFrame : () => {};
-raf.use = (impl) => nativeRaf = impl;
-raf.now = typeof performance != "undefined" ? () => performance.now() : Date.now;
-raf.batchedUpdates = (fn) => fn();
-raf.catch = console.error;
-raf.frameLoop = "always";
-raf.onDemand = () => {};
-raf.advance = () => {
-	if (raf.frameLoop !== "demand") console.warn("Cannot call the manual advancement of rafz whilst frameLoop is not set as demand");
-	else update$1();
-};
-/** The most recent timestamp. */
-let ts = -1;
-/** The number of pending tasks  */
-let pendingCount = 0;
-/** When true, scheduling is disabled. */
-let sync = false;
-function schedule(fn, queue) {
-	if (sync) {
-		queue.delete(fn);
-		fn(0);
-	} else {
-		queue.add(fn);
-		start();
-		if (raf.frameLoop === "demand") raf.onDemand();
-	}
-}
-function start() {
-	if (ts < 0) {
-		ts = 0;
-		if (raf.frameLoop !== "demand") nativeRaf(loop);
-	}
-}
-function stop() {
-	ts = -1;
-}
-function loop() {
-	if (~ts) {
-		nativeRaf(loop);
-		raf.batchedUpdates(update$1);
-	}
-}
-function update$1() {
-	const prevTs = ts;
-	ts = raf.now();
-	const count = findTimeout(ts);
-	if (count) {
-		eachSafely(timeouts.splice(0, count), (t) => t.handler());
-		pendingCount -= count;
-	}
-	if (!pendingCount) {
-		stop();
-		return;
-	}
-	onStartQueue.flush();
-	updateQueue.flush(prevTs ? Math.min(64, ts - prevTs) : 16.667);
-	onFrameQueue.flush();
-	writeQueue.flush();
-	onFinishQueue.flush();
-	if (raf.frameLoop === "demand" && pendingCount > 0) raf.onDemand();
-}
-function makeQueue() {
-	let next = /* @__PURE__ */ new Set();
-	let current = next;
-	return {
-		add(fn) {
-			pendingCount += current == next && !next.has(fn) ? 1 : 0;
-			next.add(fn);
-		},
-		delete(fn) {
-			pendingCount -= current == next && next.has(fn) ? 1 : 0;
-			return next.delete(fn);
-		},
-		flush(arg) {
-			if (current.size) {
-				next = /* @__PURE__ */ new Set();
-				pendingCount -= current.size;
-				eachSafely(current, (fn) => fn(arg) && next.add(fn));
-				pendingCount += next.size;
-				current = next;
-			}
-		}
-	};
-}
-function eachSafely(values, each) {
-	values.forEach((value) => {
-		try {
-			each(value);
-		} catch (e) {
-			raf.catch(e);
-		}
-	});
-}
-
-// node_modules/.store/@react-spring/shared@10.1.2-3ptIGZgAKMkeKnB2V4vn3A/node_modules/@react-spring/shared/dist/react-spring_shared.modern.mjs
-function noop() {}
-const defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {
-	value,
-	writable: true,
-	configurable: true
-});
-const is = {
-	arr: Array.isArray,
-	obj: (a) => !!a && a.constructor.name === "Object",
-	fun: ((a) => typeof a === "function"),
-	str: (a) => typeof a === "string",
-	num: (a) => typeof a === "number",
-	und: (a) => a === void 0
-};
-/** Compare animatable values */
-function isEqual(a, b) {
-	if (is.arr(a)) {
-		if (!is.arr(b) || a.length !== b.length) return false;
-		for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
-		return true;
-	}
-	return a === b;
-}
-/** Minifiable `.forEach` call */
-const each = (obj, fn) => obj.forEach(fn);
-/** Iterate the properties of an object */
-function eachProp(obj, fn, ctx) {
-	if (is.arr(obj)) {
-		for (let i = 0; i < obj.length; i++) fn.call(ctx, obj[i], `${i}`);
-		return;
-	}
-	for (const key in obj) if (obj.hasOwnProperty(key)) fn.call(ctx, obj[key], key);
-}
-const toArray = (a) => is.und(a) ? [] : is.arr(a) ? a : [a];
-function flush(queue, iterator) {
-	if (queue.size) {
-		const items = Array.from(queue);
-		queue.clear();
-		each(items, iterator);
-	}
-}
-/** Call every function in the queue with the same arguments. */
-const flushCalls = (queue, ...args) => flush(queue, (fn) => fn(...args));
-const isSSR = () => typeof window === "undefined" || !window.navigator || /ServerSideRendering|^Deno\//.test(window.navigator.userAgent);
-var globals_exports = /* @__PURE__ */ __exportAll({
-	assign: () => assign,
-	colors: () => colors$1,
-	createStringInterpolator: () => createStringInterpolator$1,
-	skipAnimation: () => skipAnimation,
-	to: () => to,
-	willAdvance: () => willAdvance
-});
-let createStringInterpolator$1;
-let to;
-let colors$1 = null;
-let skipAnimation = false;
-let willAdvance = noop;
-const assign = (globals) => {
-	if (globals.to) to = globals.to;
-	if (globals.now) raf.now = globals.now;
-	if (globals.colors !== void 0) colors$1 = globals.colors;
-	if (globals.skipAnimation != null) skipAnimation = globals.skipAnimation;
-	if (globals.createStringInterpolator) createStringInterpolator$1 = globals.createStringInterpolator;
-	if (globals.requestAnimationFrame) raf.use(globals.requestAnimationFrame);
-	if (globals.batchedUpdates) raf.batchedUpdates = globals.batchedUpdates;
-	if (globals.willAdvance) willAdvance = globals.willAdvance;
-	if (globals.frameLoop) raf.frameLoop = globals.frameLoop;
-	if (globals.onDemand) raf.onDemand = globals.onDemand;
-};
-const startQueue = /* @__PURE__ */ new Set();
-let currentFrame = [];
-let prevFrame = [];
-let priority = 0;
-/**
-* The frameloop executes its animations in order of lowest priority first.
-* Animations are retained until idle.
-*/
-const frameLoop = {
-	get idle() {
-		return !startQueue.size && !currentFrame.length;
-	},
-	/** Advance the given animation on every frame until idle. */
-	start(animation) {
-		if (priority > animation.priority) {
-			startQueue.add(animation);
-			raf.onStart(flushStartQueue);
-		} else {
-			startSafely(animation);
-			raf(advance);
-		}
-	},
-	/** Advance all animations by the given time. */
-	advance,
-	/** Call this when an animation's priority changes. */
-	sort(animation) {
-		if (priority) raf.onFrame(() => frameLoop.sort(animation));
-		else {
-			const prevIndex = currentFrame.indexOf(animation);
-			if (~prevIndex) {
-				currentFrame.splice(prevIndex, 1);
-				startUnsafely(animation);
-			}
-		}
-	},
-	/**
-	* Clear all animations. For testing purposes.
-	*
-	* ☠️ Never call this from within the frameloop.
-	*/
-	clear() {
-		currentFrame = [];
-		startQueue.clear();
-	}
-};
-function flushStartQueue() {
-	startQueue.forEach(startSafely);
-	startQueue.clear();
-	raf(advance);
-}
-function startSafely(animation) {
-	if (!currentFrame.includes(animation)) startUnsafely(animation);
-}
-function startUnsafely(animation) {
-	currentFrame.splice(findIndex(currentFrame, (other) => other.priority > animation.priority), 0, animation);
-}
-function advance(dt) {
-	const nextFrame = prevFrame;
-	for (let i = 0; i < currentFrame.length; i++) {
-		const animation = currentFrame[i];
-		priority = animation.priority;
-		if (!animation.idle) {
-			willAdvance(animation);
-			animation.advance(dt);
-			if (!animation.idle) nextFrame.push(animation);
-		}
-	}
-	priority = 0;
-	prevFrame = currentFrame;
-	prevFrame.length = 0;
-	currentFrame = nextFrame;
-	return currentFrame.length > 0;
-}
-/** Like `Array.prototype.findIndex` but returns `arr.length` instead of `-1` */
-function findIndex(arr, test) {
-	const index = arr.findIndex(test);
-	return index < 0 ? arr.length : index;
-}
-const clamp = (min, max, v) => Math.min(Math.max(v, min), max);
-const colors = {
-	transparent: 0,
-	aliceblue: 4042850303,
-	antiquewhite: 4209760255,
-	aqua: 16777215,
-	aquamarine: 2147472639,
-	azure: 4043309055,
-	beige: 4126530815,
-	bisque: 4293182719,
-	black: 255,
-	blanchedalmond: 4293643775,
-	blue: 65535,
-	blueviolet: 2318131967,
-	brown: 2771004159,
-	burlywood: 3736635391,
-	burntsienna: 3934150143,
-	cadetblue: 1604231423,
-	chartreuse: 2147418367,
-	chocolate: 3530104575,
-	coral: 4286533887,
-	cornflowerblue: 1687547391,
-	cornsilk: 4294499583,
-	crimson: 3692313855,
-	cyan: 16777215,
-	darkblue: 35839,
-	darkcyan: 9145343,
-	darkgoldenrod: 3095792639,
-	darkgray: 2846468607,
-	darkgreen: 6553855,
-	darkgrey: 2846468607,
-	darkkhaki: 3182914559,
-	darkmagenta: 2332068863,
-	darkolivegreen: 1433087999,
-	darkorange: 4287365375,
-	darkorchid: 2570243327,
-	darkred: 2332033279,
-	darksalmon: 3918953215,
-	darkseagreen: 2411499519,
-	darkslateblue: 1211993087,
-	darkslategray: 793726975,
-	darkslategrey: 793726975,
-	darkturquoise: 13554175,
-	darkviolet: 2483082239,
-	deeppink: 4279538687,
-	deepskyblue: 12582911,
-	dimgray: 1768516095,
-	dimgrey: 1768516095,
-	dodgerblue: 512819199,
-	firebrick: 2988581631,
-	floralwhite: 4294635775,
-	forestgreen: 579543807,
-	fuchsia: 4278255615,
-	gainsboro: 3705462015,
-	ghostwhite: 4177068031,
-	gold: 4292280575,
-	goldenrod: 3668254975,
-	gray: 2155905279,
-	green: 8388863,
-	greenyellow: 2919182335,
-	grey: 2155905279,
-	honeydew: 4043305215,
-	hotpink: 4285117695,
-	indianred: 3445382399,
-	indigo: 1258324735,
-	ivory: 4294963455,
-	khaki: 4041641215,
-	lavender: 3873897215,
-	lavenderblush: 4293981695,
-	lawngreen: 2096890111,
-	lemonchiffon: 4294626815,
-	lightblue: 2916673279,
-	lightcoral: 4034953471,
-	lightcyan: 3774873599,
-	lightgoldenrodyellow: 4210742015,
-	lightgray: 3553874943,
-	lightgreen: 2431553791,
-	lightgrey: 3553874943,
-	lightpink: 4290167295,
-	lightsalmon: 4288707327,
-	lightseagreen: 548580095,
-	lightskyblue: 2278488831,
-	lightslategray: 2005441023,
-	lightslategrey: 2005441023,
-	lightsteelblue: 2965692159,
-	lightyellow: 4294959359,
-	lime: 16711935,
-	limegreen: 852308735,
-	linen: 4210091775,
-	magenta: 4278255615,
-	maroon: 2147483903,
-	mediumaquamarine: 1724754687,
-	mediumblue: 52735,
-	mediumorchid: 3126187007,
-	mediumpurple: 2473647103,
-	mediumseagreen: 1018393087,
-	mediumslateblue: 2070474495,
-	mediumspringgreen: 16423679,
-	mediumturquoise: 1221709055,
-	mediumvioletred: 3340076543,
-	midnightblue: 421097727,
-	mintcream: 4127193855,
-	mistyrose: 4293190143,
-	moccasin: 4293178879,
-	navajowhite: 4292783615,
-	navy: 33023,
-	oldlace: 4260751103,
-	olive: 2155872511,
-	olivedrab: 1804477439,
-	orange: 4289003775,
-	orangered: 4282712319,
-	orchid: 3664828159,
-	palegoldenrod: 4008225535,
-	palegreen: 2566625535,
-	paleturquoise: 2951671551,
-	palevioletred: 3681588223,
-	papayawhip: 4293907967,
-	peachpuff: 4292524543,
-	peru: 3448061951,
-	pink: 4290825215,
-	plum: 3718307327,
-	powderblue: 2967529215,
-	purple: 2147516671,
-	rebeccapurple: 1714657791,
-	red: 4278190335,
-	rosybrown: 3163525119,
-	royalblue: 1097458175,
-	saddlebrown: 2336560127,
-	salmon: 4202722047,
-	sandybrown: 4104413439,
-	seagreen: 780883967,
-	seashell: 4294307583,
-	sienna: 2689740287,
-	silver: 3233857791,
-	skyblue: 2278484991,
-	slateblue: 1784335871,
-	slategray: 1887473919,
-	slategrey: 1887473919,
-	snow: 4294638335,
-	springgreen: 16744447,
-	steelblue: 1182971135,
-	tan: 3535047935,
-	teal: 8421631,
-	thistle: 3636451583,
-	tomato: 4284696575,
-	turquoise: 1088475391,
-	violet: 4001558271,
-	wheat: 4125012991,
-	white: 4294967295,
-	whitesmoke: 4126537215,
-	yellow: 4294902015,
-	yellowgreen: 2597139199
-};
-const NUMBER = "[-+]?\\d*\\.?\\d+";
-const PERCENTAGE = "[-+]?\\d*\\.?\\d+%";
-function call(...parts) {
-	return "\\(\\s*(" + parts.join(")\\s*,\\s*(") + ")\\s*\\)";
-}
-const rgb = new RegExp("rgb" + call(NUMBER, NUMBER, NUMBER));
-const rgba = new RegExp("rgba" + call(NUMBER, NUMBER, NUMBER, NUMBER));
-const hsl = new RegExp("hsl" + call(NUMBER, PERCENTAGE, PERCENTAGE));
-const hsla = new RegExp("hsla" + call(NUMBER, PERCENTAGE, PERCENTAGE, NUMBER));
-const hex3 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
-const hex4 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
-const hex6 = /^#([0-9a-fA-F]{6})$/;
-const hex8 = /^#([0-9a-fA-F]{8})$/;
-function normalizeColor(color) {
-	let match;
-	if (typeof color === "number") return color >>> 0 === color && color >= 0 && color <= 4294967295 ? color : null;
-	if (match = hex6.exec(color)) return parseInt(match[1] + "ff", 16) >>> 0;
-	if (colors$1 && colors$1[color] !== void 0) return colors$1[color];
-	if (match = rgb.exec(color)) return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | 255) >>> 0;
-	if (match = rgba.exec(color)) return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | parse1(match[4])) >>> 0;
-	if (match = hex3.exec(color)) return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + "ff", 16) >>> 0;
-	if (match = hex8.exec(color)) return parseInt(match[1], 16) >>> 0;
-	if (match = hex4.exec(color)) return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + match[4] + match[4], 16) >>> 0;
-	if (match = hsl.exec(color)) return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | 255) >>> 0;
-	if (match = hsla.exec(color)) return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | parse1(match[4])) >>> 0;
-	return null;
-}
-function hue2rgb(p, q, t) {
-	if (t < 0) t += 1;
-	if (t > 1) t -= 1;
-	if (t < 1 / 6) return p + (q - p) * 6 * t;
-	if (t < 1 / 2) return q;
-	if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-	return p;
-}
-function hslToRgb(h, s, l) {
-	const q = l < .5 ? l * (1 + s) : l + s - l * s;
-	const p = 2 * l - q;
-	const r = hue2rgb(p, q, h + 1 / 3);
-	const g = hue2rgb(p, q, h);
-	const b = hue2rgb(p, q, h - 1 / 3);
-	return Math.round(r * 255) << 24 | Math.round(g * 255) << 16 | Math.round(b * 255) << 8;
-}
-function parse255(str) {
-	const int = parseInt(str, 10);
-	if (int < 0) return 0;
-	if (int > 255) return 255;
-	return int;
-}
-function parse360(str) {
-	return (parseFloat(str) % 360 + 360) % 360 / 360;
-}
-function parse1(str) {
-	const num = parseFloat(str);
-	if (num < 0) return 0;
-	if (num > 1) return 255;
-	return Math.round(num * 255);
-}
-function parsePercentage(str) {
-	const int = parseFloat(str);
-	if (int < 0) return 0;
-	if (int > 100) return 1;
-	return int / 100;
-}
-function colorToRgba(input) {
-	let int32Color = normalizeColor(input);
-	if (int32Color === null) return input;
-	int32Color = int32Color || 0;
-	return `rgba(${(int32Color & 4278190080) >>> 24}, ${(int32Color & 16711680) >>> 16}, ${(int32Color & 65280) >>> 8}, ${(int32Color & 255) / 255})`;
-}
-const createInterpolator = (range, output, extrapolate) => {
-	if (is.fun(range)) return range;
-	if (is.arr(range)) return createInterpolator({
-		range,
-		output,
-		extrapolate
-	});
-	if (is.str(range.output[0])) return createStringInterpolator$1(range);
-	const config = range;
-	const outputRange = config.output;
-	const inputRange = config.range || [0, 1];
-	const extrapolateLeft = config.extrapolateLeft || config.extrapolate || "extend";
-	const extrapolateRight = config.extrapolateRight || config.extrapolate || "extend";
-	const easing = config.easing || ((t) => t);
-	return (input) => {
-		const range = findRange(input, inputRange);
-		return interpolate(input, inputRange[range], inputRange[range + 1], outputRange[range], outputRange[range + 1], easing, extrapolateLeft, extrapolateRight, config.map);
-	};
-};
-function interpolate(input, inputMin, inputMax, outputMin, outputMax, easing, extrapolateLeft, extrapolateRight, map) {
-	let result = map ? map(input) : input;
-	if (result < inputMin) {
-		if (extrapolateLeft === "identity") return result;
-		else if (extrapolateLeft === "clamp") result = inputMin;
-	}
-	if (result > inputMax) {
-		if (extrapolateRight === "identity") return result;
-		else if (extrapolateRight === "clamp") result = inputMax;
-	}
-	if (outputMin === outputMax) return outputMin;
-	if (inputMin === inputMax) return input <= inputMin ? outputMin : outputMax;
-	if (inputMin === -Infinity) result = -result;
-	else if (inputMax === Infinity) result = result - inputMin;
-	else result = (result - inputMin) / (inputMax - inputMin);
-	result = easing(result);
-	if (outputMin === -Infinity) result = -result;
-	else if (outputMax === Infinity) result = result + outputMin;
-	else result = result * (outputMax - outputMin) + outputMin;
-	return result;
-}
-function findRange(input, inputRange) {
-	for (var i = 1; i < inputRange.length - 1; ++i) if (inputRange[i] >= input) break;
-	return i - 1;
-}
-const steps = (steps, direction = "end") => (progress) => {
-	progress = direction === "end" ? Math.min(progress, .999) : Math.max(progress, .001);
-	const expanded = progress * steps;
-	return clamp(0, 1, (direction === "end" ? Math.floor(expanded) : Math.ceil(expanded)) / steps);
-};
-const c1 = 1.70158;
-const c2 = c1 * 1.525;
-const c3 = 2.70158;
-const c4 = 2 * Math.PI / 3;
-const c5 = 2 * Math.PI / 4.5;
-const bounceOut = (x) => {
-	const n1 = 7.5625;
-	const d1 = 2.75;
-	if (x < 1 / d1) return n1 * x * x;
-	else if (x < 2 / d1) return n1 * (x -= 1.5 / d1) * x + .75;
-	else if (x < 2.5 / d1) return n1 * (x -= 2.25 / d1) * x + .9375;
-	else return n1 * (x -= 2.625 / d1) * x + .984375;
-};
-const easings = {
-	linear: (x) => x,
-	easeInQuad: (x) => x * x,
-	easeOutQuad: (x) => 1 - (1 - x) * (1 - x),
-	easeInOutQuad: (x) => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2,
-	easeInCubic: (x) => x * x * x,
-	easeOutCubic: (x) => 1 - Math.pow(1 - x, 3),
-	easeInOutCubic: (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
-	easeInQuart: (x) => x * x * x * x,
-	easeOutQuart: (x) => 1 - Math.pow(1 - x, 4),
-	easeInOutQuart: (x) => x < .5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2,
-	easeInQuint: (x) => x * x * x * x * x,
-	easeOutQuint: (x) => 1 - Math.pow(1 - x, 5),
-	easeInOutQuint: (x) => x < .5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2,
-	easeInSine: (x) => 1 - Math.cos(x * Math.PI / 2),
-	easeOutSine: (x) => Math.sin(x * Math.PI / 2),
-	easeInOutSine: (x) => -(Math.cos(Math.PI * x) - 1) / 2,
-	easeInExpo: (x) => x === 0 ? 0 : Math.pow(2, 10 * x - 10),
-	easeOutExpo: (x) => x === 1 ? 1 : 1 - Math.pow(2, -10 * x),
-	easeInOutExpo: (x) => x === 0 ? 0 : x === 1 ? 1 : x < .5 ? Math.pow(2, 20 * x - 10) / 2 : (2 - Math.pow(2, -20 * x + 10)) / 2,
-	easeInCirc: (x) => 1 - Math.sqrt(1 - Math.pow(x, 2)),
-	easeOutCirc: (x) => Math.sqrt(1 - Math.pow(x - 1, 2)),
-	easeInOutCirc: (x) => x < .5 ? (1 - Math.sqrt(1 - Math.pow(2 * x, 2))) / 2 : (Math.sqrt(1 - Math.pow(-2 * x + 2, 2)) + 1) / 2,
-	easeInBack: (x) => c3 * x * x * x - c1 * x * x,
-	easeOutBack: (x) => 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2),
-	easeInOutBack: (x) => x < .5 ? Math.pow(2 * x, 2) * (7.189819 * x - c2) / 2 : (Math.pow(2 * x - 2, 2) * (3.5949095 * (x * 2 - 2) + c2) + 2) / 2,
-	easeInElastic: (x) => x === 0 ? 0 : x === 1 ? 1 : -Math.pow(2, 10 * x - 10) * Math.sin((x * 10 - 10.75) * c4),
-	easeOutElastic: (x) => x === 0 ? 0 : x === 1 ? 1 : Math.pow(2, -10 * x) * Math.sin((x * 10 - .75) * c4) + 1,
-	easeInOutElastic: (x) => x === 0 ? 0 : x === 1 ? 1 : x < .5 ? -(Math.pow(2, 20 * x - 10) * Math.sin((20 * x - 11.125) * c5)) / 2 : Math.pow(2, -20 * x + 10) * Math.sin((20 * x - 11.125) * c5) / 2 + 1,
-	easeInBounce: (x) => 1 - bounceOut(1 - x),
-	easeOutBounce: bounceOut,
-	easeInOutBounce: (x) => x < .5 ? (1 - bounceOut(1 - 2 * x)) / 2 : (1 + bounceOut(2 * x - 1)) / 2,
-	steps
-};
-/**
-* MIT License
-* Copyright (c) Alec Larson
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-* SOFTWARE.
-*/
-const $get = Symbol.for("FluidValue.get");
-const $observers = Symbol.for("FluidValue.observers");
-/** Returns true if `arg` can be observed. */
-const hasFluidValue = (arg) => Boolean(arg && arg[$get]);
-/**
-* Get the current value.
-* If `arg` is not observable, `arg` is returned.
-*/
-const getFluidValue = (arg) => arg && arg[$get] ? arg[$get]() : arg;
-/** Get the current observer set. Never mutate it directly! */
-const getFluidObservers = (target) => target[$observers] || null;
-function callFluidObserver(observer, event) {
-	if (observer.eventObserved) observer.eventObserved(event);
-	else observer(event);
-}
-function callFluidObservers(target, event) {
-	const observers = target[$observers];
-	if (observers) observers.forEach((observer) => {
-		callFluidObserver(observer, event);
-	});
-}
-/**
-* Extend this class for automatic TypeScript support when passing this
-* value to `fluids`-compatible libraries.
-*/
-var FluidValue = class {
-	constructor(get) {
-		if (!get && !(get = this.get)) throw Error("Unknown getter");
-		setFluidGetter(this, get);
-	}
-};
-/** Define the getter called by `getFluidValue`. */
-const setFluidGetter = (target, get) => setHidden(target, $get, get);
-function addFluidObserver(target, observer) {
-	if (target[$get]) {
-		let observers = target[$observers];
-		if (!observers) setHidden(target, $observers, observers = /* @__PURE__ */ new Set());
-		if (!observers.has(observer)) {
-			observers.add(observer);
-			if (target.observerAdded) target.observerAdded(observers.size, observer);
-		}
-	}
-	return observer;
-}
-function removeFluidObserver(target, observer) {
-	const observers = target[$observers];
-	if (observers && observers.has(observer)) {
-		const count = observers.size - 1;
-		if (count) observers.delete(observer);
-		else target[$observers] = null;
-		if (target.observerRemoved) target.observerRemoved(count, observer);
-	}
-}
-const setHidden = (target, key, value) => Object.defineProperty(target, key, {
-	value,
-	writable: true,
-	configurable: true
-});
-const numberRegex = /[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/g;
-const colorRegex = /(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))/gi;
-const unitRegex = new RegExp(`(${numberRegex.source})(%|[a-z]+)`, "i");
-const rgbaRegex = /rgba\(([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+)\)/gi;
-/**
-* Parse special CSS variable format into a CSS token and a fallback.
-*
-* ```
-* `var(--foo, #fff)` => [`--foo`, '#fff']
-* ```
-*
-*/
-const cssVariableRegex = /var\((--[a-zA-Z0-9-_]+),? ?([a-zA-Z0-9 ()%#.,-]+)?\)/;
-/**
-* takes a CSS variable and attempts
-* to turn it into a RGBA value
-*
-* ```
-* 'var(--white)' => 'rgba(255,255,255,1)'
-* ```
-*
-* @param input string
-* @returns string
-*/
-const variableToRgba = (input) => {
-	const [token, fallback] = parseCSSVariable(input);
-	if (!token || isSSR()) return input;
-	const value = window.getComputedStyle(document.documentElement).getPropertyValue(token);
-	if (value)
- /**
-	* We have a valid variable returned
-	* trim and return
-	*/
-	return value.trim();
-	else if (fallback && fallback.startsWith("--")) {
-		/**
-		* fallback is something like --my-variable
-		* so we try get property value
-		*/
-		const value = window.getComputedStyle(document.documentElement).getPropertyValue(fallback);
-		/**
-		* if it exists, return else nothing was found so just return the input
-		*/
-		if (value) return value;
-		else return input;
-	} else if (fallback && cssVariableRegex.test(fallback))
- /**
-	* We have a fallback and it's another CSS variable
-	*/
-	return variableToRgba(fallback);
-	else if (fallback)
- /**
-	* We have a fallback and it's not a CSS variable
-	*/
-	return fallback;
-	/**
-	* Nothing worked so just return the input
-	* like our other FluidValue replace functions do
-	*/
-	return input;
-};
-const parseCSSVariable = (current) => {
-	const match = cssVariableRegex.exec(current);
-	if (!match) return [,];
-	const [, token, fallback] = match;
-	return [token, fallback];
-};
-let namedColorRegex;
-const rgbaRound = (_, p1, p2, p3, p4) => `rgba(${Math.round(p1)}, ${Math.round(p2)}, ${Math.round(p3)}, ${p4})`;
-const getNumbers = (value) => value.match(numberRegex) ?? [];
-/**
-* Supports string shapes by extracting numbers so new values can be computed,
-* and recombines those values into new strings of the same shape.  Supports
-* things like:
-*
-*     "rgba(123, 42, 99, 0.36)"           // colors
-*     "-45deg"                            // values with units
-*     "0 2px 2px 0px rgba(0, 0, 0, 0.12)" // CSS box-shadows
-*     "rotate(0deg) translate(2px, 3px)"  // CSS transforms
-*/
-const createStringInterpolator = (config) => {
-	if (!namedColorRegex) namedColorRegex = colors$1 ? new RegExp(`(${Object.keys(colors$1).join("|")})(?!\\w)`, "g") : /^\b$/;
-	const output = config.output.map((value) => {
-		return getFluidValue(value).replace(cssVariableRegex, variableToRgba).replace(colorRegex, colorToRgba).replace(namedColorRegex, colorToRgba);
-	});
-	const keyframes = output.map((value) => getNumbers(value).map(Number));
-	const interpolators = keyframes[0].map((_, i) => keyframes.map((values) => {
-		if (!(i in values)) throw Error("The arity of each \"output\" value must be equal");
-		return values[i];
-	})).map((output) => createInterpolator({
-		...config,
-		output
-	}));
-	const inputRange = config.range || [0, 1];
-	const allTokens = output.map((value) => getNumbers(value));
-	const decimalCounts = allTokens[0].map((_, pos) => {
-		const counts = allTokens.map((tokens) => {
-			const token = tokens[pos];
-			const dot = token.indexOf(".");
-			return dot === -1 ? 0 : token.length - dot - 1;
-		});
-		return counts.every((c) => c === counts[0]) && counts[0] > 0 ? counts[0] : null;
-	});
-	return (input) => {
-		const keyIdx = inputRange.indexOf(input);
-		if (keyIdx !== -1) return output[keyIdx];
-		const missingUnit = !unitRegex.test(output[0]) && output.find((value) => unitRegex.test(value))?.replace(numberRegex, "");
-		let i = 0;
-		return output[0].replace(numberRegex, () => {
-			const pos = i++;
-			const value = interpolators[pos](input);
-			const decimals = decimalCounts[pos];
-			return `${decimals != null ? value.toFixed(decimals) : value}${missingUnit || ""}`;
-		}).replace(rgbaRegex, rgbaRound);
-	};
-};
-const prefix = "react-spring: ";
-const once = (fn) => {
-	const func = fn;
-	let called = false;
-	if (typeof func != "function") throw new TypeError(`${prefix}once requires a function parameter`);
-	return (...args) => {
-		if (!called) {
-			func(...args);
-			called = true;
-		}
-	};
-};
-const warnInterpolate = once(console.warn);
-function deprecateInterpolate() {
-	warnInterpolate(`${prefix}The "interpolate" function is deprecated in v9 (use "to" instead)`);
-}
-const warnDirectCall = once(console.warn);
-function isAnimatedString(value) {
-	return is.str(value) && (value[0] == "#" || /\d/.test(value) || !isSSR() && cssVariableRegex.test(value) || value in (colors$1 || {}));
-}
-/**
-* Use this to read layout from the DOM and synchronously
-* re-render if the isSSR returns true. Updates scheduled
-* inside `useIsomorphicLayoutEffect` will be flushed
-* synchronously in the browser, before the browser has
-* a chance to paint.
-*/
-const useIsomorphicLayoutEffect = isSSR() ? import__wp_global_react.useEffect : import__wp_global_react.useLayoutEffect;
-const useIsMounted = () => {
-	const isMounted = (0, import__wp_global_react.useRef)(false);
-	useIsomorphicLayoutEffect(() => {
-		isMounted.current = true;
-		return () => {
-			isMounted.current = false;
-		};
-	}, []);
-	return isMounted;
-};
-/** Return a function that re-renders this component, if still mounted */
-function useForceUpdate() {
-	const update = (0, import__wp_global_react.useState)()[1];
-	const isMounted = useIsMounted();
-	return () => {
-		if (isMounted.current) update(Math.random());
-	};
-}
-const useOnce = (effect) => (0, import__wp_global_react.useEffect)(effect, emptyDeps);
-const emptyDeps = [];
-
-// node_modules/.store/@react-spring/animated@10.1.2-BQI6vBG8aa46gBWhPLrImQ/node_modules/@react-spring/animated/dist/react-spring_animated.modern.mjs
-const $node = Symbol.for("Animated:node");
-const isAnimated = (value) => !!value && value[$node] === value;
-/** Get the owner's `Animated` node. */
-const getAnimated = (owner) => owner && owner[$node];
-/** Set the owner's `Animated` node. */
-const setAnimated = (owner, node) => defineHidden(owner, $node, node);
-/** Get every `AnimatedValue` in the owner's `Animated` node. */
-const getPayload = (owner) => owner && owner[$node] && owner[$node].getPayload();
-var Animated = class {
-	constructor() {
-		setAnimated(this, this);
-	}
-	/** Get every `AnimatedValue` used by this node. */
-	getPayload() {
-		return this.payload || [];
-	}
-};
-/** An animated number or a native attribute value */
-var AnimatedValue = class AnimatedValue extends Animated {
-	constructor(_value) {
-		super();
-		this._value = _value;
-		this.done = true;
-		this.durationProgress = 0;
-		if (is.num(this._value)) this.lastPosition = this._value;
-	}
-	/** @internal */
-	static create(value) {
-		return new AnimatedValue(value);
-	}
-	getPayload() {
-		return [this];
-	}
-	getValue() {
-		return this._value;
-	}
-	setValue(value, step) {
-		if (is.num(value)) {
-			this.lastPosition = value;
-			if (step) {
-				value = Math.round(value / step) * step;
-				if (this.done) this.lastPosition = value;
-			}
-		}
-		if (this._value === value) return false;
-		this._value = value;
-		return true;
-	}
-	reset() {
-		const { done } = this;
-		this.done = false;
-		if (is.num(this._value)) {
-			this.elapsedTime = 0;
-			this.durationProgress = 0;
-			this.lastPosition = this._value;
-			if (done) this.lastVelocity = null;
-			this.v0 = null;
-		}
-	}
-};
-var AnimatedString = class AnimatedString extends AnimatedValue {
-	constructor(value) {
-		super(0);
-		this._string = null;
-		this._toString = createInterpolator({ output: [value, value] });
-	}
-	/** @internal */
-	static create(value) {
-		return new AnimatedString(value);
-	}
-	getValue() {
-		const value = this._string;
-		return value == null ? this._string = this._toString(this._value) : value;
-	}
-	setValue(value) {
-		if (is.str(value)) {
-			if (value == this._string) return false;
-			this._string = value;
-			this._value = 1;
-		} else if (super.setValue(value)) this._string = null;
-		else return false;
-		return true;
-	}
-	reset(goal) {
-		if (goal) this._toString = createInterpolator({ output: [this.getValue(), goal] });
-		this._value = 0;
-		super.reset();
-	}
-};
-const TreeContext = { dependencies: null };
-/** An object containing `Animated` nodes */
-var AnimatedObject = class extends Animated {
-	constructor(source) {
-		super();
-		this.source = source;
-		this.setValue(source);
-	}
-	getValue(animated) {
-		const values = {};
-		eachProp(this.source, (source, key) => {
-			if (isAnimated(source)) values[key] = source.getValue(animated);
-			else if (hasFluidValue(source)) values[key] = getFluidValue(source);
-			else if (!animated) values[key] = source;
-		});
-		return values;
-	}
-	/** Replace the raw object data */
-	setValue(source) {
-		this.source = source;
-		this.payload = this._makePayload(source);
-	}
-	reset() {
-		if (this.payload) each(this.payload, (node) => node.reset());
-	}
-	/** Create a payload set. */
-	_makePayload(source) {
-		if (source) {
-			const payload = /* @__PURE__ */ new Set();
-			eachProp(source, this._addToPayload, payload);
-			return Array.from(payload);
-		}
-	}
-	/** Add to a payload set. */
-	_addToPayload(source) {
-		if (TreeContext.dependencies && hasFluidValue(source)) TreeContext.dependencies.add(source);
-		const payload = getPayload(source);
-		if (payload) each(payload, (node) => this.add(node));
-	}
-};
-/** An array of animated nodes */
-var AnimatedArray = class AnimatedArray extends AnimatedObject {
-	constructor(source) {
-		super(source);
-	}
-	/** @internal */
-	static create(source) {
-		return new AnimatedArray(source);
-	}
-	getValue() {
-		return this.source.map((node) => node.getValue());
-	}
-	setValue(source) {
-		const payload = this.getPayload();
-		if (source.length == payload.length) return payload.map((node, i) => node.setValue(source[i])).some(Boolean);
-		super.setValue(source.map(makeAnimated));
-		return true;
-	}
-};
-function makeAnimated(value) {
-	return (isAnimatedString(value) ? AnimatedString : AnimatedValue).create(value);
-}
-/** Return the `Animated` node constructor for a given value */
-function getAnimatedType(value) {
-	const parentNode = getAnimated(value);
-	return parentNode ? parentNode.constructor : is.arr(value) ? AnimatedArray : isAnimatedString(value) ? AnimatedString : AnimatedValue;
-}
-const withAnimated = (Component, host) => {
-	const hasInstance = !is.fun(Component) || Component.prototype && Component.prototype.isReactComponent;
-	return (0, import__wp_global_react.forwardRef)((givenProps, givenRef) => {
-		const instanceRef = (0, import__wp_global_react.useRef)(null);
-		const ref = hasInstance && (0, import__wp_global_react.useCallback)((value) => {
-			instanceRef.current = updateRef(givenRef, value);
-		}, [givenRef]);
-		const [props, deps] = getAnimatedState(givenProps, host);
-		const forceUpdate = useForceUpdate();
-		const callback = () => {
-			const instance = instanceRef.current;
-			if (hasInstance && !instance) return;
-			if ((instance ? host.applyAnimatedValues(instance, props.getValue(true)) : false) === false) forceUpdate();
-		};
-		const observer = new PropsObserver(callback, deps);
-		const observerRef = (0, import__wp_global_react.useRef)(void 0);
-		useIsomorphicLayoutEffect(() => {
-			observerRef.current = observer;
-			each(deps, (dep) => addFluidObserver(dep, observer));
-			return () => {
-				if (observerRef.current) {
-					each(observerRef.current.deps, (dep) => removeFluidObserver(dep, observerRef.current));
-					raf.cancel(observerRef.current.update);
-				}
-			};
-		});
-		(0, import__wp_global_react.useEffect)(callback, []);
-		useOnce(() => () => {
-			const observer = observerRef.current;
-			each(observer.deps, (dep) => removeFluidObserver(dep, observer));
-		});
-		const usedProps = host.getComponentProps(props.getValue());
-		return /* @__PURE__ */ import__wp_global_react.createElement(Component, {
-			...usedProps,
-			ref
-		});
-	});
-};
-var PropsObserver = class {
-	constructor(update, deps) {
-		this.update = update;
-		this.deps = deps;
-	}
-	eventObserved(event) {
-		if (event.type == "change") raf.write(this.update);
-	}
-};
-function getAnimatedState(props, host) {
-	const dependencies = /* @__PURE__ */ new Set();
-	TreeContext.dependencies = dependencies;
-	if (props.style) props = {
-		...props,
-		style: host.createAnimatedStyle(props.style)
-	};
-	props = new AnimatedObject(props);
-	TreeContext.dependencies = null;
-	return [props, dependencies];
-}
-function updateRef(ref, value) {
-	if (ref) if (is.fun(ref)) ref(value);
-	else ref.current = value;
-	return value;
-}
-const cacheKey = Symbol.for("AnimatedComponent");
-const fallbackCache = /* @__PURE__ */ new WeakMap();
-const createHost = (components, { applyAnimatedValues = () => false, createAnimatedStyle = (style) => new AnimatedObject(style), getComponentProps = (props) => props } = {}) => {
-	const hostConfig = {
-		applyAnimatedValues,
-		createAnimatedStyle,
-		getComponentProps
-	};
-	const animated = (Component) => {
-		const displayName = getDisplayName(Component) || "Anonymous";
-		if (is.str(Component)) Component = animated[Component] || (animated[Component] = withAnimated(Component, hostConfig));
-		else {
-			let cached = Component[cacheKey] ?? fallbackCache.get(Component);
-			if (!cached) {
-				cached = withAnimated(Component, hostConfig);
-				try {
-					Component[cacheKey] = cached;
-				} catch {}
-				fallbackCache.set(Component, cached);
-			}
-			Component = cached;
-		}
-		Component.displayName = `Animated(${displayName})`;
-		return Component;
-	};
-	eachProp(components, (Component, key) => {
-		if (is.arr(components)) key = getDisplayName(Component);
-		animated[key] = animated(Component);
-	});
-	return { animated };
-};
-const getDisplayName = (arg) => is.str(arg) ? arg : arg && is.str(arg.displayName) ? arg.displayName : is.fun(arg) && arg.name || null;
-
-// node_modules/.store/@react-spring/core@10.1.2-HY296fX8b5wgYlxQneRCrg/node_modules/@react-spring/core/dist/react-spring_core.modern.mjs
-function callProp(value, ...args) {
-	return is.fun(value) ? value(...args) : value;
-}
-/** Try to coerce the given value into a boolean using the given key */
-const matchProp = (value, key) => value === true || !!(key && value && (is.fun(value) ? value(key) : toArray(value).includes(key)));
-const resolveProp = (prop, key) => is.obj(prop) ? key && prop[key] : prop;
-/** Get the default value being set for the given `key` */
-const getDefaultProp = (props, key) => props.default === true ? props[key] : props.default ? props.default[key] : void 0;
-const noopTransform = (value) => value;
-/**
-* Extract the default props from an update.
-*
-* When the `default` prop is falsy, this function still behaves as if
-* `default: true` was used. The `default` prop is always respected when
-* truthy.
-*/
-const getDefaultProps = (props, transform = noopTransform) => {
-	let keys = DEFAULT_PROPS;
-	if (props.default && props.default !== true) {
-		props = props.default;
-		keys = Object.keys(props);
-	}
-	const defaults = {};
-	for (const key of keys) {
-		const value = transform(props[key], key);
-		if (!is.und(value)) defaults[key] = value;
-	}
-	return defaults;
-};
-/**
-* These props are implicitly used as defaults when defined in a
-* declarative update (eg: render-based) or any update with `default: true`.
-*
-* Use `default: {}` or `default: false` to opt-out of these implicit defaults
-* for any given update.
-*
-* Note: These are not the only props with default values. For example, the
-* `pause`, `cancel`, and `immediate` props. But those must be updated with
-* the object syntax (eg: `default: { immediate: true }`).
-*/
-const DEFAULT_PROPS = [
-	"config",
-	"onProps",
-	"onStart",
-	"onChange",
-	"onPause",
-	"onResume",
-	"onRest"
-];
-const RESERVED_PROPS = {
-	config: 1,
-	from: 1,
-	to: 1,
-	ref: 1,
-	loop: 1,
-	reset: 1,
-	pause: 1,
-	cancel: 1,
-	reverse: 1,
-	immediate: 1,
-	default: 1,
-	delay: 1,
-	onProps: 1,
-	onStart: 1,
-	onChange: 1,
-	onPause: 1,
-	onResume: 1,
-	onRest: 1,
-	onResolve: 1,
-	items: 1,
-	trail: 1,
-	sort: 1,
-	expires: 1,
-	initial: 1,
-	enter: 1,
-	update: 1,
-	leave: 1,
-	children: 1,
-	onDestroyed: 1,
-	keys: 1,
-	callId: 1,
-	parentId: 1
-};
-/**
-* Extract any properties whose keys are *not* reserved for customizing your
-* animations. All hooks use this function, which means `useTransition` props
-* are reserved for `useSpring` calls, etc.
-*/
-function getForwardProps(props) {
-	const forward = {};
-	let count = 0;
-	eachProp(props, (value, prop) => {
-		if (!RESERVED_PROPS[prop]) {
-			forward[prop] = value;
-			count++;
-		}
-	});
-	if (count) return forward;
-}
-/**
-* Clone the given `props` and move all non-reserved props
-* into the `to` prop.
-*/
-function inferTo(props) {
-	const to = getForwardProps(props);
-	if (to) {
-		const out = { to };
-		eachProp(props, (val, key) => key in to || (out[key] = val));
-		return out;
-	}
-	return { ...props };
-}
-function computeGoal(value) {
-	const resolved = getFluidValue(value);
-	if (is.arr(resolved)) return resolved.map(computeGoal);
-	if (isAnimatedString(resolved)) return globals_exports.createStringInterpolator({
-		range: [0, 1],
-		output: [resolved, resolved]
-	})(1);
-	return resolved;
-}
-function isAsyncTo(to) {
-	return is.fun(to) || is.arr(to) && is.obj(to[0]);
-}
-const config = {
-	default: {
-		tension: 170,
-		friction: 26
-	},
-	gentle: {
-		tension: 120,
-		friction: 14
-	},
-	wobbly: {
-		tension: 180,
-		friction: 12
-	},
-	stiff: {
-		tension: 210,
-		friction: 20
-	},
-	slow: {
-		tension: 280,
-		friction: 60
-	},
-	molasses: {
-		tension: 280,
-		friction: 120
-	}
-};
-const defaults = {
-	...config.default,
-	mass: 1,
-	damping: 1,
-	easing: easings.linear,
-	clamp: false
-};
-var AnimationConfig = class {
-	constructor() {
-		this.velocity = 0;
-		Object.assign(this, defaults);
-	}
-};
-function mergeConfig(config, newConfig, defaultConfig) {
-	if (defaultConfig) {
-		defaultConfig = { ...defaultConfig };
-		sanitizeConfig(defaultConfig, newConfig);
-		newConfig = {
-			...defaultConfig,
-			...newConfig
-		};
-	}
-	sanitizeConfig(config, newConfig);
-	Object.assign(config, newConfig);
-	for (const key in defaults) if (config[key] == null) config[key] = defaults[key];
-	let { frequency, damping } = config;
-	const { mass } = config;
-	if (!is.und(frequency)) {
-		if (frequency < .01) frequency = .01;
-		if (damping < 0) damping = 0;
-		config.tension = Math.pow(2 * Math.PI / frequency, 2) * mass;
-		config.friction = 4 * Math.PI * damping * mass / frequency;
-	}
-	return config;
-}
-function sanitizeConfig(config, props) {
-	if (!is.und(props.decay)) config.duration = void 0;
-	else {
-		const isTensionConfig = !is.und(props.tension) || !is.und(props.friction);
-		if (isTensionConfig || !is.und(props.frequency) || !is.und(props.damping) || !is.und(props.mass)) {
-			config.duration = void 0;
-			config.decay = void 0;
-		}
-		if (isTensionConfig) config.frequency = void 0;
-	}
-}
-const emptyArray = [];
-/** An animation being executed by the frameloop */
-var Animation = class {
-	constructor() {
-		this.changed = false;
-		this.values = emptyArray;
-		this.toValues = null;
-		this.fromValues = emptyArray;
-		this.config = new AnimationConfig();
-		this.immediate = false;
-	}
-};
-/**
-* This function sets a timeout if both the `delay` prop exists and
-* the `cancel` prop is not `true`.
-*
-* The `actions.start` function must handle the `cancel` prop itself,
-* but the `pause` prop is taken care of.
-*/
-function scheduleProps(callId, { key, props, defaultProps, state, actions }) {
-	return new Promise((resolve, reject) => {
-		let delay;
-		let timeout;
-		let cancel = matchProp(props.cancel ?? defaultProps?.cancel, key);
-		if (cancel) onStart();
-		else {
-			if (!is.und(props.pause)) state.paused = matchProp(props.pause, key);
-			let pause = defaultProps?.pause;
-			if (pause !== true) pause = state.paused || matchProp(pause, key);
-			delay = callProp(props.delay || 0, key);
-			if (pause) {
-				state.resumeQueue.add(onResume);
-				actions.pause();
-			} else {
-				actions.resume();
-				onResume();
-			}
-		}
-		function onPause() {
-			state.resumeQueue.add(onResume);
-			state.timeouts.delete(timeout);
-			timeout.cancel();
-			delay = timeout.time - raf.now();
-		}
-		function onResume() {
-			if (delay > 0 && !globals_exports.skipAnimation) {
-				state.delayed = true;
-				timeout = raf.setTimeout(onStart, delay);
-				state.pauseQueue.add(onPause);
-				state.timeouts.add(timeout);
-			} else onStart();
-		}
-		function onStart() {
-			if (state.delayed) state.delayed = false;
-			state.pauseQueue.delete(onPause);
-			state.timeouts.delete(timeout);
-			if (callId <= (state.cancelId || 0)) cancel = true;
-			try {
-				actions.start({
-					...props,
-					callId,
-					cancel
-				}, resolve);
-			} catch (err) {
-				reject(err);
-			}
-		}
-	});
-}
-/** @internal */
-const getCombinedResult = (target, results) => results.length == 1 ? results[0] : results.some((result) => result.cancelled) ? getCancelledResult(target.get()) : results.every((result) => result.noop) ? getNoopResult(target.get()) : getFinishedResult(target.get(), results.every((result) => result.finished));
-/** No-op results are for updates that never start an animation. */
-const getNoopResult = (value) => ({
-	value,
-	noop: true,
-	finished: true,
-	cancelled: false
-});
-const getFinishedResult = (value, finished, cancelled = false) => ({
-	value,
-	finished,
-	cancelled
-});
-const getCancelledResult = (value) => ({
-	value,
-	cancelled: true,
-	finished: false
-});
-/**
-* Start an async chain or an async script.
-*
-* Always call `runAsync` in the action callback of a `scheduleProps` call.
-*
-* The `T` parameter can be a set of animated values (as an object type)
-* or a primitive type for a single animated value.
-*/
-function runAsync(to, props, state, target) {
-	const { callId, parentId, onRest } = props;
-	const { asyncTo: prevTo, promise: prevPromise } = state;
-	if (!parentId && to === prevTo && !props.reset) return prevPromise;
-	return state.promise = (async () => {
-		state.asyncId = callId;
-		state.asyncTo = to;
-		const defaultProps = getDefaultProps(props, (value, key) => key === "onRest" ? void 0 : value);
-		let preventBail;
-		let bail;
-		const bailPromise = new Promise((resolve, reject) => (preventBail = resolve, bail = reject));
-		const bailIfEnded = (bailSignal) => {
-			const bailResult = callId <= (state.cancelId || 0) && getCancelledResult(target) || callId !== state.asyncId && getFinishedResult(target, false);
-			if (bailResult) {
-				bailSignal.result = bailResult;
-				bail(bailSignal);
-				throw bailSignal;
-			}
-		};
-		let skipAnimationCallCount = 0;
-		const SKIP_ANIMATION_CALL_LIMIT = 1024;
-		const animate = (arg1, arg2) => {
-			const bailSignal = new BailSignal();
-			const skipAnimationSignal = new SkipAnimationSignal();
-			return (async () => {
-				bailIfEnded(bailSignal);
-				const props = is.obj(arg1) ? { ...arg1 } : {
-					...arg2,
-					to: arg1
-				};
-				props.parentId = callId;
-				eachProp(defaultProps, (value, key) => {
-					if (is.und(props[key])) props[key] = value;
-				});
-				if (globals_exports.skipAnimation) {
-					if (++skipAnimationCallCount > SKIP_ANIMATION_CALL_LIMIT) {
-						stopAsync(state);
-						skipAnimationSignal.result = getFinishedResult(target, false);
-						bail(skipAnimationSignal);
-						throw skipAnimationSignal;
-					}
-					props.immediate = true;
-					return await target.start(props);
-				}
-				const result = await target.start(props);
-				bailIfEnded(bailSignal);
-				if (state.paused) await new Promise((resume) => {
-					state.resumeQueue.add(resume);
-				});
-				return result;
-			})();
-		};
-		let result;
-		try {
-			let animating;
-			if (is.arr(to)) animating = (async (queue) => {
-				for (const props of queue) await animate(props);
-			})(to);
-			else animating = Promise.resolve(to(animate, target.stop.bind(target)));
-			await Promise.all([animating.then(preventBail), bailPromise]);
-			result = getFinishedResult(target.get(), true, false);
-		} catch (err) {
-			if (err instanceof BailSignal) result = err.result;
-			else if (err instanceof SkipAnimationSignal) result = err.result;
-			else throw err;
-		} finally {
-			if (callId == state.asyncId) {
-				state.asyncId = parentId;
-				state.asyncTo = parentId ? prevTo : void 0;
-				state.promise = parentId ? prevPromise : void 0;
-			}
-		}
-		if (is.fun(onRest)) raf.batchedUpdates(() => {
-			onRest(result, target, target.item);
-		});
-		return result;
-	})();
-}
-/** Stop the current `runAsync` call with `finished: false` (or with `cancelled: true` when `cancelId` is defined) */
-function stopAsync(state, cancelId) {
-	flush(state.timeouts, (t) => t.cancel());
-	state.pauseQueue.clear();
-	state.resumeQueue.clear();
-	state.asyncId = state.asyncTo = state.promise = void 0;
-	if (cancelId) state.cancelId = cancelId;
-}
-/** This error is thrown to signal an interrupted async animation. */
-var BailSignal = class extends Error {
-	constructor() {
-		super("An async animation has been interrupted. You see this error because you forgot to use `await` or `.catch(...)` on its returned promise.");
-	}
-};
-var SkipAnimationSignal = class extends Error {
-	constructor() {
-		super("SkipAnimationSignal");
-	}
-};
-const isFrameValue = (value) => value instanceof FrameValue;
-let nextId$1 = 1;
-/**
-* A kind of `FluidValue` that manages an `AnimatedValue` node.
-*
-* Its underlying value can be accessed and even observed.
-*/
-var FrameValue = class extends FluidValue {
-	constructor(..._args) {
-		super(..._args);
-		this.id = nextId$1++;
-		this._priority = 0;
-	}
-	get priority() {
-		return this._priority;
-	}
-	set priority(priority) {
-		if (this._priority != priority) {
-			this._priority = priority;
-			this._onPriorityChange(priority);
-		}
-	}
-	/** Get the current value */
-	get() {
-		const node = getAnimated(this);
-		return node && node.getValue();
-	}
-	/** Create a spring that maps our value to another value */
-	to(...args) {
-		return globals_exports.to(this, args);
-	}
-	/** @deprecated Use the `to` method instead. */
-	interpolate(...args) {
-		deprecateInterpolate();
-		return globals_exports.to(this, args);
-	}
-	toJSON() {
-		return this.get();
-	}
-	observerAdded(count) {
-		if (count == 1) this._attach();
-	}
-	observerRemoved(count) {
-		if (count == 0) this._detach();
-	}
-	/** Called when the first child is added. */
-	_attach() {}
-	/** Called when the last child is removed. */
-	_detach() {}
-	/** Tell our children about our new value */
-	_onChange(value, idle = false) {
-		callFluidObservers(this, {
-			type: "change",
-			parent: this,
-			value,
-			idle
-		});
-	}
-	/** Tell our children about our new priority */
-	_onPriorityChange(priority) {
-		if (!this.idle) frameLoop.sort(this);
-		callFluidObservers(this, {
-			type: "priority",
-			parent: this,
-			priority
-		});
-	}
-};
-/** The property symbol of the current animation phase. */
-const $P = Symbol.for("SpringPhase");
-const HAS_ANIMATED = 1;
-const IS_ANIMATING = 2;
-const IS_PAUSED = 4;
-/** Returns true if the `target` has ever animated. */
-const hasAnimated = (target) => (target[$P] & HAS_ANIMATED) > 0;
-/** Returns true if the `target` is animating (even if paused). */
-const isAnimating = (target) => (target[$P] & IS_ANIMATING) > 0;
-/** Returns true if the `target` is paused (even if idle). */
-const isPaused = (target) => (target[$P] & IS_PAUSED) > 0;
-/** Set the active bit of the `target` phase. */
-const setActiveBit = (target, active) => active ? target[$P] |= 3 : target[$P] &= -3;
-const setPausedBit = (target, paused) => paused ? target[$P] |= IS_PAUSED : target[$P] &= -5;
-/**
-* Only numbers, strings, and arrays of numbers/strings are supported.
-* Non-animatable strings are also supported.
-*/
-var SpringValue = class extends FrameValue {
-	constructor(arg1, arg2) {
-		super();
-		this.animation = new Animation();
-		this.defaultProps = {};
-		this._state = {
-			paused: false,
-			delayed: false,
-			pauseQueue: /* @__PURE__ */ new Set(),
-			resumeQueue: /* @__PURE__ */ new Set(),
-			timeouts: /* @__PURE__ */ new Set()
-		};
-		this._pendingCalls = /* @__PURE__ */ new Set();
-		this._lastCallId = 0;
-		this._lastToId = 0;
-		this._memoizedDuration = 0;
-		if (!is.und(arg1) || !is.und(arg2)) {
-			const props = is.obj(arg1) ? { ...arg1 } : {
-				...arg2,
-				from: arg1
-			};
-			if (is.und(props.default)) props.default = true;
-			this.start(props);
-		}
-	}
-	/** Equals true when not advancing on each frame. */
-	get idle() {
-		return !(isAnimating(this) || this._state.asyncTo) || isPaused(this);
-	}
-	get goal() {
-		return getFluidValue(this.animation.to);
-	}
-	get velocity() {
-		const node = getAnimated(this);
-		return node instanceof AnimatedValue ? node.lastVelocity || 0 : node.getPayload().map((node) => node.lastVelocity || 0);
-	}
-	/**
-	* When true, this value has been animated at least once.
-	*/
-	get hasAnimated() {
-		return hasAnimated(this);
-	}
-	/**
-	* When true, this value has an unfinished animation,
-	* which is either active or paused.
-	*/
-	get isAnimating() {
-		return isAnimating(this);
-	}
-	/**
-	* When true, all current and future animations are paused.
-	*/
-	get isPaused() {
-		return isPaused(this);
-	}
-	/**
-	*
-	*
-	*/
-	get isDelayed() {
-		return this._state.delayed;
-	}
-	/** Advance the current animation by a number of milliseconds */
-	advance(dt) {
-		let idle = true;
-		let changed = false;
-		const anim = this.animation;
-		let { toValues } = anim;
-		const { config } = anim;
-		const payload = getPayload(anim.to);
-		if (!payload && hasFluidValue(anim.to)) toValues = toArray(getFluidValue(anim.to));
-		anim.values.forEach((node, i) => {
-			if (node.done) return;
-			const to = node.constructor == AnimatedString ? 1 : payload ? payload[i].lastPosition : toValues[i];
-			let finished = anim.immediate;
-			let position = to;
-			if (!finished) {
-				position = node.lastPosition;
-				if (config.tension <= 0) {
-					node.done = true;
-					return;
-				}
-				let elapsed = node.elapsedTime += dt;
-				const from = anim.fromValues[i];
-				const v0 = node.v0 != null ? node.v0 : node.v0 = is.arr(config.velocity) ? config.velocity[i] : config.velocity;
-				let velocity;
-				/** The smallest distance from a value before being treated like said value. */
-				/**
-				* TODO: make this value ~0.0001 by default in next breaking change
-				* for more info see – https://github.com/pmndrs/react-spring/issues/1389
-				*/
-				const precision = config.precision || (from == to ? .005 : Math.max(Math.max(Math.abs(to), Math.abs(from), 1) * Number.EPSILON, Math.min(1, Math.abs(to - from) * .001)));
-				if (!is.und(config.duration)) {
-					let p = 1;
-					if (config.duration > 0) {
-						/**
-						* Here we check if the duration has changed in the config
-						* and if so update the elapsed time to the percentage
-						* of completition so there is no jank in the animation
-						* https://github.com/pmndrs/react-spring/issues/1163
-						*/
-						if (this._memoizedDuration !== config.duration) {
-							this._memoizedDuration = config.duration;
-							if (node.durationProgress > 0) {
-								node.elapsedTime = config.duration * node.durationProgress;
-								elapsed = node.elapsedTime += dt;
-							}
-						}
-						p = (config.progress || 0) + elapsed / this._memoizedDuration;
-						p = p > 1 ? 1 : p < 0 ? 0 : p;
-						node.durationProgress = p;
-					}
-					position = from + config.easing(p) * (to - from);
-					velocity = (position - node.lastPosition) / dt;
-					finished = p == 1;
-				} else if (config.decay) {
-					const decay = config.decay === true ? .998 : config.decay;
-					const e = Math.exp(-(1 - decay) * elapsed);
-					position = from + v0 / (1 - decay) * (1 - e);
-					finished = Math.abs(node.lastPosition - position) <= precision;
-					velocity = v0 * e;
-				} else {
-					velocity = node.lastVelocity == null ? v0 : node.lastVelocity;
-					/** The velocity at which movement is essentially none */
-					const restVelocity = config.restVelocity || precision / 10;
-					const bounceFactor = config.clamp ? 0 : config.bounce;
-					const canBounce = !is.und(bounceFactor);
-					/** When `true`, the value is increasing over time */
-					const isGrowing = from == to ? node.v0 > 0 : from < to;
-					/** When `true`, the velocity is considered moving */
-					let isMoving;
-					/** When `true`, the velocity is being deflected or clamped */
-					let isBouncing = false;
-					const step = 1;
-					const numSteps = Math.ceil(dt / step);
-					for (let n = 0; n < numSteps; ++n) {
-						isMoving = Math.abs(velocity) > restVelocity;
-						if (!isMoving) {
-							finished = Math.abs(to - position) <= precision;
-							if (finished) break;
-						}
-						if (canBounce) {
-							isBouncing = position == to || position > to == isGrowing;
-							if (isBouncing) {
-								velocity = -velocity * bounceFactor;
-								position = to;
-							}
-						}
-						const acceleration = (-config.tension * 1e-6 * (position - to) + -config.friction * .001 * velocity) / config.mass;
-						velocity = velocity + acceleration * step;
-						position = position + velocity * step;
-					}
-				}
-				node.lastVelocity = velocity;
-				if (Number.isNaN(position)) {
-					console.warn(`Got NaN while animating:`, this);
-					finished = true;
-				}
-			}
-			if (payload && !payload[i].done) finished = false;
-			if (finished) node.done = true;
-			else idle = false;
-			if (node.setValue(position, config.round)) changed = true;
-		});
-		const node = getAnimated(this);
-		/**
-		* Get the node's current value, this will be different
-		* to anim.to when config.decay is true
-		*/
-		const currVal = node.getValue();
-		if (idle) {
-			const finalVal = getFluidValue(anim.to);
-			/**
-			* check if they're not equal, or if they're
-			* change and if there's no config.decay set
-			*/
-			if ((currVal !== finalVal || changed) && !config.decay) {
-				node.setValue(finalVal);
-				this._onChange(finalVal);
-			} else if (changed && config.decay)
- /**
-			* if it's changed but there is a config.decay,
-			* just call _onChange with currrent value
-			*/
-			this._onChange(currVal);
-			this._stop();
-		} else if (changed)
- /**
-		* if the spring has changed, but is not idle,
-		* just call the _onChange handler
-		*/
-		this._onChange(currVal);
-	}
-	/** Set the current value, while stopping the current animation */
-	set(value) {
-		raf.batchedUpdates(() => {
-			this._stop();
-			this._focus(value);
-			this._set(value);
-		});
-		return this;
-	}
-	/**
-	* Freeze the active animation in time, as well as any updates merged
-	* before `resume` is called.
-	*/
-	pause() {
-		this._update({ pause: true });
-	}
-	/** Resume the animation if paused. */
-	resume() {
-		this._update({ pause: false });
-	}
-	/** Skip to the end of the current animation. */
-	finish() {
-		if (isAnimating(this)) {
-			const { to, config } = this.animation;
-			raf.batchedUpdates(() => {
-				this._onStart();
-				if (!config.decay) this._set(to, false);
-				this._stop();
-			});
-		}
-		return this;
-	}
-	/** Push props into the pending queue. */
-	update(props) {
-		(this.queue || (this.queue = [])).push(props);
-		return this;
-	}
-	start(to, arg2) {
-		let queue;
-		if (!is.und(to)) queue = [is.obj(to) ? to : {
-			...arg2,
-			to
-		}];
-		else {
-			queue = this.queue || [];
-			this.queue = [];
-		}
-		return Promise.all(queue.map((props) => {
-			return this._update(props);
-		})).then((results) => getCombinedResult(this, results));
-	}
-	/**
-	* Stop the current animation, and cancel any delayed updates.
-	*
-	* Pass `true` to call `onRest` with `cancelled: true`.
-	*/
-	stop(cancel) {
-		const { to } = this.animation;
-		if (!is.und(to)) this._focus(this.get());
-		stopAsync(this._state, cancel && this._lastCallId);
-		raf.batchedUpdates(() => this._stop(to, cancel));
-		return this;
-	}
-	/** Restart the animation. */
-	reset() {
-		this._update({ reset: true });
-	}
-	/** @internal */
-	eventObserved(event) {
-		if (event.type == "change") this._start();
-		else if (event.type == "priority") this.priority = event.priority + 1;
-	}
-	/**
-	* Parse the `to` and `from` range from the given `props` object.
-	*
-	* This also ensures the initial value is available to animated components
-	* during the render phase.
-	*/
-	_prepareNode(props) {
-		const key = this.key || "";
-		let { to, from } = props;
-		to = is.obj(to) ? to[key] : to;
-		if (to == null || isAsyncTo(to)) to = void 0;
-		from = is.obj(from) ? from[key] : from;
-		if (from == null) from = void 0;
-		const range = {
-			to,
-			from
-		};
-		if (!hasAnimated(this)) {
-			if (props.reverse) [to, from] = [from, to];
-			from = getFluidValue(from);
-			if (!is.und(from)) this._set(from);
-			else if (!getAnimated(this)) this._set(to);
-		}
-		return range;
-	}
-	/** Every update is processed by this method before merging. */
-	_update({ ...props }, isLoop) {
-		const { key, defaultProps } = this;
-		if (props.default) Object.assign(defaultProps, getDefaultProps(props, (value, prop) => /^on/.test(prop) ? resolveProp(value, key) : value));
-		mergeActiveFn(this, props, "onProps");
-		sendEvent(this, "onProps", props, this);
-		const range = this._prepareNode(props);
-		if (Object.isFrozen(this)) throw Error("Cannot animate a `SpringValue` object that is frozen. Did you forget to pass your component to `animated(...)` before animating its props?");
-		const state = this._state;
-		return scheduleProps(++this._lastCallId, {
-			key,
-			props,
-			defaultProps,
-			state,
-			actions: {
-				pause: () => {
-					if (!isPaused(this)) {
-						setPausedBit(this, true);
-						flushCalls(state.pauseQueue);
-						sendEvent(this, "onPause", getFinishedResult(this, checkFinished(this, this.animation.to)), this);
-					}
-				},
-				resume: () => {
-					if (isPaused(this)) {
-						setPausedBit(this, false);
-						if (isAnimating(this)) this._resume();
-						flushCalls(state.resumeQueue);
-						sendEvent(this, "onResume", getFinishedResult(this, checkFinished(this, this.animation.to)), this);
-					}
-				},
-				start: this._merge.bind(this, range)
-			}
-		}).then((result) => {
-			if (props.loop && result.finished && !(isLoop && result.noop)) {
-				const nextProps = createLoopUpdate(props);
-				if (nextProps) return this._update(nextProps, true);
-			}
-			return result;
-		});
-	}
-	/** Merge props into the current animation */
-	_merge(range, props, resolve) {
-		if (props.cancel) {
-			this.stop(true);
-			return resolve(getCancelledResult(this));
-		}
-		/** The "to" prop is defined. */
-		const hasToProp = !is.und(range.to);
-		/** The "from" prop is defined. */
-		const hasFromProp = !is.und(range.from);
-		if (hasToProp || hasFromProp) if (props.callId > this._lastToId) this._lastToId = props.callId;
-		else return resolve(getCancelledResult(this));
-		const { key, defaultProps, animation: anim } = this;
-		const { to: prevTo, from: prevFrom } = anim;
-		let { to = prevTo, from = prevFrom } = range;
-		if (hasFromProp && !hasToProp && (!props.default || is.und(to))) to = from;
-		if (props.reverse) [to, from] = [from, to];
-		/** The "from" value is changing. */
-		const hasFromChanged = !isEqual(from, prevFrom);
-		if (hasFromChanged) anim.from = from;
-		from = getFluidValue(from);
-		/** The "to" value is changing. */
-		const hasToChanged = !isEqual(to, prevTo);
-		if (hasToChanged) this._focus(to);
-		/** The "to" prop is async. */
-		const hasAsyncTo = isAsyncTo(props.to);
-		const { config } = anim;
-		const { decay, velocity } = config;
-		if ((hasToProp || hasFromProp) && !config.decay) config.velocity = 0;
-		if (props.config && !hasAsyncTo) mergeConfig(config, callProp(props.config, key), props.config !== defaultProps.config ? callProp(defaultProps.config, key) : void 0);
-		let node = getAnimated(this);
-		if (!node || is.und(to)) return resolve(getFinishedResult(this, true));
-		/** When true, start at the "from" value. */
-		const reset = is.und(props.reset) ? hasFromProp && !props.default : !is.und(from) && matchProp(props.reset, key);
-		const value = reset ? from : this.get();
-		const goal = computeGoal(to);
-		const isAnimatable = is.num(goal) || is.arr(goal) || isAnimatedString(goal);
-		const immediate = !hasAsyncTo && (!isAnimatable || matchProp(defaultProps.immediate || props.immediate, key));
-		if (hasToChanged) {
-			const nodeType = getAnimatedType(to);
-			if (nodeType !== node.constructor) if (immediate) node = this._set(goal);
-			else throw Error(`Cannot animate between ${node.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
-		}
-		const goalType = node.constructor;
-		let started = hasFluidValue(to);
-		let finished = false;
-		if (!started) {
-			const hasValueChanged = reset || !hasAnimated(this) && hasFromChanged;
-			if (hasToChanged || hasValueChanged) {
-				finished = isEqual(computeGoal(value), goal);
-				started = !finished;
-			}
-			if (!isEqual(anim.immediate, immediate) && !immediate || !isEqual(config.decay, decay) || !isEqual(config.velocity, velocity)) started = true;
-		}
-		if (finished && isAnimating(this)) {
-			if (anim.changed && !reset) started = true;
-			else if (!started) this._stop(prevTo);
-		}
-		if (!hasAsyncTo) {
-			if (started || hasFluidValue(prevTo)) {
-				anim.values = node.getPayload();
-				anim.toValues = hasFluidValue(to) ? null : goalType == AnimatedString ? [1] : toArray(goal);
-			}
-			if (anim.immediate != immediate) {
-				anim.immediate = immediate;
-				if (!immediate && !reset) this._set(prevTo);
-			}
-			if (started) {
-				const { onRest } = anim;
-				each(ACTIVE_EVENTS, (type) => mergeActiveFn(this, props, type));
-				const result = getFinishedResult(this, checkFinished(this, prevTo));
-				flushCalls(this._pendingCalls, result);
-				this._pendingCalls.add(resolve);
-				if (anim.changed) raf.batchedUpdates(() => {
-					anim.changed = !reset;
-					onRest?.(result, this);
-					if (reset) callProp(defaultProps.onRest, result);
-					else anim.onStart?.(result, this);
-				});
-			}
-		}
-		if (reset) this._set(value);
-		if (hasAsyncTo) resolve(runAsync(props.to, props, this._state, this));
-		else if (started) this._start();
-		else if (isAnimating(this) && !hasToChanged) this._pendingCalls.add(resolve);
-		else resolve(getNoopResult(value));
-	}
-	/** Update the `animation.to` value, which might be a `FluidValue` */
-	_focus(value) {
-		const anim = this.animation;
-		if (value !== anim.to) {
-			if (getFluidObservers(this)) this._detach();
-			anim.to = value;
-			if (getFluidObservers(this)) this._attach();
-		}
-	}
-	_attach() {
-		let priority = 0;
-		const { to } = this.animation;
-		if (hasFluidValue(to)) {
-			addFluidObserver(to, this);
-			if (isFrameValue(to)) priority = to.priority + 1;
-		}
-		this.priority = priority;
-	}
-	_detach() {
-		const { to } = this.animation;
-		if (hasFluidValue(to)) removeFluidObserver(to, this);
-	}
-	/**
-	* Update the current value from outside the frameloop,
-	* and return the `Animated` node.
-	*/
-	_set(arg, idle = true) {
-		const value = getFluidValue(arg);
-		if (!is.und(value)) {
-			const oldNode = getAnimated(this);
-			if (!oldNode || !isEqual(value, oldNode.getValue())) {
-				const nodeType = getAnimatedType(value);
-				if (!oldNode || oldNode.constructor != nodeType) setAnimated(this, nodeType.create(value));
-				else oldNode.setValue(value);
-				if (oldNode) raf.batchedUpdates(() => {
-					this._onChange(value, idle);
-				});
-			}
-		}
-		return getAnimated(this);
-	}
-	_onStart() {
-		const anim = this.animation;
-		if (!anim.changed) {
-			anim.changed = true;
-			sendEvent(this, "onStart", getFinishedResult(this, checkFinished(this, anim.to)), this);
-		}
-	}
-	_onChange(value, idle) {
-		const result = getFinishedResult(value, false);
-		if (!idle) {
-			this._onStart();
-			callProp(this.animation.onChange, result, this);
-		}
-		callProp(this.defaultProps.onChange, result, this);
-		super._onChange(value, idle);
-	}
-	_start() {
-		const anim = this.animation;
-		getAnimated(this).reset(getFluidValue(anim.to));
-		if (!anim.immediate) anim.fromValues = anim.values.map((node) => node.lastPosition);
-		if (!isAnimating(this)) {
-			setActiveBit(this, true);
-			if (!isPaused(this)) this._resume();
-		}
-	}
-	_resume() {
-		if (globals_exports.skipAnimation) this.finish();
-		else frameLoop.start(this);
-	}
-	/**
-	* Exit the frameloop and notify `onRest` listeners.
-	*
-	* Always wrap `_stop` calls with `batchedUpdates`.
-	*/
-	_stop(goal, cancel) {
-		if (isAnimating(this)) {
-			setActiveBit(this, false);
-			const anim = this.animation;
-			each(anim.values, (node) => {
-				node.done = true;
-			});
-			if (anim.toValues) anim.onChange = anim.onPause = anim.onResume = void 0;
-			callFluidObservers(this, {
-				type: "idle",
-				parent: this
-			});
-			const result = cancel ? getCancelledResult(this.get()) : getFinishedResult(this.get(), checkFinished(this, goal ?? anim.to));
-			flushCalls(this._pendingCalls, result);
-			anim.changed = false;
-			sendEvent(this, "onRest", result, this);
-		}
-	}
-};
-/** Returns true when the current value and goal value are equal. */
-function checkFinished(target, to) {
-	const goal = computeGoal(to);
-	return isEqual(computeGoal(target.get()), goal);
-}
-function createLoopUpdate(props, loop = props.loop, to = props.to) {
-	const loopRet = callProp(loop);
-	if (loopRet) {
-		const overrides = loopRet !== true && inferTo(loopRet);
-		const reverse = (overrides || props).reverse;
-		const reset = !overrides || overrides.reset;
-		return createUpdate({
-			...props,
-			loop,
-			default: false,
-			pause: void 0,
-			to: !reverse || isAsyncTo(to) ? to : void 0,
-			from: reset ? props.from : void 0,
-			reset,
-			...overrides
-		});
-	}
-}
-/**
-* Return a new object based on the given `props`.
-*
-* - All non-reserved props are moved into the `to` prop object.
-* - The `keys` prop is set to an array of affected keys,
-*   or `null` if all keys are affected.
-*/
-function createUpdate(props) {
-	const { to, from } = props = inferTo(props);
-	const keys = /* @__PURE__ */ new Set();
-	if (is.obj(to)) findDefined(to, keys);
-	if (is.obj(from)) findDefined(from, keys);
-	props.keys = keys.size ? Array.from(keys) : null;
-	return props;
-}
-/** Find keys with defined values */
-function findDefined(values, keys) {
-	eachProp(values, (value, key) => value != null && keys.add(key));
-}
-/** Event props with "active handler" support */
-const ACTIVE_EVENTS = [
-	"onStart",
-	"onRest",
-	"onChange",
-	"onPause",
-	"onResume"
-];
-function mergeActiveFn(target, props, type) {
-	target.animation[type] = props[type] !== getDefaultProp(props, type) ? resolveProp(props[type], target.key) : void 0;
-}
-/** Call the active handler first, then the default handler. */
-function sendEvent(target, type, ...args) {
-	target.animation[type]?.(...args);
-	target.defaultProps[type]?.(...args);
-}
-/** Events batched by the `Controller` class */
-const BATCHED_EVENTS = [
-	"onStart",
-	"onChange",
-	"onRest"
-];
-let nextId = 1;
-var Controller = class {
-	constructor(props, flush) {
-		this.id = nextId++;
-		this.springs = {};
-		this.queue = [];
-		this._lastAsyncId = 0;
-		this._lastLoopId = 0;
-		this._active = /* @__PURE__ */ new Set();
-		this._changed = /* @__PURE__ */ new Set();
-		this._started = false;
-		this._state = {
-			paused: false,
-			pauseQueue: /* @__PURE__ */ new Set(),
-			resumeQueue: /* @__PURE__ */ new Set(),
-			timeouts: /* @__PURE__ */ new Set()
-		};
-		this._events = {
-			onStart: /* @__PURE__ */ new Map(),
-			onChange: /* @__PURE__ */ new Map(),
-			onRest: /* @__PURE__ */ new Map()
-		};
-		this._onFrame = this._onFrame.bind(this);
-		if (flush) this._flush = flush;
-		if (props) this.start({
-			default: true,
-			...props
-		});
-	}
-	/**
-	* Equals `true` when no spring values are in the frameloop, and
-	* no async animation is currently active.
-	*/
-	get idle() {
-		return !this._state.asyncTo && Object.values(this.springs).every((spring) => {
-			return spring.idle && !spring.isDelayed && !spring.isPaused;
-		});
-	}
-	get item() {
-		return this._item;
-	}
-	set item(item) {
-		this._item = item;
-	}
-	/** Get the current values of our springs */
-	get() {
-		const values = {};
-		this.each((spring, key) => values[key] = spring.get());
-		return values;
-	}
-	/** Set the current values without animating. */
-	set(values) {
-		for (const key in values) {
-			const value = values[key];
-			if (!is.und(value)) this.springs[key].set(value);
-		}
-	}
-	/** Push an update onto the queue of each value. */
-	update(props) {
-		if (props) this.queue.push(createUpdate(props));
-		return this;
-	}
-	/**
-	* Start the queued animations for every spring, and resolve the returned
-	* promise once all queued animations have finished or been cancelled.
-	*
-	* When you pass a queue (instead of nothing), that queue is used instead of
-	* the queued animations added with the `update` method, which are left alone.
-	*/
-	start(props) {
-		let { queue } = this;
-		if (props) queue = toArray(props).map(createUpdate);
-		else this.queue = [];
-		if (this._flush) return this._flush(this, queue);
-		prepareKeys(this, queue);
-		return flushUpdateQueue(this, queue);
-	}
-	/** @internal */
-	stop(arg, keys) {
-		if (arg !== !!arg) keys = arg;
-		if (keys) {
-			const springs = this.springs;
-			each(toArray(keys), (key) => springs[key].stop(!!arg));
-		} else {
-			stopAsync(this._state, this._lastAsyncId);
-			this.each((spring) => spring.stop(!!arg));
-		}
-		return this;
-	}
-	/** Freeze the active animation in time */
-	pause(keys) {
-		if (is.und(keys)) this.start({ pause: true });
-		else {
-			const springs = this.springs;
-			each(toArray(keys), (key) => springs[key].pause());
-		}
-		return this;
-	}
-	/** Resume the animation if paused. */
-	resume(keys) {
-		if (is.und(keys)) this.start({ pause: false });
-		else {
-			const springs = this.springs;
-			each(toArray(keys), (key) => springs[key].resume());
-		}
-		return this;
-	}
-	/** Call a function once per spring value */
-	each(iterator) {
-		eachProp(this.springs, iterator);
-	}
-	/**
-	* Subscribe to loop iteration restarts on this controller. Returns an
-	* unsubscribe function. Listeners fire synchronously inside `flushUpdate`
-	* just before the next iteration is dispatched.
-	* @internal
-	*/
-	onLoopReset(fn) {
-		const set = this._onLoopReset ?? (this._onLoopReset = /* @__PURE__ */ new Set());
-		set.add(fn);
-		return () => {
-			set.delete(fn);
-		};
-	}
-	/** @internal Called at the end of every animation frame */
-	_onFrame() {
-		const { onStart, onChange, onRest } = this._events;
-		const active = this._active.size > 0;
-		const changed = this._changed.size > 0;
-		if (active && !this._started || changed && !this._started) {
-			this._started = true;
-			flush(onStart, ([onStart, result]) => {
-				result.value = this.get();
-				onStart(result, this, this._item);
-			});
-		}
-		const idle = !active && this._started;
-		const values = changed || idle && onRest.size ? this.get() : null;
-		if (changed && onChange.size) flush(onChange, ([onChange, result]) => {
-			result.value = values;
-			onChange(result, this, this._item);
-		});
-		if (idle) {
-			this._started = false;
-			flush(onRest, ([onRest, result]) => {
-				result.value = values;
-				onRest(result, this, this._item);
-			});
-		}
-	}
-	/** @internal */
-	eventObserved(event) {
-		if (event.type == "change") {
-			this._changed.add(event.parent);
-			if (!event.idle) this._active.add(event.parent);
-		} else if (event.type == "idle") this._active.delete(event.parent);
-		else return;
-		raf.onFrame(this._onFrame);
-	}
-};
-/**
-* Warning: Props might be mutated.
-*/
-function flushUpdateQueue(ctrl, queue) {
-	return Promise.all(queue.map((props) => flushUpdate(ctrl, props))).then((results) => getCombinedResult(ctrl, results));
-}
-/**
-* Warning: Props might be mutated.
-*
-* Process a single set of props using the given controller.
-*
-* The returned promise resolves to `true` once the update is
-* applied and any animations it starts are finished without being
-* stopped or cancelled.
-*/
-async function flushUpdate(ctrl, props, isLoop) {
-	const { keys, to, from, loop, onRest, onResolve } = props;
-	const defaults = is.obj(props.default) && props.default;
-	if (loop) props.loop = false;
-	const propsAny = props;
-	const loopId = !isLoop && !propsAny.parentId && "loop" in props ? ++ctrl["_lastLoopId"] : isLoop ? propsAny.loopId : ctrl["_lastLoopId"];
-	if (to === false) props.to = null;
-	if (from === false) props.from = null;
-	const asyncTo = is.arr(to) || is.fun(to) ? to : void 0;
-	if (asyncTo) {
-		props.to = void 0;
-		props.onRest = void 0;
-		if (defaults) defaults.onRest = void 0;
-	} else each(BATCHED_EVENTS, (key) => {
-		const handler = props[key];
-		if (is.fun(handler)) {
-			const queue = ctrl["_events"][key];
-			props[key] = (({ finished, cancelled }) => {
-				const result = queue.get(handler);
-				if (result) {
-					if (!finished) result.finished = false;
-					if (cancelled) result.cancelled = true;
-				} else queue.set(handler, {
-					value: null,
-					finished: finished || false,
-					cancelled: cancelled || false
-				});
-			});
-			if (defaults) defaults[key] = props[key];
-		}
-	});
-	const state = ctrl["_state"];
-	if (props.pause === !state.paused) {
-		state.paused = props.pause;
-		flushCalls(props.pause ? state.pauseQueue : state.resumeQueue);
-	} else if (state.paused) props.pause = true;
-	const promises = (keys || Object.keys(ctrl.springs)).map((key) => ctrl.springs[key].start(props));
-	const cancel = props.cancel === true || getDefaultProp(props, "cancel") === true;
-	if (asyncTo || cancel && state.asyncId) promises.push(scheduleProps(++ctrl["_lastAsyncId"], {
-		props,
-		state,
-		actions: {
-			pause: noop,
-			resume: noop,
-			start(props, resolve) {
-				if (cancel) {
-					stopAsync(state, ctrl["_lastAsyncId"]);
-					resolve(getCancelledResult(ctrl));
-				} else {
-					props.onRest = onRest;
-					resolve(runAsync(asyncTo, props, state, ctrl));
-				}
-			}
-		}
-	}));
-	if (state.paused) await new Promise((resume) => {
-		state.resumeQueue.add(resume);
-	});
-	const result = getCombinedResult(ctrl, await Promise.all(promises));
-	if (loop && result.finished && !(isLoop && result.noop) && loopId === ctrl["_lastLoopId"]) {
-		const nextProps = createLoopUpdate(props, loop, to);
-		if (nextProps) {
-			nextProps.loopId = loopId;
-			ctrl["_onLoopReset"]?.forEach((fn) => fn());
-			prepareKeys(ctrl, [nextProps]);
-			return flushUpdate(ctrl, nextProps, true);
-		}
-	}
-	if (onResolve) raf.batchedUpdates(() => onResolve(result, ctrl, ctrl.item));
-	return result;
-}
-function createSpring(key, observer) {
-	const spring = new SpringValue();
-	spring.key = key;
-	if (observer) addFluidObserver(spring, observer);
-	return spring;
-}
-/**
-* Ensure spring objects exist for each defined key.
-*
-* Using the `props`, the `Animated` node of each `SpringValue` may
-* be created or updated.
-*/
-function prepareSprings(springs, props, create) {
-	if (props.keys) each(props.keys, (key) => {
-		(springs[key] || (springs[key] = create(key)))["_prepareNode"](props);
-	});
-}
-/**
-* Ensure spring objects exist for each defined key, and attach the
-* `ctrl` to them for observation.
-*
-* The queue is expected to contain `createUpdate` results.
-*/
-function prepareKeys(ctrl, queue) {
-	each(queue, (props) => {
-		prepareSprings(ctrl.springs, props, (key) => {
-			return createSpring(key, ctrl);
-		});
-	});
-}
-const SpringContext = import__wp_global_react.createContext({
-	pause: false,
-	immediate: false
-});
-/**
-* An `Interpolation` is a memoized value that's computed whenever one of its
-* `FluidValue` dependencies has its value changed.
-*
-* Other `FrameValue` objects can depend on this. For example, passing an
-* `Interpolation` as the `to` prop of a `useSpring` call will trigger an
-* animation toward the memoized value.
-*/
-var Interpolation = class extends FrameValue {
-	constructor(source, args) {
-		super();
-		this.source = source;
-		this.idle = true;
-		this._active = /* @__PURE__ */ new Set();
-		this.calc = createInterpolator(...args);
-		const value = this._get();
-		const nodeType = getAnimatedType(value);
-		setAnimated(this, nodeType.create(value));
-	}
-	advance(_dt) {
-		const value = this._get();
-		if (!isEqual(value, this.get())) {
-			getAnimated(this).setValue(value);
-			this._onChange(value, this.idle);
-		}
-		if (!this.idle && checkIdle(this._active)) becomeIdle(this);
-	}
-	_get() {
-		const inputs = is.arr(this.source) ? this.source.map(getFluidValue) : toArray(getFluidValue(this.source));
-		return this.calc(...inputs);
-	}
-	_start() {
-		if (this.idle && !checkIdle(this._active)) {
-			this.idle = false;
-			each(getPayload(this), (node) => {
-				node.done = false;
-			});
-			if (globals_exports.skipAnimation) {
-				raf.batchedUpdates(() => this.advance());
-				becomeIdle(this);
-			} else frameLoop.start(this);
-		}
-	}
-	_attach() {
-		let priority = 1;
-		each(toArray(this.source), (source) => {
-			if (hasFluidValue(source)) addFluidObserver(source, this);
-			if (isFrameValue(source)) {
-				if (!source.idle) this._active.add(source);
-				priority = Math.max(priority, source.priority + 1);
-			}
-		});
-		this.priority = priority;
-		this._start();
-	}
-	_detach() {
-		each(toArray(this.source), (source) => {
-			if (hasFluidValue(source)) removeFluidObserver(source, this);
-		});
-		this._active.clear();
-		becomeIdle(this);
-	}
-	/** @internal */
-	eventObserved(event) {
-		if (event.type == "change") if (event.idle) this.advance();
-		else {
-			this._active.add(event.parent);
-			this._start();
-		}
-		else if (event.type == "idle") this._active.delete(event.parent);
-		else if (event.type == "priority") this.priority = toArray(this.source).reduce((highest, parent) => Math.max(highest, (isFrameValue(parent) ? parent.priority : 0) + 1), 0);
-	}
-};
-/** Returns true for an idle source. */
-function isIdle(source) {
-	return source.idle !== false;
-}
-/** Return true if all values in the given set are idle or paused. */
-function checkIdle(active) {
-	return !active.size || Array.from(active).every(isIdle);
-}
-/** Become idle if not already idle. */
-function becomeIdle(self) {
-	if (!self.idle) {
-		self.idle = true;
-		each(getPayload(self), (node) => {
-			node.done = true;
-		});
-		callFluidObservers(self, {
-			type: "idle",
-			parent: self
-		});
-	}
-}
-globals_exports.assign({
-	createStringInterpolator,
-	to: (source, args) => new Interpolation(source, args)
-});
-/** Advance all animations by the given time */
-const update = frameLoop.advance;
-
-// node_modules/.store/@react-spring/web@10.1.2-4gGCnqlTbxsU8t3boUJXLQ/node_modules/@react-spring/web/dist/react-spring_web.modern.mjs
-const isCustomPropRE = /^--/;
-function dangerousStyleValue(name, value) {
-	if (value == null || typeof value === "boolean" || value === "") return "";
-	if (typeof value === "number" && value !== 0 && !isCustomPropRE.test(name) && !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name])) return value + "px";
-	return ("" + value).trim();
-}
-const attributeCache = {};
-function applyAnimatedValues(instance, props) {
-	if (!instance.nodeType || !instance.setAttribute || !instance.removeAttribute) return false;
-	const isFilterElement = instance.nodeName === "filter" || instance.parentNode && instance.parentNode.nodeName === "filter";
-	const { className, style, children, scrollTop, scrollLeft, viewBox, ...attributes } = props;
-	const values = Object.values(attributes);
-	const names = Object.keys(attributes).map((name) => isFilterElement || instance.hasAttribute(name) ? name : attributeCache[name] || (attributeCache[name] = name.replace(/([A-Z])/g, (n) => "-" + n.toLowerCase())));
-	if (props.hasOwnProperty("children")) instance.textContent = children;
-	for (const name in style) if (style.hasOwnProperty(name)) {
-		const value = dangerousStyleValue(name, style[name]);
-		if (isCustomPropRE.test(name)) instance.style.setProperty(name, value);
-		else instance.style[name] = value;
-	}
-	names.forEach((name, i) => {
-		const value = values[i];
-		if (value !== void 0) instance.setAttribute(name, value);
-		else instance.removeAttribute(name);
-	});
-	if (props.hasOwnProperty("className")) if (className !== void 0) instance.className = className;
-	else instance.removeAttribute("class");
-	if (scrollTop !== void 0) instance.scrollTop = scrollTop;
-	if (scrollLeft !== void 0) instance.scrollLeft = scrollLeft;
-	if (props.hasOwnProperty("viewBox")) if (viewBox !== void 0) instance.setAttribute("viewBox", viewBox);
-	else instance.removeAttribute("viewBox");
-}
-let isUnitlessNumber = {
-	animationIterationCount: true,
-	borderImageOutset: true,
-	borderImageSlice: true,
-	borderImageWidth: true,
-	boxFlex: true,
-	boxFlexGroup: true,
-	boxOrdinalGroup: true,
-	columnCount: true,
-	columns: true,
-	flex: true,
-	flexGrow: true,
-	flexPositive: true,
-	flexShrink: true,
-	flexNegative: true,
-	flexOrder: true,
-	gridRow: true,
-	gridRowEnd: true,
-	gridRowSpan: true,
-	gridRowStart: true,
-	gridColumn: true,
-	gridColumnEnd: true,
-	gridColumnSpan: true,
-	gridColumnStart: true,
-	fontWeight: true,
-	lineClamp: true,
-	lineHeight: true,
-	opacity: true,
-	order: true,
-	orphans: true,
-	tabSize: true,
-	widows: true,
-	zIndex: true,
-	zoom: true,
-	fillOpacity: true,
-	floodOpacity: true,
-	stopOpacity: true,
-	strokeDasharray: true,
-	strokeDashoffset: true,
-	strokeMiterlimit: true,
-	strokeOpacity: true,
-	strokeWidth: true
-};
-const prefixKey = (prefix, key) => prefix + key.charAt(0).toUpperCase() + key.substring(1);
-const prefixes = [
-	"Webkit",
-	"Ms",
-	"Moz",
-	"O"
-];
-isUnitlessNumber = Object.keys(isUnitlessNumber).reduce((acc, prop) => {
-	prefixes.forEach((prefix) => acc[prefixKey(prefix, prop)] = acc[prop]);
-	return acc;
-}, isUnitlessNumber);
-/** The transform-functions
-* (https://developer.mozilla.org/fr/docs/Web/CSS/transform-function)
-* that you can pass as keys to your animated component style and that will be
-* animated. Perspective has been left out as it would conflict with the
-* non-transform perspective style.
-*/
-const domTransforms = /^(matrix3d|matrix|translate3d|translate[XYZ]?|scale3d|scale[XYZ]?|rotate3d|rotate[XYZ]?|skew[XY]?)$/;
-const pxTransforms = /^(translate)/;
-const degTransforms = /^(rotate|skew)/;
-/** Add a unit to the value when the value is unit-less (eg: a number) */
-const addUnit = (value, unit) => is.num(value) && value !== 0 ? value + unit : value;
-/**
-* Checks if the input value matches the identity value.
-*
-*     isValueIdentity(0, 0)              // => true
-*     isValueIdentity('0px', 0)          // => true
-*     isValueIdentity([0, '0px', 0], 0)  // => true
-*/
-const isValueIdentity = (value, id) => is.arr(value) ? value.every((v) => isValueIdentity(v, id)) : is.num(value) ? value === id : parseFloat(value) === id;
-/**
-* This AnimatedStyle will simplify animated components transforms by
-* interpolating all transform function passed as keys in the style object
-* including shortcuts such as x, y and z for translateX/Y/Z
-*/
-var AnimatedStyle = class extends AnimatedObject {
-	constructor({ x, y, z, ...style }) {
-		/**
-		* An array of arrays that contains the values (static or fluid)
-		* used by each transform function.
-		*/
-		const inputs = [];
-		/**
-		* An array of functions that take a list of values (static or fluid)
-		* and returns (1) a CSS transform string and (2) a boolean that's true
-		* when the transform has no effect (eg: an identity transform).
-		*/
-		const transforms = [];
-		if (x || y || z) {
-			inputs.push([
-				x || 0,
-				y || 0,
-				z || 0
-			]);
-			transforms.push((xyz) => [`translate3d(${xyz.map((v) => addUnit(v, "px")).join(",")})`, isValueIdentity(xyz, 0)]);
-		}
-		eachProp(style, (value, key) => {
-			if (key === "transform") {
-				inputs.push([value || ""]);
-				transforms.push((transform) => [transform, transform === ""]);
-			} else if (domTransforms.test(key)) {
-				delete style[key];
-				if (is.und(value)) return;
-				const unit = pxTransforms.test(key) ? "px" : degTransforms.test(key) ? "deg" : "";
-				inputs.push(toArray(value));
-				transforms.push(key === "rotate3d" ? ([x, y, z, deg]) => [`rotate3d(${x},${y},${z},${addUnit(deg, unit)})`, isValueIdentity(deg, 0)] : (input) => [`${key}(${input.map((v) => addUnit(v, unit)).join(",")})`, isValueIdentity(input, key.startsWith("scale") ? 1 : 0)]);
-			}
-		});
-		if (inputs.length) style.transform = new FluidTransform(inputs, transforms);
-		super(style);
-	}
-};
-/** @internal */
-var FluidTransform = class extends FluidValue {
-	constructor(inputs, transforms) {
-		super();
-		this.inputs = inputs;
-		this.transforms = transforms;
-		this._value = null;
-	}
-	get() {
-		return this._value || (this._value = this._get());
-	}
-	_get() {
-		let transform = "";
-		let identity = true;
-		each(this.inputs, (input, i) => {
-			const arg1 = getFluidValue(input[0]);
-			const [t, id] = this.transforms[i](is.arr(arg1) ? arg1 : input.map(getFluidValue));
-			transform += " " + t;
-			identity = identity && id;
-		});
-		return identity ? "none" : transform;
-	}
-	observerAdded(count) {
-		if (count == 1) each(this.inputs, (input) => each(input, (value) => hasFluidValue(value) && addFluidObserver(value, this)));
-	}
-	observerRemoved(count) {
-		if (count == 0) each(this.inputs, (input) => each(input, (value) => hasFluidValue(value) && removeFluidObserver(value, this)));
-	}
-	eventObserved(event) {
-		if (event.type == "change") this._value = null;
-		callFluidObservers(this, event);
-	}
-};
-const primitives = [
-	"a",
-	"abbr",
-	"address",
-	"area",
-	"article",
-	"aside",
-	"audio",
-	"b",
-	"base",
-	"bdi",
-	"bdo",
-	"big",
-	"blockquote",
-	"body",
-	"br",
-	"button",
-	"canvas",
-	"caption",
-	"cite",
-	"code",
-	"col",
-	"colgroup",
-	"data",
-	"datalist",
-	"dd",
-	"del",
-	"details",
-	"dfn",
-	"dialog",
-	"div",
-	"dl",
-	"dt",
-	"em",
-	"embed",
-	"fieldset",
-	"figcaption",
-	"figure",
-	"footer",
-	"form",
-	"h1",
-	"h2",
-	"h3",
-	"h4",
-	"h5",
-	"h6",
-	"head",
-	"header",
-	"hgroup",
-	"hr",
-	"html",
-	"i",
-	"iframe",
-	"img",
-	"input",
-	"ins",
-	"kbd",
-	"keygen",
-	"label",
-	"legend",
-	"li",
-	"link",
-	"main",
-	"map",
-	"mark",
-	"menu",
-	"menuitem",
-	"meta",
-	"meter",
-	"nav",
-	"noscript",
-	"object",
-	"ol",
-	"optgroup",
-	"option",
-	"output",
-	"p",
-	"param",
-	"picture",
-	"pre",
-	"progress",
-	"q",
-	"rp",
-	"rt",
-	"ruby",
-	"s",
-	"samp",
-	"script",
-	"section",
-	"select",
-	"small",
-	"source",
-	"span",
-	"strong",
-	"style",
-	"sub",
-	"summary",
-	"sup",
-	"table",
-	"tbody",
-	"td",
-	"textarea",
-	"tfoot",
-	"th",
-	"thead",
-	"time",
-	"title",
-	"tr",
-	"track",
-	"u",
-	"ul",
-	"var",
-	"video",
-	"wbr",
-	"circle",
-	"clipPath",
-	"defs",
-	"ellipse",
-	"foreignObject",
-	"g",
-	"image",
-	"line",
-	"linearGradient",
-	"mask",
-	"path",
-	"pattern",
-	"polygon",
-	"polyline",
-	"radialGradient",
-	"rect",
-	"stop",
-	"svg",
-	"text",
-	"tspan"
-];
-globals_exports.assign({
-	batchedUpdates: import__wp_global_react_dom.unstable_batchedUpdates,
-	createStringInterpolator,
-	colors
-});
-const animated = createHost(primitives, {
-	applyAnimatedValues,
-	createAnimatedStyle: (style) => new AnimatedStyle(style),
-	getComponentProps: ({ scrollTop, scrollLeft, ...props }) => props
-}).animated;
-
-// packages/fields/build-module/components/media-edit/use-moving-animation.mjs
-function getAbsolutePosition(element) {
-	return {
-		top: element.offsetTop,
-		left: element.offsetLeft
-	};
-}
-/**
-* Hook used to compute the styles required to move a div into a new position.
-*
-* The way this animation works is the following:
-*  - It first renders the element as if there was no animation.
-*  - It takes a snapshot of the position of the element to use it
-*    as a destination point for the animation.
-*  - It restores the element to the previous position using a CSS transform
-*
-* Only animates on reorder of same items.
-* Cancels running animations when the set of items changes (e.g. an item is added or removed).
-*
-* @param index    Position of the element in the list; the animation runs when it changes.
-* @param itemsKey Identifies the set of items in the list, regardless of order.
-*/
-function useMovingAnimation(index, itemsKey) {
-	const ref = (0, import_element.useRef)(null);
-	const previousRef = (0, import_element.useRef)(void 0);
-	const previousItemsKeyRef = (0, import_element.useRef)(itemsKey);
-	if (ref.current) previousRef.current = getAbsolutePosition(ref.current);
-	(0, import_element.useLayoutEffect)(() => {
-		const hasItemsChanged = previousItemsKeyRef.current !== itemsKey;
-		previousItemsKeyRef.current = itemsKey;
-		const previous = previousRef.current;
-		if (!previous || !ref.current) return;
-		if (hasItemsChanged) {
-			ref.current.style.transform = "";
-			return;
-		}
-		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-		const controller = new Controller({
-			x: 0,
-			y: 0,
-			config: {
-				mass: 5,
-				tension: 2e3,
-				friction: 200
-			},
-			onChange({ value }) {
-				if (!ref.current) return;
-				let { x, y } = value;
-				x = Math.round(x);
-				y = Math.round(y);
-				const finishedMoving = x === 0 && y === 0;
-				ref.current.style.transform = finishedMoving ? "" : `translate3d(${x}px,${y}px,0)`;
-			}
-		});
-		ref.current.style.transform = "";
-		const destination = getAbsolutePosition(ref.current);
-		const x = Math.round(previous.left - destination.left);
-		const y = Math.round(previous.top - destination.top);
-		controller.start({
-			x: 0,
-			y: 0,
-			from: {
-				x,
-				y
-			}
-		});
-		return () => {
-			controller.stop();
-			controller.set({
-				x: 0,
-				y: 0
-			});
-		};
-	}, [index, itemsKey]);
-	return ref;
-}
-
-// packages/fields/build-module/components/media-edit/index.mjs
-var import_blob = require_blob();
-var import_html_entities = require_html_entities();
+// routes/lock-unlock/index.ts
 var import_media_utils = require_media_utils();
-var import_notices = require_notices();
-const { MediaUploadModal } = unlock(import_media_utils.privateApis);
-function AnimatedMediaItem({ children, index, itemsKey, className }) {
-	const ref = useMovingAnimation(index, itemsKey);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref,
-		className,
-		children
-	});
-}
-function normalizeValue(value) {
-	if (Array.isArray(value)) return value;
-	return value ? [value] : [];
-}
-/**
-* Conditional Media component that uses MediaUploadModal when experiment is enabled,
-* otherwise falls back to media-utils MediaUpload. Also what `FilteredMediaUpload`
-* falls back to when nothing is registered on `editor.MediaUpload`, as in tests.
-*
-* @param root0          Component props.
-* @param root0.render   Render prop function that receives { open } object.
-* @param root0.multiple Whether to allow multiple media selections; `'add'` keeps the current selection in the legacy media frame.
-* @return The component.
-*/
-function ConditionalMediaUpload({ render, multiple, ...props }) {
-	const [isModalOpen, setIsModalOpen] = (0, import_element.useState)(false);
-	if (window.__experimentalDataViewsMediaModal) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [render && render({ open: () => setIsModalOpen(true) }), isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaUploadModal, {
-		...props,
-		multiple: !!multiple,
-		isOpen: isModalOpen,
-		onClose: () => {
-			setIsModalOpen(false);
-			props.onClose?.();
-		},
-		onSelect: (media) => {
-			setIsModalOpen(false);
-			props.onSelect?.(media);
-		}
-	})] });
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_media_utils.MediaUpload, {
-		...props,
-		render,
-		multiple
-	});
-}
-const FilteredMediaUpload = (0, import_components.withFilters)("editor.MediaUpload")(ConditionalMediaUpload);
-function MediaPickerButton({ open, children, label, showTooltip = false, onFilesDrop, attachment, isUploading = false }) {
-	const isBlob = attachment && (0, import_blob.isBlobURL)(attachment.source_url);
-	const mediaPickerButton = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx("fields__media-edit-picker-button", { "has-attachment": attachment }),
-		role: "button",
-		tabIndex: 0,
-		onClick: () => {
-			if (!isUploading) open();
-		},
-		onKeyDown: (event) => {
-			if (isUploading) return;
-			if (event.key === "Enter" || event.key === " ") {
-				event.preventDefault();
-				open();
-			}
-		},
-		"aria-label": label,
-		"aria-disabled": isUploading,
-		children: [
-			children,
-			isBlob && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: "fields__media-edit-picker-button-spinner",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Spinner, {})
-			}),
-			!isUploading && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.DropZone, { onFilesDrop: (files) => onFilesDrop(files, attachment?.id) })
-		]
-	});
-	if (!showTooltip) return mediaPickerButton;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Root$7, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trigger$3, { render: mediaPickerButton }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Popup$1, { children: label })] });
-}
-const archiveMimeTypes = [
-	"application/zip",
-	"application/x-zip-compressed",
-	"application/x-rar-compressed",
-	"application/x-7z-compressed",
-	"application/x-tar",
-	"application/x-gzip"
-];
-function MediaTitle({ attachment }) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalTruncate, {
-		className: "fields__media-edit-filename",
-		children: (0, import_html_entities.decodeEntities)(attachment.title.rendered)
-	});
-}
-function MediaEditPlaceholder(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaPickerButton, {
-		...props,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: "fields__media-edit-placeholder",
-			children: props.label
-		})
-	});
-}
-function MoveButtons({ itemId, index, totalItems, isUploading, moveItem, orientation = "vertical" }) {
-	const isHorizontal = orientation === "horizontal";
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-		__next40pxDefaultSize: true,
-		icon: isHorizontal ? chevron_left_default : chevron_up_default,
-		label: isHorizontal ? (0, import_i18n.__)("Move left") : (0, import_i18n.__)("Move up"),
-		size: "small",
-		disabled: isUploading || index === 0,
-		accessibleWhenDisabled: true,
-		tooltipPosition: "top",
-		onClick: (event) => {
-			event.stopPropagation();
-			moveItem(itemId, "up");
-		}
-	}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-		__next40pxDefaultSize: true,
-		icon: isHorizontal ? chevron_right_default : chevron_down_default,
-		label: isHorizontal ? (0, import_i18n.__)("Move right") : (0, import_i18n.__)("Move down"),
-		size: "small",
-		disabled: isUploading || index === totalItems - 1,
-		accessibleWhenDisabled: true,
-		tooltipPosition: "top",
-		onClick: (event) => {
-			event.stopPropagation();
-			moveItem(itemId, "down");
-		}
-	})] });
-}
-function MediaPreview({ attachment }) {
-	const url = attachment.source_url;
-	const mimeType = attachment.mime_type || "";
-	if (mimeType.startsWith("image")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-		className: "fields__media-edit-thumbnail",
-		alt: attachment.alt_text || "",
-		src: url
-	});
-	else if (mimeType.startsWith("audio")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Icon, { icon: audio_default });
-	else if (mimeType.startsWith("video")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Icon, { icon: video_default });
-	else if (archiveMimeTypes.includes(mimeType)) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Icon, { icon: archive_default });
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Icon, { icon: file_default });
-}
-/**
-* Identifies the set of items regardless of their order, so a reorder can be
-* told apart from items being added or removed.
-*
-* @param items The items in the list.
-* @return A key that only changes when items are added or removed.
-*/
-function getItemsKey(items) {
-	return (items ?? []).map((item) => String(item.id)).sort().join(",");
-}
-function ExpandedMediaEditAttachments({ allItems, addButtonLabel, multiple, removeItem, moveItem, open, onFilesDrop, isUploading, setTargetItemId }) {
-	const itemsKey = getItemsKey(allItems);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: clsx("fields__media-edit-expanded", {
-			"is-multiple": multiple,
-			"is-single": !multiple,
-			"is-empty": !allItems?.length
-		}),
-		children: [allItems?.map((attachment, index) => {
-			const hasPreviewImage = attachment.mime_type?.startsWith("image");
-			const isBlob = (0, import_blob.isBlobURL)(attachment.source_url);
-			const attachmentNumericId = attachment.id;
-			return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(AnimatedMediaItem, {
-				index,
-				itemsKey,
-				className: clsx("fields__media-edit-expanded-item", { "has-preview-image": hasPreviewImage }),
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaPickerButton, {
-					open: () => {
-						setTargetItemId(attachmentNumericId);
-						open();
-					},
-					label: !isBlob ? (0, import_i18n.sprintf)(
-						/** translators: %s: The title of the media item. */
-						(0, import_i18n.__)("Replace %s"),
-						(0, import_html_entities.decodeEntities)(attachment.title.rendered)
-					) : (0, import_i18n.__)("Replace"),
-					showTooltip: true,
-					onFilesDrop,
-					attachment,
-					isUploading,
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "fields__media-edit-expanded-preview",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalVStack, {
-							spacing: 0,
-							alignment: "center",
-							justify: "center",
-							className: "fields__media-edit-expanded-preview-stack",
-							children: (!isBlob || hasPreviewImage) && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaPreview, { attachment })
-						})
-					})
-				}), !isBlob && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "fields__media-edit-expanded-overlay",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
-						className: "fields__media-edit-expanded-actions",
-						spacing: 0,
-						alignment: "flex-end",
-						expanded: false,
-						children: [multiple && allItems.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoveButtons, {
-							itemId: attachmentNumericId,
-							index,
-							totalItems: allItems.length,
-							isUploading,
-							moveItem,
-							orientation: "horizontal"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-							__next40pxDefaultSize: true,
-							icon: close_small_default,
-							label: (0, import_i18n.__)("Remove"),
-							size: "small",
-							disabled: isUploading,
-							accessibleWhenDisabled: true,
-							tooltipPosition: "top",
-							onClick: (event) => {
-								event.stopPropagation();
-								removeItem(attachmentNumericId);
-							}
-						})]
-					})
-				})]
-			}, attachment.id);
-		}), (multiple || !allItems?.length) && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditPlaceholder, {
-			open: () => {
-				setTargetItemId(void 0);
-				open();
-			},
-			label: addButtonLabel,
-			onFilesDrop,
-			isUploading
-		})]
-	});
-}
-function CompactMediaEditAttachments({ allItems, addButtonLabel, multiple, removeItem, moveItem, open, onFilesDrop, isUploading, setTargetItemId }) {
-	const itemsKey = getItemsKey(allItems);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [!!allItems?.length && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: clsx("fields__media-edit-compact-group", { "is-single": allItems.length === 1 }),
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalVStack, {
-			spacing: 0,
-			children: allItems.map((attachment, index) => {
-				const isBlob = (0, import_blob.isBlobURL)(attachment.source_url);
-				const showMoveButtons = multiple && allItems.length > 1;
-				const attachmentNumericId = attachment.id;
-				return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(AnimatedMediaItem, {
-					index,
-					itemsKey,
-					className: "fields__media-edit-compact",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaPickerButton, {
-						open: () => {
-							setTargetItemId(attachmentNumericId);
-							open();
-						},
-						label: (0, import_i18n.__)("Replace"),
-						showTooltip: true,
-						onFilesDrop,
-						attachment,
-						isUploading,
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaPreview, { attachment }), !isBlob && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaTitle, { attachment })] })
-					}), !isBlob && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalHStack, {
-						className: "fields__media-edit-compact-movers",
-						spacing: 0,
-						alignment: "flex-end",
-						expanded: false,
-						children: [showMoveButtons && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MoveButtons, {
-							itemId: attachmentNumericId,
-							index,
-							totalItems: allItems.length,
-							isUploading,
-							moveItem,
-							orientation: "vertical"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.Button, {
-							__next40pxDefaultSize: true,
-							icon: close_small_default,
-							label: (0, import_i18n.__)("Remove"),
-							size: "small",
-							disabled: isUploading,
-							accessibleWhenDisabled: true,
-							tooltipPosition: "top",
-							onClick: (event) => {
-								event.stopPropagation();
-								removeItem(attachmentNumericId);
-							}
-						})]
-					})]
-				}, attachment.id);
-			})
-		})
-	}), (multiple || !allItems?.length) && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditPlaceholder, {
-		open: () => {
-			setTargetItemId(void 0);
-			open();
-		},
-		label: addButtonLabel,
-		onFilesDrop,
-		isUploading
-	})] });
-}
-/**
-* A media edit control component that provides a media picker UI with upload functionality
-* for selecting WordPress media attachments. Supports both the traditional WordPress media
-* library and the experimental DataViews media modal.
-*
-* This component is intended to be used as the `Edit` property of a field definition when
-* registering fields with `registerEntityField` from `@wordpress/editor`.
-*
-* @template Item - The type of the item being edited.
-*
-* @param {MediaEditProps<Item>} props                       - The component props.
-* @param {Item}                 props.data                  - The item being edited.
-* @param {Object}               props.field                 - The field configuration with getValue and setValue methods.
-* @param {Function}             props.onChange              - Callback function when the media selection changes.
-* @param {string[]}             [props.allowedTypes]        - Array of allowed media types. Use `['*']` to allow all file types. Default `['image']`.
-* @param {boolean}              [props.multiple]            - Whether to allow multiple media selections. Default `false`.
-* @param {boolean}              [props.hideLabelFromVision] - Whether the label should be hidden from vision.
-* @param {boolean}              [props.isExpanded]          - Whether to render in an expanded form. Default `false`.
-*
-* @return {React.JSX.Element} The media edit control component.
-*
-* @example
-* ```tsx
-* import { MediaEdit } from '@wordpress/fields';
-* import type { DataFormControlProps } from '@wordpress/dataviews';
-*
-* const featuredImageField = {
-*   id: 'featured_media',
-*   type: 'media',
-*   label: 'Featured Image',
-*   Edit: (props: DataFormControlProps<MyPostType>) => (
-*     <MediaEdit
-*       {...props}
-*       allowedTypes={['image']}
-*     />
-*   ),
-* };
-* ```
-*/
-function MediaEdit(props) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaEditControl, { ...props });
-}
-function MediaEditControl({ data, field, onChange, hideLabelFromVision, allowedTypes = ["image"], multiple, isExpanded, validity, isPickerFiltered, featuredImageFlow, pickerTitle }) {
-	const MediaUploadComponent = isPickerFiltered ? FilteredMediaUpload : ConditionalMediaUpload;
-	const value = field.getValue({ item: data });
-	const canUpload = (0, import_data.useSelect)((select) => select(import_core_data.store).canUser("create", {
-		kind: "postType",
-		name: "attachment"
-	}) ?? true, []);
-	const [isTouched, setIsTouched] = (0, import_element.useState)(false);
-	const validityTargetRef = (0, import_element.useRef)(null);
-	const [customValidity, setCustomValidity] = (0, import_element.useState)(void 0);
-	(0, import_element.useEffect)(() => {
-		const validityTarget = validityTargetRef.current;
-		const handler = () => {
-			setIsTouched(true);
-		};
-		validityTarget?.addEventListener("invalid", handler);
-		return () => validityTarget?.removeEventListener("invalid", handler);
-	}, []);
-	const attachments = (0, import_data.useSelect)((select) => {
-		if (!value) return null;
-		const sortedIds = normalizeValue(value).toSorted((a, b) => a - b);
-		const { getEntityRecords } = select(import_core_data.store);
-		return getEntityRecords("postType", "attachment", { include: sortedIds });
-	}, [value]);
-	const stableAttachmentsRef = (0, import_element.useRef)(null);
-	if (attachments !== null) stableAttachmentsRef.current = attachments;
-	let stableAttachments = attachments;
-	if (attachments === null && stableAttachmentsRef.current && value) {
-		const stableIds = new Set(stableAttachmentsRef.current.map((a) => a.id));
-		if (normalizeValue(value).every((id) => stableIds.has(id))) stableAttachments = stableAttachmentsRef.current;
-	}
-	const orderedAttachments = (0, import_element.useMemo)(() => {
-		if (!stableAttachments) return null;
-		const normalizedValue = normalizeValue(value);
-		const attachmentMap = new Map(stableAttachments.map((a) => [a.id, a]));
-		return normalizedValue.map((id) => attachmentMap.get(id)).filter((a) => a !== void 0);
-	}, [stableAttachments, value]);
-	const { createErrorNotice } = (0, import_data.useDispatch)(import_notices.store);
-	const { receiveEntityRecords } = (0, import_data.useDispatch)(import_core_data.store);
-	const [targetItemId, setTargetItemId] = (0, import_element.useState)();
-	const openModalRef = (0, import_element.useRef)(void 0);
-	const [pendingOpen, setPendingOpen] = (0, import_element.useState)(false);
-	const [blobs, setBlobs] = (0, import_element.useState)([]);
-	(0, import_element.useEffect)(() => {
-		if (pendingOpen) {
-			setPendingOpen(false);
-			openModalRef.current?.();
-		}
-	}, [pendingOpen]);
-	const onChangeControl = (0, import_element.useCallback)((newValue) => onChange(field.setValue({
-		item: data,
-		value: newValue
-	})), [
-		data,
-		field,
-		onChange
-	]);
-	const removeItem = (0, import_element.useCallback)((itemId) => {
-		const newIds = normalizeValue(value).filter((id) => id !== itemId);
-		setIsTouched(true);
-		onChangeControl(newIds.length ? newIds : void 0);
-	}, [value, onChangeControl]);
-	const moveItem = (0, import_element.useCallback)((itemId, direction) => {
-		if (!orderedAttachments) return;
-		const currentIds = orderedAttachments.map((a) => a.id);
-		const index = currentIds.indexOf(itemId);
-		const newIndex = direction === "up" ? index - 1 : index + 1;
-		[currentIds[index], currentIds[newIndex]] = [currentIds[newIndex], currentIds[index]];
-		onChangeControl(currentIds);
-	}, [orderedAttachments, onChangeControl]);
-	const onFilesDrop = (0, import_element.useCallback)((files, _targetItemId) => {
-		setTargetItemId(_targetItemId);
-		(0, import_media_utils.uploadMedia)({
-			allowedTypes: allowedTypes?.length ? allowedTypes : void 0,
-			filesList: files,
-			onFileChange(uploadedMedia) {
-				const blobUrls = uploadedMedia.filter((item) => (0, import_blob.isBlobURL)(item.url)).map((item) => item.url);
-				setBlobs(blobUrls);
-				if (!!blobUrls.length) return;
-				receiveEntityRecords("postType", "attachment", [], void 0, true);
-				const uploadedIds = uploadedMedia.map((item) => item.id);
-				if (!multiple) {
-					onChangeControl(uploadedIds[0]);
-					setTargetItemId(void 0);
-					return;
-				}
-				const currentValue = normalizeValue(value);
-				if (_targetItemId === void 0) onChangeControl([...currentValue, ...uploadedIds]);
-				else {
-					const newValue = [...currentValue];
-					newValue.splice(currentValue.indexOf(_targetItemId), 1, ...uploadedIds);
-					onChangeControl(newValue);
-				}
-				setTargetItemId(void 0);
-			},
-			onError(error) {
-				setTargetItemId(void 0);
-				setBlobs([]);
-				createErrorNotice(error.message, { type: "snackbar" });
-			},
-			multiple: !!multiple
-		});
-	}, [
-		allowedTypes,
-		value,
-		multiple,
-		createErrorNotice,
-		onChangeControl,
-		receiveEntityRecords
-	]);
-	const addButtonLabel = field.placeholder || (multiple ? (0, import_i18n.__)("Choose files") : (0, import_i18n.__)("Choose file"));
-	const allItems = (0, import_element.useMemo)(() => {
-		if (!blobs.length) return orderedAttachments;
-		const items = [...orderedAttachments || []];
-		const blobItems = blobs.map((url) => ({
-			id: url,
-			source_url: url,
-			mime_type: (0, import_blob.getBlobTypeByURL)(url)
-		}));
-		if (targetItemId !== void 0) {
-			const targetIndex = items.findIndex((a) => a.id === targetItemId);
-			items.splice(targetIndex, 1, ...blobItems);
-		} else items.push(...blobItems);
-		return items;
-	}, [
-		orderedAttachments,
-		targetItemId,
-		blobs
-	]);
-	(0, import_element.useEffect)(() => {
-		if (!isTouched) return;
-		const input = validityTargetRef.current;
-		if (!input) return;
-		if (validity) {
-			const customValidityResult = validity?.custom;
-			setCustomValidity(customValidityResult);
-			if (customValidityResult?.type === "invalid") input.setCustomValidity(customValidityResult.message || (0, import_i18n.__)("Invalid"));
-			else input.setCustomValidity("");
-		} else {
-			input.setCustomValidity("");
-			setCustomValidity(void 0);
-		}
-	}, [
-		isTouched,
-		field.isValid,
-		validity
-	]);
-	(0, import_element.useEffect)(() => {
-		if (isTouched && customValidity?.message) speak(customValidity.message);
-	}, [isTouched, customValidity?.message]);
-	const onBlur = (0, import_element.useCallback)((event) => {
-		if (isTouched) return;
-		if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) setIsTouched(true);
-	}, [isTouched]);
-	if (!canUpload) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("fieldset", {
-		className: "fields__media-edit",
-		"data-field-id": field.id,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, { children: (0, import_i18n.sprintf)(
-			/** translators: %s: The field label. */
-			(0, import_i18n.__)("%s: To edit this field, you need permission to upload media."),
-			field.label
-		) })
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Stack, {
-		direction: "column",
-		gap: "sm",
-		onBlur,
-		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("fieldset", {
-				className: "fields__media-edit",
-				"data-field-id": field.id,
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MediaUploadComponent, {
-					title: pickerTitle ?? field.label,
-					featuredImageFlow,
-					unstableFeaturedImageFlow: featuredImageFlow,
-					onSelect: (selectedMedia) => {
-						if (!multiple) {
-							onChangeControl(selectedMedia.id);
-							setTargetItemId(void 0);
-							return;
-						}
-						const newIds = Array.isArray(selectedMedia) ? selectedMedia.map((m) => m.id) : [selectedMedia.id];
-						const currentValue = normalizeValue(value);
-						if (!currentValue.length) onChangeControl(newIds);
-						else if (targetItemId === void 0) {
-							const existingItems = currentValue.filter((id) => newIds.includes(id));
-							const newItems = newIds.filter((id) => !currentValue.includes(id));
-							onChangeControl([...existingItems, ...newItems]);
-						} else if (selectedMedia.id !== targetItemId) {
-							const filtered = currentValue.filter((id) => id !== selectedMedia.id);
-							onChangeControl(filtered.map((id) => id === targetItemId ? selectedMedia.id : id));
-						}
-						setTargetItemId(void 0);
-					},
-					onClose: () => setTargetItemId(void 0),
-					allowedTypes,
-					value: targetItemId !== void 0 ? targetItemId : value,
-					multiple: multiple && targetItemId === void 0 ? "add" : false,
-					render: ({ open }) => {
-						openModalRef.current = open;
-						const AttachmentsComponent = isExpanded ? ExpandedMediaEditAttachments : CompactMediaEditAttachments;
-						return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_components.__experimentalVStack, {
-							spacing: 2,
-							children: [
-								field.label && (hideLabelFromVision ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
-									render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("legend", {}),
-									children: field.label
-								}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.BaseControl.VisualLabel, {
-									as: "legend",
-									style: { marginBottom: 0 },
-									children: field.label
-								})),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(AttachmentsComponent, {
-									allItems,
-									addButtonLabel,
-									multiple,
-									removeItem,
-									moveItem,
-									open: () => setPendingOpen(true),
-									onFilesDrop,
-									isUploading: !!blobs.length,
-									setTargetItemId
-								}),
-								field.description && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_components.__experimentalText, {
-									variant: "muted",
-									className: "fields__media-edit-description",
-									children: field.description
-								})
-							]
-						});
-					}
-				})
-			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-				type: "text",
-				ref: validityTargetRef,
-				value: value ?? "",
-				tabIndex: -1,
-				"aria-hidden": "true",
-				onChange: () => {}
-			}) }),
-			customValidity && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ValidityIndicator, {
-				type: customValidity.type,
-				message: customValidity.message
-			})
-		]
-	});
-}
+var import_html_entities = require_html_entities();
+const { lock, unlock } = (0, import_private_apis.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/routes");
 
 // packages/style-runtime/src/index.ts
 const STYLE_HASH_ATTRIBUTE = "data-wp-hash";
@@ -38421,10 +34790,11 @@ function registerStyle(hash, css) {
 }
 
 // routes/identity/style.module.scss
-registerStyle("ba75948052", ":root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#3858e9;--wp-admin-theme-color--rgb:56,88,233;--wp-admin-theme-color-darker-10:#2145e6;--wp-admin-theme-color-darker-10--rgb:33.0384615385,68.7307692308,230.4615384615;--wp-admin-theme-color-darker-20:#183ad6;--wp-admin-theme-color-darker-20--rgb:23.6923076923,58.1538461538,214.3076923077;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}body.admin-color-fresh{--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){body.admin-color-fresh{--wp-admin-border-width-focus:1.5px}}fieldset.fields__media-edit{border:0;margin:0;padding:0;width:100%}fieldset.fields__media-edit .components-base-control__label{color:#1e1e1e}fieldset.fields__media-edit .fields__media-edit-description{font-size:12px;line-height:1.5}fieldset.fields__media-edit{container-type:inline-size}fieldset.fields__media-edit .fields__media-edit-compact-group{border:1px dashed #949494;border-radius:4px}fieldset.fields__media-edit .fields__media-edit-compact-group.is-single{border-radius:2px}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-picker-button{border:0}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-picker-button:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px));outline-offset:calc(var(--wpds-border-width-focus, var(--wp-admin-border-width-focus, 2px)) + 1px)}fieldset.fields__media-edit .fields__media-edit-compact-group .fields__media-edit-compact:not(:last-child){border-bottom:1px solid #f0f0f0}fieldset.fields__media-edit .fields__media-edit-compact .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-compact .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-compact{min-width:0;position:relative}fieldset.fields__media-edit .fields__media-edit-compact:focus-within .fields__media-edit-compact-movers,fieldset.fields__media-edit .fields__media-edit-compact:hover .fields__media-edit-compact-movers{opacity:1}fieldset.fields__media-edit .fields__media-edit-compact .fields__media-edit-compact-movers{background:#fff;border-radius:2px;opacity:0;pointer-events:none;position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:1}fieldset.fields__media-edit .fields__media-edit-compact .fields__media-edit-compact-movers *{pointer-events:auto}fieldset.fields__media-edit .fields__media-edit-picker-button:has(.fields__media-edit-placeholder):not(.fields__media-edit-expanded *) .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-picker-button:has(.fields__media-edit-placeholder):not(.fields__media-edit-expanded *) .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-picker-button{align-items:center;border:1px dashed #949494;border-radius:2px;cursor:var(--wpds-cursor-control,pointer);display:flex;gap:8px;min-height:40px;min-width:0;padding:4px 8px;position:relative}fieldset.fields__media-edit .fields__media-edit-picker-button:not(.has-attachment){border-color:var(--wp-admin-theme-color);color:var(--wp-admin-theme-color)}fieldset.fields__media-edit .fields__media-edit-picker-button:not(.has-attachment):hover{background-color:color-mix(in srgb,var(--wp-admin-theme-color,#3858e9) 4%,transparent);border-color:var(--wp-admin-theme-color-darker-20);color:var(--wp-admin-theme-color-darker-20)}fieldset.fields__media-edit .fields__media-edit-picker-button:hover{color:var(--wp-admin-theme-color)}fieldset.fields__media-edit .fields__media-edit-picker-button[aria-disabled=true]{cursor:default;opacity:.6}fieldset.fields__media-edit .fields__media-edit-picker-button:focus-visible{outline:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px)) solid var(--focus-color,var(--wpds-color-stroke-focus,var(--wp-admin-theme-color,#3858e9)));outline-offset:var(--wpds-border-width-focus,var(--wp-admin-border-width-focus,2px))}fieldset.fields__media-edit .fields__media-edit-picker-button .fields__media-edit-picker-button-spinner{left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);z-index:1}fieldset.fields__media-edit .fields__media-edit-filename,fieldset.fields__media-edit .fields__media-edit-placeholder{flex:1;min-width:0;width:100%}fieldset.fields__media-edit .fields__media-edit-placeholder{text-align:center}fieldset.fields__media-edit .fields__media-edit-thumbnail{aspect-ratio:1/1;background-image:repeating-linear-gradient(45deg,#e0e0e0 25%,transparent 0,transparent 75%,#e0e0e0 0,#e0e0e0),repeating-linear-gradient(45deg,#e0e0e0 25%,transparent 0,transparent 75%,#e0e0e0 0,#e0e0e0);background-position:0 0,4px 4px;background-size:8px 8px;border-radius:2px;flex-shrink:0;width:24px}fieldset.fields__media-edit .fields__media-edit-expanded{display:grid;gap:8px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .components-drop-zone .components-drop-zone__content-inner{align-items:center;display:flex;gap:8px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .components-drop-zone .components-drop-zone__content-inner .components-drop-zone__content-icon{margin:0}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-preview{align-items:center;aspect-ratio:var(--fields-media-edit-expanded-multiple-aspect-ratio,3/2);border-radius:2px;display:flex;justify-content:center;overflow:hidden;padding:4px;position:relative;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-preview .fields__media-edit-expanded-preview-stack{height:100%;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-overlay{bottom:0;left:0;opacity:0;pointer-events:none;position:absolute;right:0;top:0}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-overlay *{pointer-events:auto}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-actions{background:#fff;border-radius:2px;position:absolute;right:4px;top:4px}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item{border-radius:4px;min-width:0;position:relative}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:focus-within .fields__media-edit-expanded-overlay,fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:hover .fields__media-edit-expanded-overlay{opacity:1}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-expanded-item:not(.has-preview-image) .fields__media-edit-expanded-preview-stack{padding:8px}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-thumbnail{background-image:repeating-linear-gradient(45deg,#e0e0e0 25%,transparent 0,transparent 75%,#e0e0e0 0,#e0e0e0),repeating-linear-gradient(45deg,#e0e0e0 25%,transparent 0,transparent 75%,#e0e0e0 0,#e0e0e0);background-position:0 0,12px 12px;background-size:24px 24px;height:100%;object-fit:cover;object-position:50% 50%;width:100%}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-filename{flex:none;text-align:center}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-picker-button-spinner svg{margin:0}fieldset.fields__media-edit .fields__media-edit-expanded.is-single{grid-template-columns:1fr}fieldset.fields__media-edit .fields__media-edit-expanded.is-single .fields__media-edit-expanded-preview{aspect-ratio:2/1}fieldset.fields__media-edit .fields__media-edit-expanded .fields__media-edit-picker-button{border-radius:4px}fieldset.fields__media-edit .fields__media-edit-expanded.is-empty .fields__media-edit-picker-button{border-radius:2px}fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty){grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}@container (max-width: 500px){fieldset.fields__media-edit .fields__media-edit-expanded.is-multiple:not(.is-empty){grid-template-columns:repeat(auto-fill,minmax(105px,1fr))}}fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields__media-edit-picker-button{padding:0}fieldset.fields__media-edit .fields__media-edit-expanded:not(.is-empty) .fields__media-edit-placeholder{align-items:center;aspect-ratio:var(--fields-media-edit-expanded-multiple-aspect-ratio,3/2);display:flex;justify-content:center}._6aab95a7e0557262__form{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);flex-grow:1;min-height:0;overflow:auto;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}");
-var style_module_default = { "form": "_6aab95a7e0557262__form" };
+registerStyle("7b5484e145", "._9bd44f741f81cfd3__form{background-color:var(--wpds-color-background-surface-neutral-strong,#fff);flex-grow:1;min-height:0;overflow:auto;padding:var(--wpds-dimension-padding-lg,16px) var(--wpds-dimension-padding-2xl,24px)}");
+var style_module_default = { "form": "_9bd44f741f81cfd3__form" };
 
 // routes/identity/stage.tsx
+const { MediaEdit } = unlock(import_media_utils.privateApis);
 function MediaEditWithEditorAssets(props) {
 	const [isReady, setIsReady] = (0, import_element.useState)(() => !!window.wp?.media);
 	(0, import_element.useEffect)(() => {
