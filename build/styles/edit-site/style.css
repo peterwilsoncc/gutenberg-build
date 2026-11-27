@@ -4632,8 +4632,9 @@ html.canvas-mode-edit-transition::view-transition-group(toggle) {
   top: auto;
   bottom: 0;
 }
-.edit-site-layout__actions.is-entity-save-view-open:focus, .edit-site-layout__actions.is-entity-save-view-open:focus-within {
+.edit-site-layout__actions.is-entity-save-view-open {
   top: var(--wp-admin--admin-bar--height, 0);
+  bottom: 0;
 }
 @media (min-width: 782px) {
   .edit-site-layout__actions {
