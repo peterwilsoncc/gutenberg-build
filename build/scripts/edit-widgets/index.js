@@ -6873,6 +6873,7 @@ Icon: ButtonIcon });
 	}
 
 // packages/edit-widgets/build-module/components/keyboard-shortcut-help-modal/config.mjs
+/** @type {Array<import('react').ComponentProps<typeof import('./shortcut').default>>} */
 	const textFormattingShortcuts = [
 		{
 			keyCombination: {
@@ -6904,6 +6905,10 @@ Icon: ButtonIcon });
 		},
 		{
 			keyCombination: { character: "[[" },
+			ariaLabel: (0, _wordpress_i18n.__)(
+				/** translators: The keyboard sequence [[, pressing the left bracket key twice. */
+				"Left bracket twice"
+			),
 			description: (0, _wordpress_i18n.__)("Insert a link to a post or page.")
 		},
 		{
@@ -6955,22 +6960,42 @@ Icon: ButtonIcon });
 	];
 
 // packages/edit-widgets/build-module/components/keyboard-shortcut-help-modal/shortcut.mjs
-	function KeyCombination({ keyCombination, forceAriaLabel }) {
-		const shortcut = keyCombination.modifier ? _wordpress_keycodes.displayShortcutList[keyCombination.modifier](keyCombination.character) : keyCombination.character;
-		const ariaLabel = keyCombination.modifier ? _wordpress_keycodes.shortcutAriaLabel[keyCombination.modifier](keyCombination.character) : keyCombination.character;
-		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("kbd", {
+/**
+	* @typedef {Object} ShortcutKeyCombination
+	* @property {string}                                                 character  Shortcut key.
+	* @property {import('@wordpress/keycodes').WPKeycodeModifier | null} [modifier] Optional shortcut modifier.
+	*/
+	/**
+	* @param {Object}                 props                Component props.
+	* @param {ShortcutKeyCombination} props.keyCombination Shortcut to display.
+	* @param {string}                 [props.ariaLabel]    Custom readable shortcut label.
+	*/
+	function KeyCombination({ keyCombination, ariaLabel }) {
+		const { character, modifier } = keyCombination;
+		const normalizedModifier = modifier ?? "undefined";
+		const keys = _wordpress_keycodes.displayShortcutList[normalizedModifier](character);
+		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("kbd", {
 			className: "edit-widgets-keyboard-shortcut-help-modal__shortcut-key-combination",
 			dir: "ltr",
-			"aria-label": forceAriaLabel || ariaLabel,
-			children: (Array.isArray(shortcut) ? shortcut : [shortcut]).map((character, index) => {
-				if (character === "+") return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_element.Fragment, { children: character }, index);
-				return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("kbd", {
+			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(VisuallyHidden, {
+				render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {}),
+				children: ariaLabel || _wordpress_keycodes.shortcutAriaLabel[normalizedModifier](character)
+			}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", {
+				"aria-hidden": "true",
+				children: keys.map((key, index) => key === "+" && index < keys.length - 1 ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_element.Fragment, { children: key }, index) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)("kbd", {
 					className: "edit-widgets-keyboard-shortcut-help-modal__shortcut-key",
-					children: character
-				}, index);
-			})
+					children: key
+				}, index))
+			})]
 		});
 	}
+	/**
+	* @param {Object}                   props                Component props.
+	* @param {string}                   props.description    Description of the shortcut action.
+	* @param {ShortcutKeyCombination}   props.keyCombination Primary shortcut.
+	* @param {ShortcutKeyCombination[]} [props.aliases]      Alternative shortcuts.
+	* @param {string}                   [props.ariaLabel]    Custom readable shortcut label.
+	*/
 	function Shortcut({ description, keyCombination, aliases = [], ariaLabel }) {
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
 			className: "edit-widgets-keyboard-shortcut-help-modal__shortcut-description",
@@ -6979,10 +7004,10 @@ Icon: ButtonIcon });
 			className: "edit-widgets-keyboard-shortcut-help-modal__shortcut-term",
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(KeyCombination, {
 				keyCombination,
-				forceAriaLabel: ariaLabel
+				ariaLabel
 			}), aliases.map((alias, index) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(KeyCombination, {
 				keyCombination: alias,
-				forceAriaLabel: ariaLabel
+				ariaLabel
 			}, index))]
 		})] });
 	}
@@ -7055,11 +7080,7 @@ Icon: ButtonIcon });
 					categoryName: "block",
 					additionalShortcuts: [{
 						keyCombination: { character: "/" },
-						description: (0, _wordpress_i18n.__)("Change the block type after adding a new paragraph."),
-						ariaLabel: (0, _wordpress_i18n.__)(
-							/** translators: The forward-slash character. e.g. '/'. */
-							"Forward-slash"
-						)
+						description: (0, _wordpress_i18n.__)("Change the block type after adding a new paragraph.")
 					}]
 				}),
 				/* @__PURE__ */ (0, react_jsx_runtime.jsx)(ShortcutSection, {

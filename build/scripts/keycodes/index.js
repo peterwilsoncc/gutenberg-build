@@ -314,6 +314,22 @@
 				"~": (0, _wordpress_i18n.__)(
 					/** translators: tilde as in the character '~' */
 					"Tilde"
+				),
+				"/": (0, _wordpress_i18n.__)(
+					/** translators: forward slash as in the character '/' */
+					"Forward-slash"
+				),
+				"\\": (0, _wordpress_i18n.__)(
+					/** translators: backslash as in the character '\' */
+					"Backslash"
+				),
+				"+": (0, _wordpress_i18n.__)(
+					/** translators: plus as in the character '+' */
+					"Plus"
+				),
+				"-": (0, _wordpress_i18n.__)(
+					/** translators: minus as in the character '-' */
+					"Minus"
 				)
 			};
 			return [...modifier(_isApple), character].map((key) => capitaliseFirstCharacter(replacementKeyMap[key] ?? key)).join(isApple ? " " : " + ");

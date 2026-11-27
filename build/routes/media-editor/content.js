@@ -46876,15 +46876,13 @@ const SHORTCUTS = [
 	},
 	{
 		description: (0, import_i18n.__)("Pan"),
-		keyCombination: {
-			character: [
-				"↑",
-				"↓",
-				"←",
-				"→"
-			],
-			ariaLabel: (0, import_i18n.__)("Arrow keys")
-		}
+		keyCombination: { character: [
+			"↑",
+			"↓",
+			"←",
+			"→"
+		] },
+		label: (0, import_i18n.__)("Arrow keys")
 	},
 	{
 		description: (0, import_i18n.__)("Zoom in"),
@@ -46922,31 +46920,31 @@ const SHORTCUTS = [
 				"↓",
 				"←",
 				"→"
-			],
-			ariaLabel: (0, import_i18n.__)("Shift + Arrow keys")
-		}
+			]
+		},
+		label: (0, import_i18n.__)("Shift + Arrow keys")
 	}
 ];
-function KeyCombinationDisplay({ keyCombination }) {
-	const { modifier, character, ariaLabel } = keyCombination;
-	let keys;
-	if (Array.isArray(character)) {
-		if (modifier) keys = [...import_keycodes.displayShortcutList[modifier](character[0]).slice(0, -1), ...character];
-		else keys = character;
-	} else keys = modifier ? import_keycodes.displayShortcutList[modifier](character) : [character];
-	const charString = Array.isArray(character) ? character.join("") : character;
-	let label;
-	if (ariaLabel) label = ariaLabel;
-	else if (modifier) label = import_keycodes.shortcutAriaLabel[modifier](charString);
-	else label = charString;
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("kbd", {
+function KeyCombinationDisplay({ keyCombination, label }) {
+	const { character, modifier } = keyCombination;
+	const normalizedModifier = modifier ?? "undefined";
+	const characters = Array.isArray(character) ? character : [character];
+	const formatted = import_keycodes.displayShortcutList[normalizedModifier](characters[0] ?? "");
+	const prefix = formatted.slice(0, -1);
+	const keys = Array.isArray(character) ? [...prefix, ...character] : formatted;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("kbd", {
 		className: "media-editor-keyboard-shortcuts-modal__shortcut-term",
 		dir: "ltr",
-		"aria-label": label,
-		children: keys.map((key, index) => key === "+" && modifier ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_element.Fragment, { children: key }, index) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("kbd", {
-			className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
-			children: key
-		}, index))
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VisuallyHidden, {
+			render: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {}),
+			children: label || import_keycodes.shortcutAriaLabel[normalizedModifier](characters.join(""))
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			"aria-hidden": "true",
+			children: keys.map((key, keyIndex) => key === "+" && keyIndex < prefix.length ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_element.Fragment, { children: key }, keyIndex) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("kbd", {
+				className: "media-editor-keyboard-shortcuts-modal__shortcut-key",
+				children: key
+			}, keyIndex))
+		})]
 	});
 }
 function MediaEditorKeyboardShortcutsModal({ onClose }) {
@@ -46960,12 +46958,12 @@ function MediaEditorKeyboardShortcutsModal({ onClose }) {
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
 			className: "media-editor-keyboard-shortcuts-modal__shortcut-list",
 			role: "list",
-			children: SHORTCUTS.map(({ description, keyCombination }, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
+			children: SHORTCUTS.map((shortcut, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
 				className: "media-editor-keyboard-shortcuts-modal__shortcut",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 					className: "media-editor-keyboard-shortcuts-modal__shortcut-description",
-					children: description
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyCombinationDisplay, { keyCombination })]
+					children: shortcut.description
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(KeyCombinationDisplay, { ...shortcut })]
 			}, index))
 		})]
 	});
