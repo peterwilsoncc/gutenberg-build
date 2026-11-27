@@ -113555,10 +113555,6 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 		const fields = (0, _wordpress_element.useMemo)(() => _fields?.map((field) => {
 			const namespace = fieldNamespaces[field.id];
 			if (namespace) return bindFieldToNamespace(field, namespace, ENTITIES[postType]?.[namespace]?.isVisible);
-			if (field.id === "status") return {
-				...field,
-				elements: field.elements.filter((element) => element.value !== "trash")
-			};
 			if (field.id === "template") {
 				if (!templatePanelMode) return null;
 				if (templatePanelMode === "classic" && Object.keys(availableTemplates ?? {}).length === 0) return {

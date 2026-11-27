@@ -52892,10 +52892,6 @@ function QuickEditModal({ postType, postId, closeModal, onSave: onSaved, quickEd
 	const { editEntityRecord, saveEditedEntityRecord } = (0, import_data.useDispatch)(import_core_data.store);
 	const _fields = usePostFields$1({ postType });
 	const fields = (0, import_element.useMemo)(() => _fields?.map((field) => {
-		if (field.id === "status") return {
-			...field,
-			elements: field.elements.filter((element) => element.value !== "trash")
-		};
 		if (field.id === "featured_media" && field.Edit) return {
 			...field,
 			Edit: withEditorAssets(field.Edit)

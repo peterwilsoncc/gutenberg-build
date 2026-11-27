@@ -76615,14 +76615,7 @@ If there's a particular need for this, please submit a feature request at https:
 			isBulk
 		]);
 		const { editEntityRecord, saveEditedEntityRecord } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
-		const _fields = usePostFields$1({ postType });
-		const fields = (0, _wordpress_element.useMemo)(() => _fields?.map((field) => {
-			if (field.id === "status") return {
-				...field,
-				elements: field.elements?.filter((element) => element.value !== "trash")
-			};
-			return field;
-		}), [_fields]);
+		const fields = usePostFields$1({ postType });
 		const form = (0, _wordpress_element.useMemo)(() => {
 			if (!quickEditForm) return {
 				layout: { type: "panel" },
