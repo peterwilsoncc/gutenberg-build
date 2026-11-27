@@ -94381,7 +94381,7 @@ If there's a particular need for this, please submit a feature request at https:
 	*/
 	function findTerm(terms, parent, name) {
 		return terms.find((term) => {
-			return (!term.parent && !parent || parseInt(term.parent) === parseInt(parent)) && term.name.toLowerCase() === name.toLowerCase();
+			return (!term.parent && !parent || parseInt(term.parent) === parseInt(parent)) && (0, _wordpress_html_entities.decodeEntities)(term.name).toLowerCase() === name.toLowerCase();
 		});
 	}
 	/**
@@ -94396,7 +94396,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if ("" === filterValue) return originalTerm;
 			const term = { ...originalTerm };
 			if (term.children.length > 0) term.children = term.children.map(matchTermsForFilter).filter((child) => child);
-			if (-1 !== normalizeTextString(term.name).indexOf(normalizedFilterValue) || term.children.length > 0) return term;
+			if (-1 !== normalizeTextString((0, _wordpress_html_entities.decodeEntities)(term.name)).indexOf(normalizedFilterValue) || term.children.length > 0) return term;
 			return false;
 		};
 		return matchTermsForFilter;
@@ -94437,6 +94437,7 @@ If there's a particular need for this, please submit a feature request at https:
 				taxonomy: _taxonomy
 			};
 		}, [slug]);
+		const registry = (0, _wordpress_data.useRegistry)();
 		const { editPost, lockPostSaving, unlockPostSaving } = (0, _wordpress_data.useDispatch)(store);
 		const { saveEntityRecord } = (0, _wordpress_data.useDispatch)(_wordpress_core_data.store);
 		const { createErrorNotice } = (0, _wordpress_data.useDispatch)(_wordpress_notices.store);
@@ -94529,7 +94530,8 @@ If there's a particular need for this, please submit a feature request at https:
 				(0, _wordpress_a11y.speak)(termAddedMessage, "assertive");
 				setFormName("");
 				setFormParent("");
-				onUpdateTerms([...terms, newTerm.id]);
+				const assignedTermIds = registry.select(store).getEditedPostAttribute(taxonomy.rest_base);
+				onUpdateTerms([...assignedTermIds, newTerm.id]);
 			} finally {
 				setAdding(false);
 				unlockPostSaving(lockName);
