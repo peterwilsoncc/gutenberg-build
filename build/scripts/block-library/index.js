@@ -61204,9 +61204,9 @@ Icon: ButtonIcon });
 /**
 	* Generates a template part Id based on slug and theme inputs.
 	*
-	* @param {string} theme the template part's theme.
-	* @param {string} slug  the template part's slug
-	* @return {string|null} the template part's Id.
+	* @param theme the template part's theme.
+	* @param slug  the template part's slug
+	* @return the template part's Id.
 	*/
 	function createTemplatePartId(theme, slug) {
 		return theme && slug ? theme + "//" + slug : null;
@@ -62373,9 +62373,9 @@ Icon: ButtonIcon });
 /**
 	* Helper function to retrieve the corresponding icon by area name.
 	*
-	* @param {string} areaOrIconName The area name (e.g., 'header', 'navigation-overlay').
+	* @param areaOrIconName The area name (e.g., 'header', 'navigation-overlay').
 	*
-	* @return {Object} The corresponding icon.
+	* @return The corresponding icon.
 	*/
 	const getTemplatePartIcon = (areaOrIconName) => {
 		if ("header" === areaOrIconName) return header_default;
@@ -88597,10 +88597,10 @@ Icon: ButtonIcon });
 /**
 	* Retrieves the available template parts for the given area.
 	*
-	* @param {string} area       Template part area.
-	* @param {string} excludedId Template part ID to exclude.
+	* @param area       Template part area.
+	* @param excludedId Template part ID to exclude.
 	*
-	* @return {{ templateParts: Array, isResolving: boolean }} array of template parts.
+	* @return array of template parts.
 	*/
 	function useAlternativeTemplateParts(area, excludedId) {
 		const { templateParts, isResolving } = (0, _wordpress_data.useSelect)((select) => {
@@ -88630,10 +88630,10 @@ Icon: ButtonIcon });
 	/**
 	* Retrieves the available block patterns for the given area.
 	*
-	* @param {string} area     Template part area.
-	* @param {string} clientId Block Client ID. (The container of the block can impact allowed blocks).
+	* @param area     Template part area.
+	* @param clientId Block Client ID. (The container of the block can impact allowed blocks).
 	*
-	* @return {Array} array of block patterns.
+	* @return array of block patterns.
 	*/
 	function useAlternativeBlockPatterns(area, clientId) {
 		return (0, _wordpress_data.useSelect)((select) => {
@@ -88662,9 +88662,9 @@ Icon: ButtonIcon });
 	/**
 	* Retrieves the template part area object.
 	*
-	* @param {string} area Template part area identifier.
+	* @param area Template part area identifier.
 	*
-	* @return {{icon: Object, label: string, tagName: string}} Template Part area.
+	* @return Template Part area.
 	*/
 	function useTemplatePartArea(area) {
 		return (0, _wordpress_data.useSelect)((select) => {
@@ -88787,8 +88787,9 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/template-part/edit/utils/map-template-part-to-block-pattern.mjs
 /**
 	* This maps the properties of a template part to those of a block pattern.
-	* @param {Object} templatePart
-	* @return {Object} The template part in the shape of block pattern.
+	*
+	* @param templatePart
+	* @return The template part in the shape of block pattern.
 	*/
 	function mapTemplatePartToBlockPattern(templatePart) {
 		return {
@@ -88857,8 +88858,8 @@ Icon: ButtonIcon });
 /**
 	* Converts a widget entity record into a block.
 	*
-	* @param {Object} widget The widget entity record.
-	* @return {Object} a block (converted from the entity record).
+	* @param widget The widget entity record.
+	* @return a block (converted from the entity record).
 	*/
 	function transformWidgetToBlock(widget) {
 		if (widget.id_base !== "block") {
@@ -88880,14 +88881,14 @@ Icon: ButtonIcon });
 	/**
 	* Switch Legacy Widget to the first matching transformation block.
 	*
-	* @param {Object} block Legacy Widget block object
-	* @return {Object|undefined} a block
+	* @param block Legacy Widget block object
+	* @return a block
 	*/
 	function switchLegacyWidgetType(block) {
 		const transforms = (0, _wordpress_blocks.getPossibleBlockTransformations)([block]).filter((item) => {
 			if (!item.transforms) return true;
-			const hasWildCardFrom = item.transforms?.from?.find((from) => from.blocks && from.blocks.includes("*"));
-			const hasWildCardTo = item.transforms?.to?.find((to) => to.blocks && to.blocks.includes("*"));
+			const hasWildCardFrom = item.transforms?.from?.find((from) => "blocks" in from && from.blocks && from.blocks.includes("*"));
+			const hasWildCardTo = item.transforms?.to?.find((to) => "blocks" in to && to.blocks && to.blocks.includes("*"));
 			return !hasWildCardFrom && !hasWildCardTo;
 		});
 		if (!transforms.length) return;
