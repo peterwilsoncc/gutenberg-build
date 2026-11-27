@@ -56633,6 +56633,19 @@ VisualLabel });
 		return presentation ?? (asButtons ? "toggle-buttons" : "listbox");
 	}
 	/**
+	* Returns a React key for each option group. A group with a unique slug keeps
+	* its identity when groups are reordered or removed. Groups without a slug, or
+	* with a slug that another group also uses, fall back to their index. A group
+	* whose slug becomes repeated, or stops being repeated, gets a new key.
+	*/
+	function getOptionGroupKeys(groups) {
+		const slugCounts = /* @__PURE__ */ new Map();
+		groups.forEach(({ slug }) => {
+			if (typeof slug === "string") slugCounts.set(slug, (slugCounts.get(slug) ?? 0) + 1);
+		});
+		return groups.map(({ slug }, index) => typeof slug === "string" && slugCounts.get(slug) === 1 ? `slug-${slug}` : `index-${index}`);
+	}
+	/**
 	* Computes the common props for the CircularOptionPicker.
 	*/
 	function getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby, presentation) {
@@ -57204,6 +57217,7 @@ VisualLabel });
 	function MultiplePalettes({ className, clearColor, colors, onChange, value, selectedSlug, headingLevel, presentation }) {
 		const instanceId = (0, _wordpress_compose.useInstanceId)(MultiplePalettes, "color-palette");
 		if (colors.length === 0) return null;
+		const keys = getOptionGroupKeys(colors);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VStack, {
 			spacing: 3,
 			className,
@@ -57225,7 +57239,7 @@ VisualLabel });
 						presentation,
 						"aria-labelledby": id
 					})]
-				}, index);
+				}, keys[index]);
 			})
 		});
 	}
@@ -64850,6 +64864,7 @@ VisualLabel });
 	}
 	function MultipleOrigin({ className, clearGradient, gradients, onChange, value, selectedSlug, headingLevel, presentation }) {
 		const instanceId = (0, _wordpress_compose.useInstanceId)(MultipleOrigin);
+		const keys = getOptionGroupKeys(gradients);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(VStack, {
 			spacing: 3,
 			className,
@@ -64871,7 +64886,7 @@ VisualLabel });
 						presentation,
 						"aria-labelledby": id
 					})]
-				}, index);
+				}, keys[index]);
 			})
 		});
 	}
