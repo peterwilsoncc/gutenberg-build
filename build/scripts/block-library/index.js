@@ -42808,6 +42808,26 @@ Icon: ButtonIcon });
 	* @return {boolean} Is the URL a Blob URL.
 	*/
 	const isTemporaryMedia = (id, url) => !id && (0, _wordpress_blob.isBlobURL)(url);
+	/**
+	* Gets the pixel size of a CSS length unit in the element's document.
+	*
+	* @param {HTMLElement|null|undefined} element Element used to resolve the unit.
+	* @param {string}                     unit    CSS length unit.
+	* @return {number|undefined} Pixels per unit, if it can be resolved.
+	*/
+	function getPixelsPerUnit(element, unit) {
+		if (!element) return;
+		const view = element.ownerDocument.defaultView;
+		if (!view) return;
+		switch (unit) {
+			case "px": return 1;
+			case "em": return parseFloat(view.getComputedStyle(element).fontSize);
+			case "rem": return parseFloat(view.getComputedStyle(element.ownerDocument.documentElement).fontSize);
+			case "vw": return view.innerWidth / 100;
+			case "vh": return view.innerHeight / 100;
+			default: return;
+		}
+	}
 	function CoverEdit({ attributes, clientId, isSelected, overlayColor, setAttributes, setOverlayColor, toggleSelection, context: { postId, postType } }) {
 		const { contentPosition, id, url: originalUrl, backgroundType: originalBackgroundType, useFeaturedImage, dimRatio, focalPoint, hasParallax, isDark, isRepeated, style, alt, allowedBlocks, templateLock, tagName: TagName = "div", isUserOverlayColor, sizeSlug, poster } = attributes;
 		const [featuredImage] = (0, _wordpress_core_data.useEntityProp)("postType", postType, "featured_media", postId);
@@ -42995,6 +43015,10 @@ Icon: ButtonIcon });
 		const hasBackground = !!(url || overlayColor.color || gradientValue);
 		const hasInnerBlocks = (0, _wordpress_data.useSelect)((select) => select(_wordpress_block_editor.store).getBlock(clientId).innerBlocks.length > 0, [clientId]);
 		const ref = (0, _wordpress_element.useRef)();
+		const resizeUnitRef = (0, _wordpress_element.useRef)({
+			unit: "px",
+			pixelsPerUnit: 1
+		});
 		const [dropZoneElement, setDropZoneElement] = (0, _wordpress_element.useState)(null);
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)({ ref: (0, _wordpress_compose.useMergeRefs)([ref, setDropZoneElement]) });
 		const innerBlocksProps = (0, _wordpress_block_editor.useInnerBlocksProps)({ className: "wp-block-cover__inner-container" }, {
@@ -43122,12 +43146,14 @@ Icon: ButtonIcon });
 			featuredImage: media,
 			isSelected
 		});
-		const setMinHeight = (value) => {
+		const setMinHeight = (pixelHeight) => {
+			const { unit, pixelsPerUnit } = resizeUnitRef.current;
+			const value = pixelHeight === void 0 ? void 0 : Number((pixelHeight / pixelsPerUnit).toFixed(2));
 			setAttributes({ style: cleanEmptyObject$4({
 				...style,
 				dimensions: {
 					...style?.dimensions,
-					minHeight: value === void 0 ? void 0 : `${value}px`
+					minHeight: value === void 0 ? void 0 : `${value}${unit}`
 				}
 			}) });
 		};
@@ -43137,6 +43163,15 @@ Icon: ButtonIcon });
 			height,
 			minHeight,
 			onResizeStart: () => {
+				const [, minHeightUnit = "px"] = (0, _wordpress_components.__experimentalParseQuantityAndUnitFromRawValue)(minHeight);
+				const pixelsPerUnit = getPixelsPerUnit(ref.current, minHeightUnit);
+				resizeUnitRef.current = Number.isFinite(pixelsPerUnit) && pixelsPerUnit > 0 ? {
+					unit: minHeightUnit,
+					pixelsPerUnit
+				} : {
+					unit: "px",
+					pixelsPerUnit: 1
+				};
 				toggleSelection(false);
 			},
 			onResize: setMinHeight,
