@@ -4061,6 +4061,7 @@ div.dataviews-view-list {
 }
 
 .dataforms-layouts-card__field-header-content-description {
+  color: var(--wpds-color-foreground-content-neutral-weak, #6e6e6e);
   display: contents;
 }
 

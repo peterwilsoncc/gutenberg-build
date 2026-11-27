@@ -89214,6 +89214,13 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasBadge = touched && layout.isCollapsible;
 		const hasSummary = visibleSummaryFields.length > 0 && layout.withHeader;
 		const HeadingTag = layout.withHeader && !layout.isCollapsible && layout.headingLevel ? `h${layout.headingLevel}` : void 0;
+		const description = (hasBadge || hasSummary) && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [hasBadge && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidationBadge, { validity }), hasSummary && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+			className: "dataforms-layouts-card__field-summary",
+			children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(summaryField.render, {
+				item: data,
+				field: summaryField
+			}, summaryField.id))
+		})] });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(Stack, {
 			align: "center",
 			justify: "space-between",
@@ -89221,16 +89228,15 @@ If there's a particular need for this, please submit a feature request at https:
 			children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(Title$1, {
 				render: HeadingTag && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HeadingTag, {}),
 				children: label
-			}), (hasBadge || hasSummary) && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(HeaderDescription, {
+			}), description && (layout.isCollapsible ? /* @__PURE__ */ (0, react_jsx_runtime.jsx)(HeaderDescription, {
 				className: "dataforms-layouts-card__field-header-content-description",
-				children: [hasBadge && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ValidationBadge, { validity }), hasSummary && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
-					className: "dataforms-layouts-card__field-summary",
-					children: visibleSummaryFields.map((summaryField) => /* @__PURE__ */ (0, react_jsx_runtime.jsx)(summaryField.render, {
-						item: data,
-						field: summaryField
-					}, summaryField.id))
-				})]
-			})]
+				children: description
+			}) : /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Text$1, {
+				render: /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {}),
+				variant: "body-md",
+				className: "dataforms-layouts-card__field-header-content-description",
+				children: description
+			}))]
 		});
 	}
 	function BodyContent({ data, field, form, onChange, hideLabelFromVision, markWhenOptional, validity, withHeader }) {
