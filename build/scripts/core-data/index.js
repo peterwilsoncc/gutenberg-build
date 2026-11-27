@@ -17861,6 +17861,16 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		}
 	];
 	/**
+	* Returns the loader that provides the entity config for the given kind and
+	* name. A loader without a name provides every config of its kind.
+	*
+	* @param kind Entity kind.
+	* @param name Entity name.
+	*
+	* @return The loader, if there is one.
+	*/
+	const findEntityConfigLoader = (kind, name) => additionalEntityConfigLoaders.find((loader) => loader.kind === kind && (!loader.name || loader.name === name));
+	/**
 	* Apply extra edits before persisting a post type.
 	*
 	* @param persistedRecord Already persisted Post
@@ -19785,7 +19795,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		getEntitiesByKind: () => getEntitiesByKind,
 		getEntitiesConfig: () => getEntitiesConfig$1,
 		getEntity: () => getEntity,
-		getEntityConfig: () => getEntityConfig,
+		getEntityConfig: () => getEntityConfig$1,
 		getEntityRecord: () => getEntityRecord$1,
 		getEntityRecordEdits: () => getEntityRecordEdits,
 		getEntityRecordNonTransientEdits: () => getEntityRecordNonTransientEdits,
@@ -19915,7 +19925,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			since: "6.0",
 			alternative: "wp.data.select( 'core' ).getEntityConfig()"
 		});
-		return getEntityConfig(state, kind, name);
+		return getEntityConfig$1(state, kind, name);
 	}
 	/**
 	* Returns the entity config given its kind and name.
@@ -19926,7 +19936,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*
 	* @return Entity config
 	*/
-	function getEntityConfig(state, kind, name) {
+	function getEntityConfig$1(state, kind, name) {
 		logEntityDeprecation(kind, name, "getEntityConfig");
 		return state.entities.config?.find((config) => config.kind === kind && config.name === name);
 	}
@@ -20029,7 +20039,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const getRawEntityRecord$1 = (0, _wordpress_data.createSelector)((state, kind, name, recordId) => {
 		logEntityDeprecation(kind, name, "getRawEntityRecord");
 		const record = getEntityRecord$1(state, kind, name, recordId);
-		const config = getEntityConfig(state, kind, name);
+		const config = getEntityConfig$1(state, kind, name);
 		if (!record || !config?.rawAttributes?.length) return record;
 		return Object.fromEntries(Object.keys(record).map((key) => {
 			if (config.rawAttributes.includes(key)) {
@@ -20076,7 +20086,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		logEntityDeprecation(kind, name, "getEntityRecords");
 		const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
 		if (!queriedState) return null;
-		return getQueriedItems(queriedState, query, { supportsPagination: !!getEntityConfig(state, kind, name)?.supportsPagination });
+		return getQueriedItems(queriedState, query, { supportsPagination: !!getEntityConfig$1(state, kind, name)?.supportsPagination });
 	});
 	/**
 	* Returns the Entity's total available records for a given query (ignoring pagination).
@@ -20110,7 +20120,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		logEntityDeprecation(kind, name, "getEntityRecordsTotalPages");
 		const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
 		if (!queriedState) return null;
-		if (!getEntityConfig(state, kind, name)?.supportsPagination || query?.per_page === -1) return 1;
+		if (!getEntityConfig$1(state, kind, name)?.supportsPagination || query?.per_page === -1) return 1;
 		const totalItems = getQueriedTotalItems(queriedState, query);
 		if (!totalItems) return totalItems;
 		if (!query?.per_page) return getQueriedTotalPages(queriedState, query);
@@ -20130,7 +20140,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			Object.keys(records[kind]).forEach((name) => {
 				const primaryKeys = Object.keys(records[kind][name].edits).filter((primaryKey) => getEntityRecord$1(state, kind, name, primaryKey) && hasEditsForEntityRecord(state, kind, name, primaryKey));
 				if (primaryKeys.length) {
-					const entityConfig = getEntityConfig(state, kind, name);
+					const entityConfig = getEntityConfig$1(state, kind, name);
 					primaryKeys.forEach((primaryKey) => {
 						const entityRecord = getEditedEntityRecord$1(state, kind, name, primaryKey);
 						dirtyRecords.push({
@@ -20159,7 +20169,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 			Object.keys(records[kind]).forEach((name) => {
 				const primaryKeys = Object.keys(records[kind][name].saving).filter((primaryKey) => isSavingEntityRecord(state, kind, name, primaryKey));
 				if (primaryKeys.length) {
-					const entityConfig = getEntityConfig(state, kind, name);
+					const entityConfig = getEntityConfig$1(state, kind, name);
 					primaryKeys.forEach((primaryKey) => {
 						const entityRecord = getEditedEntityRecord$1(state, kind, name, primaryKey);
 						recordsBeingSaved.push({
@@ -20204,7 +20214,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	const getEntityRecordNonTransientEdits = (0, _wordpress_data.createSelector)((state, kind, name, recordId) => {
 		logEntityDeprecation(kind, name, "getEntityRecordNonTransientEdits");
-		const { transientEdits } = getEntityConfig(state, kind, name) || {};
+		const { transientEdits } = getEntityConfig$1(state, kind, name) || {};
 		const edits = getEntityRecordEdits(state, kind, name, recordId) || {};
 		if (!transientEdits) return edits;
 		return Object.keys(edits).reduce((acc, key) => {
@@ -21256,7 +21266,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	const deleteEntityRecord = (kind, name, recordId, query, { __unstableFetch = _wordpress_api_fetch.default, throwOnError = false } = {}) => async ({ dispatch, resolveSelect }) => {
 		logEntityDeprecation(kind, name, "deleteEntityRecord");
-		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.kind === kind && config.name === name);
+		const entityConfig = await resolveSelect.getEntityConfig(kind, name);
 		let error;
 		let deletedRecord = false;
 		if (!entityConfig) return;
@@ -21439,7 +21449,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*/
 	const saveEntityRecord = (kind, name, record, { isAutosave = false, __unstableFetch = _wordpress_api_fetch.default, throwOnError = false } = {}) => async ({ select, resolveSelect, dispatch }) => {
 		logEntityDeprecation(kind, name, "saveEntityRecord");
-		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.kind === kind && config.name === name);
+		const entityConfig = await resolveSelect.getEntityConfig(kind, name);
 		if (!entityConfig) return;
 		const entityIdKey = entityConfig.key ?? "id";
 		const recordId = record[entityIdKey];
@@ -21616,7 +21626,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	const saveEditedEntityRecord = (kind, name, recordId, options) => async ({ select, dispatch, resolveSelect }) => {
 		logEntityDeprecation(kind, name, "saveEditedEntityRecord");
 		if (!select.hasEditsForEntityRecord(kind, name, recordId)) return;
-		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.kind === kind && config.name === name);
+		const entityConfig = await resolveSelect.getEntityConfig(kind, name);
 		if (!entityConfig) return;
 		const entityIdKey = entityConfig.key || "id";
 		const edits = select.getEntityRecordNonTransientEdits(kind, name, recordId);
@@ -21641,7 +21651,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		const edits = select.getEntityRecordNonTransientEdits(kind, name, recordId);
 		const editsToSave = {};
 		for (const item of itemsToSave) setNestedValue(editsToSave, item, getNestedValue(edits, item));
-		const entityIdKey = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.kind === kind && config.name === name)?.key || "id";
+		const entityIdKey = (await resolveSelect.getEntityConfig(kind, name))?.key || "id";
 		if (recordId) editsToSave[entityIdKey] = recordId;
 		return await dispatch.saveEntityRecord(kind, name, editsToSave, options);
 	};
@@ -21763,7 +21773,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		logEntityDeprecation(kind, name, "receiveRevisions");
 		dispatch({
 			type: "RECEIVE_ITEM_REVISIONS",
-			key: (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.kind === kind && config.name === name)?.revisionKey ?? "id",
+			key: (await resolveSelect.getEntityConfig(kind, name))?.revisionKey ?? "id",
 			items: records,
 			recordKey,
 			meta,
@@ -21819,7 +21829,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		if (!recordId) return;
 		const kind = "postType";
 		const name = "attachment";
-		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.kind === kind && config.name === name);
+		const entityConfig = await resolveSelect.getEntityConfig(kind, name);
 		if (!entityConfig) return;
 		const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, [
 			"entities",
@@ -22504,6 +22514,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		getEmbedPreview: () => getEmbedPreview,
 		getEntitiesConfig: () => getEntitiesConfig,
 		getEntityActionsConfig: () => getEntityActionsConfig,
+		getEntityConfig: () => getEntityConfig,
 		getEntityRecord: () => getEntityRecord,
 		getEntityRecords: () => getEntityRecords,
 		getEntityRecordsTotalItems: () => getEntityRecordsTotalItems,
@@ -22547,7 +22558,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*              fields, fields must always include the ID.
 	*/
 	const getEntityRecord = (kind, name, key = "", query) => async ({ select, dispatch, registry, resolveSelect }) => {
-		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.name === name && config.kind === kind);
+		const entityConfig = await resolveSelect.getEntityConfig(kind, name);
 		if (!entityConfig) return;
 		if (!isSafeEntityKey(key)) return;
 		const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, [
@@ -22648,7 +22659,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*              must always include the ID.
 	*/
 	const getEntityRecords = (kind, name, query = {}) => async ({ dispatch, registry, resolveSelect }) => {
-		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.name === name && config.kind === kind);
+		const entityConfig = await resolveSelect.getEntityConfig(kind, name);
 		if (!entityConfig) return;
 		const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, [
 			"entities",
@@ -22808,7 +22819,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		if (typeof resource === "object") {
 			if (!resource.kind || !resource.name) throw new Error("The entity resource object is not valid.");
 			if (!isSafeEntityKey(resource.id)) return;
-			const entityConfig = (await resolveSelect.getEntitiesConfig(resource.kind)).find((config) => config.name === resource.name && config.kind === resource.kind);
+			const entityConfig = await resolveSelect.getEntityConfig(resource.kind, resource.name);
 			if (!entityConfig) return;
 			resourcePath = entityConfig.baseURL + (resource.id ? "/" + resource.id : "");
 		} else {
@@ -22956,7 +22967,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	};
 	const getDefaultTemplateId = (query) => async ({ dispatch, registry, resolveSelect }) => {
 		const template = await (0, _wordpress_api_fetch.default)({ path: (0, _wordpress_url.addQueryArgs)("/wp/v2/templates/lookup", query) });
-		await resolveSelect.getEntitiesConfig("postType");
+		await resolveSelect.getEntityConfig("postType", "wp_template");
 		const id = template?.id;
 		registry.batch(() => {
 			dispatch.receiveDefaultTemplateId(query, id || "");
@@ -22982,7 +22993,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*                  fields, fields must always include the ID.
 	*/
 	const getRevisions = (kind, name, recordKey, query = {}) => async ({ dispatch, resolveSelect }) => {
-		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.name === name && config.kind === kind);
+		const entityConfig = await resolveSelect.getEntityConfig(kind, name);
 		if (!entityConfig || !isSafeEntityKey(recordKey)) return;
 		const rawQuery = { ...query };
 		const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, [
@@ -23050,7 +23061,7 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	*                    fields, fields must always include the ID.
 	*/
 	const getRevision = (kind, name, recordKey, revisionKey, query) => async ({ select, dispatch, resolveSelect }) => {
-		const entityConfig = (await resolveSelect.getEntitiesConfig(kind)).find((config) => config.name === name && config.kind === kind);
+		const entityConfig = await resolveSelect.getEntityConfig(kind, name);
 		if (!entityConfig || !isSafeEntityKey(recordKey) || !isSafeEntityKey(revisionKey)) return;
 		if (query !== void 0 && query._fields) query = {
 			...query,
@@ -23103,18 +23114,43 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 		return action.selectorName === "getPostType" && args[0] === postType || action.selectorName === "getEntityRecord" && args[0] === "root" && args[1] === "postType" && args[2] === postType;
 	};
 	/**
-	* Requests entity configs for the given kind from the REST API.
+	* Requests the entity config for the given kind and name from the REST API,
+	* if a loader provides it.
 	*
 	* @param kind Entity kind.
+	* @param name Entity name.
 	*/
-	const getEntitiesConfig = (kind) => async ({ dispatch }) => {
-		const loader = additionalEntityConfigLoaders.find((l) => l.kind === kind);
+	const getEntityConfig = (kind, name) => async ({ dispatch }) => {
+		const loader = findEntityConfigLoader(kind, name);
 		if (!loader) return;
 		try {
 			const configs = await loader.loadEntities();
 			if (!configs.length) return;
 			dispatch.addEntities(configs);
 		} catch {}
+	};
+	/**
+	* Resolves each loader once. A loader without a name loads every config of
+	* its kind, so all names of that kind share one resolution, keyed by an
+	* empty name.
+	*
+	* @param kind Entity kind.
+	* @param name Entity name.
+	*
+	* @return The resolution args.
+	*/
+	getEntityConfig.getResolutionArgs = (kind, name) => {
+		const loader = findEntityConfigLoader(kind, name);
+		return [kind, loader && !loader.name ? "" : name];
+	};
+	getEntityConfig.isFulfilled = (state, kind, name) => state.entities.config.some((config) => config.kind === kind && config.name === name);
+	/**
+	* Requests the entity configs for the given kind from the REST API.
+	*
+	* @param kind Entity kind.
+	*/
+	const getEntitiesConfig = (kind) => async ({ resolveSelect }) => {
+		await Promise.all(additionalEntityConfigLoaders.filter((loader) => loader.kind === kind).map((loader) => resolveSelect.getEntityConfig(kind, loader.name ?? "")));
 	};
 	/**
 	* Requests editor settings from the REST API.

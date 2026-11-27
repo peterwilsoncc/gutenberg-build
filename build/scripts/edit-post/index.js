@@ -10396,9 +10396,9 @@ _wordpress_theme = __toESM(_wordpress_theme, 1);
 		try {
 			await Promise.all([
 				core.getCurrentUser(),
-				core.getEntitiesConfig("postType"),
-				core.getEntitiesConfig("taxonomy"),
-				core.getEntitiesConfig("root"),
+				core.getEntityConfig("postType", postType),
+				core.getEntityConfig("taxonomy", "category"),
+				core.getEntityConfig("root", "site"),
 				core.getEntityRecords("root", "taxonomy"),
 				core.getCurrentTheme(),
 				core.getThemeSupports(),
