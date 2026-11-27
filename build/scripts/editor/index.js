@@ -94527,11 +94527,11 @@ If there's a particular need for this, please submit a feature request at https:
 					taxonomy?.labels?.singular_name ?? defaultName
 				);
 				(0, _wordpress_a11y.speak)(termAddedMessage, "assertive");
-				setAdding(false);
 				setFormName("");
 				setFormParent("");
 				onUpdateTerms([...terms, newTerm.id]);
 			} finally {
+				setAdding(false);
 				unlockPostSaving(lockName);
 			}
 		};
