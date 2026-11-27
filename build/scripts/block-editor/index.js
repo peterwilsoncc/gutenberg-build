@@ -127380,11 +127380,14 @@ If there's a particular need for this, please submit a feature request at https:
   function useInspectorControlsTabs(blockName, contentClientIds, isSectionBlock2, hasBlockStyles) {
     const tabs = [];
     const {
+      background: backgroundGroup,
       bindings: bindingsGroup,
       border: borderGroup,
       color: colorGroup,
       content: contentGroup,
       default: defaultGroup,
+      elements: elementsGroup,
+      filter: filterGroup,
       layout: layoutGroup,
       dimensions: dimensionsGroup,
       list: listGroup,
@@ -127398,11 +127401,14 @@ If there's a particular need for this, please submit a feature request at https:
     const contentFills = (0, import_components259.__experimentalUseSlotFills)(contentGroup.name);
     const hasContentFills = !!contentFills && contentFills.length;
     const styleFills = [
+      ...(0, import_components259.__experimentalUseSlotFills)(backgroundGroup.name) || [],
       ...(0, import_components259.__experimentalUseSlotFills)(borderGroup.name) || [],
       ...(0, import_components259.__experimentalUseSlotFills)(colorGroup.name) || [],
       ...(0, import_components259.__experimentalUseSlotFills)(layoutGroup.name) || [],
       ...(0, import_components259.__experimentalUseSlotFills)(positionGroup.name) || [],
       ...(0, import_components259.__experimentalUseSlotFills)(dimensionsGroup.name) || [],
+      ...(0, import_components259.__experimentalUseSlotFills)(elementsGroup.name) || [],
+      ...(0, import_components259.__experimentalUseSlotFills)(filterGroup.name) || [],
       ...(0, import_components259.__experimentalUseSlotFills)(stylesGroup.name) || [],
       ...(0, import_components259.__experimentalUseSlotFills)(typographyGroup.name) || [],
       ...(0, import_components259.__experimentalUseSlotFills)(effectsGroup.name) || []
