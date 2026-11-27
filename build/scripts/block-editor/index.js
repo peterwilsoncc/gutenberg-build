@@ -62462,7 +62462,7 @@ Icon: ButtonIcon });
 	* @return Ref effect for the block element.
 	*/
 	function useGhostMaterialize(rootClientId, ghostBlock) {
-		const { insertBlocks } = (0, _wordpress_data.useDispatch)(store);
+		const { insertBlocks, __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(store);
 		return (0, _wordpress_compose.useRefEffect)((element) => {
 			if (!ghostBlock) return;
 			function remove() {
@@ -62471,6 +62471,7 @@ Icon: ButtonIcon });
 			}
 			function materialize() {
 				remove();
+				__unstableMarkNextChangeAsNotPersistent({ history: "ignore" });
 				insertBlocks([ghostBlock], void 0, rootClientId, true, 0);
 			}
 			element.addEventListener("pointerdown", materialize, true);
@@ -62479,7 +62480,8 @@ Icon: ButtonIcon });
 		}, [
 			ghostBlock,
 			rootClientId,
-			insertBlocks
+			insertBlocks,
+			__unstableMarkNextChangeAsNotPersistent
 		]);
 	}
 	/**

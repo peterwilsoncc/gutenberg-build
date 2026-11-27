@@ -111625,9 +111625,12 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 				const blockOrder = registry.select(_wordpress_block_editor.store).getBlockOrder("");
 				const lastBlockClientId = blockOrder[blockOrder.length - 1];
 				const lastBlock = registry.select(_wordpress_block_editor.store).getBlock(lastBlockClientId);
-				const { selectBlock, insertDefaultBlock } = registry.dispatch(_wordpress_block_editor.store);
+				const { selectBlock, insertDefaultBlock, __unstableMarkNextChangeAsNotPersistent } = registry.dispatch(_wordpress_block_editor.store);
 				if (lastBlock && (0, _wordpress_blocks.isUnmodifiedDefaultBlock)(lastBlock)) selectBlock(lastBlockClientId);
-				else insertDefaultBlock();
+				else {
+					if (!blockOrder.length) __unstableMarkNextChangeAsNotPersistent({ history: "ignore" });
+					insertDefaultBlock();
+				}
 			}
 			const { ownerDocument } = node;
 			ownerDocument.addEventListener("pointerdown", onMouseDown);
