@@ -75098,6 +75098,7 @@ Icon: ButtonIcon });
 				"__experimentalTextTransform": true,
 				"__experimentalTextDecoration": true,
 				"__experimentalLetterSpacing": true,
+				"textShadow": true,
 				"fitText": true,
 				"__experimentalDefaultControls": { "fontSize": true }
 			},
