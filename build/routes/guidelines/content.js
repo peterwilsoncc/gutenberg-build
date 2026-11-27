@@ -31467,6 +31467,52 @@ InputLayoutSlot.displayName = "InputLayout.Slot";
 */
 const InputLayout = Object.assign(InputLayout$1, { Slot: InputLayoutSlot });
 
+// packages/ui/build-module/form/primitives/input/use-number-value-text.mjs
+function toValueText(value) {
+	return value === void 0 || value === null ? "" : String(value);
+}
+/**
+* Works around VoiceOver in Chrome on macOS, which reads a number input with a
+* `max` as a percentage of its range unless it has an `aria-valuetext`.
+* Safari and Firefox are not affected.
+*
+* Remove this hook once VoiceOver reads such an input as its value in Chrome.
+*
+* An uncontrolled input's value text follows user edits and form resets, but
+* not a value set directly on the element, which fires no event.
+*
+* @param props The input's props that affect its value text.
+*/
+function useNumberValueText(props) {
+	const { type, value, defaultValue, "aria-valuetext": ariaValueText, onValueChange } = props;
+	const needsValueText = type === "number" && ariaValueText === void 0;
+	const tracksValue = needsValueText && value === void 0;
+	const ref = (0, import_element.useRef)(null);
+	const [uncontrolledValue, setUncontrolledValue] = (0, import_element.useState)(() => toValueText(defaultValue));
+	(0, import_element.useEffect)(() => {
+		const input = ref.current;
+		if (!tracksValue || !input) return;
+		setUncontrolledValue(input.value);
+		const onReset = (event) => {
+			if (event.target !== input.form) return;
+			setTimeout(() => setUncontrolledValue(input.value));
+		};
+		const { ownerDocument } = input;
+		ownerDocument.addEventListener("reset", onReset);
+		return () => ownerDocument.removeEventListener("reset", onReset);
+	}, [tracksValue]);
+	const handleValueChange = (nextValue, eventDetails) => {
+		if (tracksValue) setUncontrolledValue(nextValue);
+		onValueChange?.(nextValue, eventDetails);
+	};
+	const valueText = tracksValue ? uncontrolledValue : toValueText(value);
+	return {
+		ref,
+		"aria-valuetext": needsValueText ? valueText || void 0 : ariaValueText,
+		onValueChange: handleValueChange
+	};
+}
+
 // packages/ui/build-module/form/primitives/input/input.mjs
 const STYLE_HASH_ATTRIBUTE$21 = "data-wp-hash";
 /**
@@ -31600,7 +31646,15 @@ var style_module_default$10 = {
 *
 * Prefer `InputControl` when using with a standard label and description.
 */
-const Input = (0, import_element.forwardRef)(function UnforwardedInput({ className, size = "default", prefix, suffix, style, ...restProps }, ref) {
+const Input = (0, import_element.forwardRef)(function UnforwardedInput({ className, size = "default", prefix, suffix, style, "aria-valuetext": ariaValueText, onValueChange, ...restProps }, ref) {
+	const { ref: valueTextRef, ...valueTextProps } = useNumberValueText({
+		type: restProps.type,
+		value: restProps.value,
+		defaultValue: restProps.defaultValue,
+		"aria-valuetext": ariaValueText,
+		onValueChange
+	});
+	const mergedRef = (0, import_compose.useMergeRefs)([ref, valueTextRef]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(InputLayout, {
 		className: clsx(style_module_default$10.layout, focus_module_default$3["outset-ring--focus-within"], className),
 		style,
@@ -31609,8 +31663,9 @@ const Input = (0, import_element.forwardRef)(function UnforwardedInput({ classNa
 		prefix,
 		suffix,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input$1, {
-			ref,
+			ref: mergedRef,
 			className: clsx(global_css_defense_module_default$4.input, style_module_default$10.input),
+			...valueTextProps,
 			...restProps
 		})
 	});
