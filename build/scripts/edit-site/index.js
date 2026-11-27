@@ -76588,7 +76588,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const isBulk = postId.length > 1;
 		const [modalElement, setModalElement] = (0, _wordpress_element.useState)(null);
 		const [localEdits, setLocalEdits] = (0, _wordpress_element.useState)({});
-		const { record, hasFinishedResolution, canSwitchTemplate } = (0, _wordpress_data.useSelect)((select) => {
+		const { record, hasFinishedResolution } = (0, _wordpress_data.useSelect)((select) => {
 			const { getEditedEntityRecord, hasFinishedResolution: hasFinished } = select(_wordpress_core_data.store);
 			if (isBulk) return {
 				record: null,
@@ -76599,14 +76599,9 @@ If there's a particular need for this, please submit a feature request at https:
 				postType,
 				postId[0]
 			];
-			const { getHomePage, getPostsPageId } = unlock$5(select(_wordpress_core_data.store));
-			const singlePostId = String(postId[0]);
-			const isPostsPage = singlePostId !== void 0 && getPostsPageId() === singlePostId;
-			const isFrontPage = singlePostId !== void 0 && postType === "page" && getHomePage()?.postId === singlePostId;
 			return {
 				record: getEditedEntityRecord(...args),
-				hasFinishedResolution: hasFinished("getEditedEntityRecord", args),
-				canSwitchTemplate: !isPostsPage && !isFrontPage
+				hasFinishedResolution: hasFinished("getEditedEntityRecord", args)
 			};
 		}, [
 			postType,
@@ -76620,12 +76615,8 @@ If there's a particular need for this, please submit a feature request at https:
 				...field,
 				elements: field.elements?.filter((element) => element.value !== "trash")
 			};
-			if (field.id === "template") return {
-				...field,
-				readOnly: !canSwitchTemplate
-			};
 			return field;
-		}), [_fields, canSwitchTemplate]);
+		}), [_fields]);
 		const form = (0, _wordpress_element.useMemo)(() => {
 			if (!quickEditForm) return {
 				layout: { type: "panel" },

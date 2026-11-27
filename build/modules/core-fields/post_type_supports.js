@@ -17740,6 +17740,25 @@ const fieldExtensions$3 = {
 */
 const fieldExtensions$2 = { isVisible: (item) => hasActionLink(item, "wp:action-sticky") };
 
+// packages/core-fields/build-module/post_type_supports/template/is-template-switchable.mjs
+/**
+* Whether the template of a post can be switched: the front page and the
+* posts page are assigned a template by the reading settings rather than by
+* this field.
+*
+* @param select   The `select` function of a registry.
+* @param postType The post type.
+* @param postId   The post id.
+* @return Whether the template can be switched.
+*/
+function isTemplateSwitchable(select, postType, postId) {
+	const { getHomePage, getPostsPageId } = unlock(select(import_core_data.store));
+	const singlePostId = String(postId);
+	const isPostsPage = getPostsPageId() === singlePostId;
+	const isFrontPage = postType === "page" && getHomePage()?.postId === singlePostId;
+	return !isPostsPage && !isFrontPage;
+}
+
 // packages/core-fields/build-module/post_type_supports/template/hooks.mjs
 /**
 * The mode the template field renders in for a post, or null when the post
@@ -17823,22 +17842,8 @@ function toItemValue(template) {
 function fromItemValue(itemValue) {
 	return !itemValue || itemValue === DEFAULT_TEMPLATE_VALUE ? "" : itemValue;
 }
-/**
-* Whether the post is the front page or the posts page, which are assigned
-* a template by the reading settings rather than by this field.
-*
-* @param postType The post type.
-* @param postId   The post id.
-* @return Whether the template can be switched.
-*/
 function useCanSwitchTemplate(postType, postId) {
-	return (0, import_data.useSelect)((select) => {
-		const { getHomePage, getPostsPageId } = unlock(select(import_core_data.store));
-		const singlePostId = String(postId);
-		const isPostsPage = getPostsPageId() === singlePostId;
-		const isFrontPage = postType === "page" && getHomePage()?.postId === singlePostId;
-		return !isPostsPage && !isFrontPage;
-	}, [postId, postType]);
+	return (0, import_data.useSelect)((select) => isTemplateSwitchable(select, postType, postId), [postId, postType]);
 }
 function ClassicTemplateEdit({ data, field, onChange }) {
 	const value = field.getValue({ item: data });
@@ -17931,7 +17936,8 @@ function TemplateView({ item, field }) {
 */
 const fieldExtensions$1 = {
 	Edit: TemplateEdit,
-	render: TemplateView
+	render: TemplateView,
+	isDisabled: ({ item }) => !isTemplateSwitchable(import_data.select, item.type, item.id)
 };
 
 // packages/core-fields/build-module/shared/title/view.mjs

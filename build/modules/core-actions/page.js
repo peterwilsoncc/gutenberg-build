@@ -88,6 +88,42 @@ async function refetchPages(registry, ids) {
 	await registry.resolveSelect(import_core_data.store).getEntityRecords("postType", "page", query);
 }
 
+// packages/core-actions/build-module/page/sync-site-base.mjs
+/**
+* The reading settings that the base data of the site mirrors.
+*/
+const READING_SETTINGS = [
+	"show_on_front",
+	"page_on_front",
+	"page_for_posts"
+];
+/**
+* Copies the saved reading settings into the base data of the site.
+*
+* The homepage and the posts page are saved to the `root/site` entity, while
+* `getHomePage()` and `getPostsPageId()` read them from `root/__unstableBase`,
+* which saving the settings doesn't update. Without this, whatever depends on
+* those selectors, such as the template field, keeps the previous pages until
+* the next load.
+*
+* Base data that isn't loaded yet is left alone: requesting it here fetches
+* it, and the response already holds the saved settings.
+*
+* @param registry      The data registry.
+* @param savedSettings The site settings the save responded with.
+*/
+function syncSiteBase(registry, savedSettings) {
+	if (!savedSettings) return;
+	const base = registry.select(import_core_data.store).getEntityRecord("root", "__unstableBase");
+	if (!base) return;
+	const readingSettings = {};
+	for (const setting of READING_SETTINGS) if (setting in savedSettings) readingSettings[setting] = savedSettings[setting];
+	registry.dispatch(import_core_data.store).receiveEntityRecords("root", "__unstableBase", {
+		...base,
+		...readingSettings
+	});
+}
+
 // \0wp-global:react/jsx-runtime
 var require_jsx_runtime = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = window.ReactJSXRuntime;
@@ -118,8 +154,9 @@ function SetSitePageModal({ setting, items, closeModal, getText, submitLabel, su
 	async function onSubmit(event) {
 		event.preventDefault();
 		const previousId = siteSettings?.[setting];
+		let savedSettings;
 		try {
-			await saveEntityRecord("root", "site", {
+			savedSettings = await saveEntityRecord("root", "site", {
 				[setting]: item.id,
 				show_on_front: "page"
 			}, { throwOnError: true });
@@ -130,6 +167,7 @@ function SetSitePageModal({ setting, items, closeModal, getText, submitLabel, su
 			closeModal?.();
 			return;
 		}
+		syncSiteBase(registry, savedSettings);
 		createSuccessNotice(successNotice, { type: "snackbar" });
 		closeModal?.();
 		try {

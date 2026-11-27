@@ -52862,7 +52862,7 @@ function QuickEditModal({ postType, postId, closeModal, onSave: onSaved, quickEd
 	const isBulk = postId.length > 1;
 	const [modalElement, setModalElement] = (0, import_element.useState)(null);
 	const [localEdits, setLocalEdits] = (0, import_element.useState)({});
-	const { record, hasFinishedResolution, canSwitchTemplate } = (0, import_data.useSelect)((select) => {
+	const { record, hasFinishedResolution } = (0, import_data.useSelect)((select) => {
 		const store = select(import_core_data.store);
 		const { getEditedEntityRecord } = store;
 		if (isBulk) return {
@@ -52874,14 +52874,9 @@ function QuickEditModal({ postType, postId, closeModal, onSave: onSaved, quickEd
 			postType,
 			postId[0]
 		];
-		const { getHomePage, getPostsPageId } = unlock(select(import_core_data.store));
-		const singlePostId = String(postId[0]);
-		const isPostsPage = singlePostId !== void 0 && getPostsPageId() === singlePostId;
-		const isFrontPage = singlePostId !== void 0 && postType === "page" && getHomePage()?.postId === singlePostId;
 		return {
 			record: getEditedEntityRecord(...args),
-			hasFinishedResolution: store.hasFinishedResolution("getEditedEntityRecord", args),
-			canSwitchTemplate: !isPostsPage && !isFrontPage
+			hasFinishedResolution: store.hasFinishedResolution("getEditedEntityRecord", args)
 		};
 	}, [
 		postType,
@@ -52895,16 +52890,12 @@ function QuickEditModal({ postType, postId, closeModal, onSave: onSaved, quickEd
 			...field,
 			elements: field.elements.filter((element) => element.value !== "trash")
 		};
-		if (field.id === "template") return {
-			...field,
-			readOnly: !canSwitchTemplate
-		};
 		if (field.id === "featured_media" && field.Edit) return {
 			...field,
 			Edit: withEditorAssets(field.Edit)
 		};
 		return field;
-	}), [_fields, canSwitchTemplate]);
+	}), [_fields]);
 	const form = (0, import_element.useMemo)(() => {
 		if (!quickEditForm) return {
 			layout: { type: "panel" },
