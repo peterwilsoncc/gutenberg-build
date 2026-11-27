@@ -84297,24 +84297,34 @@ Icon: ButtonIcon });
 		const hasAnySelected = isSelected || hasSelectedChild;
 		const logosOnly = attributes.className?.includes("is-style-logos-only");
 		const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+		const { __unstableMarkNextChangeAsNotPersistent } = (0, _wordpress_data.useDispatch)(_wordpress_block_editor.store);
 		(0, _wordpress_element.useEffect)(() => {
-			if (logosOnly) {
-				let restore;
-				setAttributes((prev) => {
-					restore = {
-						iconBackgroundColor: prev.iconBackgroundColor,
-						iconBackgroundColorValue: prev.iconBackgroundColorValue,
-						customIconBackgroundColor: prev.customIconBackgroundColor
-					};
-					return {
-						iconBackgroundColor: void 0,
-						iconBackgroundColorValue: void 0,
-						customIconBackgroundColor: void 0
-					};
-				});
-				return () => setAttributes({ ...restore });
-			}
-		}, [logosOnly, setAttributes]);
+			if (!logosOnly) return;
+			let restore;
+			__unstableMarkNextChangeAsNotPersistent();
+			setAttributes((prev) => {
+				const { iconBackgroundColor: bg, iconBackgroundColorValue: bgValue, customIconBackgroundColor: customBg } = prev;
+				if (bg || bgValue || customBg) restore = {
+					iconBackgroundColor: bg,
+					iconBackgroundColorValue: bgValue,
+					customIconBackgroundColor: customBg
+				};
+				return {
+					iconBackgroundColor: void 0,
+					iconBackgroundColorValue: void 0,
+					customIconBackgroundColor: void 0
+				};
+			});
+			return () => {
+				if (!restore) return;
+				__unstableMarkNextChangeAsNotPersistent();
+				setAttributes(restore);
+			};
+		}, [
+			logosOnly,
+			setAttributes,
+			__unstableMarkNextChangeAsNotPersistent
+		]);
 		const className = clsx(size, {
 			"has-visible-labels": showLabels,
 			"has-icon-color": iconColor.color || iconColorValue,
