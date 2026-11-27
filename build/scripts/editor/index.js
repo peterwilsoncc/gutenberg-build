@@ -89641,12 +89641,9 @@ If there's a particular need for this, please submit a feature request at https:
 	}
 
 // packages/editor/build-module/components/document-outline/item.mjs
-	const TableOfContentsItem = ({ children, isValid, isDisabled, level, href, onSelect }) => {
-		function handleClick(event) {
-			if (isDisabled) {
-				event.preventDefault();
-				return;
-			}
+	const TableOfContentsItem = ({ children, isValid, isDisabled, level, onSelect }) => {
+		function handleClick() {
+			if (isDisabled) return;
 			onSelect();
 		}
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("li", {
@@ -89654,8 +89651,8 @@ If there's a particular need for this, please submit a feature request at https:
 				"is-invalid": !isValid,
 				"is-disabled": isDisabled
 			}),
-			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("a", {
-				href,
+			children: /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("button", {
+				type: "button",
 				className: "document-outline__button",
 				"aria-disabled": isDisabled,
 				onClick: handleClick,
@@ -89855,7 +89852,6 @@ If there's a particular need for this, please submit a feature request at https:
 					else canvasDocument?.querySelector(".editor-post-title__input")?.focus();
 					onSelect?.();
 				},
-				href: "#",
 				isDisabled: hasOutlineItemsDisabled,
 				children: title
 			}), headings.map((item) => {
@@ -89866,7 +89862,6 @@ If there's a particular need for this, please submit a feature request at https:
 					level: `H${item.level}`,
 					isValid,
 					isDisabled: hasOutlineItemsDisabled || !isContentBlock(item.clientId),
-					href: `#block-${item.clientId}`,
 					onSelect: () => {
 						selectBlock(item.clientId);
 						onSelect?.();

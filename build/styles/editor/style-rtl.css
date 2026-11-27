@@ -5971,9 +5971,6 @@ mark.wp-note {
   display: flex;
   margin: 4px 0;
 }
-.document-outline__item a {
-  text-decoration: none;
-}
 .document-outline__item .document-outline__emdash::before {
   color: #ddd;
   margin-left: 4px;
@@ -6003,6 +6000,7 @@ mark.wp-note {
   margin: 0 -1px 0 0;
   padding: 2px 1px 2px 5px;
   color: #1e1e1e;
+  font: inherit;
   text-align: right;
   border-radius: 2px;
 }
