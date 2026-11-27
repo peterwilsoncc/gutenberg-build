@@ -507,13 +507,14 @@ _wordpress_deprecated = __toESM(_wordpress_deprecated, 1);
 	function PluginArea({ scope, onError }) {
 		const store = (0, _wordpress_element.useMemo)(() => {
 			let lastValue = [];
+			const namespace = scope ? `core/plugins/plugin-area/${scope}` : "core/plugins/plugin-area";
 			return {
 				subscribe(listener) {
-					(0, _wordpress_hooks.addAction)("plugins.pluginRegistered", "core/plugins/plugin-area/plugins-registered", listener);
-					(0, _wordpress_hooks.addAction)("plugins.pluginUnregistered", "core/plugins/plugin-area/plugins-unregistered", listener);
+					(0, _wordpress_hooks.addAction)("plugins.pluginRegistered", namespace, listener);
+					(0, _wordpress_hooks.addAction)("plugins.pluginUnregistered", namespace, listener);
 					return () => {
-						(0, _wordpress_hooks.removeAction)("plugins.pluginRegistered", "core/plugins/plugin-area/plugins-registered");
-						(0, _wordpress_hooks.removeAction)("plugins.pluginUnregistered", "core/plugins/plugin-area/plugins-unregistered");
+						(0, _wordpress_hooks.removeAction)("plugins.pluginRegistered", namespace);
+						(0, _wordpress_hooks.removeAction)("plugins.pluginUnregistered", namespace);
 					};
 				},
 				getValue() {
