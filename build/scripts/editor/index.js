@@ -108505,6 +108505,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if (isInserterOpened) event.preventDefault();
 		};
 		const isWideViewport = (0, _wordpress_compose.useViewportMatch)("wide");
+		const isMediumViewport = (0, _wordpress_compose.useViewportMatch)("medium");
 		/** translators: accessibility text for the editor toolbar */
 		const toolbarAriaLabel = (0, _wordpress_i18n.__)("Document tools");
 		const toggleListView = (0, _wordpress_element.useCallback)(() => setIsListViewOpened(!isListViewOpen), [setIsListViewOpened, isListViewOpen]);
@@ -108530,36 +108531,32 @@ If there's a particular need for this, please submit a feature request at https:
 					label: showIconLabels ? shortLabel : longLabel,
 					showTooltip: !showIconLabels,
 					"aria-expanded": isInserterOpened
-				}), (isWideViewport || !showIconLabels) && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, {
-						as: undo_default,
-						showTooltip: !showIconLabels,
-						variant: showIconLabels ? "tertiary" : void 0,
-						size: "compact"
-					}),
-					/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, {
-						as: redo_default,
-						showTooltip: !showIconLabels,
-						variant: showIconLabels ? "tertiary" : void 0,
-						size: "compact"
-					}),
-					!isDistractionFree && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
-						className: "editor-document-tools__document-overview-toggle",
-						icon: list_view_default,
-						disabled: disableBlockTools,
-						isPressed: isListViewOpen,
-						label: (0, _wordpress_i18n.__)(
-							/** translators: button label text should, if possible, be under 16 characters. */
-							"Document Overview"
-						),
-						onClick: toggleListView,
-						shortcut: listViewShortcut,
-						showTooltip: !showIconLabels,
-						variant: showIconLabels ? "tertiary" : void 0,
-						"aria-expanded": isListViewOpen,
-						ref: listViewToggleRef
-					})
-				] })]
+				}), (isWideViewport || !showIconLabels) && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [isMediumViewport && /* @__PURE__ */ (0, react_jsx_runtime.jsxs)(react_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, {
+					as: undo_default,
+					showTooltip: !showIconLabels,
+					variant: showIconLabels ? "tertiary" : void 0,
+					size: "compact"
+				}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarItem, {
+					as: redo_default,
+					showTooltip: !showIconLabels,
+					variant: showIconLabels ? "tertiary" : void 0,
+					size: "compact"
+				})] }), !isDistractionFree && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(_wordpress_components.ToolbarButton, {
+					className: "editor-document-tools__document-overview-toggle",
+					icon: list_view_default,
+					disabled: disableBlockTools,
+					isPressed: isListViewOpen,
+					label: (0, _wordpress_i18n.__)(
+						/** translators: button label text should, if possible, be under 16 characters. */
+						"Document Overview"
+					),
+					onClick: toggleListView,
+					shortcut: listViewShortcut,
+					showTooltip: !showIconLabels,
+					variant: showIconLabels ? "tertiary" : void 0,
+					"aria-expanded": isListViewOpen,
+					ref: listViewToggleRef
+				})] })]
 			})
 		});
 	}

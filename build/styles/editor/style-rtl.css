@@ -6050,16 +6050,6 @@ mark.wp-note {
   display: inline-flex;
   align-items: center;
 }
-.editor-document-tools .editor-document-tools__left > .editor-history__redo,
-.editor-document-tools .editor-document-tools__left > .editor-history__undo {
-  display: none;
-}
-@media (min-width: 782px) {
-  .editor-document-tools .editor-document-tools__left > .editor-history__redo,
-  .editor-document-tools .editor-document-tools__left > .editor-history__undo {
-    display: inline-flex;
-  }
-}
 .editor-document-tools .editor-document-tools__left > .editor-document-tools__inserter-toggle {
   display: inline-flex;
 }
