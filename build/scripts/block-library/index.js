@@ -88272,18 +88272,24 @@ Icon: ButtonIcon });
 		from: [{
 			type: "block",
 			blocks: ["core/categories"],
-			transform: ({ taxonomy, showPostCounts }) => (0, _wordpress_blocks.createBlock)("core/tag-cloud", {
-				taxonomy,
-				showTagCounts: showPostCounts
-			})
+			transform: (attributes) => {
+				const { taxonomy, showPostCounts } = attributes;
+				return (0, _wordpress_blocks.createBlock)("core/tag-cloud", {
+					taxonomy,
+					showTagCounts: showPostCounts
+				});
+			}
 		}],
 		to: [{
 			type: "block",
 			blocks: ["core/categories"],
-			transform: ({ taxonomy, showTagCounts }) => (0, _wordpress_blocks.createBlock)("core/categories", {
-				taxonomy,
-				showPostCounts: showTagCounts
-			})
+			transform: (attributes) => {
+				const { taxonomy, showTagCounts } = attributes;
+				return (0, _wordpress_blocks.createBlock)("core/categories", {
+					taxonomy,
+					showPostCounts: showTagCounts
+				});
+			}
 		}]
 	};
 
@@ -88382,14 +88388,10 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/tag-cloud/edit.mjs
 /**
 	* Minimum number of tags a user can show using this block.
-	*
-	* @type {number}
 	*/
 	const MIN_TAGS = 1;
 	/**
 	* Maximum number of tags a user can show using this block.
-	*
-	* @type {number}
 	*/
 	const MAX_TAGS = 100;
 	const MIN_FONT_SIZE = .1;
