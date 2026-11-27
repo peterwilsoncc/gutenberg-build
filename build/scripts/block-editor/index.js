@@ -13753,7 +13753,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	};
 
 // packages/block-editor/build-module/autocompleters/block.mjs
-	const noop$21 = () => {};
+	const noop$22 = () => {};
 	const SHOWN_BLOCK_TYPES$1 = 9;
 	/**
 	* Creates a blocks repeater for replacing the current block with a selected block type.
@@ -13779,7 +13779,7 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 						prioritizedBlocks: getBlockListSettings(_rootClientId)?.prioritizedInserterBlocks
 					};
 				}, []);
-				const [items, categories, collections] = useBlockTypesState(rootClientId, noop$21, true);
+				const [items, categories, collections] = useBlockTypesState(rootClientId, noop$22, true);
 				const filteredItems = (0, _wordpress_element.useMemo)(() => {
 					return (!!filterValue.trim() ? searchBlockItems(items, categories, collections, filterValue) : orderInserterBlockItems(orderBy(items, "frecency", "desc"), prioritizedBlocks)).filter((item) => item.id !== selectedBlockId).slice(0, SHOWN_BLOCK_TYPES$1);
 				}, [
@@ -13828,21 +13828,28 @@ var import_es6 = /* @__PURE__ */ __toESM(require_es6(), 1);
 	* returning a new array reference on every invocation.
 	*/
 	const EMPTY_ARRAY$19 = [];
-	function useCompleters({ completers = EMPTY_ARRAY$19 }) {
+	function useCompleters({ completers = EMPTY_ARRAY$19, onReplace }) {
 		const { name } = useBlockEditContext();
+		const canReplace = !!onReplace;
 		return (0, _wordpress_element.useMemo)(() => {
 			let filteredCompleters = [...completers];
-			if (name === (0, _wordpress_blocks.getDefaultBlockName)() || (0, _wordpress_blocks.getBlockSupport)(name, "__experimentalSlashInserter", false)) filteredCompleters = [...filteredCompleters, block_default$2];
+			if (canReplace && (name === (0, _wordpress_blocks.getDefaultBlockName)() || (0, _wordpress_blocks.getBlockSupport)(name, "__experimentalSlashInserter", false))) filteredCompleters = [...filteredCompleters, block_default$2];
 			if ((0, _wordpress_hooks.hasFilter)("editor.Autocomplete.completers")) {
 				if (filteredCompleters === completers) filteredCompleters = filteredCompleters.map((completer) => ({ ...completer }));
 				filteredCompleters = (0, _wordpress_hooks.applyFilters)("editor.Autocomplete.completers", filteredCompleters, name);
 			}
 			return filteredCompleters;
-		}, [completers, name]);
+		}, [
+			completers,
+			name,
+			canReplace
+		]);
 	}
+	const noop$21 = () => {};
 	function useBlockEditorAutocompleteProps(props) {
 		return (0, _wordpress_components.__unstableUseAutocompleteProps)({
 			...props,
+			onReplace: props.onReplace ?? noop$21,
 			completers: useCompleters(props)
 		});
 	}
@@ -108978,7 +108985,7 @@ If there's a particular need for this, please submit a feature request at https:
 			getDomPosition
 		]);
 		const autocompleteProps = useBlockEditorAutocompleteProps({
-			onReplace,
+			onReplace: onReplace ? (blocks) => onReplace(blocks.flat()) : void 0,
 			completers: autocompleters,
 			record: value,
 			onChange
