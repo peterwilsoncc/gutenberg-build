@@ -64544,7 +64544,8 @@ Icon: ButtonIcon });
 			containerRef.current.ownerDocument.defaultView.focus();
 			if (hasMultiSelection()) containerRef.current.focus();
 			else if (getSelectedBlockClientId()) {
-				if (getLastFocus()?.current) getLastFocus().current.focus();
+				const lastFocus = getLastFocus()?.current;
+				if (lastFocus?.isConnected) lastFocus.focus();
 				else containerRef.current.querySelector(`[data-block="${getSelectedBlockClientId()}"]`).focus();
 			} else if (isZoomOut()) {
 				const sectionRootClientId = getSectionRootClientId();
@@ -66126,7 +66127,8 @@ Icon: ButtonIcon });
 			const navigableToolbar = toolbarRef.current;
 			const handleKeyDown = (event) => {
 				if (event.keyCode !== _wordpress_keycodes.ESCAPE) return;
-				const target = getLastFocus()?.current ?? refsMap.get(getSelectedBlockClientId());
+				const lastFocus = getLastFocus()?.current;
+				const target = lastFocus?.isConnected ? lastFocus : refsMap.get(getSelectedBlockClientId());
 				if (target) {
 					event.preventDefault();
 					target.focus();
