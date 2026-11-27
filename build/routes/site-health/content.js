@@ -34021,6 +34021,7 @@ function ButtonTrigger({ action, onClick, items, variant }) {
 		size: "compact",
 		variant,
 		onClick,
+		"aria-haspopup": "RenderModal" in action ? "dialog" : void 0,
 		children: label
 	});
 }
@@ -34029,6 +34030,7 @@ function MenuItemTrigger({ action, onClick, items }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 		disabled: action.disabled,
 		onClick,
+		"aria-haspopup": "RenderModal" in action ? "dialog" : void 0,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: label })
 	});
 }
@@ -34236,6 +34238,7 @@ function ActionTrigger({ action, onClick, isBusy, items }) {
 		disabled: !!action.disabled || isBusy,
 		loading: isBusy,
 		onClick,
+		"aria-haspopup": "RenderModal" in action ? "dialog" : void 0,
 		children: label
 	});
 }
@@ -34249,6 +34252,7 @@ function ActionButton({ action, selectedItems, actionInProgress, onAction, isMen
 	if (isMenuItem) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item$2, {
 		onClick,
 		disabled: !!action.disabled || isBusy,
+		"aria-haspopup": "RenderModal" in action ? "dialog" : void 0,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ItemLabel$1, { children: getActionLabel(action, selectedEligibleItems, "menu") })
 	});
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionTrigger, {
@@ -35880,6 +35884,7 @@ function PrimaryActionGridCell({ idPrefix, primaryAction, item }) {
 				accessibleWhenDisabled: true,
 				text: label,
 				size: "small",
+				"aria-haspopup": "dialog",
 				onClick: () => setIsModalOpen(true)
 			}),
 			children: isModalOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionModal, {

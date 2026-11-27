@@ -73706,6 +73706,7 @@ Icon: ButtonIcon });
 			size: "compact",
 			variant,
 			onClick,
+			"aria-haspopup": "RenderModal" in action ? "dialog" : void 0,
 			children: label
 		});
 	}
@@ -73714,6 +73715,7 @@ Icon: ButtonIcon });
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Item$3, {
 			disabled: action.disabled,
 			onClick,
+			"aria-haspopup": "RenderModal" in action ? "dialog" : void 0,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: label })
 		});
 	}
@@ -73921,6 +73923,7 @@ Icon: ButtonIcon });
 			disabled: !!action.disabled || isBusy,
 			loading: isBusy,
 			onClick,
+			"aria-haspopup": "RenderModal" in action ? "dialog" : void 0,
 			children: label
 		});
 	}
@@ -73934,6 +73937,7 @@ Icon: ButtonIcon });
 		if (isMenuItem) return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(Item$3, {
 			onClick,
 			disabled: !!action.disabled || isBusy,
+			"aria-haspopup": "RenderModal" in action ? "dialog" : void 0,
 			children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ItemLabel$1, { children: getActionLabel(action, selectedEligibleItems, "menu") })
 		});
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionTrigger, {
@@ -75564,6 +75568,7 @@ Icon: ButtonIcon });
 					accessibleWhenDisabled: true,
 					text: label,
 					size: "small",
+					"aria-haspopup": "dialog",
 					onClick: () => setIsModalOpen(true)
 				}),
 				children: isModalOpen && /* @__PURE__ */ (0, react_jsx_runtime.jsx)(ActionModal, {
