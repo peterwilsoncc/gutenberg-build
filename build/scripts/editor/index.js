@@ -112020,10 +112020,11 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 		const isNavigationPreview = postType === "wp_navigation" && isPreview;
 		const [paddingAppenderRef, paddingStyle] = usePaddingAppender(!isPreview && renderingMode === "post-only" && !isDesignPostType);
 		const canvasHeight = enableResizing && canvasWidth && containerSize?.height > 0 && containerSize?.width > CANVAS_MIN_WIDTH ? getCanvasHeight(canvasWidth, containerSize) : "100%";
+		const publishedCanvasHeight = typeof canvasHeight === "number" && !isResizablePostType ? canvasHeight : void 0;
 		const { setCanvasHeight } = unlock$5((0, _wordpress_data.useDispatch)(store));
 		(0, _wordpress_element.useEffect)(() => {
-			setCanvasHeight(typeof canvasHeight === "number" ? canvasHeight : void 0);
-		}, [canvasHeight, setCanvasHeight]);
+			setCanvasHeight(publishedCanvasHeight);
+		}, [publishedCanvasHeight, setCanvasHeight]);
 		(0, _wordpress_element.useEffect)(() => () => setCanvasHeight(void 0), [setCanvasHeight]);
 		const hasCanvasMargin = !isPreview && !isZoomedOut && !enableResizing;
 		const hasCanvasMarginFill = !!(0, _wordpress_components.__experimentalUseSlotFills)(CanvasMargin.name)?.length;
