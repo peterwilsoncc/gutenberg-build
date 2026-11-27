@@ -113590,8 +113590,6 @@ ${Array.from({ length: 3 }, (_, index) => `.collaborators-overlay-block-label-it
 				} else baseEdits[key] = value;
 			}
 			if (!Object.keys(baseEdits).length) return;
-			if (baseEdits.status && baseEdits.status !== "future" && record?.status === "future" && new Date(record.date) > /* @__PURE__ */ new Date()) baseEdits.date = null;
-			if (baseEdits.status && baseEdits.status === "private" && record?.password) baseEdits.password = "";
 			editEntityRecord("postType", postType, postId, baseEdits);
 		};
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)(PostPanelSection, {

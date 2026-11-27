@@ -76635,12 +76635,6 @@ If there's a particular need for this, please submit a feature request at https:
 			};
 		}, [isBulk, quickEditForm]);
 		const onChange = (edits) => {
-			const currentData = {
-				...record,
-				...localEdits
-			};
-			if (edits.status && edits.status !== "future" && currentData?.status === "future" && new Date(currentData.date) > /* @__PURE__ */ new Date()) edits.date = null;
-			if (edits.status && edits.status === "private" && currentData?.password) edits.password = "";
 			setLocalEdits((prev) => ({
 				...prev,
 				...edits
