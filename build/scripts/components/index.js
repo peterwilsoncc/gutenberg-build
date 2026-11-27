@@ -23348,7 +23348,7 @@ Icon: ButtonIcon });
 	*   React.useEffect(() => {}, [onClick]);
 	* }
 	*/
-	function useEvent$7(callback) {
+	function useEvent$8(callback) {
 		const ref = (0, react$1.useRef)(() => {
 			throw new Error("Cannot call an event handler while rendering.");
 		});
@@ -23503,7 +23503,7 @@ Icon: ButtonIcon });
 	* boolean value, which will be turned into a function.
 	*/
 	function useBooleanEvent(booleanOrCallback) {
-		return useEvent$7(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
+		return useEvent$8(typeof booleanOrCallback === "function" ? booleanOrCallback : () => booleanOrCallback);
 	}
 	/**
 	* Returns props with an additional `wrapElement` prop.
@@ -23558,7 +23558,7 @@ Icon: ButtonIcon });
 			addGlobalEventListener("scroll", resetMouseMoving, true);
 			hasInstalledGlobalEventListeners$1 = true;
 		}, []);
-		return useEvent$7(() => mouseMoving);
+		return useEvent$8(() => mouseMoving);
 	}
 	let mouseMoving = false;
 	let previousScreenX = 0;
@@ -23873,7 +23873,7 @@ Icon: ButtonIcon });
 		return tabIndexProp ?? 0;
 	}
 	function useDisableEvent(onEvent, disabled) {
-		return useEvent$7((event) => {
+		return useEvent$8((event) => {
 			onEvent?.(event);
 			if (event.defaultPrevented) return;
 			if (disabled) {
@@ -23926,7 +23926,7 @@ Icon: ButtonIcon });
 		const [focusVisible, setFocusVisible] = (0, react$1.useState)(false);
 		const focusVisibleRef = (0, react$1.useRef)(false);
 		const nativeSubmitObserverCleanupRef = (0, react$1.useRef)(null);
-		const cleanupFocusVisible = useEvent$7((element) => {
+		const cleanupFocusVisible = useEvent$8((element) => {
 			nativeSubmitObserverCleanupRef.current?.();
 			nativeSubmitObserverCleanupRef.current = null;
 			focusVisibleRef.current = false;
@@ -23990,7 +23990,7 @@ Icon: ButtonIcon });
 			setFocusVisible(true);
 		};
 		const onKeyDownCaptureProp = props.onKeyDownCapture;
-		const onKeyDownCapture = useEvent$7((event) => {
+		const onKeyDownCapture = useEvent$8((event) => {
 			onKeyDownCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!focusable) return;
@@ -24003,7 +24003,7 @@ Icon: ButtonIcon });
 			queueBeforeEvent(element, "focusout", applyFocusVisible);
 		});
 		const onFocusCaptureProp = props.onFocusCapture;
-		const onFocusCapture = useEvent$7((event) => {
+		const onFocusCapture = useEvent$8((event) => {
 			onFocusCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!focusable) return;
@@ -24017,7 +24017,7 @@ Icon: ButtonIcon });
 			else setFocusVisible(false);
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$7((event) => {
+		const onBlur = useEvent$8((event) => {
 			onBlurProp?.(event);
 			if (!focusable) return;
 			if (!isFocusEventOutside(event)) return;
@@ -24025,7 +24025,7 @@ Icon: ButtonIcon });
 			setFocusVisible(false);
 		});
 		const autoFocusOnShow = (0, react$1.useContext)(FocusableContext);
-		const autoFocusRef = useEvent$7((element) => {
+		const autoFocusRef = useEvent$8((element) => {
 			if (!focusable) return;
 			if (!autoFocus) return;
 			if (!element) return;
@@ -24161,7 +24161,7 @@ Icon: ButtonIcon });
 			setActive(false);
 		}, [disabled]);
 		const onKeyDownProp = props.onKeyDown;
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			onKeyDownProp?.(event);
 			const element = event.currentTarget;
 			if (event.defaultPrevented) return;
@@ -24198,7 +24198,7 @@ Icon: ButtonIcon });
 			}
 		});
 		const onKeyUpProp = props.onKeyUp;
-		const onKeyUp = useEvent$7((event) => {
+		const onKeyUp = useEvent$8((event) => {
 			onKeyUpProp?.(event);
 			if (isDuplicate) return;
 			const isSpace = clickOnSpace && event.key === " ";
@@ -24217,7 +24217,7 @@ Icon: ButtonIcon });
 			queueMicrotask(() => fireClickEvent(element, eventInit));
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$7((event) => {
+		const onBlur = useEvent$8((event) => {
 			onBlurProp?.(event);
 			if (!activeRef.current) return;
 			activeRef.current = false;
@@ -25805,7 +25805,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return [react$1.useMemo(() => ({
 			...store,
 			useState
-		}), [store, useState]), useEvent$7(() => {
+		}), [store, useState]), useEvent$8(() => {
 			setStore((store) => createStore({
 				...props,
 				...store.getState()
@@ -25966,7 +25966,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const hasFocusedComposite = (0, react$1.useRef)(false);
 		const cancelScheduledFocusRedirectRef = (0, react$1.useRef)(null);
 		const present = usePresentItem(store);
-		const onFocus = useEvent$7((event) => {
+		const onFocus = useEvent$8((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isPortalEvent(event)) return;
@@ -26028,7 +26028,7 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 		});
 		const onBlurCaptureProp = props.onBlurCapture;
-		const onBlurCapture = useEvent$7((event) => {
+		const onBlurCapture = useEvent$8((event) => {
 			onBlurCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if ((store?.getState())?.virtualFocus && hasFocusedComposite.current) {
@@ -26040,7 +26040,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onKeyDownProp = props.onKeyDown;
 		const preventScrollOnKeyDownProp = useBooleanEvent(preventScrollOnKeyDown);
 		const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isSelfTarget(event)) return;
@@ -26211,7 +26211,7 @@ If there's a particular need for this, please submit a feature request at https:
 			return nextItem;
 		}, [dimmed, getItemProp]);
 		const onClickProp = props.onClick;
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			store?.setSelectedId(id);
@@ -26362,7 +26362,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return event.key === "Shift" || event.key === "Control" || event.key === "Alt" || event.key === "Meta";
 	}
 	function useKeyboardEventProxy(store, onKeyboardEvent, previousElementRef) {
-		return useEvent$7((event) => {
+		return useEvent$8((event) => {
 			onKeyboardEvent?.(event);
 			if (event.defaultPrevented) return;
 			if (event.isPropagationStopped()) return;
@@ -26545,7 +26545,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onKeyDownCapture = useKeyboardEventProxy(store, props.onKeyDownCapture, previousElementRef);
 		const onKeyUpCapture = useKeyboardEventProxy(store, props.onKeyUpCapture, previousElementRef);
 		const onFocusCaptureProp = props.onFocusCapture;
-		const onFocusCapture = useEvent$7((event) => {
+		const onFocusCapture = useEvent$8((event) => {
 			scheduleFocusUpdateRef.current?.();
 			onFocusCaptureProp?.(event);
 			if (event.defaultPrevented) return;
@@ -26560,7 +26560,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$7((event) => {
+		const onFocus = useEvent$8((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!composite) return;
@@ -26588,7 +26588,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onBlurCaptureProp = props.onBlurCapture;
-		const onBlurCapture = useEvent$7((event) => {
+		const onBlurCapture = useEvent$8((event) => {
 			scheduleFocusUpdateRef.current?.();
 			onBlurCaptureProp?.(event);
 			if (event.defaultPrevented) return;
@@ -26611,7 +26611,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const onKeyDownProp = props.onKeyDown;
 		const moveOnKeyPressProp = useBooleanEvent(moveOnKeyPress);
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			onKeyDownProp?.(event);
 			if (event.nativeEvent.isComposing) return;
 			if (event.defaultPrevented) return;
@@ -27160,7 +27160,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const disclosure = useDisclosureStore({ open });
 		const mounted = useStoreState(disclosure, "mounted");
 		const scrollPositionRef = (0, react$1.useRef)(null);
-		const getScrollElement = useEvent$7(() => {
+		const getScrollElement = useEvent$8(() => {
 			const panelElement = ref.current;
 			if (!panelElement) return null;
 			if (!scrollElement) return panelElement;
@@ -27222,7 +27222,7 @@ If there's a particular need for this, please submit a feature request at https:
 			getItemProp
 		]);
 		const onKeyDownProp = props.onKeyDown;
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!store?.composite) return;
@@ -29078,7 +29078,7 @@ If there's a particular need for this, please submit a feature request at https:
 		return targets.elements.some((target) => isElementWithinDialog(target, contentElement, disclosureElement));
 	}
 	function useEventOutside({ store, type, listener, capture, open, contentElement, focusedRef }) {
-		const callListener = useEvent$7(listener);
+		const callListener = useEvent$8(listener);
 		(0, react$1.useEffect)(() => {
 			if (!open) return;
 			const onEvent = (event) => {
@@ -29517,7 +29517,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const hiddenDismissRef = (0, react$1.useRef)(null);
 		const hasDefaultModalPortal = modal && portal && !props.portalElement;
 		const handlingHideRef = (0, react$1.useRef)(false);
-		const dispatchClose = useEvent$7(() => {
+		const dispatchClose = useEvent$8(() => {
 			const dialog = ref.current;
 			if (!dialog) return true;
 			const event = new Event("close", {
@@ -29791,7 +29791,7 @@ If there's a particular need for this, please submit a feature request at https:
 			canTakeTreeSnapshot,
 			earlierDialogElementChanges
 		]);
-		const getPersistentElementsProp = useEvent$7(getPersistentElements);
+		const getPersistentElementsProp = useEvent$8(getPersistentElements);
 		const treeRef = (0, react$1.useRef)(null);
 		useSafeLayoutEffect(() => {
 			return () => {
@@ -29957,7 +29957,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onKeyDownProp = props.onKeyDown;
 		const onKeyDownCaptureProp = props.onKeyDownCapture;
 		const onFocusCaptureProp = props.onFocusCapture;
-		const onFocusCapture = useEvent$7((event) => {
+		const onFocusCapture = useEvent$8((event) => {
 			onFocusCaptureProp?.(event);
 			if (!store.getState().open) return;
 			const target = event.target;
@@ -29965,7 +29965,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if (!contains(event.currentTarget, target)) return;
 			focusedStoreRef.current = store;
 		});
-		const acceptEscape = useEvent$7((event) => {
+		const acceptEscape = useEvent$8((event) => {
 			if (event.key !== "Escape") return false;
 			if (!event.bubbles) return false;
 			const result = escapeEvents.get(event);
@@ -29992,7 +29992,7 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 			return keyPress.accepted;
 		});
-		const hideOnEscapeEvent = useEvent$7((event) => {
+		const hideOnEscapeEvent = useEvent$8((event) => {
 			const accepted = acceptEscape(event);
 			escapeEvents.delete(event);
 			if (!accepted) return false;
@@ -30004,7 +30004,7 @@ If there's a particular need for this, please submit a feature request at https:
 			store.hide();
 			return true;
 		});
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			const nativeEvent = event.nativeEvent;
 			const wasPropagationStopped = nativeEvent.cancelBubble;
 			onKeyDownProp?.(event);
@@ -30015,7 +30015,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if (!hideOnEscapeEvent(nativeEvent)) return;
 			event.stopPropagation();
 		});
-		const onKeyDownCapture = useEvent$7((event) => {
+		const onKeyDownCapture = useEvent$8((event) => {
 			const nativeEvent = event.nativeEvent;
 			const wasPropagationStopped = nativeEvent.cancelBubble;
 			onKeyDownCaptureProp?.(event);
@@ -30402,7 +30402,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const requestedInitialFocus = !!popoverElement && requestedElementRef.current === popoverElement;
 		const positioned = !placing || requestedInitialFocus;
 		const autoFocusOnShowProp = useBooleanEvent(autoFocusOnShow);
-		const shouldAutoFocusOnShow = useEvent$7((element) => {
+		const shouldAutoFocusOnShow = useEvent$8((element) => {
 			const shouldFocus = autoFocusOnShowProp(element);
 			if (!store?.getState().unstable_placing) requestedElementRef.current = popoverElement;
 			return shouldFocus;
@@ -30413,8 +30413,8 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 		}, [store]);
 		const { portalRef, domReady } = usePortalRef(portal, props.portalRef);
-		const getAnchorRectProp = useEvent$7(getAnchorRect);
-		const updatePositionProp = useEvent$7(updatePosition);
+		const getAnchorRectProp = useEvent$8(getAnchorRect);
+		const updatePositionProp = useEvent$8(updatePosition);
 		const hasCustomUpdatePosition = !!updatePosition;
 		const overflowPaddingTop = typeof overflowPadding === "number" ? overflowPadding : overflowPadding.top ?? 0;
 		const overflowPaddingRight = typeof overflowPadding === "number" ? overflowPadding : overflowPadding.right ?? 0;
@@ -30744,7 +30744,7 @@ If there's a particular need for this, please submit a feature request at https:
 	function useEscapeClose({ hideOnEscape, onClose, onEscapeClose }) {
 		const acceptedEscapeRef = (0, react$1.useRef)(null);
 		return {
-			hideOnEscape: useEvent$7((event) => {
+			hideOnEscape: useEvent$8((event) => {
 				if (isFalsyBooleanCallback(hideOnEscape, event)) return false;
 				const acceptedEscape = {};
 				acceptedEscapeRef.current = acceptedEscape;
@@ -30754,7 +30754,7 @@ If there's a particular need for this, please submit a feature request at https:
 				});
 				return true;
 			}),
-			onClose: useEvent$7((event) => {
+			onClose: useEvent$8((event) => {
 				const acceptedEscape = acceptedEscapeRef.current;
 				acceptedEscapeRef.current = null;
 				onClose?.(event);
@@ -30792,7 +30792,7 @@ If there's a particular need for this, please submit a feature request at https:
 			if (!mounted) setAutoFocusOnHide(false);
 		}, [mounted]);
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$7((event) => {
+		const onFocus = useEvent$8((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			setAutoFocusOnHide(true);
@@ -31163,7 +31163,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const focusable = props.focusable !== false;
 		const triggerRef = (0, react$1.useRef)(null);
 		const showTimeoutRef = (0, react$1.useRef)(0);
-		const isTrulyDisabled = useEvent$7((element) => {
+		const isTrulyDisabled = useEvent$8((element) => {
 			if (disabled && !focusable) return true;
 			return trulyDisabledFromElement(element);
 		});
@@ -31182,7 +31182,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const showOnHoverProp = useBooleanEvent(showOnHover);
 		const showOnHoverWhenDisabledProp = useBooleanEvent(showOnHoverWhenDisabled);
 		const isMouseMoving = useIsMouseMoving();
-		const onMouseMove = useEvent$7((event) => {
+		const onMouseMove = useEvent$8((event) => {
 			onMouseMoveProp?.(event);
 			if (event.defaultPrevented) return;
 			if (showTimeoutRef.current) return;
@@ -31211,7 +31211,7 @@ If there's a particular need for this, please submit a feature request at https:
 			else showTimeoutRef.current = window.setTimeout(showHovercard, timeoutMs);
 		});
 		const onClickProp = props.onClick;
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			window.clearTimeout(showTimeoutRef.current);
 			showTimeoutRef.current = 0;
@@ -31352,7 +31352,7 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 		}, [store]);
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$7((event) => {
+		const onFocus = useEvent$8((event) => {
 			onFocusProp?.(event);
 			if (!returningFocusRef.current) return;
 			returningFocusRef.current = false;
@@ -31372,12 +31372,12 @@ If there's a particular need for this, please submit a feature request at https:
 			}));
 		}, [store]);
 		const onMouseEnterProp = props.onMouseEnter;
-		const onMouseEnter = useEvent$7((event) => {
+		const onMouseEnter = useEvent$8((event) => {
 			onMouseEnterProp?.(event);
 			canShowOnHoverRef.current = true;
 		});
 		const onFocusVisibleProp = props.onFocusVisible;
-		const onFocusVisible = useEvent$7((event) => {
+		const onFocusVisible = useEvent$8((event) => {
 			onFocusVisibleProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isEscapeKeyEvent(event.nativeEvent)) return;
@@ -31387,7 +31387,7 @@ If there's a particular need for this, please submit a feature request at https:
 			showStore(store);
 		});
 		const onBlurProp = props.onBlur;
-		const onBlur = useEvent$7((event) => {
+		const onBlur = useEvent$8((event) => {
 			onBlurProp?.(event);
 			if (event.defaultPrevented) return;
 			const { activeStore } = globalStore.getState();
@@ -31705,7 +31705,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onClickProp = props.onClick;
 		const toggleOnClickProp = useBooleanEvent(toggleOnClick);
 		const [isDuplicate, metadataProps] = useMetadataProps(props, symbol$1, true);
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isDuplicate) return;
@@ -31987,7 +31987,7 @@ If there's a particular need for this, please submit a feature request at https:
 			name,
 			value
 		]);
-		const onChange = useEvent$7((event) => {
+		const onChange = useEvent$8((event) => {
 			if (disabled) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -32003,14 +32003,14 @@ If there's a particular need for this, please submit a feature request at https:
 			store?.setValue(value);
 		});
 		const onClickProp = props.onClick;
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			if (nativeRadio) return;
 			onChange(event);
 		});
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$7((event) => {
+		const onFocus = useEvent$8((event) => {
 			onFocusProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!nativeRadio) return;
@@ -32149,7 +32149,7 @@ If there's a particular need for this, please submit a feature request at https:
 			})
 		}), [store, disabled]);
 		const onBlurCaptureProp = props.onBlurCapture;
-		const onBlurCapture = useEvent$7((event) => {
+		const onBlurCapture = useEvent$8((event) => {
 			onBlurCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isFocusEventOutside(event)) return;
@@ -32351,7 +32351,7 @@ If there's a particular need for this, please submit a feature request at https:
 		store = store || context;
 		invariant$1(store, "CompositeTypeahead must be a Composite component");
 		const onKeyDownCaptureProp = props.onKeyDownCapture;
-		const onKeyDownCapture = useEvent$7((event) => {
+		const onKeyDownCapture = useEvent$8((event) => {
 			onKeyDownCaptureProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!typeahead) return;
@@ -32507,7 +32507,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const dir = getBasePlacement(placement);
 		const value = useStoreState(store, "value");
 		const multiSelectable = Array.isArray(value);
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!store) return;
@@ -32783,7 +32783,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const isMouseMoving = useIsMouseMoving();
 		const onMouseMoveProp = props.onMouseMove;
 		const focusOnHoverProp = useBooleanEvent(focusOnHover);
-		const onMouseMove = useEvent$7((event) => {
+		const onMouseMove = useEvent$8((event) => {
 			onMouseMoveProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isMouseMoving()) return;
@@ -32796,7 +32796,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const onMouseLeaveProp = props.onMouseLeave;
 		const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
-		const onMouseLeave = useEvent$7((event) => {
+		const onMouseLeave = useEvent$8((event) => {
 			onMouseLeaveProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!isMouseMoving()) return;
@@ -32909,7 +32909,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onClickProp = props.onClick;
 		const setValueOnClickProp = useBooleanEvent(setValueOnClick);
 		const hideOnClickProp = useBooleanEvent(hideOnClick);
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isDownloading(event)) return;
@@ -33139,7 +33139,7 @@ If there's a particular need for this, please submit a feature request at https:
 		invariant$1(store, "SelectLabel must receive a `store` prop or be wrapped in a SelectProvider component.");
 		const id = useId$4(props.id);
 		const onClickProp = props.onClick;
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			queueMicrotask(() => {
@@ -33218,7 +33218,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const onKeyDownProp = props.onKeyDown;
 		const resetOnEscapeProp = useBooleanEvent(resetOnEscape);
 		const hideOnEnterProp = useBooleanEvent(hideOnEnter);
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			if (event.key === "Escape" && resetOnEscapeProp(event)) store?.setValue(defaultValue);
@@ -33677,7 +33677,7 @@ If there's a particular need for this, please submit a feature request at https:
 			valueProp
 		]);
 		const onChangeProp = props.onChange;
-		const onChange = useEvent$7((event) => {
+		const onChange = useEvent$8((event) => {
 			if (disabled) {
 				event.stopPropagation();
 				event.preventDefault();
@@ -33704,7 +33704,7 @@ If there's a particular need for this, please submit a feature request at https:
 			});
 		});
 		const onClickProp = props.onClick;
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			if (nativeCheckbox) return;
@@ -33824,7 +33824,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const orientation = useStoreState(store, ["orientation"], (state) => state.orientation === "both" ? void 0 : state.orientation);
 		const isHorizontal = orientation !== "vertical";
 		const isMenubarHorizontal = useStoreState(parentMenubar, ["orientation"], (state) => !!state && state.orientation !== "vertical");
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			onKeyDownProp?.(event);
 			if (event.defaultPrevented) return;
 			const target = event.target;
@@ -34201,7 +34201,7 @@ If there's a particular need for this, please submit a feature request at https:
 			store?.show();
 		};
 		const onFocusProp = props.onFocus;
-		const onFocus = useEvent$7((event) => {
+		const onFocus = useEvent$8((event) => {
 			onFocusProp?.(event);
 			if (isDisabled(event.currentTarget)) return;
 			if (event.defaultPrevented) return;
@@ -34214,7 +34214,7 @@ If there's a particular need for this, please submit a feature request at https:
 		});
 		const dir = useStoreState(store, ["placement"], (state) => getBasePlacement(state.placement));
 		const onKeyDownProp = props.onKeyDown;
-		const onKeyDown = useEvent$7((event) => {
+		const onKeyDown = useEvent$8((event) => {
 			onKeyDownProp?.(event);
 			if (isDisabled(event.currentTarget)) return;
 			if (event.defaultPrevented) return;
@@ -34233,7 +34233,7 @@ If there's a particular need for this, please submit a feature request at https:
 			}
 		});
 		const onClickProp = props.onClick;
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			if (!store) return;
@@ -34454,7 +34454,7 @@ If there's a particular need for this, please submit a feature request at https:
 		const hideOnClickProp = useBooleanEvent(hideOnClick);
 		const hideMenu = "hideAll" in store ? store.hideAll : void 0;
 		const isWithinMenu = !!hideMenu;
-		const onClick = useEvent$7((event) => {
+		const onClick = useEvent$8((event) => {
 			onClickProp?.(event);
 			if (event.defaultPrevented) return;
 			if (isDownloading(event)) return;
@@ -77194,7 +77194,7 @@ The screen with id ${screen.id} will not be added.`);
 				return false;
 			}
 		}
-		function trySandBox(forceRerender = false) {
+		const trySandBox = (0, _wordpress_compose.useEvent)((forceRerender = false) => {
 			if (!isFrameAccessible()) return;
 			const { contentDocument, ownerDocument } = ref.current;
 			if (!forceRerender && null !== contentDocument?.body.getAttribute("data-resizable-iframe-connected")) return;
@@ -77211,7 +77211,7 @@ The screen with id ${screen.id} will not be added.`);
 				lang: ownerDocument.documentElement.lang
 			}));
 			contentDocument.close();
-		}
+		});
 		(0, _wordpress_element.useEffect)(() => {
 			trySandBox();
 			function tryNoForceSandBox() {
@@ -77236,17 +77236,22 @@ The screen with id ${screen.id} will not be added.`);
 				iframe?.removeEventListener("load", tryNoForceSandBox, false);
 				defaultView?.removeEventListener("message", checkMessageForResize);
 			};
-		}, []);
+		}, [trySandBox]);
 		(0, _wordpress_element.useEffect)(() => {
 			trySandBox();
 		}, [
 			title,
 			styles,
-			scripts
+			scripts,
+			trySandBox
 		]);
 		(0, _wordpress_element.useEffect)(() => {
 			trySandBox(true);
-		}, [html, type]);
+		}, [
+			html,
+			type,
+			trySandBox
+		]);
 		return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("iframe", {
 			ref: (0, _wordpress_compose.useMergeRefs)([ref, (0, _wordpress_compose.useFocusableIframe)()]),
 			title,
