@@ -37525,15 +37525,9 @@ Icon: ButtonIcon });
 /**
 	* Renders the `core/comment-author-name` block on the editor.
 	*
-	* @param {Object} props                       React props.
-	* @param {Object} props.setAttributes         Callback for updating block attributes.
-	* @param {Object} props.attributes            Block attributes.
-	* @param {string} props.attributes.isLink     Whether the author name should be linked.
-	* @param {string} props.attributes.linkTarget Target of the link.
-	* @param {Object} props.context               Inherited context.
-	* @param {string} props.context.commentId     The comment ID.
+	* @param props React props.
 	*
-	* @return {React.JSX.Element} React element.
+	* @return React element.
 	*/
 	function Edit$12(props) {
 		const { attributes: { isLink, linkTarget }, context: { commentId }, setAttributes } = props;
@@ -37679,7 +37673,7 @@ Icon: ButtonIcon });
 		},
 		migrate: migrate_font_family_default,
 		isEligible({ style }) {
-			return style?.typography?.fontFamily;
+			return !!style?.typography?.fontFamily;
 		}
 	}];
 
