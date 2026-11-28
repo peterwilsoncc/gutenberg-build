@@ -37895,16 +37895,6 @@ Icon: ButtonIcon });
 // packages/block-library/build-module/comment-date/edit.mjs
 /**
 	* Renders the `core/comment-date` block on the editor.
-	*
-	* @param {Object} props                   React props.
-	* @param {Object} props.setAttributes     Callback for updating block attributes.
-	* @param {Object} props.attributes        Block attributes.
-	* @param {string} props.attributes.format Format of the date.
-	* @param {string} props.attributes.isLink Whether the author name should be linked.
-	* @param {Object} props.context           Inherited context.
-	* @param {string} props.context.commentId The comment ID.
-	*
-	* @return {React.JSX.Element} React element.
 	*/
 	function Edit$10({ attributes: { format, isLink }, context: { commentId }, setAttributes }) {
 		const blockProps = (0, _wordpress_block_editor.useBlockProps)();
@@ -37996,7 +37986,7 @@ Icon: ButtonIcon });
 		},
 		migrate: migrate_font_family_default,
 		isEligible({ style }) {
-			return style?.typography?.fontFamily;
+			return !!style?.typography?.fontFamily;
 		}
 	}];
 
