@@ -37411,8 +37411,8 @@ Icon: ButtonIcon });
 			showHandle: isSelected,
 			onResizeStop: (event, direction, elt, delta) => {
 				setAttributes({
-					height: parseInt(height + delta.height, 10),
-					width: parseInt(width + delta.width, 10)
+					height: parseInt(String(height + delta.height), 10),
+					width: parseInt(String(width + delta.width), 10)
 				});
 			},
 			lockAspectRatio: true,
