@@ -34990,8 +34990,8 @@ Icon: ButtonIcon });
 	*
 	* @see `WP_REST_Posts_Controller::prepare_date_response()`.
 	*
-	* @param {string} date Date in `ISO8601/RFC3339` format.
-	* @return {Object} Year and date of the specified date.
+	* @param date Date in `ISO8601/RFC3339` format.
+	* @return Year and date of the specified date.
 	*/
 	const getYearMonth = memize((date) => {
 		if (!date) return {};
